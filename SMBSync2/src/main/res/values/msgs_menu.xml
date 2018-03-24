@@ -11,7 +11,7 @@
 	<string name="msgs_menu_housekeep">Maintenance of Admin files&#8230;</string>
 	<string name="msgs_menu_kill">Kill the application&#8230;</string>
 	<string name="msgs_menu_add_shortcut">Add shortcut</string>
-    <string name="msgs_menu_list_storage_info">Write storage info to Log</string>
+    <string name="msgs_menu_list_storage_info">Storage info</string>
 	<string name="msgs_menu_battery_optimization_disabled">To enable battery optimization&#8230;</string>
 	<string name="msgs_menu_battery_optimization_enabled">To disable battery optimization&#8230;</string>
     

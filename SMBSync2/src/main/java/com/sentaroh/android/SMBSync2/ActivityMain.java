@@ -195,7 +195,6 @@ public class ActivityMain extends AppCompatActivity {
 
         mTaskUtil = new SyncTaskUtil(mUtil, this, commonDlg, ccMenu, mGp, getSupportFragmentManager());
 
-
         mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mGp.msgList);
 
         if (mGp.syncTaskList == null)
@@ -205,8 +204,7 @@ public class ActivityMain extends AppCompatActivity {
 
         if (mGp.syncHistoryList == null) mGp.syncHistoryList = mUtil.loadHistoryList();
 
-        mGp.syncHistoryAdapter = new AdapterSyncHistory(mActivity, R.layout.sync_history_list_item_view,
-                mGp.syncHistoryList);
+        mGp.syncHistoryAdapter = new AdapterSyncHistory(mActivity, R.layout.sync_history_list_item_view, mGp.syncHistoryList);
         mCurrentTab = SMBSYNC2_TAB_NAME_TASK;
 
         createTabView();
@@ -232,8 +230,6 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    ;
-
     @SuppressLint("NewApi")
     @Override
     protected void onStart() {
@@ -242,8 +238,6 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    ;
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -251,15 +245,6 @@ public class ActivityMain extends AppCompatActivity {
         if (restartType == RESTART_WITH_OUT_INITIALYZE) {
             setActivityForeground(true);
             ScheduleUtil.setSchedulerInfo(mGp);
-//			if (!mGp.freezeMessageViewScroll) {
-//				mGp.uiHandler.post(new Runnable(){
-//					@Override
-//					public void run() {
-//					    if (mGp!=null && mGp.msgListView!=null && mGp.msgListAdapter!=null)
-//						    mGp.msgListView.setSelection(mGp.msgListAdapter.getCount()-1);
-//					}
-//				});
-//			}
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
@@ -435,53 +420,92 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     private void listStorageInfo() {
-        mUtil.addLogMsg("I", "Storage information begin, API=" + Build.VERSION.SDK_INT);
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.common_dialog);
 
-        listsMountPoint();
+        final TextView tv_title=(TextView)dialog.findViewById(R.id.common_dialog_title);
+        final TextView tv_msg=(TextView)dialog.findViewById(R.id.common_dialog_msg);
+        final Button btn_copy=(Button)dialog.findViewById(R.id.common_dialog_btn_ok);
+        final Button btn_close=(Button)dialog.findViewById(R.id.common_dialog_btn_cancel);
 
-        mUtil.addLogMsg("I", "getExternalSdcardPath=" + mGp.safMgr.getExternalSdcardPath());
-        mUtil.addLogMsg("I", "getSdcardDirectory=" + mGp.safMgr.getSdcardDirectory());
+        tv_title.setText(mContext.getString(R.string.msgs_info_storage_title));
+        btn_close.setText(mContext.getString(R.string.msgs_common_dialog_close));
+        btn_copy.setText(mContext.getString(R.string.msgs_info_storage_copy_clipboard));
+
+        String si="";
+        si+="Storage information begin, API=" + Build.VERSION.SDK_INT+"\n";
+
+        si+=listsMountPoint();
+
+        si+="getExternalSdcardPath=" + mGp.safMgr.getExternalSdcardPath()+"\n";
+        si+="getSdcardDirectory=" + mGp.safMgr.getSdcardDirectory()+"\n";
 
         File[] fl = ContextCompat.getExternalFilesDirs(mContext, null);
         if (fl != null) {
             for (File f : fl) {
-                if (f != null) mUtil.addLogMsg("I", "ExternalFilesDirs=" + f.getPath());
+                if (f != null) si+="ExternalFilesDirs=" + f.getPath()+"\n";
             }
         }
         if (mGp.safMgr.getSdcardSafFile() != null)
-            mUtil.addLogMsg("I", "getSdcardSafFile name=" + mGp.safMgr.getSdcardSafFile().getName());
+            si+="getSdcardSafFile name=" + mGp.safMgr.getSdcardSafFile().getName()+"\n";
+        si+=listSafMgrList();
+        si+=getRemovableStoragePaths(mContext, true);
+        si+="Storage information end"+"\n";
 
-        listSafMgrList();
+        mUtil.addLogMsg("I",si);
 
-        getRemovableStoragePaths(mContext, true);
+        tv_msg.setText(si);
+        final String si_copy=si;
 
-        mUtil.addLogMsg("I", "Storage information end");
+        CommonDialog.setDlgBoxSizeLimit(dialog,true);
 
+        btn_copy.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                android.content.ClipboardManager cm=(android.content.ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setText(si_copy);
+                Toast.makeText(mContext,
+                        mContext.getString(R.string.msgs_info_storage_copy_completed), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btn_close.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                btn_close.performClick();
+            }
+        });
+
+        dialog.show();
     }
 
-    ;
-
-    private void listSafMgrList() {
+    private String listSafMgrList() {
+        String mpi="";
         ArrayList<SafFileItem> sfl = mGp.safMgr.getSafList();
         for (SafFileItem item : sfl) {
             String saf_name = null;
             if (item.storageRootFile != null) saf_name = item.storageRootFile.getName();
-            mUtil.addLogMsg("I", "SafFile list uuid=" + item.storageUuid +
+            mpi+="SafFile list uuid=" + item.storageUuid +
                     ", root=" + item.storageRootDirectory +
                     ", mounted=" + item.storageIsMounted +
                     ", isSDCARD=" + item.storageTypeSdcard +
                     ", saf=" + item.storageRootFile +
-                    ", saf name=" + saf_name);
+                    ", saf name=" + saf_name+"\n";
         }
+        return mpi;
     }
 
-    ;
-
-    @SuppressWarnings("unused")
-    private String[] getRemovableStoragePaths(Context context, boolean debug) {
+    private String getRemovableStoragePaths(Context context, boolean debug) {
+        String mpi="";
         ArrayList<String> paths = new ArrayList<String>();
         try {
             StorageManager sm = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
@@ -494,7 +518,7 @@ public class ActivityMain extends AppCompatActivity {
                 Method toString = volume.getClass().getDeclaredMethod("toString");
                 String path = (String) getPath.invoke(volume);
 //	            boolean removable = (Boolean)isRemovable.invoke(volume);
-                mUtil.addLogMsg("I", (String) toString.invoke(volume));
+                mpi+=(String) toString.invoke(volume)+"\n";
 //	            if ((String)getUuid.invoke(volume)!=null) {
 //	            	paths.add(path);
 //					if (debug) {
@@ -512,68 +536,65 @@ public class ActivityMain extends AppCompatActivity {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        return paths.toArray(new String[paths.size()]);
+        return mpi;
     }
 
-    ;
-
-    private void listsMountPoint() {
-        mUtil.addLogMsg("I", "/ directory:");
+    private String listsMountPoint() {
+        String mpi="/ directory:+\n";
         File[] fl = (new File("/")).listFiles();
         if (fl != null) {
             for (File item : fl) {
                 if (item.isDirectory())
-                    mUtil.addLogMsg("I", "   /" + item.getName() + ", read=" + item.canRead());
+                    mpi+="   /" + item.getName() + ", read=" + item.canRead()+"\n";
             }
         }
 
-        mUtil.addLogMsg("I", "/mnt directory:");
+        mpi+="/mnt directory:"+"\n";
         fl = (new File("/mnt")).listFiles();
         if (fl != null) {
             for (File item : fl) {
                 if (item.isDirectory())
-                    mUtil.addLogMsg("I", "   /mnt/" + item.getName() + ", read=" + item.canRead());
+                    mpi+="   /mnt/" + item.getName() + ", read=" + item.canRead()+"\n";
             }
         }
 
-        mUtil.addLogMsg("I", "/storage directory:");
+        mpi+="/storage directory:"+"\n";
         fl = (new File("/storage")).listFiles();
         if (fl != null) {
             for (File item : fl) {
                 if (item.isDirectory())
-                    mUtil.addLogMsg("I", "   /storage/" + item.getName() + ", read=" + item.canRead());
+                    mpi+="   /storage/" + item.getName() + ", read=" + item.canRead()+"\n";
             }
         }
 
-        mUtil.addLogMsg("I", "/storage/emulated directory:");
+        mpi+="/storage/emulated directory:"+"\n";
         fl = (new File("/storage/emulated")).listFiles();
         if (fl != null) {
             for (File item : fl) {
                 if (item.isDirectory())
-                    mUtil.addLogMsg("I", "   /storage/emulated/" + item.getName() + ", read=" + item.canRead());
+                    mpi+="   /storage/emulated/" + item.getName() + ", read=" + item.canRead()+"\n";
             }
         }
 
-        mUtil.addLogMsg("I", "/storage/self directory:");
+        mpi+="/storage/self directory:"+"\n";
         fl = (new File("/storage/self")).listFiles();
         if (fl != null) {
             for (File item : fl) {
                 if (item.isDirectory())
-                    mUtil.addLogMsg("I", "   /storage/self/" + item.getName() + ", read=" + item.canRead());
+                    mpi+="   /storage/self/" + item.getName() + ", read=" + item.canRead()+"\n";
             }
         }
 
-        mUtil.addLogMsg("I", "/Removable directory:");
+        mpi+="/Removable directory:"+"\n";
         fl = (new File("/Removable")).listFiles();
         if (fl != null) {
             for (File item : fl) {
                 if (item.isDirectory())
-                    mUtil.addLogMsg("I", "   /Removable/" + item.getName() + ", read=" + item.canRead());
+                    mpi+="   /Removable/" + item.getName() + ", read=" + item.canRead()+"\n";
             }
         }
+        return mpi;
     }
-
-    ;
 
     @SuppressLint("NewApi")
     private void showBatteryOptimization() {
@@ -1186,7 +1207,7 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonNormalMode();
                 return true;
             case R.id.menu_top_scheduler:
-                if (mScheduleEditorAvailable) {
+                if (mScheduleEditorAvailable && isUiEnabled()) {
                     mScheduleEditorAvailable = false;
 //					ScheduleItemEditor sm=new ScheduleItemEditor(mUtil, this, this, commonDlg, ccMenu, mGp, mGp.scheduleInfoList.get(0));
 //					sm.initDialog();

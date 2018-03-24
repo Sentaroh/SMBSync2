@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.Properties;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -61,6 +62,10 @@ import android.widget.Spinner;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.StringUtil;
+
+import jcifs.CIFSException;
+import jcifs.config.PropertyConfiguration;
+import jcifs.context.BaseContext;
 
 public final class SyncUtil {
     private Context mContext = null;
@@ -112,19 +117,34 @@ public final class SyncUtil {
         mLog.resetLogReceiver();
     }
 
-    ;
+    static public BaseContext buildBaseContextWithSmbProtocol(String smb_proto) {
+        BaseContext bc=null;
+        try {
+            Properties prop_master=new Properties();
+            if (smb_proto.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM)) {
+                prop_master.setProperty("jcifs.smb.client.minVersion","SMB1");
+                prop_master.setProperty("jcifs.smb.client.maxVersion","SMB210");
+            } else if (smb_proto.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+                prop_master.setProperty("jcifs.smb.client.minVersion","SMB1");
+                prop_master.setProperty("jcifs.smb.client.maxVersion","SMB1");
+            } else if (smb_proto.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) {
+                prop_master.setProperty("jcifs.smb.client.minVersion","SMB210");
+                prop_master.setProperty("jcifs.smb.client.maxVersion","SMB210");
+            }
+            bc = new BaseContext(new PropertyConfiguration(prop_master));
+        } catch (CIFSException e) {
+            e.printStackTrace();
+        }
+        return bc;
+    }
 
     final public void flushLog() {
         mLog.flushLog();
     }
 
-    ;
-
     final public void rotateLogFile() {
         mLog.rotateLogFile();
     }
-
-    ;
 
     final public static String getWifiSsidName(WifiManager wm) {
         String wssid = "";
@@ -136,8 +156,6 @@ public final class SyncUtil {
         }
         return wssid;
     }
-
-    ;
 
     final public static boolean isNetworkConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

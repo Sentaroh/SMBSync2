@@ -110,8 +110,7 @@
     <string name="msgs_create_profile_not_found">指定されたファイルが見つからないためタスクリスト作成できません。ファイル=%s</string>
     <string name="msgs_save_to_profile_error">"タスクの保存に失敗しました。ファイル=%s</string>
     
-    <string name="msgs_dir_empty"			>--- ディレクトリが見つかりませんでした ---</string>
-    <string name="msgs_share_empty"			>--- 共有が見つかりませんでした ---</string>
+    <string name="msgs_dir_empty"			>ディレクトリが見つかりませんでした</string>
     <string name="msgs_share_list_not_obtained">共有名の一覧が取得できませんでした。アクセス権のあるユーザーを指定して再度取得するか、共有名を直接入力してください。</string>
     
  	<string name="msgs_override"			>上書きしますか?</string>
@@ -256,7 +255,7 @@
     <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMBプロトコル</string>
     <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">システムで判別</string>
     <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1_only">SMB1のみ使用</string>
-    <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb2_only">SMB2のみ使用</string>
+    <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb2_only">SMB2(2.01)のみ使用</string>
 
 	<string name="msgs_profile_edit_sync_folder_dlg_zip_time_stamp">ZIPファイルにタイムスタンプを付ける</string>
 	<string name="msgs_profile_edit_sync_folder_dlg_zip_use_sdcard">SDCARDにZIPファイルを保存する</string>
@@ -355,4 +354,7 @@
 
     <string name="msgs_profile_sync_folder_dlg_confirm_msg_nosave">同期フォルダーが変更されています、保存せず終了しますか。</string>
 
+    <string name="msgs_info_storage_copy_clipboard">コピー</string>
+    <string name="msgs_info_storage_copy_completed">クリップボードにコピーしました</string>
+    <string name="msgs_info_storage_title">ストレージ情報</string>
 </resources>

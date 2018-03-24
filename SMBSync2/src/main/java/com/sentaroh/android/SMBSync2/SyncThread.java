@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -370,38 +371,6 @@ public class SyncThread extends Thread {
 
                 mStwa.currentSTI = sri.sync_task_list.poll();
 
-                try {
-                    if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM)) {
-                        System.getProperties().setProperty("jcifs.smb.client.minVersion","SMB1");
-                        System.getProperties().setProperty("jcifs.smb.client.maxVersion","SMB210");
-                        mStwa.masterBaseContext = new BaseContext(new PropertyConfiguration(System.getProperties()));
-                    } else if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
-                        System.getProperties().setProperty("jcifs.smb.client.minVersion","SMB1");
-                        System.getProperties().setProperty("jcifs.smb.client.maxVersion","SMB1");
-                        mStwa.masterBaseContext = new BaseContext(new PropertyConfiguration(System.getProperties()));
-                    } else if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) {
-                        System.getProperties().setProperty("jcifs.smb.client.minVersion","SMB210");
-                        System.getProperties().setProperty("jcifs.smb.client.maxVersion","SMB210");
-                        mStwa.masterBaseContext = new BaseContext(new PropertyConfiguration(System.getProperties()));
-                    }
-                    if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM)) {
-                        System.getProperties().setProperty("jcifs.smb.client.minVersion","SMB1");
-                        System.getProperties().setProperty("jcifs.smb.client.maxVersion","SMB210");
-                        mStwa.targetBaseContext = new BaseContext(new PropertyConfiguration(System.getProperties()));
-                    } else if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
-                        System.getProperties().setProperty("jcifs.smb.client.minVersion","SMB1");
-                        System.getProperties().setProperty("jcifs.smb.client.maxVersion","SMB1");
-                        mStwa.targetBaseContext = new BaseContext(new PropertyConfiguration(System.getProperties()));
-                    } else if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) {
-                        System.getProperties().setProperty("jcifs.smb.client.minVersion","SMB210");
-                        System.getProperties().setProperty("jcifs.smb.client.maxVersion","SMB210");
-                        mStwa.targetBaseContext = new BaseContext(new PropertyConfiguration(System.getProperties()));
-                    }
-                } catch (CIFSException e) {
-                    e.printStackTrace();
-                }
-
-
                 long start_time = 0;
                 while ((sync_result == 0 || sync_result == SyncTaskItem.SYNC_STATUS_WARNING) && mStwa.currentSTI != null) {
                     start_time = System.currentTimeMillis();
@@ -409,6 +378,9 @@ public class SyncThread extends Thread {
                     setSyncTaskRunning(true);
                     showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "I", "", "",
                             mGp.appContext.getString(R.string.msgs_mirror_task_started));
+
+                    mStwa.masterBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(mStwa.currentSTI.getMasterSmbProtocol());
+                    mStwa.targetBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(mStwa.currentSTI.getTargetSmbProtocol());
 
                     initSyncParms(mStwa.currentSTI);
 
@@ -520,8 +492,6 @@ public class SyncThread extends Thread {
         }
         System.gc();
     }
-
-    ;
 
     private void setSyncTaskRunning(boolean running) {
         SyncTaskItem c_sti = SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, mStwa.currentSTI.getSyncTaskName());

@@ -749,20 +749,15 @@ class SyncTaskItem implements Serializable, Cloneable {
         return npfli;
     }
 
-    private static boolean isSameBoolean(boolean cmp1, boolean cmp2) {
-        if ((cmp1 && cmp2) || (!cmp1 && !cmp2)) return true;
-        else return false;
-    }
-
-    public boolean isSameSyncTask(SyncTaskItem sti) {
+    public boolean isSame(SyncTaskItem sti) {
         boolean result = false;
         if ((syncTasｋName.equals(sti.getSyncTaskName()) &&
                 (syncTasｋGroup.equals(sti.getSyncTaskGroup())) &&
-                (isSameBoolean(syncTaskEnabled, sti.isSyncTaskAuto())) &&
-                (isSameBoolean(syncOptionSyncTestMode, sti.isSyncTestMode())) &&
+                (syncTaskEnabled==sti.isSyncTaskAuto()) &&
+                (syncOptionSyncTestMode==sti.isSyncTestMode()) &&
                 (syncTaskType.equals(sti.getSyncTaskType())) &&
                 (syncTwoWayConflictOption.equals(sti.getSyncTwoWayConflictOption())) &&
-                (isSameBoolean(syncTaskTwoWay, sti.isSyncTaskTwoWay())) &&
+                (syncTaskTwoWay==sti.isSyncTaskTwoWay()))&&
                 (syncTaskMasterFolderType.equals(sti.getMasterFolderType())) &&
                 (syncTaskMasterFolderDirName.equals(sti.getMasterDirectoryName())) &&
                 (syncTaskMasterLocalMountPoint.equals(sti.getMasterLocalMountPoint())) &&
@@ -774,7 +769,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskMasterFolderRemotePassword.equals(sti.getMasterSmbPassword())) &&
                 (syncTaskMasterFolderRemoteDomain.equals(sti.getMasterSmbDomain())) &&
                 (syncTaskMasterFolderSmbProtocol.equals(sti.getMasterSmbProtocol())) &&
-                (syncTaskMasterFolderRemovableStorageID.equals(sti.getMasterRemovableStorageID())))) {
+                (syncTaskMasterFolderRemovableStorageID.equals(sti.getMasterRemovableStorageID()))) {
 //                Log.v("","step1");
             if ((syncTaskTargetFolderType.equals(sti.getTargetFolderType())) &&
                     (syncTaskTargetFolderDirName.equals(sti.getTargetDirectoryName())) &&
@@ -795,32 +790,32 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncTaskTargetZipCompOptionEncrypt.equals(sti.getTargetZipEncryptMethod())) &&
                         (syncTaskTargetZipCompOptionPassword.equals(sti.getTargetZipPassword())) &&
                         (syncTaskTargetZipCompOptionEncoding.equals(sti.getTargetZipFileNameEncoding())) &&
-                        (isSameBoolean(syncTaskTargetZipUseExternalSdcard, sti.isTargetZipUseExternalSdcard())) &&
-                        (isSameBoolean(syncFileTypeAudio, sti.isSyncFileTypeAudio())) &&
-                        (isSameBoolean(syncFileTypeImage, sti.isSyncFileTypeImage())) &&
-                        (isSameBoolean(syncFileTypeVideo, sti.isSyncFileTypeVideo())) &&
+                        (syncTaskTargetZipUseExternalSdcard==sti.isTargetZipUseExternalSdcard()) &&
+                        (syncFileTypeAudio==sti.isSyncFileTypeAudio()) &&
+                        (syncFileTypeImage==sti.isSyncFileTypeImage()) &&
+                        (syncFileTypeVideo==sti.isSyncFileTypeVideo()) &&
 
-                        (isSameBoolean(syncOptionRootDirFileToBeProcessed, sti.isSyncProcessRootDirFile())) &&
-                        (isSameBoolean(syncOptionProcessOverrideCopyMove, sti.isSyncOverrideCopyMoveFile())) &&
-                        (isSameBoolean(syncOptionConfirmOverrideDelete, sti.isSyncConfirmOverrideOrDelete())) &&
-                        (isSameBoolean(syncOptionForceLastModifiedUseSmbsync, sti.isSyncDetectLastModifiedBySmbsync())) &&
-                        (isSameBoolean(syncOptionNotUsedLastModifiedForRemote, sti.isSyncDoNotResetLastModifiedSmbFile())) &&
+                        (syncOptionRootDirFileToBeProcessed==sti.isSyncProcessRootDirFile()) &&
+                        (syncOptionProcessOverrideCopyMove==sti.isSyncOverrideCopyMoveFile()) &&
+                        (syncOptionConfirmOverrideDelete==sti.isSyncConfirmOverrideOrDelete()) &&
+                        (syncOptionForceLastModifiedUseSmbsync==sti.isSyncDetectLastModifiedBySmbsync()) &&
+                        (syncOptionNotUsedLastModifiedForRemote==sti.isSyncDoNotResetLastModifiedSmbFile()) &&
                         (syncOptionRetryCount.equals(sti.getSyncRetryCount())) &&
-                        (isSameBoolean(syncOptionSyncEmptyDir, sti.isSyncEmptyDirectory())) &&
-                        (isSameBoolean(syncOptionSyncHiddenFile, sti.isSyncHiddenFile())) &&
-                        (isSameBoolean(syncOptionSyncHiddenDir, sti.isSyncHiddenDirectory())) &&
-                        (isSameBoolean(syncOptionSyncSubDir, sti.isSyncSubDirectory())) &&
-                        (isSameBoolean(syncOptionUseSmallIoBuffer, sti.isSyncUseSmallIoBuffer())) &&
-                        (isSameBoolean(syncOptionDeterminChangedFileBySize, sti.isSyncDifferentFileBySize())) &&
-                        (isSameBoolean(syncOptionDeterminChangedFileByTime, sti.isSyncDifferentFileByTime())) &&
+                        (syncOptionSyncEmptyDir==sti.isSyncEmptyDirectory()) &&
+                        (syncOptionSyncHiddenFile==sti.isSyncHiddenFile()) &&
+                        (syncOptionSyncHiddenDir==sti.isSyncHiddenDirectory()) &&
+                        (syncOptionSyncSubDir==sti.isSyncSubDirectory()) &&
+                        (syncOptionUseSmallIoBuffer==sti.isSyncUseSmallIoBuffer()) &&
+                        (syncOptionDeterminChangedFileBySize==sti.isSyncDifferentFileBySize()) &&
+                        (syncOptionDeterminChangedFileByTime==sti.isSyncDifferentFileByTime()) &&
                         (syncOptionDeterminChangedFileByTimeValue == sti.getSyncDifferentFileAllowableTime()) &&
-                        (isSameBoolean(syncOptionUseFileCopyByTempName, sti.isSyncUseFileCopyByTempName())) &&
-                        (isSameBoolean(syncOptionUseExtendedDirectoryFilter1, sti.isSyncUseExtendedDirectoryFilter1())) &&
+                        (syncOptionUseFileCopyByTempName==sti.isSyncUseFileCopyByTempName()) &&
+                        (syncOptionUseExtendedDirectoryFilter1==sti.isSyncUseExtendedDirectoryFilter1()) &&
 
                         (syncOptionWifiStatus.equals(sti.getSyncWifiStatusOption())) &&
 
-                        (isSameBoolean(syncTaskSkipIfConnectAnotherWifiSsid, sti.isSyncTaskSkipIfConnectAnotherWifiSsid())) &&
-                        (isSameBoolean(syncOptionSyncOnlyCharging, sti.isSyncOptionSyncWhenCharging()))) {
+                        (syncTaskSkipIfConnectAnotherWifiSsid==sti.isSyncTaskSkipIfConnectAnotherWifiSsid()) &&
+                        (syncOptionSyncOnlyCharging==sti.isSyncOptionSyncWhenCharging())) {
 
                     String ff_cmp1 = "";
                     for (String item : syncFileFilter) ff_cmp1 += item;

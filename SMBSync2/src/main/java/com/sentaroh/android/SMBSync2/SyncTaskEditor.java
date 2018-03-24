@@ -25,6 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync2.Constants.*;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_YEAR;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -44,7 +45,6 @@ import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -102,12 +102,8 @@ public class SyncTaskEditor extends DialogFragment {
         return frag;
     }
 
-    ;
-
     public SyncTaskEditor() {
     }
-
-    ;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -118,8 +114,6 @@ public class SyncTaskEditor extends DialogFragment {
 //	    }
     }
 
-    ;
-
     @Override
     public void onConfigurationChanged(final Configuration newConfig) {
         // Ignore orientation change to keep activity from restarting
@@ -129,8 +123,6 @@ public class SyncTaskEditor extends DialogFragment {
         reInitViewWidget();
     }
 
-    ;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
@@ -138,8 +130,6 @@ public class SyncTaskEditor extends DialogFragment {
         CommonDialog.setDlgBoxSizeLimit(mDialog, true);
         return view;
     }
-
-    ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -156,15 +146,11 @@ public class SyncTaskEditor extends DialogFragment {
         }
     }
 
-    ;
-
     @Override
     final public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
     }
-
-    ;
 
     @Override
     final public void onAttach(Activity activity) {
@@ -175,15 +161,11 @@ public class SyncTaskEditor extends DialogFragment {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
     }
 
-    ;
-
     @Override
     final public void onDetach() {
         super.onDetach();
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
     }
-
-    ;
 
     @Override
     final public void onStart() {
@@ -193,15 +175,11 @@ public class SyncTaskEditor extends DialogFragment {
         if (mTerminateRequired) mDialog.cancel();
     }
 
-    ;
-
     @Override
     final public void onStop() {
         super.onStop();
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
     }
-
-    ;
 
     @Override
     public void onDestroyView() {
@@ -210,8 +188,6 @@ public class SyncTaskEditor extends DialogFragment {
             getDialog().setDismissMessage(null);
         super.onDestroyView();
     }
-
-    ;
 
     @Override
     public void onCancel(DialogInterface di) {
@@ -223,8 +199,6 @@ public class SyncTaskEditor extends DialogFragment {
         mFragment.dismiss();
         super.onCancel(di);
     }
-
-    ;
 
     @Override
     public void onDismiss(DialogInterface di) {
@@ -247,8 +221,6 @@ public class SyncTaskEditor extends DialogFragment {
         }
         return mDialog;
     }
-
-    ;
 
     class SavedViewContents {
         CharSequence prof_name_et;
@@ -282,8 +254,6 @@ public class SyncTaskEditor extends DialogFragment {
         public int sync_diff_last_mod_value = -1;
 
     }
-
-    ;
 
     private SavedViewContents saveViewContents() {
         SavedViewContents sv = new SavedViewContents();
@@ -370,8 +340,6 @@ public class SyncTaskEditor extends DialogFragment {
         sv.sync_use_ext_dir_fileter = ctUseExtendedDirectoryFilter1.isChecked();
         return sv;
     }
-
-    ;
 
     private void restoreViewContents(final SavedViewContents sv) {
         final EditText et_sync_main_task_name = (EditText) mDialog.findViewById(R.id.edit_sync_task_task_name);
@@ -476,8 +444,6 @@ public class SyncTaskEditor extends DialogFragment {
         }, 50);
     }
 
-    ;
-
     public void reInitViewWidget() {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
         if (!mTerminateRequired) {
@@ -486,21 +452,8 @@ public class SyncTaskEditor extends DialogFragment {
             initViewWidget();
             restoreViewContents(sv);
             CommonDialog.setDlgBoxSizeLimit(mDialog, true);
-//    		Handler hndl=new Handler();
-//    		hndl.post(new Runnable(){
-//				@Override
-//				public void run() {
-//			    	SavedViewContents sv=null;
-//			    	sv=saveViewContents();
-//			    	initViewWidget();
-//			    	restoreViewContents(sv);
-//			    	CommonDialog.setDlgBoxSizeLimit(mDialog,true);
-//				}
-//    		});
         }
     }
-
-    ;
 
     public void initViewWidget() {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
@@ -508,13 +461,8 @@ public class SyncTaskEditor extends DialogFragment {
         editProfile(mOpType, mCurrentSyncTaskItem);
     }
 
-    ;
-
     private String mOpType = "";
     private SyncTaskItem mCurrentSyncTaskItem;
-    //	private SyncUtil mUtil=null;
-//	private CommonDialog mCommonDlg=null;
-//	private FragmentManager mFragmentMgr=null;
     private NotifyEvent mNotifyComplete = null;
 
     public void showDialog(FragmentManager fm, Fragment frag,
@@ -541,26 +489,14 @@ public class SyncTaskEditor extends DialogFragment {
 //	    show(fm,APPLICATION_TAG);
     }
 
-    ;
-
     private void setDialogMsg(final TextView tv, final String msg) {
 //    	Log.v("","t="+tv.getText().toString()+", m="+msg);
         if (msg.equals("")) {
             tv.setVisibility(TextView.GONE);
             tv.setText("");
-            ;
         } else {
             tv.setVisibility(TextView.VISIBLE);
             tv.setText(msg);
-            ;
-//    		if (tv.getText().length()==0) {
-//    			Handler hndl=new Handler();
-//    			hndl.post(new Runnable(){
-//					@Override
-//					public void run() {
-//					}
-//    			});
-//    		}
         }
     }
 
@@ -568,6 +504,195 @@ public class SyncTaskEditor extends DialogFragment {
         String out = in_str.replaceAll(":", "").replaceAll("\\\\", "").replaceAll("\\*", "").replaceAll("\\?", "").replaceAll("\"", "").replaceAll("<", "")
                 .replaceAll(">", "").replaceAll("\\|", "");
         return out;
+    }
+
+    private void setSyncFolderSmbListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
+        final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
+        setSyncFolderSmbProtoSpinner(sti, sp_sync_folder_smb_proto, sfev.folder_smb_protocol);
+
+        //		final LinearLayout ll_sync_folder_smb_view = (LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_smb_host_view);
+        final Button btn_search_host = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_search_remote_host);
+
+        final EditText et_remote_host = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
+        if (!sfev.folder_remote_addr.equals("")) et_remote_host.setText(sfev.folder_remote_addr);
+        else et_remote_host.setText(sfev.folder_remote_host);
+
+        //		final LinearLayout ll_sync_folder_port = (LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_port_option_view);
+        final CheckedTextView ctv_sync_folder_use_port = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
+        SyncUtil.setCheckedTextView(ctv_sync_folder_use_port);
+        final EditText et_sync_folder_port = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
+        if (!sfev.folder_remote_port.equals("")) {
+            ctv_sync_folder_use_port.setChecked(true);
+            et_sync_folder_port.setEnabled(true);
+            et_sync_folder_port.setText(sfev.folder_remote_port);
+        } else {
+            ctv_sync_folder_use_port.setChecked(false);
+            et_sync_folder_port.setEnabled(false);
+        }
+        ctv_sync_folder_use_port.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !ctv_sync_folder_use_port.isChecked();
+                ctv_sync_folder_use_port.setChecked(isChecked);
+                et_sync_folder_port.setEnabled(isChecked);
+                checkSyncFolderValidation(dialog, sfev);
+            }
+        });
+
+        final CheckedTextView ctv_sync_folder_use_pswd = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
+        final EditText et_sync_folder_domain = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_domain);
+        et_sync_folder_domain.setVisibility(EditText.GONE);
+        final EditText et_sync_folder_user = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
+        final EditText et_sync_folder_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
+        if (!sfev.folder_remote_user.equals("") || !sfev.folder_remote_pswd.equals("")) {
+            ctv_sync_folder_use_pswd.setChecked(true);
+            et_sync_folder_user.setEnabled(true);
+            et_sync_folder_user.setText(sfev.folder_remote_user);
+            et_sync_folder_pswd.setEnabled(true);
+            et_sync_folder_pswd.setText(sfev.folder_remote_pswd);
+        } else {
+            ctv_sync_folder_use_pswd.setChecked(false);
+            et_sync_folder_user.setEnabled(false);
+            et_sync_folder_pswd.setEnabled(false);
+        }
+        sfev.folder_remote_use_pswd=ctv_sync_folder_use_pswd.isChecked();
+        ctv_sync_folder_use_pswd.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !ctv_sync_folder_use_pswd.isChecked();
+                ctv_sync_folder_use_pswd.setChecked(isChecked);
+                et_sync_folder_user.setEnabled(isChecked);
+                et_sync_folder_pswd.setEnabled(isChecked);
+                checkSyncFolderValidation(dialog, sfev);
+            }
+        });
+
+        final Button btn_sync_folder_logon = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_logon_btn);
+        final Button btn_sync_folder_list_share = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_share_btn);
+        final EditText et_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
+        et_sync_folder_share_name.setText(sfev.folder_remote_share);
+
+        et_remote_host.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkSyncFolderValidation(dialog, sfev);
+            }
+        });
+        et_sync_folder_port.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkSyncFolderValidation(dialog, sfev);
+            }
+        });
+
+        et_sync_folder_user.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkSyncFolderValidation(dialog, sfev);
+            }
+        });
+        et_sync_folder_pswd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkSyncFolderValidation(dialog, sfev);
+            }
+        });
+        et_sync_folder_share_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkSyncFolderValidation(dialog, sfev);
+            }
+        });
+
+        sp_sync_folder_smb_proto.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                setSyncFolderViewVisibility(dialog, sfev.folder_master, sfev);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        btn_search_host.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTaskUtil.ipAddressScanButtonDlg(dialog);
+            }
+        });
+
+        btn_sync_folder_logon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String user=et_sync_folder_user.getText().toString().trim().length()>0?et_sync_folder_user.getText().toString().trim():null;
+                String pass=et_sync_folder_pswd.getText().toString().trim().length()>0?et_sync_folder_pswd.getText().toString().trim():null;
+                if (!ctv_sync_folder_use_pswd.isChecked()) {
+                    user=pass=null;
+                }
+                String smb_proto=""+sp_sync_folder_smb_proto.getSelectedItemPosition();
+                if (SmbUtil.isValidIpAddress(et_remote_host.getText().toString())) {
+                    mTaskUtil.testSmbLogonDlg("", et_remote_host.getText().toString().trim(),
+                            et_sync_folder_port.getText().toString().trim(),
+                            user, pass,
+                            et_sync_folder_share_name.getText().toString().trim(), smb_proto, null);
+                } else {
+                    mTaskUtil.testSmbLogonDlg(et_remote_host.getText().toString().trim(), "",
+                            et_sync_folder_port.getText().toString().trim(),
+                            user, pass,
+                            et_sync_folder_share_name.getText().toString().trim(), smb_proto, null);
+                }
+            }
+        });
+
+        btn_sync_folder_list_share.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTaskUtil.invokeSelectRemoteShareDlg(dialog);
+            }
+        });
+
     }
 
     private void editSyncFolder(SyncTaskItem sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
@@ -591,77 +716,14 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
         setSyncFolderTypeSpinner(sti, sp_sync_folder_type, sfev.folder_type, sfev.folder_master);
 
-        final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
-        setSyncFolderSmbProtoSpinner(sti, sp_sync_folder_smb_proto, sfev.folder_smb_protocol);
-
         final LinearLayout ll_sync_folder_mp = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_local_mount_point_selector_view);
         final Spinner sp_sync_folder_mp = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_local_mount_point_selector);
         setSyncFolderMpSpinner(sti, sp_sync_folder_mp, sfev.folder_mountpoint, !sfev.folder_master);
 
-//		final LinearLayout ll_sync_folder_smb_view = (LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_smb_host_view);
-        final Button btn_search_host = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_search_remote_host);
-
-        final EditText et_remote_host = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
-        if (!sfev.folder_remote_addr.equals("")) et_remote_host.setText(sfev.folder_remote_addr);
-        else et_remote_host.setText(sfev.folder_remote_host);
+        setSyncFolderSmbListener(dialog, sti, sfev, ntfy);
 
         setSyncFolderFieldHelpListener(dialog, sfev.folder_type);
 
-//		CommonDialog.setDlgBoxSizeLimit(dialog, false);
-
-//		final LinearLayout ll_sync_folder_port = (LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_port_option_view);
-        final CheckedTextView ctv_sync_folder_use_port = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
-        SyncUtil.setCheckedTextView(ctv_sync_folder_use_port);
-        final EditText et_sync_folder_port = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
-        if (!sfev.folder_remote_port.equals("")) {
-            ctv_sync_folder_use_port.setChecked(true);
-            et_sync_folder_port.setEnabled(true);
-            et_sync_folder_port.setText(sfev.folder_remote_port);
-        } else {
-            ctv_sync_folder_use_port.setChecked(false);
-            et_sync_folder_port.setEnabled(false);
-        }
-        ctv_sync_folder_use_port.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = !ctv_sync_folder_use_port.isChecked();
-                ctv_sync_folder_use_port.setChecked(isChecked);
-                et_sync_folder_port.setEnabled(isChecked);
-                checkEditFolderValidation(dialog, sfev);
-            }
-        });
-
-        final CheckedTextView ctv_sync_folder_use_pswd = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
-        final EditText et_sync_folder_domain = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_domain);
-        et_sync_folder_domain.setVisibility(EditText.GONE);
-        final EditText et_sync_folder_user = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
-        final EditText et_sync_folder_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
-        if (!sfev.folder_remote_user.equals("") || !sfev.folder_remote_pswd.equals("")) {
-            ctv_sync_folder_use_pswd.setChecked(true);
-            et_sync_folder_user.setEnabled(true);
-            et_sync_folder_user.setText(sfev.folder_remote_user);
-            et_sync_folder_pswd.setEnabled(true);
-            et_sync_folder_pswd.setText(sfev.folder_remote_pswd);
-        } else {
-            ctv_sync_folder_use_pswd.setChecked(false);
-            et_sync_folder_user.setEnabled(false);
-            et_sync_folder_pswd.setEnabled(false);
-        }
-        ctv_sync_folder_use_pswd.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = !ctv_sync_folder_use_pswd.isChecked();
-                ctv_sync_folder_use_pswd.setChecked(isChecked);
-                et_sync_folder_user.setEnabled(isChecked);
-                et_sync_folder_pswd.setEnabled(isChecked);
-                checkEditFolderValidation(dialog, sfev);
-            }
-        });
-
-        final Button btn_sync_folder_logon = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_logon_btn);
-        final Button btn_sync_folder_list_share = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_share_btn);
-        final EditText et_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
-        et_sync_folder_share_name.setText(sfev.folder_remote_share);
         final Button btn_sync_folder_list_dir = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_directory_btn);
 
         final EditText et_sync_folder_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_directory_name);
@@ -680,29 +742,6 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_zip_view_keyword_insert_month = (Button) ll_zip_view.findViewById(R.id.edit_sync_folder_keyword_insert_month);
         final Button btn_zip_view_keyword_insert_day = (Button) ll_zip_view.findViewById(R.id.edit_sync_folder_keyword_insert_day);
         final Button btn_zip_view_keyword_insert_day_of_year = (Button) ll_zip_view.findViewById(R.id.edit_sync_folder_keyword_insert_day_of_year);
-
-//		ctv_sync_folder_use_usb_folder.setChecked(sfev.folder_use_usb_folder);
-//		ctv_sync_folder_use_usb_folder.setOnClickListener(new OnClickListener(){
-//			@Override
-//			public void onClick(View v) {
-//				boolean isChecked=!ctv_sync_folder_use_usb_folder.isChecked();
-//				ctv_sync_folder_use_usb_folder.setChecked(isChecked);
-//				if (isChecked) {
-//					if (mGp.safMgr.getUsbFileSystemDirectory().equals(SafFileManager.UNKNOWN_USB_FS_DIRECTORY)) {
-//						btn_sync_folder_list_dir.setEnabled(false);
-//						dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted));
-//						dlg_msg.setVisibility(TextView.VISIBLE);
-//					} else {
-//						btn_sync_folder_list_dir.setEnabled(true);
-//						dlg_msg.setText("");
-//						dlg_msg.setVisibility(TextView.GONE);
-//						checkEditFolderValidation(dialog);
-//					}
-//				} else {
-//					checkEditFolderValidation(dialog);
-//				}
-//			}
-//        });
 
         final CheckedTextView ctv_zip_file_save_sdcard = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_use_sdcard);
         SyncUtil.setCheckedTextView(ctv_zip_file_save_sdcard);
@@ -762,7 +801,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                     }
                 }
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
         });
 
@@ -792,94 +831,15 @@ public class SyncTaskEditor extends DialogFragment {
                     et_zip_pswd.setVisibility(EditText.VISIBLE);
                     et_zip_conf_pswd.setVisibility(EditText.VISIBLE);
                 }
-                checkEditFolderValidation(dialog, sfev);
+                checkSyncFolderValidation(dialog, sfev);
             }
         });
 
         final Button btn_sync_folder_cancel = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_cancel);
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
 
-        et_remote_host.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                checkEditFolderValidation(dialog, sfev);
-            }
-        });
-        et_sync_folder_port.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                checkEditFolderValidation(dialog, sfev);
-            }
-        });
-
-        et_sync_folder_user.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                checkEditFolderValidation(dialog, sfev);
-            }
-        });
-        et_sync_folder_pswd.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                checkEditFolderValidation(dialog, sfev);
-            }
-        });
-        et_sync_folder_share_name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                checkEditFolderValidation(dialog, sfev);
-            }
-        });
-
-
-//		if (sfev.folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) ctv_sync_folder_use_usb_folder.setVisibility(CheckedTextView.VISIBLE);
-//		else ctv_sync_folder_use_usb_folder.setVisibility(CheckedTextView.GONE);
-
-//		if (sfev.folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
-//		else btn_sdcard_select_sdcard.setVisibility(Button.GONE);
 
         setSyncFolderViewVisibility(dialog, sfev.folder_master, sfev);
-//		checkEditFolderValidation(dialog);
 
         sp_sync_folder_type.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -893,49 +853,6 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
-        sp_sync_folder_smb_proto.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                setSyncFolderViewVisibility(dialog, sfev.folder_master, sfev);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        btn_search_host.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTaskUtil.ipAddressScanButtonDlg(dialog);
-            }
-        });
-
-        btn_sync_folder_logon.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (SmbUtil.isValidIpAddress(et_remote_host.getText().toString())) {
-                    mTaskUtil.testSmbLogonDlg("", et_remote_host.getText().toString().trim(),
-                            et_sync_folder_port.getText().toString().trim(),
-                            et_sync_folder_user.getText().toString().trim(), et_sync_folder_pswd.getText().toString().trim(),
-                            et_sync_folder_share_name.getText().toString().trim(),null);
-                } else {
-                    mTaskUtil.testSmbLogonDlg(et_remote_host.getText().toString().trim(), "",
-                            et_sync_folder_port.getText().toString().trim(),
-                            et_sync_folder_user.getText().toString().trim(), et_sync_folder_pswd.getText().toString().trim(),
-                            et_sync_folder_share_name.getText().toString().trim(),null);
-                }
-            }
-        });
-
-        btn_sync_folder_list_share.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTaskUtil.invokeSelectRemoteShareDlg(dialog);
-            }
-        });
-
         btn_sync_folder_list_dir.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -946,9 +863,6 @@ public class SyncTaskEditor extends DialogFragment {
                         sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard))) {
                     String url = mGp.safMgr.getSdcardDirectory();
                     if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal))) {
-//						if (ctv_sync_folder_use_usb_folder.isChecked()) url=mGp.safMgr.getUsbFileSystemDirectory();
-//						else url=mGp.internalRootDirectory;
-//                        url=mGp.internalRootDirectory;
                         url = sp_sync_folder_mp.getSelectedItem().toString();
                     }
                     String p_dir = et_sync_folder_dir_name.getText().toString();
@@ -974,7 +888,7 @@ public class SyncTaskEditor extends DialogFragment {
 //					mTaskUtil.selectLocalDirectoryDlg(url,"",p_dir,ntfy);
                 } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {
                 }
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
         });
 
@@ -1001,7 +915,7 @@ public class SyncTaskEditor extends DialogFragment {
                             dlg_msg.setVisibility(TextView.GONE);
                             dlg_msg.setText("");
                             btn_sdcard_select_sdcard.setEnabled(true);
-                            checkEditFolderValidation(dialog, sfev);
+                            checkSyncFolderValidation(dialog, sfev);
                             setSyncFolderOkButtonEnabled(btn_sync_folder_ok, true);
                         }
                     }
@@ -1018,7 +932,7 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
 
             @Override
@@ -1032,8 +946,8 @@ public class SyncTaskEditor extends DialogFragment {
                 boolean isChecked = !ctv_zip_file_save_sdcard.isChecked();
                 ctv_zip_file_save_sdcard.setChecked(isChecked);
                 setSyncFolderViewVisibility(dialog, sfev.folder_master, sfev);
-//				checkEditFolderValidation(dialog);
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
+//				checkSyncFolderValidation(dialog);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
         });
         btn_zip_select_sdcard.setOnClickListener(new OnClickListener() {
@@ -1066,7 +980,7 @@ public class SyncTaskEditor extends DialogFragment {
                             tv_zip_dir.setText(zip_dir.replace(mGp.safMgr.getExternalSdcardPath(), ""));
                             et_zip_file.setText(zip_file);
                         }
-                        setOkButtonEnabledIfFolderChanged(dialog, sfev);
+                        setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
                     }
 
                     @Override
@@ -1101,7 +1015,7 @@ public class SyncTaskEditor extends DialogFragment {
                                 , "", null);
                     }
                 }
-                checkEditFolderValidation(dialog, sfev);
+                checkSyncFolderValidation(dialog, sfev);
             }
         });
 
@@ -1118,7 +1032,7 @@ public class SyncTaskEditor extends DialogFragment {
             public void afterTextChanged(Editable s) {
                 if (s.length() > 0) et_zip_conf_pswd.setEnabled(true);
                 else et_zip_conf_pswd.setEnabled(false);
-                checkEditFolderValidation(dialog, sfev);
+                checkSyncFolderValidation(dialog, sfev);
             }
         });
 
@@ -1136,67 +1050,19 @@ public class SyncTaskEditor extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                checkEditFolderValidation(dialog, sfev);
+                checkSyncFolderValidation(dialog, sfev);
             }
         });
 
-        btn_dir_view_keyword_insert_year.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertKeyword(et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_YEAR);
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
-            }
-        });
-        btn_dir_view_keyword_insert_month.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertKeyword(et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_MONTH);
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
-            }
-        });
-        btn_dir_view_keyword_insert_day.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertKeyword(et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY);
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
-            }
-        });
-        btn_dir_view_keyword_insert_day_of_year.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertKeyword(et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR);
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
-            }
-        });
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_year, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_YEAR);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_month, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_MONTH);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day_of_year, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR);
 
-        btn_zip_view_keyword_insert_year.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertKeyword(et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_YEAR);
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
-            }
-        });
-        btn_zip_view_keyword_insert_month.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertKeyword(et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_MONTH);
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
-            }
-        });
-        btn_zip_view_keyword_insert_day.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertKeyword(et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_DAY);
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
-            }
-        });
-        btn_zip_view_keyword_insert_day_of_year.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertKeyword(et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR);
-                setOkButtonEnabledIfFolderChanged(dialog, sfev);
-            }
-        });
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_zip_view_keyword_insert_year, et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_YEAR);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_zip_view_keyword_insert_month, et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_MONTH);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_zip_view_keyword_insert_day, et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_DAY);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_zip_view_keyword_insert_day_of_year, et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR);
 
         btn_sync_folder_ok.setEnabled(false);
         setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
@@ -1255,7 +1121,18 @@ public class SyncTaskEditor extends DialogFragment {
         dialog.show();
     }
 
-    ;
+    private void setSyncFolderkeywordButtonListener(final Dialog dialog, final SyncFolderEditValue sfev,
+                                                    final Button btn, final EditText et, final String key_word) {
+        btn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et.getSelectionStart() == et.getSelectionEnd())
+                    et.getText().insert(et.getSelectionStart(), key_word);
+                else et.getText().replace(et.getSelectionStart(), et.getSelectionEnd(), key_word);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+            }
+        });
+    }
 
     private SyncFolderEditValue buildSyncFolderEditValue(Dialog dialog, SyncFolderEditValue org_sfev) {
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
@@ -1365,7 +1242,11 @@ public class SyncTaskEditor extends DialogFragment {
             if (ctv_sync_folder_use_pswd.isChecked()) {
                 nsfev.folder_remote_user = et_sync_folder_user.getText().toString();
                 nsfev.folder_remote_pswd = et_sync_folder_pswd.getText().toString();
+            } else {
+                nsfev.folder_remote_user = "";
+                nsfev.folder_remote_pswd = "";
             }
+            nsfev.folder_remote_use_pswd =ctv_sync_folder_use_pswd.isChecked();
             nsfev.folder_remote_share = et_sync_folder_share_name.getText().toString().trim();
             if (sp_sync_folder_smb_proto.getSelectedItemPosition()==Integer.parseInt(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM)) nsfev.folder_smb_protocol=SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM;
             else if (sp_sync_folder_smb_proto.getSelectedItemPosition()==Integer.parseInt(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) nsfev.folder_smb_protocol=SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY;
@@ -1376,13 +1257,6 @@ public class SyncTaskEditor extends DialogFragment {
 
     private void setSyncFolderOkButtonEnabled(Button ok_btn, boolean enabled) {
         ok_btn.setEnabled(enabled);
-    }
-
-    private static void insertKeyword(EditText et, String kw) {
-        if (et.getSelectionStart() == et.getSelectionEnd())
-            et.getText().insert(et.getSelectionStart(), kw);
-        else et.getText().replace(et.getSelectionStart(), et.getSelectionEnd(), kw);
-
     }
 
     private void setSyncFolderViewVisibility(final Dialog dialog, final boolean master, SyncFolderEditValue org_sfev) {
@@ -1421,12 +1295,6 @@ public class SyncTaskEditor extends DialogFragment {
         String sel = sp_sync_folder_type.getSelectedItem().toString();
         btn_sdcard_select_sdcard.setVisibility(Button.GONE);
 
-//		if (sfev.folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) ctv_sync_folder_use_usb_folder.setVisibility(CheckedTextView.VISIBLE);
-//		else ctv_sync_folder_use_usb_folder.setVisibility(CheckedTextView.GONE);
-//		
-//		if (sfev.folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
-//		else btn_sdcard_select_sdcard.setVisibility(Button.GONE);
-
         if (master) {
             ll_dir_keyword_view.setVisibility(LinearLayout.GONE);
             ll_zip_keyword_view.setVisibility(LinearLayout.GONE);
@@ -1439,7 +1307,7 @@ public class SyncTaskEditor extends DialogFragment {
             ll_dir_view.setVisibility(LinearLayout.VISIBLE);
             ll_sync_folder_smb_view.setVisibility(LinearLayout.VISIBLE);
             ll_sync_folder_mp.setVisibility(LinearLayout.GONE);
-            checkEditFolderValidation(dialog, org_sfev);
+            checkSyncFolderValidation(dialog, org_sfev);
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_SMB);
         } else {
             ll_zip_view.setVisibility(LinearLayout.GONE);
@@ -1463,7 +1331,7 @@ public class SyncTaskEditor extends DialogFragment {
                     dlg_msg.setVisibility(TextView.GONE);
                     dlg_msg.setText("");
                     btn_sdcard_select_sdcard.setEnabled(true);
-                    checkEditFolderValidation(dialog, org_sfev);
+                    checkSyncFolderValidation(dialog, org_sfev);
                 }
                 btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
                 setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD);
@@ -1490,33 +1358,18 @@ public class SyncTaskEditor extends DialogFragment {
                         dlg_msg.setVisibility(TextView.GONE);
                         dlg_msg.setText("");
                         btn_zip_select_sdcard.setEnabled(true);
-                        checkEditFolderValidation(dialog, org_sfev);
+                        checkSyncFolderValidation(dialog, org_sfev);
                     }
                 } else {
                     btn_zip_select_sdcard.setVisibility(Button.GONE);
-                    checkEditFolderValidation(dialog, org_sfev);
+                    checkSyncFolderValidation(dialog, org_sfev);
                 }
                 setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_ZIP);
             } else {
                 ll_sync_folder_mp.setVisibility(LinearLayout.VISIBLE);
                 ll_zip_view.setVisibility(LinearLayout.GONE);
                 ll_dir_view.setVisibility(LinearLayout.VISIBLE);
-//				ctv_sync_folder_use_usb_folder.setVisibility(CheckedTextView.VISIBLE);
-//				if (ctv_sync_folder_use_usb_folder.isChecked()) {
-//					if (mGp.safMgr.getUsbFileSystemDirectory().equals(SafFileManager.UNKNOWN_USB_FS_DIRECTORY)) {
-//						btn_sync_folder_list_dir.setEnabled(false);
-//						dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted));
-//						dlg_msg.setVisibility(TextView.VISIBLE);
-//					} else {
-//						btn_sync_folder_list_dir.setEnabled(true);
-//						dlg_msg.setText("");
-//						dlg_msg.setVisibility(TextView.GONE);
-//						checkEditFolderValidation(dialog);
-//					}
-//				} else {
-//					checkEditFolderValidation(dialog);
-//				}
-                checkEditFolderValidation(dialog, org_sfev);
+                checkSyncFolderValidation(dialog, org_sfev);
                 setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL);
             }
 
@@ -1524,9 +1377,7 @@ public class SyncTaskEditor extends DialogFragment {
 
     }
 
-    ;
-
-    private boolean checkEditFolderValidation(Dialog dialog, SyncFolderEditValue org_sfev) {
+    private boolean checkSyncFolderValidation(Dialog dialog, SyncFolderEditValue org_sfev) {
         boolean result = true;
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
         setDialogMsg(dlg_msg, "");
@@ -1649,7 +1500,7 @@ public class SyncTaskEditor extends DialogFragment {
             }
         }
         if (result) {
-            setOkButtonEnabledIfFolderChanged(dialog, org_sfev);
+            setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
         } else {
             setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
         }
@@ -1657,15 +1508,10 @@ public class SyncTaskEditor extends DialogFragment {
         return result;
     }
 
-    ;
-
-    private void setOkButtonEnabledIfFolderChanged(Dialog dialog, SyncFolderEditValue org_sfev) {
+    private void setSyncFolderOkButtonEnabledIfFolderChanged(Dialog dialog, SyncFolderEditValue org_sfev) {
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
         SyncFolderEditValue nsfev = buildSyncFolderEditValue(dialog, org_sfev);
-        boolean changed = nsfev.isSameContents(org_sfev);
-//        Log.v("", "chang
-// ed=" + changed);
-
+        boolean changed = nsfev.isSame(org_sfev);
         if (!changed) setSyncFolderOkButtonEnabled(btn_sync_folder_ok, true);
         else setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
     }
@@ -1721,8 +1567,6 @@ public class SyncTaskEditor extends DialogFragment {
         }
     }
 
-    ;
-
     private void invokeEditDirFilterDlg(final Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg) {
         final TextView dlg_dir_filter = (TextView) dialog.findViewById(R.id.sync_filter_edit_dir_filter_btn);
         NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -1742,8 +1586,6 @@ public class SyncTaskEditor extends DialogFragment {
         mTaskUtil.editDirFilterDlg(n_sti, ntfy);
 
     }
-
-    ;
 
     private void invokeEditFileFilterDlg(Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg) {
         final TextView dlg_file_filter = (TextView) dialog.findViewById(R.id.sync_filter_edit_file_filter_btn);
@@ -1766,8 +1608,6 @@ public class SyncTaskEditor extends DialogFragment {
 
     }
 
-    ;
-
     private String buildMasterSyncFolderInfo(SyncTaskItem sti, Button ib) {
         String info = "";
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
@@ -1778,27 +1618,6 @@ public class SyncTaskEditor extends DialogFragment {
             ib.setCompoundDrawablePadding(32);
             ib.setCompoundDrawablesWithIntrinsicBounds(
                     mContext.getResources().getDrawable(R.drawable.ic_32_mobile, null), null, null, null);
-//            if (!sti.isMasterFolderUseInternalUsbFolder()) {
-//        	} else {
-//            	if (dir.equals("")) info=mGp.safMgr.getUsbFileSystemDirectory();
-//            	else info=mGp.safMgr.getUsbFileSystemDirectory()+"/"+dir;
-//            	if (mGp.safMgr.getUsbFileSystemDirectory().equals(SafFileManager.UNKNOWN_USB_FS_DIRECTORY)) {
-//            		ib.setCompoundDrawablePadding(32);
-//            		ib.setCompoundDrawablesWithIntrinsicBounds(
-//                    		mContext.getResources().getDrawable(R.drawable.ic_32_bad_media, null), null, null, null);
-//            	} else {
-//            		ib.setCompoundDrawablePadding(32);
-//            		ib.setCompoundDrawablesWithIntrinsicBounds(
-//                    		mContext.getResources().getDrawable(R.drawable.ic_32_usb, null), null, null, null);
-//            	}
-//        	}
-//        } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-//        	String dir=sti.getMasterDirectoryName();
-//        	if (dir.equals("")) info=mGp.safMgr.getUsbFileSystemDirectory();
-//        	else info=mGp.safMgr.getUsbFileSystemDirectory()+"/"+dir;
-//    		ib.setCompoundDrawablePadding(32);
-//    		ib.setCompoundDrawablesWithIntrinsicBounds(
-//            		mContext.getResources().getDrawable(R.drawable.ic_32_usb, null), null, null, null);
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             String dir = sti.getMasterDirectoryName();
             if (dir.equals("")) info = mGp.safMgr.getSdcardDirectory();
@@ -1835,27 +1654,6 @@ public class SyncTaskEditor extends DialogFragment {
             ib.setCompoundDrawablePadding(32);
             ib.setCompoundDrawablesWithIntrinsicBounds(
                     mContext.getResources().getDrawable(R.drawable.ic_32_mobile, null), null, null, null);
-//        	if (!sti.isTargetFolderUseInternalUsbFolder()) {
-//        	} else {
-//            	if (dir.equals("")) info=mGp.safMgr.getUsbFileSystemDirectory();
-//            	else info=mGp.safMgr.getUsbFileSystemDirectory()+"/"+dir;
-//            	if (mGp.safMgr.getUsbFileSystemDirectory().equals(SafFileManager.UNKNOWN_USB_FS_DIRECTORY)) {
-//            		ib.setCompoundDrawablePadding(32);
-//            		ib.setCompoundDrawablesWithIntrinsicBounds(
-//                    		mContext.getResources().getDrawable(R.drawable.ic_32_bad_media, null), null, null, null);
-//            	} else {
-//            		ib.setCompoundDrawablePadding(32);
-//            		ib.setCompoundDrawablesWithIntrinsicBounds(
-//                    		mContext.getResources().getDrawable(R.drawable.ic_32_usb, null), null, null, null);
-//            	}
-//        	}
-//        } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-//        	String dir=sti.getTargetDirectoryName();
-//        	if (dir.equals("")) info=mGp.safMgr.getUsbFileSystemDirectory();
-//        	else info=mGp.safMgr.getUsbFileSystemDirectory()+"/"+dir;
-//    		ib.setCompoundDrawablePadding(32);
-//    		ib.setCompoundDrawablesWithIntrinsicBounds(
-//            		mContext.getResources().getDrawable(R.drawable.ic_32_usb, null), null, null, null);
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             String dir = sti.getTargetDirectoryName();
             if (dir.equals("")) info = mGp.safMgr.getSdcardDirectory();
@@ -1899,8 +1697,6 @@ public class SyncTaskEditor extends DialogFragment {
         return info;
     }
 
-    ;
-
     private void setSyncFolderZipCompressionLevelSpinner(Spinner spinner, String cv) {
         SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
@@ -1926,12 +1722,9 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.notifyDataSetChanged();
     }
 
-    ;
-
     private void setSyncFolderMpSpinner(SyncTaskItem sti, Spinner spinner, String cv, boolean write_only) {
         SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
-        final CustomSpinnerAdapter adapter =
-                new CustomSpinnerAdapter(mContext, R.layout.custom_simple_spinner_item);
+        final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mContext, R.layout.custom_simple_spinner_item);
         mGp.safMgr.loadSafFileList();
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
@@ -2047,8 +1840,6 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.notifyDataSetChanged();
     }
 
-    ;
-
     private void setSyncOptionSpinner(Spinner spinnerSyncOption, String prof_syncopt) {
         SyncUtil.setSpinnerBackground(mContext, spinnerSyncOption, mGp.themeIsLight);
         final CustomSpinnerAdapter adapterSyncOption =
@@ -2072,8 +1863,6 @@ public class SyncTaskEditor extends DialogFragment {
         adapterSyncOption.notifyDataSetChanged();
     }
 
-    ;
-
     private void setSyncWifiOptionSpinner(Spinner spinner, String cv) {
         SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
@@ -2091,8 +1880,6 @@ public class SyncTaskEditor extends DialogFragment {
 
         adapter.notifyDataSetChanged();
     }
-
-    ;
 
     private void setSyncDiffTimeValue(Spinner spinner, int cv) {
         SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
@@ -2112,8 +1899,6 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.notifyDataSetChanged();
     }
 
-    ;
-
     private String buildFilterInfo(ArrayList<String> filter_list) {
         String info = "";
         if (filter_list != null && filter_list.size() > 0) {
@@ -2130,8 +1915,6 @@ public class SyncTaskEditor extends DialogFragment {
         }
         return info;
     }
-
-    ;
 
     private String checkTaskNameValidity(String type, String t_name, TextView tv, Button ok) {
         String result = "";
@@ -2236,12 +2019,6 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
-//		if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
-//				n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-//			setSyncWifiOptionSpinner(spinnerSyncWifiStatus, n_sti.getSyncWifiStatusOption(), true);
-//		} else {
-//			setSyncWifiOptionSpinner(spinnerSyncWifiStatus, n_sti.getSyncWifiStatusOption(), false);
-//		}
         setSyncWifiOptionSpinner(spinnerSyncWifiStatus, n_sti.getSyncWifiStatusOption());
         if (n_sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP))
             ll_wifi_ap_list.setVisibility(Button.VISIBLE);
@@ -2359,9 +2136,6 @@ public class SyncTaskEditor extends DialogFragment {
         SyncUtil.setCheckedTextView(ctvSyncSubDir);
         ctvSyncSubDir.setChecked(n_sti.isSyncSubDirectory());
 
-        // Master Dir processボタンの指定
-        //	if (prof_dir_filter.size()!=0) cbmpd.setVisibility(CheckBoCheckedTextViewE);//.setEnabled(true);
-        //		else cbmpd.setVisibility(CheckBox.GONE);//.setEnabled(false);
         if (n_sti.isSyncProcessRootDirFile()) {
             ctvProcessRootDirFile.setChecked(true);
             ctvSyncSubDir.setChecked(n_sti.isSyncSubDirectory());
@@ -2688,20 +2462,12 @@ public class SyncTaskEditor extends DialogFragment {
                         } else {
                             confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                         }
-//						if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
-//								n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-//							setSyncWifiOptionSpinner(spinnerSyncWifiStatus,SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP, true);
-//						} else {
-//							setSyncWifiOptionSpinner(spinnerSyncWifiStatus,SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF, false);
-//						}
-//                        confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                     }
 
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
                         mGp.safMgr.loadSafFileList();
                         master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
-//						confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                     }
 
                 });
@@ -2720,6 +2486,11 @@ public class SyncTaskEditor extends DialogFragment {
                 sfev.folder_smb_protocol=n_sti.getMasterSmbProtocol();
                 sfev.folder_removable_uuid = n_sti.getMasterRemovableStorageID();
                 sfev.folder_type = n_sti.getMasterFolderType();
+                if (!sfev.folder_remote_user.equals("") || !sfev.folder_remote_pswd.equals("")) {
+                    sfev.folder_remote_use_pswd=true;
+                } else {
+                    sfev.folder_remote_use_pswd=false;
+                }
                 editSyncFolder(n_sti, sfev, ntfy);
             }
         });
@@ -2758,14 +2529,6 @@ public class SyncTaskEditor extends DialogFragment {
                 target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
 
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-
-//				if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
-//						n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-//					setSyncWifiOptionSpinner(spinnerSyncWifiStatus,SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP, true);
-//				} else {
-//					setSyncWifiOptionSpinner(spinnerSyncWifiStatus,SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF, false);
-//				}
-
             }
         });
 
@@ -2851,15 +2614,6 @@ public class SyncTaskEditor extends DialogFragment {
                         } else {
                             confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                         }
-
-
-//						if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
-//								n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-//							setSyncWifiOptionSpinner(spinnerSyncWifiStatus,SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP, true);
-//						} else {
-//							setSyncWifiOptionSpinner(spinnerSyncWifiStatus,SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF, false);
-//						}
-//						confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                     }
 
                     @Override
@@ -2885,6 +2639,12 @@ public class SyncTaskEditor extends DialogFragment {
                 sfev.folder_type = n_sti.getTargetFolderType();
                 sfev.folder_smb_protocol = n_sti.getTargetSmbProtocol();
                 sfev.folder_removable_uuid = n_sti.getTargetRemovableStorageID();
+
+                if (!sfev.folder_remote_user.equals("") || !sfev.folder_remote_pswd.equals("")) {
+                    sfev.folder_remote_use_pswd=true;
+                } else {
+                    sfev.folder_remote_use_pswd=false;
+                }
 
                 sfev.zip_file_use_sdcard = n_sti.isTargetZipUseExternalSdcard();
                 sfev.zip_comp_level = n_sti.getTargetZipCompressionLevel();
@@ -3025,8 +2785,6 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
     }
-
-    ;
 
     private SyncTaskItem buildSyncTaskListItem(Dialog dialog, SyncTaskItem base_stli) {
         final EditText et_sync_main_task_name = (EditText) dialog.findViewById(R.id.edit_sync_task_task_name);
@@ -3257,7 +3015,7 @@ public class SyncTaskEditor extends DialogFragment {
         String n_type = new_stli.getSyncTaskType();
         String c_type = mCurrentSyncTaskItem.getSyncTaskType();
 
-        boolean result = new_stli.isSameSyncTask(org_stli);
+        boolean result = new_stli.isSame(org_stli);
         return result;
     }
 
@@ -3330,9 +3088,6 @@ public class SyncTaskEditor extends DialogFragment {
         }
     }
 
-    ;
-
-    @SuppressLint("DefaultLocale")
     private String checkMasterTargetCombination(Dialog dialog, SyncTaskItem sti) {
         String result = "";
         final CheckedTextView ctvSyncSpecificSubDir = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_sub_directory_specific);
@@ -3396,6 +3151,7 @@ public class SyncTaskEditor extends DialogFragment {
     static class SyncFolderEditValue implements Externalizable, Serializable, Cloneable {
         public String folder_title = "";
         public boolean folder_master = false;
+        public boolean folder_remote_use_pswd =false;
         public String folder_type = "";
         public String folder_directory = "";
         public String folder_mountpoint = "";
@@ -3447,26 +3203,46 @@ public class SyncTaskEditor extends DialogFragment {
             return npfli;
         }
 
-        public boolean isSameContents(SyncFolderEditValue comp) {
+        public boolean isSame(SyncFolderEditValue comp) {
             boolean result = false;
-            if (//folder_title.equals(comp.folder_title) &&
-                    folder_type.equals(comp.folder_type) &&
-                            folder_directory.equals(comp.folder_directory) &&
-                            folder_mountpoint.equals(comp.folder_mountpoint) &&
-                            folder_remote_user.equals(comp.folder_remote_user) &&
-                            folder_remote_pswd.equals(comp.folder_remote_pswd) &&
-                            folder_remote_domain.equals(comp.folder_remote_domain) &&
-                            folder_remote_addr.equals(comp.folder_remote_addr) &&
-                            folder_remote_host.equals(comp.folder_remote_host) &&
-                            folder_remote_share.equals(comp.folder_remote_share) &&
-                            folder_remote_port.equals(comp.folder_remote_port) &&
-                            folder_smb_protocol.equals(comp.folder_smb_protocol) &&
-                            folder_removable_uuid.equals(comp.folder_removable_uuid) &&
-                            ((zip_file_use_sdcard && comp.zip_file_use_sdcard) || (!zip_file_use_sdcard && !comp.zip_file_use_sdcard)) &&
-                            zip_comp_level.equals(comp.zip_comp_level) &&
-                            zip_enc_method.equals(comp.zip_enc_method) &&
-                            zip_file_name.equals(comp.zip_file_name) &&
-                            zip_file_password.equals(comp.zip_file_password)) result = true;
+            if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
+                if (folder_type.equals(comp.folder_type) &&
+                    folder_directory.equals(comp.folder_directory) &&
+                    folder_remote_user.equals(comp.folder_remote_user) &&
+                    folder_remote_pswd.equals(comp.folder_remote_pswd) &&
+                    folder_remote_domain.equals(comp.folder_remote_domain) &&
+                    folder_remote_addr.equals(comp.folder_remote_addr) &&
+                    folder_remote_host.equals(comp.folder_remote_host) &&
+                    folder_remote_share.equals(comp.folder_remote_share) &&
+                    folder_remote_port.equals(comp.folder_remote_port) &&
+                    folder_smb_protocol.equals(comp.folder_smb_protocol) &&
+                    folder_removable_uuid.equals(comp.folder_removable_uuid) &&
+                    (folder_remote_use_pswd == comp.folder_remote_use_pswd)  &&
+                    (zip_file_use_sdcard == comp.zip_file_use_sdcard)  &&
+                    zip_comp_level.equals(comp.zip_comp_level) &&
+                    zip_enc_method.equals(comp.zip_enc_method) &&
+                    zip_file_name.equals(comp.zip_file_name) &&
+                    zip_file_password.equals(comp.zip_file_password)) result = true;
+            } else {
+                if (folder_type.equals(comp.folder_type) &&
+                    folder_directory.equals(comp.folder_directory) &&
+                    folder_mountpoint.equals(comp.folder_mountpoint) &&
+                    folder_remote_user.equals(comp.folder_remote_user) &&
+                    folder_remote_pswd.equals(comp.folder_remote_pswd) &&
+                    folder_remote_domain.equals(comp.folder_remote_domain) &&
+                    folder_remote_addr.equals(comp.folder_remote_addr) &&
+                    folder_remote_host.equals(comp.folder_remote_host) &&
+                    folder_remote_share.equals(comp.folder_remote_share) &&
+                    folder_remote_port.equals(comp.folder_remote_port) &&
+                    folder_smb_protocol.equals(comp.folder_smb_protocol) &&
+                    folder_removable_uuid.equals(comp.folder_removable_uuid) &&
+                    (folder_remote_use_pswd == comp.folder_remote_use_pswd)  &&
+                    (zip_file_use_sdcard == comp.zip_file_use_sdcard)  &&
+                    zip_comp_level.equals(comp.zip_comp_level) &&
+                    zip_enc_method.equals(comp.zip_enc_method) &&
+                    zip_file_name.equals(comp.zip_file_name) &&
+                    zip_file_password.equals(comp.zip_file_password)) result = true;
+            }
             return result;
         }
 

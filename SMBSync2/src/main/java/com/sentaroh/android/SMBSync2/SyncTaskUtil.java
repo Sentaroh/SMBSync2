@@ -43,9 +43,11 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Properties;
 
 import jcifs.CIFSContext;
 import jcifs.CIFSException;
+import jcifs.Config;
 import jcifs.config.PropertyConfiguration;
 import jcifs.context.BaseContext;
 import jcifs.smb.NtlmPasswordAuthentication;
@@ -83,6 +85,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.Base64Compat;
@@ -122,8 +125,6 @@ public class SyncTaskUtil {
 //		ccMenu=ccm;
         mFragMgr = fm;
     }
-
-    ;
 
     public void importSyncTaskListDlg(final NotifyEvent p_ntfy) {
 
@@ -1092,60 +1093,26 @@ public class SyncTaskUtil {
 //	};
 
     public void testSmbLogonDlg(final String host, final String addr, final String port,
-                                final String user, final String pass, final String share, final NotifyEvent p_ntfy) {
+                                final String user, final String pass, final String share, final String smb_proto, final NotifyEvent p_ntfy) {
         final ThreadCtrl tc = new ThreadCtrl();
         tc.setEnabled();
         tc.setThreadResultSuccess();
 
-        // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.progress_spin_dlg);
+        final Dialog dialog=showProgressSpinIndicator(mContext);
 
-        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.progress_spin_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
-
-        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.progress_spin_dlg_title_view);
-        final TextView title = (TextView) dialog.findViewById(R.id.progress_spin_dlg_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-        title.setText(R.string.msgs_progress_spin_dlg_test_logon);
-
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.progress_spin_dlg_btn_cancel);
-        btn_cancel.setText(R.string.msgs_progress_spin_dlg_test_logon_cancel);
-
-        CommonDialog.setDlgBoxSizeCompact(dialog);
-        // CANCELボタンの指定
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                tc.setDisabled();//disableAsyncTask();
-                btn_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
-                btn_cancel.setEnabled(false);
-                util.addDebugMsg(1, "W", "Logon is cancelled.");
-            }
-        });
         dialog.setOnCancelListener(new Dialog.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface arg0) {
-                btn_cancel.performClick();
+                tc.setDisabled();//disableAsyncTask();
+                util.addDebugMsg(1, "W", "Logon is cancelled.");
             }
         });
+        dialog.show();
 
         Thread th = new Thread() {
             @Override
             public void run() {
-                util.addDebugMsg(1, "I", "Test logon started, host=" + host + ", addr=" + addr +
-                        ", port=" + port + ", user=" + user);
-                BaseContext bc = null;
-                try {
-                    bc = new BaseContext(new PropertyConfiguration(System.getProperties()));
-                } catch (CIFSException e) {
-                    e.printStackTrace();
-                }
-                NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, user+":"+pass);
-                CIFSContext auth = bc.withCredentials(creds);
-
+                util.addDebugMsg(1, "I", "Test logon started, host=" + host + ", addr=" + addr + ", port=" + port + ", user=" + user);
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
@@ -1154,19 +1121,16 @@ public class SyncTaskUtil {
                         String err_msg = (String) o[0];
                         if (tc.isEnabled()) {
                             if (err_msg != null) {
-                                commonDlg.showCommonDialog(false, "E",
-                                        mContext.getString(R.string.msgs_remote_profile_dlg_logon_error)
+                                commonDlg.showCommonDialog(false, "E", mContext.getString(R.string.msgs_remote_profile_dlg_logon_error)
                                         , err_msg, null);
                                 if (p_ntfy != null) p_ntfy.notifyToListener(false, null);
                             } else {
-                                commonDlg.showCommonDialog(false, "I", "",
-                                        mContext.getString(R.string.msgs_remote_profile_dlg_logon_success), null);
+                                commonDlg.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_success), "", null);
                                 if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
                             }
                         } else {
-                            commonDlg.showCommonDialog(false, "I", "",
-                                    mContext.getString(R.string.msgs_remote_profile_dlg_logon_cancel), null);
-                            if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
+//                            commonDlg.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_cancel), "", null);
+//                            if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
                         }
                     }
 
@@ -1178,25 +1142,21 @@ public class SyncTaskUtil {
                 if (host.equals("")) {
                     boolean reachable = false;
                     if (port.equals("")) {
-                        if (SmbUtil.isIpAddressAndPortConnected(addr, 139, 3500) ||
-                                SmbUtil.isIpAddressAndPortConnected(addr, 445, 3500)) {
+                        if (SmbUtil.isIpAddressAndPortConnected(addr, 139, 3500) || SmbUtil.isIpAddressAndPortConnected(addr, 445, 3500)) {
                             reachable = true;
                         }
                     } else {
-                        reachable = SmbUtil.isIpAddressAndPortConnected(addr,
-                                Integer.parseInt(port), 3500);
+                        reachable = SmbUtil.isIpAddressAndPortConnected(addr, Integer.parseInt(port), 3500);
                     }
                     if (reachable) {
-                        testSmbAuth(auth, user, addr, port, share, ntfy);
+                        testSmbAuth(user, pass, addr, port, share, smb_proto, ntfy);
                     } else {
                         util.addDebugMsg(1, "I", "Test logon failed, remote server not connected");
                         String unreachble_msg = "";
                         if (port.equals("")) {
-                            unreachble_msg = String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected)
-                                    , addr);
+                            unreachble_msg = String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected), addr);
                         } else {
-                            unreachble_msg = String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected_with_port)
-                                    , addr, port);
+                            unreachble_msg = String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected_with_port), addr, port);
                         }
                         ntfy.notifyToListener(true, new Object[]{unreachble_msg});
                     }
@@ -1215,7 +1175,7 @@ public class SyncTaskUtil {
 //							e.printStackTrace();
                         }
                     }
-                    if (ipAddress != null) testSmbAuth(auth, user, ipAddress, port, share, ntfy);
+                    if (ipAddress != null) testSmbAuth(user, pass, ipAddress, port, share, smb_proto, ntfy);
                     else {
                         util.addDebugMsg(1, "I", "Test logon failed, remote server not connected");
                         String unreachble_msg = "";
@@ -1226,13 +1186,10 @@ public class SyncTaskUtil {
             }
         };
         th.start();
-        dialog.show();
     }
 
-    ;
-
-    private void testSmbAuth(final CIFSContext auth, final String user,
-                             final String host, String port, String share, final NotifyEvent ntfy) {
+    private void testSmbAuth(final String user, final String pass, final String host, String port, String share,
+                             final String smb_proto, final NotifyEvent ntfy) {
         final UncaughtExceptionHandler defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
         Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
@@ -1253,8 +1210,11 @@ public class SyncTaskUtil {
 
         String err_msg = null, url = "";
 
-        if (port.equals("")) url = "smb://" + host + "/"+share+"/";
-        else url = "smb://" + host + ":" + port + "/"+share+"/";
+        if (port.equals("")) url = "smb://" + host + "/";//+share+"/";
+        else url = "smb://" + host + ":" + port + "/";//+share+"/";
+
+        BaseContext bc = SyncUtil.buildBaseContextWithSmbProtocol(smb_proto);
+        CIFSContext auth = bc.withCredentials(new NtlmPasswordAuthentication(bc, "", user, pass));
 
         try {
             SmbFile sf = new SmbFile(url, auth);
@@ -1277,8 +1237,6 @@ public class SyncTaskUtil {
         ntfy.notifyToListener(true, new Object[]{err_msg});
     }
 
-    ;
-
     public void copySyncTask(SyncTaskItem pli, NotifyEvent p_ntfy) {
         SyncTaskItem npfli = pli.clone();
         npfli.setLastSyncResult(0);
@@ -1286,9 +1244,6 @@ public class SyncTaskUtil {
         SyncTaskEditor pmsp = SyncTaskEditor.newInstance();
         pmsp.showDialog(mFragMgr, pmsp, "COPY", npfli, this, util, commonDlg, mGp, p_ntfy);
     }
-
-    ;
-
 
     public void renameSyncTask(final SyncTaskItem pli, final NotifyEvent p_ntfy) {
 
@@ -1370,8 +1325,6 @@ public class SyncTaskUtil {
 
     }
 
-    ;
-
     public void ipAddressScanButtonDlg(Dialog dialog) {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
         final EditText edithost = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
@@ -1401,6 +1354,7 @@ public class SyncTaskUtil {
     public void invokeSelectRemoteShareDlg(Dialog dialog) {
 //		final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
 
+        final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
         final EditText edituser = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
         final EditText editpass = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
         final EditText editshare = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
@@ -1414,6 +1368,8 @@ public class SyncTaskUtil {
             remote_user = edituser.getText().toString();
             remote_pass = editpass.getText().toString();
         }
+
+        final String smb_proto=""+sp_sync_folder_smb_proto.getSelectedItemPosition();
 
         setSmbUserPass(remote_user, remote_pass);
 //		Log.v("","u="+remote_user+", pass="+remote_pass);
@@ -1448,21 +1404,18 @@ public class SyncTaskUtil {
             }
 
         });
-        selectRemoteShareDlg(remurl, ntfy);
+        selectRemoteShareDlg(remurl, smb_proto, ntfy);
     }
-
-    ;
 
     public void setSmbUserPass(String user, String pass) {
         smbUser = user;
         smbPass = pass;
     }
 
-    ;
-
     public void selectRemoteDirectoryDlg(Dialog p_dialog) {
 //		final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
 
+        final Spinner sp_sync_folder_smb_proto = (Spinner) p_dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
         final EditText edithost = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
         final EditText edituser = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
         final EditText editpass = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
@@ -1476,6 +1429,8 @@ public class SyncTaskUtil {
             remote_user = edituser.getText().toString();
             remote_pass = editpass.getText().toString();
         }
+
+        final String smb_proto=""+sp_sync_folder_smb_proto.getSelectedItemPosition();
 
         remote_share = editshare.getText().toString();
 
@@ -1503,12 +1458,19 @@ public class SyncTaskUtil {
             public void positiveResponse(Context c, Object[] o) {
                 @SuppressWarnings("unchecked")
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
+
+                if (rfl.size()==0) {
+                    String msg=mContext.getString(R.string.msgs_dir_empty);
+                    commonDlg.showCommonDialog(false,"W",msg,"",null);
+                    return;
+                }
+
                 for (int i = 0; i < rfl.size(); i++) {
                     if (rfl.get(i).isDir() && rfl.get(i).canRead()) rows.add(rfl.get(i));
                 }
                 Collections.sort(rows);
-                if (rows.size() < 1)
-                    rows.add(new TreeFilelistItem(mContext.getString(R.string.msgs_dir_empty)));
+//                if (rows.size() < 1)
+//                    rows.add(new TreeFilelistItem(mContext.getString(R.string.msgs_dir_empty)));
                 //カスタムダイアログの生成
                 final Dialog dialog = new Dialog(mContext);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1527,7 +1489,7 @@ public class SyncTaskUtil {
                 subtitle.setTextColor(mGp.themeColorList.text_color_primary);//.text_color_dialog_title);
 
                 title.setText(mContext.getString(R.string.msgs_select_remote_dir));
-                subtitle.setText(mContext.getString(R.string.msgs_current_dir) + "/" + remurl);
+                subtitle.setText(remurl);
                 final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
 
                 CommonDialog.setDlgBoxSizeLimit(dialog, true);
@@ -1551,8 +1513,7 @@ public class SyncTaskUtil {
                         int idx = (Integer) o[0];
                         final int pos = tfa.getItem(idx);
                         final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                        if (tfi.getName().startsWith("---")) return;
-                        expandHideRemoteDirTree(remurl, pos, tfi, tfa);
+                        expandHideRemoteDirTree(remurl, smb_proto, pos, tfi, tfa);
                     }
 
                     @Override
@@ -1564,9 +1525,8 @@ public class SyncTaskUtil {
                     public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
                         final int pos = tfa.getItem(idx);
                         final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                        if (tfi.getName().startsWith("---")) return;
 //						tfa.setDataItemIsSelected(pos);
-                        expandHideRemoteDirTree(remurl, pos, tfi, tfa);
+                        expandHideRemoteDirTree(remurl, smb_proto, pos, tfi, tfa);
                     }
                 });
                 lv.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -1606,8 +1566,7 @@ public class SyncTaskUtil {
                     public void onClick(View v) {
                         String sel = "";
                         for (int i = 0; i < tfa.getCount(); i++) {
-                            if (tfa.getDataItem(i).isChecked() &&
-                                    !tfa.getDataItem(i).getName().equals(mContext.getString(R.string.msgs_dir_empty))) {
+                            if (tfa.getDataItem(i).isChecked()) {
                                 if (tfa.getDataItem(i).getPath().length() == 1)
                                     sel = tfa.getDataItem(i).getName();
                                 else sel = tfa.getDataItem(i).getPath()
@@ -1646,11 +1605,9 @@ public class SyncTaskUtil {
                 commonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
             }
         });
-        createRemoteFileList(remurl, "", ntfy, true);
+        createRemoteFileList(remurl, "", smb_proto, ntfy, true);
 
     }
-
-    ;
 
     static public SyncTaskItem getExternalSdcardUsedSyncTask(GlobalParameters gp) {
         SyncTaskItem pli = null;
@@ -1753,7 +1710,6 @@ public class SyncTaskUtil {
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
                 AdapterFilterList.FilterListItem fli = filterAdapter.getItem(idx);
-                if (fli.getFilter().startsWith("---") || fli.isDeleted()) return;
                 // リストアイテムを選択したときの処理
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
@@ -1877,14 +1833,10 @@ public class SyncTaskUtil {
                 ap_list.clear();
                 if (filterAdapter.getCount() > 0) {
                     for (int i = 0; i < filterAdapter.getCount(); i++) {
-                        if (!filterAdapter.getItem(i).isDeleted() &&
-                                !filterAdapter.getItem(i).getFilter().startsWith("---")) {
-                            String inc = SMBSYNC2_PROF_FILTER_EXCLUDE;
-                            if (filterAdapter.getItem(i).isInclude())
-                                inc = SMBSYNC2_PROF_FILTER_INCLUDE;
-                            ap_list.add(inc + filterAdapter.getItem(i).getFilter());
-                        }
-
+                        String inc = SMBSYNC2_PROF_FILTER_EXCLUDE;
+                        if (filterAdapter.getItem(i).isInclude())
+                            inc = SMBSYNC2_PROF_FILTER_INCLUDE;
+                        ap_list.add(inc + filterAdapter.getItem(i).getFilter());
                     }
                 }
                 p_ntfy.notifyToListener(true, null);
@@ -1972,7 +1924,6 @@ public class SyncTaskUtil {
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
                 AdapterFilterList.FilterListItem fli = filterAdapter.getItem(idx);
-                if (fli.getFilter().startsWith("---") || fli.isDeleted()) return;
                 // リストアイテムを選択したときの処理
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
@@ -2059,14 +2010,10 @@ public class SyncTaskUtil {
                 file_filter.clear();
                 if (filterAdapter.getCount() > 0) {
                     for (int i = 0; i < filterAdapter.getCount(); i++) {
-                        if (!filterAdapter.getItem(i).isDeleted() &&
-                                !filterAdapter.getItem(i).getFilter().startsWith("---")) {
-                            String inc = SMBSYNC2_PROF_FILTER_EXCLUDE;
-                            if (filterAdapter.getItem(i).isInclude())
-                                inc = SMBSYNC2_PROF_FILTER_INCLUDE;
-                            file_filter.add(inc + filterAdapter.getItem(i).getFilter());
-                        }
-
+                        String inc = SMBSYNC2_PROF_FILTER_EXCLUDE;
+                        if (filterAdapter.getItem(i).isInclude())
+                            inc = SMBSYNC2_PROF_FILTER_INCLUDE;
+                        file_filter.add(inc + filterAdapter.getItem(i).getFilter());
                     }
                 }
                 p_ntfy.notifyToListener(true, null);
@@ -2162,7 +2109,6 @@ public class SyncTaskUtil {
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
                 AdapterFilterList.FilterListItem fli = filterAdapter.getItem(idx);
-                if (fli.getFilter().startsWith("---") || fli.isDeleted()) return;
                 // リストアイテムを選択したときの処理
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
@@ -2221,8 +2167,6 @@ public class SyncTaskUtil {
                 }
                 dlg_msg.setText("");
                 et_filter.setText("");
-//				if (filterAdapter.getItem(0).getFilter().startsWith("---"))
-//					filterAdapter.remove(filterAdapter.getItem(0));
                 filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort(new Comparator<AdapterFilterList.FilterListItem>() {
@@ -2301,13 +2245,10 @@ public class SyncTaskUtil {
                 sti.getDirFilter().clear();
                 if (filterAdapter.getCount() > 0) {
                     for (int i = 0; i < filterAdapter.getCount(); i++) {
-                        if (!filterAdapter.getItem(i).isDeleted() &&
-                                !filterAdapter.getItem(i).getFilter().startsWith("---")) {
-                            String inc = SMBSYNC2_PROF_FILTER_EXCLUDE;
-                            if (filterAdapter.getItem(i).isInclude())
-                                inc = SMBSYNC2_PROF_FILTER_INCLUDE;
-                            sti.getDirFilter().add(inc + filterAdapter.getItem(i).getFilter());
-                        }
+                        String inc = SMBSYNC2_PROF_FILTER_EXCLUDE;
+                        if (filterAdapter.getItem(i).isInclude())
+                            inc = SMBSYNC2_PROF_FILTER_INCLUDE;
+                        sti.getDirFilter().add(inc + filterAdapter.getItem(i).getFilter());
                     }
                 }
                 p_ntfy.notifyToListener(true, null);
@@ -2420,6 +2361,14 @@ public class SyncTaskUtil {
             localBaseDir_t = mGp.safMgr.getSdcardDirectory();
         final String localBaseDir = localBaseDir_t;
 
+        ArrayList<TreeFilelistItem> tfl = createLocalFilelist(true, localBaseDir, "/" + m_dir);
+
+        if (tfl.size()==0) {
+            String msg=mContext.getString(R.string.msgs_dir_empty);
+            commonDlg.showCommonDialog(false,"W",msg,"",null);
+            return;
+        }
+
         //カスタムダイアログの生成
         final Dialog dialog = new Dialog(mContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -2455,12 +2404,6 @@ public class SyncTaskUtil {
         final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
         final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mContext, false, false);
         lv.setAdapter(tfa);
-        ArrayList<TreeFilelistItem> tfl = createLocalFilelist(true, localBaseDir, "/" + m_dir);
-        if (tfl.size() < 1) {
-            tfl.add(new TreeFilelistItem(mContext.getString(R.string.msgs_dir_empty)));
-            ib_select_all.setVisibility(ImageButton.GONE);//.setEnabled(false);
-            ib_unselect_all.setVisibility(ImageButton.GONE);//.setEnabled(false);
-        }
         tfa.setDataList(tfl);
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
@@ -2472,7 +2415,6 @@ public class SyncTaskUtil {
                 int idx = (Integer) o[0];
                 final int pos = tfa.getItem(idx);
                 final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                if (tfi.getName().startsWith("---")) return;
                 expandHideLocalDirTree(true, localBaseDir, pos, tfi, tfa);
             }
 
@@ -2485,7 +2427,6 @@ public class SyncTaskUtil {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
                 final int pos = tfa.getItem(idx);
                 final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                if (tfi.getName().startsWith("---")) return;
 //				tfa.setDataItemIsSelected(pos);
                 expandHideLocalDirTree(true, localBaseDir, pos, tfi, tfa);
             }
@@ -2587,12 +2528,22 @@ public class SyncTaskUtil {
         if (!sti.getMasterSmbPassword().equals("")) h_port = ":" + sti.getMasterSmbPort();
         final String remurl = "smb://" + t_remurl + h_port + "/" + sti.getMasterRemoteSmbShareName();
         final String remdir = "/" + sti.getMasterDirectoryName() + "/";
+        final String smb_proto=sti.getMasterSmbProtocol();
 
         NotifyEvent ntfy = new NotifyEvent(mContext);
         // set thread response
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
+                @SuppressWarnings("unchecked")
+                ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
+
+                if (rfl.size()==0) {
+                    String msg=mContext.getString(R.string.msgs_dir_empty);
+                    commonDlg.showCommonDialog(false,"W",msg,"",null);
+                    return;
+                }
+
                 //カスタムダイアログの生成
                 final Dialog dialog = new Dialog(mContext);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -2612,7 +2563,6 @@ public class SyncTaskUtil {
                 title.setText(mContext.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
                 String c_dir = (remdir.equals("//")) ? remurl + "/" : remurl + remdir;
                 subtitle.setText(mContext.getString(R.string.msgs_current_dir) + " " + c_dir);
-//				Log.v("","remurl="+remurl+", remdir="+remdir+", c_dir="+c_dir);
                 final TextView dlg_msg = (TextView) dialog.findViewById(R.id.item_select_list_dlg_msg);
                 final LinearLayout ll_context = (LinearLayout) dialog.findViewById(R.id.context_view_file_select);
                 ll_context.setVisibility(LinearLayout.VISIBLE);
@@ -2621,26 +2571,15 @@ public class SyncTaskUtil {
                 final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
                 dlg_msg.setVisibility(TextView.VISIBLE);
 
-//		        if (rows.size()<=2)
-//		        	((TextView)dialog.findViewById(R.id.item_select_list_dlg_spacer))
-//		        	.setVisibility(TextView.VISIBLE);
-
                 CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
                 final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
                 final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mContext, false, false);
                 final ArrayList<TreeFilelistItem> rows = new ArrayList<TreeFilelistItem>();
-                @SuppressWarnings("unchecked")
-                ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
                 for (int i = 0; i < rfl.size(); i++) {
                     if (rfl.get(i).isDir() && rfl.get(i).canRead()) rows.add(rfl.get(i));
                 }
                 Collections.sort(rows);
-                if (rows.size() < 1) {
-                    rows.add(new TreeFilelistItem(mContext.getString(R.string.msgs_dir_empty)));
-                    ib_select_all.setVisibility(ImageButton.GONE);//.setEnabled(false);
-                    ib_unselect_all.setVisibility(ImageButton.GONE);//.setEnabled(false);
-                }
 
                 tfa.setDataList(rows);
                 lv.setAdapter(tfa);
@@ -2655,8 +2594,7 @@ public class SyncTaskUtil {
                         int idx = (Integer) o[0];
                         final int pos = tfa.getItem(idx);
                         final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                        if (tfi.getName().startsWith("---")) return;
-                        expandHideRemoteDirTree(remurl, pos, tfi, tfa);
+                        expandHideRemoteDirTree(remurl, smb_proto, pos, tfi, tfa);
                     }
 
                     @Override
@@ -2668,9 +2606,8 @@ public class SyncTaskUtil {
                     public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
                         final int pos = tfa.getItem(idx);
                         final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                        if (tfi.getName().startsWith("---")) return;
 //						tfa.setDataItemIsSelected(pos);
-                        expandHideRemoteDirTree(remurl, pos, tfi, tfa);
+                        expandHideRemoteDirTree(remurl, smb_proto, pos, tfi, tfa);
                     }
                 });
                 lv.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -2756,10 +2693,8 @@ public class SyncTaskUtil {
                 p_ntfy.notifyToListener(false, o);
             }
         });
-        createRemoteFileList(remurl, remdir, ntfy, true);
+        createRemoteFileList(remurl, remdir, smb_proto, ntfy, true);
     }
-
-    ;
 
     @SuppressLint("DefaultLocale")
     private String isFilterSameDirectoryAccess(SyncTaskItem sti, AdapterFilterList filterAdapter) {
@@ -3449,197 +3384,24 @@ public class SyncTaskUtil {
         return tfl;
     }
 
-    public void selectLocalDirectoryDlg(final String url, final String dir,
-                                        String p_dir, final NotifyEvent p_ntfy) {
-
-        //カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.item_select_list_dlg);
-
-        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
-
-        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_title_view);
-        final TextView title = (TextView) dialog.findViewById(R.id.item_select_list_dlg_title);
-        final TextView subtitle = (TextView) dialog.findViewById(R.id.item_select_list_dlg_subtitle);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-        subtitle.setTextColor(mGp.themeColorList.text_color_primary);//.text_color_dialog_title);
-
-        title.setText(mContext.getString(R.string.msgs_select_local_dir));
-        String c_dir = (dir.equals("")) ? url + "/" : url + "/" + dir + "/";
-//        Log.v("","url="+url+", dir="+dir+", c_dir="+c_dir);
-        subtitle.setText(mContext.getString(R.string.msgs_current_dir) + c_dir);
-
-        final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
-
-        CommonDialog.setDlgBoxSizeLimit(dialog, true);
-
-        ListView lv = (ListView) dialog.findViewById(android.R.id.list);
-        final TreeFilelistAdapter tfa =
-                new TreeFilelistAdapter(mContext, true, false);
-        lv.setAdapter(tfa);
-        ArrayList<TreeFilelistItem> tfl = createLocalFilelist(true, url, dir);
-        if (tfl.size() < 1)
-            tfl.add(new TreeFilelistItem(mContext.getString(R.string.msgs_dir_empty)));
-        tfa.setDataList(tfl);
-        lv.setScrollingCacheEnabled(false);
-        lv.setScrollbarFadingEnabled(false);
-
-        if (p_dir.length() != 0)
-            for (int i = 0; i < tfa.getDataItemCount(); i++) {
-                if (tfa.getDataItem(i).getName().equals(p_dir))
-                    lv.setSelection(i);
-            }
-        NotifyEvent ntfy_expand_close = new NotifyEvent(mContext);
-        ntfy_expand_close.setListener(new NotifyEventListener() {
-            @Override
-            public void positiveResponse(Context c, Object[] o) {
-                int idx = (Integer) o[0];
-                final int pos = tfa.getItem(idx);
-                final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                if (tfi.getName().startsWith("---")) return;
-                expandHideLocalDirTree(true, url, pos, tfi, tfa);
-            }
-
-            @Override
-            public void negativeResponse(Context c, Object[] o) {
-            }
-        });
-        tfa.setExpandCloseListener(ntfy_expand_close);
-        lv.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
-                final int pos = tfa.getItem(idx);
-                final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                if (tfi.getName().startsWith("---")) return;
-//				tfa.setDataItemIsSelected(pos);
-                expandHideLocalDirTree(true, url, pos, tfi, tfa);
-            }
-        });
-        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> items, View view, int idx, long id) {
-                return true;
-            }
-        });
-
-        NotifyEvent ctv_ntfy = new NotifyEvent(mContext);
-        ctv_ntfy.setListener(new NotifyEventListener() {
-            @Override
-            public void positiveResponse(Context c, Object[] o) {
-                if (o != null) {
-                    int pos = (Integer) o[0];
-                    if (tfa.getDataItem(pos).isChecked()) btn_ok.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void negativeResponse(Context c, Object[] o) {
-                btn_ok.setEnabled(false);
-                for (int i = 0; i < tfa.getDataItemCount(); i++) {
-                    if (tfa.getDataItem(i).isChecked()) {
-                        btn_ok.setEnabled(true);
-                        break;
-                    }
-                }
-            }
-        });
-        tfa.setCbCheckListener(ctv_ntfy);
-
-        //OKボタンの指定
-        btn_ok.setEnabled(false);
-        btn_ok.setVisibility(Button.VISIBLE);
-        btn_ok.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String sel = "";
-                for (int i = 0; i < tfa.getCount(); i++) {
-                    if (tfa.getDataItem(i).isChecked() &&
-                            !tfa.getDataItem(i).getName().equals(mContext.getString(R.string.msgs_dir_empty))) {
-                        if (tfa.getDataItem(i).getPath().length() == 1)
-                            sel = tfa.getDataItem(i).getName();
-                        else
-                            sel = tfa.getDataItem(i).getPath().substring(1, tfa.getDataItem(i).getPath().length()) + tfa.getDataItem(i).getName();
-                        break;
-                    }
-                }
-                if (sel.equals("")) {
-
-                }
-                dialog.dismiss();
-                p_ntfy.notifyToListener(true, new Object[]{sel});
-            }
-        });
-
-        //CANCELボタンの指定
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.item_select_list_dlg_cancel_btn);
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                dialog.dismiss();
-                p_ntfy.notifyToListener(false, null);
-            }
-        });
-        // Cancelリスナーの指定
-        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface arg0) {
-                btn_cancel.performClick();
-            }
-        });
-//        dialog.setOnKeyListener(new DialogOnKeyListener(context));
-//        dialog.setCancelable(false);
-        dialog.show();
-
-        return;
-    }
-
-    private void createRemoteFileList(String remurl, String remdir,
+    private void createRemoteFileList(String remurl, String remdir, String smb_proto,
                                       final NotifyEvent p_event, boolean readSubDirCnt) {
         final ArrayList<TreeFilelistItem> remoteFileList = new ArrayList<TreeFilelistItem>();
         final ThreadCtrl tc = new ThreadCtrl();
         tc.setEnabled();
         tc.setThreadResultSuccess();
 
-        // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.progress_spin_dlg);
+        final Dialog dialog=showProgressSpinIndicator(mContext);
 
-        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.progress_spin_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
-
-        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.progress_spin_dlg_title_view);
-        final TextView title = (TextView) dialog.findViewById(R.id.progress_spin_dlg_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-
-        title.setText(R.string.msgs_progress_spin_dlg_filelist_getting);
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.progress_spin_dlg_btn_cancel);
-        btn_cancel.setText(R.string.msgs_progress_spin_dlg_filelist_cancel);
-
-//		(dialog.context.findViewById(R.id.progress_spin_dlg)).setVisibility(TextView.GONE);
-//		(dialog.context.findViewById(R.id.progress_spin_dlg)).setEnabled(false);
-
-        CommonDialog.setDlgBoxSizeCompact(dialog);
-        // CANCELボタンの指定
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                tc.setDisabled();//disableAsyncTask();
-                btn_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
-                btn_cancel.setEnabled(false);
-                util.addDebugMsg(1, "W", "Sharelist is cancelled.");
-            }
-        });
         dialog.setOnCancelListener(new Dialog.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface arg0) {
-                btn_cancel.performClick();
+                tc.setDisabled();//disableAsyncTask();
+//                btn_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
+//                btn_cancel.setEnabled(false);
+                util.addDebugMsg(1, "W", "Sharelist is cancelled.");
             }
         });
-//		dialog.setOnKeyListener(new DialogOnKeyListener(context));
-//		dialog.setCancelable(false);
-//		dialog.show(); showDelayedProgDlgで表示
 
         final Handler hndl = new Handler();
         NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -3657,11 +3419,10 @@ public class SyncTaskUtil {
                         if (tc.isThreadResultSuccess()) {
                             p_event.notifyToListener(true, new Object[]{remoteFileList});
                         } else {
-                            if (tc.isThreadResultCancelled())
-                                err = mContext.getString(R.string.msgs_filelist_cancel);
-                            else
+                            if (tc.isThreadResultError()) {
                                 err = mContext.getString(R.string.msgs_filelist_error) + "\n" + tc.getThreadMessage();
-                            p_event.notifyToListener(false, new Object[]{err});
+                                p_event.notifyToListener(false, new Object[]{err});
+                            }
                         }
                     }
                 });
@@ -3673,13 +3434,26 @@ public class SyncTaskUtil {
         });
 
         Thread tf = new Thread(new ReadSmbFilelist(mContext, tc, remurl, remdir, remoteFileList,
-                smbUser, smbPass, ntfy, true, readSubDirCnt, mGp));
+                smbUser, smbPass, smb_proto, ntfy, true, readSubDirCnt, mGp));
         tf.start();
 
         dialog.show();
     }
 
-    public void selectRemoteShareDlg(final String remurl, final NotifyEvent p_ntfy) {
+    public Dialog showProgressSpinIndicator(Context c) {
+        final Dialog dialog=new Dialog(c, android.R.style.Theme_Translucent);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.progress_spin_indicator_dlg);
+//		RelativeLayout rl_view=(RelativeLayout)dialog.findViewById(R.id.progress_spin_indicator_dlg_view);
+//		rl_view.setBackgroundColor(Color.TRANSPARENT);
+//		ProgressBar pb_view=(ProgressBar)dialog.findViewById(R.id.progress_spin_indicator_dlg_progress_bar);
+//		pb_view.setBackgroundColor(Color.TRANSPARENT);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
+    }
+
+    public void selectRemoteShareDlg(final String remurl, String smb_proto, final NotifyEvent p_ntfy) {
 
         NotifyEvent ntfy = new NotifyEvent(mContext);
         // set thread response
@@ -3689,12 +3463,7 @@ public class SyncTaskUtil {
                 final ArrayList<String> rows = new ArrayList<String>();
                 @SuppressWarnings("unchecked")
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
-                for (int i = 0; i < rfl.size(); i++) {
-                    if (rfl.get(i).isDir() && rfl.get(i).canRead() &&
-                            !rfl.get(i).getName().endsWith("$"))
-//							!rfl.get(i).getName().startsWith("IPC$"))
-                        rows.add(rfl.get(i).getName().replaceAll("/", ""));
-                }
+                for (TreeFilelistItem item:rfl) rows.add(item.getName());
                 if (rows.size() < 1) {
                     commonDlg.showCommonDialog(false, "W",
                             mContext.getString(R.string.msgs_share_list_not_obtained), "", null);
@@ -3777,11 +3546,11 @@ public class SyncTaskUtil {
                 p_ntfy.notifyToListener(false, o);
             }
         });
-        createRemoteFileList(remurl, null, ntfy, false);
+        createRemoteFileList(remurl, null, smb_proto, ntfy, false);
 
     }
 
-    private void expandHideRemoteDirTree(String remurl, final int pos,
+    private void expandHideRemoteDirTree(String remurl, String smb_proto, final int pos,
                                          final TreeFilelistItem tfi, final TreeFilelistAdapter tfa) {
         if (tfi.getSubDirItemCount() == 0) return;
         if (tfi.isChildListExpanded()) {
@@ -3805,7 +3574,7 @@ public class SyncTaskUtil {
                         public void negativeResponse(Context c, Object[] o) {
                         }
                     });
-                    createRemoteFileList(remurl, tfi.getPath() + tfi.getName() + "/", ne, true);
+                    createRemoteFileList(remurl, tfi.getPath() + tfi.getName() + "/", smb_proto, ne, true);
                 }
             }
         }

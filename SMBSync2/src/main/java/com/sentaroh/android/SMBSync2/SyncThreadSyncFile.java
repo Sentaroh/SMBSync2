@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.os.SystemClock;
+import android.util.Log;
 
 import static com.sentaroh.android.SMBSync2.Constants.*;
 
@@ -74,7 +75,7 @@ public class SyncThreadSyncFile {
                                             sync_result = syncDeleteSmbToExternal(stwa, sti, from_base, master_dir + tmp,
                                                     to_base, target_dir + "/" + tmp, element, smb_fl);
                                         } else {
-                                            sync_result = syncDeleteSmbToExternal(stwa, sti, from_base, master_dir + tmp + "/",
+                                            sync_result = syncDeleteSmbToExternal(stwa, sti, from_base, master_dir + tmp ,
                                                     to_base, target_dir + "/" + tmp, element, smb_fl);
                                         }
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR) {
@@ -2157,6 +2158,7 @@ public class SyncThreadSyncFile {
                 stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
+//            for(String item:stwa.smbFileList) Log.v("","fp="+item);
             sync_result = syncDeleteSmbToSmb(stwa, sti,
                     from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
         }
@@ -2392,10 +2394,12 @@ public class SyncThreadSyncFile {
                                     while (stwa.syncTaskRetryCount > 0) {
                                         if (element.isFile()) {
                                             sync_result = syncDeleteSmbToSmb(stwa, sti, from_base, master_dir + tmp_fname,
-                                                    to_base, target_dir + "/" + tmp_fname, element, smb_fl);
+                                                    to_base, target_dir + tmp_fname, element, smb_fl);
                                         } else {
-                                            sync_result = syncDeleteSmbToSmb(stwa, sti, from_base, master_dir + tmp_fname + "/",
-                                                    to_base, target_dir + "/" + tmp_fname, element, smb_fl);
+//                                            sync_result = syncDeleteSmbToSmb(stwa, sti, from_base, master_dir + tmp_fname + "/",
+//                                                    to_base, target_dir + "/" + tmp_fname, element, smb_fl);
+                                            sync_result = syncDeleteSmbToSmb(stwa, sti, from_base, master_dir + tmp_fname,
+                                                    to_base, target_dir + tmp_fname, element, smb_fl);
                                         }
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR) {
                                             stwa.syncTaskRetryCount--;

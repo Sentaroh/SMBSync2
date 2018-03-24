@@ -327,6 +327,7 @@ public class SyncService extends Service {
                 }
             }, 100);
         } else {
+            mGp.clearParms();
 //			mGp=null;
             System.gc();
         }

@@ -9,7 +9,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 23
 
-        versionCode 51
+        versionCode 52
         versionName "1.31"
 
         compileOptions {

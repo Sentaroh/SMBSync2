@@ -66,8 +66,7 @@
     <string name="msgs_create_profile_error">create task list was failed. file=%s</string>
     <string name="msgs_save_to_profile_error">"Save task list was failed. file=%s</string>
     
-    <string name="msgs_dir_empty"			>--- Directory could not be found ---</string>
-    <string name="msgs_share_empty"			>--- Share could not be found ---</string>
+    <string name="msgs_dir_empty"			>Directory could not be found</string>
     <string name="msgs_share_list_not_obtained">Could not get share name. Please specify the user with access authority and get it again or enter the share name directly.</string>
  	<string name="msgs_override"			>override?</string>
 	<string name="msgs_active_sync_prof_not_found">Auto sync task can not be found.</string>
@@ -261,7 +260,7 @@
     <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMB protocol</string>
     <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Determined by system</string>
     <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1_only">Uses SMB1 only</string>
-    <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb2_only">Uses SMB2 only</string>
+    <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb2_only">Uses SMB2(2.01) only</string>
 
     <string name="msgs_profile_edit_sync_folder_dlg_zip_time_stamp">Put a time stamp to the ZIP file</string>
 	<string name="msgs_profile_edit_sync_folder_dlg_zip_use_sdcard">To save the ZIP file to the SDCARD.</string>
@@ -362,4 +361,7 @@
 
     <string name="msgs_profile_sync_folder_dlg_confirm_msg_nosave">The sync folder has changed, do you exit without saving?</string>
 
+    <string name="msgs_info_storage_copy_clipboard">Copy</string>
+    <string name="msgs_info_storage_copy_completed">Copied to clipboard</string>
+    <string name="msgs_info_storage_title">Storage Information</string>
 </resources>

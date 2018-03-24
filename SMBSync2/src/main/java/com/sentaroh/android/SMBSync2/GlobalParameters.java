@@ -403,7 +403,7 @@ public class GlobalParameters extends CommonGlobalParms {
         if (ues) settingsSmbUseExtendedSecurity = "true";
         else settingsSmbUseExtendedSecurity = "false";
 
-//        System.setProperty("jcifs.netbios.retryTimeout", "3000");
+        System.setProperty("jcifs.netbios.retryTimeout", "3000");
 //
 //        System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
 //        System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);

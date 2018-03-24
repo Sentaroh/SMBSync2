@@ -26,9 +26,12 @@ OTHER DEALINGS IN THE SOFTWARE.
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import jcifs.CIFSContext;
 import jcifs.CIFSException;
+import jcifs.CloseableIterator;
+import jcifs.SmbResource;
 import jcifs.config.PropertyConfiguration;
 import jcifs.context.BaseContext;
 import jcifs.smb.NtlmPasswordAuthentication;
@@ -36,6 +39,8 @@ import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 
 import android.content.Context;
+import android.os.SystemClock;
+import android.util.Log;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.ThreadCtrl;
@@ -46,8 +51,6 @@ public class ReadSmbFilelist implements Runnable {
 
     private ArrayList<TreeFilelistItem> remoteFileList;
     private String remoteUrl, remoteDir;
-    private CIFSContext mCifsAuth;
-    private BaseContext mBaseContext = null;
 
     private NotifyEvent notifyEvent;
 
@@ -61,9 +64,10 @@ public class ReadSmbFilelist implements Runnable {
     private Context mContext = null;
 
     private String mUserName = null, mUserPassword = null;
+    private String mSmbProtocol="0";
 
     public ReadSmbFilelist(Context c, ThreadCtrl ac, String ru, String rd,
-                           ArrayList<TreeFilelistItem> fl, String user, String pass,
+                           ArrayList<TreeFilelistItem> fl, String user, String pass, String smb_proto,
                            NotifyEvent ne, boolean dironly, boolean dc, GlobalParameters gp) {
         mContext = c;
         mUtil = new SyncUtil(mContext, "FileList", gp);
@@ -72,6 +76,8 @@ public class ReadSmbFilelist implements Runnable {
         remoteDir = rd;
         getFLCtrl = ac; //new ThreadCtrl();
         notifyEvent = ne;
+
+        mSmbProtocol=smb_proto;
 
         readDirOnly = dironly;
         readSubDirCnt = dc;
@@ -91,9 +97,7 @@ public class ReadSmbFilelist implements Runnable {
             mHostName = t_host2;
         }
         mUtil.addDebugMsg(1, "I", "ReadSmbFilelist init. name=" + mHostName +
-                ", addr=" + mHostAddr + ", port=" + mHostPort + ", remoteUrl=" + remoteUrl + ", Dir=" + remoteDir);
-
-        mUtil.addDebugMsg(1, "I", "ReadSmbFilelist init. user=" + user + ", url=" + ru + ", dir=" + rd);
+                ", addr=" + mHostAddr + ", port=" + mHostPort + ", remoteUrl=" + remoteUrl + ", Dir=" + remoteDir+", user="+user+", smb_proto="+smb_proto);
 
         if (user.length() != 0) mUserName = user;
         if (pass.length() != 0) mUserPassword = pass;
@@ -110,40 +114,43 @@ public class ReadSmbFilelist implements Runnable {
 
         mUtil.addDebugMsg(1, "I", "ReadSmbFilelist started, readSubDirCnt=" + readSubDirCnt + ", readDirOnly=" + readDirOnly);
 
-
-        try {
-            mBaseContext = new BaseContext(new PropertyConfiguration(System.getProperties()));
-        } catch (CIFSException e) {
-            e.printStackTrace();
-        }
-        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(mBaseContext, "", mUserName, mUserPassword);
-        mCifsAuth = mBaseContext.withCredentials(creds);
-
         boolean error_exit = false;
         if (mHostName.equals("")) {
             if (mHostPort.equals("")) {
                 if (!SyncUtil.isSmbHostAddressConnected(mHostAddr)) {
                     error_exit = true;
-                    getFLCtrl.setThreadResultError();
-                    getFLCtrl.setThreadMessage(
-                            String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected), mHostAddr));
+                    if (getFLCtrl.isEnabled()) {
+                        getFLCtrl.setThreadResultError();
+                        getFLCtrl.setThreadMessage(
+                                String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected), mHostAddr));
+                    } else {
+                        getFLCtrl.setThreadResultCancelled();
+                    }
                 }
             } else {
                 if (!SyncUtil.isSmbHostAddressConnected(mHostAddr,
                         Integer.parseInt(mHostPort))) {
                     error_exit = true;
-                    getFLCtrl.setThreadResultError();
-                    getFLCtrl.setThreadMessage(
-                            String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected_with_port),
-                                    mHostAddr, mHostPort));
+                    if (getFLCtrl.isEnabled()) {
+                        getFLCtrl.setThreadResultError();
+                        getFLCtrl.setThreadMessage(
+                                String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected_with_port),
+                                        mHostAddr, mHostPort));
+                    } else {
+                        getFLCtrl.setThreadResultCancelled();
+                    }
                 }
             }
         } else {
             if (SmbUtil.getSmbHostIpAddressFromName(mHostName) == null) {
                 error_exit = true;
-                getFLCtrl.setThreadResultError();
-                getFLCtrl.setThreadMessage(
-                        mContext.getString(R.string.msgs_mirror_smb_name_not_found) + mHostName);
+                if (getFLCtrl.isEnabled()) {
+                    getFLCtrl.setThreadResultError();
+                    getFLCtrl.setThreadMessage(
+                            mContext.getString(R.string.msgs_mirror_smb_name_not_found) + mHostName);
+                } else {
+                    getFLCtrl.setThreadResultCancelled();
+                }
             }
         }
         if (!error_exit) {
@@ -158,8 +165,12 @@ public class ReadSmbFilelist implements Runnable {
 
     private void readFileList() {
         remoteFileList.clear();
+        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(mSmbProtocol);
+        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", mUserName, mUserPassword);
+        CIFSContext ct= bc.withCredentials(creds);
+
         try {
-            SmbFile remoteFile = new SmbFile(remoteUrl + remoteDir, mCifsAuth);
+            SmbFile remoteFile = new SmbFile(remoteUrl + remoteDir, ct);
             SmbFile[] fl = remoteFile.listFiles();
 
             for (int i = 0; i < fl.length; i++) {
@@ -178,7 +189,7 @@ public class ReadSmbFilelist implements Runnable {
                             !fn.equals("System Volume Information") &&
                             fl[i].canRead()) {
                         if (readSubDirCnt) {
-                            SmbFile tdf = new SmbFile(fl[i].getPath(), mCifsAuth);
+                            SmbFile tdf = new SmbFile(fl[i].getPath(), ct);
                             SmbFile[] tfl = null;
                             try {
                                 tfl = tdf.listFiles();
@@ -232,17 +243,25 @@ public class ReadSmbFilelist implements Runnable {
         } catch (SmbException e) {
             e.printStackTrace();
             mUtil.addDebugMsg(1, "E", e.toString());
-            getFLCtrl.setThreadResultError();
-            String[] e_msg = SmbUtil.analyzeNtStatusCode(e, mContext,
-                    remoteUrl + remoteDir, "");
-            getFLCtrl.setThreadMessage(e_msg[0]);
-            getFLCtrl.setDisabled();
+            if (getFLCtrl.isEnabled()) {
+                getFLCtrl.setThreadResultError();
+                String[] e_msg = SmbUtil.analyzeNtStatusCode(e, mContext,
+                        remoteUrl + remoteDir, mUserName);
+                getFLCtrl.setThreadMessage(e_msg[0]);
+                getFLCtrl.setDisabled();
+            } else {
+                getFLCtrl.setThreadResultCancelled();
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
             mUtil.addDebugMsg(1, "E", e.toString());
-            getFLCtrl.setThreadResultError();
-            getFLCtrl.setThreadMessage(e.getMessage());
-            getFLCtrl.setDisabled();
+            if (getFLCtrl.isEnabled()) {
+                getFLCtrl.setThreadResultError();
+                getFLCtrl.setThreadMessage(e.getMessage());
+                getFLCtrl.setDisabled();
+            } else {
+                getFLCtrl.setThreadResultCancelled();
+            }
         }
     }
 
@@ -250,26 +269,22 @@ public class ReadSmbFilelist implements Runnable {
 
     private void readShareList() {
         remoteFileList.clear();
+        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM);
+        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", mUserName, mUserPassword);
+        CIFSContext ct = bc.withCredentials(creds);
+
         try {
             SmbFile[] fl=null;
             SmbException last_smb_exception=null;
             try {
-                SmbFile remoteFile = new SmbFile(remoteUrl, mCifsAuth);
+                SmbFile remoteFile = new SmbFile(remoteUrl, ct);
                 fl = remoteFile.listFiles();
-                mUtil.addDebugMsg(1, "W", "Share list obtained with user provided auth info.");
+                for(SmbFile item:fl) Log.v("","fn="+item.getName());
+                mUtil.addDebugMsg(1, "W", "Read Share list with user provided auth info.");
             } catch (SmbException e) {
                 last_smb_exception=e;
             }
 
-            if (fl==null) {
-                try {
-                    SmbFile remoteFile = new SmbFile(remoteUrl, mBaseContext.withAnonymousCredentials());
-                    fl = remoteFile.listFiles();
-                    mUtil.addDebugMsg(1, "W", "Share list obtained with anonymous auth.");
-                } catch (SmbException e) {
-                    last_smb_exception=e;
-                }
-            }
             if (fl==null) {
                 mUtil.addDebugMsg(1, "E", last_smb_exception.toString());
                 getFLCtrl.setThreadResultError();
@@ -279,37 +294,26 @@ public class ReadSmbFilelist implements Runnable {
                 getFLCtrl.setDisabled();
                 return;
             }
-            for (int i = 0; i < fl.length; i++) {
-                String fn = fl[i].getName();
-                if (fn.endsWith("/")) fn = fn.substring(0, fn.length() - 1);
+            for (SmbFile item:fl) {
+                String fn = item.getName().substring(0,item.getName().length()-1);
+                String fp = item.getPath().substring(0,item.getPath().length()-1);
                 if (getFLCtrl.isEnabled()) {
-                    String fp = fl[i].getPath();
-                    if (fp.endsWith("/")) fp = fp.substring(0, fp.lastIndexOf("/"));
-                    fp = fp.substring(remoteUrl.length() + 1, fp.length());
-                    if (fp.lastIndexOf("/") > 0) {
-                        fp = "/" + fp.substring(0, fp.lastIndexOf("/") + 1);
-                    } else fp = "/";
-                    try {
-                        if (!fn.endsWith("$")) {
-                            TreeFilelistItem fi = new TreeFilelistItem(
-                                    fn,
-                                    "",
-                                    true,//fl[i].isDirectory(),
-                                    0,//fl[i].length(),
-                                    0,//fl[i].lastModified(),
-                                    false,
-                                    true,//fl[i].canRead(),
-                                    false,//fl[i].canWrite(),
-                                    false,//fl[i].isHidden(),
-                                    fp, 0);
-                            remoteFileList.add(fi);
-                            mUtil.addDebugMsg(2, "I", "filelist added :" + fn);
-                        }
-                    } catch (Exception e) {
-//						e.printStackTrace();
-                        mUtil.addDebugMsg(1, "E", "Share name=" + fn);
-                        mUtil.addDebugMsg(1, "E", e.toString());
+                    if (!fn.endsWith("$")) {
+                        TreeFilelistItem fi = new TreeFilelistItem(
+                                fn,
+                                "",
+                                true,//fl[i].isDirectory(),
+                                0,//fl[i].length(),
+                                0,//fl[i].lastModified(),
+                                false,
+                                true,//fl[i].canRead(),
+                                false,//fl[i].canWrite(),
+                                false,//fl[i].isHidden(),
+                                fp, 0);
+                        remoteFileList.add(fi);
+                        mUtil.addDebugMsg(2, "I", "filelist added :" + fn);
                     }
+
                 } else {
                     getFLCtrl.setThreadResultCancelled();
                     mUtil.addDebugMsg(1, "W", "File list creation cancelled by main task.");
@@ -318,9 +322,13 @@ public class ReadSmbFilelist implements Runnable {
             }
         } catch (MalformedURLException e) {
             mUtil.addDebugMsg(1, "E", e.toString());
-            getFLCtrl.setThreadResultError();
-            getFLCtrl.setThreadMessage(e.getMessage());
-            getFLCtrl.setDisabled();
+            if (getFLCtrl.isEnabled()) {
+                getFLCtrl.setThreadResultError();
+                getFLCtrl.setThreadMessage(e.getMessage());
+                getFLCtrl.setDisabled();
+            } else {
+                getFLCtrl.setThreadResultCancelled();
+            }
         }
     }
 
