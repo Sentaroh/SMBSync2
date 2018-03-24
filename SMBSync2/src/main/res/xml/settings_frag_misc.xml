@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+   	    <CheckBoxPreference
+			android:key="settings_exit_clean"
+			android:title="@string/settings_exit_clean_title"
+			android:summary="@string/settings_exit_clean_summary_ena" />
+</PreferenceScreen>

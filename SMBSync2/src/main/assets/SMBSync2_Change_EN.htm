@@ -1,0 +1,922 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<title>SMBSync Description</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:"ＭＳ ゴシック";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"\@ＭＳ ゴシック";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+h1
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:21.25pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.25pt;
+	page-break-before:always;
+	page-break-after:avoid;
+	word-break:break-all;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h2
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;}
+h3
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;}
+h4
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+h5
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;}
+h6
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:10.5pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:21.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	layout-grid-mode:char;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	layout-grid-mode:char;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoListBullet, li.MsoListBullet, div.MsoListBullet
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:18.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-18.0pt;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoList2, li.MsoList2, div.MsoList2
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:5.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-10.0pt;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoListBullet2, li.MsoListBullet2, div.MsoListBullet2
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:39.25pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-18.0pt;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoBodyTextIndent, li.MsoBodyTextIndent, div.MsoBodyTextIndent
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:42.55pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoBodyTextFirstIndent, li.MsoBodyTextFirstIndent, div.MsoBodyTextFirstIndent
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.5pt;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoBodyTextFirstIndent2, li.MsoBodyTextFirstIndent2, div.MsoBodyTextFirstIndent2
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:42.55pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.5pt;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:9.0pt;
+	font-family:"Arial","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.148mm, li.148mm, div.148mm
+	{mso-style-name:"スタイル 左 \:  14\.8 mm";
+	margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.2Century, li.2Century, div.2Century
+	{mso-style-name:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝";
+	mso-style-link:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝 \(文字\)";
+	margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Century","serif";}
+span.2Century0
+	{mso-style-name:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝 \(文字\)";
+	mso-style-link:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝";
+	font-family:"Century","serif";}
+p.318pt, li.318pt, div.318pt
+	{mso-style-name:"スタイル 見出し 3 + 段落前 \:  18 pt";
+	margin-top:18.0pt;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+p.21, li.21, div.21
+	{mso-style-name:"スタイル 見出し 2 + 段落前 \:  1 行";
+	margin-top:18.0pt;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.hps
+	{mso-style-name:hps;}
+span.shorttext
+	{mso-style-name:short_text;}
+.MsoChpDefault
+	{font-size:10.0pt;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:41.2pt 30.0mm 49.65pt 30.0mm;
+	layout-grid:18.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0mm;}
+ul
+	{margin-bottom:0mm;}
+-->
+</style>
+
+</head>
+
+<body bgcolor=white lang=JA link=blue vlink=purple style='text-justify-trim:
+punctuation'>
+
+<div class=WordSection1 style='layout-grid:18.0pt'>
+
+<h1 style='margin-top:18.0pt;margin-right:0mm;margin-bottom:0mm;margin-left:
+0mm;margin-bottom:.0001pt;text-indent:0mm;word-break:normal'><a
+name="_Toc386446736"><span lang=EN-US>Change history</span></a></h1>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2018-03-xx</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.31</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>SMB2(2.01) enabled.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2018-03-20</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.29-1.30</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>To allow for multiple
+schedule</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>“Sync is started only
+during charging&quot; is added to the sync task option</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Prevented excluded
+directories from being created as empty directories</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Improved deletion of
+unusable characters by directory and file name</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2018-02-28</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.28</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>To the exclusion of
+higher-level directory in the directory filters, and lower directory If you
+select a sub-directory will be synchronized. (It becomes valid when checking
+&quot;Use expanded directory selection/exclusion filter&quot; in the
+synchronization task) </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Add to sync task the
+option to display a warning message to the sync task at the start when you are
+not connected to the SSID of the Wi-Fi access point list to start the next
+task.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2018-02-22</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.27</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Fixed a bug that will
+be copied every time in synchronization from SMB to SDCARD</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Added keyword of
+year/month/day to target directory or ZIP file name. Keywords are replaced by
+the year, month and date at the start of sync task.</span></p>
+
+<p class=MsoListParagraph align=left style='text-align:left;word-break:break-all'><span
+lang=EN-US style='font-size:12.0pt'>-%YEAR% the year (such as 2018 or 2019)</span></p>
+
+<p class=MsoListParagraph align=left style='text-align:left;word-break:break-all'><span
+lang=EN-US style='font-size:12.0pt'>-%MONTH% month (01 to 12)</span></p>
+
+<p class=MsoListParagraph align=left style='text-align:left;word-break:break-all'><span
+lang=EN-US style='font-size:12.0pt'>-%DAY% day (01 to 31)</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+word-break:break-all'><span lang=EN-US style='font-size:12.0pt'>-%DAY-OF-YEAR%
+days since the beginning of the year (001 to </span><span style='font-size:
+12.0pt;font-family:"ＭＳ 明朝","serif"'>　</span><span lang=EN-US style='font-size:
+12.0pt'>365, leap year 366)</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2018-02-16</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.26</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Added synchronization
+between SMB servers.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Shortcut is to be
+created in the Android 8.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>0 byte files when
+synchronized to an external SDCARD was not allowed to be created in test mode.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-11-07</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.25</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>In synchronization with
+the SMB server, eliminating the problem of an error during synchronization.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Change the internal
+processing of external SDCARD access.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-10-24</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.24</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt;word-break:break-all'><span lang=EN-US style='font-size:
+12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Change_EN.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Using the DNS when a
+failed SMB name resolution has to be the name resolution. However, the need is
+that the name is specified by FQDN as such win-srv.test.domain.com.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-09-30</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.23</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>To be able to set the
+volume of the notification sound.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-09-26</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.22</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve the bug that
+option is not saved in the &quot;To use the last update time of the file to the
+difference judgment&quot; and &quot;To use the file size to the difference
+judgment&quot;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-09-23</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.21</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Added an option to show
+a notification message.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-09-01</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.20</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve the bug that
+empty directory is not sync with the sync to external SDCARD.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-08-21</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.19</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Allowed to prevent the
+overwriting of files in the sync options.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-08-16</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.18</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Disable FastScroll in
+the Directory selection screen</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-08-02</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.17</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve the bug that
+duplicated in synchronization start from the external application</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Reduction of the
+deletion time in the mirror to the ZIP file</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-06-26</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.16</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve the bug that
+can not be external SD card recognition</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-06-26</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.15</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Added USB folder
+path(/storage/emulated/UsbDriveA, /storage/emulated/UsbDriveB)</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-06-25</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.14</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve an empty
+directory is not reflected bug when synchronized with the ZIP</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-06-23</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.13 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Add sync, copy or move
+from the internal storage to the ZIP file (internal storage or external SDCARD)</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-06-17</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.12 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Add path
+/Removable/MicroSD for SDCARD</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-06-17</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.11 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve the bug to be
+killed when the application is started with the intent at the time of the
+screen off.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-06-13</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.10 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve the bug of name
+resolution of the SMB host name.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Notification messages
+display optimization.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-05-29</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.09 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>It was strictly a test
+to access the same directory on the master and the target.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve the bug to be
+killed in the deletion of the WiFi access point.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-05-25</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.08 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Add help to the
+synchronization task add and edit screen</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Change the UI of the
+file selection, 1. Selection is to tap the name of the file or directory name.
+2. display of the sub-directory is to tap the left edge of the icon. 3. abolish
+the long tap.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Added an option to fix
+the orientation of the screen to portrait</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-05-16</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.07 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Change the Help file to
+link to the Google Drive has a small file size.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve the bug that
+can not be added in the file and directory filter.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Improve the UI of the
+file filter</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-05-07</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.06 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Add external SDCARD
+path (/storage/MicroSD, /storage/extSdCard and /mnt/extSdCard)</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve not copied bug
+in synchronization to an external SD card</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-05-03</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.05 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>It was to be able to
+specify a wireless LAN access point to allow sync with the sync options.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Improved the user
+interface for the selection of external SDCARD.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-04-16</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.04 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>To be able to import a
+task list from exported SMBSync profile.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-04-14</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.03 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Improve performance</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve the bug that
+settings value is not restored during import task list.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-04-10</span><span style='font-family:"ＭＳ 明朝","serif"'>　</span><span
+lang=EN-US>Ver1.02 </span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>Fixed a bug that not be moved a file from
+SDCARD.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:12.0pt'>Resolve the bug can not
+be mirrored in the some of the directory.</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:21.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>2016-04-09 Ver1.00</span></p>
+
+<p class=MsoListParagraph align=left style='margin-left:42.0pt;text-align:left;
+text-indent:-21.0pt'><span lang=EN-US style='font-family:Symbol'><img width=11
+height=11 src="SMBSync2_Change_EN.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>Initial release</span></p>
+
+</div>
+
+</body>
+
+</html>

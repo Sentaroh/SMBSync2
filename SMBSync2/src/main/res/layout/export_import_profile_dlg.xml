@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/export_import_profile_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ButtonStyle,RtlHardcoded" >
+
+    <LinearLayout
+        android:id="@+id/export_import_profile_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/export_import_profile_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <include layout="@layout/divider_line1_turquoise" />
+    </LinearLayout>
+
+    <CheckedTextView
+        android:id="@+id/export_import_profile_list_ctv_import_settings"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center_vertical"
+        android:text="@string/msgs_export_import_profile_import_settings" />
+    <include layout="@layout/divider_line1" />
+    <CheckedTextView
+        android:id="@+id/export_import_profile_list_ctv_import_schedule"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center_vertical"
+        android:text="@string/msgs_export_import_profile_import_schedule" />
+    
+	<include layout="@layout/divider_line3" />
+
+    			    
+    <ListView
+        android:id="@+id/export_import_profile_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1" >
+    </ListView>
+	
+    <include layout="@layout/divider_line3" />
+	    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/export_import_profile_list_select_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="@string/msgs_export_import_profile_select_all" />
+
+        <Button
+            android:id="@+id/export_import_profile_list_unselect_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/msgs_export_import_profile_unselect_all" />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_line3" />
+    
+    <CheckedTextView
+        android:id="@+id/export_import_profile_list_ctv_reset_profile"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center_vertical"
+        android:text="@string/msgs_export_import_profile_reset_current_profile" />
+
+    <LinearLayout
+        android:id="@+id/export_import_profile_file_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/export_import_profile_listing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/msgs_export_import_profile_listing" />
+
+        <EditText
+            android:id="@+id/export_import_profile_filename"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="file path"
+            android:inputType="textMultiLine" >
+        </EditText>
+    </LinearLayout>
+
+    <include layout="@layout/export_import_profile_dlg_ok_cancel" />
+
+</LinearLayout>

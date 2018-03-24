@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	    <CheckBoxPreference
+			android:key="@string/settings_suppress_warning_app_specific_dir"
+			android:title="@string/settings_suppress_warning_app_specific_dir_title"
+			android:summary="@string/settings_suppress_warning_app_specific_dir_summary_ena" />
+  	    <ListPreference
+			android:key="@string/settings_notification_message_when_sync_ended"
+			android:title="@string/settings_notification_message_when_sync_ended_title"
+			android:summary="@string/settings_notification_message_when_sync_ended_summary_no" 
+			android:dialogTitle="@string/settings_notification_message_when_sync_ended_dialog_title"
+			android:entries="@array/settings_notification_message_when_sync_ended_list_entries"
+			android:entryValues="@array/settings_notification_message_when_sync_ended_list_values" />
+  	    <ListPreference
+			android:key="@string/settings_playback_ringtone_when_sync_ended"
+			android:title="@string/settings_playback_ringtone_when_sync_ended_title"
+			android:summary="@string/settings_playback_ringtone_when_sync_ended_summary_no" 
+			android:dialogTitle="@string/settings_playback_ringtone_when_sync_ended_dialog_title"
+			android:entries="@array/settings_playback_ringtone_when_sync_ended_list_entries"
+			android:entryValues="@array/settings_playback_ringtone_when_sync_ended_list_values" />
+        <com.sentaroh.android.SMBSync2.SeekBarPreference
+            android:key="@string/settings_playback_ringtone_volume"
+            android:title="@string/settings_playback_ringtone_volume_title"
+            android:summary="@string/settings_playback_ringtone_volume_summary"
+            android:defaultValue="100"/>  	    
+  	    <ListPreference
+			android:key="@string/settings_vibrate_when_sync_ended"
+			android:title="@string/settings_vibrate_when_sync_ended_title"
+			android:summary="@string/settings_vibrate_when_sync_ended_summary_no" 
+			android:dialogTitle="@string/settings_vibrate_when_sync_ended_dialog_title"
+			android:entries="@array/settings_vibrate_when_sync_ended_list_entries"
+			android:entryValues="@array/settings_vibrate_when_sync_ended_list_values" />
+	    <CheckBoxPreference
+			android:key="@string/settings_device_orientation_portrait"
+			android:title="@string/settings_device_orientation_portrait_title"
+			android:summary="@string/settings_device_orientation_portrait_summary_ena" />
+  	    <CheckBoxPreference
+			android:key="@string/settings_use_light_theme"
+			android:title="@string/settings_use_light_theme_title"
+			android:summary="@string/settings_use_light_theme_summary_ena" />
+  	    <CheckBoxPreference
+			android:key="@string/settings_dim_screen_on_while_sync"
+			android:title="@string/settings_dim_screen_on_while_sync_title"
+			android:summary="@string/settings_dim_screen_on_while_sync_summary_ena" />
+  	    	    	    	    	    	    	    
+</PreferenceScreen>

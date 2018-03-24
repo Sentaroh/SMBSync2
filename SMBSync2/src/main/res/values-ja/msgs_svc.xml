@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="msgs_svc_can_not_start_sync_task_disabled">同期タスクが無効になっているため、同期タスクを開始できませんでした。</string>
+	<string name="msgs_svc_received_start_request_from_scheduler">SMBSync2スケジューラーから同期要求を受け付けました。</string>
+	<string name="msgs_svc_received_start_request_from_scheduler_task_not_found">SMBSync2スケジューラーから同期要求を受け付けましたが指定されたタスクは存在しないため無視しました。タスク=</string>
+	<string name="msgs_svc_received_start_request_from_scheduler_no_task_list">SMBSync2スケジューラーから同期要求された全タスクが存在しないため中止しました。</string>
+
+	<string name="msgs_svc_received_start_request_from_external">外部アプリから同期要求を受け付けました。</string>
+	<string name="msgs_svc_received_start_request_from_external_task_not_found">外部アプリから同期要求を受け付けましたが指定されたタスクは存在しないため無視しました。タスク=</string>
+	<string name="msgs_svc_received_start_request_from_external_no_task_list">外部アプリから同期要求されたタスクは全て存在しないため要求を無視しました。</string>
+	<string name="msgs_svc_received_start_request_from_external_no_task_specified">同期要求を受け付けましたが同期タスクが指定されていないため、要求を無視しました。</string>
+	<string name="msgs_svc_received_start_request_from_external_auto_task">同期要求を受け付けましたが同期タスクが指定されていないため自動タスクを開始しました。</string>
+
+	<string name="msgs_svc_received_start_request_from_shortcut">ショートカットから同期要求を受け付けました。</string>		 
+	<string name="msgs_svc_received_start_request_ignored_duplicate_request">同期開始要求が受付済みのため無視しました。 ID=%s</string>
+</resources>

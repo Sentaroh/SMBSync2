@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE string>
+<resources>
+    
+    <string name="msgs_mirror_task_result_ok">Sync task was successfully ended.</string>
+    <string name="msgs_mirror_task_result_cancel">Sync task was cancelled.</string>
+    <string name="msgs_mirror_task_result_error_ended">Sync task was ended with error.</string>
+    <string name="msgs_mirror_task_result_error_skipped">It was ignored an error by the setting of the error handling options.</string>
+    <string name="msgs_mirror_task_file_deleted">File was deleted</string>
+    <string name="msgs_mirror_task_started">Sync task has been started.</string>
+    <string name="msgs_mirror_task_no_of_copy" formatted="false">No of copies=%s, No of deletes=%s, No of ignores=%s, Elapsed time=%s(Sec)</string>
+    <string name="msgs_mirror_task_avg_rate">Average transfer rate %s</string>
+    <string name="msgs_mirror_task_success_end">was Successfully ended.</string>
+    <string name="msgs_mirror_task_was_cancelled">was cancelled.</string>
+    <string name="msgs_mirror_task_file_copied">File was copied.</string>
+    <string name="msgs_mirror_task_file_replaced">File was overridden.</string>
+    <string name="msgs_mirror_task_master_not_found">Master file or directory was not found.</string>
+    <string name="msgs_mirror_task_dir_deleted">directory was deleted.</string>
+    <string name="msgs_mirror_task_dir_create">directory was created.</string>
+    <string name="msgs_mirror_task_dir_create_failed">directory create failed.</string>
+    <string name="msgs_mirror_task_file_copying" >Copying file. %s %% complete.</string>
+    <string name="msgs_mirror_task_result_stats" formatted="false">No of copies=%s, No of deletes=%s, No of ignores=%s, No of warnings=%s, No of retries=%s, No of errors=%s</string>
+    
+    <string name="msgs_mirror_ignore_override_move_file">Moving of the file was ignored. Because the overwritten with the synchronization option it is disabled.</string>
+    <string name="msgs_mirror_ignore_override_copy_file">Copying of the file was ignored. Because the overwritten with the synchronization option it is disabled.</string>
+    
+    <string name="msgs_mirror_confirm_copy_cancel">Copy cancelled by user request.</string>
+    <string name="msgs_mirror_confirm_move_cancel">Move cancelled by user request.</string>
+	<string name="msgs_mirror_confirm_delete_cancel">Delete cancelled by user request.</string>
+	<string name="msgs_mirror_confirm_copy_confirm">Do you want to overwrite the file?\n%s\n(Please uncheck the &#8220;Confirm&#8221; in the synchronization profile if confirmation is not required)</string>
+	<string name="msgs_mirror_confirm_move_confirm">Do you want to move the file?(Copy the original file will be deleted after the copy is complete)\n%s\n(Please uncheck the &#8220;Confirm&#8221; in the synchronization profile if confirmation is not required)</string>
+	<string name="msgs_mirror_confirm_no_btn">No</string>
+	<string name="msgs_mirror_confirm_noall_btn">No All subsequent</string>
+	<string name="msgs_mirror_confirm_yes_btn">Yes</string>
+	<string name="msgs_mirror_confirm_yesall_btn">Yes All subsequent</string>
+	<string name="msgs_mirror_confirm_task_cancel_btn">Cancel synchronize</string>
+	<string name="msgs_mirror_same_directory_ignored">I ignored the directory because the same directory can not be synchronized. Directory=%s</string>
+    
+	<string name="msgs_mirror_remote_addr_not_connected">Can not be connecting to specified remote SMB host. IP Address=%s</string>
+	<string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Can not be connecting to specified remote SMB host. IP Address=%s, Port=%s</string>
+	
+    <string name="msgs_mirror_task_file_moved">File was moved.</string>
+	<string name="msgs_mirror_confirm_delete_file_confirm">Do you want to delete the file?\N%s\n(Please uncheck the &#8220;confirmation&#8221; if confirmation is not required for synchronization task)</string>
+	<string name="msgs_mirror_confirm_delete_dir_confirm">Do you want to delete the directory?\N%s\n(Please uncheck the &#8220;confirmation&#8221; if confirmation is not required for synchronization task)</string>
+	<string name="msgs_mirror_confirm_please_check_confirm_msg_copy">Confirmation of override a copy of the file is required. Tap here, please check.</string>
+	<string name="msgs_mirror_confirm_please_check_confirm_msg_delete_dir">Confirmation of directory deletion is required. Tap here, please check.</string>
+	<string name="msgs_mirror_confirm_please_check_confirm_msg_delete_file">Confirm File Deletion required. Tap here, please check.</string>
+	<string name="msgs_mirror_confirm_please_check_confirm_msg_move">Confirmation of file moved is required. Tap here, please check.</string>
+
+	<string name="msgs_mirror_external_sdcard_select_required">Cancel the sync because the selection of external SD card has not been made.</string>		
+	<string name="msgs_mirror_external_sdcard_not_mounted">Cancel sync because external SDCARD it is not mounted.</string>
+	
+	<string name="msgs_mirror_usb_storage_not_mounted">Cancel sync because USB storage is not mounted.</string>
+
+	<string name="msgs_mirror_smb_name_not_found">SMB host name that is specified in the SMB folder could not be found. Host name=</string>
+	<string name="msgs_mirror_smb_addr_not_connected">Unable to connect to the SMB host that is specified in the SMB folder. IP address=%s</string>
+	<string name="msgs_mirror_smb_addr_not_connected_with_port" formatted="false">Unable to connect to the SMB host that is specified in the SMB folder. IP address=%s, port=%s</string>
+	
+	<string name="msgs_mirror_sync_start_was_delayed">In order to the wireless LAN is a delay time after ON has been specified, it delays the start of the synchronization %s seconds.</string>
+	
+	<string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">Stop the sync because wireless LAN is not connected to the access point.</string>
+	<string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">Stop the sync because wireless LAN is not connected to the specified access point.</string>
+    <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">Skip the sync task because wireless LAN is not connected to the specified access point.</string>
+
+    <string name="msgs_mirror_task_sync_request_error_detected">Sync request was ended with some error.</string>
+	<string name="msgs_mirror_sync_request_started">sync request has been started. Requestor=%s</string>
+	<string name="msgs_mirror_sync_request_ended">sync request has ended. Requestor=%s</string>
+	
+	<string name="msgs_mirror_remote_name_not_found">Specified remote SMB host name was not found. Hostname=</string>
+
+    <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">Sync has been canceled because it is not charging.</string>
+</resources>

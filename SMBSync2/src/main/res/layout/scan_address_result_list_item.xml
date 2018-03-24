@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:orientation="horizontal"
+    tools:ignore="HardcodedText,InefficientWeight" >
+
+    <Button
+        android:id="@+id/scan_result_list_item_server_addr"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical|left"
+        android:lines="2"
+        android:text="192.168.XXX.XXX"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/scan_result_list_item_server_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:gravity="center_vertical|left"
+        android:lines="2"
+        android:text="ABCDEFGHIJKLMN"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+</LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="msgs_help_sync_task_file">SMBSync2_Help_EN_task.htm</string>
+	<string name="msgs_help_sync_task_title">Sync task help</string>
+	
+	<string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_EN_folder_internal.htm</string>
+	<string name="msgs_help_sync_folder_internal_title">Internal storage help</string>
+	
+	<string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_EN_folder_sdcard.htm</string>
+	<string name="msgs_help_sync_folder_sdcard_title">External SDCARD help</string>
+	
+	<string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_EN_folder_smb.htm</string>
+	<string name="msgs_help_sync_folder_smb_title">SMB server help</string>
+
+	<string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_EN_folder_zip.htm</string>
+	<string name="msgs_help_sync_folder_zip_title">ZIP folder help</string>
+						
+</resources>

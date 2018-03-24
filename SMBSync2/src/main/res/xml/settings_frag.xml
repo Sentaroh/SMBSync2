@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+	<header android:title="@string/settings_sync_title"
+	    android:fragment="com.sentaroh.android.SMBSync2.ActivitySettings$SettingsSync"/>
+    <header android:title="@string/settings_ui_title"
+	    android:fragment="com.sentaroh.android.SMBSync2.ActivitySettings$SettingsUi"/>
+    <header android:title="@string/settings_log_title"
+	    android:fragment="com.sentaroh.android.SMBSync2.ActivitySettings$SettingsLog"/>
+	<header android:title="@string/settings_smb_title"
+	    android:fragment="com.sentaroh.android.SMBSync2.ActivitySettings$SettingsSmb"/>
+	<header android:title="@string/settings_misc_title"
+	    android:fragment="com.sentaroh.android.SMBSync2.ActivitySettings$SettingsMisc"/>
+</preference-headers>

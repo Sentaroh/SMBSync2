@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_dialog_progress_bar_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <TextView 
+        android:id="@+id/main_dialog_progress_bar_msg" 
+        android:layout_marginTop="5dp" 
+        android:layout_marginLeft="5dp" 
+        android:layout_marginRight="5dp" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" 
+        android:text="" 
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ProgressBar 
+        android:id="@+id/main_dialog_progress_bar_progress" 
+        android:layout_marginTop="5dp" 
+        android:layout_marginLeft="5dp" 
+        android:layout_marginRight="5dp" 
+        style="?android:attr/progressBarStyleHorizontal" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/main_dialog_progress_bar_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="2dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/main_dialog_progress_bar_btn_immediate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+	
+    <include layout="@layout/divider_line1_turquoise" />
+</LinearLayout>

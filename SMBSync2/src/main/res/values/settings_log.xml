@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="settings_log_title">Log</string>	    
+	<string name="settings_log_preference_screen_title">Log</string>
+	
+	<string name="settings_log_option_title">Log file</string>
+	<string name="settings_log_option_summary_ena">Create a log file</string>
+	<string name="settings_log_option">settings_log_option</string>
+
+	<string name="settings_put_logcat_option_title">Android Logcat</string>
+	<string name="settings_put_logcat_option_summary_ena">Put message to Logcat</string>
+	<string name="settings_put_logcat_option">settings_put_logcat_option</string>
+		
+    <string name="settings_mgt_dir">settings_mgt_dir</string>
+	<string name="settings_mgt_dir_title">Management files directory</string>
+    <string name="settings_mgt_dir_summary">Not specified=</string>
+        
+	<string name="settings_log_level_title">Debug message level</string>
+	<string name="settings_log_level_summary">Current debug message level=0</string>
+	<string name="settings_log_level_dialog_title">Select debug message level</string>
+	<string name="settings_log_level">settings_log_level</string>
+	<string-array name="settings_log_level_list_entries">
+        <item>0:No Debug message</item>
+        <item>1:Debug message</item>
+        <item>2:Detail debug message</item>
+        <item>3:File compare message</item>
+    </string-array>
+    <string-array name="settings_log_level_list_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    
+    <string name="settings_log_file_max_count_title">Max log file count</string>
+	<string name="settings_log_file_max_count_summary">Max log file count=%s</string>
+	<string name="settings_log_file_max_count_dialog_title">Select file count</string>
+	<string name="settings_log_file_max_count">settings_log_file_max_count</string>
+	<string-array name="settings_log_file_max_count_list_entries">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>50</item>
+    </string-array>
+    <string-array name="settings_log_file_max_count_list_values">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>50</item>
+    </string-array>
+    
+    
+</resources>

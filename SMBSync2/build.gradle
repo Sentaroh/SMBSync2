@@ -1,0 +1,82 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        applicationId "com.sentaroh.android.SMBSync2"
+        minSdkVersion 21
+        targetSdkVersion 23
+
+        versionCode 51
+        versionName "1.31"
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+    }
+
+    lintOptions {
+        disable 'MissingTranslation'
+        abortOnError false
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals("debug")) {
+                    variant.outputs.all {
+                        def versionName = variant.versionName
+                        def versionNumber = variant.versionCode.toString()
+                        def date = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())
+                        def mod_name = variant.getPackageApplication().projectBaseName
+                        def fileExtension= outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".")+1)
+//                        def newName = "${mod_name}_${versionName}_${versionNumber}_${date}.${fileExtension}"
+//                        def newName = "${mod_name}_${versionName}_${versionNumber}_debug.${fileExtension}"
+                        def newName = "${mod_name}_debug.${fileExtension}"
+                        outputFileName = "../../../../../release/"+newName
+                    }
+                }
+            }
+
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals("release")) {
+                    variant.outputs.all {
+                        def versionName = variant.versionName
+                        def versionNumber = variant.versionCode.toString()
+                        def date = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())
+                        def mod_name = variant.getPackageApplication().projectBaseName
+                        def fileExtension= outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".")+1)
+//                        def newName = "${mod_name}_${versionName}_${versionNumber}_${date}.${fileExtension}"
+                        def newName = "${mod_name}_${versionName}_${versionNumber}_release.${fileExtension}"
+                        outputFileName = newName
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+dependencies {
+//    implementation project(':Utilities')
+//    implementation(name: 'Utilities-1.0.5', ext: 'aar')
+    implementation files('libs/jcifs-ng-2.1.0.jar')
+    implementation files('libs/slf4j-api-1.7.7.jar')
+    implementation files('libs/slf4j-simple-1.7.7.jar')
+//    implementation "org.bouncycastle:bcprov-jdk15on:1.56"
+    implementation files('libs/bcprov-jdk15on-158.jar')
+
+    implementation files('libs/Utilities-1.0.7.aar')
+    implementation 'com.android.support:appcompat-v7:22.2.1'
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   	<string name="msgs_scan_progress_spin_dlg_addr_cancel">検索中止</string>
+   	<string name="msgs_scan_ip_address_select_title">SMBサーバーの検索</string>
+	<string name="msgs_scan_ip_address_scan_btn">検索開始</string>
+	<string name="msgs_scan_ip_address_press_scan_btn">IPアドレスを指定して、検索ボタンを押してください。</string>
+	<string name="msgs_scan_ip_address_not_detected">リモートSMBホストが検知できませんでした。</string>
+	<string name="msgs_scan_ip_address_select_detected_host">検索結果のIPアドレスかホスト名をタップして選択してください。</string>
+	<string name="msgs_scan_ip_address_scan_result_title">検索結果</string>
+   	<string name="msgs_ip_address_scan_progress">リモートSMBホスト 検索が%s%% 終了</string>
+   	
+   	<string name="msgs_ip_address_range_dlg_begin">開始</string>
+   	<string name="msgs_ip_address_range_dlg_end">終了</string>
+   	
+   	<string name="msgs_ip_address_range_dlg_begin_notspecified">開始アドレスが指定されていません。</string>
+   	<string name="msgs_ip_address_range_dlg_addr_range_error">アドレスは0から255の範囲で指定してください。</string>
+   	<string name="msgs_ip_address_range_dlg_begin_range_error">開始アドレスは1から254の範囲で指定してください。</string>
+   	<string name="msgs_ip_address_range_dlg_end_notspecified">終了アドレスが指定されていません。</string>
+   	<string name="msgs_ip_address_range_dlg_end_range_error">終了アドレスは1から254の範囲で指定してください。</string>
+   	<string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">開始アドレスが終了アドレスより大きい。</string>
+   	<string name="msgs_ip_address_range_dlg_not_private">グローバルアドレスのため検索できません。</string>
+   	
+   	<string name="msgs_progress_dlg_canceling">キャンセルしています</string>
+   	
+   	<string name="msgs_progress_spin_dlg_filelist_getting">ファイルリスト取得中</string>
+   	<string name="msgs_progress_spin_dlg_filelist_cancel">ファイルリスト取得を中止</string>
+   	
+   	<string name="msgs_progress_spin_dlg_test_logon">リモートにログオン中</string>
+   	<string name="msgs_progress_spin_dlg_test_logon_cancel">ログオンを中止</string>
+    
+</resources>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit_sync_folder_dlg_zip_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,RtlHardcoded" >
+
+    <CheckedTextView
+        android:id="@+id/edit_sync_folder_dlg_zip_file_use_sdcard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center_vertical"
+        android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_use_sdcard"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/edit_sync_folder_dlg_zip_select_document_tree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msgs_profile_edit_sync_folder_dlg_select_sdcard"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <LinearLayout
+        android:id="@+id/edit_sync_folder_dlg_zip_file_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        <LinearLayout
+            android:id="@+id/edit_sync_folder_dlg_zip_file_keyword_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/msgs_profile_sync_task_dlg_keyword_insert_file"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:ignore="RtlHardcoded" />
+
+            <include
+                layout="@layout/edit_sync_folder_keyword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/edit_sync_folder_dlg_zip_filelist_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_filelist"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/edit_sync_folder_dlg_zip_dir_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="1dp"
+                android:hint="Directory"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/edit_sync_folder_dlg_zip_file_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/msgs_profile_edit_sync_folder_dlg_zip_filename"
+                android:inputType="text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_comp_level_title"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/edit_sync_folder_dlg_zip_comp_level"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="36dp"
+            android:paddingLeft="5dp"
+            android:layout_weight="1"
+            android:layout_gravity="clip_vertical"
+            android:layout_marginLeft="5dp"
+             />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_title"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical" >
+
+        <RadioGroup
+            android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_none"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_none" />
+
+            <RadioButton
+                android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_standard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto" />
+
+            <RadioButton
+                android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_aes128"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128" />
+
+            <RadioButton
+                android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_aes256"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/edit_sync_folder_dlg_zip_enc_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/edit_sync_folder_dlg_zip_enc_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="confirm"
+            android:inputType="textPassword" />
+    </LinearLayout>
+    
+</LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE string>
+<resources>
+    <string name="msgs_about_dlg_func_btn">機能</string>
+    <string name="msgs_about_dlg_change_btn">更新履歴</string>
+    <string name="msgs_dlg_title_about">SMBSync2について</string>
+    <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_JA_Short.htm</string>
+    <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_JA.htm</string>
+</resources>

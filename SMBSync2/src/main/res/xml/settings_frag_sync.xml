@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="@string/settings_error_option"
+        android:title="@string/settings_error_option_title"
+        android:summary="@string/settings_error_option_summary_ena" />
+
+    <CheckBoxPreference
+        android:key="@string/settings_wifi_lock"
+        android:title="@string/settings_wifi_lock_title"
+        android:summary="@string/settings_wifi_lock_summary_ena" />
+
+    <EditTextPreference
+        android:key="@string/settings_no_compress_file_type"
+        android:title="@string/settings_no_compress_file_type_title"
+        android:inputType="text"/>
+
+    <com.sentaroh.android.SMBSync2.CustomDirectorySelectPreference
+        android:key="@string/settings_mgt_dir"
+        android:title="@string/settings_mgt_dir_title"
+        android:summary="@string/settings_mgt_dir_summary"
+        android:inputType="text"/>
+
+</PreferenceScreen>

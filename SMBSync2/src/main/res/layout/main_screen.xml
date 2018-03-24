@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+    xmlns:tools="http://schemas.android.com/tools"  
+    android:layout_width="match_parent"  
+    android:layout_height="match_parent"  
+    android:orientation="vertical" >  
+
+	<TabHost 
+	    android:id="@android:id/tabhost"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:visibility="visible"
+	    tools:ignore="HardcodedText,UselessParent" >
+	
+	    <LinearLayout
+	        android:id="@+id/main_screen_view"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+			android:orientation="vertical" >
+	
+	        <TabWidget
+	            android:id="@android:id/tabs"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            />
+	        
+			<include layout="@layout/main_dialog" />
+				        
+	        <FrameLayout
+	            android:id="@android:id/tabcontent"
+	            android:layout_width="0dp"
+	            android:layout_height="0dp" >
+	        </FrameLayout>
+
+	        <com.sentaroh.android.Utilities.Widget.CustomViewPager
+	            android:id="@+id/main_screen_pager"
+	            android:layout_width="fill_parent"
+	            android:layout_height="0dp"
+	            android:layout_weight="1"/>
+	        
+			<include layout="@layout/main_schedule_info" />
+	        	        	        	
+	    </LinearLayout>
+	    
+	    
+	</TabHost>
+</LinearLayout>    

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/about_dialog_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/about_dialog_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </LinearLayout>
+    
+	<TabHost
+	    android:id="@+id/about_tab_host"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
+	
+	    <LinearLayout
+	        android:orientation="vertical"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        >
+	        
+		  	<TabWidget
+	            android:id="@android:id/tabs"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"/>
+	
+	       	<FrameLayout
+	            android:id="@android:id/tabcontent"
+	            android:layout_width="0dp"
+	            android:layout_height="0dp">
+	    	</FrameLayout>
+	    	
+	        <com.sentaroh.android.Utilities.Widget.CustomViewPager
+	            android:id="@+id/about_view_pager"
+	            android:layout_width="fill_parent"
+	            android:layout_height="0dp"
+	            android:layout_marginLeft="0dp"
+	            android:layout_marginRight="0dp"
+	            android:layout_weight="1"/>
+
+		    <Button
+		        android:id="@+id/about_dialog_btn_ok"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/msgs_common_dialog_close" />
+	        	        	       		    	
+	    </LinearLayout>
+	    
+	</TabHost>
+    
+</LinearLayout>
+
+
+

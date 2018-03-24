@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+   	    <CheckBoxPreference
+			android:key="settings_log_option"
+			android:title="@string/settings_log_option_title"
+			android:summary="@string/settings_log_option_summary_ena" />
+
+   	    <CheckBoxPreference
+			android:key="settings_put_logcat_option"
+			android:title="@string/settings_put_logcat_option_title"
+			android:summary="@string/settings_put_logcat_option_summary_ena" />
+   	    	    	    
+   	    <ListPreference
+			android:key="settings_log_level"
+			android:title="@string/settings_log_level_title"
+			android:summary="@string/settings_log_level_summary"
+			android:dialogTitle="@string/settings_log_level_dialog_title"
+			android:entries="@array/settings_log_level_list_entries"
+			android:entryValues="@array/settings_log_level_list_values"/>
+
+   	    <ListPreference
+			android:key="settings_log_file_max_count"
+			android:title="@string/settings_log_file_max_count_title"
+			android:summary="@string/settings_log_file_max_count_summary"
+			android:dialogTitle="@string/settings_log_file_max_count_dialog_title"
+			android:entries="@array/settings_log_file_max_count_list_entries"
+			android:entryValues="@array/settings_log_file_max_count_list_values"/>
+   	    	    	    
+</PreferenceScreen>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="msgs_log_management_title">Log management</string>
+	
+	<string name="msgs_log_management_label_delete">Delete log item</string>
+	<string name="msgs_log_management_label_share">Share log item</string>
+	<string name="msgs_log_management_label_select_all">Select all log item</string>
+	<string name="msgs_log_management_label_unselect_all">Unselect all log item</string>
+			
+	<string name="msgs_log_management_no_log_file">No log files</string>
+	
+	<string name="msgs_log_management_delete_confirm_msg">Delete the following log files.</string>
+	
+	<string name="msgs_log_management_dlg_close">Close</string>
+	
+	<string name="msgs_log_management_dlg_send_zip_file_creating">Creating the zip file</string>
+	<string name="msgs_log_management_dlg_send_zip_file_cancelled">Zip file creation has been canceled</string>
+	
+	<string name="msgs_log_management_log_file_switched">Log file was switched.</string>
+	
+</resources>

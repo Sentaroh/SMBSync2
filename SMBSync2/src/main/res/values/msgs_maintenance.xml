@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE string>
+<resources>
+   	<string name="msgs_progress_spin_dlg_housekeep_running">Perform maintenance of management file.</string>
+   	<string name="msgs_progress_spin_dlg_housekeep_cancel">Cancel maintenance</string>
+   	<string name="msgs_progress_spin_dlg_housekeep_cancel_confirm">Are you sure you want to cancel the maintenance of management file?</string>
+    
+    <string name="msgs_maintenance_last_mod_list_confirm_start_msg">Do you want to run the Maintain of the management file? Running will not be able to be sync from the scheduled synch and external applications.</string>
+    <string name="msgs_maintenance_last_mod_list_can_not_start_msg">Because sync task is running, it was unable to perform the maintenance of the management files.</string>
+    <string name="msgs_maintenance_last_mod_list_cancel_msg">Maintenance of the management file has been canceled.</string>
+    <string name="msgs_maintenance_last_mod_list_del_count">Has been %s items deleted from the last modified time list.</string>
+    <string name="msgs_maintenance_last_mod_list_end_msg">Maintenance of the management file has ended.</string>
+    <string name="msgs_maintenance_last_mod_list_start_msg">Maintenance of the management file has been started.</string>
+    <string name="msgs_maintenance_result_log_list_del_count">Has been %s files deleted from the history log directory.</string>
+    <string name="msgs_maintenance_result_log_list_del_file">%s was deleted.</string>
+    <string name="msgs_maintenance_result_log_list_del_title">Directories/Files that have not been registered in the history has been found, Do you want to remove?</string>
+    
+</resources>

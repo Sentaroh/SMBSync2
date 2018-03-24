@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sync_history_list_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:orientation="horizontal"
+    tools:ignore="HardcodedText,RtlHardcoded,InefficientWeight" >
+
+    <TextView
+        android:id="@+id/sync_history_list_view_seq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0000"/>
+    
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:id="@+id/sync_history_list_view_date"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="5dp"
+	            android:text="2012/12/31"
+	            tools:ignore="HardcodedText" />
+	
+	        <TextView
+	            android:id="@+id/sync_history_list_view_time"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="5dp"
+	            android:text="23:59:59"
+	            tools:ignore="HardcodedText" />
+
+	        <TextView
+	            android:id="@+id/sync_history_list_view_prof"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:layout_marginLeft="5dp"
+	            android:ellipsize="end"
+	            android:maxLines="1"
+	            android:text="SyncProfile00000000"
+	            tools:ignore="HardcodedText" />
+	        	        
+	        <TextView
+	            android:id="@+id/sync_history_list_view_status"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="5dp"
+	            android:text="Success"
+	            tools:ignore="HardcodedText" />
+	        
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/sync_history_list_view_count"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/msgs_main_sync_history_mode"
+	            />
+	        	        	
+	        <TextView
+	            android:id="@+id/sync_history_list_view_mode"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="5dp"
+	            android:gravity="right"
+	            android:text="Normal"
+	            tools:ignore="HardcodedText" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="5dp"
+	            android:text="@string/msgs_main_sync_history_count_copied"
+	            />
+	        
+	        <TextView
+	            android:id="@+id/sync_history_list_view_count_copied"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:ellipsize="end"
+	            android:maxLines="1"
+	            android:text="100"
+	            tools:ignore="HardcodedText" />
+	
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="5dp"
+	            android:text="@string/msgs_main_sync_history_count_deleted"
+	            />
+	        
+	        <TextView
+	            android:id="@+id/sync_history_list_view_count_deleted"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:ellipsize="end"
+	            android:maxLines="1"
+	            android:text="900"
+	            tools:ignore="HardcodedText" />
+
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="5dp"
+	            android:text="@string/msgs_main_sync_history_elapsed_time"
+	            />
+	        
+	        <TextView
+	            android:id="@+id/sync_history_list_view_elapsed_time"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:ellipsize="end"
+	            android:maxLines="1"
+	            android:text="900"
+	            tools:ignore="HardcodedText" />
+	        	        
+	        <TextView
+	            android:id="@+id/sync_history_list_view_requestor"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="5dp"
+	            android:gravity="right"
+	            android:text="Activity"
+	            tools:ignore="HardcodedText" />
+	        	        
+	        	        	        	        	
+	    </LinearLayout>
+	    
+	    <TextView
+	        android:id="@+id/sync_history_list_view_error_text"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginRight="10dp"
+	        android:text="error"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        tools:ignore="HardcodedText" />
+        
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/sync_history_list_view_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+    
+</LinearLayout>

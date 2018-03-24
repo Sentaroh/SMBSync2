@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ctv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    tools:ignore="SpUsage" >
+
+    <TextView
+        android:id="@+id/msg_list_view_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="HH:MM:SS"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <com.sentaroh.android.Utilities.Widget.CustomTextView
+        android:id="@+id/msg_list_view_item_msg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:text="Small Text"
+        ctv:textSize="15dp" />
+
+</LinearLayout>

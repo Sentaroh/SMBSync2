@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	    <ListPreference
+			android:key="settings_smb_lm_compatibility"
+			android:title="@string/settings_smb_lm_compatibility_title"
+			android:summary="@string/settings_smb_lm_compatibility_summary" 
+			android:dialogTitle="@string/settings_smb_lm_compatibility_dialog_title"
+			android:entries="@array/settings_smb_lm_compatibility_list_entries"
+			android:entryValues="@array/settings_smb_lm_compatibility_list_values" />
+	    <CheckBoxPreference
+			android:key="@string/settings_smb_use_extended_security"
+			android:title="@string/settings_smb_use_extended_security_title"
+			android:summary="@string/settings_smb_use_extended_security_summary_ena" />
+    			    	    	
+		<EditTextPreference
+			android:key="@string/settings_smb_rcv_buf_size"
+			android:title="@string/settings_smb_rcv_buf_size_title"
+			android:summary="@string/settings_smb_rcv_buf_size_summary"
+			android:inputType="number"/>
+		<EditTextPreference
+			android:key="@string/settings_smb_snd_buf_size"
+			android:title="@string/settings_smb_snd_buf_size_title"
+			android:summary="@string/settings_smb_snd_buf_size_summary"
+			android:inputType="number"/>
+		<EditTextPreference
+			android:key="@string/settings_smb_listSize"
+			android:title="@string/settings_smb_listSize_title"
+			android:summary="@string/settings_smb_listSize_summary"
+			android:inputType="number"/>
+		<EditTextPreference
+			android:key="@string/settings_smb_maxBuffers"
+			android:title="@string/settings_smb_maxBuffers_title"
+			android:summary="@string/settings_smb_maxBuffers_summary"
+			android:inputType="number"/>
+
+</PreferenceScreen>

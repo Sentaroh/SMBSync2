@@ -1,0 +1,404 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<title>SMBSync Description</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:"ＭＳ ゴシック";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"MS UI Gothic";
+	panose-1:2 11 6 0 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@ＭＳ ゴシック";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:"\@MS UI Gothic";
+	panose-1:2 11 6 0 7 2 5 8 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+h1
+	{mso-style-link:"見出し 1 \(文字\)";
+	margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:21.25pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.25pt;
+	page-break-before:always;
+	page-break-after:avoid;
+	word-break:break-all;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h2
+	{mso-style-link:"見出し 2 \(文字\)";
+	margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h3
+	{mso-style-link:"見出し 3 \(文字\)";
+	margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h4
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+h5
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;}
+h6
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:10.5pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:21.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	layout-grid-mode:char;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	layout-grid-mode:char;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{mso-style-link:"見出しマップ \(文字\)";
+	margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:9.0pt;
+	font-family:"MS UI Gothic";}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"吹き出し \(文字\)";
+	margin:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:9.0pt;
+	font-family:"Arial","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.148mm, li.148mm, div.148mm
+	{mso-style-name:"スタイル 左 \:  14\.8 mm";
+	margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.2Century, li.2Century, div.2Century
+	{mso-style-name:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝";
+	mso-style-link:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝 \(文字\)";
+	margin-top:18.0pt;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:0mm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Century","serif";
+	text-decoration:underline;}
+span.2
+	{mso-style-name:"見出し 2 \(文字\)";
+	mso-style-link:"見出し 2";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.2Century0
+	{mso-style-name:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝 \(文字\)";
+	mso-style-link:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.a
+	{mso-style-name:"吹き出し \(文字\)";
+	mso-style-link:吹き出し;
+	font-family:"Arial","sans-serif";}
+span.a0
+	{mso-style-name:"見出しマップ \(文字\)";
+	mso-style-link:見出しマップ;
+	font-family:"MS UI Gothic";}
+span.1
+	{mso-style-name:"見出し 1 \(文字\)";
+	mso-style-link:"見出し 1";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.3
+	{mso-style-name:"見出し 3 \(文字\)";
+	mso-style-link:"見出し 3";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+.MsoChpDefault
+	{font-size:10.0pt;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:42.55pt 30.0mm 42.55pt 30.0mm;
+	layout-grid:18.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0mm;}
+ul
+	{margin-bottom:0mm;}
+-->
+</style>
+
+</head>
+
+<body lang=JA link=blue vlink=purple style='text-justify-trim:punctuation'>
+
+<div class=WordSection1 style='layout-grid:18.0pt'>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc450110949"><span style='font-family:
+"ＭＳ ゴシック"'>機能</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US>SMBSync2</span><span style='font-family:
+"ＭＳ 明朝","serif"'>は</span><span lang=EN-US>Android</span><span style='font-family:
+"ＭＳ 明朝","serif"'>端末内の内部ストレージ、</span><span lang=EN-US>SDCARD</span><span
+style='font-family:"ＭＳ 明朝","serif"'>および</span><span lang=EN-US>USB</span><span
+style='font-family:"ＭＳ 明朝","serif"'>フラッシュと</span><span lang=EN-US>PC</span><span
+style='font-family:"ＭＳ 明朝","serif"'>や</span><span lang=EN-US>NAS</span><span
+style='font-family:"ＭＳ 明朝","serif"'>との間で</span><span lang=EN-US>SMB/SAMBA</span><span
+style='font-family:"ＭＳ 明朝","serif"'>を使用してファイルの同期を行うためのツールです。同期はマスターからターゲットへの一方向で、ミラー、移動、コピーの３種類が使用できます。（内部ストレージ、</span><span
+lang=EN-US>SDCARD</span><span style='font-family:"ＭＳ 明朝","serif"'>、</span><span
+lang=EN-US>USB</span><span style='font-family:"ＭＳ 明朝","serif"'>フラッシュ、</span><span
+lang=EN-US>SMB</span><span style='font-family:"ＭＳ 明朝","serif"'>、</span><span
+lang=EN-US>ZIP</span><span style='font-family:"ＭＳ 明朝","serif"'>の組み合わせが可能です）</span></p>
+
+<p class=MsoNormal><span lang=EN-US>SMBSync2</span><span style='font-family:
+"ＭＳ 明朝","serif"'>のスケジュール機能または外部アプリケーション（</span><span lang=EN-US>Tasker</span><span
+style='font-family:"ＭＳ 明朝","serif"'>や</span><span lang=EN-US>AutoMagic</span><span
+style='font-family:"ＭＳ 明朝","serif"'>など）により定期的に同期を開始する事が可能です。</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-indent:-35.4pt;word-break:
+break-all'><span lang=EN-US style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Desc_JA_Short.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"ＭＳ 明朝","serif"'>ミラー</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;word-break:break-all'><span
+style='font-family:"ＭＳ 明朝","serif"'>マスター側のディレクトリーとファイルをターゲット側に差分コピー</span><span
+lang=EN-US>(*1)</span><span style='font-family:"ＭＳ 明朝","serif"'>し、コピー終了後にマスター側に存在しないターゲット側のファイルとディレクトリーを削除する。</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-indent:-35.4pt;word-break:
+break-all'><span lang=EN-US style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Desc_JA_Short.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"ＭＳ 明朝","serif"'>移動</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;word-break:break-all'><span
+style='font-family:"ＭＳ 明朝","serif"'>マスター側のディレクトリーとファイルをターゲット側に差分コピーし、コピー終了後にマスター側のファイルを削除する。（ただし、マスターとターゲットに同名でファイルサイズと更新日時が同じファイルはコピーせずマスター側のファイルを削除）</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-indent:-35.4pt;word-break:
+break-all'><span lang=EN-US style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Desc_JA_Short.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"ＭＳ 明朝","serif"'>コピー</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;word-break:break-all'><span
+style='font-family:"ＭＳ 明朝","serif"'>マスター側のディレクトリーに含まれるファイルをターゲット側に差分コピーする。</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span style='font-family:"ＭＳ 明朝","serif"'>注</span><span
+lang=EN-US>1:</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span style='font-family:"ＭＳ 明朝","serif"'>下記の３条件のうちいずれかが成立した場合に差分ファイルと判定し、コピーや移動を行います。ただし、同期タスクのオプションでファイルサイズと最終更新時間を無視することができます。</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:-21.0pt;word-break:
+break-all'><span lang=EN-US>①<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"ＭＳ 明朝","serif"'>ファイルが存在しない</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:-21.0pt;word-break:
+break-all'><span lang=EN-US>②<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"ＭＳ 明朝","serif"'>ファイルサイズが違う</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:-21.0pt;word-break:
+break-all'><span lang=EN-US>③<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-family:"ＭＳ 明朝","serif"'>最終更新日時が</span><span
+lang=EN-US>3</span><span style='font-family:"ＭＳ 明朝","serif"'>秒以上違う</span><span
+lang=EN-US>(</span><span style='font-family:"ＭＳ 明朝","serif"'>秒数は同期タスクのオプションにより変更可能</span><span
+lang=EN-US>)</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span style='font-family:"ＭＳ 明朝","serif"'>注</span><span
+lang=EN-US>2:</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span style='font-family:"ＭＳ 明朝","serif"'>内部ストレージへ同期したファイルの最終更新時刻は機種により同期した時刻に書き換えられる事があります。また、外部</span><span
+lang=EN-US>SDCARD</span><span style='font-family:"ＭＳ 明朝","serif"'>の最終更新時刻はシステムの制限により常に同期した時刻に書き換えられます。</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span style='font-family:"ＭＳ 明朝","serif"'>注</span><span
+lang=EN-US>3:</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span lang=EN-US>SMB</span><span
+style='font-family:"ＭＳ 明朝","serif"'>プロトコルは</span><span lang=EN-US>SMB1/SMB2</span><span
+style='font-family:"ＭＳ 明朝","serif"'>のみサポートしています。</span><span lang=EN-US>SMB3</span><span
+style='font-family:"ＭＳ 明朝","serif"'>は使用できませんので</span><span lang=EN-US>PC/NAS</span><span
+style='font-family:"ＭＳ 明朝","serif"'>で</span><span lang=EN-US>SMB1</span><span
+style='font-family:"ＭＳ 明朝","serif"'>または</span><span lang=EN-US>SMB2</span><span
+style='font-family:"ＭＳ 明朝","serif"'>を使用可能にしてください。</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span style='font-family:"ＭＳ 明朝","serif"'>注</span><span
+lang=EN-US>4:</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span lang=EN-US>Android 6.0</span><span
+style='font-family:"ＭＳ 明朝","serif"'>以上でスケジュール同期またはバックグラウンドで同期する場合はバッテリーの最適化を無効にしてください。（メニュー</span><span
+lang=EN-US>-&gt;</span><span style='font-family:"ＭＳ 明朝","serif"'>バッテリー最適化を無効にする）</span></p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc450110990"><span style='font-family:
+"ＭＳ ゴシック"'>使用ライブラリー</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US><a href="https://github.com/AgNO3/jcifs-ng">-jcifs-ng
+2.1 SNAPSHOT ClientLibrary</a></span></p>
+
+<p class=MsoNormal><span lang=EN-US>-Zip4J 1.3.2</span></p>
+
+<h2 style='margin-top:18.0pt'><span style='font-family:"ＭＳ ゴシック"'>詳細</span></h2>
+
+<p class=MsoNormal style='word-break:break-all'><span lang=EN-US>Google</span><span
+style='font-family:"ＭＳ 明朝","serif"'>ドライブへのリンク</span><span lang=EN-US>:</span></p>
+
+<p class=MsoNormal style='word-break:break-all'><span lang=EN-US><a
+href="https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing">https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing</a></span></p>
+
+</div>
+
+</body>
+
+</html>
