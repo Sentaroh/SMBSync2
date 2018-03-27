@@ -1424,7 +1424,7 @@ public class SyncTaskUtil {
         final EditText edituser = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
         final EditText editpass = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
         final EditText editshare = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
-        final EditText editdir = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_directory_name);
+        final EditText editdir = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_smb_directory_name);
         final CheckedTextView ctv_use_userpass = (CheckedTextView) p_dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
         final EditText editport = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
         final CheckedTextView ctv_use_port_number = (CheckedTextView) p_dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
@@ -2628,13 +2628,12 @@ public class SyncTaskUtil {
                 subtitle.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
                 title.setText(mContext.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
-                String c_dir = (remdir.equals("//")) ? remurl + "/" : remurl + remdir;
-                subtitle.setText(c_dir);
+                subtitle.setText((remdir.equals("//")) ? remurl + "/" : remurl + remdir);
                 final TextView dlg_msg = (TextView) dialog.findViewById(R.id.item_select_list_dlg_msg);
-                final LinearLayout ll_context = (LinearLayout) dialog.findViewById(R.id.context_view_file_select);
-                ll_context.setVisibility(LinearLayout.VISIBLE);
-                final ImageButton ib_select_all = (ImageButton) ll_context.findViewById(R.id.context_button_select_all);
-                final ImageButton ib_unselect_all = (ImageButton) ll_context.findViewById(R.id.context_button_unselect_all);
+//                final LinearLayout ll_context = (LinearLayout) dialog.findViewById(R.id.context_view_file_select);
+//                ll_context.setVisibility(LinearLayout.VISIBLE);
+//                final ImageButton ib_select_all = (ImageButton) ll_context.findViewById(R.id.context_button_select_all);
+//                final ImageButton ib_unselect_all = (ImageButton) ll_context.findViewById(R.id.context_button_unselect_all);
                 final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
                 dlg_msg.setVisibility(TextView.VISIBLE);
 
@@ -2663,10 +2662,8 @@ public class SyncTaskUtil {
                         final TreeFilelistItem tfi = tfa.getDataItem(pos);
                         expandHideRemoteDirTree(remurl, smb_proto, pos, tfi, tfa);
                     }
-
                     @Override
-                    public void negativeResponse(Context c, Object[] o) {
-                    }
+                    public void negativeResponse(Context c, Object[] o) {}
                 });
                 tfa.setExpandCloseListener(ntfy_expand_close);
                 lv.setOnItemClickListener(new OnItemClickListener() {
@@ -2683,28 +2680,28 @@ public class SyncTaskUtil {
                     }
                 });
 
-                ib_select_all.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0; i < tfa.getDataItemCount(); i++) {
-                            TreeFilelistItem tfli = tfa.getDataItem(i);
-                            if (!tfli.isHideListItem()) tfa.setDataItemIsSelected(i);
-                        }
-                        tfa.notifyDataSetChanged();
-                        btn_ok.setEnabled(true);
-                    }
-                });
-
-                ib_unselect_all.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0; i < tfa.getDataItemCount(); i++) {
-                            tfa.setDataItemIsUnselected(i);
-                        }
-                        tfa.notifyDataSetChanged();
-                        btn_ok.setEnabled(false);
-                    }
-                });
+//                ib_select_all.setOnClickListener(new OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        for (int i = 0; i < tfa.getDataItemCount(); i++) {
+//                            TreeFilelistItem tfli = tfa.getDataItem(i);
+//                            if (!tfli.isHideListItem()) tfa.setDataItemIsSelected(i);
+//                        }
+//                        tfa.notifyDataSetChanged();
+//                        btn_ok.setEnabled(true);
+//                    }
+//                });
+//
+//                ib_unselect_all.setOnClickListener(new OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        for (int i = 0; i < tfa.getDataItemCount(); i++) {
+//                            tfa.setDataItemIsUnselected(i);
+//                        }
+//                        tfa.notifyDataSetChanged();
+//                        btn_ok.setEnabled(false);
+//                    }
+//                });
 
                 //OKボタンの指定
                 btn_ok.setEnabled(false);

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit_sync_folder_dlg_internal_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:ignore="SpUsage,InefficientWeight,ContentDescription" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="clip_horizontal|fill_horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/edit_sync_folder_dlg_internal_local_mount_point_selector_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/msgs_profile_edit_sync_folder_dlg_local_mount_point"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:ignore="RtlHardcoded" />
+            <Spinner
+                android:id="@+id/edit_sync_folder_dlg_internal_local_mount_point_selector"
+                style="?android:attr/spinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:minHeight="36dp"
+                android:paddingLeft="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:ignore="RtlSymmetry,RtlHardcoded" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/edit_sync_folder_dlg_internal_directory_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/edit_sync_folder_dlg_internal_dir_keyword_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/msgs_profile_sync_task_dlg_keyword_insert_dir"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    tools:ignore="RtlHardcoded" />
+
+                <include layout="@layout/edit_sync_folder_keyword"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/edit_sync_folder_dlg_list_internal_directory_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="@string/msgs_profile_edit_sync_folder_dlg_dirlist"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/edit_sync_folder_dlg_internal_directory_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/msgs_profile_edit_sync_folder_dlg_directory"
+                    android:inputType="text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
