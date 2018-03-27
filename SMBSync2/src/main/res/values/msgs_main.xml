@@ -188,7 +188,7 @@
     <string name="msgs_filter_list_dlg_dir_filter">Directory filter</string>
     <string name="msgs_filter_list_dlg_add_dir_filter">Add directory filter</string>
     <string name="msgs_filter_list_filter_deleted">This entry was deleted.</string>
-    <string name="msgs_filter_list_duplicate_filter_specified">Duplicate filter was specified.filter=%s</string>
+    <string name="msgs_filter_list_duplicate_filter_specified">%s is already registered</string>
 	<string name="msgs_filter_list_same_directory_access">This filter can not be specified because the master and the target is to access the same directory. Filter=%s</string>
 	<string name="msgs_filter_list_same_directory_access_not_excluded">Please exclude the directory so as to access to the master and the target is different directory. Directory=%s</string>	    
     <string name="msgs_filter_list_no_filter">---Empty filter---</string>

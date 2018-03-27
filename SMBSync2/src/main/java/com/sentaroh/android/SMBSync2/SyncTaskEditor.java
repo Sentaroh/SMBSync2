@@ -858,7 +858,7 @@ public class SyncTaskEditor extends DialogFragment {
             public void onClick(View v) {
                 String sel = sp_sync_folder_type.getSelectedItem().toString();
                 if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {
-                    mTaskUtil.selectRemoteDirectoryDlg(dialog);
+                    mTaskUtil.selectRemoteDirectoryDlg(dialog, !sfev.folder_master);
                 } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal)) ||
                         sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard))) {
                     String url = mGp.safMgr.getSdcardDirectory();

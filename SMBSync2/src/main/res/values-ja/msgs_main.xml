@@ -182,7 +182,7 @@
     <string name="msgs_filter_list_dlg_dir_filter">ディレクトリー フィルター</string>
     <string name="msgs_filter_list_dlg_add_dir_filter">ディレクトリー フィルター追加</string>
     <string name="msgs_filter_list_filter_deleted">削除済み</string>
-    <string name="msgs_filter_list_duplicate_filter_specified">フィルターが重複しています。フィルター=%s</string>
+    <string name="msgs_filter_list_duplicate_filter_specified">%s は既に登録されています。</string>
     <string name="msgs_filter_list_same_directory_access">マスターとターゲットが同じディレクトリをアクセスするため指定できません。フィルター=%s</string>
     <string name="msgs_filter_list_same_directory_access_not_excluded">マスターとターゲットが同じディレクトリをアクセスするため、ディレクトリを除外してください。ディレクトリ=%s</string>
     <string name="msgs_filter_list_no_filter">---フィルターは空です---</string>
