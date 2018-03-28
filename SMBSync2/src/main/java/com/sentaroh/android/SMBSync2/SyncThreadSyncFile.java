@@ -75,7 +75,7 @@ public class SyncThreadSyncFile {
                                             sync_result = syncDeleteSmbToExternal(stwa, sti, from_base, master_dir + tmp,
                                                     to_base, target_dir + "/" + tmp, element, smb_fl);
                                         } else {
-                                            sync_result = syncDeleteSmbToExternal(stwa, sti, from_base, master_dir + tmp ,
+                                            sync_result = syncDeleteSmbToExternal(stwa, sti, from_base, master_dir + tmp+"/" ,
                                                     to_base, target_dir + "/" + tmp, element, smb_fl);
                                         }
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR) {
