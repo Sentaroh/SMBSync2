@@ -674,17 +674,19 @@ public class SyncTaskEditor extends DialogFragment {
                 if (!ctv_sync_folder_use_pswd.isChecked()) {
                     user=pass=null;
                 }
-                String smb_proto=""+sp_sync_folder_smb_proto.getSelectedItemPosition();
+                RemoteAuthInfo ra=new RemoteAuthInfo();
+                ra.smb_user_name=user;
+                ra.smb_user_password=pass;
+                ra.smb_smb_protocol=""+sp_sync_folder_smb_proto.getSelectedItemPosition();
+                ra.smb_ipc_signing_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
                 if (SmbUtil.isValidIpAddress(et_remote_host.getText().toString())) {
                     mTaskUtil.testSmbLogonDlg("", et_remote_host.getText().toString().trim(),
                             et_sync_folder_port.getText().toString().trim(),
-                            user, pass,
-                            et_sync_folder_share_name.getText().toString().trim(), ctv_sync_folder_smb_ipc_enforced.isChecked(), smb_proto, null);
+                            et_sync_folder_share_name.getText().toString().trim(), ra, null);
                 } else {
                     mTaskUtil.testSmbLogonDlg(et_remote_host.getText().toString().trim(), "",
                             et_sync_folder_port.getText().toString().trim(),
-                            user, pass,
-                            et_sync_folder_share_name.getText().toString().trim(), ctv_sync_folder_smb_ipc_enforced.isChecked(), smb_proto, null);
+                            et_sync_folder_share_name.getText().toString().trim(), ra, null);
                 }
             }
         });

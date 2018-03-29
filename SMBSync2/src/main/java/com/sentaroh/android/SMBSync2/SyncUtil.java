@@ -118,7 +118,7 @@ public final class SyncUtil {
         mLog.resetLogReceiver();
     }
 
-    static public BaseContext buildBaseContextWithSmbProtocol(boolean ipc_signing_enforced, String smb_proto) {
+    static public BaseContext buildBaseContextWithSmbProtocol(RemoteAuthInfo ra) {
         BaseContext bc=null;
         try {
             Properties prop=new Properties();
@@ -136,17 +136,17 @@ public final class SyncUtil {
 
 //            prop_master.setProperty("jcifs.smb.client.minVersion","SMB1");
 //            prop_master.setProperty("jcifs.smb.client.maxVersion","SMB1");
-            if (smb_proto.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM)) {
-                if (ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced","true");
+            if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM)) {
+                if (ra.smb_ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced","true");
                 else prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
                 prop.setProperty("jcifs.smb.client.minVersion","SMB1");
                 prop.setProperty("jcifs.smb.client.maxVersion","SMB210");
-            } else if (smb_proto.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+            } else if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
                 prop.setProperty("jcifs.smb.client.minVersion","SMB1");
                 prop.setProperty("jcifs.smb.client.maxVersion","SMB1");
                 prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
-            } else if (smb_proto.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) {
-                if (ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced","true");
+            } else if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) {
+                if (ra.smb_ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced","true");
                 else prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
                 prop.setProperty("jcifs.smb.client.minVersion","SMB210");
                 prop.setProperty("jcifs.smb.client.maxVersion","SMB210");

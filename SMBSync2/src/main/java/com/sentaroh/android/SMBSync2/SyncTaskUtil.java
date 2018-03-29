@@ -1096,9 +1096,8 @@ public class SyncTaskUtil {
 //		return result;
 //	};
 
-    public void testSmbLogonDlg(final String host, final String addr, final String port,
-                                final String user, final String pass, final String share,
-                                final boolean ipc_enforced, final String smb_proto, final NotifyEvent p_ntfy) {
+    public void testSmbLogonDlg(final String host, final String addr, final String port, final String share,
+                                RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
         final ThreadCtrl tc = new ThreadCtrl();
         tc.setEnabled();
         tc.setThreadResultSuccess();
@@ -1117,7 +1116,7 @@ public class SyncTaskUtil {
         Thread th = new Thread() {
             @Override
             public void run() {
-                util.addDebugMsg(1, "I", "Test logon started, host=" + host + ", addr=" + addr + ", port=" + port + ", user=" + user);
+                util.addDebugMsg(1, "I", "Test logon started, host=" + host + ", addr=" + addr + ", port=" + port + ", user=" + ra.smb_user_name);
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
@@ -1154,7 +1153,7 @@ public class SyncTaskUtil {
                         reachable = SmbUtil.isIpAddressAndPortConnected(addr, Integer.parseInt(port), 3500);
                     }
                     if (reachable) {
-                        testSmbAuth(user, pass, addr, port, share, ipc_enforced, smb_proto, ntfy);
+                        testSmbAuth(addr, port, share, ra, ntfy);
                     } else {
                         util.addDebugMsg(1, "I", "Test logon failed, remote server not connected");
                         String unreachble_msg = "";
@@ -1180,7 +1179,7 @@ public class SyncTaskUtil {
 //							e.printStackTrace();
                         }
                     }
-                    if (ipAddress != null) testSmbAuth(user, pass, ipAddress, port, share, ipc_enforced, smb_proto, ntfy);
+                    if (ipAddress != null) testSmbAuth(ipAddress, port, share, ra, ntfy);
                     else {
                         util.addDebugMsg(1, "I", "Test logon failed, remote server not connected");
                         String unreachble_msg = "";
@@ -1193,8 +1192,8 @@ public class SyncTaskUtil {
         th.start();
     }
 
-    private void testSmbAuth(final String user, final String pass, final String host, String port, String share,
-                             boolean ipc_enforced, final String smb_proto, final NotifyEvent ntfy) {
+    private void testSmbAuth(final String host, String port, String share,
+                             RemoteAuthInfo ra, final NotifyEvent ntfy) {
         final UncaughtExceptionHandler defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
         Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
@@ -1218,15 +1217,15 @@ public class SyncTaskUtil {
         if (port.equals("")) url = "smb://" + host + "/IPC$/";//+share+"/";
         else url = "smb://" + host + ":" + port + "/IPC%/";//+share+"/";
 
-        BaseContext bc = SyncUtil.buildBaseContextWithSmbProtocol(ipc_enforced, smb_proto);
-        CIFSContext auth = bc.withCredentials(new NtlmPasswordAuthentication(bc, "", user, pass));
+        BaseContext bc = SyncUtil.buildBaseContextWithSmbProtocol(ra);
+        CIFSContext auth = bc.withCredentials(new NtlmPasswordAuthentication(bc, "", ra.smb_user_name, ra.smb_user_password));
 
         try {
             SmbFile sf = new SmbFile(url, auth);
             sf.connect();
-            util.addDebugMsg(1, "I", "Test logon completed, host=" + host + ", port=" + port+", user="+user);
+            util.addDebugMsg(1, "I", "Test logon completed, host=" + host + ", port=" + port+", user="+ra.smb_user_name);
         } catch (SmbException e) {
-            String[] e_msg = SmbUtil.analyzeNtStatusCode(e, mContext, url, user);
+            String[] e_msg = SmbUtil.analyzeNtStatusCode(e, mContext, url, ra.smb_user_name);
             err_msg = e_msg[0];
             util.addDebugMsg(1, "I", "Test logon failed." + "\n" + err_msg);
         } catch (MalformedURLException e) {
@@ -3500,8 +3499,12 @@ public class SyncTaskUtil {
             }
         });
 
-        Thread tf = new Thread(new ReadSmbFilelist(mContext, tc, remurl, remdir, remoteFileList,
-                smbUser, smbPass, ipc_enforced, smb_proto, ntfy, true, readSubDirCnt, mGp));
+        RemoteAuthInfo ra=new RemoteAuthInfo();
+        if (smbUser!=null && !smbUser.equals("")) ra.smb_user_name=smbUser;
+        if (smbPass!=null && !smbPass.equals("")) ra.smb_user_password=smbPass;
+        ra.smb_ipc_signing_enforced=ipc_enforced;
+        ra.smb_smb_protocol=smb_proto;
+        Thread tf = new Thread(new ReadSmbFilelist(mContext, tc, remurl, remdir, remoteFileList, ra, ntfy, true, readSubDirCnt, mGp));
         tf.start();
 
         dialog.show();

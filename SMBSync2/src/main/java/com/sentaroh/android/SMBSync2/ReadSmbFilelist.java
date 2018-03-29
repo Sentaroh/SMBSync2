@@ -23,24 +23,17 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Properties;
 
 import jcifs.CIFSContext;
-import jcifs.CIFSException;
-import jcifs.CloseableIterator;
-import jcifs.SmbResource;
-import jcifs.config.PropertyConfiguration;
 import jcifs.context.BaseContext;
 import jcifs.smb.NtlmPasswordAuthentication;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 
 import android.content.Context;
-import android.os.SystemClock;
 import android.util.Log;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
@@ -64,12 +57,10 @@ public class ReadSmbFilelist implements Runnable {
 
     private Context mContext = null;
 
-    private String mUserName = null, mUserPassword = null;
-    private String mSmbProtocol="0";
+    private RemoteAuthInfo mRemoteAuthInfo=null;
 
-    private boolean mIpcEnforced=true;
     public ReadSmbFilelist(Context c, ThreadCtrl ac, String ru, String rd,
-                           ArrayList<TreeFilelistItem> fl, String user, String pass, boolean ipc_enforced, String smb_proto,
+                           ArrayList<TreeFilelistItem> fl, RemoteAuthInfo rauth,
                            NotifyEvent ne, boolean dironly, boolean dc, GlobalParameters gp) {
         mContext = c;
         mUtil = new SyncUtil(mContext, "FileList", gp);
@@ -79,12 +70,10 @@ public class ReadSmbFilelist implements Runnable {
         getFLCtrl = ac; //new ThreadCtrl();
         notifyEvent = ne;
 
-        mSmbProtocol=smb_proto;
+        mRemoteAuthInfo=rauth;
 
         readDirOnly = dironly;
         readSubDirCnt = dc;
-
-        mIpcEnforced=ipc_enforced;
 
         String t_host1 = ru.replace("smb://", "");
         String t_host11 = t_host1;
@@ -101,11 +90,8 @@ public class ReadSmbFilelist implements Runnable {
             mHostName = t_host2;
         }
         mUtil.addDebugMsg(1, "I", "ReadSmbFilelist init. name=" + mHostName +
-                ", addr=" + mHostAddr + ", port=" + mHostPort + ", remoteUrl=" + remoteUrl + ", Dir=" + remoteDir+", user="+user+", smb_proto="+smb_proto);
-
-        if (user.length() != 0) mUserName = user;
-        if (pass.length() != 0) mUserPassword = pass;
-
+                ", addr=" + mHostAddr + ", port=" + mHostPort + ", remoteUrl=" + remoteUrl + ", Dir=" +
+                remoteDir+", user="+rauth.smb_user_name+", smb_proto="+rauth.smb_smb_protocol);
     }
 
     @Override
@@ -169,8 +155,8 @@ public class ReadSmbFilelist implements Runnable {
 
     private void readFileList() {
         remoteFileList.clear();
-        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(mIpcEnforced, mSmbProtocol);
-        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", mUserName, mUserPassword);
+        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(mRemoteAuthInfo);
+        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
         CIFSContext ct= bc.withCredentials(creds);
 
         try {
@@ -247,7 +233,7 @@ public class ReadSmbFilelist implements Runnable {
         } catch (SmbException e) {
             e.printStackTrace();
             String cause="";
-            String[] e_msg=SmbUtil.analyzeNtStatusCode(e, mContext, remoteUrl + remoteDir, mUserName);
+            String[] e_msg=SmbUtil.analyzeNtStatusCode(e, mContext, remoteUrl + remoteDir, mRemoteAuthInfo.smb_user_name);
             if (e.getCause()!=null) {
                 cause=e.getCause().toString();
                 mUtil.addDebugMsg(1, "E", cause.substring(cause.indexOf(":")+1));
@@ -276,21 +262,14 @@ public class ReadSmbFilelist implements Runnable {
 
     private void readShareList() {
         remoteFileList.clear();
-        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(mIpcEnforced, mSmbProtocol);//SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM);
-        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", mUserName, mUserPassword);
+        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(mRemoteAuthInfo);//SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM);
+        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
         SmbFile[] fl=null;
         CIFSContext ct = bc.withCredentials(creds);
-//        CIFSContext ct = bc.withAnonymousCredentials();
-//        String auth_url=remoteUrl+"IPC$/";
         try {
-//            SmbFile t_auth = new SmbFile(auth_url, ct);
-//            t_auth.connect();
-
             SmbFile remoteFile = new SmbFile(remoteUrl, ct);
             fl = remoteFile.listFiles();
             for(SmbFile item:fl) Log.v("","fn="+item.getName());
-            mUtil.addDebugMsg(1, "W", "Read Share list with user provided auth info.");
-
         } catch (SmbException e) {
             e.printStackTrace();
             String cause="";

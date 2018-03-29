@@ -379,10 +379,14 @@ public class SyncThread extends Thread {
                     showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "I", "", "",
                             mGp.appContext.getString(R.string.msgs_mirror_task_started));
 
-                    mStwa.masterBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(
-                            mStwa.currentSTI.isMasterSmbIpcSigningEnforced(), mStwa.currentSTI.getMasterSmbProtocol());
-                    mStwa.targetBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(
-                            mStwa.currentSTI.isTargetSmbIpcSigningEnforced(),mStwa.currentSTI.getTargetSmbProtocol());
+                    RemoteAuthInfo ra_mst=new RemoteAuthInfo();
+                    ra_mst.smb_ipc_signing_enforced=mStwa.currentSTI.isMasterSmbIpcSigningEnforced();
+                    ra_mst.smb_smb_protocol=mStwa.currentSTI.getMasterSmbProtocol();
+                    mStwa.masterBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(ra_mst);
+                    RemoteAuthInfo ra_tgt=new RemoteAuthInfo();
+                    ra_tgt.smb_ipc_signing_enforced=mStwa.currentSTI.isTargetSmbIpcSigningEnforced();
+                    ra_tgt.smb_smb_protocol=mStwa.currentSTI.getTargetSmbProtocol();
+                    mStwa.targetBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(ra_tgt);
 
                     initSyncParms(mStwa.currentSTI);
 
