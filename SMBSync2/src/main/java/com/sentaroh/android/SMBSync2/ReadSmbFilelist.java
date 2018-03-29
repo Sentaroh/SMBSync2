@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -66,8 +67,9 @@ public class ReadSmbFilelist implements Runnable {
     private String mUserName = null, mUserPassword = null;
     private String mSmbProtocol="0";
 
+    private boolean mIpcEnforced=true;
     public ReadSmbFilelist(Context c, ThreadCtrl ac, String ru, String rd,
-                           ArrayList<TreeFilelistItem> fl, String user, String pass, String smb_proto,
+                           ArrayList<TreeFilelistItem> fl, String user, String pass, boolean ipc_enforced, String smb_proto,
                            NotifyEvent ne, boolean dironly, boolean dc, GlobalParameters gp) {
         mContext = c;
         mUtil = new SyncUtil(mContext, "FileList", gp);
@@ -81,6 +83,8 @@ public class ReadSmbFilelist implements Runnable {
 
         readDirOnly = dironly;
         readSubDirCnt = dc;
+
+        mIpcEnforced=ipc_enforced;
 
         String t_host1 = ru.replace("smb://", "");
         String t_host11 = t_host1;
@@ -165,7 +169,7 @@ public class ReadSmbFilelist implements Runnable {
 
     private void readFileList() {
         remoteFileList.clear();
-        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(mSmbProtocol);
+        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(mIpcEnforced, mSmbProtocol);
         NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", mUserName, mUserPassword);
         CIFSContext ct= bc.withCredentials(creds);
 
@@ -242,12 +246,17 @@ public class ReadSmbFilelist implements Runnable {
 
         } catch (SmbException e) {
             e.printStackTrace();
+            String cause="";
+            String[] e_msg=SmbUtil.analyzeNtStatusCode(e, mContext, remoteUrl + remoteDir, mUserName);
+            if (e.getCause()!=null) {
+                cause=e.getCause().toString();
+                mUtil.addDebugMsg(1, "E", cause.substring(cause.indexOf(":")+1));
+                e_msg[0]=cause+"\n"+e_msg[0];
+            }
             mUtil.addDebugMsg(1, "E", e.toString());
+            getFLCtrl.setThreadMessage(e_msg[0]);
             if (getFLCtrl.isEnabled()) {
                 getFLCtrl.setThreadResultError();
-                String[] e_msg = SmbUtil.analyzeNtStatusCode(e, mContext,
-                        remoteUrl + remoteDir, mUserName);
-                getFLCtrl.setThreadMessage(e_msg[0]);
                 getFLCtrl.setDisabled();
             } else {
                 getFLCtrl.setThreadResultCancelled();
@@ -265,74 +274,73 @@ public class ReadSmbFilelist implements Runnable {
         }
     }
 
-    ;
-
     private void readShareList() {
         remoteFileList.clear();
-        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM);
+        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(mIpcEnforced, mSmbProtocol);//SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM);
         NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", mUserName, mUserPassword);
+        SmbFile[] fl=null;
         CIFSContext ct = bc.withCredentials(creds);
-
+//        CIFSContext ct = bc.withAnonymousCredentials();
+//        String auth_url=remoteUrl+"IPC$/";
         try {
-            SmbFile[] fl=null;
-            SmbException last_smb_exception=null;
-            try {
-                SmbFile remoteFile = new SmbFile(remoteUrl, ct);
-                fl = remoteFile.listFiles();
-                for(SmbFile item:fl) Log.v("","fn="+item.getName());
-                mUtil.addDebugMsg(1, "W", "Read Share list with user provided auth info.");
-            } catch (SmbException e) {
-                last_smb_exception=e;
-            }
+//            SmbFile t_auth = new SmbFile(auth_url, ct);
+//            t_auth.connect();
 
-            if (fl==null) {
-                mUtil.addDebugMsg(1, "E", last_smb_exception.toString());
-                getFLCtrl.setThreadResultError();
-                String[] e_msg = SmbUtil.analyzeNtStatusCode(last_smb_exception, mContext,
-                        remoteUrl + remoteDir, "");
-                getFLCtrl.setThreadMessage(e_msg[0]);
-                getFLCtrl.setDisabled();
-                return;
-            }
-            for (SmbFile item:fl) {
-                String fn = item.getName().substring(0,item.getName().length()-1);
-                String fp = item.getPath().substring(0,item.getPath().length()-1);
-                if (getFLCtrl.isEnabled()) {
-                    if (!fn.endsWith("$")) {
-                        TreeFilelistItem fi = new TreeFilelistItem(
-                                fn,
-                                "",
-                                true,//fl[i].isDirectory(),
-                                0,//fl[i].length(),
-                                0,//fl[i].lastModified(),
-                                false,
-                                true,//fl[i].canRead(),
-                                false,//fl[i].canWrite(),
-                                false,//fl[i].isHidden(),
-                                fp, 0);
-                        remoteFileList.add(fi);
-                        mUtil.addDebugMsg(2, "I", "filelist added :" + fn);
-                    }
+            SmbFile remoteFile = new SmbFile(remoteUrl, ct);
+            fl = remoteFile.listFiles();
+            for(SmbFile item:fl) Log.v("","fn="+item.getName());
+            mUtil.addDebugMsg(1, "W", "Read Share list with user provided auth info.");
 
-                } else {
-                    getFLCtrl.setThreadResultCancelled();
-                    mUtil.addDebugMsg(1, "W", "File list creation cancelled by main task.");
-                    break;
-                }
+        } catch (SmbException e) {
+            e.printStackTrace();
+            String cause="";
+            if (e.getCause()!=null) {
+                cause=e.getCause().toString();
+                mUtil.addDebugMsg(1, "E", cause.substring(cause.indexOf(":")+1));
             }
-        } catch (MalformedURLException e) {
             mUtil.addDebugMsg(1, "E", e.toString());
+            getFLCtrl.setThreadResultError();
+            String[] e_msg = SmbUtil.analyzeNtStatusCode(e, mContext, remoteUrl, "");
+
+            if (!cause.equals("")) getFLCtrl.setThreadMessage(cause.substring(cause.indexOf(":")+1)+"\n"+e_msg[0]);
+            else getFLCtrl.setThreadMessage(e_msg[0]);
+
+            getFLCtrl.setDisabled();
+            return;
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+        }
+
+        for (SmbFile item:fl) {
+            String fn = item.getName().substring(0,item.getName().length()-1);
+            String fp = item.getPath().substring(0,item.getPath().length()-1);
             if (getFLCtrl.isEnabled()) {
-                getFLCtrl.setThreadResultError();
-                getFLCtrl.setThreadMessage(e.getMessage());
-                getFLCtrl.setDisabled();
+                if (!fn.endsWith("$")) {
+                    TreeFilelistItem fi = new TreeFilelistItem(
+                            fn,
+                            "",
+                            true,//fl[i].isDirectory(),
+                            0,//fl[i].length(),
+                            0,//fl[i].lastModified(),
+                            false,
+                            true,//fl[i].canRead(),
+                            false,//fl[i].canWrite(),
+                            false,//fl[i].isHidden(),
+                            fp, 0);
+                    remoteFileList.add(fi);
+                    mUtil.addDebugMsg(2, "I", "filelist added :" + fn);
+                }
+
             } else {
                 getFLCtrl.setThreadResultCancelled();
+                mUtil.addDebugMsg(1, "W", "File list creation cancelled by main task.");
+                break;
             }
         }
     }
-
-    ;
 
     // Default uncaught exception handler variable
     private UncaughtExceptionHandler defaultUEH;

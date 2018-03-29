@@ -75,7 +75,8 @@ android {
 dependencies {
 //    implementation project(':Utilities')
 //    implementation(name: 'Utilities-1.0.5', ext: 'aar')
-    implementation files('libs/jcifs-ng-2.1.0.jar')
+    implementation files('libs/jcifs-ng-2.1.0-mod-02.jar')
+//    implementation files('libs/jcifs-ng-2.1.0.jar')
     implementation files('libs/slf4j-api-1.7.7.jar')
     implementation files('libs/slf4j-simple-1.7.7.jar')
 //    implementation "org.bouncycastle:bcprov-jdk15on:1.56"

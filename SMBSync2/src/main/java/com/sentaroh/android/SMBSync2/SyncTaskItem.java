@@ -79,6 +79,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY = "1";
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY = "2";
     private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SYSTEM;
+    private boolean syncTaskMasterFolderSmbIpcSigningEnforced = true;
     private String syncTaskMasterFolderRemovableStorageID = "";
 //	private boolean syncTaskMasterFolderUseInternalUsbFolder=false;
 
@@ -93,6 +94,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskTargetFolderRemotePassword = "";
     private String syncTaskTargetFolderRemoteDomain = "";
     private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SYSTEM;
+    private boolean syncTaskTargetFolderSmbIpcSigningEnforced = true;
     private String syncTaskTargetFolderRemovableStorageID = "";
     private String syncTaskTargetZipFileName = "";
     public final static String ZIP_OPTION_COMP_LEVEL_FASTEST = "FASTEST";
@@ -267,6 +269,14 @@ class SyncTaskItem implements Serializable, Cloneable {
         return syncTaskMasterFolderRemovableStorageID;
     }
 
+    public boolean isMasterSmbIpcSigningEnforced() {
+        return syncTaskMasterFolderSmbIpcSigningEnforced;
+    }
+
+    public void setMasterSmbIpcSigningEnforced(boolean enforced) {
+        syncTaskMasterFolderSmbIpcSigningEnforced=enforced;
+    }
+
     public String getMasterFolderType() {
         return syncTaskMasterFolderType;
     }
@@ -314,6 +324,15 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setTargetSmbProtocol(String proto) {
         syncTaskTargetFolderSmbProtocol=proto;
     }
+
+    public boolean isTargetSmbIpcSigningEnforced() {
+        return syncTaskTargetFolderSmbIpcSigningEnforced;
+    }
+
+    public void setTargetSmbIpcSigningEnforced(boolean enforced) {
+        syncTaskTargetFolderSmbIpcSigningEnforced=enforced;
+    }
+
     public String getTargetRemovableStorageID() {
         return syncTaskTargetFolderRemovableStorageID;
     }
@@ -769,6 +788,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskMasterFolderRemotePassword.equals(sti.getMasterSmbPassword())) &&
                 (syncTaskMasterFolderRemoteDomain.equals(sti.getMasterSmbDomain())) &&
                 (syncTaskMasterFolderSmbProtocol.equals(sti.getMasterSmbProtocol())) &&
+                (syncTaskMasterFolderSmbIpcSigningEnforced==sti.isMasterSmbIpcSigningEnforced()) &&
                 (syncTaskMasterFolderRemovableStorageID.equals(sti.getMasterRemovableStorageID()))) {
 //                Log.v("","step1");
             if ((syncTaskTargetFolderType.equals(sti.getTargetFolderType())) &&
@@ -782,6 +802,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                     (syncTaskTargetFolderRemotePassword.equals(sti.getTargetSmbPassword())) &&
                     (syncTaskTargetFolderRemoteDomain.equals(sti.getTargetSmbDomain())) &&
                     (syncTaskTargetFolderSmbProtocol.equals(sti.getTargetSmbProtocol())) &&
+                    (syncTaskTargetFolderSmbIpcSigningEnforced==sti.isTargetSmbIpcSigningEnforced()) &&
                     (syncTaskTargetFolderRemovableStorageID.equals(sti.getTargetRemovableStorageID()))) {
 //                Log.v("","step2");
                 if ((syncTaskTargetZipFileName.equals(sti.getTargetZipOutputFileName())) &&
@@ -845,9 +866,6 @@ class SyncTaskItem implements Serializable, Cloneable {
 
 
         }
-
         return result;
-
     }
-
 }

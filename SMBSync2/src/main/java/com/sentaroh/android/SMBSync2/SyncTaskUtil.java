@@ -1097,7 +1097,8 @@ public class SyncTaskUtil {
 //	};
 
     public void testSmbLogonDlg(final String host, final String addr, final String port,
-                                final String user, final String pass, final String share, final String smb_proto, final NotifyEvent p_ntfy) {
+                                final String user, final String pass, final String share,
+                                final boolean ipc_enforced, final String smb_proto, final NotifyEvent p_ntfy) {
         final ThreadCtrl tc = new ThreadCtrl();
         tc.setEnabled();
         tc.setThreadResultSuccess();
@@ -1153,7 +1154,7 @@ public class SyncTaskUtil {
                         reachable = SmbUtil.isIpAddressAndPortConnected(addr, Integer.parseInt(port), 3500);
                     }
                     if (reachable) {
-                        testSmbAuth(user, pass, addr, port, share, smb_proto, ntfy);
+                        testSmbAuth(user, pass, addr, port, share, ipc_enforced, smb_proto, ntfy);
                     } else {
                         util.addDebugMsg(1, "I", "Test logon failed, remote server not connected");
                         String unreachble_msg = "";
@@ -1179,7 +1180,7 @@ public class SyncTaskUtil {
 //							e.printStackTrace();
                         }
                     }
-                    if (ipAddress != null) testSmbAuth(user, pass, ipAddress, port, share, smb_proto, ntfy);
+                    if (ipAddress != null) testSmbAuth(user, pass, ipAddress, port, share, ipc_enforced, smb_proto, ntfy);
                     else {
                         util.addDebugMsg(1, "I", "Test logon failed, remote server not connected");
                         String unreachble_msg = "";
@@ -1193,7 +1194,7 @@ public class SyncTaskUtil {
     }
 
     private void testSmbAuth(final String user, final String pass, final String host, String port, String share,
-                             final String smb_proto, final NotifyEvent ntfy) {
+                             boolean ipc_enforced, final String smb_proto, final NotifyEvent ntfy) {
         final UncaughtExceptionHandler defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
         Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
@@ -1214,10 +1215,10 @@ public class SyncTaskUtil {
 
         String err_msg = null, url = "";
 
-        if (port.equals("")) url = "smb://" + host + "/";//+share+"/";
-        else url = "smb://" + host + ":" + port + "/";//+share+"/";
+        if (port.equals("")) url = "smb://" + host + "/IPC$/";//+share+"/";
+        else url = "smb://" + host + ":" + port + "/IPC%/";//+share+"/";
 
-        BaseContext bc = SyncUtil.buildBaseContextWithSmbProtocol(smb_proto);
+        BaseContext bc = SyncUtil.buildBaseContextWithSmbProtocol(ipc_enforced, smb_proto);
         CIFSContext auth = bc.withCredentials(new NtlmPasswordAuthentication(bc, "", user, pass));
 
         try {
@@ -1366,6 +1367,7 @@ public class SyncTaskUtil {
         final CheckedTextView ctv_use_userpass = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
         final EditText editport = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
         final CheckedTextView ctv_use_port_number = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
+        final CheckedTextView ctv_sync_folder_smb_ipc_enforced = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_ipc_signing_enforced);
         String remote_addr, remote_user = "", remote_pass = "", remote_host;
 
         if (ctv_use_userpass.isChecked()) {
@@ -1374,7 +1376,7 @@ public class SyncTaskUtil {
         }
 
         final String smb_proto=""+sp_sync_folder_smb_proto.getSelectedItemPosition();
-
+        final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
         setSmbUserPass(remote_user, remote_pass);
 //		Log.v("","u="+remote_user+", pass="+remote_pass);
         String t_url = "";
@@ -1408,7 +1410,7 @@ public class SyncTaskUtil {
             }
 
         });
-        selectRemoteShareDlg(remurl, smb_proto, ntfy);
+        selectRemoteShareDlg(remurl, ipc_enforced, smb_proto, ntfy);
     }
 
     public void setSmbUserPass(String user, String pass) {
@@ -1428,6 +1430,7 @@ public class SyncTaskUtil {
         final CheckedTextView ctv_use_userpass = (CheckedTextView) p_dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
         final EditText editport = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
         final CheckedTextView ctv_use_port_number = (CheckedTextView) p_dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
+        final CheckedTextView ctv_sync_folder_smb_ipc_enforced = (CheckedTextView) p_dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_ipc_signing_enforced);
         String remote_addr, remote_user = "", remote_pass = "", remote_share, remote_host;
         if (ctv_use_userpass.isChecked()) {
             remote_user = edituser.getText().toString();
@@ -1435,7 +1438,7 @@ public class SyncTaskUtil {
         }
 
         final String smb_proto=""+sp_sync_folder_smb_proto.getSelectedItemPosition();
-
+        final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
         remote_share = editshare.getText().toString();
 
         final String p_dir = editdir.getText().toString();
@@ -1484,7 +1487,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                remoteDirectorySelector(rows, remurl, p_dir, smb_proto, show_create, ntfy_sel);
+                remoteDirectorySelector(rows, remurl, p_dir, ipc_enforced, smb_proto, show_create, ntfy_sel);
             }
 
             @Override
@@ -1493,12 +1496,12 @@ public class SyncTaskUtil {
                 commonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
             }
         });
-        createRemoteFileList(remurl, "", smb_proto, ntfy, true);
+        createRemoteFileList(remurl, "", ipc_enforced, smb_proto, ntfy, true);
 
     }
 
     private void remoteDirectorySelector(ArrayList<TreeFilelistItem> rows, String remurl, String p_dir,
-                                         String smb_proto, final boolean show_create, final NotifyEvent p_ntfy) {
+                                         boolean ipc_enforced, String smb_proto, final boolean show_create, final NotifyEvent p_ntfy) {
         //カスタムダイアログの生成
         final Dialog dialog = new Dialog(mContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1555,7 +1558,7 @@ public class SyncTaskUtil {
                 int idx = (Integer) o[0];
                 final int pos = tfa.getItem(idx);
                 final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                expandHideRemoteDirTree(remurl, smb_proto, pos, tfi, tfa);
+                expandHideRemoteDirTree(remurl, ipc_enforced, smb_proto, pos, tfi, tfa);
             }
 
             @Override
@@ -1568,7 +1571,7 @@ public class SyncTaskUtil {
                 final int pos = tfa.getItem(idx);
                 final TreeFilelistItem tfi = tfa.getDataItem(pos);
 //						tfa.setDataItemIsSelected(pos);
-                expandHideRemoteDirTree(remurl, smb_proto, pos, tfi, tfa);
+                expandHideRemoteDirTree(remurl, ipc_enforced, smb_proto, pos, tfi, tfa);
             }
         });
         lv.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -1626,7 +1629,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                createRemoteFileList(tv_home.getText().toString(), "", smb_proto, ntfy_refresh, true);
+                createRemoteFileList(tv_home.getText().toString(), "", ipc_enforced, smb_proto, ntfy_refresh, true);
             }
         });
 
@@ -1967,10 +1970,8 @@ public class SyncTaskUtil {
                 btn_ok.setEnabled(true);
                 dlg_msg.setText("");
             }
-
             @Override
-            public void negativeResponse(Context c, Object[] o) {
-            }
+            public void negativeResponse(Context c, Object[] o) {}
         });
         filterAdapter.setNotifyIncExcListener(ntfy_inc_exc);
 
@@ -1981,10 +1982,8 @@ public class SyncTaskUtil {
                 btn_ok.setEnabled(true);
                 dlg_msg.setText("");
             }
-
             @Override
-            public void negativeResponse(Context c, Object[] o) {
-            }
+            public void negativeResponse(Context c, Object[] o) {}
         });
         filterAdapter.setNotifyDeleteListener(ntfy_delete);
 
@@ -1998,10 +1997,8 @@ public class SyncTaskUtil {
                     public void positiveResponse(Context c, Object[] o) {
                         btn_ok.setEnabled(true);
                     }
-
                     @Override
-                    public void negativeResponse(Context c, Object[] o) {
-                    }
+                    public void negativeResponse(Context c, Object[] o) {}
 
                 });
                 editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy);
@@ -2032,12 +2029,9 @@ public class SyncTaskUtil {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
         addBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -2089,9 +2083,7 @@ public class SyncTaskUtil {
         dialog.show();
     }
 
-    public void editDirFilterDlg(
-            final SyncTaskItem sti,
-            final NotifyEvent p_ntfy) {
+    public void editDirFilterDlg(final SyncTaskItem sti, final NotifyEvent p_ntfy) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
         final AdapterFilterList filterAdapter;
 
@@ -2147,10 +2139,8 @@ public class SyncTaskUtil {
                 btn_ok.setEnabled(true);
                 dlg_msg.setText("");
             }
-
             @Override
-            public void negativeResponse(Context c, Object[] o) {
-            }
+            public void negativeResponse(Context c, Object[] o) { }
         });
         filterAdapter.setNotifyIncExcListener(ntfy_inc_exc);
 
@@ -2166,10 +2156,8 @@ public class SyncTaskUtil {
                 btn_ok.setEnabled(true);
                 dlg_msg.setText("");
             }
-
             @Override
-            public void negativeResponse(Context c, Object[] o) {
-            }
+            public void negativeResponse(Context c, Object[] o) { }
         });
         filterAdapter.setNotifyDeleteListener(ntfy_delete);
 
@@ -2216,11 +2204,9 @@ public class SyncTaskUtil {
 //				et_filter.setText(s);
             }
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
         addbtn.setEnabled(false);
         addbtn.setOnClickListener(new View.OnClickListener() {
@@ -2242,8 +2228,6 @@ public class SyncTaskUtil {
                                        AdapterFilterList.FilterListItem rhs) {
                         return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
                     }
-
-                    ;
                 });
                 String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
                 if (!e_msg.equals("")) {
@@ -2270,7 +2254,6 @@ public class SyncTaskUtil {
                         btn_ok.setEnabled(true);
                         dlg_msg.setText("");
                     }
-
                     @Override
                     public void negativeResponse(Context arg0, Object[] arg1) {
                         if (arg1 != null) {
@@ -2596,6 +2579,7 @@ public class SyncTaskUtil {
         final String remurl = "smb://" + t_remurl + h_port + "/" + sti.getMasterRemoteSmbShareName();
         final String remdir = "/" + sti.getMasterDirectoryName() + "/";
         final String smb_proto=sti.getMasterSmbProtocol();
+        final boolean ipc_enforced=sti.isMasterSmbIpcSigningEnforced();
 
         NotifyEvent ntfy = new NotifyEvent(mContext);
         // set thread response
@@ -2660,7 +2644,7 @@ public class SyncTaskUtil {
                         int idx = (Integer) o[0];
                         final int pos = tfa.getItem(idx);
                         final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                        expandHideRemoteDirTree(remurl, smb_proto, pos, tfi, tfa);
+                        expandHideRemoteDirTree(remurl, ipc_enforced, smb_proto, pos, tfi, tfa);
                     }
                     @Override
                     public void negativeResponse(Context c, Object[] o) {}
@@ -2671,7 +2655,7 @@ public class SyncTaskUtil {
                         final int pos = tfa.getItem(idx);
                         final TreeFilelistItem tfi = tfa.getDataItem(pos);
 //						tfa.setDataItemIsSelected(pos);
-                        expandHideRemoteDirTree(remurl, smb_proto, pos, tfi, tfa);
+                        expandHideRemoteDirTree(remurl, ipc_enforced, smb_proto, pos, tfi, tfa);
                     }
                 });
                 lv.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -2774,7 +2758,7 @@ public class SyncTaskUtil {
                 p_ntfy.notifyToListener(false, o);
             }
         });
-        createRemoteFileList(remurl, remdir, smb_proto, ntfy, true);
+        createRemoteFileList(remurl, remdir, ipc_enforced, smb_proto, ntfy, true);
     }
 
     @SuppressLint("DefaultLocale")
@@ -3467,7 +3451,7 @@ public class SyncTaskUtil {
         return tfl;
     }
 
-    private void createRemoteFileList(String remurl, String remdir, String smb_proto,
+    private void createRemoteFileList(String remurl, String remdir, boolean ipc_enforced, String smb_proto,
                                       final NotifyEvent p_event, boolean readSubDirCnt) {
         final ArrayList<TreeFilelistItem> remoteFileList = new ArrayList<TreeFilelistItem>();
         final ThreadCtrl tc = new ThreadCtrl();
@@ -3517,7 +3501,7 @@ public class SyncTaskUtil {
         });
 
         Thread tf = new Thread(new ReadSmbFilelist(mContext, tc, remurl, remdir, remoteFileList,
-                smbUser, smbPass, smb_proto, ntfy, true, readSubDirCnt, mGp));
+                smbUser, smbPass, ipc_enforced, smb_proto, ntfy, true, readSubDirCnt, mGp));
         tf.start();
 
         dialog.show();
@@ -3536,7 +3520,7 @@ public class SyncTaskUtil {
         return dialog;
     }
 
-    public void selectRemoteShareDlg(final String remurl, String smb_proto, final NotifyEvent p_ntfy) {
+    public void selectRemoteShareDlg(final String remurl, boolean ipc_enforced, String smb_proto, final NotifyEvent p_ntfy) {
 
         NotifyEvent ntfy = new NotifyEvent(mContext);
         // set thread response
@@ -3629,11 +3613,11 @@ public class SyncTaskUtil {
                 p_ntfy.notifyToListener(false, o);
             }
         });
-        createRemoteFileList(remurl, null, smb_proto, ntfy, false);
+        createRemoteFileList(remurl, null, ipc_enforced, smb_proto, ntfy, false);
 
     }
 
-    private void expandHideRemoteDirTree(String remurl, String smb_proto, final int pos,
+    private void expandHideRemoteDirTree(String remurl, boolean ipc_enforced, String smb_proto, final int pos,
                                          final TreeFilelistItem tfi, final TreeFilelistAdapter tfa) {
         if (tfi.getSubDirItemCount() == 0) return;
         if (tfi.isChildListExpanded()) {
@@ -3657,7 +3641,7 @@ public class SyncTaskUtil {
                         public void negativeResponse(Context c, Object[] o) {
                         }
                     });
-                    createRemoteFileList(remurl, tfi.getPath() + tfi.getName() + "/", smb_proto, ne, true);
+                    createRemoteFileList(remurl, tfi.getPath() + tfi.getName() + "/", ipc_enforced, smb_proto, ne, true);
                 }
             }
         }
@@ -4744,6 +4728,9 @@ public class SyncTaskUtil {
 
             if (!parm[65].equals("") && !parm[65].equals("end")) stli.setTargetSmbProtocol(parm[65]);
 
+            if (!parm[66].equals("") && !parm[66].equals("end")) stli.setMasterSmbIpcSigningEnforced((parm[66].equals("1") ? true : false));
+            if (!parm[67].equals("") && !parm[67].equals("end")) stli.setTargetSmbIpcSigningEnforced((parm[67].equals("1") ? true : false));
+
             sync.add(stli);
         }
     }
@@ -5023,6 +5010,9 @@ public class SyncTaskUtil {
                             item.getMasterSmbProtocol() + "\t" +                                //64
 
                             item.getTargetSmbProtocol() + "\t" +                                //65
+
+                            (item.isMasterSmbIpcSigningEnforced() ? "1" : "0") + "\t" +         //66
+                            (item.isTargetSmbIpcSigningEnforced() ? "1" : "0") + "\t" +         //67
 
                             "end"
                     ;

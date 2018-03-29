@@ -204,11 +204,11 @@ public class SyncThreadCopyFile {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        SmbFile out_dest = new SmbFile(to_file_dest, stwa.masterCifsContext);
+        SmbFile out_dest = new SmbFile(to_file_dest, stwa.targetCifsContext);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        SmbFile out_file = new SmbFile(to_file_path, stwa.masterCifsContext);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.masterCifsContext);
+        SmbFile out_file = new SmbFile(to_file_path, stwa.targetCifsContext);
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetCifsContext);
 
         FileInputStream is = new FileInputStream(mf);
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
@@ -267,11 +267,11 @@ public class SyncThreadCopyFile {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        SmbFile out_dest = new SmbFile(to_file_dest, stwa.masterCifsContext);
+        SmbFile out_dest = new SmbFile(to_file_dest, stwa.targetCifsContext);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        SmbFile out_file = new SmbFile(to_file_path, stwa.masterCifsContext);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.masterCifsContext);
+        SmbFile out_file = new SmbFile(to_file_path, stwa.targetCifsContext);
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetCifsContext);
 
         FileInputStream is = new FileInputStream(mf);
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
@@ -620,11 +620,11 @@ public class SyncThreadCopyFile {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        SmbFile out_dest = new SmbFile(to_file_dest, stwa.masterCifsContext);
+        SmbFile out_dest = new SmbFile(to_file_dest, stwa.targetCifsContext);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        SmbFile out_file = new SmbFile(to_file_path, stwa.masterCifsContext);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.masterCifsContext);
+        SmbFile out_file = new SmbFile(to_file_path, stwa.targetCifsContext);
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetCifsContext);
 
         FileInputStream is = new FileInputStream(mf);
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
@@ -680,11 +680,11 @@ public class SyncThreadCopyFile {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        SmbFile out_dest = new SmbFile(to_file_dest, stwa.masterCifsContext);
+        SmbFile out_dest = new SmbFile(to_file_dest, stwa.targetCifsContext);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        SmbFile out_file = new SmbFile(to_file_path, stwa.masterCifsContext);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.masterCifsContext);
+        SmbFile out_file = new SmbFile(to_file_path, stwa.targetCifsContext);
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetCifsContext);
 
         FileInputStream is = new FileInputStream(mf);
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);

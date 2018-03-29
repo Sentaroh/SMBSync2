@@ -379,8 +379,10 @@ public class SyncThread extends Thread {
                     showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "I", "", "",
                             mGp.appContext.getString(R.string.msgs_mirror_task_started));
 
-                    mStwa.masterBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(mStwa.currentSTI.getMasterSmbProtocol());
-                    mStwa.targetBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(mStwa.currentSTI.getTargetSmbProtocol());
+                    mStwa.masterBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(
+                            mStwa.currentSTI.isMasterSmbIpcSigningEnforced(), mStwa.currentSTI.getMasterSmbProtocol());
+                    mStwa.targetBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(
+                            mStwa.currentSTI.isTargetSmbIpcSigningEnforced(),mStwa.currentSTI.getTargetSmbProtocol());
 
                     initSyncParms(mStwa.currentSTI);
 
@@ -998,7 +1000,7 @@ public class SyncThread extends Thread {
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-SMB From=" + from + ", To=" + to);
 
-            mStwa.masterCifsContext = setSmbAuth(mStwa.masterBaseContext, "", sti.getTargetSmbUserName(), sti.getTargetSmbPassword());
+            mStwa.targetCifsContext = setSmbAuth(mStwa.targetBaseContext, "", sti.getTargetSmbUserName(), sti.getTargetSmbPassword());
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyInternalToSmb(mStwa, sti, from, to);
@@ -1053,7 +1055,7 @@ public class SyncThread extends Thread {
 
             mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-SMB From=" + from + ", To=" + to);
 
-            mStwa.masterCifsContext = setSmbAuth(mStwa.masterBaseContext, "", sti.getTargetSmbUserName(), sti.getTargetSmbPassword());
+            mStwa.targetCifsContext = setSmbAuth(mStwa.targetBaseContext, "", sti.getTargetSmbUserName(), sti.getTargetSmbPassword());
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyExternalToSmb(mStwa, sti, from, to);

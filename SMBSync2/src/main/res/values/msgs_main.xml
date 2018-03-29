@@ -236,7 +236,7 @@
 	<string name="msgs_main_sync_profile_dlg_specify_host_port_number">Please specify the port number of the SMB host.</string>
 	<string name="msgs_main_sync_profile_dlg_specify_host_userid_pswd">Please specify the user name and/or password of the SMB host.</string>
 	<string name="msgs_main_sync_profile_dlg_specify_host_share_name">Please specify the share name of the SMB host.</string>
-		
+
     <string name="msgs_profile_edit_sync_folder_dlg_folder_type">Folder type</string>
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_server">Server/address</string>
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">User name</string>
@@ -247,7 +247,8 @@
     <string name="msgs_profile_edit_sync_folder_dlg_dirlist">List Directory</string>
     <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">Search SMB server</string>
 	<string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">Use UserID and password</string>
-	<string name="msgs_profile_edit_sync_folder_dlg_logon">Logon</string>
+    <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
+    <string name="msgs_profile_edit_sync_folder_dlg_logon">Logon</string>
 	<string name="msgs_profile_edit_sync_folder_dlg_logon_success">Logon successful</string>
 	<string name="msgs_profile_edit_sync_folder_dlg_logon_error">Error detected during logon</string>
 	<string name="msgs_profile_edit_sync_folder_dlg_logon_cancel">Cancel logon process</string>
