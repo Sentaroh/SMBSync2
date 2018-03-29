@@ -3314,7 +3314,7 @@ public class SyncTaskEditor extends DialogFragment {
         public String folder_remote_host = "";
         public String folder_remote_share = "";
         public String folder_remote_port = "";
-        public String folder_smb_protocol = "0";
+        public String folder_smb_protocol = "1";
         public boolean folder_smb_ipc_enforced=true;
         public String folder_removable_uuid = "";
 

@@ -78,7 +78,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SYSTEM = "0";
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY = "1";
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY = "2";
-    private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SYSTEM;
+    private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY;
     private boolean syncTaskMasterFolderSmbIpcSigningEnforced = true;
     private String syncTaskMasterFolderRemovableStorageID = "";
 //	private boolean syncTaskMasterFolderUseInternalUsbFolder=false;
@@ -93,7 +93,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskTargetFolderRemoteUserName = "";
     private String syncTaskTargetFolderRemotePassword = "";
     private String syncTaskTargetFolderRemoteDomain = "";
-    private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SYSTEM;
+    private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY;
     private boolean syncTaskTargetFolderSmbIpcSigningEnforced = true;
     private String syncTaskTargetFolderRemovableStorageID = "";
     private String syncTaskTargetZipFileName = "";
