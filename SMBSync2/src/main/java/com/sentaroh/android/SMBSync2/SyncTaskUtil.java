@@ -45,15 +45,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Properties;
 
-import jcifs.CIFSContext;
-import jcifs.CIFSException;
-import jcifs.Config;
-import jcifs.config.PropertyConfiguration;
-import jcifs.context.BaseContext;
-import jcifs.smb.NtlmPasswordAuthentication;
-import jcifs.smb.SmbException;
-import jcifs.smb.SmbFile;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -1165,7 +1156,8 @@ public class SyncTaskUtil {
                         ntfy.notifyToListener(true, new Object[]{unreachble_msg});
                     }
                 } else {
-                    String ipAddress = SmbUtil.getSmbHostIpAddressFromName(host);
+                    String lbl=ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)?JcifsFile.JCIFS_LEVEL_JCIFS1:JcifsFile.JCIFS_LEVEL_JCIFS2;
+                    String ipAddress = SmbUtil.getSmbHostIpAddressFromName(lbl, host);
                     if (ipAddress == null) {
                         try {
                             InetAddress[] addr_list = Inet4Address.getAllByName(host);
@@ -1217,16 +1209,21 @@ public class SyncTaskUtil {
         if (port.equals("")) url = "smb://" + host + "/IPC$/";//+share+"/";
         else url = "smb://" + host + ":" + port + "/IPC%/";//+share+"/";
 
-        BaseContext bc = SyncUtil.buildBaseContextWithSmbProtocol(ra);
-        CIFSContext auth = bc.withCredentials(new NtlmPasswordAuthentication(bc, "", ra.smb_user_name, ra.smb_user_password));
-
+        JcifsAuth auth=null;
+        String proto_level=JcifsFile.JCIFS_LEVEL_JCIFS1;
+        if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+            auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS1, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+        } else {
+            auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS2, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password, ra.smb_ipc_signing_enforced);
+            proto_level=JcifsFile.JCIFS_LEVEL_JCIFS2;
+        }
         try {
-            SmbFile sf = new SmbFile(url, auth);
+            JcifsFile sf = new JcifsFile(url, auth);
             sf.connect();
             util.addDebugMsg(1, "I", "Test logon completed, host=" + host + ", port=" + port+", user="+ra.smb_user_name);
-        } catch (SmbException e) {
+        } catch (JcifsException e) {
             String[] e_msg = SmbUtil.analyzeNtStatusCode(e, mContext, url, ra.smb_user_name);
-            err_msg = e_msg[0];
+            err_msg = e.getMessage()+"\n"+e_msg[0];
             util.addDebugMsg(1, "I", "Test logon failed." + "\n" + err_msg);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -3147,7 +3144,7 @@ public class SyncTaskUtil {
                     for (int j = i; j < (i + scan_thread); j++) {
                         if (j <= end_addr) {
                             startRemoteNetworkScanThread(handler, tc, dialog, p_ntfy,
-                                    lv_ipaddr, adap, tvmsg, subnet + "." + j, ipAddressList, scan_port);
+                                    lv_ipaddr, adap, tvmsg, subnet + "." + j, ipAddressList, scan_port, JcifsFile.JCIFS_LEVEL_JCIFS1);
                         } else {
                             scan_end = true;
                         }
@@ -3225,7 +3222,7 @@ public class SyncTaskUtil {
                                               final TextView tvmsg,
                                               final String addr,
                                               final ArrayList<AdapterNetworkScanResult.NetworkScanListItem> ipAddressList,
-                                              final String scan_port) {
+                                              final String scan_port, final String cifs_level) {
         final String scan_prog = mContext.getString(R.string.msgs_ip_address_scan_progress);
         Thread th = new Thread(new Runnable() {
             @Override
@@ -3234,7 +3231,7 @@ public class SyncTaskUtil {
                     mScanRequestedAddrList.add(addr);
                 }
                 if (isIpAddrSmbHost(addr, scan_port)) {
-                    final String srv_name = getSmbHostName(addr);
+                    final String srv_name = getSmbHostName(cifs_level, addr);
                     handler.post(new Runnable() {// UI thread
                         @Override
                         public void run() {
@@ -3304,8 +3301,8 @@ public class SyncTaskUtil {
         return smbhost;
     }
 
-    private String getSmbHostName(String address) {
-        String srv_name = SmbUtil.getSmbHostNameFromAddress(address);
+    private String getSmbHostName(String cifs_level, String address) {
+        String srv_name = SmbUtil.getSmbHostNameFromAddress(cifs_level, address);
         util.addDebugMsg(1, "I", "getSmbHostName Address=" + address + ", name=" + srv_name);
         return srv_name;
     }

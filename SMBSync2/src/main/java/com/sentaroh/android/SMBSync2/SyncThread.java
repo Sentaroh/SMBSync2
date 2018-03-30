@@ -49,14 +49,6 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jcifs.CIFSContext;
-import jcifs.CIFSException;
-import jcifs.config.PropertyConfiguration;
-import jcifs.context.BaseContext;
-import jcifs.smb.NtlmPasswordAuthentication;
-import jcifs.smb.SmbException;
-import jcifs.smb.SmbFile;
-
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -88,6 +80,7 @@ import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.ZipFileListItem;
 
+
 public class SyncThread extends Thread {
 
     private GlobalParameters mGp = null;
@@ -116,10 +109,10 @@ public class SyncThread extends Thread {
 
         public boolean setLastModifiedIsFunctional = true;
 
-        public CIFSContext masterCifsContext = null;
-        public CIFSContext targetCifsContext = null;
-        public BaseContext masterBaseContext = null;
-        public BaseContext targetBaseContext = null;
+        public JcifsAuth masterAuth=null;
+        public String masterCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS1;
+        public JcifsAuth targetAuth=null;
+        public String targetCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS1;
 
         public SyncUtil util = null;
 
@@ -379,14 +372,21 @@ public class SyncThread extends Thread {
                     showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "I", "", "",
                             mGp.appContext.getString(R.string.msgs_mirror_task_started));
 
-                    RemoteAuthInfo ra_mst=new RemoteAuthInfo();
-                    ra_mst.smb_ipc_signing_enforced=mStwa.currentSTI.isMasterSmbIpcSigningEnforced();
-                    ra_mst.smb_smb_protocol=mStwa.currentSTI.getMasterSmbProtocol();
-                    mStwa.masterBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(ra_mst);
-                    RemoteAuthInfo ra_tgt=new RemoteAuthInfo();
-                    ra_tgt.smb_ipc_signing_enforced=mStwa.currentSTI.isTargetSmbIpcSigningEnforced();
-                    ra_tgt.smb_smb_protocol=mStwa.currentSTI.getTargetSmbProtocol();
-                    mStwa.targetBaseContext=SyncUtil.buildBaseContextWithSmbProtocol(ra_tgt);
+                    if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+                        mStwa.masterCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS1;
+                    } else {
+                        mStwa.masterCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS2;
+                    }
+                    mStwa.masterAuth=new JcifsAuth(mStwa.masterCifsLevel, mStwa.currentSTI.getMasterSmbDomain(),
+                            mStwa.currentSTI.getMasterSmbUserName(), mStwa.currentSTI.getMasterSmbPassword());
+
+                    if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+                        mStwa.targetCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS1;
+                    } else {
+                        mStwa.targetCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS2;
+                    }
+                    mStwa.targetAuth=new JcifsAuth(mStwa.targetCifsLevel, mStwa.currentSTI.getTargetSmbDomain(),
+                            mStwa.currentSTI.getTargetSmbUserName(), mStwa.currentSTI.getTargetSmbPassword());
 
                     initSyncParms(mStwa.currentSTI);
 
@@ -708,7 +708,7 @@ public class SyncThread extends Thread {
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr = sti.getMasterSmbAddr();
             if (!sti.getMasterSmbHostName().equals("")) {
-                addr = resolveHostName(sti.getMasterSmbHostName());
+                addr = resolveHostName(mStwa.masterCifsLevel, sti.getMasterSmbHostName());
                 if (addr == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getMasterSmbHostName();
@@ -748,7 +748,7 @@ public class SyncThread extends Thread {
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr = sti.getTargetSmbAddr();
             if (!sti.getTargetSmbHostName().equals("")) {
-                addr = resolveHostName(sti.getTargetSmbHostName());
+                addr = resolveHostName(mStwa.targetCifsLevel, sti.getTargetSmbHostName());
                 if (addr == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getTargetSmbHostName();
@@ -834,8 +834,8 @@ public class SyncThread extends Thread {
 
     ;
 
-    private String resolveHostName(String hn) {
-        String ipAddress = SmbUtil.getSmbHostIpAddressFromName(hn);
+    private String resolveHostName(String cifs_level, String hn) {
+        String ipAddress = SmbUtil.getSmbHostIpAddressFromName(cifs_level, hn);
         if (ipAddress == null) {//add dns name resolve
             try {
                 InetAddress[] addr_list = Inet4Address.getAllByName(hn);
@@ -1004,8 +1004,6 @@ public class SyncThread extends Thread {
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-SMB From=" + from + ", To=" + to);
 
-            mStwa.targetCifsContext = setSmbAuth(mStwa.targetBaseContext, "", sti.getTargetSmbUserName(), sti.getTargetSmbPassword());
-
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyInternalToSmb(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) {
@@ -1059,8 +1057,6 @@ public class SyncThread extends Thread {
 
             mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-SMB From=" + from + ", To=" + to);
 
-            mStwa.targetCifsContext = setSmbAuth(mStwa.targetBaseContext, "", sti.getTargetSmbUserName(), sti.getTargetSmbPassword());
-
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyExternalToSmb(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) {
@@ -1079,8 +1075,6 @@ public class SyncThread extends Thread {
             to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-Internal From=" + from + ", To=" + to);
-
-            mStwa.masterCifsContext = setSmbAuth(mStwa.masterBaseContext, "", sti.getMasterSmbUserName(), sti.getMasterSmbPassword());
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopySmbToInternal(mStwa, sti, from, to);
@@ -1101,8 +1095,6 @@ public class SyncThread extends Thread {
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-SDCARD From=" + from + ", To=" + to);
 
-            mStwa.masterCifsContext = setSmbAuth(mStwa.masterBaseContext, "", sti.getMasterSmbUserName(), sti.getMasterSmbPassword());
-
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopySmbToExternal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) {
@@ -1122,9 +1114,6 @@ public class SyncThread extends Thread {
             to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-SMB From=" + from + ", To=" + to);
-
-            mStwa.masterCifsContext = setSmbAuth(mStwa.masterBaseContext, "", sti.getMasterSmbUserName(), sti.getMasterSmbPassword());
-            mStwa.targetCifsContext = setSmbAuth(mStwa.targetBaseContext, "", sti.getTargetSmbUserName(), sti.getTargetSmbPassword());
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopySmbToSmb(mStwa, sti, from, to);
@@ -1175,16 +1164,16 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    private CIFSContext setSmbAuth(BaseContext bc, String domain, String user, String pass) {
-        String tuser = null, tpass = null;
-        if (user.length() != 0) tuser = user;
-        if (pass.length() != 0) tpass = pass;
-
-        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", tuser, tpass);
-        CIFSContext smb_auth = bc.withCredentials(creds);
-
-        return smb_auth;
-    }
+//    private CIFSContext setSmbAuth(BaseContext bc, String domain, String user, String pass) {
+//        String tuser = null, tpass = null;
+//        if (user.length() != 0) tuser = user;
+//        if (pass.length() != 0) tpass = pass;
+//
+//        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", tuser, tpass);
+//        CIFSContext smb_auth = bc.withCredentials(creds);
+//
+//        return smb_auth;
+//    }
 
     final public static boolean createDirectoryToInternalStorage(SyncThreadWorkArea stwa, SyncTaskItem sti, String dir) {
         boolean result = false;
@@ -1220,8 +1209,8 @@ public class SyncThread extends Thread {
     }
 
     final public static void createDirectoryToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String dir,
-                                                  CIFSContext auth) throws MalformedURLException, SmbException {
-        SmbFile sf = new SmbFile(dir, auth);
+                                                  JcifsAuth auth) throws MalformedURLException, JcifsException {
+        JcifsFile sf = new JcifsFile(dir, auth);
         if (!sti.isSyncTestMode()) {
             if (!sf.exists()) {
                 sf.mkdirs();
@@ -1305,27 +1294,25 @@ public class SyncThread extends Thread {
     }
 
     static public void deleteSmbItem(SyncThreadWorkArea stwa, boolean del_dir, SyncTaskItem sti,
-                                     String to_base, String tmp_target, CIFSContext auth) throws IOException {
+                                     String to_base, String tmp_target, JcifsAuth auth) throws IOException, JcifsException {
         if (stwa.gp.settingDebugLevel >= 1)
             stwa.util.addDebugMsg(1, "I", "deleteSmbItem entered, del=" + tmp_target);
         if (!tmp_target.equals(to_base)) {
-            SmbFile lf_tmp = new SmbFile(tmp_target, auth);
+            JcifsFile lf_tmp = new JcifsFile(tmp_target, auth);
             if (lf_tmp.exists()) {
                 deleteSmbFile(stwa, sti, tmp_target, lf_tmp);
             }
         }
     }
 
-    ;
-
-    static public void deleteSmbFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp, SmbFile hf) throws IOException {
+    static public void deleteSmbFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp, JcifsFile hf) throws  JcifsException {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "deleteSmbFile entered, del=" + fp);
-//		SmbFile hf=new SmbFile(fp, stwa.ntlmPasswordAuth);
+//		JcifsFile hf=new JcifsFile(fp, stwa.ntlmPasswordAuth);
         if (hf.isDirectory()) {
-            SmbFile[] fl = hf.listFiles();
+            JcifsFile[] fl = hf.listFiles();
             if (fl != null && fl.length > 0) {
-                for (SmbFile c_item : fl) {
+                for (JcifsFile c_item : fl) {
                     if (c_item.isDirectory()) {
                         deleteSmbFile(stwa, sti, fp + c_item.getName(), c_item);
                     } else {
@@ -1815,25 +1802,20 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    ;
-
-
-    static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp, File lf, SmbFile hf, boolean ac)
-            throws SmbException {
+    static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp, File lf, JcifsFile hf, boolean ac)
+            throws JcifsException {
         long hf_time = 0, hf_length = 0;
         boolean hf_exists = hf.exists();
 
         if (hf_exists) {
-            hf_time = hf.lastModified();
+            hf_time = hf.getLastModified();
             hf_length = hf.length();
         }
         return isFileChangedDetailCompare(stwa, sti, fp, lf, hf_exists, hf_time, hf_length, ac);
     }
 
-    ;
-
     static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp, File mf, File tf, boolean ac)
-            throws SmbException {
+            throws JcifsException {
         long tf_time = 0, tf_length = 0;
         boolean tf_exists = tf.exists();
 
@@ -1847,27 +1829,27 @@ public class SyncThread extends Thread {
     ;
 
     static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,
-                                              SmbFile mf, SmbFile tf, boolean ac)
-            throws SmbException {
+                                              JcifsFile mf, JcifsFile tf, boolean ac)
+            throws JcifsException {
 
         long lf_time = 0, lf_length = 0;
         boolean lf_exists = mf.exists();
 
         if (lf_exists) {
-            lf_time = mf.lastModified();
+            lf_time = mf.getLastModified();
             lf_length = mf.length();
         }
 
         return isFileChangedDetailCompare(stwa, sti, fp,
                 lf_exists, lf_time, lf_length, mf.getPath(),
-                tf.exists(), tf.lastModified(), tf.length(), ac);
+                tf.exists(), tf.getLastModified(), tf.length(), ac);
 
     }
 
     ;
 
     static final public boolean isFileChangedDetailCompare(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,
-                                                           File lf, boolean hf_exists, long hf_time, long hf_length, boolean ac) throws SmbException {
+                                                           File lf, boolean hf_exists, long hf_time, long hf_length, boolean ac) throws JcifsException {
         long lf_time = 0, lf_length = 0;
         boolean lf_exists = lf.exists();
 
@@ -1943,14 +1925,14 @@ public class SyncThread extends Thread {
     ;
 
     static final public boolean isFileChangedForLocalToRemote(SyncThreadWorkArea stwa, SyncTaskItem sti,
-                                                              String fp, File lf, SmbFile hf, boolean ac)
-            throws SmbException {
+                                                              String fp, File lf, JcifsFile hf, boolean ac)
+            throws JcifsException {
         boolean diff = false;
         long hf_time = 0, hf_length = 0;
         boolean hf_exists = hf.exists();
 
         if (hf_exists) {
-            hf_time = hf.lastModified();
+            hf_time = hf.getLastModified();
             hf_length = hf.length();
         }
         long lf_time = 0, lf_length = 0;
@@ -2009,7 +1991,7 @@ public class SyncThread extends Thread {
 
     ;
 
-    static public boolean isHiddenDirectory(SyncThreadWorkArea stwa, SyncTaskItem sti, SmbFile hf) throws SmbException {
+    static public boolean isHiddenDirectory(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile hf) throws JcifsException {
         boolean result = false;
         if (sti.isSyncHiddenDirectory()) result = false;
         else {
@@ -2038,7 +2020,7 @@ public class SyncThread extends Thread {
 
     ;
 
-    static public boolean isHiddenFile(SyncThreadWorkArea stwa, SyncTaskItem sti, SmbFile hf) throws SmbException {
+    static public boolean isHiddenFile(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile hf) throws JcifsException {
         boolean result = false;
         if (sti.isSyncHiddenFile()) result = false;
         else {

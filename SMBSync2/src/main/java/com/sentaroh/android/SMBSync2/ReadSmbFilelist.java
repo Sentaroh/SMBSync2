@@ -27,11 +27,6 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-import jcifs.CIFSContext;
-import jcifs.context.BaseContext;
-import jcifs.smb.NtlmPasswordAuthentication;
-import jcifs.smb.SmbException;
-import jcifs.smb.SmbFile;
 
 import android.content.Context;
 import android.util.Log;
@@ -58,6 +53,8 @@ public class ReadSmbFilelist implements Runnable {
     private Context mContext = null;
 
     private RemoteAuthInfo mRemoteAuthInfo=null;
+
+    private String mCifslevel ="";
 
     public ReadSmbFilelist(Context c, ThreadCtrl ac, String ru, String rd,
                            ArrayList<TreeFilelistItem> fl, RemoteAuthInfo rauth,
@@ -92,6 +89,8 @@ public class ReadSmbFilelist implements Runnable {
         mUtil.addDebugMsg(1, "I", "ReadSmbFilelist init. name=" + mHostName +
                 ", addr=" + mHostAddr + ", port=" + mHostPort + ", remoteUrl=" + remoteUrl + ", Dir=" +
                 remoteDir+", user="+rauth.smb_user_name+", smb_proto="+rauth.smb_smb_protocol);
+
+        mCifslevel = rauth.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)?JcifsFile.JCIFS_LEVEL_JCIFS1:JcifsFile.JCIFS_LEVEL_JCIFS2;
     }
 
     @Override
@@ -132,7 +131,7 @@ public class ReadSmbFilelist implements Runnable {
                 }
             }
         } else {
-            if (SmbUtil.getSmbHostIpAddressFromName(mHostName) == null) {
+            if (SmbUtil.getSmbHostIpAddressFromName(mCifslevel, mHostName) == null) {
                 error_exit = true;
                 if (getFLCtrl.isEnabled()) {
                     getFLCtrl.setThreadResultError();
@@ -155,13 +154,17 @@ public class ReadSmbFilelist implements Runnable {
 
     private void readFileList() {
         remoteFileList.clear();
-        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(mRemoteAuthInfo);
-        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
-        CIFSContext ct= bc.withCredentials(creds);
+        JcifsAuth auth=null;
+        if (mRemoteAuthInfo.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+            auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS1, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
+        } else {
+            auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS2, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password,
+                    mRemoteAuthInfo.smb_ipc_signing_enforced);
+        }
 
         try {
-            SmbFile remoteFile = new SmbFile(remoteUrl + remoteDir, ct);
-            SmbFile[] fl = remoteFile.listFiles();
+            JcifsFile remoteFile = new JcifsFile(remoteUrl + remoteDir, auth);
+            JcifsFile[] fl = remoteFile.listFiles();
 
             for (int i = 0; i < fl.length; i++) {
                 String fn = fl[i].getName();
@@ -175,53 +178,60 @@ public class ReadSmbFilelist implements Runnable {
                         fp = "/" + fp.substring(0, fp.lastIndexOf("/") + 1);
                     } else fp = "/";
 //					Log.v("","name="+fl[i].getPath());
-                    if (fl[i].isDirectory() &&
-                            !fn.equals("System Volume Information") &&
-                            fl[i].canRead()) {
-                        if (readSubDirCnt) {
-                            SmbFile tdf = new SmbFile(fl[i].getPath(), ct);
-                            SmbFile[] tfl = null;
-                            try {
-                                tfl = tdf.listFiles();
-                                if (readDirOnly) {
-                                    for (int j = 0; j < tfl.length; j++)
-                                        if (tfl[j].isDirectory()) dirct++;
-                                } else {
-                                    dirct = tfl.length;
+                    try {
+                        if (fl[i].isDirectory() &&
+                                !fn.equals("System Volume Information") &&
+                                fl[i].canRead()) {
+                            if (readSubDirCnt) {
+                                JcifsFile tdf = new JcifsFile(fl[i].getPath(), auth);
+                                JcifsFile[] tfl = null;
+                                try {
+                                    tfl = tdf.listFiles();
+                                    if (readDirOnly) {
+                                        for (int j = 0; j < tfl.length; j++) {
+//                                            Log.v("","name="+tfl[j].getPath());
+                                            if (tfl[j].isDirectory()) dirct++;
+                                        }
+                                    } else {
+                                        dirct = tfl.length;
+                                    }
+                                    TreeFilelistItem fi = new TreeFilelistItem(
+                                            fn,
+                                            "",
+                                            fl[i].isDirectory(),
+                                            fl[i].length(),
+                                            fl[i].getLastModified(),
+                                            false,
+                                            fl[i].canRead(),
+                                            fl[i].canWrite(),
+                                            fl[i].isHidden(),
+                                            fp, 0);
+                                    fi.setSubDirItemCount(dirct);
+                                    if (readDirOnly) {
+                                        if (fi.isDir()) {
+                                            remoteFileList.add(fi);
+                                            mUtil.addDebugMsg(2, "I", "filelist added :" + fn + ",isDir=" +
+                                                    fl[i].isDirectory() + ", canRead=" + fl[i].canRead() +
+                                                    ", canWrite=" + fl[i].canWrite() + ",fp=" + fp + ", dircnt=" + dirct);
+                                        }
+                                    } else {
+                                        remoteFileList.add(fi);
+                                        mUtil.addDebugMsg(2, "I", "filelist added :" + fn + ",isDir=" +
+                                                fl[i].isDirectory() + ", canRead=" + fl[i].canRead() +
+                                                ", canWrite=" + fl[i].canWrite() + ",fp=" + fp + ", dircnt=" + dirct);
+                                    }
+                                } catch (JcifsException e) {
                                 }
-                            } catch (SmbException e) {
-                            }
-                        }
-                        TreeFilelistItem fi = new TreeFilelistItem(
-                                fn,
-                                "",
-                                fl[i].isDirectory(),
-                                fl[i].length(),
-                                fl[i].lastModified(),
-                                false,
-                                fl[i].canRead(),
-                                fl[i].canWrite(),
-                                fl[i].isHidden(),
-                                fp, 0);
-                        fi.setSubDirItemCount(dirct);
-                        if (readDirOnly) {
-                            if (fi.isDir()) {
-                                remoteFileList.add(fi);
-                                mUtil.addDebugMsg(2, "I", "filelist added :" + fn + ",isDir=" +
-                                        fl[i].isDirectory() + ", canRead=" + fl[i].canRead() +
-                                        ", canWrite=" + fl[i].canWrite() + ",fp=" + fp + ", dircnt=" + dirct);
                             }
                         } else {
-                            remoteFileList.add(fi);
-                            mUtil.addDebugMsg(2, "I", "filelist added :" + fn + ",isDir=" +
+                            mUtil.addDebugMsg(2, "I", "filelist ignored :" + fn + ",isDir=" +
                                     fl[i].isDirectory() + ", canRead=" + fl[i].canRead() +
                                     ", canWrite=" + fl[i].canWrite() + ",fp=" + fp + ", dircnt=" + dirct);
+                            mUtil.addDebugMsg(2, "I", "filelist ignored :" + fn);
                         }
-                    } else {
-                        mUtil.addDebugMsg(2, "I", "filelist ignored :" + fn + ",isDir=" +
-                                fl[i].isDirectory() + ", canRead=" + fl[i].canRead() +
-                                ", canWrite=" + fl[i].canWrite() + ",fp=" + fp + ", dircnt=" + dirct);
-                        mUtil.addDebugMsg(2, "I", "filelist ignored :" + fn);
+
+                    } catch (JcifsException e) {
+                        e.printStackTrace();
                     }
                 } else {
                     getFLCtrl.setThreadResultCancelled();
@@ -230,10 +240,11 @@ public class ReadSmbFilelist implements Runnable {
                 }
             }
 
-        } catch (SmbException e) {
+        } catch (JcifsException e) {
             e.printStackTrace();
             String cause="";
             String[] e_msg=SmbUtil.analyzeNtStatusCode(e, mContext, remoteUrl + remoteDir, mRemoteAuthInfo.smb_user_name);
+//            e_msg[0] = e.getMessage()+"\n"+e_msg[0];
             if (e.getCause()!=null) {
                 cause=e.getCause().toString();
                 mUtil.addDebugMsg(1, "E", cause.substring(cause.indexOf(":")+1));
@@ -262,15 +273,19 @@ public class ReadSmbFilelist implements Runnable {
 
     private void readShareList() {
         remoteFileList.clear();
-        BaseContext bc=SyncUtil.buildBaseContextWithSmbProtocol(mRemoteAuthInfo);//SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM);
-        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
-        SmbFile[] fl=null;
-        CIFSContext ct = bc.withCredentials(creds);
+        JcifsAuth auth=null;
+        if (mRemoteAuthInfo.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+            auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS1, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
+        } else {
+            auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS2, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password,
+                    mRemoteAuthInfo.smb_ipc_signing_enforced);
+        }
+        JcifsFile[] fl=null;
         try {
-            SmbFile remoteFile = new SmbFile(remoteUrl, ct);
+            JcifsFile remoteFile = new JcifsFile(remoteUrl, auth);
             fl = remoteFile.listFiles();
-            for(SmbFile item:fl) Log.v("","fn="+item.getName());
-        } catch (SmbException e) {
+            for(JcifsFile item:fl) Log.v("","fn="+item.getName());
+        } catch (JcifsException e) {
             e.printStackTrace();
             String cause="";
             if (e.getCause()!=null) {
@@ -280,7 +295,7 @@ public class ReadSmbFilelist implements Runnable {
             mUtil.addDebugMsg(1, "E", e.toString());
             getFLCtrl.setThreadResultError();
             String[] e_msg = SmbUtil.analyzeNtStatusCode(e, mContext, remoteUrl, "");
-
+//            e_msg[0] = e.getMessage()+"\n"+e_msg[0];
             if (!cause.equals("")) getFLCtrl.setThreadMessage(cause.substring(cause.indexOf(":")+1)+"\n"+e_msg[0]);
             else getFLCtrl.setThreadMessage(e_msg[0]);
 
@@ -293,7 +308,7 @@ public class ReadSmbFilelist implements Runnable {
 //            e.printStackTrace();
         }
 
-        for (SmbFile item:fl) {
+        for (JcifsFile item:fl) {
             String fn = item.getName().substring(0,item.getName().length()-1);
             String fp = item.getPath().substring(0,item.getPath().length()-1);
             if (getFLCtrl.isEnabled()) {

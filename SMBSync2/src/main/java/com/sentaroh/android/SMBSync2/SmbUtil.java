@@ -31,13 +31,12 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import jcifs.CIFSException;
-import jcifs.NetbiosAddress;
-import jcifs.config.PropertyConfiguration;
-import jcifs.context.BaseContext;
-import jcifs.netbios.NbtAddress;
-import jcifs.smb.NtStatus;
-import jcifs.smb.SmbException;
+import jcifsng.CIFSException;
+import jcifsng.NetbiosAddress;
+import jcifsng.config.PropertyConfiguration;
+import jcifsng.context.BaseContext;
+import jcifsng.netbios.NbtAddress;
+import jcifsng.smb.NtStatus;
 
 
 public class SmbUtil {
@@ -86,7 +85,27 @@ public class SmbUtil {
 //        else return false;
 //    }
 
-	final static public String getSmbHostIpAddressFromName(String hn) {
+    final static public String getSmbHostIpAddressFromName(String cifs_level, String hn) {
+        if (JcifsFile.JCIFS_LEVEL_JCIFS1.equals(cifs_level)) {
+            return getSmbHostIpAddressFromNameSmb1(hn);
+        } else {
+            return getSmbHostIpAddressFromNameSmb2(hn);
+        }
+    }
+
+    final static private String getSmbHostIpAddressFromNameSmb1(String hn) {
+        String ipAddress=null;
+        try {
+            jcifs.netbios.NbtAddress nbtAddress = jcifs.netbios.NbtAddress.getByName(hn);
+            InetAddress address = nbtAddress.getInetAddress();
+            ipAddress= address.getHostAddress();
+        } catch (UnknownHostException e) {
+//			e.printStackTrace();
+        }
+        return ipAddress;
+    }
+
+    final static private String getSmbHostIpAddressFromNameSmb2(String hn) {
 		String ipAddress=null;
 		try {
             BaseContext bc = new BaseContext(new PropertyConfiguration(System.getProperties()));
@@ -150,8 +169,38 @@ public class SmbUtil {
 //		}
 //    	return srv_name;
 // 	};
- 	
-	final static public String getSmbHostNameFromAddress(String address) {
+
+    final static public String getSmbHostNameFromAddress(String cifs_level, String address) {
+        if (JcifsFile.JCIFS_LEVEL_JCIFS1.equals(cifs_level)) {
+            return getSmbHostNameFromAddressSmb1(address);
+        } else {
+            return getSmbHostNameFromAddressSmb2(address);
+        }
+    }
+
+    final static private String getSmbHostNameFromAddressSmb1(String address) {
+        String srv_name="";
+        try {
+            jcifs.netbios.NbtAddress[] uax = jcifs.netbios.NbtAddress.getAllByAddress(address);
+            if (uax!=null) {
+                for(int i=0;i<uax.length;i++) {
+                    jcifs.netbios.NbtAddress ua = uax[i];
+                    String hn;
+                    hn = ua.firstCalledName();
+//	            	Log.v("","getSmbHostName Address="+address+
+//		            		", cn="+hn+", hn="+ua.getHostName()+", nametype="+ua.getNameType()+", nodetype="+ua.getNodeType());
+                    if (ua.getNameType()==32) {
+                        srv_name=hn;
+                        break;
+                    }
+                }
+            }
+        } catch (UnknownHostException e) {
+        }
+        return srv_name;
+    };
+
+    final static private String getSmbHostNameFromAddressSmb2(String address) {
 		String srv_name="";
 	   	try {
             BaseContext bc = new BaseContext(new PropertyConfiguration(System.getProperties()));
@@ -176,9 +225,27 @@ public class SmbUtil {
         }
         return srv_name;
  	};
- 	
 
- 	final static public boolean isNbtAddressActive(String address) {
+
+    final static public boolean isNbtAddressActive(String cifs_level, String address) {
+        if (JcifsFile.JCIFS_LEVEL_JCIFS1.equals(cifs_level)) {
+            return isNbtAddressActiveSmb1(address);
+        } else {
+            return isNbtAddressActiveSmb2(address);
+        }
+    }
+
+    final static private boolean isNbtAddressActiveSmb1(String address) {
+        boolean result=false;
+        try {
+            jcifs.netbios.NbtAddress na = jcifs.netbios.NbtAddress.getByName(address);
+            result=na.isActive();
+        } catch (UnknownHostException e) {
+        }
+        return result;
+    };
+
+ 	final static private boolean isNbtAddressActiveSmb2(String address) {
 		boolean result=false;
 		try {
             BaseContext bc = new BaseContext(new PropertyConfiguration(System.getProperties()));
@@ -191,10 +258,9 @@ public class SmbUtil {
         return result;
 	};
 
-	final static public String[] analyzeNtStatusCode(SmbException e, Context c,
-                                                     String url, String user) {
+	final static public String[] analyzeNtStatusCode(JcifsException e, Context c, String url, String user) {
 		String[] result=new String[4];
-		
+
 		String host_t1=url.replace("smb://", "");
 		String host_id=host_t1;
 		String share_name="";
@@ -208,13 +274,13 @@ public class SmbUtil {
 				file_path=fpath_t1;
 			}
 		}
-		
+
 		result[1]=host_id;
 		result[2]=share_name;
 		result[3]=file_path;
-		
+
 		String msg_text=e.getMessage();
-		
+
 		switch(e.getNtStatus()) {
 		    case NtStatus.NT_STATUS_OK:
 		    	msg_text="";

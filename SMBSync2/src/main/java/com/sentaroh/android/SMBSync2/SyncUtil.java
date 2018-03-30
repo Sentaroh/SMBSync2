@@ -63,11 +63,6 @@ import android.widget.Spinner;
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.StringUtil;
 
-import jcifs.CIFSException;
-import jcifs.Config;
-import jcifs.config.PropertyConfiguration;
-import jcifs.context.BaseContext;
-
 public final class SyncUtil {
     private Context mContext = null;
 
@@ -118,45 +113,45 @@ public final class SyncUtil {
         mLog.resetLogReceiver();
     }
 
-    static public BaseContext buildBaseContextWithSmbProtocol(RemoteAuthInfo ra) {
-        BaseContext bc=null;
-        try {
-            Properties prop=new Properties();
-//            prop_master.setProperty("jcifs.smb.lmCompatibility", "0");
-//            prop_master.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
-//            prop_master.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
-//            prop_master.setProperty("jcifs.smb.client.signingPreferred", "false");
-//            prop_master.setProperty("jcifs.smb.client.signingEnforced", "false");
-//            prop_master.setProperty("jcifs.smb.client.encryptionEnabled", "false");
-//            prop_master.setProperty("jcifs.smb.useRawNTLM", "true");
+//    static public BaseContext buildBaseContextWithSmbProtocol(RemoteAuthInfo ra) {
+//        BaseContext bc=null;
+//        try {
+//            Properties prop=new Properties();
+////            prop_master.setProperty("jcifs.smb.lmCompatibility", "0");
+////            prop_master.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
+////            prop_master.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
+////            prop_master.setProperty("jcifs.smb.client.signingPreferred", "false");
+////            prop_master.setProperty("jcifs.smb.client.signingEnforced", "false");
+////            prop_master.setProperty("jcifs.smb.client.encryptionEnabled", "false");
+////            prop_master.setProperty("jcifs.smb.useRawNTLM", "true");
+////
+////            prop_master.setProperty("jcifs.smb.client.forceExtendedSecurity", "false");
+////
+////            prop_master.setProperty("jcifs.smb.client.useSMB2Negotiation", "false");
 //
-//            prop_master.setProperty("jcifs.smb.client.forceExtendedSecurity", "false");
-//
-//            prop_master.setProperty("jcifs.smb.client.useSMB2Negotiation", "false");
-
-//            prop_master.setProperty("jcifs.smb.client.minVersion","SMB1");
-//            prop_master.setProperty("jcifs.smb.client.maxVersion","SMB1");
-            if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM)) {
-                if (ra.smb_ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced","true");
-                else prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
-                prop.setProperty("jcifs.smb.client.minVersion","SMB1");
-                prop.setProperty("jcifs.smb.client.maxVersion","SMB210");
-            } else if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
-                prop.setProperty("jcifs.smb.client.minVersion","SMB1");
-                prop.setProperty("jcifs.smb.client.maxVersion","SMB1");
-                prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
-            } else if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) {
-                if (ra.smb_ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced","true");
-                else prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
-                prop.setProperty("jcifs.smb.client.minVersion","SMB210");
-                prop.setProperty("jcifs.smb.client.maxVersion","SMB210");
-            }
-            bc = new BaseContext(new PropertyConfiguration(prop));
-        } catch (CIFSException e) {
-            e.printStackTrace();
-        }
-        return bc;
-    }
+////            prop_master.setProperty("jcifs.smb.client.minVersion","SMB1");
+////            prop_master.setProperty("jcifs.smb.client.maxVersion","SMB1");
+//            if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM)) {
+//                if (ra.smb_ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced","true");
+//                else prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
+//                prop.setProperty("jcifs.smb.client.minVersion","SMB1");
+//                prop.setProperty("jcifs.smb.client.maxVersion","SMB210");
+//            } else if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+//                prop.setProperty("jcifs.smb.client.minVersion","SMB1");
+//                prop.setProperty("jcifs.smb.client.maxVersion","SMB1");
+//                prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
+//            } else if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) {
+//                if (ra.smb_ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced","true");
+//                else prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
+//                prop.setProperty("jcifs.smb.client.minVersion","SMB210");
+//                prop.setProperty("jcifs.smb.client.maxVersion","SMB210");
+//            }
+//            bc = new BaseContext(new PropertyConfiguration(prop));
+//        } catch (CIFSException e) {
+//            e.printStackTrace();
+//        }
+//        return bc;
+//    }
 
     final public void flushLog() {
         mLog.flushLog();

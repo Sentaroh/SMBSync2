@@ -37,8 +37,6 @@ import java.util.Collections;
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
 
-import jcifs.smb.SmbFile;
-
 public class SyncThreadSyncFile {
 
 //	static final private int syncDeleteSmbToExternal(SyncThreadCommonArea stwa,   
@@ -134,6 +132,15 @@ public class SyncThreadSyncFile {
                 }
             }
         } catch (IOException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " master=" + master_dir + ", target=" + target_dir);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     SyncUtil.getExecutedMethodName() + " master=" + master_dir + ", target=" + target_dir);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
@@ -249,17 +256,26 @@ public class SyncThreadSyncFile {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " master=" + master_dir + ", target=" + target_dir);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
         return sync_result;
     }
 
     ;
 
-    private static boolean isSmbFileExitst(SyncThreadWorkArea stwa, ArrayList<String> smb_fl, String fp) throws IOException {
+    private static boolean isSmbFileExitst(SyncThreadWorkArea stwa, ArrayList<String> smb_fl, String fp) throws IOException, JcifsException {
         boolean mf_exists = (Collections.binarySearch(stwa.smbFileList, fp) >= 0);
         if (!mf_exists) {
             stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " file list not found, fp=" + fp);
-            SmbFile mf = new SmbFile(fp, stwa.masterCifsContext);
+            JcifsFile mf = new JcifsFile(fp, stwa.masterAuth);
             mf_exists = mf.exists();
         }
         return mf_exists;
@@ -363,7 +379,7 @@ public class SyncThreadSyncFile {
 //	};
 
     static final private int syncDeleteInternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
-                                                     String master_dir, String to_base, String target_dir, SmbFile tf) {
+                                                     String master_dir, String to_base, String target_dir, JcifsFile tf) {
         int sync_result = 0;
         File mf;
         if (stwa.gp.settingDebugLevel >= 2)
@@ -377,9 +393,9 @@ public class SyncThreadSyncFile {
                                 SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     mf = new File(master_dir);
                     if (mf.exists()) {
-                        SmbFile[] children = tf.listFiles();
+                        JcifsFile[] children = tf.listFiles();
                         if (children != null) {
-                            for (SmbFile element : children) {
+                            for (JcifsFile element : children) {
                                 String tmp = element.getName();
                                 if (tmp.lastIndexOf("/") > 0)
                                     tmp = tmp.substring(0, tmp.lastIndexOf("/"));
@@ -414,7 +430,7 @@ public class SyncThreadSyncFile {
                         }
                     } else {
                         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, target_dir)) {
-                            SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir + "/", stwa.targetCifsContext);
+                            SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir + "/", stwa.targetAuth);
                         } else {
                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
                                     stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
@@ -434,7 +450,7 @@ public class SyncThreadSyncFile {
                         if (!mf.exists()) {
                             if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
-                                    SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetCifsContext);
+                                    SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
                                 } else {
                                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
                                             stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
@@ -444,6 +460,15 @@ public class SyncThreadSyncFile {
                     }
                 }
             }
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " master=" + master_dir + ", target=" + target_dir);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         } catch (IOException e) {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     SyncUtil.getExecutedMethodName() + " master=" + master_dir + ", target=" + target_dir);
@@ -704,6 +729,15 @@ public class SyncThreadSyncFile {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
         return sync_result;
@@ -891,6 +925,15 @@ public class SyncThreadSyncFile {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
         return sync_result;
@@ -903,9 +946,9 @@ public class SyncThreadSyncFile {
         File mf = new File(from_path);
         int sync_result = moveCopyInternalToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            SmbFile tf = null;
+            JcifsFile tf = null;
             try {
-                tf = new SmbFile(to_path + "/", stwa.targetCifsContext);
+                tf = new JcifsFile(to_path + "/", stwa.targetAuth);
                 sync_result = syncDeleteInternalToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf);
             } catch (MalformedURLException e) {
                 stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + to_path);
@@ -918,8 +961,6 @@ public class SyncThreadSyncFile {
         }
         return sync_result;
     }
-
-    ;
 
     static public int syncCopyInternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                             String from_path, String to_path) {
@@ -942,7 +983,7 @@ public class SyncThreadSyncFile {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path + ", move=" + move_file);
         int sync_result = 0;
-        SmbFile tf;
+        JcifsFile tf;
         try {
             if (mf.exists()) {
                 String t_from_path = from_path.substring(from_base.length());
@@ -951,7 +992,7 @@ public class SyncThreadSyncFile {
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
                         if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetCifsContext);
+                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
                         }
                         File[] children = mf.listFiles();
                         if (children != null) {
@@ -1005,7 +1046,7 @@ public class SyncThreadSyncFile {
                             !SyncThread.isHiddenFile(stwa, sti, mf) &&
                             SyncThread.isFileSelected(stwa, sti, t_from_path)) {
 //						mf = new File(from_path);
-                        tf = new SmbFile(to_path, stwa.targetCifsContext);
+                        tf = new JcifsFile(to_path, stwa.targetAuth);
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
@@ -1033,7 +1074,7 @@ public class SyncThreadSyncFile {
                                         }
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                    to_path, tf.lastModified(), mf.lastModified());
+                                                    to_path, tf.getLastModified(), mf.lastModified());
 //											SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                             SyncThread.deleteInternalStorageItem(stwa, false, sti, from_path);
@@ -1069,7 +1110,7 @@ public class SyncThreadSyncFile {
                                             String tmsg = tf_exists ? stwa.msgs_mirror_task_file_replaced : stwa.msgs_mirror_task_file_copied;
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
                                             SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                    to_path, tf.lastModified(), mf.lastModified());
+                                                    to_path, tf.getLastModified(), mf.lastModified());
 //											SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                         }
@@ -1089,6 +1130,15 @@ public class SyncThreadSyncFile {
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
         } catch (IOException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
@@ -1251,6 +1301,15 @@ public class SyncThreadSyncFile {
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
         } catch (IOException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
@@ -1453,6 +1512,15 @@ public class SyncThreadSyncFile {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
         return sync_result;
@@ -1465,9 +1533,9 @@ public class SyncThreadSyncFile {
         File mf = new File(from_path);
         int sync_result = moveCopyInternalToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            SmbFile tf = null;
+            JcifsFile tf = null;
             try {
-                tf = new SmbFile(to_path + "/", stwa.targetCifsContext);
+                tf = new JcifsFile(to_path + "/", stwa.targetAuth);
                 sync_result = syncDeleteInternalToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf);
             } catch (MalformedURLException e) {
                 stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + to_path);
@@ -1504,7 +1572,7 @@ public class SyncThreadSyncFile {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path + ", move=" + move_file);
         int sync_result = 0;
-        SmbFile tf;
+        JcifsFile tf;
         try {
             if (mf.exists()) {
                 String t_from_path = from_path.substring(from_base.length());
@@ -1513,7 +1581,7 @@ public class SyncThreadSyncFile {
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
                         if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetCifsContext);
+                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
                         }
                         File[] children = mf.listFiles();
                         if (children != null) {
@@ -1567,7 +1635,7 @@ public class SyncThreadSyncFile {
                             !SyncThread.isHiddenFile(stwa, sti, mf) &&
                             SyncThread.isFileSelected(stwa, sti, t_from_path)) {
 //						mf = new File(from_path);
-                        tf = new SmbFile(to_path, stwa.targetCifsContext);
+                        tf = new JcifsFile(to_path, stwa.targetAuth);
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
@@ -1595,7 +1663,7 @@ public class SyncThreadSyncFile {
                                         }
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                    to_path, tf.lastModified(), mf.lastModified());
+                                                    to_path, tf.getLastModified(), mf.lastModified());
 //											SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                             SyncThread.deleteExternalStorageItem(stwa, false, sti, from_path);
@@ -1631,7 +1699,7 @@ public class SyncThreadSyncFile {
                                             String tmsg = tf_exists ? stwa.msgs_mirror_task_file_replaced : stwa.msgs_mirror_task_file_copied;
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
                                             SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                    to_path, tf.lastModified(), mf.lastModified());
+                                                    to_path, tf.getLastModified(), mf.lastModified());
 //											SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                         }
@@ -1659,6 +1727,15 @@ public class SyncThreadSyncFile {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
         return sync_result;
@@ -1668,9 +1745,9 @@ public class SyncThreadSyncFile {
 
     static public int syncMirrorSmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                               String from_path, String to_path) {
-        SmbFile mf = null;
+        JcifsFile mf = null;
         try {
-            mf = new SmbFile(from_path, stwa.masterCifsContext);
+            mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
@@ -1694,9 +1771,9 @@ public class SyncThreadSyncFile {
 
     static public int syncCopySmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                             String from_path, String to_path) {
-        SmbFile mf = null;
+        JcifsFile mf = null;
         try {
-            mf = new SmbFile(from_path, stwa.masterCifsContext);
+            mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
@@ -1712,9 +1789,9 @@ public class SyncThreadSyncFile {
 
     static public int syncMoveSmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                             String from_path, String to_path) {
-        SmbFile mf = null;
+        JcifsFile mf = null;
         try {
-            mf = new SmbFile(from_path, stwa.masterCifsContext);
+            mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
@@ -1728,7 +1805,7 @@ public class SyncThreadSyncFile {
     ;
 
     static private int moveCopySmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, boolean move_file,
-                                             String from_base, String from_path, SmbFile mf, String to_base, String to_path, ArrayList<String> smb_fl) {
+                                             String from_base, String from_path, JcifsFile mf, String to_base, String to_path, ArrayList<String> smb_fl) {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path + ", move=" + move_file);
         int sync_result = 0;
@@ -1743,9 +1820,9 @@ public class SyncThreadSyncFile {
                         if (sti.isSyncEmptyDirectory()) {
                             SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
                         }
-                        SmbFile[] children = mf.listFiles();
+                        JcifsFile[] children = mf.listFiles();
                         if (children != null) {
-                            for (SmbFile element : children) {
+                            for (JcifsFile element : children) {
                                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     while (stwa.syncTaskRetryCount > 0) {
                                         if (element.isFile()) {
@@ -1824,17 +1901,17 @@ public class SyncThreadSyncFile {
                                             }
                                         }
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                            tf.setLastModified(mf.lastModified());
+                                            tf.setLastModified(mf.getLastModified());
                                             SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                    to_path, tf.lastModified(), mf.lastModified());
+                                                    to_path, tf.lastModified(), mf.getLastModified());
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
-                                            SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterCifsContext);
+                                            SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterAuth);
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(),
                                                     stwa.msgs_mirror_task_file_moved);
                                         }
                                     } else {
-                                        SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterCifsContext);
+                                        SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterAuth);
 
                                         SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(),
                                                 stwa.msgs_mirror_task_file_moved);
@@ -1862,9 +1939,9 @@ public class SyncThreadSyncFile {
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             String tmsg = tf_exists ? stwa.msgs_mirror_task_file_replaced : stwa.msgs_mirror_task_file_copied;
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
-                                            tf.setLastModified(mf.lastModified());
+                                            tf.setLastModified(mf.getLastModified());
                                             SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                    to_path, tf.lastModified(), mf.lastModified());
+                                                    to_path, tf.lastModified(), mf.getLastModified());
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                         }
@@ -1892,6 +1969,15 @@ public class SyncThreadSyncFile {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
         return sync_result;
     }
@@ -1901,9 +1987,9 @@ public class SyncThreadSyncFile {
     static public int syncMirrorSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                               String from_path, String to_path) {
         stwa.smbFileList = new ArrayList<String>();
-        SmbFile mf = null;
+        JcifsFile mf = null;
         try {
-            mf = new SmbFile(from_path, stwa.masterCifsContext);
+            mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
@@ -1926,9 +2012,9 @@ public class SyncThreadSyncFile {
 
     static public int syncCopySmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                             String from_path, String to_path) {
-        SmbFile mf = null;
+        JcifsFile mf = null;
         try {
-            mf = new SmbFile(from_path, stwa.masterCifsContext);
+            mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
@@ -1944,9 +2030,9 @@ public class SyncThreadSyncFile {
 
     static public int syncMoveSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                             String from_path, String to_path) {
-        SmbFile mf = null;
+        JcifsFile mf = null;
         try {
-            mf = new SmbFile(from_path, stwa.masterCifsContext);
+            mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
@@ -1960,7 +2046,7 @@ public class SyncThreadSyncFile {
     ;
 
     static private int moveCopySmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, boolean move_file,
-                                             String from_base, String from_path, SmbFile mf, String to_base, String to_path, ArrayList<String> smb_fl) {
+                                             String from_base, String from_path, JcifsFile mf, String to_base, String to_path, ArrayList<String> smb_fl) {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path + ", move=" + move_file);
         int sync_result = 0;
@@ -1975,9 +2061,9 @@ public class SyncThreadSyncFile {
                         if (sti.isSyncEmptyDirectory()) {
                             SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
                         }
-                        SmbFile[] children = mf.listFiles();
+                        JcifsFile[] children = mf.listFiles();
                         if (children != null) {
-                            for (SmbFile element : children) {
+                            for (JcifsFile element : children) {
                                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     while (stwa.syncTaskRetryCount > 0) {
                                         if (element.isFile()) {
@@ -2067,16 +2153,16 @@ public class SyncThreadSyncFile {
                                                     }
                                                 }
                                                 SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                        to_path, sf.lastModified(), mf.lastModified());
+                                                        to_path, sf.lastModified(), mf.getLastModified());
                                                 SyncThread.scanMediaFile(stwa, to_path);
                                             }
                                             stwa.totalCopyCount++;
-                                            SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterCifsContext);
+                                            SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterAuth);
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(),
                                                     stwa.msgs_mirror_task_file_moved);
                                         }
                                     } else {
-                                        SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterCifsContext);
+                                        SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterAuth);
                                         SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(),
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
@@ -2116,7 +2202,7 @@ public class SyncThreadSyncFile {
                                                     }
                                                 }
                                                 SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                        to_path, sf.lastModified(), mf.lastModified());
+                                                        to_path, sf.lastModified(), mf.getLastModified());
                                                 SyncThread.scanMediaFile(stwa, to_path);
                                             }
                                             stwa.totalCopyCount++;
@@ -2145,6 +2231,15 @@ public class SyncThreadSyncFile {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
         return sync_result;
@@ -2154,9 +2249,9 @@ public class SyncThreadSyncFile {
 
     static public int syncMirrorSmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                          String from_path, String to_path) {
-        SmbFile mf = null;
+        JcifsFile mf = null;
         try {
-            mf = new SmbFile(from_path, stwa.masterCifsContext);
+            mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() +
                     " From=" + from_path + ", Master file error");
@@ -2169,9 +2264,9 @@ public class SyncThreadSyncFile {
         int sync_result = moveCopySmbToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
             Collections.sort(stwa.smbFileList);
-            SmbFile tf = null;
+            JcifsFile tf = null;
             try {
-                tf = new SmbFile(from_path, stwa.masterCifsContext);
+                tf = new JcifsFile(from_path, stwa.masterAuth);
             } catch (MalformedURLException e) {
                 stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() +
                         " To=" + to_path + ", Target file instance creation error occurred during sync delete process");
@@ -2192,9 +2287,9 @@ public class SyncThreadSyncFile {
 
     static public int syncCopySmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                        String from_path, String to_path) {
-        SmbFile mf = null;
+        JcifsFile mf = null;
         try {
-            mf = new SmbFile(from_path, stwa.masterCifsContext);
+            mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
@@ -2210,9 +2305,9 @@ public class SyncThreadSyncFile {
 
     static public int syncMoveSmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                        String from_path, String to_path) {
-        SmbFile mf = null;
+        JcifsFile mf = null;
         try {
-            mf = new SmbFile(from_path, stwa.masterCifsContext);
+            mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
@@ -2226,11 +2321,11 @@ public class SyncThreadSyncFile {
     ;
 
     static private int moveCopySmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, boolean move_file,
-                                        String from_base, String from_path, SmbFile mf, String to_base, String to_path, ArrayList<String> smb_fl) {
+                                        String from_base, String from_path, JcifsFile mf, String to_base, String to_path, ArrayList<String> smb_fl) {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path + ", move=" + move_file);
         int sync_result = 0;
-        SmbFile tf;
+        JcifsFile tf;
         try {
             if (mf.exists()) {
                 String t_from_path = from_path.substring(from_base.length());
@@ -2239,11 +2334,11 @@ public class SyncThreadSyncFile {
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
                         if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetCifsContext);
+                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
                         }
-                        SmbFile[] children = mf.listFiles();
+                        JcifsFile[] children = mf.listFiles();
                         if (children != null) {
-                            for (SmbFile element : children) {
+                            for (JcifsFile element : children) {
                                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     while (stwa.syncTaskRetryCount > 0) {
                                         if (element.isFile()) {
@@ -2296,7 +2391,7 @@ public class SyncThreadSyncFile {
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
                             !SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, t_from_path)) {
 //						tf = new File(to_path);
-                        tf = new SmbFile(to_path, stwa.targetCifsContext);
+                        tf = new JcifsFile(to_path, stwa.targetAuth);
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
@@ -2328,12 +2423,12 @@ public class SyncThreadSyncFile {
 //													to_path, tf.lastModified(), mf.lastModified());
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
-                                            SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.targetCifsContext);
+                                            SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.targetAuth);
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(),
                                                     stwa.msgs_mirror_task_file_moved);
                                         }
                                     } else {
-                                        SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.targetCifsContext);
+                                        SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.targetAuth);
 
                                         SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(),
                                                 stwa.msgs_mirror_task_file_moved);
@@ -2391,6 +2486,15 @@ public class SyncThreadSyncFile {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
         return sync_result;
     }
@@ -2398,7 +2502,7 @@ public class SyncThreadSyncFile {
     ;
 
     static final private int syncDeleteSmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
-                                                String master_dir, String to_base, String target_dir, SmbFile tf, ArrayList<String> smb_fl) {
+                                                String master_dir, String to_base, String target_dir, JcifsFile tf, ArrayList<String> smb_fl) {
         int sync_result = 0;
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " master=", master_dir, ", target=", target_dir);
@@ -2410,9 +2514,9 @@ public class SyncThreadSyncFile {
                         !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
                                 SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     if (isSmbFileExitst(stwa, smb_fl, master_dir)) {
-                        SmbFile[] children = tf.listFiles();
+                        JcifsFile[] children = tf.listFiles();
                         if (children != null) {
-                            for (SmbFile element : children) {
+                            for (JcifsFile element : children) {
                                 String tmp_fname = element.getName();
                                 if (element.isFile() || (element.isDirectory() && sti.isSyncSubDirectory())) {
                                     while (stwa.syncTaskRetryCount > 0) {
@@ -2453,7 +2557,7 @@ public class SyncThreadSyncFile {
                         }
                     } else {
                         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, target_dir)) {
-                            SyncThread.deleteSmbItem(stwa, true, sti, target_dir, target_dir, stwa.targetCifsContext);
+                            SyncThread.deleteSmbItem(stwa, true, sti, target_dir, target_dir, stwa.targetAuth);
                         } else {
                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
                                     stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
@@ -2471,7 +2575,7 @@ public class SyncThreadSyncFile {
                         if (!isSmbFileExitst(stwa, smb_fl, master_dir)) {
                             if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
-                                    SyncThread.deleteSmbItem(stwa, true, sti, target_dir, target_dir, stwa.targetCifsContext);
+                                    SyncThread.deleteSmbItem(stwa, true, sti, target_dir, target_dir, stwa.targetAuth);
                                 } else {
                                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
                                             stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
@@ -2490,11 +2594,18 @@ public class SyncThreadSyncFile {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " master=" + master_dir + ", target=" + target_dir);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
         return sync_result;
     }
-
-    ;
 
     static private int waitRetryInterval(SyncThreadWorkArea stwa) {
         int result = 0;
@@ -2513,7 +2624,5 @@ public class SyncThreadSyncFile {
         }
         return result;
     }
-
-    ;
 
 }

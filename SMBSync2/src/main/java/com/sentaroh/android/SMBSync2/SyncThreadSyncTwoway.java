@@ -133,6 +133,13 @@ public class SyncThreadSyncTwoway {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
         return sync_result;

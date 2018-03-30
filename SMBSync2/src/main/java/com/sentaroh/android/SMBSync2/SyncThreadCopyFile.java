@@ -29,16 +29,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-
-import jcifs.smb.SmbFile;
-import jcifs.smb.SmbFileInputStream;
-import jcifs.smb.SmbFileOutputStream;
 
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.android.Utilities.SafFileManager.SafFileItem;
+
 
 public class SyncThreadCopyFile {
 
@@ -186,7 +184,7 @@ public class SyncThreadCopyFile {
 
     static public int copyFileInternalToSmb(SyncThreadWorkArea stwa,
                                             SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name)
-            throws IOException {
+            throws IOException, JcifsException{
         if (sti.isSyncUseSmallIoBuffer()) {
             return copyFileInternalToSmbSmallBuffer(stwa, sti, from_dir, mf, to_dir, file_name);
         } else {
@@ -198,21 +196,21 @@ public class SyncThreadCopyFile {
 
     static private int copyFileInternalToSmbSmallBuffer(SyncThreadWorkArea stwa,
                                                         SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name)
-            throws IOException {
+            throws IOException, JcifsException {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "copyFileInternalToSmbSmallBuffer from_dir=" + from_dir + ", to_dir=" + to_dir + ", name=" + file_name);
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        SmbFile out_dest = new SmbFile(to_file_dest, stwa.targetCifsContext);
+        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        SmbFile out_file = new SmbFile(to_file_path, stwa.targetCifsContext);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetCifsContext);
+        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
         FileInputStream is = new FileInputStream(mf);
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
-        SmbFileOutputStream ofs = new SmbFileOutputStream(out_file);
+        OutputStream ofs = out_file.getOutputStream();
 //		BufferedOutputStream ofs=new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
 
         int buffer_read_bytes = 0;
@@ -238,11 +236,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -260,22 +258,22 @@ public class SyncThreadCopyFile {
 
     static private int copyFileInternalToSmbLargeBuffer(SyncThreadWorkArea stwa,
                                                         SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name)
-            throws IOException {
+            throws IOException, JcifsException {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "copyFileInternalToSmbLargeBuffer from_dir=" + from_dir + ", to_dir=" + to_dir + ", name=" + file_name);
 
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        SmbFile out_dest = new SmbFile(to_file_dest, stwa.targetCifsContext);
+        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        SmbFile out_file = new SmbFile(to_file_path, stwa.targetCifsContext);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetCifsContext);
+        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
         FileInputStream is = new FileInputStream(mf);
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
-        SmbFileOutputStream os = new SmbFileOutputStream(out_file);
+        OutputStream os = out_file.getOutputStream();
         BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
 
         int buffer_read_bytes = 0;
@@ -301,11 +299,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -323,7 +321,7 @@ public class SyncThreadCopyFile {
 
     static public int copyFileSmbToSmb(SyncThreadWorkArea stwa,
                                        SyncTaskItem sti, String from_dir, String to_dir, String file_name)
-            throws IOException {
+            throws IOException, JcifsException {
         if (sti.isSyncUseSmallIoBuffer()) {
             return copyFileSmbToSmbSmallBuffer(stwa, sti, from_dir, to_dir, file_name);
         } else {
@@ -335,25 +333,25 @@ public class SyncThreadCopyFile {
 
     static private int copyFileSmbToSmbSmallBuffer(SyncThreadWorkArea stwa,
                                                    SyncTaskItem sti, String from_dir, String to_dir, String file_name)
-            throws IOException {
+            throws IOException, JcifsException {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "copyFileSmbToSmbSmallBuffer from_dir=" + from_dir + ", to_dir=" + to_dir + ", name=" + file_name);
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        SmbFile out_dest = new SmbFile(to_file_dest, stwa.targetCifsContext);
+        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        SmbFile out_file = new SmbFile(to_file_path, stwa.targetCifsContext);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetCifsContext);
+        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
         String in_file_path = from_dir + "/" + file_name;
-        SmbFile mf = new SmbFile(in_file_path, stwa.masterCifsContext);
+        JcifsFile mf = new JcifsFile(in_file_path, stwa.masterAuth);
 
-        SmbFileInputStream is = new SmbFileInputStream(mf);
+        InputStream is = mf.getInputStream();
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
 
-        SmbFileOutputStream ofs = new SmbFileOutputStream(out_file);
+        OutputStream ofs = out_file.getOutputStream();
 //		BufferedOutputStream ofs=new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
 
         int buffer_read_bytes = 0;
@@ -379,11 +377,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.getLastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -401,26 +399,26 @@ public class SyncThreadCopyFile {
 
     static private int copyFileSmbToSmbLargeBuffer(SyncThreadWorkArea stwa,
                                                    SyncTaskItem sti, String from_dir, String to_dir, String file_name)
-            throws IOException {
+            throws IOException, JcifsException {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "copyFileSmbToSmbLargeBuffer from_dir=" + from_dir + ", to_dir=" + to_dir + ", name=" + file_name);
 
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        SmbFile out_dest = new SmbFile(to_file_dest, stwa.targetCifsContext);
+        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        SmbFile out_file = new SmbFile(to_file_path, stwa.targetCifsContext);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetCifsContext);
+        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
         String in_file_path = from_dir + "/" + file_name;
-        SmbFile mf = new SmbFile(in_file_path, stwa.masterCifsContext);
+        JcifsFile mf = new JcifsFile(in_file_path, stwa.masterAuth);
 
-        SmbFileInputStream is = new SmbFileInputStream(mf);
+        InputStream is = mf.getInputStream();
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
 
-        SmbFileOutputStream os = new SmbFileOutputStream(out_file);
+        OutputStream os = out_file.getOutputStream();
         BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
 
         int buffer_read_bytes = 0;
@@ -446,11 +444,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.getLastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -604,7 +602,7 @@ public class SyncThreadCopyFile {
 
     static public int copyFileExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                             String from_dir, File mf, String to_dir, String file_name)
-            throws IOException {
+            throws IOException, JcifsException {
         if (sti.isSyncUseSmallIoBuffer()) {
             return copyFileExternalToSmbSmallBuffer(stwa, sti, from_dir, mf, to_dir, file_name);
         } else {
@@ -616,19 +614,19 @@ public class SyncThreadCopyFile {
 
     static private int copyFileExternalToSmbSmallBuffer(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                         String from_dir, File mf, String to_dir, String file_name)
-            throws IOException {
+            throws IOException, JcifsException {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        SmbFile out_dest = new SmbFile(to_file_dest, stwa.targetCifsContext);
+        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        SmbFile out_file = new SmbFile(to_file_path, stwa.targetCifsContext);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetCifsContext);
+        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
         FileInputStream is = new FileInputStream(mf);
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
-        SmbFileOutputStream ofs = new SmbFileOutputStream(out_file);
+        OutputStream ofs = out_file.getOutputStream();
 //		BufferedOutputStream ofs=new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
 
         int buffer_read_bytes = 0;
@@ -654,11 +652,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -676,19 +674,19 @@ public class SyncThreadCopyFile {
 
     static private int copyFileExternalToSmbLargeBuffer(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                         String from_dir, File mf, String to_dir, String file_name)
-            throws IOException {
+            throws IOException, JcifsException {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        SmbFile out_dest = new SmbFile(to_file_dest, stwa.targetCifsContext);
+        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        SmbFile out_file = new SmbFile(to_file_path, stwa.targetCifsContext);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetCifsContext);
+        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
         FileInputStream is = new FileInputStream(mf);
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
-        SmbFileOutputStream os = new SmbFileOutputStream(out_file);
+        OutputStream os = out_file.getOutputStream();
         BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
 
         int buffer_read_bytes = 0;
@@ -714,11 +712,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -779,8 +777,8 @@ public class SyncThreadCopyFile {
 //	};
 
     static public int copyFileSmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
-                                            SmbFile mf, String to_dir, String file_name)
-            throws IOException {
+                                            JcifsFile mf, String to_dir, String file_name)
+            throws IOException, JcifsException {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
@@ -790,7 +788,7 @@ public class SyncThreadCopyFile {
         File t_dir = new File(to_dir);
         if (!t_dir.exists()) t_dir.mkdirs();
 
-        SmbFileInputStream is = new SmbFileInputStream(mf);
+        InputStream is = mf.getInputStream();
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
 
         FileOutputStream os = new FileOutputStream(out_file);
@@ -840,8 +838,8 @@ public class SyncThreadCopyFile {
     ;
 
     static public int copyFileSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
-                                            SmbFile mf, String to_dir, String file_name)
-            throws IOException {
+                                            JcifsFile mf, String to_dir, String file_name)
+            throws IOException, JcifsException {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
@@ -867,7 +865,7 @@ public class SyncThreadCopyFile {
             }
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-        SmbFileInputStream is = new SmbFileInputStream(mf);
+        InputStream is = mf.getInputStream();
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
 
         OutputStream os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
