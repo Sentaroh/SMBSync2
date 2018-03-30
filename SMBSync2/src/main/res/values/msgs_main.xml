@@ -241,6 +241,7 @@
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_server">Server/address</string>
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">User name</string>
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_password">Password</string>
+    <string name="msgs_profile_edit_sync_folder_dlg_show_password">Show password</string>
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share">Share name</string>
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">List Share</string>
     <string name="msgs_profile_edit_sync_folder_dlg_directory">Directory</string>

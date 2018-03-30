@@ -84,4 +84,7 @@ dependencies {
 
     implementation files('libs/Utilities-1.0.7.aar')
     implementation 'com.android.support:appcompat-v7:22.2.1'
+    implementation 'com.android.support:support-annotations:24.2.0'
+
+
 }

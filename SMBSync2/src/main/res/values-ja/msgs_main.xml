@@ -236,6 +236,7 @@
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_server">サーバ 名/アドレス</string>
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">ユーザー名</string>
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_password">パスワード</string>
+    <string name="msgs_profile_edit_sync_folder_dlg_show_password">パスワードの表示</string>
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share">共有名</string>
     <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">共有一覧</string>
     <string name="msgs_profile_edit_sync_folder_dlg_directory">ディレクトリ</string>

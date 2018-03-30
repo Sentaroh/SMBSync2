@@ -97,8 +97,9 @@
 
                 <CheckedTextView
                     android:id="@+id/edit_sync_folder_dlg_ctv_use_remote_port_number"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number"
@@ -134,8 +135,9 @@
 
                 <EditText
                     android:id="@+id/edit_sync_folder_dlg_remote_user"
-                    android:layout_width="145dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:hint="@string/msgs_profile_edit_sync_folder_dlg_remote_smb_username"
                     android:inputType="text"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -148,18 +150,22 @@
                     android:hint="@string/msgs_profile_edit_sync_folder_dlg_remote_smb_password"
                     android:inputType="textPassword"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <CheckedTextView
+                    android:id="@+id/edit_sync_folder_dlg_ctv_show_password"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_edit_sync_folder_dlg_show_password"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    tools:ignore="RtlHardcoded" />
+
             </LinearLayout>
-            <CheckedTextView
-                android:id="@+id/edit_sync_folder_dlg_ctv_show_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:gravity="center_vertical"
-                android:text="@string/msgs_profile_edit_sync_folder_dlg_show_password"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                tools:ignore="RtlHardcoded" />
-            <LinearLayout
+
+                        <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

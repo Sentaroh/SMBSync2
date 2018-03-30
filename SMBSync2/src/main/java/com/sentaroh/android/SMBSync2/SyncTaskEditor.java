@@ -60,7 +60,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -588,6 +591,17 @@ public class SyncTaskEditor extends DialogFragment {
                 et_sync_folder_user.setEnabled(isChecked);
                 et_sync_folder_pswd.setEnabled(isChecked);
                 checkSyncFolderValidation(dialog, sfev);
+            }
+        });
+
+        final CheckedTextView ctv_show_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_password);
+        ctv_show_password.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CheckedTextView ctv=(CheckedTextView)view;
+                ctv.setChecked(!ctv.isChecked());
+                if (!ctv.isChecked()) et_sync_folder_pswd.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                else et_sync_folder_pswd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             }
         });
 
