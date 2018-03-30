@@ -9,8 +9,8 @@ android {
         minSdkVersion 21
         targetSdkVersion 23
 
-        versionCode 57
-        versionName "1.34"
+        versionCode 58
+        versionName "1.35"
 
 //        compileOptions {
 //            sourceCompatibility JavaVersion.VERSION_1_7
