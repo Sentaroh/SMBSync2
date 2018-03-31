@@ -1230,10 +1230,6 @@ public class SyncTaskUtil {
             e.printStackTrace();
             err_msg = e.getMessage();
             util.addDebugMsg(1, "I", "Test logon failed." + "\n" + err_msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-            err_msg = e.getMessage();
-            util.addDebugMsg(1, "I", "Test logon failed." + "\n" + err_msg);
         }
         Thread.currentThread().setUncaughtExceptionHandler(defaultUEH);
         ntfy.notifyToListener(true, new Object[]{err_msg});
