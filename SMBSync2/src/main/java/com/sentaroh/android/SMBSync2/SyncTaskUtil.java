@@ -3724,7 +3724,9 @@ public class SyncTaskUtil {
                 File lf3 = new File(gp.applicationRootDirectory + "/" + SMBSYNC2_PROFILE_FILE_NAME_V3);
                 File lf4 = new File(gp.applicationRootDirectory + "/" + SMBSYNC2_PROFILE_FILE_NAME_V4);
                 File lf5 = new File(gp.applicationRootDirectory + "/" + SMBSYNC2_PROFILE_FILE_NAME_V5);
-                if (lf5.exists()) pf = SMBSYNC2_PROFILE_FILE_NAME_V5;
+                File lf6 = new File(gp.applicationRootDirectory + "/" + SMBSYNC2_PROFILE_FILE_NAME_V6);
+                if (lf6.exists()) pf = SMBSYNC2_PROFILE_FILE_NAME_V6;
+                else if (lf5.exists()) pf = SMBSYNC2_PROFILE_FILE_NAME_V5;
                 else if (lf4.exists()) pf = SMBSYNC2_PROFILE_FILE_NAME_V4;
                 else if (lf3.exists()) pf = SMBSYNC2_PROFILE_FILE_NAME_V3;
                 else if (lf2.exists()) pf = SMBSYNC2_PROFILE_FILE_NAME_V2;
@@ -4731,6 +4733,10 @@ public class SyncTaskUtil {
             if (!parm[66].equals("") && !parm[66].equals("end")) stli.setMasterSmbIpcSigningEnforced((parm[66].equals("1") ? true : false));
             if (!parm[67].equals("") && !parm[67].equals("end")) stli.setTargetSmbIpcSigningEnforced((parm[67].equals("1") ? true : false));
 
+            if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
+                stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
+            if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
+                stli.setTargetSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
             sync.add(stli);
         }
     }

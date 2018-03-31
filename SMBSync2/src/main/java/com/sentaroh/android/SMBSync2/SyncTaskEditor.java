@@ -691,7 +691,7 @@ public class SyncTaskEditor extends DialogFragment {
                 RemoteAuthInfo ra=new RemoteAuthInfo();
                 ra.smb_user_name=user;
                 ra.smb_user_password=pass;
-                ra.smb_smb_protocol=""+sp_sync_folder_smb_proto.getSelectedItemPosition();
+                ra.smb_smb_protocol=getSmbSelectedProtocol(sp_sync_folder_smb_proto);
                 ra.smb_ipc_signing_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
                 if (SmbUtil.isValidIpAddress(et_remote_host.getText().toString())) {
                     mTaskUtil.testSmbLogonDlg("", et_remote_host.getText().toString().trim(),
@@ -751,7 +751,6 @@ public class SyncTaskEditor extends DialogFragment {
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_month, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_MONTH);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day_of_year, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR);
-
     }
 
     private void setSyncFolderInternalListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
@@ -1402,9 +1401,7 @@ public class SyncTaskEditor extends DialogFragment {
             }
             nsfev.folder_remote_use_pswd =ctv_sync_folder_use_pswd.isChecked();
             nsfev.folder_remote_share = et_sync_folder_share_name.getText().toString().trim();
-            if (sp_sync_folder_smb_proto.getSelectedItemPosition()==Integer.parseInt(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM)) nsfev.folder_smb_protocol=SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM;
-            else if (sp_sync_folder_smb_proto.getSelectedItemPosition()==Integer.parseInt(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) nsfev.folder_smb_protocol=SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY;
-            else if (sp_sync_folder_smb_proto.getSelectedItemPosition()==Integer.parseInt(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) nsfev.folder_smb_protocol=SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY;
+            nsfev.folder_smb_protocol=getSmbSelectedProtocol(sp_sync_folder_smb_proto);;
             nsfev.folder_smb_ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
         }
         return nsfev;
@@ -1457,7 +1454,7 @@ public class SyncTaskEditor extends DialogFragment {
             ll_sync_folder_smb_view.setVisibility(LinearLayout.VISIBLE);
             ll_sync_folder_sdcard_view.setVisibility(LinearLayout.GONE);
             ll_sync_folder_zip_view.setVisibility(LinearLayout.GONE);
-            if (String.valueOf(sp_sync_folder_smb_proto.getSelectedItemPosition()).equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+            if (getSmbSelectedProtocol(sp_sync_folder_smb_proto).equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
                 ctv_sync_folder_smb_ipc_enforced.setEnabled(false);
             } else {
                 ctv_sync_folder_smb_ipc_enforced.setEnabled(true);
@@ -1910,6 +1907,19 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.notifyDataSetChanged();
     }
 
+    private String getSmbSelectedProtocol(Spinner spinner) {
+        if (spinner.getSelectedItem()==null) {
+            return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY;
+        }
+        String sel=spinner.getSelectedItem().toString();
+        if (spinner.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1_only))) {
+            return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY;
+        } else if (spinner.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb2_only))) {
+            return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY;
+        }
+        return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY;
+    }
+
     private void setSyncFolderSmbProtoSpinner(SyncTaskItem sti, Spinner spinner, String cv) {
         SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
@@ -1919,12 +1929,12 @@ public class SyncTaskEditor extends DialogFragment {
         spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
         spinner.setAdapter(adapter);
 
-        adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_system));
+//        adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_system));
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1_only));
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb2_only));
 
-        if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) spinner.setSelection(1);
-        else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) spinner.setSelection(2);
+        if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) spinner.setSelection(0);
+        else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) spinner.setSelection(1);
         else spinner.setSelection(0);
     }
 
