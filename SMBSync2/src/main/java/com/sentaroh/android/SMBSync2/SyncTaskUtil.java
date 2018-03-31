@@ -43,7 +43,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Properties;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -96,8 +95,6 @@ import com.sentaroh.jcifs.JcifsAuth;
 import com.sentaroh.jcifs.JcifsException;
 import com.sentaroh.jcifs.JcifsFile;
 import com.sentaroh.jcifs.JcifsUtil;
-
-import org.w3c.dom.Text;
 
 public class SyncTaskUtil {
 
@@ -1375,7 +1372,7 @@ public class SyncTaskUtil {
             remote_pass = editpass.getText().toString();
         }
 
-        final String smb_proto=""+sp_sync_folder_smb_proto.getSelectedItemPosition();
+        final String smb_proto=sp_sync_folder_smb_proto.getSelectedItemPosition()==0 ? SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY:SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY;
         final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
         setSmbUserPass(remote_user, remote_pass);
 //		Log.v("","u="+remote_user+", pass="+remote_pass);
@@ -1437,7 +1434,8 @@ public class SyncTaskUtil {
             remote_pass = editpass.getText().toString();
         }
 
-        final String smb_proto=""+sp_sync_folder_smb_proto.getSelectedItemPosition();
+        final String smb_proto=sp_sync_folder_smb_proto.getSelectedItemPosition()==0 ?
+                SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY:SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY;
         final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
         remote_share = editshare.getText().toString();
 
