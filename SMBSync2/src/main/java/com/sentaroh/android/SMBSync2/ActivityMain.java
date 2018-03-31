@@ -1099,17 +1099,17 @@ public class ActivityMain extends AppCompatActivity {
 //		menu.findItem(R.id.menu_top_scheduler).setVisible(false);
         boolean pm_bo = false;
         if (Build.VERSION.SDK_INT >= 23) {
-            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(true);
-            String packageName = mContext.getPackageName();
-            PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-            pm_bo = pm.isIgnoringBatteryOptimizations(packageName);
-            String bo_title = "";
-            if (pm_bo)
-                bo_title = mContext.getString(R.string.msgs_menu_battery_optimization_disabled);
-            else bo_title = mContext.getString(R.string.msgs_menu_battery_optimization_enabled);
-            menu.findItem(R.id.menu_top_show_battery_optimization).setTitle(bo_title);
+//            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(true);
+//            String packageName = mContext.getPackageName();
+//            PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+//            pm_bo = pm.isIgnoringBatteryOptimizations(packageName);
+//            String bo_title = "";
+//            if (pm_bo)
+//                bo_title = mContext.getString(R.string.msgs_menu_battery_optimization_disabled);
+//            else bo_title = mContext.getString(R.string.msgs_menu_battery_optimization_enabled);
+//            menu.findItem(R.id.menu_top_show_battery_optimization).setTitle(bo_title);
         } else {
-            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(false);
+//            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(false);
         }
         if (isUiEnabled()) {
             menu.findItem(R.id.menu_top_housekeep).setEnabled(true);
@@ -1135,7 +1135,7 @@ public class ActivityMain extends AppCompatActivity {
             if (mGp.debuggable) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
             else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
 
-            menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(true);
+//            menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(true);
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             if (!mGp.settingLogOption) menu.findItem(R.id.menu_top_browse_log).setVisible(false);
@@ -1162,7 +1162,7 @@ public class ActivityMain extends AppCompatActivity {
             if (mGp.debuggable) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
             else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
 
-            menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(false);
+//            menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(false);
         }
         menu.findItem(R.id.menu_top_add_shortcut).setVisible(false);
         return super.onPrepareOptionsMenu(menu);
@@ -1239,9 +1239,9 @@ public class ActivityMain extends AppCompatActivity {
             case R.id.menu_top_add_shortcut:
                 addShortcut();
                 return true;
-            case R.id.menu_top_show_battery_optimization:
-                showBatteryOptimization();
-                return true;
+//            case R.id.menu_top_show_battery_optimization:
+//                showBatteryOptimization();
+//                return true;
             case R.id.menu_top_list_storage:
                 listStorageInfo();
                 return true;

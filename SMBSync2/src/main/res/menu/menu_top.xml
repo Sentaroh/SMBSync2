@@ -38,9 +38,9 @@
           android:icon="@android:drawable/ic_menu_preferences"
           />
 
-    <item android:id="@+id/menu_top_show_battery_optimization"
-      	  android:title="@string/msgs_menu_battery_optimization_disabled" 
-    	  />
+    <!--<item android:id="@+id/menu_top_show_battery_optimization"-->
+      	  <!--android:title="@string/msgs_menu_battery_optimization_disabled" -->
+    	  <!--/>-->
     
     <item android:id="@+id/menu_top_kill"
           android:title="@string/msgs_menu_kill" 
