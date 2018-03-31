@@ -37,7 +37,6 @@ import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.android.Utilities.SafFileManager.SafFileItem;
 
-
 public class SyncThreadCopyFile {
 
     public final static int SHOW_PROGRESS_THRESHOLD_VALUE = 1024 * 1024 * 4;
@@ -184,7 +183,7 @@ public class SyncThreadCopyFile {
 
     static public int copyFileInternalToSmb(SyncThreadWorkArea stwa,
                                             SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name)
-            throws IOException, JcifsException{
+            throws IOException, JcifsException {
         if (sti.isSyncUseSmallIoBuffer()) {
             return copyFileInternalToSmbSmallBuffer(stwa, sti, from_dir, mf, to_dir, file_name);
         } else {

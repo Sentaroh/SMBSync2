@@ -80,7 +80,6 @@ import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.ZipFileListItem;
 
-
 public class SyncThread extends Thread {
 
     private GlobalParameters mGp = null;
@@ -110,7 +109,7 @@ public class SyncThread extends Thread {
         public boolean setLastModifiedIsFunctional = true;
 
         public JcifsAuth masterAuth=null;
-        public String masterCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS1;
+        public String masterCifsLevel= JcifsFile.JCIFS_LEVEL_JCIFS1;
         public JcifsAuth targetAuth=null;
         public String targetCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS1;
 

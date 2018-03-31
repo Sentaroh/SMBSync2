@@ -90,7 +90,7 @@ public class ReadSmbFilelist implements Runnable {
                 ", addr=" + mHostAddr + ", port=" + mHostPort + ", remoteUrl=" + remoteUrl + ", Dir=" +
                 remoteDir+", user="+rauth.smb_user_name+", smb_proto="+rauth.smb_smb_protocol);
 
-        mCifslevel = rauth.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)?JcifsFile.JCIFS_LEVEL_JCIFS1:JcifsFile.JCIFS_LEVEL_JCIFS2;
+        mCifslevel = rauth.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)? JcifsFile.JCIFS_LEVEL_JCIFS1:JcifsFile.JCIFS_LEVEL_JCIFS2;
     }
 
     @Override

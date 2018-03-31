@@ -1156,7 +1156,7 @@ public class SyncTaskUtil {
                         ntfy.notifyToListener(true, new Object[]{unreachble_msg});
                     }
                 } else {
-                    String lbl=ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)?JcifsFile.JCIFS_LEVEL_JCIFS1:JcifsFile.JCIFS_LEVEL_JCIFS2;
+                    String lbl=ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)? JcifsFile.JCIFS_LEVEL_JCIFS1:JcifsFile.JCIFS_LEVEL_JCIFS2;
                     String ipAddress = SmbUtil.getSmbHostIpAddressFromName(lbl, host);
                     if (ipAddress == null) {
                         try {

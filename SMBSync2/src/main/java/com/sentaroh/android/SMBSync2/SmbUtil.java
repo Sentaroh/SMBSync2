@@ -35,9 +35,7 @@ import jcifsng.CIFSException;
 import jcifsng.NetbiosAddress;
 import jcifsng.config.PropertyConfiguration;
 import jcifsng.context.BaseContext;
-import jcifsng.netbios.NbtAddress;
 import jcifsng.smb.NtStatus;
-
 
 public class SmbUtil {
 	

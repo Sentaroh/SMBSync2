@@ -5,7 +5,7 @@ import java.util.Properties;
 public class JcifsAuth {
 	private jcifs.smb.NtlmPasswordAuthentication mOldAuth=null;
 	private jcifsng.CIFSContext mNgAuth=null;
-	private String mLevel=JcifsFile.JCIFS_LEVEL_JCIFS1;
+	private String mLevel= JcifsFile.JCIFS_LEVEL_JCIFS1;
 
 	public JcifsAuth(String level, String domain, String user, String pass) {
         mLevel=level;
