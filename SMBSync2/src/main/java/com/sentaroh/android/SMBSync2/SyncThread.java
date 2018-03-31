@@ -80,6 +80,11 @@ import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.ZipFileListItem;
 
+import com.sentaroh.jcifs.JcifsAuth;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
+import com.sentaroh.jcifs.JcifsUtil;
+
 public class SyncThread extends Thread {
 
     private GlobalParameters mGp = null;
@@ -834,7 +839,7 @@ public class SyncThread extends Thread {
     ;
 
     private String resolveHostName(String cifs_level, String hn) {
-        String ipAddress = SmbUtil.getSmbHostIpAddressFromName(cifs_level, hn);
+        String ipAddress = JcifsUtil.getSmbHostIpAddressFromName(cifs_level, hn);
         if (ipAddress == null) {//add dns name resolve
             try {
                 InetAddress[] addr_list = Inet4Address.getAllByName(hn);

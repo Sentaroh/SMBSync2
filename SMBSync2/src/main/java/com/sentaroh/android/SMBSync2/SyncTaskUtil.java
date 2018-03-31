@@ -92,6 +92,10 @@ import com.sentaroh.android.Utilities.Dialog.DialogBackKeyListener;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistAdapter;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistItem;
 import com.sentaroh.android.Utilities.Widget.CustomTextView;
+import com.sentaroh.jcifs.JcifsAuth;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
+import com.sentaroh.jcifs.JcifsUtil;
 
 import org.w3c.dom.Text;
 
@@ -1137,11 +1141,11 @@ public class SyncTaskUtil {
                 if (host.equals("")) {
                     boolean reachable = false;
                     if (port.equals("")) {
-                        if (SmbUtil.isIpAddressAndPortConnected(addr, 139, 3500) || SmbUtil.isIpAddressAndPortConnected(addr, 445, 3500)) {
+                        if (JcifsUtil.isIpAddressAndPortConnected(addr, 139, 3500) || JcifsUtil.isIpAddressAndPortConnected(addr, 445, 3500)) {
                             reachable = true;
                         }
                     } else {
-                        reachable = SmbUtil.isIpAddressAndPortConnected(addr, Integer.parseInt(port), 3500);
+                        reachable = JcifsUtil.isIpAddressAndPortConnected(addr, Integer.parseInt(port), 3500);
                     }
                     if (reachable) {
                         testSmbAuth(addr, port, share, ra, ntfy);
@@ -1157,7 +1161,7 @@ public class SyncTaskUtil {
                     }
                 } else {
                     String lbl=ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)? JcifsFile.JCIFS_LEVEL_JCIFS1:JcifsFile.JCIFS_LEVEL_JCIFS2;
-                    String ipAddress = SmbUtil.getSmbHostIpAddressFromName(lbl, host);
+                    String ipAddress = JcifsUtil.getSmbHostIpAddressFromName(lbl, host);
                     if (ipAddress == null) {
                         try {
                             InetAddress[] addr_list = Inet4Address.getAllByName(host);
@@ -1222,7 +1226,7 @@ public class SyncTaskUtil {
             sf.connect();
             util.addDebugMsg(1, "I", "Test logon completed, host=" + host + ", port=" + port+", user="+ra.smb_user_name);
         } catch (JcifsException e) {
-            String[] e_msg = SmbUtil.analyzeNtStatusCode(e, mContext, url, ra.smb_user_name);
+            String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, url, ra.smb_user_name);
             err_msg = e.getMessage()+"\n"+e_msg[0];
             util.addDebugMsg(1, "I", "Test logon failed." + "\n" + err_msg);
         } catch (MalformedURLException e) {
@@ -1376,7 +1380,7 @@ public class SyncTaskUtil {
         setSmbUserPass(remote_user, remote_pass);
 //		Log.v("","u="+remote_user+", pass="+remote_pass);
         String t_url = "";
-        if (SmbUtil.isValidIpAddress(edithost.getText().toString())) {
+        if (JcifsUtil.isValidIpAddress(edithost.getText().toString())) {
             remote_addr = edithost.getText().toString();
             t_url = remote_addr;
         } else {
@@ -1441,7 +1445,7 @@ public class SyncTaskUtil {
 
         setSmbUserPass(remote_user, remote_pass);
         String t_url = "";
-        if (SmbUtil.isValidIpAddress(edithost.getText().toString())) {
+        if (JcifsUtil.isValidIpAddress(edithost.getText().toString())) {
             remote_addr = edithost.getText().toString();
             t_url = remote_addr;
         } else {
@@ -3289,11 +3293,11 @@ public class SyncTaskUtil {
     private boolean isIpAddrSmbHost(String address, String scan_port) {
         boolean smbhost = false;
         if (scan_port.equals("")) {
-            if (!SmbUtil.isIpAddressAndPortConnected(address, 139, 3000)) {
-                smbhost = SmbUtil.isIpAddressAndPortConnected(address, 445, 3000);
+            if (!JcifsUtil.isIpAddressAndPortConnected(address, 139, 3000)) {
+                smbhost = JcifsUtil.isIpAddressAndPortConnected(address, 445, 3000);
             } else smbhost = true;
         } else {
-            smbhost = SmbUtil.isIpAddressAndPortConnected(address,
+            smbhost = JcifsUtil.isIpAddressAndPortConnected(address,
                     Integer.parseInt(scan_port), 3000);
         }
         util.addDebugMsg(2, "I", "isIpAddrSmbHost Address=" + address +
@@ -3302,7 +3306,7 @@ public class SyncTaskUtil {
     }
 
     private String getSmbHostName(String cifs_level, String address) {
-        String srv_name = SmbUtil.getSmbHostNameFromAddress(cifs_level, address);
+        String srv_name = JcifsUtil.getSmbHostNameFromAddress(cifs_level, address);
         util.addDebugMsg(1, "I", "getSmbHostName Address=" + address + ", name=" + srv_name);
         return srv_name;
     }

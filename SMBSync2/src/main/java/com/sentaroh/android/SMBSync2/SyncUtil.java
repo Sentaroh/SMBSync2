@@ -62,6 +62,7 @@ import android.widget.Spinner;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.StringUtil;
+import com.sentaroh.jcifs.JcifsUtil;
 
 public final class SyncUtil {
     private Context mContext = null;
@@ -389,8 +390,8 @@ public final class SyncUtil {
 
     public static boolean isSmbHostAddressConnected(String addr) {
         boolean result = false;
-        if (SmbUtil.isIpAddressAndPortConnected(addr, 139, 3500) ||
-                SmbUtil.isIpAddressAndPortConnected(addr, 445, 3500)) result = true;
+        if (JcifsUtil.isIpAddressAndPortConnected(addr, 139, 3500) ||
+                JcifsUtil.isIpAddressAndPortConnected(addr, 445, 3500)) result = true;
         return result;
     }
 
@@ -398,7 +399,7 @@ public final class SyncUtil {
 
     public static boolean isSmbHostAddressConnected(String addr, int port) {
         boolean result = false;
-        result = SmbUtil.isIpAddressAndPortConnected(addr, port, 3500);
+        result = JcifsUtil.isIpAddressAndPortConnected(addr, port, 3500);
 //		Log.v("","addr="+addr+", port="+port+", result="+result);
         return result;
     }

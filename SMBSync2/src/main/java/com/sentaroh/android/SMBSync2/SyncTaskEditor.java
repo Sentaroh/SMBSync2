@@ -44,6 +44,7 @@ import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
+import com.sentaroh.jcifs.JcifsUtil;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -693,7 +694,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ra.smb_user_password=pass;
                 ra.smb_smb_protocol=getSmbSelectedProtocol(sp_sync_folder_smb_proto);
                 ra.smb_ipc_signing_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
-                if (SmbUtil.isValidIpAddress(et_remote_host.getText().toString())) {
+                if (JcifsUtil.isValidIpAddress(et_remote_host.getText().toString())) {
                     mTaskUtil.testSmbLogonDlg("", et_remote_host.getText().toString().trim(),
                             et_sync_folder_port.getText().toString().trim(),
                             et_sync_folder_share_name.getText().toString().trim(), ra, null);
@@ -1383,7 +1384,7 @@ public class SyncTaskEditor extends DialogFragment {
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {//smb
             nsfev.folder_directory = et_sync_folder_smb_dir_name.getText().toString().trim();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SMB;
-            if (SmbUtil.isValidIpAddress(et_remote_host.getText().toString())) {
+            if (JcifsUtil.isValidIpAddress(et_remote_host.getText().toString())) {
                 nsfev.folder_remote_addr = et_remote_host.getText().toString().trim();
             } else {
                 nsfev.folder_remote_host = et_remote_host.getText().toString().trim();

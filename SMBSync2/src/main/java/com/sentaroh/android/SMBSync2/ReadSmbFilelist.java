@@ -34,6 +34,10 @@ import android.util.Log;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistItem;
+import com.sentaroh.jcifs.JcifsAuth;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
+import com.sentaroh.jcifs.JcifsUtil;
 
 public class ReadSmbFilelist implements Runnable {
     private ThreadCtrl getFLCtrl = null;
@@ -81,7 +85,7 @@ public class ReadSmbFilelist implements Runnable {
             t_host2 = t_host11.substring(0, t_host11.indexOf(":"));
             mHostPort = t_host11.replace(t_host2 + ":", "");
         }
-        if (SmbUtil.isValidIpAddress(t_host2)) {
+        if (JcifsUtil.isValidIpAddress(t_host2)) {
             mHostAddr = t_host2;
         } else {
             mHostName = t_host2;
@@ -131,7 +135,7 @@ public class ReadSmbFilelist implements Runnable {
                 }
             }
         } else {
-            if (SmbUtil.getSmbHostIpAddressFromName(mCifslevel, mHostName) == null) {
+            if (JcifsUtil.getSmbHostIpAddressFromName(mCifslevel, mHostName) == null) {
                 error_exit = true;
                 if (getFLCtrl.isEnabled()) {
                     getFLCtrl.setThreadResultError();
@@ -243,7 +247,7 @@ public class ReadSmbFilelist implements Runnable {
         } catch (JcifsException e) {
             e.printStackTrace();
             String cause="";
-            String[] e_msg=SmbUtil.analyzeNtStatusCode(e, mContext, remoteUrl + remoteDir, mRemoteAuthInfo.smb_user_name);
+            String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, remoteUrl + remoteDir, mRemoteAuthInfo.smb_user_name);
 //            e_msg[0] = e.getMessage()+"\n"+e_msg[0];
             if (e.getCause()!=null) {
                 cause=e.getCause().toString();
@@ -294,7 +298,7 @@ public class ReadSmbFilelist implements Runnable {
             }
             mUtil.addDebugMsg(1, "E", e.toString());
             getFLCtrl.setThreadResultError();
-            String[] e_msg = SmbUtil.analyzeNtStatusCode(e, mContext, remoteUrl, "");
+            String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, remoteUrl, "");
 //            e_msg[0] = e.getMessage()+"\n"+e_msg[0];
             if (!cause.equals("")) getFLCtrl.setThreadMessage(cause.substring(cause.indexOf(":")+1)+"\n"+e_msg[0]);
             else getFLCtrl.setThreadMessage(e_msg[0]);
