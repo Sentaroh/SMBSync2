@@ -57,6 +57,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.service.notification.NotificationListenerService;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -1454,11 +1455,11 @@ public class SyncTaskUtil {
                 @SuppressWarnings("unchecked")
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
 
-                if (rfl.size()==0) {
-                    String msg=mContext.getString(R.string.msgs_dir_empty);
-                    commonDlg.showCommonDialog(false,"W",msg,"",null);
-                    return;
-                }
+//                if (rfl.size()==0) {
+//                    String msg=mContext.getString(R.string.msgs_dir_empty);
+//                    commonDlg.showCommonDialog(false,"W",msg,"",null);
+//                    return;
+//                }
 
                 for (int i = 0; i < rfl.size(); i++) {
                     if (rfl.get(i).isDir() && rfl.get(i).canRead()) rows.add(rfl.get(i));
@@ -1522,6 +1523,12 @@ public class SyncTaskUtil {
         final Button btn_refresh = (Button) dialog.findViewById(R.id.file_select_edit_dlg_refresh_btn);
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
+
+        RemoteAuthInfo ra=new RemoteAuthInfo();
+        ra.smb_smb_protocol=smb_proto;
+        ra.smb_ipc_signing_enforced=ipc_enforced;
+        ra.smb_user_name=smbUser;
+        ra.smb_user_password=smbPass;
 
         final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
         final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mContext, true, false);
@@ -1594,11 +1601,21 @@ public class SyncTaskUtil {
 
 //        if (show_create) btn_create.setVisibility(Button.VISIBLE);
 //        else btn_create.setVisibility(Button.GONE);
-        btn_create.setVisibility(Button.GONE);
+        btn_create.setVisibility(Button.VISIBLE);
         btn_create.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                NotifyEvent ne=new NotifyEvent(mContext);
+                ne.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        btn_refresh.performClick();
+                    }
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                    }
+                });
+                createRemoteDirectoryDlg(tv_home.getText(), ra, ne);
             }
         });
 
@@ -1678,7 +1695,168 @@ public class SyncTaskUtil {
         return pli;
     }
 
-    ;
+    private void createRemoteDirectoryDlg(final String c_dir, final RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
+        // カスタムダイアログの生成
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(com.sentaroh.android.Utilities.R.layout.single_item_input_dlg);
+        final TextView dlg_title = (TextView) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_title);
+        dlg_title.setText(mContext.getString(com.sentaroh.android.Utilities.R.string.msgs_file_select_edit_dlg_create));
+        final TextView dlg_msg = (TextView) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_msg);
+        final TextView dlg_cmp = (TextView) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_name);
+        final Button btnOk = (Button) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_ok_btn);
+        final Button btnCancel = (Button) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_cancel_btn);
+        final EditText etDir=(EditText) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_dir);
+
+        dlg_cmp.setText(mContext.getString(com.sentaroh.android.Utilities.R.string.msgs_file_select_edit_parent_directory)+":"+c_dir);
+        CommonDialog.setDlgBoxSizeCompact(dialog);
+        btnOk.setEnabled(false);
+        final Handler hndl=new Handler();
+        etDir.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length()>0) {
+                    btnOk.setEnabled(false);
+                    String n_dir=c_dir+s.toString();
+                    NotifyEvent ne=new NotifyEvent(mContext);
+                    ne.setListener(new NotifyEventListener() {
+                        @Override
+                        public void positiveResponse(Context context, Object[] objects) {
+                            hndl.post(new Runnable() {
+                                  @Override
+                                  public void run() {
+                                      btnOk.setEnabled(false);
+                                      dlg_msg.setText(mContext.getString(
+                                              com.sentaroh.android.Utilities.R.string.msgs_single_item_input_dlg_duplicate_dir));
+                                  }
+                              });
+                        }
+
+                        @Override
+                        public void negativeResponse(Context context, Object[] objects) {
+                            hndl.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    btnOk.setEnabled(true);
+                                    dlg_msg.setText("");
+                                }
+                            });
+                        }
+                    });
+                    isRemoteDirectoryExists(n_dir, ra, ne);
+                } else {
+                    btnOk.setEnabled(false);
+                    dlg_msg.setText("");
+                }
+            }
+        });
+
+        //OK button
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+//				NotifyEvent
+                final String creat_dir=etDir.getText().toString();
+                final String n_path=c_dir+creat_dir+"/";
+                NotifyEvent ntfy=new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEvent.NotifyEventListener(){
+                    @Override
+                    public void positiveResponse(Context c, Object[] o) {
+
+                        NotifyEvent ne=new NotifyEvent(mContext);
+                        ne.setListener(new NotifyEventListener() {
+                            @Override
+                            public void positiveResponse(Context context, Object[] objects) {
+                                hndl.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        p_ntfy.notifyToListener(true, null);
+                                        dialog.dismiss();
+                                    }
+                                });
+                            }
+                            @Override
+                            public void negativeResponse(Context context, Object[] objects) {
+                                hndl.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        p_ntfy.notifyToListener(false, null);
+                                        dialog.dismiss();
+                                    }
+                                });
+                            }
+                        });
+                        createRemoteDirectory(c_dir+etDir.getText().toString(), ra, ne);
+                    }
+                    @Override
+                    public void negativeResponse(Context c, Object[] o) {
+                    }
+                });
+                CommonDialog cd=new CommonDialog(mContext, mFragMgr);
+                cd.showCommonDialog(true, "W", mContext.getString(com.sentaroh.android.Utilities.R.string.msgs_file_select_edit_confirm_create_directory), n_path, ntfy);
+            }
+        });
+        // CANCELボタンの指定
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+                p_ntfy.notifyToListener(false, null);
+            }
+        });
+        dialog.show();
+    };
+
+    private void isRemoteDirectoryExists(final String new_dir, final RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
+        final Dialog dialog=showProgressSpinIndicator(mContext);
+        dialog.show();
+        Thread th=new Thread(){
+          @Override
+          public void run() {
+              JcifsAuth auth=null;
+              if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS1, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+              else auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS2, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+              try {
+                  JcifsFile jf=new JcifsFile(new_dir, auth);
+                  if (jf.exists()) p_ntfy.notifyToListener(true, null);
+                  else p_ntfy.notifyToListener(false, null);
+              } catch (MalformedURLException e) {
+                  e.printStackTrace();
+              } catch (JcifsException e) {
+                  e.printStackTrace();
+              }
+              dialog.dismiss();
+          }
+        };
+        th.start();
+    }
+
+    private void createRemoteDirectory(final String new_dir, final RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
+        final Dialog dialog=showProgressSpinIndicator(mContext);
+        dialog.show();
+        Thread th=new Thread(){
+            @Override
+            public void run() {
+                JcifsAuth auth=null;
+                if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS1, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+                else auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS2, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+                try {
+                    JcifsFile jf=new JcifsFile(new_dir, auth);
+                    jf.mkdirs();
+                    if (jf.exists()) p_ntfy.notifyToListener(true, null);
+                    else p_ntfy.notifyToListener(false, null);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (JcifsException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+        };
+        th.start();
+    }
 
 //	static public SyncTaskItem getUsbSafUsedSyncTask(GlobalParameters gp) {
 //		SyncTaskItem pli=null;

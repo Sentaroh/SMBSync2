@@ -246,7 +246,8 @@ public class ReadSmbFilelist implements Runnable {
             String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, remoteUrl + remoteDir, mRemoteAuthInfo.smb_user_name);
 //            e_msg[0] = e.getMessage()+"\n"+e_msg[0];
             if (e.getCause()!=null) {
-                cause=e.getCause().toString();
+                String tc=e.getCause().toString();
+                cause=tc.substring(tc.indexOf(":")+1);
                 mUtil.addDebugMsg(1, "E", cause.substring(cause.indexOf(":")+1));
                 e_msg[0]=cause+"\n"+e_msg[0];
             }

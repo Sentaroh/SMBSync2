@@ -1341,8 +1341,6 @@ public class SyncThread extends Thread {
         }
     }
 
-    ;
-
     static public void deleteInternalStorageItem(SyncThreadWorkArea stwa, boolean del_dir, SyncTaskItem sti, String tmp_target) {
         if (stwa.gp.settingDebugLevel >= 1)
             stwa.util.addDebugMsg(1, "I", "deleteInternalStorageItem entered, del=" + tmp_target);
@@ -1354,8 +1352,6 @@ public class SyncThread extends Thread {
             }
         }
     }
-
-    ;
 
     static public void deleteInternalStorageFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp, File lf) {
         if (stwa.gp.settingDebugLevel >= 2)
@@ -1409,8 +1405,6 @@ public class SyncThread extends Thread {
         }
     }
 
-    ;
-
     private void reconnectWifi() {
         boolean wifi_reconnect_required = false;
         try {
@@ -1463,8 +1457,6 @@ public class SyncThread extends Thread {
 
     }
 
-    ;
-
     private String isWifiConditionSatisfied(SyncTaskItem sti) {
         String result = "";
         if (sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
@@ -1476,7 +1468,6 @@ public class SyncThread extends Thread {
             } else if (sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
                 ArrayList<String> wl = sti.getSyncWifiConnectionWhiteList();
                 ArrayList<Pattern> inc = new ArrayList<Pattern>();
-//				ArrayList<Pattern> exc=new ArrayList<Pattern>();
                 int flags = Pattern.CASE_INSENSITIVE;
                 for (String apl : wl) {
                     if (apl.startsWith("I")) {
@@ -1484,9 +1475,6 @@ public class SyncThread extends Thread {
                         if (apl.substring(1).endsWith("*")) suffix = "$";
                         inc.add(Pattern.compile(prefix + MiscUtil.convertRegExp(apl.substring(1)) + suffix, flags));
                         mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied include added=" + inc.get(inc.size() - 1).toString());
-//					} else {
-//						exc.add(Pattern.compile(MiscUtil.convertRegExp(apl.substring(1)), flags));
-//						mStca.util.addDebugMsg(1,"I", "isWifiConditionSatisfied exclude added="+exc.get(inc.size()-1).toString());
                     }
                 }
                 if (!getWifiConnectedAP().equals("")) {
@@ -1501,16 +1489,6 @@ public class SyncThread extends Thread {
                                 break;
                             }
                         }
-//						if (exc.size()>0) {
-//							for(Pattern pat:exc) {
-//								mt = pat.matcher(mGp.wifiSsid);
-//								if (mt.find()) {
-//									found=false;
-//									mStca.util.addDebugMsg(1,"I", "isWifiConditionSatisfied exclude matched="+pat.toString());
-//									break;
-//								}
-//							}
-//						}
                         if (!found) {
                             if (sti.isSyncTaskSkipIfConnectAnotherWifiSsid()) {
                                 result = mGp.appContext.getString(R.string.msgs_mirror_sync_skipped_wifi_ap_conn_other);
@@ -1518,20 +1496,6 @@ public class SyncThread extends Thread {
                                 result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_conn_other);
                             }
                         }
-//					} else {
-//						Matcher mt;
-//						boolean found=true;
-//						if (exc.size()>0) {
-//							for(Pattern pat:exc) {
-//								mt = pat.matcher(mGp.wifiSsid);
-//								if (mt.find()) {
-//									found=false;
-//									mStca.util.addDebugMsg(1,"I", "isWifiConditionSatisfied exclude matched="+pat.toString());
-//									break;
-//								}
-//							}
-//						}
-//						if (!found) result=SyncTaskItem.SYNC_STATUS_ERROR;
                     }
                 } else {
                     result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
@@ -1542,8 +1506,6 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    ;
-
     private String getWifiConnectedAP() {
         String result = "";
         WifiManager wm = (WifiManager) mGp.appContext.getSystemService(Context.WIFI_SERVICE);
@@ -1552,16 +1514,12 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    ;
-
     private boolean isWifiOn() {
         boolean result = false;
         WifiManager wm = (WifiManager) mGp.appContext.getSystemService(Context.WIFI_SERVICE);
         result = wm.isWifiEnabled();
         return result;
     }
-
-    ;
 
     private boolean setWifiOn() {
         boolean result = false;
@@ -1570,17 +1528,12 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    ;
-
     private boolean setWifiOff() {
         boolean result = false;
         WifiManager wm = (WifiManager) mGp.appContext.getSystemService(Context.WIFI_SERVICE);
         result = wm.setWifiEnabled(false);
         return result;
     }
-
-    ;
-
 
     static public void showProgressMsg(final SyncThreadWorkArea stwa, final String task_name, final String msg) {
         NotificationUtil.showOngoingMsg(stwa.gp, 0, task_name, msg);
@@ -1599,8 +1552,6 @@ public class SyncThread extends Thread {
             });
         }
     }
-
-    ;
 
     static public void showMsg(final SyncThreadWorkArea stwa, boolean log_only,
                                final String task_name, final String cat,
@@ -1639,8 +1590,6 @@ public class SyncThread extends Thread {
         }
     }
 
-    ;
-
     public static void printStackTraceElement(SyncThreadWorkArea stwa, StackTraceElement[] ste) {
         String print_msg = "";
         for (int i = 0; i < ste.length; i++) {
@@ -1651,8 +1600,6 @@ public class SyncThread extends Thread {
             }
         }
     }
-
-    ;
 
     static final public boolean sendConfirmRequest(SyncThreadWorkArea stwa, SyncTaskItem sti, String type, String url) {
         boolean result = true;
@@ -1737,8 +1684,6 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    ;
-
     static final public boolean isLocalFileLastModifiedWasDifferent(SyncThreadWorkArea stwa,
                                                                     SyncTaskItem sti,
                                                                     ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
@@ -1752,8 +1697,6 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    ;
-
     static final public void deleteLocalFileLastModifiedEntry(SyncThreadWorkArea stwa,
                                                               ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
                                                               ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
@@ -1765,8 +1708,6 @@ public class SyncThread extends Thread {
 
     }
 
-    ;
-
     static final public boolean updateLocalFileLastModifiedList(SyncThreadWorkArea stwa,
                                                                 ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
                                                                 ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
@@ -1777,8 +1718,6 @@ public class SyncThread extends Thread {
                 curr_last_modified_list, new_last_modified_list, to_dir, l_lm, r_lm);
     }
 
-    ;
-
     static final public void addLastModifiedItem(SyncThreadWorkArea stwa,
                                                  ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
                                                  ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
@@ -1788,8 +1727,6 @@ public class SyncThread extends Thread {
         if (stwa.gp.settingDebugLevel >= 3)
             stwa.util.addDebugMsg(3, "I", "addLastModifiedItem entry=" + to_dir);
     }
-
-    ;
 
     final private boolean isSetLastModifiedFunctional(String lmp) {
         boolean result =
@@ -1822,8 +1759,6 @@ public class SyncThread extends Thread {
         }
         return isFileChangedDetailCompare(stwa, sti, fp, mf, tf_exists, tf_time, tf_length, ac);
     }
-
-    ;
 
     static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,
                                               JcifsFile mf, JcifsFile tf, boolean ac)
@@ -2306,8 +2241,6 @@ public class SyncThread extends Thread {
         }
     }
 
-    ;
-
     final private void compileFilter(SyncTaskItem sti, ArrayList<String> s_ff, ArrayList<String> s_df) {
         ArrayList<String> ff = new ArrayList<String>();
         ff.addAll(s_ff);
@@ -2384,8 +2317,6 @@ public class SyncThread extends Thread {
             mStwa.util.addDebugMsg(1, "I", "compileFilter" + " File include=" + ffinc + ", exclude=" + ffexc);
 
     }
-
-    ;
 
     final private void createDirFilterArrayList(String prefix, String filter) {
         int flags = Pattern.CASE_INSENSITIVE | Pattern.MULTILINE;

@@ -5,7 +5,7 @@ import java.util.Properties;
 public class JcifsAuth {
 	
 	private jcifs.smb.NtlmPasswordAuthentication mSmb1Auth=null;
-	private jcifsng.CIFSContext mNgAuth=null;
+	private jcifsng.CIFSContext mSmb2Auth =null;
 	private String mLevel = JcifsFile.JCIFS_LEVEL_JCIFS1;
 
 	private String mDomain=null, mUserName=null, mUserPass=null;
@@ -24,7 +24,7 @@ public class JcifsAuth {
                 Properties prop=new Properties();
 				bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
 		        jcifsng.smb.NtlmPasswordAuthentication creds = new jcifsng.smb.NtlmPasswordAuthentication(bc, domain,user,pass);
-		        mNgAuth = bc.withCredentials(creds);
+		        mSmb2Auth = bc.withCredentials(creds);
 			} catch (jcifsng.CIFSException e) {
 				e.printStackTrace();
 			}
@@ -47,7 +47,7 @@ public class JcifsAuth {
 
                 bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
                 jcifsng.smb.NtlmPasswordAuthentication creds = new jcifsng.smb.NtlmPasswordAuthentication(bc, domain,user,pass);
-                mNgAuth = bc.withCredentials(creds);
+                mSmb2Auth = bc.withCredentials(creds);
             } catch (jcifsng.CIFSException e) {
                 e.printStackTrace();
             }
@@ -72,7 +72,7 @@ public class JcifsAuth {
 
                 bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
                 jcifsng.smb.NtlmPasswordAuthentication creds = new jcifsng.smb.NtlmPasswordAuthentication(bc, domain,user,pass);
-                mNgAuth = bc.withCredentials(creds);
+                mSmb2Auth = bc.withCredentials(creds);
             } catch (jcifsng.CIFSException e) {
                 e.printStackTrace();
             }
@@ -88,7 +88,7 @@ public class JcifsAuth {
 	}
 	
 	public jcifsng.CIFSContext getSmb2Auth() {
-		return mNgAuth;
+		return mSmb2Auth;
 	}
 
 	public String getCifsLevel() {
