@@ -57,7 +57,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.service.notification.NotificationListenerService;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -100,7 +99,7 @@ public class SyncTaskUtil {
 
     private Context mContext;
 
-    private SyncUtil util;
+    private SyncUtil mUtil;
 
     private ArrayList<PreferenceParmListIItem>
             importedSettingParmList = new ArrayList<PreferenceParmListIItem>();
@@ -113,7 +112,7 @@ public class SyncTaskUtil {
                  CommonDialog cd, CustomContextMenu ccm, GlobalParameters gp, FragmentManager fm) {
         mContext = c;
         mGp = gp;
-        util = mu;
+        mUtil = mu;
         commonDlg = cd;
 //		ccMenu=ccm;
         mFragMgr = fm;
@@ -140,7 +139,7 @@ public class SyncTaskUtil {
                                     ImportOldProfileList.importOldProfileList(mGp, fpath), mGp);
                         } else {
                             tfl = new AdapterSyncTask(mContext, R.layout.sync_task_item_view,
-                                    createSyncTaskListFromFile(mContext, mGp, util, true, fpath, importedSettingParmList), mGp);
+                                    createSyncTaskListFromFile(mContext, mGp, mUtil, true, fpath, importedSettingParmList), mGp);
                         }
                         if (tfl.getCount() > 0) {
                             selectImportProfileItem(tfl, p_ntfy);
@@ -234,10 +233,7 @@ public class SyncTaskUtil {
         return result;
     }
 
-    public void promptPasswordForImport(final String fpath,
-                                        final NotifyEvent ntfy_pswd) {
-
-        // カスタムダイアログの生成
+    public void promptPasswordForImport(final String fpath, final NotifyEvent ntfy_pswd) {
         final Dialog dialog = new Dialog(mContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
@@ -706,7 +702,7 @@ public class SyncTaskUtil {
                 if (imp_list.length() > 0) imp_list += " ";
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskListView.setSelection(0);
-                saveSyncTaskList(mGp, mContext, util, mGp.syncTaskAdapter.getArrayList());
+                saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
                 commonDlg.showCommonDialog(false, "I",
                         mContext.getString(R.string.msgs_export_import_profile_import_success),
                         imp_list, null);
@@ -735,7 +731,7 @@ public class SyncTaskUtil {
         final ArrayList<PreferenceParmListIItem> spl = importedSettingParmList;
 
         if (spl.size() == 0) {
-            util.addDebugMsg(2, "I", "Import setting parms can not be not found.");
+            mUtil.addDebugMsg(2, "I", "Import setting parms can not be not found.");
             return;
         }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -755,25 +751,25 @@ public class SyncTaskUtil {
     private void restorePreferenceParms(Editor pe, PreferenceParmListIItem pa) {
         if (pa.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING)) {
             pe.putString(pa.parms_key, pa.parms_value);
-            util.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
+            mUtil.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
         } else if (pa.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_BOOLEAN)) {
             boolean b_val = false;
             if (pa.parms_value.equals("false")) b_val = false;
             else b_val = true;
             pe.putBoolean(pa.parms_key, b_val);
-            util.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
+            mUtil.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
         } else if (pa.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_INT)) {
             int i_val = 0;
             i_val = Integer.parseInt(pa.parms_value);
             ;
             pe.putInt(pa.parms_key, i_val);
-            util.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
+            mUtil.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
         } else if (pa.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_LONG)) {
             long i_val = 0;
             i_val = Long.parseLong(pa.parms_value);
             ;
             pe.putLong(pa.parms_key, i_val);
-            util.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
+            mUtil.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
         }
     }
 
@@ -781,7 +777,7 @@ public class SyncTaskUtil {
         final ArrayList<PreferenceParmListIItem> spl = importedSettingParmList;
 
         if (spl.size() == 0) {
-            util.addDebugMsg(2, "I", "Import setting parms can not be not found.");
+            mUtil.addDebugMsg(2, "I", "Import setting parms can not be not found.");
             return;
         }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -802,7 +798,7 @@ public class SyncTaskUtil {
         final ArrayList<PreferenceParmListIItem> spl = importedSettingParmList;
 
         if (spl.size() == 0) {
-            util.addDebugMsg(2, "I", "Import setting parms can not be not found.");
+            mUtil.addDebugMsg(2, "I", "Import setting parms can not be not found.");
             return;
         }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -866,11 +862,11 @@ public class SyncTaskUtil {
                     String fp = profile_dir + "/" + profile_filename;
                     String fd = profile_dir;
 
-                    if (saveSyncTaskListToFile(mGp, mContext, util, true, fd, fp,
+                    if (saveSyncTaskListToFile(mGp, mContext, mUtil, true, fd, fp,
                             mGp.syncTaskAdapter.getArrayList(), encrypt_required)) {
                         commonDlg.showCommonDialog(false, "I",
                                 mContext.getString(R.string.msgs_export_prof_success), "File=" + fp, null);
-                        util.addDebugMsg(1, "I", "Profile was exported. fn=" + fp);
+                        mUtil.addDebugMsg(1, "I", "Profile was exported. fn=" + fp);
                     } else {
                         commonDlg.showCommonDialog(false, "E",
                                 mContext.getString(R.string.msgs_export_prof_fail), "File=" + fp, null);
@@ -887,12 +883,12 @@ public class SyncTaskUtil {
         } else {
             String fp = profile_dir + "/" + profile_filename;
             String fd = profile_dir;
-            if (saveSyncTaskListToFile(mGp, mContext, util, true, fd, fp,
+            if (saveSyncTaskListToFile(mGp, mContext, mUtil, true, fd, fp,
                     mGp.syncTaskAdapter.getArrayList(), encrypt_required)) {
                 commonDlg.showCommonDialog(false, "I",
                         mContext.getString(R.string.msgs_export_prof_success),
                         "File=" + fp, null);
-                util.addDebugMsg(1, "I", "Profile was exported. fn=" + fp);
+                mUtil.addDebugMsg(1, "I", "Profile was exported. fn=" + fp);
             } else {
                 commonDlg.showCommonDialog(false, "E",
                         mContext.getString(R.string.msgs_export_prof_fail),
@@ -919,7 +915,7 @@ public class SyncTaskUtil {
             }
         }
 
-        saveSyncTaskList(mGp, mContext, util, gp.syncTaskAdapter.getArrayList());
+        saveSyncTaskList(mGp, mContext, mUtil, gp.syncTaskAdapter.getArrayList());
         mGp.syncTaskAdapter.notifyDataSetChanged();
         gp.syncTaskAdapter.setNotifyOnChange(true);
 //		gp.profileListView.setSelectionFromTop(pos,posTop);
@@ -938,7 +934,7 @@ public class SyncTaskUtil {
             }
         }
 
-        saveSyncTaskListToFile(mGp, mContext, util, false, "", "", mGp.syncTaskAdapter.getArrayList(), false);
+        saveSyncTaskListToFile(mGp, mContext, mUtil, false, "", "", mGp.syncTaskAdapter.getArrayList(), false);
         mGp.syncTaskAdapter.notifyDataSetChanged();
         mGp.syncTaskAdapter.setNotifyOnChange(true);
         mGp.syncTaskListView.setSelectionFromTop(pos, posTop);
@@ -969,7 +965,7 @@ public class SyncTaskUtil {
                 for (int i = 0; i < dpItemList.size(); i++)
                     mGp.syncTaskAdapter.remove(dpItemList.get(i));
 
-                saveSyncTaskList(mGp, mContext, util, mGp.syncTaskAdapter.getArrayList());
+                saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
 
                 mGp.syncTaskAdapter.setNotifyOnChange(true);
                 mGp.syncTaskListView.setSelection(pos);
@@ -1097,7 +1093,7 @@ public class SyncTaskUtil {
             @Override
             public void onCancel(DialogInterface arg0) {
                 tc.setDisabled();//disableAsyncTask();
-                util.addDebugMsg(1, "W", "Logon is cancelled.");
+                mUtil.addDebugMsg(1, "W", "Logon is cancelled.");
             }
         });
         dialog.show();
@@ -1105,7 +1101,7 @@ public class SyncTaskUtil {
         Thread th = new Thread() {
             @Override
             public void run() {
-                util.addDebugMsg(1, "I", "Test logon started, host=" + host + ", addr=" + addr + ", port=" + port + ", user=" + ra.smb_user_name);
+                mUtil.addDebugMsg(1, "I", "Test logon started, host=" + host + ", addr=" + addr + ", port=" + port + ", user=" + ra.smb_user_name);
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
@@ -1144,7 +1140,7 @@ public class SyncTaskUtil {
                     if (reachable) {
                         testSmbAuth(addr, port, share, ra, ntfy);
                     } else {
-                        util.addDebugMsg(1, "I", "Test logon failed, remote server not connected");
+                        mUtil.addDebugMsg(1, "I", "Test logon failed, remote server not connected");
                         String unreachble_msg = "";
                         if (port.equals("")) {
                             unreachble_msg = String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected), addr);
@@ -1171,7 +1167,7 @@ public class SyncTaskUtil {
                     }
                     if (ipAddress != null) testSmbAuth(ipAddress, port, share, ra, ntfy);
                     else {
-                        util.addDebugMsg(1, "I", "Test logon failed, remote server not connected");
+                        mUtil.addDebugMsg(1, "I", "Test logon failed, remote server not connected");
                         String unreachble_msg = "";
                         unreachble_msg = mContext.getString(R.string.msgs_mirror_smb_name_not_found) + host;
                         ntfy.notifyToListener(true, new Object[]{unreachble_msg});
@@ -1216,15 +1212,15 @@ public class SyncTaskUtil {
         try {
             JcifsFile sf = new JcifsFile(url, auth);
             sf.connect();
-            util.addDebugMsg(1, "I", "Test logon completed, host=" + host + ", port=" + port+", user="+ra.smb_user_name);
+            mUtil.addDebugMsg(1, "I", "Test logon completed, host=" + host + ", port=" + port+", user="+ra.smb_user_name);
         } catch (JcifsException e) {
             String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, url, ra.smb_user_name);
             err_msg = e_msg[0];
-            util.addDebugMsg(1, "I", "Test logon failed." + "\n" + e_msg[0]);
+            mUtil.addDebugMsg(1, "I", "Test logon failed." + "\n" + e_msg[0]);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             err_msg = e.getMessage();
-            util.addDebugMsg(1, "I", "Test logon failed." + "\n" + err_msg);
+            mUtil.addDebugMsg(1, "I", "Test logon failed." + "\n" + err_msg);
         }
         Thread.currentThread().setUncaughtExceptionHandler(defaultUEH);
         ntfy.notifyToListener(true, new Object[]{err_msg});
@@ -1235,7 +1231,7 @@ public class SyncTaskUtil {
         npfli.setLastSyncResult(0);
         npfli.setLastSyncTime("");
         SyncTaskEditor pmsp = SyncTaskEditor.newInstance();
-        pmsp.showDialog(mFragMgr, pmsp, "COPY", npfli, this, util, commonDlg, mGp, p_ntfy);
+        pmsp.showDialog(mFragMgr, pmsp, "COPY", npfli, this, mUtil, commonDlg, mGp, p_ntfy);
     }
 
     public void renameSyncTask(final SyncTaskItem pli, final NotifyEvent p_ntfy) {
@@ -1294,7 +1290,7 @@ public class SyncTaskUtil {
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskAdapter.notifyDataSetChanged();
 
-                saveSyncTaskList(mGp, mContext, util, mGp.syncTaskAdapter.getArrayList());
+                saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
 
                 SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
 
@@ -1726,28 +1722,36 @@ public class SyncTaskUtil {
                     ne.setListener(new NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
+                            final boolean success=(boolean)objects[0];
                             hndl.post(new Runnable() {
                                   @Override
                                   public void run() {
-                                      btnOk.setEnabled(false);
-                                      dlg_msg.setText(mContext.getString(
-                                              com.sentaroh.android.Utilities.R.string.msgs_single_item_input_dlg_duplicate_dir));
+                                      if (success) {
+                                          btnOk.setEnabled(false);
+                                          dlg_msg.setText(mContext.getString(
+                                                  com.sentaroh.android.Utilities.R.string.msgs_single_item_input_dlg_duplicate_dir));
+                                      } else {
+                                          btnOk.setEnabled(true);
+                                          dlg_msg.setText("");
+                                      }
                                   }
                               });
                         }
 
                         @Override
                         public void negativeResponse(Context context, Object[] objects) {
+                            final String e_msg=(String)objects[0];
                             hndl.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    btnOk.setEnabled(true);
-                                    dlg_msg.setText("");
+                                    commonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
+                                    dialog.dismiss();
+                                    p_ntfy.notifyToListener(false, null);
                                 }
                             });
                         }
                     });
-                    isRemoteDirectoryExists(n_dir, ra, ne);
+                    isRemoteItemExists(n_dir, ra, ne);
                 } else {
                     btnOk.setEnabled(false);
                     dlg_msg.setText("");
@@ -1783,8 +1787,16 @@ public class SyncTaskUtil {
                                 hndl.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        p_ntfy.notifyToListener(false, null);
-                                        dialog.dismiss();
+                                        final String e_msg=(String)objects[0];
+                                        hndl.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                commonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
+                                                dialog.dismiss();
+                                                p_ntfy.notifyToListener(false, null);
+                                            }
+                                        });
+
                                     }
                                 });
                             }
@@ -1809,23 +1821,37 @@ public class SyncTaskUtil {
         dialog.show();
     };
 
-    private void isRemoteDirectoryExists(final String new_dir, final RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
+    private void isRemoteItemExists(final String new_dir, final RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
         final Dialog dialog=showProgressSpinIndicator(mContext);
         dialog.show();
         Thread th=new Thread(){
           @Override
           public void run() {
               JcifsAuth auth=null;
-              if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) auth=new JcifsAuth(true, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
-              else auth=new JcifsAuth(false, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+              if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+                  auth=new JcifsAuth(true, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+              } else {
+                  auth=new JcifsAuth(false, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+              }
               try {
                   JcifsFile jf=new JcifsFile(new_dir, auth);
-                  if (jf.exists()) p_ntfy.notifyToListener(true, null);
-                  else p_ntfy.notifyToListener(false, null);
+                  if (jf.exists()) p_ntfy.notifyToListener(true, new Object[] {true});
+                  else p_ntfy.notifyToListener(true, new Object[] {false});
               } catch (MalformedURLException e) {
                   e.printStackTrace();
+                  mUtil.addDebugMsg(1, "E", e.toString());
+                  p_ntfy.notifyToListener(false, new Object[]{e.toString()});
               } catch (JcifsException e) {
                   e.printStackTrace();
+                  String cause="";
+                  String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, new_dir, ra.smb_user_name);
+                  if (e.getCause()!=null) {
+                      String tc=e.getCause().toString();
+                      cause=tc.substring(tc.indexOf(":")+1);
+                      e_msg[0]=cause+"\n"+e_msg[0];
+                  }
+                  mUtil.addDebugMsg(1, "E", e_msg[0]);
+                  p_ntfy.notifyToListener(false, new Object[]{e_msg[0]});
               }
               dialog.dismiss();
           }
@@ -1840,8 +1866,11 @@ public class SyncTaskUtil {
             @Override
             public void run() {
                 JcifsAuth auth=null;
-                if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) auth=new JcifsAuth(true, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
-                else auth=new JcifsAuth(false, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+                if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+                    auth=new JcifsAuth(true, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+                } else {
+                    auth=new JcifsAuth(false, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+                }
                 try {
                     JcifsFile jf=new JcifsFile(new_dir, auth);
                     jf.mkdirs();
@@ -1849,8 +1878,19 @@ public class SyncTaskUtil {
                     else p_ntfy.notifyToListener(false, null);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
+                    mUtil.addDebugMsg(1, "E", e.toString());
+                    p_ntfy.notifyToListener(false, new Object[]{e.toString()});
                 } catch (JcifsException e) {
                     e.printStackTrace();
+                    String cause="";
+                    String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, new_dir, ra.smb_user_name);
+                    if (e.getCause()!=null) {
+                        String tc=e.getCause().toString();
+                        cause=tc.substring(tc.indexOf(":")+1);
+                        e_msg[0]=cause+"\n"+e_msg[0];
+                    }
+                    mUtil.addDebugMsg(1, "E", e_msg[0]);
+                    p_ntfy.notifyToListener(false, new Object[]{e_msg[0]});
                 }
                 dialog.dismiss();
             }
@@ -3285,13 +3325,13 @@ public class SyncTaskUtil {
             public void onClick(View v) {
                 scan_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
                 scan_cancel.setEnabled(false);
-                util.addDebugMsg(1, "W", "IP Address list creation was cancelled");
+                mUtil.addDebugMsg(1, "W", "IP Address list creation was cancelled");
                 tc.setDisabled();
             }
         });
         dialog.show();
 
-        util.addDebugMsg(1, "I", "Scan IP address ransge is " + subnet + "." + begin_addr + " - " + end_addr);
+        mUtil.addDebugMsg(1, "I", "Scan IP address ransge is " + subnet + "." + begin_addr + " - " + end_addr);
 
         mScanRequestedAddrList.clear();
 
@@ -3466,14 +3506,14 @@ public class SyncTaskUtil {
             smbhost = JcifsUtil.isIpAddressAndPortConnected(address,
                     Integer.parseInt(scan_port), 3000);
         }
-        util.addDebugMsg(2, "I", "isIpAddrSmbHost Address=" + address +
+        mUtil.addDebugMsg(2, "I", "isIpAddrSmbHost Address=" + address +
                 ", port=" + scan_port + ", smbhost=" + smbhost);
         return smbhost;
     }
 
     private String getSmbHostName(boolean smb1, String address) {
         String srv_name = JcifsUtil.getSmbHostNameFromAddress(smb1, address);
-        util.addDebugMsg(1, "I", "getSmbHostName Address=" + address + ", name=" + srv_name);
+        mUtil.addDebugMsg(1, "I", "getSmbHostName Address=" + address + ", name=" + srv_name);
         return srv_name;
     }
 
@@ -3632,7 +3672,7 @@ public class SyncTaskUtil {
                 tc.setDisabled();//disableAsyncTask();
 //                btn_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
 //                btn_cancel.setEnabled(false);
-                util.addDebugMsg(1, "W", "Sharelist is cancelled.");
+                mUtil.addDebugMsg(1, "W", "Sharelist is cancelled.");
             }
         });
 
@@ -3646,7 +3686,7 @@ public class SyncTaskUtil {
                     public void run() {
                         dialog.dismiss();
                         String err;
-                        util.addDebugMsg(1, "I", "FileListThread result=" + tc.getThreadResult() + "," +
+                        mUtil.addDebugMsg(1, "I", "FileListThread result=" + tc.getThreadResult() + "," +
                                 "msg=" + tc.getThreadMessage() + ", enable=" +
                                 tc.isEnabled());
                         if (tc.isThreadResultSuccess()) {
