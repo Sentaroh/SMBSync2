@@ -686,8 +686,12 @@ public class SyncTaskEditor extends DialogFragment {
                 String pass=et_sync_folder_pswd.getText().toString().trim().length()>0?et_sync_folder_pswd.getText().toString().trim():null;
                 if (!ctv_sync_folder_use_pswd.isChecked()) {
                     user=pass=null;
+                } else {
+                    if (et_sync_folder_user.getText().length()==0) user=null;
+                    if (et_sync_folder_pswd.getText().length()==0) pass=null;
                 }
                 RemoteAuthInfo ra=new RemoteAuthInfo();
+                ra.smb_domain_name=null;
                 ra.smb_user_name=user;
                 ra.smb_user_password=pass;
                 ra.smb_smb_protocol=getSmbSelectedProtocol(sp_sync_folder_smb_proto);

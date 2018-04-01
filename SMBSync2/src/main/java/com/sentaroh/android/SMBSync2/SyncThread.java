@@ -369,20 +369,24 @@ public class SyncThread extends Thread {
                     showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "I", "", "",
                             mGp.appContext.getString(R.string.msgs_mirror_task_started));
 
+                    String mst_dom=null, mst_user=null, mst_pass=null;
+                    mst_dom=mStwa.currentSTI.getMasterSmbDomain().equals("")?null:mStwa.currentSTI.getMasterSmbDomain();
+                    mst_user=mStwa.currentSTI.getMasterSmbUserName().equals("")?null:mStwa.currentSTI.getMasterSmbUserName();
+                    mst_pass=mStwa.currentSTI.getMasterSmbPassword().equals("")?null:mStwa.currentSTI.getMasterSmbPassword();
                     if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
-                        mStwa.masterAuth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS1, mStwa.currentSTI.getMasterSmbDomain(),
-                                mStwa.currentSTI.getMasterSmbUserName(), mStwa.currentSTI.getMasterSmbPassword());
+                        mStwa.masterAuth=new JcifsAuth(true, mst_dom, mst_user, mst_pass);
                     } else {
-                        mStwa.masterAuth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS2, mStwa.currentSTI.getMasterSmbDomain(),
-                                mStwa.currentSTI.getMasterSmbUserName(), mStwa.currentSTI.getMasterSmbPassword());
+                        mStwa.masterAuth=new JcifsAuth(false, mst_dom, mst_user, mst_pass);
                     }
 
+                    String tgt_dom=null, tgt_user=null, tgt_pass=null;
+                    tgt_dom=mStwa.currentSTI.getTargetSmbDomain().equals("")?null:mStwa.currentSTI.getTargetSmbDomain();
+                    tgt_user=mStwa.currentSTI.getTargetSmbUserName().equals("")?null:mStwa.currentSTI.getTargetSmbUserName();
+                    tgt_pass=mStwa.currentSTI.getTargetSmbPassword().equals("")?null:mStwa.currentSTI.getTargetSmbPassword();
                     if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
-                        mStwa.targetAuth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS1, mStwa.currentSTI.getTargetSmbDomain(),
-                                mStwa.currentSTI.getTargetSmbUserName(), mStwa.currentSTI.getTargetSmbPassword());
+                        mStwa.targetAuth=new JcifsAuth(true, tgt_dom, tgt_user, tgt_pass);
                     } else {
-                        mStwa.targetAuth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS2, mStwa.currentSTI.getTargetSmbDomain(),
-                                mStwa.currentSTI.getTargetSmbUserName(), mStwa.currentSTI.getTargetSmbPassword());
+                        mStwa.targetAuth=new JcifsAuth(false, tgt_dom, tgt_user, tgt_pass);
                     }
 
                     initSyncParms(mStwa.currentSTI);
@@ -705,7 +709,7 @@ public class SyncThread extends Thread {
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr = sti.getMasterSmbAddr();
             if (!sti.getMasterSmbHostName().equals("")) {
-                addr = resolveHostName(mStwa.masterAuth.getCifsLevel(), sti.getMasterSmbHostName());
+                addr = resolveHostName(mStwa.masterAuth.isSmb1Auth(), sti.getMasterSmbHostName());
                 if (addr == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getMasterSmbHostName();
@@ -745,7 +749,7 @@ public class SyncThread extends Thread {
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr = sti.getTargetSmbAddr();
             if (!sti.getTargetSmbHostName().equals("")) {
-                addr = resolveHostName(mStwa.targetAuth.getCifsLevel(), sti.getTargetSmbHostName());
+                addr = resolveHostName(mStwa.targetAuth.isSmb1Auth(), sti.getTargetSmbHostName());
                 if (addr == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getTargetSmbHostName();
@@ -831,8 +835,8 @@ public class SyncThread extends Thread {
 
     ;
 
-    private String resolveHostName(String cifs_level, String hn) {
-        String ipAddress = JcifsUtil.getSmbHostIpAddressFromName(cifs_level, hn);
+    private String resolveHostName(boolean smb1, String hn) {
+        String ipAddress = JcifsUtil.getSmbHostIpAddressFromName(smb1, hn);
         if (ipAddress == null) {//add dns name resolve
             try {
                 InetAddress[] addr_list = Inet4Address.getAllByName(hn);

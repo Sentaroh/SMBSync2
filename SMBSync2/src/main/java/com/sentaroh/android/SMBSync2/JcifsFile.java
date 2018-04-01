@@ -8,9 +8,7 @@ import java.net.MalformedURLException;
 
 public class JcifsFile {
 
-    static final public String JCIFS_LEVEL_JCIFS1="CIFS1";
-    static final public String JCIFS_LEVEL_JCIFS2="CIFS2";
-    private String mLevel=JCIFS_LEVEL_JCIFS1;
+    private boolean mSmb1=true;
 
     private String mUrl="";
 
@@ -20,11 +18,11 @@ public class JcifsFile {
     private jcifs.smb.SmbFile mSmb1File =null;
 
     public JcifsFile(String url, JcifsAuth auth) throws MalformedURLException {
-        mLevel=auth.getCifsLevel();
+        mSmb1=auth.isSmb1Auth();
         mUrl=url;
         mAuth=auth;
         
-    	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+    	if (mSmb1) {
     		mSmb1File =new jcifs.smb.SmbFile(mUrl, auth.getSmb1Auth());
     	} else {
     		mSmb2File =new jcifsng.smb.SmbFile(mUrl,auth.getSmb2Auth());
@@ -33,12 +31,12 @@ public class JcifsFile {
     }
 
     public boolean isSmb1File() {
-    	return mLevel.equals(JCIFS_LEVEL_JCIFS1)?true:false;
+    	return mSmb1;
     }
     
     public boolean exists()   throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+            if (mSmb1) {
         		return mSmb1File.exists();
         	} else {
         		return mSmb2File.exists();
@@ -55,7 +53,7 @@ public class JcifsFile {
 
     public void delete()   throws JcifsException{
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+            if (mSmb1) {
         		mSmb1File.delete();
         	} else {
         		mSmb2File.delete();
@@ -72,7 +70,7 @@ public class JcifsFile {
 
     public void mkdir()   throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+            if (mSmb1) {
         		mSmb1File.mkdir();
         	} else {
         		mSmb2File.mkdir();
@@ -89,7 +87,7 @@ public class JcifsFile {
 
     public void mkdirs()   throws JcifsException{
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		mSmb1File.mkdirs();
         	} else {
         		mSmb2File.mkdirs();
@@ -106,7 +104,7 @@ public class JcifsFile {
 
     public int getAttributes() throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		return mSmb1File.getAttributes();
         	} else {
         		return mSmb2File.getAttributes();
@@ -122,7 +120,7 @@ public class JcifsFile {
     
     public InputStream getInputStream()   throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		return mSmb1File.getInputStream();
         	} else {
         		return mSmb2File.getInputStream();
@@ -143,7 +141,7 @@ public class JcifsFile {
 
     public OutputStream getOutputStream()  throws JcifsException{
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		return mSmb1File.getOutputStream();
         	} else {
         		return mSmb2File.getOutputStream();
@@ -163,7 +161,7 @@ public class JcifsFile {
     
     public void connect() throws JcifsException{
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		mSmb1File.connect();
         	} else {
         		mSmb2File.connect();
@@ -183,7 +181,7 @@ public class JcifsFile {
 
     public void createNew() throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		mSmb1File.createNewFile();
         	} else {
         		mSmb2File.createNewFile();
@@ -199,7 +197,7 @@ public class JcifsFile {
     }
     
     public String getName() {
-        if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        if (mSmb1) {
 			return mSmb1File.getName();
 		} else {
 			return mSmb2File.getName();
@@ -208,7 +206,7 @@ public class JcifsFile {
     }
 
     public String getPath() {
-        if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        if (mSmb1) {
 			return mSmb1File.getPath();
 		} else {
 			return mSmb2File.getPath();
@@ -216,7 +214,7 @@ public class JcifsFile {
     }
 
     public String getCanonicalPath() {
-        if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        if (mSmb1) {
 			return mSmb1File.getCanonicalPath();
 		} else {
 			return mSmb2File.getCanonicalPath();
@@ -224,7 +222,7 @@ public class JcifsFile {
     }
 
     public String getShare() {
-        if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        if (mSmb1) {
 			return mSmb1File.getShare();
 		} else {
 			return mSmb2File.getShare();
@@ -233,7 +231,7 @@ public class JcifsFile {
 
     public int getType() throws JcifsException {
         try {
-            if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+            if (mSmb1) {
     			return mSmb1File.getType();
     		} else {
     			return mSmb2File.getType();
@@ -248,7 +246,7 @@ public class JcifsFile {
     }
 
     public String getUncPath() {
-        if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        if (mSmb1) {
 			return mSmb1File.getUncPath();
 		} else {
 			return mSmb2File.getUncPath();
@@ -256,7 +254,7 @@ public class JcifsFile {
     }
 
     public String getParent() {
-        if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        if (mSmb1) {
 			return mSmb1File.getParent();
 		} else {
 			return mSmb2File.getParent();
@@ -266,7 +264,7 @@ public class JcifsFile {
 
     public boolean canRead()   throws JcifsException {
         try {
-            if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+            if (mSmb1) {
                 return mSmb1File.canRead();
             } else {
                 return mSmb2File.canRead();
@@ -282,7 +280,7 @@ public class JcifsFile {
 
     public boolean canWrite()   throws JcifsException {
         try {
-            if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+            if (mSmb1) {
                 return mSmb1File.canWrite();
             } else {
                 return mSmb2File.canWrite();
@@ -298,7 +296,7 @@ public class JcifsFile {
 
     public boolean isDirectory() throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		return mSmb1File.isDirectory();
         	} else {
         		return mSmb2File.isDirectory();
@@ -315,7 +313,7 @@ public class JcifsFile {
 
     public boolean isFile() throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		return mSmb1File.isFile();
         	} else {
         		return mSmb2File.isFile();
@@ -332,7 +330,7 @@ public class JcifsFile {
 
     public boolean isHidden() throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		return mSmb1File.isHidden();
         	} else {
         		return mSmb2File.isHidden();
@@ -348,7 +346,7 @@ public class JcifsFile {
     
     public long length() throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		return mSmb1File.length();
         	} else {
         		return mSmb2File.length();
@@ -365,7 +363,7 @@ public class JcifsFile {
     
     public String[] list() throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) return mSmb1File.list();
+        	if (mSmb1) return mSmb1File.list();
         	else return mSmb2File.list();
 		} catch (jcifsng.smb.SmbException e) {
 			e.printStackTrace();
@@ -379,7 +377,7 @@ public class JcifsFile {
 
     public JcifsFile[] listFiles() throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		jcifs.smb.SmbFile[] files= mSmb1File.listFiles();
         		if (files==null) return null;
         		JcifsFile[] result=new JcifsFile[files.length];
@@ -405,7 +403,7 @@ public class JcifsFile {
     
     public void renameTo ( JcifsFile d ) throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         		jcifs.smb.SmbFile to=new jcifs.smb.SmbFile(d.getPath(), d.getAuth().getSmb1Auth());
         		mSmb1File.renameTo(to);
         	} else {
@@ -430,7 +428,7 @@ public class JcifsFile {
     
     public void setLastModified(long lm) throws JcifsException {
         try {
-        	if (mLevel.equals(JCIFS_LEVEL_JCIFS1)) {
+        	if (mSmb1) {
         	    mSmb1File.setLastModified(lm);
             } else {
         	    mSmb2File.setLastModified(lm);
@@ -446,7 +444,7 @@ public class JcifsFile {
 
     public long getLastModified() throws JcifsException {
         try {
-			return mLevel.equals(JCIFS_LEVEL_JCIFS1)? mSmb1File.lastModified(): mSmb2File.lastModified();
+			return mSmb1? mSmb1File.lastModified(): mSmb2File.lastModified();
 		} catch (jcifsng.smb.SmbException e) {
 			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));

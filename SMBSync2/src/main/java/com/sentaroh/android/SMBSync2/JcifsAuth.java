@@ -6,15 +6,15 @@ public class JcifsAuth {
 	
 	private jcifs.smb.NtlmPasswordAuthentication mSmb1Auth=null;
 	private jcifsng.CIFSContext mSmb2Auth =null;
-	private String mLevel = JcifsFile.JCIFS_LEVEL_JCIFS1;
+	private boolean mSmb1=true;
 
 	private String mDomain=null, mUserName=null, mUserPass=null;
-	public JcifsAuth(String level, String domain, String user, String pass) {
-        mLevel=level;
+	public JcifsAuth(boolean smb1, String domain, String user, String pass) {
+        mSmb1=smb1;
         mDomain=domain;
         mUserName=user;
         mUserPass=pass;
-		if (level.equals(JcifsFile.JCIFS_LEVEL_JCIFS1)) {
+        if (mSmb1) {
 			mSmb1Auth=new jcifs.smb.NtlmPasswordAuthentication(domain, user, pass);
 		} else {
 	        jcifsng.context.BaseContext bc;
@@ -31,12 +31,12 @@ public class JcifsAuth {
 		}
 	}
 
-    public JcifsAuth(String level, String domain, String user, String pass, boolean ipc_signing_enforced) {
-        mLevel=level;
+    public JcifsAuth(boolean smb1, String domain, String user, String pass, boolean ipc_signing_enforced) {
+        mSmb1=smb1;
         mDomain=domain;
         mUserName=user;
         mUserPass=pass;
-        if (level.equals(JcifsFile.JCIFS_LEVEL_JCIFS1)) {
+        if (mSmb1) {
             mSmb1Auth=new jcifs.smb.NtlmPasswordAuthentication(domain, user, pass);
         } else {
             jcifsng.context.BaseContext bc;
@@ -54,12 +54,12 @@ public class JcifsAuth {
         }
     }
 
-    public JcifsAuth(String level, String domain, String user, String pass, boolean ipc_signing_enforced, String min_version, String max_version) {
-        mLevel=level;
+    public JcifsAuth(boolean smb1, String domain, String user, String pass, boolean ipc_signing_enforced, String min_version, String max_version) {
+        mSmb1=smb1;
         mDomain=domain;
         mUserName=user;
         mUserPass=pass;
-        if (level.equals(JcifsFile.JCIFS_LEVEL_JCIFS1)) {
+        if (mSmb1) {
             mSmb1Auth=new jcifs.smb.NtlmPasswordAuthentication(domain, user, pass);
         } else {
             jcifsng.context.BaseContext bc;
@@ -80,7 +80,7 @@ public class JcifsAuth {
     }
 
     public boolean isSmb1Auth() {
-    	return mLevel.equals(JcifsFile.JCIFS_LEVEL_JCIFS1)?true:false;
+    	return mSmb1;
     }
     
     public jcifs.smb.NtlmPasswordAuthentication getSmb1Auth() {
@@ -90,10 +90,6 @@ public class JcifsAuth {
 	public jcifsng.CIFSContext getSmb2Auth() {
 		return mSmb2Auth;
 	}
-
-	public String getCifsLevel() {
-	    return mLevel;
-    }
 
     public String getDomain() {return mDomain;}
     public String getUserName() {return mUserName;}

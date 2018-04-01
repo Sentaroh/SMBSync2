@@ -75,8 +75,8 @@ public class JcifsUtil {
 //        else return false;
 //    }
 
-    final static public String getSmbHostIpAddressFromName(String cifs_level, String hn) {
-        if (JcifsFile.JCIFS_LEVEL_JCIFS1.equals(cifs_level)) {
+    final static public String getSmbHostIpAddressFromName(boolean smb1, String hn) {
+        if (smb1) {
             return getSmbHostIpAddressFromNameSmb1(hn);
         } else {
             return getSmbHostIpAddressFromNameSmb2(hn);
@@ -160,8 +160,8 @@ public class JcifsUtil {
 //    	return srv_name;
 // 	};
 
-    final static public String getSmbHostNameFromAddress(String cifs_level, String address) {
-        if (JcifsFile.JCIFS_LEVEL_JCIFS1.equals(cifs_level)) {
+    final static public String getSmbHostNameFromAddress(boolean smb1, String address) {
+        if (smb1) {
             return getSmbHostNameFromAddressSmb1(address);
         } else {
             return getSmbHostNameFromAddressSmb2(address);
@@ -217,8 +217,8 @@ public class JcifsUtil {
  	};
 
 
-    final static public boolean isNbtAddressActive(String cifs_level, String address) {
-        if (JcifsFile.JCIFS_LEVEL_JCIFS1.equals(cifs_level)) {
+    final static public boolean isNbtAddressActive(boolean smb1, String address) {
+        if (smb1) {
             return isNbtAddressActiveSmb1(address);
         } else {
             return isNbtAddressActiveSmb2(address);
