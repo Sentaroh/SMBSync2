@@ -114,9 +114,7 @@ public class SyncThread extends Thread {
         public boolean setLastModifiedIsFunctional = true;
 
         public JcifsAuth masterAuth=null;
-        public String masterCifsLevel= JcifsFile.JCIFS_LEVEL_JCIFS1;
         public JcifsAuth targetAuth=null;
-        public String targetCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS1;
 
         public SyncUtil util = null;
 
@@ -377,20 +375,20 @@ public class SyncThread extends Thread {
                             mGp.appContext.getString(R.string.msgs_mirror_task_started));
 
                     if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
-                        mStwa.masterCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS1;
+                        mStwa.masterAuth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS1, mStwa.currentSTI.getMasterSmbDomain(),
+                                mStwa.currentSTI.getMasterSmbUserName(), mStwa.currentSTI.getMasterSmbPassword());
                     } else {
-                        mStwa.masterCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS2;
+                        mStwa.masterAuth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS2, mStwa.currentSTI.getMasterSmbDomain(),
+                                mStwa.currentSTI.getMasterSmbUserName(), mStwa.currentSTI.getMasterSmbPassword());
                     }
-                    mStwa.masterAuth=new JcifsAuth(mStwa.masterCifsLevel, mStwa.currentSTI.getMasterSmbDomain(),
-                            mStwa.currentSTI.getMasterSmbUserName(), mStwa.currentSTI.getMasterSmbPassword());
 
                     if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
-                        mStwa.targetCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS1;
+                        mStwa.targetAuth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS1, mStwa.currentSTI.getTargetSmbDomain(),
+                                mStwa.currentSTI.getTargetSmbUserName(), mStwa.currentSTI.getTargetSmbPassword());
                     } else {
-                        mStwa.targetCifsLevel=JcifsFile.JCIFS_LEVEL_JCIFS2;
+                        mStwa.targetAuth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS2, mStwa.currentSTI.getTargetSmbDomain(),
+                                mStwa.currentSTI.getTargetSmbUserName(), mStwa.currentSTI.getTargetSmbPassword());
                     }
-                    mStwa.targetAuth=new JcifsAuth(mStwa.targetCifsLevel, mStwa.currentSTI.getTargetSmbDomain(),
-                            mStwa.currentSTI.getTargetSmbUserName(), mStwa.currentSTI.getTargetSmbPassword());
 
                     initSyncParms(mStwa.currentSTI);
 
@@ -712,7 +710,7 @@ public class SyncThread extends Thread {
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr = sti.getMasterSmbAddr();
             if (!sti.getMasterSmbHostName().equals("")) {
-                addr = resolveHostName(mStwa.masterCifsLevel, sti.getMasterSmbHostName());
+                addr = resolveHostName(mStwa.masterAuth.getCifsLevel(), sti.getMasterSmbHostName());
                 if (addr == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getMasterSmbHostName();
@@ -752,7 +750,7 @@ public class SyncThread extends Thread {
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr = sti.getTargetSmbAddr();
             if (!sti.getTargetSmbHostName().equals("")) {
-                addr = resolveHostName(mStwa.targetCifsLevel, sti.getTargetSmbHostName());
+                addr = resolveHostName(mStwa.targetAuth.getCifsLevel(), sti.getTargetSmbHostName());
                 if (addr == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getTargetSmbHostName();

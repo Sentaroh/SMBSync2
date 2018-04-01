@@ -1211,12 +1211,10 @@ public class SyncTaskUtil {
         else url = "smb://" + host + ":" + port + "/IPC%/";//+share+"/";
 
         JcifsAuth auth=null;
-        String proto_level=JcifsFile.JCIFS_LEVEL_JCIFS1;
         if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
             auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS1, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
         } else {
             auth=new JcifsAuth(JcifsFile.JCIFS_LEVEL_JCIFS2, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password, ra.smb_ipc_signing_enforced);
-            proto_level=JcifsFile.JCIFS_LEVEL_JCIFS2;
         }
         try {
             JcifsFile sf = new JcifsFile(url, auth);
