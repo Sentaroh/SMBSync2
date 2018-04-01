@@ -34,10 +34,6 @@ import android.util.Log;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistItem;
-import com.sentaroh.jcifs.JcifsAuth;
-import com.sentaroh.jcifs.JcifsException;
-import com.sentaroh.jcifs.JcifsFile;
-import com.sentaroh.jcifs.JcifsUtil;
 
 public class ReadSmbFilelist implements Runnable {
     private ThreadCtrl getFLCtrl = null;
@@ -288,7 +284,6 @@ public class ReadSmbFilelist implements Runnable {
         try {
             JcifsFile remoteFile = new JcifsFile(remoteUrl, auth);
             fl = remoteFile.listFiles();
-            for(JcifsFile item:fl) Log.v("","fn="+item.getName());
         } catch (JcifsException e) {
             e.printStackTrace();
             String cause="";
@@ -298,8 +293,7 @@ public class ReadSmbFilelist implements Runnable {
             }
             mUtil.addDebugMsg(1, "E", e.toString());
             getFLCtrl.setThreadResultError();
-            String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, remoteUrl, "");
-//            e_msg[0] = e.getMessage()+"\n"+e_msg[0];
+            String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, remoteUrl, auth.getUserName());
             if (!cause.equals("")) getFLCtrl.setThreadMessage(cause.substring(cause.indexOf(":")+1)+"\n"+e_msg[0]);
             else getFLCtrl.setThreadMessage(e_msg[0]);
 
@@ -308,8 +302,6 @@ public class ReadSmbFilelist implements Runnable {
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
         }
 
         for (JcifsFile item:fl) {

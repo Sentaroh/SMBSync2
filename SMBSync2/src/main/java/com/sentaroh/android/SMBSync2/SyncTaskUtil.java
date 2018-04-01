@@ -91,10 +91,6 @@ import com.sentaroh.android.Utilities.Dialog.DialogBackKeyListener;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistAdapter;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistItem;
 import com.sentaroh.android.Utilities.Widget.CustomTextView;
-import com.sentaroh.jcifs.JcifsAuth;
-import com.sentaroh.jcifs.JcifsException;
-import com.sentaroh.jcifs.JcifsFile;
-import com.sentaroh.jcifs.JcifsUtil;
 
 public class SyncTaskUtil {
 
@@ -1222,8 +1218,8 @@ public class SyncTaskUtil {
             util.addDebugMsg(1, "I", "Test logon completed, host=" + host + ", port=" + port+", user="+ra.smb_user_name);
         } catch (JcifsException e) {
             String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, url, ra.smb_user_name);
-            err_msg = e.getMessage()+"\n"+e_msg[0];
-            util.addDebugMsg(1, "I", "Test logon failed." + "\n" + err_msg);
+            err_msg = e_msg[0];
+            util.addDebugMsg(1, "I", "Test logon failed." + "\n" + e_msg[0]);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             err_msg = e.getMessage();
