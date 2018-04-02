@@ -2925,7 +2925,6 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy_target_dir_not_specified.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        mFragment.dismiss();
                         if (type.equals("EDIT")) {
                             mGp.syncTaskAdapter.remove(pfli);
                             mGp.syncTaskAdapter.add(new_stli);
@@ -2948,11 +2947,10 @@ public class SyncTaskEditor extends DialogFragment {
                         }
                         if (mNotifyComplete != null) mNotifyComplete.notifyToListener(true, null);
                         SyncTaskUtil.saveSyncTaskListToFile(mGp, mContext, mUtil, false, "", "", mGp.syncTaskList, false);
+                        mFragment.dismissAllowingStateLoss();
                     }
-
                     @Override
-                    public void negativeResponse(Context c, Object[] o) {
-                    }
+                    public void negativeResponse(Context c, Object[] o) {}
                 });
                 if (!new_stli.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP) && new_stli.getTargetDirectoryName().equals("")) {
                     mCommonDlg.showCommonDialog(true, "W", "",

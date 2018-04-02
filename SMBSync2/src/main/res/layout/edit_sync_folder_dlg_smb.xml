@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="clip_horizontal|fill_horizontal"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="0dp"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -41,6 +41,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:layout_gravity="center_vertical">
 
                 <TextView

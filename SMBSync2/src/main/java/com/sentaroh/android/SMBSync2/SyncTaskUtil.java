@@ -1523,8 +1523,9 @@ public class SyncTaskUtil {
         RemoteAuthInfo ra=new RemoteAuthInfo();
         ra.smb_smb_protocol=smb_proto;
         ra.smb_ipc_signing_enforced=ipc_enforced;
-        ra.smb_user_name=smbUser;
-        ra.smb_user_password=smbPass;
+        ra.smb_domain_name=null;
+        ra.smb_user_name=smbUser.length()==0?null:smbUser;
+        ra.smb_user_password=smbPass.length()==0?null:smbPass;
 
         final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
         final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mContext, true, false);
