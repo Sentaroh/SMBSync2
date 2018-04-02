@@ -111,6 +111,8 @@ public class SyncThread extends Thread {
         public JcifsAuth masterAuth=null;
         public JcifsAuth targetAuth=null;
 
+        public int jcifsNtStatusCode=0;
+
         public SyncUtil util = null;
 
         public MediaScannerConnection mediaScanner = null;
@@ -376,7 +378,7 @@ public class SyncThread extends Thread {
                     if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
                         mStwa.masterAuth=new JcifsAuth(true, mst_dom, mst_user, mst_pass);
                     } else {
-                        mStwa.masterAuth=new JcifsAuth(false, mst_dom, mst_user, mst_pass);
+                        mStwa.masterAuth=new JcifsAuth(false, mst_dom, mst_user, mst_pass, mStwa.currentSTI.isMasterSmbIpcSigningEnforced());
                     }
 
                     String tgt_dom=null, tgt_user=null, tgt_pass=null;
@@ -386,7 +388,7 @@ public class SyncThread extends Thread {
                     if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
                         mStwa.targetAuth=new JcifsAuth(true, tgt_dom, tgt_user, tgt_pass);
                     } else {
-                        mStwa.targetAuth=new JcifsAuth(false, tgt_dom, tgt_user, tgt_pass);
+                        mStwa.targetAuth=new JcifsAuth(false, tgt_dom, tgt_user, tgt_pass, mStwa.currentSTI.isTargetSmbIpcSigningEnforced());
                     }
 
                     initSyncParms(mStwa.currentSTI);
@@ -522,6 +524,8 @@ public class SyncThread extends Thread {
                 ", SmbShare=" + sti.getMasterRemoteSmbShareName() +
                 ", UserID=" + sti.getMasterSmbUserName() +
                 ", Directory=" + sti.getMasterDirectoryName() +
+                ", SMB Protocol=" + sti.getMasterSmbProtocol() +
+                ", SMB IPC signing enforced=" + sti.isMasterSmbIpcSigningEnforced() +
                 ", RemovableID=" + sti.getMasterRemovableStorageID() +
                 "");
         mStwa.util.addDebugMsg(1, "I", "   Target Type=" + sti.getTargetFolderType() +
@@ -531,6 +535,8 @@ public class SyncThread extends Thread {
                 ", SmbShare=" + sti.getTargetSmbShareName() +
                 ", UserID=" + sti.getTargetSmbUserName() +
                 ", Directory=" + sti.getTargetDirectoryName() +
+                ", SMB Protocol=" + sti.getTargetSmbProtocol() +
+                ", SMB IPC signing enforced=" + sti.isTargetSmbIpcSigningEnforced() +
                 ", RemovableID=" + sti.getTargetRemovableStorageID() +
                 "");
         mStwa.util.addDebugMsg(1, "I", "   File filter Audio=" + sti.isSyncFileTypeAudio() +
@@ -558,8 +564,6 @@ public class SyncThread extends Thread {
                 ", SyncOnlyCharging=" + sti.isSyncOptionSyncWhenCharging() +
                 "");
     }
-
-    ;
 
     private void initSyncParms(SyncTaskItem sti) {
         mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncRetryCount()) + 1;
@@ -1299,9 +1303,17 @@ public class SyncThread extends Thread {
         if (stwa.gp.settingDebugLevel >= 1)
             stwa.util.addDebugMsg(1, "I", "deleteSmbItem entered, del=" + tmp_target);
         if (!tmp_target.equals(to_base)) {
-            JcifsFile lf_tmp = new JcifsFile(tmp_target, auth);
-            if (lf_tmp.exists()) {
-                deleteSmbFile(stwa, sti, tmp_target, lf_tmp);
+            try {
+                JcifsFile lf_tmp = new JcifsFile(tmp_target, auth);
+                if (lf_tmp.exists()) {
+                    deleteSmbFile(stwa, sti, tmp_target, lf_tmp);
+                }
+            } catch(JcifsException e) {
+                showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","Delete SMB Error");
+                throw(e);
+            } catch(IOException e) {
+                showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","Delete SMB Error");
+                throw(e);
             }
         }
     }

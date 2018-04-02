@@ -60,6 +60,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -1200,8 +1201,10 @@ public class SyncTaskUtil {
 
         String err_msg = null, url = "";
 
-        if (port.equals("")) url = "smb://" + host + "/IPC$/";//+share+"/";
-        else url = "smb://" + host + ":" + port + "/IPC%/";//+share+"/";
+//        if (port.equals("")) url = "smb://" + host + "/IPC$/";//+share+"/";
+//        else url = "smb://" + host + ":" + port + "/IPC%/";//+share+"/";
+        if (port.equals("")) url = "smb://" + host + "/"+share+"/";
+        else url = "smb://" + host + ":" + port + "/"+share+"/";
 
         JcifsAuth auth=null;
         if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
@@ -1211,12 +1214,17 @@ public class SyncTaskUtil {
         }
         try {
             JcifsFile sf = new JcifsFile(url, auth);
-            sf.connect();
+            String[] fl=sf.list();//.connect();
             mUtil.addDebugMsg(1, "I", "Test logon completed, host=" + host + ", port=" + port+", user="+ra.smb_user_name);
         } catch (JcifsException e) {
+            String cm="";
+            try {
+                cm=e.getCause().getCause().getMessage();
+            } catch(Exception ex) {
+            }
             String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, url, ra.smb_user_name);
-            err_msg = e_msg[0];
-            mUtil.addDebugMsg(1, "I", "Test logon failed." + "\n" + e_msg[0]);
+            err_msg = cm+"\n"+e_msg[0];
+            mUtil.addDebugMsg(1, "I", "Test logon failed." + "\n" + err_msg);
         } catch (MalformedURLException e) {
             e.printStackTrace();
             err_msg = e.getMessage();
@@ -1337,8 +1345,6 @@ public class SyncTaskUtil {
         if (ctv_use_port_number.isChecked()) port_num = editport.getText().toString();
         scanRemoteNetworkDlg(ntfy, port_num, false);
     }
-
-    ;
 
     public void invokeSelectRemoteShareDlg(Dialog dialog) {
 //		final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);

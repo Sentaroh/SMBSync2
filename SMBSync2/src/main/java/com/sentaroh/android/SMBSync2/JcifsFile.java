@@ -42,10 +42,10 @@ public class JcifsFile {
         		return mSmb2File.exists();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     	
@@ -59,10 +59,10 @@ public class JcifsFile {
         		mSmb2File.delete();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     	
@@ -76,10 +76,10 @@ public class JcifsFile {
         		mSmb2File.mkdir();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     	
@@ -93,10 +93,10 @@ public class JcifsFile {
         		mSmb2File.mkdirs();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     	
@@ -110,10 +110,10 @@ public class JcifsFile {
         		return mSmb2File.getAttributes();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     }
@@ -126,13 +126,13 @@ public class JcifsFile {
         		return mSmb2File.getInputStream();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, 0, e.getCause()));
 		}
     	
@@ -147,13 +147,13 @@ public class JcifsFile {
         		return mSmb2File.getOutputStream();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, 0, e.getCause()));
 		}
     	
@@ -167,13 +167,13 @@ public class JcifsFile {
         		mSmb2File.connect();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, 0, e.getCause()));
 		}
 
@@ -187,10 +187,10 @@ public class JcifsFile {
         		mSmb2File.createNewFile();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     	
@@ -237,10 +237,10 @@ public class JcifsFile {
     			return mSmb2File.getType();
     		}
         } catch (jcifsng.smb.SmbException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
         } catch (jcifs.smb.SmbException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
         }
     }
@@ -270,10 +270,10 @@ public class JcifsFile {
                 return mSmb2File.canRead();
             }
         } catch (jcifsng.smb.SmbException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
         } catch (jcifs.smb.SmbException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
         }
     }
@@ -286,10 +286,10 @@ public class JcifsFile {
                 return mSmb2File.canWrite();
             }
         } catch (jcifsng.smb.SmbException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
         } catch (jcifs.smb.SmbException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
         }
     }
@@ -302,10 +302,10 @@ public class JcifsFile {
         		return mSmb2File.isDirectory();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     	
@@ -319,10 +319,10 @@ public class JcifsFile {
         		return mSmb2File.isFile();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     	
@@ -336,10 +336,10 @@ public class JcifsFile {
         		return mSmb2File.isHidden();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     }
@@ -352,10 +352,10 @@ public class JcifsFile {
         		return mSmb2File.length();
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     	
@@ -366,10 +366,10 @@ public class JcifsFile {
         	if (mSmb1) return mSmb1File.list();
         	else return mSmb2File.list();
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     	
@@ -391,10 +391,10 @@ public class JcifsFile {
         		return result;
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
             throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (MalformedURLException e) {
             return null;
@@ -411,10 +411,10 @@ public class JcifsFile {
         		mSmb2File.renameTo(to);
         	}
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (MalformedURLException e) {
             e.printStackTrace();
@@ -434,10 +434,10 @@ public class JcifsFile {
         	    mSmb2File.setLastModified(lm);
             }
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     }
@@ -446,10 +446,10 @@ public class JcifsFile {
         try {
 			return mSmb1? mSmb1File.lastModified(): mSmb2File.lastModified();
 		} catch (jcifsng.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		} catch (jcifs.smb.SmbException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
 		}
     }

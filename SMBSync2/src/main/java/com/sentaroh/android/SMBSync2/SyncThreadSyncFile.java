@@ -2395,10 +2395,8 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file)
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (move_file) stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                            else stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -2423,12 +2421,12 @@ public class SyncThreadSyncFile {
 //													to_path, tf.lastModified(), mf.lastModified());
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
-                                            SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.targetAuth);
+                                            SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterAuth);
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(),
                                                     stwa.msgs_mirror_task_file_moved);
                                         }
                                     } else {
-                                        SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.targetAuth);
+                                        SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterAuth);
 
                                         SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(),
                                                 stwa.msgs_mirror_task_file_moved);
@@ -2491,7 +2489,8 @@ public class SyncThreadSyncFile {
                     SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
-
+//            String nt=String.format("%h", e.getNtStatus());
+            stwa.jcifsNtStatusCode=e.getNtStatus();
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;

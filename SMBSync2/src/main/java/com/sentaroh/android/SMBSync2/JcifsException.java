@@ -1,6 +1,8 @@
 package com.sentaroh.android.SMBSync2;
 
 
+import android.util.Log;
+
 public class JcifsException extends Exception {
 	/**
 	 * 

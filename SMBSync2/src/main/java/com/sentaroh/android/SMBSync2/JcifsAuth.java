@@ -19,9 +19,9 @@ public class JcifsAuth {
 		} else {
 	        jcifsng.context.BaseContext bc;
 			try {
-//				System.getProperties().setProperty("jcifs.smb.client.ipcSigningEnforced", "false");
-
                 Properties prop=new Properties();
+                prop.setProperty("jcifs.smb.client.minVersion","SMB210");
+                prop.setProperty("jcifs.smb.client.maxVersion","SMB210");
 				bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
 		        jcifsng.smb.NtlmPasswordAuthentication creds = new jcifsng.smb.NtlmPasswordAuthentication(bc, domain,user,pass);
 		        mSmb2Auth = bc.withCredentials(creds);
@@ -44,6 +44,8 @@ public class JcifsAuth {
                 Properties prop=new Properties();
                 if (ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced", "true");
                 else prop.setProperty("jcifs.smb.client.ipcSigningEnforced", "false");
+                prop.setProperty("jcifs.smb.client.minVersion","SMB210");
+                prop.setProperty("jcifs.smb.client.maxVersion","SMB210");
 
                 bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
                 jcifsng.smb.NtlmPasswordAuthentication creds = new jcifsng.smb.NtlmPasswordAuthentication(bc, domain,user,pass);
