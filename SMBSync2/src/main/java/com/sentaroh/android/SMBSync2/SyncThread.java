@@ -1215,18 +1215,23 @@ public class SyncThread extends Thread {
 
     final public static void createDirectoryToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String dir,
                                                   JcifsAuth auth) throws MalformedURLException, JcifsException {
-        JcifsFile sf = new JcifsFile(dir, auth);
-        if (!sti.isSyncTestMode()) {
-            if (!sf.exists()) {
-                sf.mkdirs();
-                if (stwa.gp.settingDebugLevel >= 1)
-                    stwa.util.addDebugMsg(1, "I", "createDirectoryToSmb directory created, dir=" + dir);
+        try {
+            JcifsFile sf = new JcifsFile(dir, auth);
+            if (!sti.isSyncTestMode()) {
+                if (!sf.exists()) {
+                    sf.mkdirs();
+                    if (stwa.gp.settingDebugLevel >= 1)
+                        stwa.util.addDebugMsg(1, "I", "createDirectoryToSmb directory created, dir=" + dir);
+                }
+            } else {
+                if (!sf.exists()) {
+                    if (stwa.gp.settingDebugLevel >= 1)
+                        stwa.util.addDebugMsg(1, "I", "createDirectoryToSmb directory created, dir=" + dir);
+                }
             }
-        } else {
-            if (!sf.exists()) {
-                if (stwa.gp.settingDebugLevel >= 1)
-                    stwa.util.addDebugMsg(1, "I", "createDirectoryToSmb directory created, dir=" + dir);
-            }
+        } catch(JcifsException e) {
+            showMsg(stwa, false, sti.getSyncTaskName(), "E", dir, "","SMB create error, "+e.getMessage());
+            throw(e);
         }
     }
 
@@ -1309,10 +1314,10 @@ public class SyncThread extends Thread {
                     deleteSmbFile(stwa, sti, tmp_target, lf_tmp);
                 }
             } catch(JcifsException e) {
-                showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","Delete SMB Error");
+                showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","SMB delete error, "+e.getMessage());
                 throw(e);
             } catch(IOException e) {
-                showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","Delete SMB Error");
+                showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","SMB delete error, "+e.getMessage());
                 throw(e);
             }
         }
