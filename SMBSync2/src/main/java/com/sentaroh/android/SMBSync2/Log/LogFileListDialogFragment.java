@@ -9,6 +9,7 @@ public class LogFileListDialogFragment extends CommonLogFileListDialogFragment{
 		LogFileListDialogFragment frag = new LogFileListDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putBoolean("retainInstance", retainInstance);
+        bundle.putBoolean("showSaveButton", false);
         bundle.putString("title", title);
 //        bundle.putString("msgtext", msgtext);
         frag.setArguments(bundle);
