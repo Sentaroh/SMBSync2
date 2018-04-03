@@ -421,7 +421,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void listStorageInfo() {
-        final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.common_dialog);
 
@@ -1721,7 +1721,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @SuppressLint({"InflateParams", "NewApi"})
     private void aboutSMBSync() {
-        final Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.about_dialog);
 

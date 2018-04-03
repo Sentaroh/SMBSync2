@@ -649,7 +649,7 @@ public class ScheduleListEditor {
     private void renameSchedule(final ScheduleItem si, final NotifyEvent p_ntfy) {
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.single_item_input_dlg);

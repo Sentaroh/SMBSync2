@@ -45,6 +45,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -99,6 +100,7 @@ public class SyncTaskUtil {
     private String smbUser, smbPass;
 
     private Context mContext;
+    private Activity mActivity;
 
     private SyncUtil mUtil;
 
@@ -109,13 +111,13 @@ public class SyncTaskUtil {
     private GlobalParameters mGp = null;
     private FragmentManager mFragMgr = null;
 
-    SyncTaskUtil(SyncUtil mu, Context c,
+    SyncTaskUtil(SyncUtil mu, Activity a,
                  CommonDialog cd, CustomContextMenu ccm, GlobalParameters gp, FragmentManager fm) {
-        mContext = c;
+        mContext = a.getApplicationContext();
         mGp = gp;
         mUtil = mu;
         commonDlg = cd;
-//		ccMenu=ccm;
+		mActivity=a;
         mFragMgr = fm;
     }
 
@@ -235,7 +237,7 @@ public class SyncTaskUtil {
     }
 
     public void promptPasswordForImport(final String fpath, final NotifyEvent ntfy_pswd) {
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.password_input_dlg);
@@ -345,7 +347,7 @@ public class SyncTaskUtil {
     public void promptPasswordForExport(final String fpath, final NotifyEvent ntfy_pswd) {
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.password_input_dlg);
@@ -502,7 +504,7 @@ public class SyncTaskUtil {
     }
 
     private void selectImportProfileItem(final AdapterSyncTask tfl, final NotifyEvent p_ntfy) {
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.export_import_profile_dlg);
         dialog.setCanceledOnTouchOutside(false);
@@ -990,7 +992,7 @@ public class SyncTaskUtil {
     }
 
     public void showSelectSdcardMsg(final NotifyEvent ntfy) {
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.show_select_sdcard_dlg);
 
@@ -1088,7 +1090,7 @@ public class SyncTaskUtil {
         tc.setEnabled();
         tc.setThreadResultSuccess();
 
-        final Dialog dialog=showProgressSpinIndicator(mContext);
+        final Dialog dialog=showProgressSpinIndicator(mActivity);
 
         dialog.setOnCancelListener(new Dialog.OnCancelListener() {
             @Override
@@ -1245,7 +1247,7 @@ public class SyncTaskUtil {
     public void renameSyncTask(final SyncTaskItem pli, final NotifyEvent p_ntfy) {
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.single_item_input_dlg);
@@ -1494,7 +1496,7 @@ public class SyncTaskUtil {
     private void remoteDirectorySelector(ArrayList<TreeFilelistItem> rows, String remurl, String p_dir,
                                          boolean ipc_enforced, String smb_proto, final boolean show_create, final NotifyEvent p_ntfy) {
         //カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.file_select_edit_dlg);
@@ -1700,7 +1702,7 @@ public class SyncTaskUtil {
 
     private void createRemoteDirectoryDlg(final String c_dir, final RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(com.sentaroh.android.Utilities.R.layout.single_item_input_dlg);
         final TextView dlg_title = (TextView) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_title);
@@ -1829,7 +1831,7 @@ public class SyncTaskUtil {
     };
 
     private void isRemoteItemExists(final String new_dir, final RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
-        final Dialog dialog=showProgressSpinIndicator(mContext);
+        final Dialog dialog=showProgressSpinIndicator(mActivity);
         dialog.show();
         Thread th=new Thread(){
           @Override
@@ -1867,7 +1869,7 @@ public class SyncTaskUtil {
     }
 
     private void createRemoteDirectory(final String new_dir, final RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
-        final Dialog dialog=showProgressSpinIndicator(mContext);
+        final Dialog dialog=showProgressSpinIndicator(mActivity);
         dialog.show();
         Thread th=new Thread(){
             @Override
@@ -1921,7 +1923,7 @@ public class SyncTaskUtil {
         final AdapterFilterList filterAdapter;
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.filter_list_dlg);
@@ -2138,7 +2140,7 @@ public class SyncTaskUtil {
         final AdapterFilterList filterAdapter;
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.filter_list_dlg);
@@ -2301,7 +2303,7 @@ public class SyncTaskUtil {
         final AdapterFilterList filterAdapter;
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.filter_list_dlg);
@@ -2525,7 +2527,7 @@ public class SyncTaskUtil {
                             final AdapterFilterList.FilterListItem fli, final String filter, String title_text, final NotifyEvent p_ntfy) {
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.filter_edit_dlg);
@@ -2633,7 +2635,7 @@ public class SyncTaskUtil {
         }
 
         //カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.item_select_list_dlg);
@@ -2809,7 +2811,7 @@ public class SyncTaskUtil {
                 }
 
                 //カスタムダイアログの生成
-                final Dialog dialog = new Dialog(mContext);
+                final Dialog dialog = new Dialog(mActivity);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.setContentView(R.layout.item_select_list_dlg);
@@ -3153,7 +3155,7 @@ public class SyncTaskUtil {
     public void scanRemoteNetworkDlg(final NotifyEvent p_ntfy,
                                      String port_number, boolean scan_start) {
         //カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.scan_remote_ntwk_dlg);
@@ -3671,7 +3673,7 @@ public class SyncTaskUtil {
         tc.setEnabled();
         tc.setThreadResultSuccess();
 
-        final Dialog dialog=showProgressSpinIndicator(mContext);
+        final Dialog dialog=showProgressSpinIndicator(mActivity);
 
         dialog.setOnCancelListener(new Dialog.OnCancelListener() {
             @Override
@@ -3724,8 +3726,8 @@ public class SyncTaskUtil {
         dialog.show();
     }
 
-    public Dialog showProgressSpinIndicator(Context c) {
-        final Dialog dialog=new Dialog(c, android.R.style.Theme_Translucent);
+    public Dialog showProgressSpinIndicator(Activity a) {
+        final Dialog dialog=new Dialog(a, android.R.style.Theme_Translucent);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.progress_spin_indicator_dlg);
 //		RelativeLayout rl_view=(RelativeLayout)dialog.findViewById(R.id.progress_spin_indicator_dlg_view);
@@ -3755,7 +3757,7 @@ public class SyncTaskUtil {
                 }
                 Collections.sort(rows, String.CASE_INSENSITIVE_ORDER);
                 //カスタムダイアログの生成
-                final Dialog dialog = new Dialog(mContext);
+                final Dialog dialog = new Dialog(mActivity);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.setContentView(R.layout.item_select_list_dlg);
