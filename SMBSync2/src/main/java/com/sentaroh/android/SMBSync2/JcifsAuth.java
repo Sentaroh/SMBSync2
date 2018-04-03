@@ -9,7 +9,19 @@ public class JcifsAuth {
 	private boolean mSmb1=true;
 
 	private String mDomain=null, mUserName=null, mUserPass=null;
-	public JcifsAuth(boolean smb1, String domain, String user, String pass) {
+
+    /**
+     * @param smb1
+     *            true is use jcifs-1.3.17, false is use jcifs-ng
+     * @param domain
+     *            A domain name
+     * @param user
+     *            A user name
+     * @param pass
+     *            A password for user
+     * @throws JcifsException
+     */
+    public JcifsAuth(boolean smb1, String domain, String user, String pass) {
         mSmb1=smb1;
         mDomain=domain;
         mUserName=user;
@@ -31,6 +43,19 @@ public class JcifsAuth {
 		}
 	}
 
+    /**
+     * @param smb1
+     *            true is use jcifs-1.3.17, false is use jcifs-ng
+     * @param domain
+     *            A domain name
+     * @param user
+     *            A user name
+     * @param pass
+     *            A password for user
+     * @param ipc_signing_enforced
+     *            true is use IpcSigningEnforced
+     * @throws JcifsException
+     */
     public JcifsAuth(boolean smb1, String domain, String user, String pass, boolean ipc_signing_enforced) {
         mSmb1=smb1;
         mDomain=domain;
