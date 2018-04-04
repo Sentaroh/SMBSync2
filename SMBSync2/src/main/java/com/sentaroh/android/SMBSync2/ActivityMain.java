@@ -2354,8 +2354,6 @@ public class ActivityMain extends AppCompatActivity {
         th.start();
     }
 
-    ;
-
     private void setHistoryContextButtonListener() {
         mContextHistoryButtonSendTo.setOnClickListener(new OnClickListener() {
             @Override

@@ -1203,8 +1203,8 @@ public class SyncTaskUtil {
 
         String err_msg = null, url = "";
 
-//        if (port.equals("")) url = "smb://" + host + "/IPC$/";//+share+"/";
-//        else url = "smb://" + host + ":" + port + "/IPC%/";//+share+"/";
+//        if (port.equals("")) url = "smb://" + host + "/IPC$/";
+//        else url = "smb://" + host + ":" + port + "/IPC$/";
         if (port.equals("")) url = "smb://" + host + "/"+share+"/";
         else url = "smb://" + host + ":" + port + "/"+share+"/";
 
@@ -1216,7 +1216,8 @@ public class SyncTaskUtil {
         }
         try {
             JcifsFile sf = new JcifsFile(url, auth);
-            String[] fl=sf.list();//.connect();
+            String[] fl=sf.list();
+//            sf.connect();
             mUtil.addDebugMsg(1, "I", "Test logon completed, host=" + host + ", port=" + port+", user="+ra.smb_user_name);
         } catch (JcifsException e) {
             String cm="";
