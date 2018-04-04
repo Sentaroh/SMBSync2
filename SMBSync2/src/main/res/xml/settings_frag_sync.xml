@@ -11,6 +11,11 @@
         android:title="@string/settings_wifi_lock_title"
         android:summary="@string/settings_wifi_lock_summary_ena" />
 
+    <CheckBoxPreference
+        android:key="@string/settings_sync_history_log"
+        android:title="@string/settings_sync_history_log_title"
+        android:summary="@string/settings_sync_history_log_summary_ena" />
+
     <EditTextPreference
         android:key="@string/settings_no_compress_file_type"
         android:title="@string/settings_no_compress_file_type_title"

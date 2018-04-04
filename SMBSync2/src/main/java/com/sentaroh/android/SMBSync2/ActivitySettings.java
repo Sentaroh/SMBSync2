@@ -169,6 +169,8 @@ public class ActivitySettings extends PreferenceActivity {
             isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_wifi_lock))) {
             isChecked = true;
+        } else if (key_string.equals(c.getString(R.string.settings_sync_history_log))) {
+            isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_no_compress_file_type))) {
             isChecked = true;
             if (shared_pref.getString(key_string, "").equals("")) {
@@ -178,8 +180,6 @@ public class ActivitySettings extends PreferenceActivity {
         }
         return isChecked;
     }
-
-    ;
 
     private static boolean checkUiSettings(SyncUtil ut, Preference pref_key,
                                            SharedPreferences shared_pref, String key_string, Context c) {
@@ -414,6 +414,7 @@ public class ActivitySettings extends PreferenceActivity {
 
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_error_option));
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_wifi_lock));
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_history_log));
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_no_compress_file_type));
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_mgt_dir));
 

@@ -9,6 +9,9 @@
     <string name="settings_wifi_lock_title">Wi-Fiロック</string>
     <string name="settings_wifi_lock_summary_ena">同期中はWi-Fiロックする</string>
 
+    <string name="settings_sync_history_log_title">同期履歴</string>
+    <string name="settings_sync_history_log_summary_ena">詳細ログを保存する</string>
+
     <string name="settings_no_compress_file_type_title">圧縮しないファイルタイプ</string>
 
 	<string name="settings_suppress_warning_app_specific_dir_title">アプリケーション固有ディレクトリの使用</string>

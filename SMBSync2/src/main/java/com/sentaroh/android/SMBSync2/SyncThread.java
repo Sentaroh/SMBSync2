@@ -1596,14 +1596,14 @@ public class SyncThread extends Thread {
         String lm = full_path.equals("") ? msg : full_path.concat(" ").concat(msg);
         if (task_name.equals("")) {
             stwa.util.addLogMsg(cat, lm);
-            if (stwa.syncHistoryWriter != null) {
+            if (stwa.gp.settingWriteSyncResultLog && stwa.syncHistoryWriter != null) {
                 String print_msg = "";
                 print_msg = stwa.util.buildPrintMsg(cat, lm);
                 stwa.syncHistoryWriter.println(print_msg);
             }
         } else {
             stwa.util.addLogMsg(cat, task_name, " ", lm);
-            if (stwa.syncHistoryWriter != null) {
+            if (stwa.gp.settingWriteSyncResultLog && stwa.syncHistoryWriter != null) {
                 String print_msg = "";
                 print_msg = stwa.util.buildPrintMsg(cat, task_name, " ", lm);
                 stwa.syncHistoryWriter.println(print_msg);
@@ -2421,11 +2421,10 @@ public class SyncThread extends Thread {
         stwa.mediaScanner.scanFile(fp, null);
     }
 
-    ;
-
-    private String mSyncHistroryResultFilepath = null;
+    private String mSyncHistroryResultFilepath = "";
 
     final private void openSyncResultLog(SyncTaskItem sti) {
+        if (!mStwa.gp.settingWriteSyncResultLog) return;
         mSyncHistroryResultFilepath = mStwa.util.createSyncResultFilePath(sti.getSyncTaskName());
         if (mStwa.syncHistoryWriter != null) closeSyncResultLog();
         File lf = new File(mGp.settingMgtFileDir + "");
@@ -2439,8 +2438,6 @@ public class SyncThread extends Thread {
             e.printStackTrace();
         }
     }
-
-    ;
 
     private void closeSyncResultLog() {
         if (mStwa.syncHistoryWriter != null) {
@@ -2457,8 +2454,6 @@ public class SyncThread extends Thread {
 //			Log.v("","close exit");
         }
     }
-
-    ;
 
     private void playBackDefaultNotification() {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

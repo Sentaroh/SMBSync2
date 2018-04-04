@@ -119,6 +119,8 @@ public class GlobalParameters extends CommonGlobalParms {
     public int settingLogFileMaxSize = 1024 * 1024 * 20;
     public boolean settingPutLogcatOption = false;
 
+    public boolean settingWriteSyncResultLog = true;
+
     public boolean settingErrorOption = false;
     public boolean settingWifiLockRequired = true;
 
@@ -332,9 +334,11 @@ public class GlobalParameters extends CommonGlobalParms {
                     SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS).commit();
         if (!prefs.contains(appContext.getString(R.string.settings_playback_ringtone_volume)))
             prefs.edit().putInt(appContext.getString(R.string.settings_playback_ringtone_volume), 100).commit();
-    }
 
-    ;
+        if (!prefs.contains(appContext.getString(R.string.settings_sync_history_log)))
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_sync_history_log), true).commit();
+
+    }
 
     public void setSettingOptionLogEnabled(boolean enabled) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
@@ -380,9 +384,8 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingNotificationVolume = prefs.getInt(appContext.getString(R.string.settings_playback_ringtone_volume), 100);
 
+        settingWriteSyncResultLog = prefs.getBoolean(appContext.getString(R.string.settings_sync_history_log), true);
     }
-
-    ;
 
     public String settingsSmbRcvBufSize = "16644",
             settingsSmbSndBufSize = "16644", settingsSmbListSize = "130170",

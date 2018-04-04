@@ -2184,13 +2184,16 @@ public class ActivityMain extends AppCompatActivity {
                             setHistoryContextButtonSelectMode();
                             mGp.syncHistoryListView.setEnabled(true);
                         } else {
-                            if (!item.sync_result_file_path.equals("")) {
-                                Intent intent =
-                                        new Intent(android.content.Intent.ACTION_VIEW);
-                                intent.setDataAndType(
-                                        Uri.parse("file://" + item.sync_result_file_path),
-                                        "text/plain");
-                                startActivityForResult(intent, 1);
+                            if (item.sync_result_file_path!=null && !item.sync_result_file_path.equals("")) {
+                                File lf=new File(item.sync_result_file_path);
+                                if (lf.exists()) {
+                                    Intent intent =
+                                            new Intent(android.content.Intent.ACTION_VIEW);
+                                    intent.setDataAndType(
+                                            Uri.parse("file://" + item.sync_result_file_path),
+                                            "text/plain");
+                                    startActivityForResult(intent, 1);
+                                }
                             }
                             mUiHandler.postDelayed(new Runnable() {
                                 @Override

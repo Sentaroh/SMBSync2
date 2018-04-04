@@ -8,9 +8,13 @@
 
     <string name="settings_wifi_lock_title">Wi-Fi lock</string>
     <string name="settings_wifi_lock_summary_ena">Acquire Wi-Fi lock during synchronization</string>
-	<string name="settings_wifi_lock">settings_wifi_lock</string>	
+	<string name="settings_wifi_lock">settings_wifi_lock</string>
 
-	<string name="settings_no_compress_file_type_title">File type for no compress</string>
+    <string name="settings_sync_history_log_title">Sync history</string>
+    <string name="settings_sync_history_log_summary_ena">Keep sync history detail log</string>
+    <string name="settings_sync_history_log">settings_sync_history_log</string>
+
+    <string name="settings_no_compress_file_type_title">File type for no compress</string>
 	<string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
 
 	<string name="settings_suppress_warning_app_specific_dir_title">Application specific directory use</string>
