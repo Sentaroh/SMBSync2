@@ -828,7 +828,7 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, "");
                     }
                 });
-                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "",
+                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "/"+et_sync_folder_dir_name.getText().toString(),
                         mContext.getString(R.string.msgs_select_local_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
