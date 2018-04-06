@@ -291,6 +291,8 @@ public class ActivityMain extends AppCompatActivity {
                     restartType = RESTART_WITH_OUT_INITIALYZE;
 
                     reshowDialogWindow();
+
+                    if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
                 }
 
                 @Override
@@ -718,6 +720,8 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryAdapter.setShowCheckBox(vsa.sync_adapter_show_cb);
         mGp.syncHistoryAdapter.notifyDataSetChanged();
 
+        if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
+
         initAdapterAndView();
 
         restoreViewContent(vsa);
@@ -859,7 +863,7 @@ public class ActivityMain extends AppCompatActivity {
     ;
 
     private void initAdapterAndView() {
-        if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
+//        if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
 
         mGp.msgListView.setAdapter(mGp.msgListAdapter);
         mGp.msgListView.setDrawingCacheEnabled(true);
