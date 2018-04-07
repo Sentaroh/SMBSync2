@@ -61,7 +61,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -83,6 +82,7 @@ import android.widget.Toast;
 
 import com.sentaroh.android.Utilities.Base64Compat;
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
+import com.sentaroh.android.Utilities.Dialog.CommonFileSelector;
 import com.sentaroh.android.Utilities.EncryptUtil;
 import com.sentaroh.android.Utilities.EncryptUtil.CipherParms;
 import com.sentaroh.android.Utilities.NotifyEvent;
@@ -107,7 +107,7 @@ public class SyncTaskUtil {
     private ArrayList<PreferenceParmListIItem>
             importedSettingParmList = new ArrayList<PreferenceParmListIItem>();
 
-    private CommonDialog commonDlg = null;
+    private CommonDialog mCommonDlg = null;
     private GlobalParameters mGp = null;
     private FragmentManager mFragMgr = null;
 
@@ -116,11 +116,40 @@ public class SyncTaskUtil {
         mContext = a.getApplicationContext();
         mGp = gp;
         mUtil = mu;
-        commonDlg = cd;
+        mCommonDlg = cd;
 		mActivity=a;
         mFragMgr = fm;
     }
 
+//    public void fileSelectorFileOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
+//        boolean include_root=false;
+//        CommonFileSelector fsdf=
+//                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
+//                        true, inc_mp, mount_point, dir_name, file_name, title);
+//        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+//    };
+//
+//    public void fileSelectorDirOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
+//        CommonFileSelector fsdf=
+//                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
+//                        true, inc_mp, mount_point, dir_name, "", title);
+//        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+//    };
+//
+//    public void fileSelectorFileOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
+//        CommonFileSelector fsdf=
+//                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
+//                        true, inc_mp, mount_point, dir_name, file_name, title);
+//        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+//    };
+//
+//    public void fileSelectorDirOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
+//        CommonFileSelector fsdf=
+//                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
+//                        true, inc_mp, mount_point, dir_name, "", title);
+//        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+//    };
+//
     public void importSyncTaskListDlg(final NotifyEvent p_ntfy) {
 
         importedSettingParmList.clear();
@@ -129,7 +158,7 @@ public class SyncTaskUtil {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                final String fpath = (String) o[0];
+                final String fpath = (String) o[0]+(String)o[1];
 
                 NotifyEvent ntfy_pswd = new NotifyEvent(mContext);
                 ntfy_pswd.setListener(new NotifyEventListener() {
@@ -147,7 +176,7 @@ public class SyncTaskUtil {
                         if (tfl.getCount() > 0) {
                             selectImportProfileItem(tfl, p_ntfy);
                         } else {
-                            commonDlg.showCommonDialog(false, "W",
+                            mCommonDlg.showCommonDialog(false, "W",
                                     mContext.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
                             p_ntfy.notifyToListener(false, null);
                         }
@@ -168,7 +197,7 @@ public class SyncTaskUtil {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        fileSelectorFileOnlySelectWithCreate(true,
+        mCommonDlg.fileSelectorFileOnlySelectWithCreate(true,
                 mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_import_file), ntfy);
     }
 
@@ -706,7 +735,7 @@ public class SyncTaskUtil {
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskListView.setSelection(0);
                 saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
-                commonDlg.showCommonDialog(false, "I",
+                mCommonDlg.showCommonDialog(false, "I",
                         mContext.getString(R.string.msgs_export_import_profile_import_success),
                         imp_list, null);
                 if (import_settings || import_schedule) {
@@ -721,7 +750,7 @@ public class SyncTaskUtil {
         });
         if (!repl_list.equals("")) {
             //Confirm
-            commonDlg.showCommonDialog(true, "W",
+            mCommonDlg.showCommonDialog(true, "W",
                     mContext.getString(R.string.msgs_export_import_profile_confirm_override),
                     repl_list, ntfy);
         } else {
@@ -824,7 +853,7 @@ public class SyncTaskUtil {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                final String fpath = (String) o[0];
+                final String fpath = (String) o[0]+(String)o[1];
                 NotifyEvent ntfy_pswd = new NotifyEvent(mContext);
                 ntfy_pswd.setListener(new NotifyEventListener() {
                     @Override
@@ -849,38 +878,9 @@ public class SyncTaskUtil {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        fileSelectorFileOnlySelectWithCreate(true,
+        mCommonDlg.fileSelectorFileOnlySelectWithCreate(true,
                 mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_export_file), ntfy);
     }
-
-    public void fileSelectorFileOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
-        boolean include_root=false;
-        CommonFileSelector fsdf=
-                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
-                        true, inc_mp, mount_point, dir_name, file_name, title);
-        fsdf.showDialog(mFragMgr, fsdf, ntfy);
-    };
-
-    public void fileSelectorDirOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
-        CommonFileSelector fsdf=
-                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
-                        true, inc_mp, mount_point, dir_name, "", title);
-        fsdf.showDialog(mFragMgr, fsdf, ntfy);
-    };
-
-    public void fileSelectorFileOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
-        CommonFileSelector fsdf=
-                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
-                        true, inc_mp, mount_point, dir_name, file_name, title);
-        fsdf.showDialog(mFragMgr, fsdf, ntfy);
-    };
-
-    public void fileSelectorDirOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
-        CommonFileSelector fsdf=
-                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
-                        true, inc_mp, mount_point, dir_name, "", title);
-        fsdf.showDialog(mFragMgr, fsdf, ntfy);
-    };
 
     public void exportSyncTaskListToFile(final String profile_dir,
                                          final String profile_filename, final boolean encrypt_required) {
@@ -896,11 +896,11 @@ public class SyncTaskUtil {
 
                     if (saveSyncTaskListToFile(mGp, mContext, mUtil, true, fd, fp,
                             mGp.syncTaskAdapter.getArrayList(), encrypt_required)) {
-                        commonDlg.showCommonDialog(false, "I",
+                        mCommonDlg.showCommonDialog(false, "I",
                                 mContext.getString(R.string.msgs_export_prof_success), "File=" + fp, null);
                         mUtil.addDebugMsg(1, "I", "Profile was exported. fn=" + fp);
                     } else {
-                        commonDlg.showCommonDialog(false, "E",
+                        mCommonDlg.showCommonDialog(false, "E",
                                 mContext.getString(R.string.msgs_export_prof_fail), "File=" + fp, null);
                     }
                 }
@@ -909,7 +909,7 @@ public class SyncTaskUtil {
                 public void negativeResponse(Context c, Object[] o) {
                 }
             });
-            commonDlg.showCommonDialog(true, "W",
+            mCommonDlg.showCommonDialog(true, "W",
                     mContext.getString(R.string.msgs_export_prof_title),
                     profile_dir + "/" + profile_filename + " " + mContext.getString(R.string.msgs_override), ntfy);
         } else {
@@ -917,12 +917,12 @@ public class SyncTaskUtil {
             String fd = profile_dir;
             if (saveSyncTaskListToFile(mGp, mContext, mUtil, true, fd, fp,
                     mGp.syncTaskAdapter.getArrayList(), encrypt_required)) {
-                commonDlg.showCommonDialog(false, "I",
+                mCommonDlg.showCommonDialog(false, "I",
                         mContext.getString(R.string.msgs_export_prof_success),
                         "File=" + fp, null);
                 mUtil.addDebugMsg(1, "I", "Profile was exported. fn=" + fp);
             } else {
-                commonDlg.showCommonDialog(false, "E",
+                mCommonDlg.showCommonDialog(false, "E",
                         mContext.getString(R.string.msgs_export_prof_fail),
                         "File=" + fp, null);
             }
@@ -984,7 +984,7 @@ public class SyncTaskUtil {
         }
 
         NotifyEvent ntfy = new NotifyEvent(mContext);
-        // set commonDlg.showCommonDialog response
+        // set mCommonDlg.showCommonDialog response
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -1016,7 +1016,7 @@ public class SyncTaskUtil {
                 p_ntfy.notifyToListener(false, null);
             }
         });
-        commonDlg.showCommonDialog(true, "W",
+        mCommonDlg.showCommonDialog(true, "W",
                 mContext.getString(R.string.msgs_delete_following_profile), dpmsg, ntfy);
     }
 
@@ -1142,15 +1142,15 @@ public class SyncTaskUtil {
                         String err_msg = (String) o[0];
                         if (tc.isEnabled()) {
                             if (err_msg != null) {
-                                commonDlg.showCommonDialog(false, "E", mContext.getString(R.string.msgs_remote_profile_dlg_logon_error)
+                                mCommonDlg.showCommonDialog(false, "E", mContext.getString(R.string.msgs_remote_profile_dlg_logon_error)
                                         , err_msg, null);
                                 if (p_ntfy != null) p_ntfy.notifyToListener(false, null);
                             } else {
-                                commonDlg.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_success), "", null);
+                                mCommonDlg.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_success), "", null);
                                 if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
                             }
                         } else {
-//                            commonDlg.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_cancel), "", null);
+//                            mCommonDlg.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_cancel), "", null);
 //                            if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
                         }
                     }
@@ -1271,7 +1271,7 @@ public class SyncTaskUtil {
         npfli.setLastSyncResult(0);
         npfli.setLastSyncTime("");
         SyncTaskEditor pmsp = SyncTaskEditor.newInstance();
-        pmsp.showDialog(mFragMgr, pmsp, "COPY", npfli, this, mUtil, commonDlg, mGp, p_ntfy);
+        pmsp.showDialog(mFragMgr, pmsp, "COPY", npfli, this, mUtil, mCommonDlg, mGp, p_ntfy);
     }
 
     public void renameSyncTask(final SyncTaskItem pli, final NotifyEvent p_ntfy) {
@@ -1427,7 +1427,7 @@ public class SyncTaskUtil {
 //				else dlg_msg.setText("");
                 if (arg1 != null) {
                     String msg_text = (String) arg1[0];
-                    commonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
+                    mCommonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
                 }
             }
 
@@ -1509,7 +1509,7 @@ public class SyncTaskUtil {
             @Override
             public void negativeResponse(Context c, Object[] o) {
                 String msg_text = (String) o[0];
-                commonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
+                mCommonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
             }
         });
         createRemoteFileList(remurl, "", ipc_enforced, smb_proto, ntfy, true);
@@ -1550,7 +1550,8 @@ public class SyncTaskUtil {
         tv_home.setText(remurl);
 
         final Button btn_create = (Button) dialog.findViewById(R.id.common_file_selector_create_btn);
-
+        if (show_create) btn_create.setVisibility(Button.VISIBLE);
+        else btn_create.setVisibility(Button.GONE);
         title.setText(mContext.getString(R.string.msgs_select_remote_dir));
         final Button btn_ok = (Button) dialog.findViewById(R.id.common_file_selector_btn_ok);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.common_file_selector_btn_cancel);
@@ -1633,7 +1634,7 @@ public class SyncTaskUtil {
                             @Override
                             public void negativeResponse(Context c, Object[] o) {
                                 String msg_text = (String) o[0];
-                                commonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
+                                mCommonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
                             }
                         });
                         createRemoteFileList(remurl.substring(0,remurl.length()-1), n_dir, ipc_enforced, smb_proto, ntfy, true);
@@ -1670,7 +1671,6 @@ public class SyncTaskUtil {
 
 //        if (show_create) btn_create.setVisibility(Button.VISIBLE);
 //        else btn_create.setVisibility(Button.GONE);
-        btn_create.setVisibility(Button.VISIBLE);
         btn_create.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1697,6 +1697,15 @@ public class SyncTaskUtil {
                     public void positiveResponse(Context context, Object[] o) {
                         tv_home.setText(remurl+tv_home.getText().replace(remurl,""));
                         ArrayList<TreeFilelistItem> new_rfl = (ArrayList<TreeFilelistItem>) o[0];
+
+                        if (new_rfl.size()==0) {
+                            tv_empty.setVisibility(TextView.VISIBLE);
+                            lv.setVisibility(ListView.GONE);
+                        } else {
+                            tv_empty.setVisibility(TextView.GONE);
+                            lv.setVisibility(ListView.VISIBLE);
+                        }
+
                         tfa.setDataList(new_rfl);
                         tfa.notifyDataSetChanged();
                     }
@@ -1887,7 +1896,7 @@ public class SyncTaskUtil {
                             hndl.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    commonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
+                                    mCommonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
                                     dialog.dismiss();
                                     p_ntfy.notifyToListener(false, null);
                                 }
@@ -1934,7 +1943,7 @@ public class SyncTaskUtil {
                                         hndl.post(new Runnable() {
                                             @Override
                                             public void run() {
-                                                commonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
+                                                mCommonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
                                                 dialog.dismiss();
                                                 p_ntfy.notifyToListener(false, null);
                                             }
@@ -2607,7 +2616,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context arg0, Object[] arg1) {
                         if (arg1 != null) {
                             String msg_text = (String) arg1[0];
-                            commonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
+                            mCommonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
                         }
                     }
                 });
@@ -2764,7 +2773,7 @@ public class SyncTaskUtil {
 
         if (tfl.size()==0) {
             String msg=mContext.getString(R.string.msgs_dir_empty);
-            commonDlg.showCommonDialog(false,"W",msg,"",null);
+            mCommonDlg.showCommonDialog(false,"W",msg,"",null);
             return;
         }
 
@@ -2940,7 +2949,7 @@ public class SyncTaskUtil {
 
                 if (rfl.size()==0) {
                     String msg=mContext.getString(R.string.msgs_dir_empty);
-                    commonDlg.showCommonDialog(false,"W",msg,"",null);
+                    mCommonDlg.showCommonDialog(false,"W",msg,"",null);
                     return;
                 }
 
@@ -3886,7 +3895,7 @@ public class SyncTaskUtil {
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
                 for (TreeFilelistItem item:rfl) rows.add(item.getName());
                 if (rows.size() < 1) {
-                    commonDlg.showCommonDialog(false, "W",
+                    mCommonDlg.showCommonDialog(false, "W",
                             mContext.getString(R.string.msgs_share_list_not_obtained), "", null);
                     return;
                 }

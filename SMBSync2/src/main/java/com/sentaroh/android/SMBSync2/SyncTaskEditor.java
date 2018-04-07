@@ -39,6 +39,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
+import com.sentaroh.android.Utilities.Dialog.CommonFileSelector;
 import com.sentaroh.android.Utilities.LocalMountPoint;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.SafFileManager;
@@ -97,6 +98,37 @@ public class SyncTaskEditor extends DialogFragment {
     private SyncUtil mUtil = null;
     private CommonDialog mCommonDlg = null;
 
+    private FragmentManager mFragMgr = null;
+
+//    public void fileSelectorFileOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
+//        boolean include_root=false;
+//        CommonFileSelector fsdf=
+//                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
+//                        true, inc_mp, mount_point, dir_name, file_name, title);
+//        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+//    };
+//
+//    public void fileSelectorDirOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
+//        CommonFileSelector fsdf=
+//                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
+//                        true, inc_mp, mount_point, dir_name, "", title);
+//        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+//    };
+//
+//    public void fileSelectorFileOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
+//        CommonFileSelector fsdf=
+//                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
+//                        true, inc_mp, mount_point, dir_name, file_name, title);
+//        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+//    };
+//
+//    public void fileSelectorDirOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
+//        CommonFileSelector fsdf=
+//                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
+//                        true, inc_mp, mount_point, dir_name, "", title);
+//        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+//    };
+//
     public static SyncTaskEditor newInstance() {
         SyncTaskEditor frag = new SyncTaskEditor();
         Bundle bundle = new Bundle();
@@ -139,6 +171,7 @@ public class SyncTaskEditor extends DialogFragment {
         setRetainInstance(true);
         if (mContext == null) mContext = this.getActivity();
         mFragment = this;
+        mFragMgr = this.getFragmentManager();
         mGp = (GlobalParameters) getActivity().getApplication();
         if (mUtil == null) mUtil = new SyncUtil(mContext, "SyncTaskEditor", mGp);
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
@@ -817,7 +850,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        String dir = (String) arg1[0];
+                        String dir = ((String)arg1[1]).equals("/")?"":((String)arg1[1]).substring(1);
                         if (dir.endsWith("/"))
                             et_sync_folder_dir_name.setText(dir.substring(0, dir.length() - 1));
                         else et_sync_folder_dir_name.setText(dir);
@@ -828,7 +861,7 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, "");
                     }
                 });
-                fileSelectorDirOnlySelectWithCreateHideMP(false, url, "/"+et_sync_folder_dir_name.getText().toString(),
+                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "/"+et_sync_folder_dir_name.getText().toString(),
                         mContext.getString(R.string.msgs_select_local_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
@@ -900,7 +933,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        String dir = (String) arg1[0];
+                        String dir = ((String)arg1[1]).equals("/")?"":((String)arg1[1]).substring(1);
                         if (dir.endsWith("/"))
                             et_sync_folder_dir_name.setText(dir.substring(0, dir.length() - 1));
                         else et_sync_folder_dir_name.setText(dir);
@@ -911,7 +944,7 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, "");
                     }
                 });
-                fileSelectorDirOnlySelectWithCreateHideMP(false, url, "",
+                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "",
                         mContext.getString(R.string.msgs_select_local_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
@@ -1135,9 +1168,9 @@ public class SyncTaskEditor extends DialogFragment {
                 });
                 String title = mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_select_file_title);
                 if (!ctv_zip_file_save_sdcard.isChecked())
-                    fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.internalRootDirectory, "", "", title, ntfy);
+                    mCommonDlg.fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.internalRootDirectory, "", "", title, ntfy);
                 else
-                    fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.safMgr.getExternalSdcardPath(), "", "", title, ntfy);
+                    mCommonDlg.fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.safMgr.getExternalSdcardPath(), "", "", title, ntfy);
             }
         });
         et_zip_file.addTextChangedListener(new TextWatcher() {
@@ -3264,34 +3297,6 @@ public class SyncTaskEditor extends DialogFragment {
             edit_wifi_ap_list.setText(mContext.getString(R.string.msgs_filter_list_dlg_not_specified));
         }
     }
-    public void fileSelectorFileOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
-        boolean include_root=false;
-        CommonFileSelector fsdf=
-                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
-                        true, inc_mp, mount_point, dir_name, file_name, title);
-        fsdf.showDialog(this.getFragmentManager(), fsdf, ntfy);
-    };
-
-    public void fileSelectorDirOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
-        CommonFileSelector fsdf=
-                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
-                        true, inc_mp, mount_point, dir_name, "", title);
-        fsdf.showDialog(this.getFragmentManager(), fsdf, ntfy);
-    };
-
-    public void fileSelectorFileOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
-        CommonFileSelector fsdf=
-                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
-                        true, inc_mp, mount_point, dir_name, file_name, title);
-        fsdf.showDialog(this.getFragmentManager(), fsdf, ntfy);
-    };
-
-    public void fileSelectorDirOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
-        CommonFileSelector fsdf=
-                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
-                        true, inc_mp, mount_point, dir_name, "", title);
-        fsdf.showDialog(this.getFragmentManager(), fsdf, ntfy);
-    };
 
     private String checkMasterTargetCombination(Dialog dialog, SyncTaskItem sti) {
         String result = "";
