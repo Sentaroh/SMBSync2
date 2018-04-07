@@ -39,7 +39,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
-import com.sentaroh.android.Utilities.Dialog.CommonFileSelector;
 import com.sentaroh.android.Utilities.LocalMountPoint;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.SafFileManager;
@@ -493,7 +492,7 @@ public class SyncTaskEditor extends DialogFragment {
     public void initViewWidget() {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
 
-        editProfile(mOpType, mCurrentSyncTaskItem);
+        editSyncTask(mOpType, mCurrentSyncTaskItem);
     }
 
     private String mOpType = "";
@@ -2140,7 +2139,7 @@ public class SyncTaskEditor extends DialogFragment {
         return result;
     }
 
-    public void editProfile(final String type, final SyncTaskItem pfli) {
+    public void editSyncTask(final String type, final SyncTaskItem pfli) {
         final SyncTaskItem n_sti = pfli.clone();
 
         mGp.safMgr.loadSafFileList();
