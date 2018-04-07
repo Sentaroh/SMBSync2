@@ -3429,26 +3429,33 @@ public class SyncTaskEditor extends DialogFragment {
                     zip_enc_method.equals(comp.zip_enc_method) &&
                     zip_file_name.equals(comp.zip_file_name) &&
                     zip_file_password.equals(comp.zip_file_password)) result = true;
-            } else {
+            } else if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                 if (folder_type.equals(comp.folder_type) &&
                     folder_directory.equals(comp.folder_directory) &&
-                    folder_mountpoint.equals(comp.folder_mountpoint) &&
-                    folder_remote_user.equals(comp.folder_remote_user) &&
-                    folder_remote_pswd.equals(comp.folder_remote_pswd) &&
-                    folder_remote_domain.equals(comp.folder_remote_domain) &&
-                    folder_remote_addr.equals(comp.folder_remote_addr) &&
-                    folder_remote_host.equals(comp.folder_remote_host) &&
-                    folder_remote_share.equals(comp.folder_remote_share) &&
-                    folder_remote_port.equals(comp.folder_remote_port) &&
-                    folder_smb_protocol.equals(comp.folder_smb_protocol) &&
-                    folder_removable_uuid.equals(comp.folder_removable_uuid) &&
-                    (folder_remote_use_pswd == comp.folder_remote_use_pswd)  &&
-                    (zip_file_use_sdcard == comp.zip_file_use_sdcard)  &&
-                    (folder_smb_ipc_enforced==comp.folder_smb_ipc_enforced) &&
-                    zip_comp_level.equals(comp.zip_comp_level) &&
-                    zip_enc_method.equals(comp.zip_enc_method) &&
-                    zip_file_name.equals(comp.zip_file_name) &&
-                    zip_file_password.equals(comp.zip_file_password)) result = true;
+                    folder_mountpoint.equals(comp.folder_mountpoint) ) result = true;
+            } else if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                if (folder_type.equals(comp.folder_type) &&
+                        folder_directory.equals(comp.folder_directory) &&
+                        folder_remote_user.equals(comp.folder_remote_user) &&
+                        folder_remote_pswd.equals(comp.folder_remote_pswd) &&
+                        folder_remote_domain.equals(comp.folder_remote_domain) &&
+                        folder_remote_addr.equals(comp.folder_remote_addr) &&
+                        folder_remote_host.equals(comp.folder_remote_host) &&
+                        folder_remote_share.equals(comp.folder_remote_share) &&
+                        folder_remote_port.equals(comp.folder_remote_port) &&
+                        folder_smb_protocol.equals(comp.folder_smb_protocol) &&
+                        (folder_remote_use_pswd == comp.folder_remote_use_pswd)  &&
+                        (folder_smb_ipc_enforced==comp.folder_smb_ipc_enforced) ) result = true;
+            } else if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
+                if (folder_type.equals(comp.folder_type) &&
+                        folder_directory.equals(comp.folder_directory) &&
+                        folder_mountpoint.equals(comp.folder_mountpoint) &&
+                        folder_removable_uuid.equals(comp.folder_removable_uuid) &&
+                        (zip_file_use_sdcard == comp.zip_file_use_sdcard)  &&
+                        zip_comp_level.equals(comp.zip_comp_level) &&
+                        zip_enc_method.equals(comp.zip_enc_method) &&
+                        zip_file_name.equals(comp.zip_file_name) &&
+                        zip_file_password.equals(comp.zip_file_password)) result = true;
             }
             return result;
         }
