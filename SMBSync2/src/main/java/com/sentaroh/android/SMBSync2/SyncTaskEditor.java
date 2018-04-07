@@ -828,7 +828,7 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, "");
                     }
                 });
-                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "/"+et_sync_folder_dir_name.getText().toString(),
+                fileSelectorDirOnlySelectWithCreateHideMP(false, url, "/"+et_sync_folder_dir_name.getText().toString(),
                         mContext.getString(R.string.msgs_select_local_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
@@ -911,7 +911,7 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, "");
                     }
                 });
-                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "",
+                fileSelectorDirOnlySelectWithCreateHideMP(false, url, "",
                         mContext.getString(R.string.msgs_select_local_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
@@ -1135,9 +1135,9 @@ public class SyncTaskEditor extends DialogFragment {
                 });
                 String title = mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_select_file_title);
                 if (!ctv_zip_file_save_sdcard.isChecked())
-                    mCommonDlg.fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.internalRootDirectory, "", "", title, ntfy);
+                    fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.internalRootDirectory, "", "", title, ntfy);
                 else
-                    mCommonDlg.fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.safMgr.getExternalSdcardPath(), "", "", title, ntfy);
+                    fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.safMgr.getExternalSdcardPath(), "", "", title, ntfy);
             }
         });
         et_zip_file.addTextChangedListener(new TextWatcher() {
@@ -3264,6 +3264,34 @@ public class SyncTaskEditor extends DialogFragment {
             edit_wifi_ap_list.setText(mContext.getString(R.string.msgs_filter_list_dlg_not_specified));
         }
     }
+    public void fileSelectorFileOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
+        boolean include_root=false;
+        CommonFileSelector fsdf=
+                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
+                        true, inc_mp, mount_point, dir_name, file_name, title);
+        fsdf.showDialog(this.getFragmentManager(), fsdf, ntfy);
+    };
+
+    public void fileSelectorDirOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
+        CommonFileSelector fsdf=
+                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
+                        true, inc_mp, mount_point, dir_name, "", title);
+        fsdf.showDialog(this.getFragmentManager(), fsdf, ntfy);
+    };
+
+    public void fileSelectorFileOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
+        CommonFileSelector fsdf=
+                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
+                        true, inc_mp, mount_point, dir_name, file_name, title);
+        fsdf.showDialog(this.getFragmentManager(), fsdf, ntfy);
+    };
+
+    public void fileSelectorDirOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
+        CommonFileSelector fsdf=
+                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
+                        true, inc_mp, mount_point, dir_name, "", title);
+        fsdf.showDialog(this.getFragmentManager(), fsdf, ntfy);
+    };
 
     private String checkMasterTargetCombination(Dialog dialog, SyncTaskItem sti) {
         String result = "";

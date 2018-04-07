@@ -168,7 +168,7 @@ public class SyncTaskUtil {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        commonDlg.fileSelectorFileOnlySelectWithCreate(true,
+        fileSelectorFileOnlySelectWithCreate(true,
                 mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_import_file), ntfy);
     }
 
@@ -849,9 +849,38 @@ public class SyncTaskUtil {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        commonDlg.fileSelectorFileOnlySelectWithCreate(true,
+        fileSelectorFileOnlySelectWithCreate(true,
                 mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_export_file), ntfy);
     }
+
+    public void fileSelectorFileOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
+        boolean include_root=false;
+        CommonFileSelector fsdf=
+                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
+                        true, inc_mp, mount_point, dir_name, file_name, title);
+        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+    };
+
+    public void fileSelectorDirOnlySelectWithCreate(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
+        CommonFileSelector fsdf=
+                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
+                        true, inc_mp, mount_point, dir_name, "", title);
+        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+    };
+
+    public void fileSelectorFileOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String file_name, String title, NotifyEvent ntfy) {
+        CommonFileSelector fsdf=
+                CommonFileSelector.newInstance(false, true, true, CommonFileSelector.DIALOG_SELECT_CATEGORY_FILE,
+                        true, inc_mp, mount_point, dir_name, file_name, title);
+        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+    };
+
+    public void fileSelectorDirOnlySelectWithCreateHideMP(Boolean inc_mp, String mount_point, String dir_name, String title, NotifyEvent ntfy) {
+        CommonFileSelector fsdf=
+                CommonFileSelector.newInstance(false, true, false, CommonFileSelector.DIALOG_SELECT_CATEGORY_DIRECTORY,
+                        true, inc_mp, mount_point, dir_name, "", title);
+        fsdf.showDialog(mFragMgr, fsdf, ntfy);
+    };
 
     public void exportSyncTaskListToFile(final String profile_dir,
                                          final String profile_filename, final boolean encrypt_required) {
@@ -1510,8 +1539,11 @@ public class SyncTaskUtil {
 
         final Spinner mp = (Spinner) dialog.findViewById(R.id.common_file_selector_storage_spinner);
         mp.setVisibility(LinearLayout.GONE);
-        final EditText et_file_name = (EditText) dialog.findViewById(R.id.common_file_selector_file_name);
-        et_file_name.setVisibility(EditText.GONE);
+        final LinearLayout dir_name_view = (LinearLayout) dialog.findViewById(R.id.common_file_selector_dir_name_view);
+        dir_name_view.setVisibility(LinearLayout.VISIBLE);
+        final EditText et_dir_name = (EditText) dialog.findViewById(R.id.common_file_selector_dir_name);
+        et_dir_name.setText(p_dir);
+//        et_file_name.setVisibility(EditText.GONE);
 
         final CustomTextView tv_home = (CustomTextView) dialog.findViewById(R.id.common_file_selector_filepath);
         tv_home.setTextColor(mGp.themeColorList.text_color_primary);
@@ -1575,36 +1607,37 @@ public class SyncTaskUtil {
                 if (tfi.isDir()) {
                     final String n_dir=tfi.getPath()+tfi.getName()+"/";
 //                    String t_dir=c_dir.substring(0,c_dir.lastIndexOf("/"));
-
-                    NotifyEvent ntfy = new NotifyEvent(mContext);
-                    ntfy.setListener(new NotifyEventListener() {
-                        @Override
-                        public void positiveResponse(Context c, Object[] o) {
-                            setTopUpButtonEnabled(dialog, true);
-                            tv_home.setText(remurl.substring(0,remurl.length()-1)+n_dir);
-                            ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
-                            ArrayList<TreeFilelistItem> new_tfl = new ArrayList<TreeFilelistItem>();
-                            for (int i = 0; i < rfl.size(); i++) {
-                                if (rfl.get(i).isDir() && rfl.get(i).canRead()) new_tfl.add(rfl.get(i));
+                    if (tfi.getSubDirItemCount()>0) {
+                        NotifyEvent ntfy = new NotifyEvent(mContext);
+                        ntfy.setListener(new NotifyEventListener() {
+                            @Override
+                            public void positiveResponse(Context c, Object[] o) {
+                                setTopUpButtonEnabled(dialog, true);
+                                tv_home.setText(remurl.substring(0,remurl.length()-1)+n_dir);
+                                ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
+                                ArrayList<TreeFilelistItem> new_tfl = new ArrayList<TreeFilelistItem>();
+                                for (int i = 0; i < rfl.size(); i++) {
+                                    if (rfl.get(i).isDir() && rfl.get(i).canRead()) new_tfl.add(rfl.get(i));
+                                }
+                                Collections.sort(new_tfl);
+                                if (new_tfl.size()==0) {
+                                    tv_empty.setVisibility(TextView.VISIBLE);
+                                    lv.setVisibility(ListView.GONE);
+                                } else {
+                                    tv_empty.setVisibility(TextView.GONE);
+                                    lv.setVisibility(ListView.VISIBLE);
+                                }
+                                tfa.setDataList(new_tfl);
                             }
-                            Collections.sort(new_tfl);
-                            if (new_tfl.size()==0) {
-                                tv_empty.setVisibility(TextView.VISIBLE);
-                                lv.setVisibility(ListView.GONE);
-                            } else {
-                                tv_empty.setVisibility(TextView.GONE);
-                                lv.setVisibility(ListView.VISIBLE);
-                            }
-                            tfa.setDataList(new_tfl);
-                        }
 
-                        @Override
-                        public void negativeResponse(Context c, Object[] o) {
-                            String msg_text = (String) o[0];
-                            commonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
-                        }
-                    });
-                    createRemoteFileList(remurl.substring(0,remurl.length()-1), n_dir, ipc_enforced, smb_proto, ntfy, true);
+                            @Override
+                            public void negativeResponse(Context c, Object[] o) {
+                                String msg_text = (String) o[0];
+                                commonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
+                            }
+                        });
+                        createRemoteFileList(remurl.substring(0,remurl.length()-1), n_dir, ipc_enforced, smb_proto, ntfy, true);
+                    }
                 } else {
 
                 }
@@ -1618,7 +1651,7 @@ public class SyncTaskUtil {
                 if (o != null) {
                     int pos = (Integer) o[0];
                     final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                    tv_home.setText(remurl.substring(0,remurl.length()-1)+tfi.getPath()+tfi.getName()+"/");
+                    et_dir_name.setText((tfi.getPath()+tfi.getName()).substring(1));
                 }
             }
 
@@ -1752,9 +1785,8 @@ public class SyncTaskUtil {
 //                        break;
 //                    }
 //                }
-                String sel=tv_home.getText().replace(remurl,"");
-                if (sel.endsWith("/")) p_ntfy.notifyToListener(true, new Object[]{sel.substring(0,sel.length()-1)});
-                else p_ntfy.notifyToListener(true, new Object[]{sel});
+                String sel=et_dir_name.getText().toString();
+                p_ntfy.notifyToListener(true, new Object[]{sel});
             }
         });
         //CANCELボタンの指定
@@ -3800,6 +3832,7 @@ public class SyncTaskUtil {
                         mUtil.addDebugMsg(1, "I", "FileListThread result=" + tc.getThreadResult() + "," +
                                 "msg=" + tc.getThreadMessage() + ", enable=" +
                                 tc.isEnabled());
+                        Collections.sort(remoteFileList);
                         if (tc.isThreadResultSuccess()) {
                             p_event.notifyToListener(true, new Object[]{remoteFileList});
                         } else {
