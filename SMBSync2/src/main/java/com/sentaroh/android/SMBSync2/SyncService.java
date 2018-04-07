@@ -182,7 +182,7 @@ public class SyncService extends Service {
 //            mUtil.addDebugMsg(1,"I", "HeartBeat started");
             mHeartBeatActive = true;
 //			Thread.dumpStack();
-            long time = System.currentTimeMillis() + 1000 * 5;
+            long time = System.currentTimeMillis() + 1000 * 300;
 //			Intent in = new Intent(mContext, SyncService.class);
             Intent in = new Intent();
             in.setAction(SMBSYNC2_SERVICE_HEART_BEAT);
