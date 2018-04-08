@@ -1669,8 +1669,6 @@ public class SyncTaskUtil {
         });
         tfa.setCbCheckListener(ctv_ntfy);
 
-//        if (show_create) btn_create.setVisibility(Button.VISIBLE);
-//        else btn_create.setVisibility(Button.GONE);
         btn_create.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
