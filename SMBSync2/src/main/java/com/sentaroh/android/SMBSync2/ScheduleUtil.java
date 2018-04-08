@@ -42,9 +42,13 @@ public class ScheduleUtil {
         ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
         ScheduleItem sp = new ScheduleItem();
         String v2_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V2, "-1");
+        String v3_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V3, "-1");
 //    	Log.v("","data="+v2_data);
-        if (!v2_data.equals("-1")) {
+        if (!v3_data.equals("-1")) {
+            sl = buildScheduleListV3(gp, v3_data);
+        } else if (!v2_data.equals("-1")) {
             sl = buildScheduleListV2(gp, v2_data);
+            saveScheduleData(gp, sl);
         } else {
             if (!prefs.getString(SCHEDULER_SCHEDULE_HOURS_KEY, "-1").equals("-1")) {
                 sp.scheduleName = "NO NAME";
@@ -68,14 +72,13 @@ public class ScheduleUtil {
                         prefs.getString(SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_KEY,
                                 SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_DEFAULT_VALUE));
                 sl.add(sp);
+                saveScheduleData(gp, sl);
             } else {
                 //empty
             }
         }
         return sl;
     }
-
-    ;
 
     final static public ArrayList<ScheduleItem> buildScheduleListV2(GlobalParameters gp, String v2_data) {
         ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
@@ -121,6 +124,49 @@ public class ScheduleUtil {
     }
 
 
+    final static public ArrayList<ScheduleItem> buildScheduleListV3(GlobalParameters gp, String v3_data) {
+        ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
+        String[] sd_array = v3_data.split("\u0001");
+        for (String sd_sub : sd_array) {
+//            Log.v("","sub="+sd_sub);
+            if (sd_sub.equals("end")) break;
+            String[] sub_array = sd_sub.split("\u0002");
+//            Log.v("","array="+sub_array.length);
+            if (sub_array.length >= 14) {
+                for (String item : sub_array) item = item.replace("\u0000", "");
+                ScheduleItem si = new ScheduleItem();
+                si.scheduleEnabled = sub_array[0].replace("\u0000", "").equals("1") ? true : false;
+                si.scheduleName = sub_array[1].replace("\u0000", "");
+                if (sub_array[2].length() > 0)
+                    si.schedulePosition = Integer.valueOf(sub_array[2].replace("\u0000", ""));
+                si.scheduleType = sub_array[3].replace("\u0000", "");
+                si.scheduleHours = sub_array[4].replace("\u0000", "");
+                si.scheduleMinutes = sub_array[5].replace("\u0000", "");
+                si.scheduleDayOfTheWeek = sub_array[6].replace("\u0000", "");
+                si.scheduleIntervalFirstRunImmed = sub_array[7].replace("\u0000", "").equals("1") ? true : false;
+                if (sub_array[8].length() > 0)
+                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace("\u0000", ""));
+                si.syncTaskList = sub_array[9].replace("\u0000", "");
+                si.syncGroupList = sub_array[10].replace("\u0000", "");
+                si.syncWifiOnBeforeStart = sub_array[11].replace("\u0000", "").equals("1") ? true : false;
+                si.syncWifiOffAfterEnd = sub_array[12].replace("\u0000", "").equals("1") ? true : false;
+                if (sub_array[13].length() > 0)
+                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace("\u0000", ""));
+
+                if (si.scheduleLastExecTime == 0)
+                    si.scheduleLastExecTime = System.currentTimeMillis();
+
+                sl.add(si);
+//                Log.v("","load="+si.scheduleName);
+            }
+        }
+//        if (sl.size()==0) {
+//            ScheduleItem si=new ScheduleItem();
+//            sl.add(si);
+//        }
+        return sl;
+    }
+
     final static public ScheduleItem copyScheduleData(GlobalParameters gp, ScheduleItem sp) {
         ScheduleItem n_sp = new ScheduleItem();
         n_sp.scheduleDayOfTheWeek = sp.scheduleDayOfTheWeek;
@@ -138,40 +184,29 @@ public class ScheduleUtil {
 
     final static public void saveScheduleData(GlobalParameters gp, ArrayList<ScheduleItem> sl) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(gp.appContext);
-        String v2_data = "";
+        String data = "";
         for (ScheduleItem si : sl) {
 //                Log.v("","name="+si.scheduleName);
-            v2_data += (si.scheduleEnabled ? "1" : "0") + "\u0000" + "\t";
-            v2_data += si.scheduleName + "\u0000" + "\t";
-            v2_data += String.valueOf(si.schedulePosition) + "\t";
-            v2_data += si.scheduleType + "\u0000" + "\t";
-            ;
-            v2_data += si.scheduleHours + "\u0000" + "\t";
-            ;
-            v2_data += si.scheduleMinutes + "\u0000" + "\t";
-            ;
-            v2_data += si.scheduleDayOfTheWeek + "\u0000" + "\t";
-            ;
-            v2_data += (si.scheduleIntervalFirstRunImmed ? "1" : "0") + "\u0000" + "\t";
-            v2_data += String.valueOf(si.scheduleLastExecTime) + "\t";
-            v2_data += si.syncTaskList + "\u0000" + "\t";
-            v2_data += si.syncGroupList + "\u0000" + "\t";
-            v2_data += (si.syncWifiOnBeforeStart ? "1" : "0") + "\u0000" + "\t";
-            v2_data += (si.syncWifiOffAfterEnd ? "1" : "0") + "\u0000" + "\t";
-            v2_data += String.valueOf(si.syncDelayAfterWifiOn) + "\t" + "\n";
+            data += (si.scheduleEnabled ? "1" : "0") + "\u0000" + "\u0002";
+            data += si.scheduleName + "\u0000" + "\u0002";
+            data += String.valueOf(si.schedulePosition) + "\u0002";
+            data += si.scheduleType + "\u0000" + "\u0002";
+            data += si.scheduleHours + "\u0000" + "\u0002";
+            data += si.scheduleMinutes + "\u0000" + "\u0002";
+            data += si.scheduleDayOfTheWeek + "\u0000" + "\u0002";
+            data += (si.scheduleIntervalFirstRunImmed ? "1" : "0") + "\u0000" + "\u0002";
+            data += String.valueOf(si.scheduleLastExecTime) + "\u0002";
+            data += si.syncTaskList + "\u0000" + "\u0002";
+            data += si.syncGroupList + "\u0000" + "\u0002";
+            data += (si.syncWifiOnBeforeStart ? "1" : "0") + "\u0000" + "\u0002";
+            data += (si.syncWifiOffAfterEnd ? "1" : "0") + "\u0000" + "\u0002";
+            data += String.valueOf(si.syncDelayAfterWifiOn) + "\u0002" + "\u0001";
 
         }
-        v2_data += "end";
-        prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V2, v2_data).commit();
+        data += "end";
+        prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V3, data).commit();
 
     }
-
-    ;
-
-//    final static public void saveScheduleLastExecTime(long last_exec_time, Context c) {
-//    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
-//    	prefs.edit().putLong(SCHEDULER_SCHEDULE_LAST_EXEC_TIME_KEY, last_exec_time).commit();
-//    };
 
     final static public long getNextSchedule(ScheduleItem sp) {
         Calendar cal = Calendar.getInstance();

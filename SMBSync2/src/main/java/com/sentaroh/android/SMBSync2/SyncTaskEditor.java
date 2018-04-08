@@ -932,10 +932,14 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        String dir = ((String)arg1[1]).equals("/")?"":((String)arg1[1]).substring(1);
-                        if (dir.endsWith("/"))
-                            et_sync_folder_dir_name.setText(dir.substring(0, dir.length() - 1));
-                        else et_sync_folder_dir_name.setText(dir);
+                        if (((String)arg1[1]).length()>0) {
+                            String dir = ((String)arg1[1]).equals("/")?"":((String)arg1[1]).substring(1);
+                            if (dir.endsWith("/"))
+                                et_sync_folder_dir_name.setText(dir.substring(0, dir.length() - 1));
+                            else et_sync_folder_dir_name.setText(dir);
+                        } else {
+                            et_sync_folder_dir_name.setText("");
+                        }
                     }
 
                     @Override
@@ -1141,7 +1145,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        String zip_path = (String) o[0];
+                        String zip_path = (String) o[1];
                         String zip_dir="", zip_file="";
                         if (zip_path.lastIndexOf("/")>1) {
                             //Directory付

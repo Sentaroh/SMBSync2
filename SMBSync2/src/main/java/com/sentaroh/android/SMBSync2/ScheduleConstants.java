@@ -30,6 +30,7 @@ public class ScheduleConstants {
     public static final String SCHEDULER_SCHEDULE_ENABLED_KEY = "scheduler_schedule_enabled_key";
 
     public static final String SCHEDULER_SCHEDULE_SAVED_DATA_V2 = "scheduler_schedule_saved_data_v2_key";
+    public static final String SCHEDULER_SCHEDULE_SAVED_DATA_V3 = "scheduler_schedule_saved_data_v3_key";
 
     public static final String SCHEDULER_SCHEDULE_INTERVAL_FIRST_RUN_KEY = "scheduler_schedule_interval_first_run_key";
     public static final String SCHEDULER_SCHEDULE_TYPE_KEY = "scheduler_schedule_type_key";
