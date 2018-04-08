@@ -3996,33 +3996,14 @@ public class ActivityMain extends AppCompatActivity {
     final private boolean checkJcifsOptionChanged() {
         boolean changed = false;
 
-        String prevSmbRcvBufSize = mGp.settingsSmbRcvBufSize,
-                prevSmbSndBufSize = mGp.settingsSmbSndBufSize, prevSmbListSize = mGp.settingsSmbListSize,
-                prevSmbMaxBuffers = mGp.settingsSmbMaxBuffers,
-                prevSmbLmCompatibility = mGp.settingsSmbLmCompatibility,
+        String  prevSmbLmCompatibility = mGp.settingsSmbLmCompatibility,
                 prevSmbUseExtendedSecurity = mGp.settingsSmbUseExtendedSecurity;
 
         mGp.initJcifsOption();
 
         if (!mGp.settingsSmbLmCompatibility.equals(prevSmbLmCompatibility)) changed = true;
-        else if (!mGp.settingsSmbUseExtendedSecurity.equals(prevSmbUseExtendedSecurity))
-            changed = true;
+        else if (!mGp.settingsSmbUseExtendedSecurity.equals(prevSmbUseExtendedSecurity)) changed = true;
 
-        if (!changed) {
-            if (!mGp.settingsSmbRcvBufSize.equals(prevSmbRcvBufSize)) {
-                changed = true;
-//				Log.v("","rcvBuff");
-            } else if (!mGp.settingsSmbSndBufSize.equals(prevSmbSndBufSize)) {
-                changed = true;
-//				Log.v("","sndBuff");
-            } else if (!mGp.settingsSmbListSize.equals(prevSmbListSize)) {
-                changed = true;
-//				Log.v("","listSize");
-            } else if (!mGp.settingsSmbMaxBuffers.equals(prevSmbMaxBuffers)) {
-                changed = true;
-//				Log.v("","maxBuff");
-            }
-        }
         if (changed) {
             listSettingsOption();
 //            commonDlg.showCommonDialog(false, "W",

@@ -342,36 +342,12 @@ public class ActivitySettings extends PreferenceActivity {
         boolean isChecked = false;
         if (key_string.equals(c.getString(R.string.settings_smb_use_extended_security))) {
             isChecked = true;
-        } else if (key_string.equals(c.getString(R.string.settings_smb_rcv_buf_size))) {
-            EditTextPreference etp = (EditTextPreference) pref_key;
-            etp.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-            if (shared_pref.getString(key_string, "").equals("")) {
-                shared_pref.edit().putString(key_string, "66576").commit();
-                etp.setText("66576");
-            }
-        } else if (key_string.equals(c.getString(R.string.settings_smb_snd_buf_size))) {
-            EditTextPreference etp = (EditTextPreference) pref_key;
-            etp.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-            if (shared_pref.getString(key_string, "").equals("")) {
-                shared_pref.edit().putString(key_string, "66576").commit();
-                etp.setText("66576");
-            }
-        } else if (key_string.equals(c.getString(R.string.settings_smb_listSize))) {
-            EditTextPreference etp = (EditTextPreference) pref_key;
-            etp.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-        } else if (key_string.equals(c.getString(R.string.settings_smb_maxBuffers))) {
-            EditTextPreference etp = (EditTextPreference) pref_key;
-            etp.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-            if (shared_pref.getString(key_string, "").equals("")) {
-                shared_pref.edit().putString(key_string, "100").commit();
-                etp.setText("100");
-            }
+        } else if (key_string.equals(c.getString(R.string.settings_smb_lm_compatibility))) {
+            isChecked = true;
         }
 
         return isChecked;
     }
-
-    ;
 
     private static boolean checkOtherSettings(SyncUtil ut,
                                               Preference pref_key, SharedPreferences shared_pref, String key_string, Context c) {
@@ -386,9 +362,6 @@ public class ActivitySettings extends PreferenceActivity {
         }
         return isChecked;
     }
-
-    ;
-
 
     public static class SettingsSync extends PreferenceFragment {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =
@@ -591,20 +564,7 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_lm_compatibility));
             findPreference(getString(R.string.settings_smb_lm_compatibility).toString()).setEnabled(false);
 
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_rcv_buf_size));
-            findPreference(getString(R.string.settings_smb_rcv_buf_size).toString()).setEnabled(false);
-
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_snd_buf_size));
-            findPreference(getString(R.string.settings_smb_snd_buf_size).toString()).setEnabled(false);
-
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_listSize));
-            findPreference(getString(R.string.settings_smb_listSize).toString()).setEnabled(false);
-
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_maxBuffers));
-            findPreference(getString(R.string.settings_smb_maxBuffers).toString()).setEnabled(false);
         }
-
-        ;
 
         @Override
         public void onStart() {

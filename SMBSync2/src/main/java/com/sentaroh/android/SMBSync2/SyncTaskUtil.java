@@ -2083,7 +2083,7 @@ public class SyncTaskUtil {
         Button add_current_ssid = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
         add_current_ssid.setText(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_add_current_ap));
 
-        filterAdapter = new AdapterFilterList(mContext,
+        filterAdapter = new AdapterFilterList(mActivity,
                 R.layout.filter_list_item_view, filterList, false);
         ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
 
@@ -2299,7 +2299,7 @@ public class SyncTaskUtil {
         Button dirbtn = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
         dirbtn.setVisibility(Button.GONE);
 
-        filterAdapter = new AdapterFilterList(mContext, R.layout.filter_list_item_view, filterList);
+        filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList);
         ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
 
         for (int i = 0; i < file_filter.size(); i++) {
@@ -2459,7 +2459,7 @@ public class SyncTaskUtil {
         title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
         title.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
-        filterAdapter = new AdapterFilterList(mContext, R.layout.filter_list_item_view, filterList);
+        filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList);
         final ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
 
         for (int i = 0; i < sti.getDirFilter().size(); i++) {
@@ -2810,7 +2810,7 @@ public class SyncTaskUtil {
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
         final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
-        final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mContext, false, false);
+        final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mActivity, false, false);
         lv.setAdapter(tfa);
         tfa.setDataList(tfl);
         lv.setScrollingCacheEnabled(false);
@@ -2967,7 +2967,7 @@ public class SyncTaskUtil {
                 final TextView subtitle = (TextView) dialog.findViewById(R.id.item_select_list_dlg_subtitle);
                 title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
                 title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-                subtitle.setTextColor(mGp.themeColorList.text_color_dialog_title);
+                subtitle.setTextColor(mGp.themeColorList.text_color_primary);
 
                 title.setText(mContext.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
                 subtitle.setText((remdir.equals("//")) ? remurl + "/" : remurl + remdir);
@@ -2982,7 +2982,7 @@ public class SyncTaskUtil {
                 CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
                 final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
-                final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mContext, false, false);
+                final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mActivity, false, false);
                 final ArrayList<TreeFilelistItem> rows = new ArrayList<TreeFilelistItem>();
                 for (int i = 0; i < rfl.size(); i++) {
                     if (rfl.get(i).isDir() && rfl.get(i).canRead()) rows.add(rfl.get(i));
@@ -5461,11 +5461,6 @@ public class SyncTaskUtil {
 
         saveSettingsParmsToFileString(c, pw, "0", encrypt_required, cp, c.getString(R.string.settings_smb_lm_compatibility));
         saveSettingsParmsToFileBoolean(c, pw, false, encrypt_required, cp, c.getString(R.string.settings_smb_use_extended_security));
-
-        saveSettingsParmsToFileString(c, pw, "", encrypt_required, cp, c.getString(R.string.settings_smb_rcv_buf_size));
-        saveSettingsParmsToFileString(c, pw, "", encrypt_required, cp, c.getString(R.string.settings_smb_snd_buf_size));
-        saveSettingsParmsToFileString(c, pw, "", encrypt_required, cp, c.getString(R.string.settings_smb_listSize));
-        saveSettingsParmsToFileString(c, pw, "", encrypt_required, cp, c.getString(R.string.settings_smb_maxBuffers));
 
         saveSettingsParmsToFileString(c, pw, "-1", encrypt_required, cp, SCHEDULER_SCHEDULE_SAVED_DATA_V2);
     }

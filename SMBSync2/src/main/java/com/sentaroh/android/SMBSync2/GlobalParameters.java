@@ -320,10 +320,6 @@ public class GlobalParameters extends CommonGlobalParms {
 
             pe.putString(appContext.getString(R.string.settings_smb_lm_compatibility), "0");
             pe.putBoolean(appContext.getString(R.string.settings_smb_use_extended_security), false);
-            pe.putString(appContext.getString(R.string.settings_smb_rcv_buf_size), "66576");
-            pe.putString(appContext.getString(R.string.settings_smb_snd_buf_size), "66576");
-            pe.putString(appContext.getString(R.string.settings_smb_listSize), "65535");
-            pe.putString(appContext.getString(R.string.settings_smb_maxBuffers), "100");
 
             pe.commit();
         }
@@ -387,18 +383,10 @@ public class GlobalParameters extends CommonGlobalParms {
         settingWriteSyncResultLog = prefs.getBoolean(appContext.getString(R.string.settings_sync_history_log), true);
     }
 
-    public String settingsSmbRcvBufSize = "16644",
-            settingsSmbSndBufSize = "16644", settingsSmbListSize = "130170",
-            settingsSmbMaxBuffers = "",
-            settingsSmbLmCompatibility = "0", settingsSmbUseExtendedSecurity = "true";
+    public String settingsSmbLmCompatibility = "0", settingsSmbUseExtendedSecurity = "true";
 
     final public void initJcifsOption() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
-
-        settingsSmbRcvBufSize = prefs.getString(appContext.getString(R.string.settings_smb_rcv_buf_size), "66576");
-        settingsSmbSndBufSize = prefs.getString(appContext.getString(R.string.settings_smb_snd_buf_size), "66576");
-        settingsSmbListSize = prefs.getString(appContext.getString(R.string.settings_smb_listSize), "");
-        settingsSmbMaxBuffers = prefs.getString(appContext.getString(R.string.settings_smb_maxBuffers), "100");
 
         settingsSmbLmCompatibility = prefs.getString(appContext.getString(R.string.settings_smb_lm_compatibility), "0");
         boolean ues = prefs.getBoolean(appContext.getString(R.string.settings_smb_use_extended_security), false);
@@ -409,19 +397,8 @@ public class GlobalParameters extends CommonGlobalParms {
 
         System.setProperty("jcifs.netbios.retryTimeout", "3000");
 //
-//        System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
-//        System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);
-//
-//        if (!settingsSmbRcvBufSize.equals(""))
-//            System.setProperty("jcifs.smb.client.rcv_buf_size", settingsSmbRcvBufSize);//60416 120832
-//        if (!settingsSmbSndBufSize.equals(""))
-//            System.setProperty("jcifs.smb.client.snd_buf_size", settingsSmbSndBufSize);//16644 120832
-//
-//        if (!settingsSmbListSize.equals(""))
-//            System.setProperty("jcifs.smb.client.listSize", settingsSmbListSize); //65536 1300
-//        if (!settingsSmbMaxBuffers.equals(""))
-//            System.setProperty("jcifs.smb.maxBuffers", settingsSmbMaxBuffers);//16 100
-
+        System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
+        System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);
     }
 
     private boolean isDebuggable() {

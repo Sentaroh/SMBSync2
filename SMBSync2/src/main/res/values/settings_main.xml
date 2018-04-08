@@ -117,8 +117,6 @@
 
 	<string name="settings_smb_title">SMB settings</string>
 	
-    <string name="settings_smb_tuning">settings_smb_tuning</string>
-
     <string name="settings_smb_use_extended_security_title">jcifs.smb.client.useExtendedSecurity</string>
     <string name="settings_smb_use_extended_security_summary_ena">Use extended security</string>
 	<string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>	
@@ -142,22 +140,6 @@
         <item>4</item>
     </string-array>
 		
-    <string name="settings_smb_rcv_buf_size">settings_smb_rcv_buf_size</string>
-	<string name="settings_smb_rcv_buf_size_title">JCIFS rcv_buf_size</string>        
-    <string name="settings_smb_rcv_buf_size_summary">Not specified</string>
-    
-    <string name="settings_smb_snd_buf_size">settings_smb_snd_buf_size</string>
-	<string name="settings_smb_snd_buf_size_title">JCIFS snd_buf_size</string>        
-    <string name="settings_smb_snd_buf_size_summary">Not specified</string>
-    
-    <string name="settings_smb_listSize">settings_smb_listSize</string>
-	<string name="settings_smb_listSize_title">JCIFS listSize</string>        
-    <string name="settings_smb_listSize_summary">Not specified</string>
-
-    <string name="settings_smb_maxBuffers">settings_smb_maxBuffers</string>
-	<string name="settings_smb_maxBuffers_title">JCIFS maxBuffers</string>        
-    <string name="settings_smb_maxBuffers_summary">Not specified</string>
-    
     <string name="settings_misc_title">Miscellaneous</string>
     
 	<string name="settings_exported_profile_encryption">settings_exported_profile_encryption</string>
