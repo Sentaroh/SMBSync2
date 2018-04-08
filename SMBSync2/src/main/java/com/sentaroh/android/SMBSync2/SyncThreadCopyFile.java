@@ -23,6 +23,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -101,8 +103,6 @@ public class SyncThreadCopyFile {
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
-
-    ;
 
     static public int copyFileInternalToExternal(SyncThreadWorkArea stwa,
                                                  SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name)
@@ -235,11 +235,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -252,8 +252,6 @@ public class SyncThreadCopyFile {
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
-
-    ;
 
     static private int copyFileInternalToSmbLargeBuffer(SyncThreadWorkArea stwa,
                                                         SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name)
@@ -298,11 +296,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -376,11 +374,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.getLastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.getLastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -443,11 +441,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.getLastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.getLastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -651,11 +649,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -711,11 +709,11 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
         }
+        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 

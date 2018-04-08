@@ -33,7 +33,15 @@ public class JcifsFile {
     public boolean isSmb1File() {
     	return mSmb1;
     }
-    
+
+    public jcifs.smb.SmbFile getSmb1File() {
+        return mSmb1File;
+    }
+
+    public jcifsng.smb.SmbFile getSmb2File() {
+        return mSmb2File;
+    }
+
     public boolean exists()   throws JcifsException {
         try {
             if (mSmb1) {
@@ -404,11 +412,11 @@ public class JcifsFile {
     public void renameTo ( JcifsFile d ) throws JcifsException {
         try {
         	if (mSmb1) {
-        		jcifs.smb.SmbFile to=new jcifs.smb.SmbFile(d.getPath(), d.getAuth().getSmb1Auth());
-        		mSmb1File.renameTo(to);
+//        		jcifs.smb.SmbFile to=new jcifs.smb.SmbFile(d.getPath(), d.getAuth().getSmb1Auth());
+        		mSmb1File.renameTo(d.getSmb1File());
         	} else {
-                jcifsng.smb.SmbFile to=new jcifsng.smb.SmbFile(d.getPath(), d.getAuth().getSmb2Auth());
-        		mSmb2File.renameTo(to);
+//                jcifsng.smb.SmbFile to=new jcifsng.smb.SmbFile(d.getPath(), d.getAuth().getSmb2Auth());
+        		mSmb2File.renameTo(d.getSmb2File());
         	}
 		} catch (jcifsng.smb.SmbException e) {
 //			e.printStackTrace();
@@ -416,8 +424,6 @@ public class JcifsFile {
 		} catch (jcifs.smb.SmbException e) {
 //			e.printStackTrace();
 			throw(new JcifsException(e, e.getNtStatus(), e.getCause()));
-		} catch (MalformedURLException e) {
-            e.printStackTrace();
         }
     }
 
