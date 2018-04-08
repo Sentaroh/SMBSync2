@@ -156,9 +156,9 @@ public class ReadSmbFilelist implements Runnable {
         remoteFileList.clear();
         JcifsAuth auth=null;
         if (mRemoteAuthInfo.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
-            auth=new JcifsAuth(true, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
+            auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
         } else {
-            auth=new JcifsAuth(false, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password,
+            auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB2, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password,
                     mRemoteAuthInfo.smb_ipc_signing_enforced);
         }
 
@@ -276,9 +276,9 @@ public class ReadSmbFilelist implements Runnable {
         remoteFileList.clear();
         JcifsAuth auth=null;
         if (mRemoteAuthInfo.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
-            auth=new JcifsAuth(true, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
+            auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
         } else {
-            auth=new JcifsAuth(false, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password,
+            auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB2, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password,
                     mRemoteAuthInfo.smb_ipc_signing_enforced);
         }
         JcifsFile[] fl=null;

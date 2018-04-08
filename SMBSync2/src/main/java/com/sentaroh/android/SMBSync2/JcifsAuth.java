@@ -3,7 +3,8 @@ package com.sentaroh.android.SMBSync2;
 import java.util.Properties;
 
 public class JcifsAuth {
-	
+	final static public boolean JCIFS_FILE_SMB1=true;
+    final static public boolean JCIFS_FILE_SMB2=false;
 	private jcifs.smb.NtlmPasswordAuthentication mSmb1Auth=null;
 	private jcifsng.CIFSContext mSmb2Auth =null;
 	private boolean mSmb1=true;
