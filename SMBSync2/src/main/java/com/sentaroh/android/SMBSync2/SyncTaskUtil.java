@@ -1512,8 +1512,8 @@ public class SyncTaskUtil {
                 mCommonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
             }
         });
+//        createRemoteFileList(remurl, p_dir, ipc_enforced, smb_proto, ntfy, true);
         createRemoteFileList(remurl, "", ipc_enforced, smb_proto, ntfy, true);
-
     }
 
     private void remoteDirectorySelector(ArrayList<TreeFilelistItem> rows, String remurl, String p_dir,
