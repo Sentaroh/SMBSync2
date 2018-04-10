@@ -115,15 +115,15 @@
     <string name="settings_exit_clean_summary_ena">Kill application process after application cleanup</string>
 	<string name="settings_exit_clean">settings_exit_clean</string>
 
-	<string name="settings_smb_title">SMB settings</string>
+	<string name="settings_smb_title">SMB1 settings</string>
 	
-    <string name="settings_smb_use_extended_security_title">jcifs.smb.client.useExtendedSecurity</string>
+    <string name="settings_smb_use_extended_security_title">Use extended security</string>
     <string name="settings_smb_use_extended_security_summary_ena">Use extended security</string>
-	<string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>	
+	<string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
 
-	<string name="settings_smb_lm_compatibility_title">jcifs.smb.lmCompatibility</string>
-	<string name="settings_smb_lm_compatibility_summary">jcifs.smb.lmCompatibility</string>
-	<string name="settings_smb_lm_compatibility_dialog_title">Select jcifs.smb.lmCompatibility value</string>
+	<string name="settings_smb_lm_compatibility_title">LanMan Compatibility</string>
+	<string name="settings_smb_lm_compatibility_summary">LanMan Compatibility</string>
+	<string name="settings_smb_lm_compatibility_dialog_title">Select LanMan Compatibility value</string>
 	<string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
 	<string-array name="settings_smb_lm_compatibility_list_entries">
 	    <item>0(Default)</item>
@@ -139,7 +139,24 @@
         <item>3</item>
         <item>4</item>
     </string-array>
-		
+
+    <string name="settings_smb_client_reponse_timeout_title">Client reponse timeout</string>
+    <string name="settings_smb_client_reponse_timeout_summary">Response timeout</string>
+    <string name="settings_smb_client_reponse_timeout_dialog_title">Select Client response timeout value</string>
+    <string name="settings_smb_client_reponse_timeout">settings_smb_client_reponse_timeout</string>
+    <string-array name="settings_smb_client_reponse_timeout_list_entries">
+        <item>30000 ms(Default)</item>
+        <item>45000 ms</item>
+        <item>60000 ms</item>
+        <item>120000 ms</item>
+    </string-array>
+    <string-array name="settings_smb_client_reponse_timeout_list_values">
+        <item>30000</item>
+        <item>45000</item>
+        <item>60000</item>
+        <item>120000</item>
+    </string-array>
+
     <string name="settings_misc_title">Miscellaneous</string>
     
 	<string name="settings_exported_profile_encryption">settings_exported_profile_encryption</string>

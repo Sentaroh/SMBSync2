@@ -383,22 +383,26 @@ public class GlobalParameters extends CommonGlobalParms {
         settingWriteSyncResultLog = prefs.getBoolean(appContext.getString(R.string.settings_sync_history_log), true);
     }
 
-    public String settingsSmbLmCompatibility = "0", settingsSmbUseExtendedSecurity = "true";
+    public String settingsSmbLmCompatibility = "0", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout="30000";
 
     final public void initJcifsOption() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
 
         settingsSmbLmCompatibility = prefs.getString(appContext.getString(R.string.settings_smb_lm_compatibility), "0");
         boolean ues = prefs.getBoolean(appContext.getString(R.string.settings_smb_use_extended_security), false);
+        settingsSmbClientResponseTimeout = prefs.getString(appContext.getString(R.string.settings_smb_client_reponse_timeout),"30000");
 
         settingsSmbUseExtendedSecurity = "";
         if (ues) settingsSmbUseExtendedSecurity = "true";
         else settingsSmbUseExtendedSecurity = "false";
 
         System.setProperty("jcifs.netbios.retryTimeout", "3000");
-//
+
         System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
         System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);
+
+//        System.setProperty("jcifs.smb.client.responseTimeout","30000"); // default value
+        System.setProperty("jcifs.smb.client.responseTimeout",settingsSmbClientResponseTimeout);
     }
 
     private boolean isDebuggable() {

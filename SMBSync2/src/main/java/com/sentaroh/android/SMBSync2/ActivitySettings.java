@@ -335,14 +335,16 @@ public class ActivitySettings extends PreferenceActivity {
         return isChecked;
     }
 
-    ;
-
     private static boolean checkSmbSettings(SyncUtil ut,
                                             Preference pref_key, SharedPreferences shared_pref, String key_string, Context c) {
         boolean isChecked = false;
         if (key_string.equals(c.getString(R.string.settings_smb_use_extended_security))) {
             isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_smb_lm_compatibility))) {
+            pref_key.setSummary(shared_pref.getString(key_string, "0"));
+            isChecked = true;
+        } else if (key_string.equals(c.getString(R.string.settings_smb_client_reponse_timeout))) {
+            pref_key.setSummary(shared_pref.getString(key_string, "30000")+" Millis");
             isChecked = true;
         }
 
@@ -534,8 +536,6 @@ public class ActivitySettings extends PreferenceActivity {
         ;
     }
 
-    ;
-
     public static class SettingsSmb extends PreferenceFragment {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -559,10 +559,13 @@ public class ActivitySettings extends PreferenceActivity {
             SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_use_extended_security));
-            findPreference(getString(R.string.settings_smb_use_extended_security).toString()).setEnabled(false);
+//            findPreference(getString(R.string.settings_smb_use_extended_security).toString()).setEnabled(false);
 
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_lm_compatibility));
-            findPreference(getString(R.string.settings_smb_lm_compatibility).toString()).setEnabled(false);
+//            findPreference(getString(R.string.settings_smb_lm_compatibility).toString()).setEnabled(false);
+
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_client_reponse_timeout));
+//            findPreference(getString(R.string.settings_smb_client_reponse_timeout).toString()).setEnabled(false);
 
         }
 

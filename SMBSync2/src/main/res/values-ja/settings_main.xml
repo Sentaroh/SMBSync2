@@ -94,7 +94,7 @@
     <string name="settings_exit_clean_summary_ena">Kill application process after application cleanup</string>
 	<string name="settings_exit_clean">settings_exit_clean</string>
 
-	<string name="settings_smb_title">SMB設定</string>
+	<string name="settings_smb_title">SMB1設定</string>
 	
     <string name="settings_misc_title">その他</string>
     

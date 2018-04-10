@@ -27,7 +27,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -97,6 +99,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.*;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.*;
 
@@ -1904,8 +1907,6 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    ;
-
     private void listSettingsOption() {
         mUtil.addDebugMsg(1, "I", "Option: " +
                 "debugLevel=" + mGp.settingDebugLevel +
@@ -1936,7 +1937,7 @@ public class ActivityMain extends AppCompatActivity {
         LogUtil.flushLog(mContext, mGp);
         if (mGp.settingLogOption) {
             Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
             intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(mGp)), "text/plain");
             try {
                 startActivity(intent);
@@ -1947,16 +1948,12 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     private void invokeSettingsActivity() {
         mUtil.addDebugMsg(1, "I", "Invoke Settings.");
         Intent intent = null;
         intent = new Intent(this, ActivitySettings.class);
         startActivityForResult(intent, 0);
     }
-
-    ;
 
 //	@SuppressLint("InlinedApi")
 //	private void checkSafExternalSdcardTreeUri(final NotifyEvent p_ntfy) {
@@ -2339,7 +2336,7 @@ public class ActivityMain extends AppCompatActivity {
                 ZipUtil.createZipFile(mContext, tc, pbdf, zip_file_name, lmp[0], file_name);
                 if (tc.isEnabled()) {
                     Intent intent = new Intent();
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                     intent.setAction(Intent.ACTION_SEND);
 //				    intent.setType("message/rfc822");
 //				    intent.setType("text/plain");
@@ -3592,8 +3589,6 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    ;
-
     private void setUiEnabled() {
         mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered");
         enableMainUi = true;
@@ -3606,8 +3601,6 @@ public class ActivityMain extends AppCompatActivity {
 
         refreshOptionMenu();
     }
-
-    ;
 
     private void setUiDisabled() {
         mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered");
@@ -3622,13 +3615,9 @@ public class ActivityMain extends AppCompatActivity {
         refreshOptionMenu();
     }
 
-    ;
-
     private boolean isUiEnabled() {
         return enableMainUi;
     }
-
-    ;
 
     @SuppressLint("NewApi")
     final private void refreshOptionMenu() {
@@ -3637,8 +3626,6 @@ public class ActivityMain extends AppCompatActivity {
 //			this.invalidateOptionsMenu();
         supportInvalidateOptionsMenu();
     }
-
-    ;
 
     private void startSyncTask(ArrayList<SyncTaskItem> alp) {
         String[] task_name = new String[alp.size()];
@@ -3650,8 +3637,6 @@ public class ActivityMain extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    ;
 
     private void syncThreadStarted() {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
@@ -3696,8 +3681,6 @@ public class ActivityMain extends AppCompatActivity {
         LogUtil.flushLog(mContext, mGp);
     }
 
-    ;
-
     private void syncThreadEnded() {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
         LogUtil.flushLog(mContext, mGp);
@@ -3715,8 +3698,6 @@ public class ActivityMain extends AppCompatActivity {
 
         setUiEnabled();
     }
-
-    ;
 
     private ISvcCallback mSvcCallbackStub = new ISvcCallback.Stub() {
         @Override
@@ -3811,8 +3792,6 @@ public class ActivityMain extends AppCompatActivity {
         bindService(intmsg, mSvcConnection, BIND_AUTO_CREATE);
     }
 
-    ;
-
     private void closeService() {
 
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, conn=" + mSvcConnection);
@@ -3836,8 +3815,6 @@ public class ActivityMain extends AppCompatActivity {
 //        stopService(intent);
     }
 
-    ;
-
     final private void setCallbackListener() {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
         try {
@@ -3847,8 +3824,6 @@ public class ActivityMain extends AppCompatActivity {
             mUtil.addDebugMsg(1, "E", "setCallbackListener error :" + e.toString());
         }
     }
-
-    ;
 
     final private void unsetCallbackListener() {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
@@ -3861,8 +3836,6 @@ public class ActivityMain extends AppCompatActivity {
             }
         }
     }
-
-    ;
 
     private void reshowDialogWindow() {
         if (mGp.dialogWindowShowed) {
@@ -3877,8 +3850,6 @@ public class ActivityMain extends AppCompatActivity {
     private void hideConfirmDialog() {
         mGp.confirmView.setVisibility(LinearLayout.GONE);
     }
-
-    ;
 
     private void showConfirmDialog(String fp, String method) {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
@@ -3991,31 +3962,43 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmCancel.setOnClickListener(mGp.confirmCancelListener);
     }
 
-    ;
-
     final private boolean checkJcifsOptionChanged() {
         boolean changed = false;
 
         String  prevSmbLmCompatibility = mGp.settingsSmbLmCompatibility,
                 prevSmbUseExtendedSecurity = mGp.settingsSmbUseExtendedSecurity;
+        String p_response_timeout=mGp.settingsSmbClientResponseTimeout;
 
         mGp.initJcifsOption();
 
         if (!mGp.settingsSmbLmCompatibility.equals(prevSmbLmCompatibility)) changed = true;
         else if (!mGp.settingsSmbUseExtendedSecurity.equals(prevSmbUseExtendedSecurity)) changed = true;
+        else if (!mGp.settingsSmbClientResponseTimeout.equals(p_response_timeout)) changed = true;
 
         if (changed) {
             listSettingsOption();
-//            commonDlg.showCommonDialog(false, "W",
-//                    mContext.getString(R.string.msgs_smbsync_main_settings_jcifs_changed_restart), "", null);
-//            mGp.settingExitClean = true;
+            NotifyEvent ntfy=new NotifyEvent(mContext);
+            ntfy.setListener(new NotifyEventListener() {
+                @Override
+                public void positiveResponse(Context context, Object[] objects) {
+                    mUtil.flushLog();
+                    Intent in_act = new Intent(context, ActivityMain.class);
+                    int pi_id = R.string.app_name;
+                    PendingIntent pi = PendingIntent.getActivity(context, pi_id, in_act, PendingIntent.FLAG_CANCEL_CURRENT);
+                    AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+                    am.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pi);
+                    Runtime.getRuntime().exit(0);
+                }
+                @Override
+                public void negativeResponse(Context context, Object[] objects) {}
+            });
+            commonDlg.showCommonDialog(true, "W",
+                    mContext.getString(R.string.msgs_smbsync_main_settings_jcifs_changed_restart), "", ntfy);
+            mGp.settingExitClean = true;
         }
 
         return changed;
     }
-
-    ;
-
 
     private void saveTaskData() {
         mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered");
@@ -4042,8 +4025,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     private String printStackTraceElement(StackTraceElement[] ste) {
         String st_msg = "";
         for (int i = 0; i < ste.length; i++) {
@@ -4054,53 +4035,46 @@ public class ActivityMain extends AppCompatActivity {
         return st_msg;
     }
 
-    ;
-
     private void restoreTaskData() {
         mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered");
-        File lf =
-                new File(mGp.applicationRootDirectory + "/" + SMBSYNC2_SERIALIZABLE_FILE_NAME);
+        File lf = new File(mGp.applicationRootDirectory + "/" + SMBSYNC2_SERIALIZABLE_FILE_NAME);
         if (lf.exists()) {
-            try {
-//			    FileInputStream fis = new FileInputStream(lf);
-//			    BufferedInputStream bis=new BufferedInputStream(fis,4096*256);
-//			    ObjectInputStream ois = new ObjectInputStream(bis);
-//			    ActivityDataHolder data = (ActivityDataHolder) ois.readObject();
-//			    ois.close();
-//			    lf.delete();
-//
-//			    ArrayList<SyncMessageItem> o_ml=new ArrayList<SyncMessageItem>();
-//				for (int i=0;i<mGp.msgListAdapter.getCount();i++)
-//					o_ml.add(mGp.msgListAdapter.getItem(i));
-//
-//				mGp.msgListAdapter.clear();
-//
-//				mGp.msgListAdapter.setMessageList(data.ml);
-//
-//				for (int i=0;i<o_ml.size();i++) mGp.msgListAdapter.add(o_ml.get(i));
-//
-//				mGp.msgListAdapter.notifyDataSetChanged();
-//				mGp.msgListAdapter.resetDataChanged();
-//
-//				mGp.syncTaskAdapter.clear();
-//				mGp.syncTaskAdapter.setArrayList(data.pl);
-                mUtil.addDebugMsg(1, "I", "Task data was restored.");
-            } catch (Exception e) {
-                e.printStackTrace();
-                mUtil.addLogMsg("E", "restoreTaskData error, " + e.toString());
-                mUtil.addLogMsg("E", "StackTrace element, " + printStackTraceElement(e.getStackTrace()));
-            }
+//            try {
+////			    FileInputStream fis = new FileInputStream(lf);
+////			    BufferedInputStream bis=new BufferedInputStream(fis,4096*256);
+////			    ObjectInputStream ois = new ObjectInputStream(bis);
+////			    ActivityDataHolder data = (ActivityDataHolder) ois.readObject();
+////			    ois.close();
+////			    lf.delete();
+////
+////			    ArrayList<SyncMessageItem> o_ml=new ArrayList<SyncMessageItem>();
+////				for (int i=0;i<mGp.msgListAdapter.getCount();i++)
+////					o_ml.add(mGp.msgListAdapter.getItem(i));
+////
+////				mGp.msgListAdapter.clear();
+////
+////				mGp.msgListAdapter.setMessageList(data.ml);
+////
+////				for (int i=0;i<o_ml.size();i++) mGp.msgListAdapter.add(o_ml.get(i));
+////
+////				mGp.msgListAdapter.notifyDataSetChanged();
+////				mGp.msgListAdapter.resetDataChanged();
+////
+////				mGp.syncTaskAdapter.clear();
+////				mGp.syncTaskAdapter.setArrayList(data.pl);
+//                mUtil.addDebugMsg(1, "I", "Task data was restored.");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                mUtil.addLogMsg("E", "restoreTaskData error, " + e.toString());
+//                mUtil.addLogMsg("E", "StackTrace element, " + printStackTraceElement(e.getStackTrace()));
+//            }
         }
     }
-
-    ;
 
     private boolean isTaskDataExisted() {
         File lf = new File(getFilesDir() + "/" + SMBSYNC2_SERIALIZABLE_FILE_NAME);
         return lf.exists();
     }
-
-    ;
 
     private void deleteTaskData() {
         File lf =
@@ -4110,8 +4084,6 @@ public class ActivityMain extends AppCompatActivity {
             mUtil.addDebugMsg(1, "I", "RestartData was delete.");
         }
     }
-
-    ;
 
 }
 

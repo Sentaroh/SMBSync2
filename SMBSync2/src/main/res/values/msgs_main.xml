@@ -61,7 +61,7 @@
     <string name="msgs_smbsync_main_start">Application has started.</string>
     <string name="msgs_smbsync_main_restart_by_killed">Application was restarted, because application is killed after the move to the background in last time.</string>
     <string name="msgs_smbsync_main_restart_by_destroyed">Application was restarted because destroyed of the activity is requested.　Please disable it if you&#8217;re to enable the &#8220;Don&#8217;t keep activities&#8221; in the Settings->developer options.</string>
-	<string name="msgs_smbsync_main_settings_jcifs_changed_restart"	>SMB parameters have been changed, but will not take effect until you restart the application.</string>
+	<string name="msgs_smbsync_main_settings_jcifs_changed_restart"	>The SMB1 parameter has been changed. It will not take effect until you restart the application. Would you like to restart now?</string>
 	    
     <string name="msgs_create_profile_error">create task list was failed. file=%s</string>
     <string name="msgs_save_to_profile_error">"Save task list was failed. file=%s</string>

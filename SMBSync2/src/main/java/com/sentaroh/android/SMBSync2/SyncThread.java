@@ -563,6 +563,10 @@ public class SyncThread extends Thread {
                 ", SkipIfConnectAnotherWifiSsid=" + sti.isSyncTaskSkipIfConnectAnotherWifiSsid() +
                 ", SyncOnlyCharging=" + sti.isSyncOptionSyncWhenCharging() +
                 "");
+        mStwa.util.addDebugMsg(1, "I", "   SMB1 Option, LM Compatiibility=" + mGp.settingsSmbLmCompatibility +
+                ", Use extended security=" + mGp.settingsSmbUseExtendedSecurity +
+                ", Client reponse timeout=" + mGp.settingsSmbClientResponseTimeout +
+                "");
     }
 
     private void initSyncParms(SyncTaskItem sti) {
@@ -583,8 +587,6 @@ public class SyncThread extends Thread {
         } else mStwa.setLastModifiedIsFunctional = false;//SDCARD
         mStwa.util.addDebugMsg(1, "I", "setLastModifiedIsFunctional=" + mStwa.setLastModifiedIsFunctional);
     }
-
-    ;
 
     private void postProcessSyncResult(SyncTaskItem sti, int sync_result, long et) {
         int t_et_sec = (int) (et / 1000);
