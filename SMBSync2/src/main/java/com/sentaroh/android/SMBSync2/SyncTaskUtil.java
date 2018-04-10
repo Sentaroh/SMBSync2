@@ -1560,11 +1560,11 @@ public class SyncTaskUtil {
         final Button btn_refresh = (Button) dialog.findViewById(R.id.common_file_selector_refresh_btn);
 
         if (mGp.themeIsLight) {
-            btn_up.setCompoundDrawablesWithIntrinsicBounds(com.sentaroh.android.Utilities.R.drawable.ic_16_go_up_dark, 0, 0, 0);
-            btn_top.setCompoundDrawablesWithIntrinsicBounds(com.sentaroh.android.Utilities.R.drawable.ic_16_go_top_dark, 0, 0, 0);
+            btn_up.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_16_go_up_dark, 0, 0, 0);
+            btn_top.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_16_go_top_dark, 0, 0, 0);
         } else {
-            btn_up.setCompoundDrawablesWithIntrinsicBounds(com.sentaroh.android.Utilities.R.drawable.ic_16_go_up_light, 0, 0, 0);
-            btn_top.setCompoundDrawablesWithIntrinsicBounds(com.sentaroh.android.Utilities.R.drawable.ic_16_go_top_light, 0, 0, 0);
+            btn_up.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_16_go_up_light, 0, 0, 0);
+            btn_top.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_16_go_top_light, 0, 0, 0);
         }
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
@@ -1815,8 +1815,8 @@ public class SyncTaskUtil {
     }
 
     private void setTopUpButtonEnabled(Dialog dialog, boolean p) {
-        final Button btnTop = (Button)dialog.findViewById(com.sentaroh.android.Utilities.R.id.common_file_selector_top_btn);
-        final Button btnUp = (Button)dialog.findViewById(com.sentaroh.android.Utilities.R.id.common_file_selector_up_btn);
+        final Button btnTop = (Button)dialog.findViewById(R.id.common_file_selector_top_btn);
+        final Button btnUp = (Button)dialog.findViewById(R.id.common_file_selector_up_btn);
 
         btnUp.setEnabled(p);
         btnTop.setEnabled(p);
@@ -1845,16 +1845,22 @@ public class SyncTaskUtil {
         // カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(com.sentaroh.android.Utilities.R.layout.single_item_input_dlg);
-        final TextView dlg_title = (TextView) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_title);
-        dlg_title.setText(mContext.getString(com.sentaroh.android.Utilities.R.string.msgs_file_select_edit_dlg_create));
-        final TextView dlg_msg = (TextView) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_msg);
-        final TextView dlg_cmp = (TextView) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_name);
-        final Button btnOk = (Button) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_ok_btn);
-        final Button btnCancel = (Button) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_cancel_btn);
-        final EditText etDir=(EditText) dialog.findViewById(com.sentaroh.android.Utilities.R.id.single_item_input_dir);
+        dialog.setContentView(R.layout.single_item_input_dlg);
 
-        dlg_cmp.setText(mContext.getString(com.sentaroh.android.Utilities.R.string.msgs_file_select_edit_parent_directory)+":"+c_dir);
+        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
+        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+
+        final TextView dlg_title = (TextView) dialog.findViewById(R.id.single_item_input_title);
+        dlg_title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        dlg_title.setText(mContext.getString(R.string.msgs_file_select_edit_dlg_create));
+        final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
+        final TextView dlg_cmp = (TextView) dialog.findViewById(R.id.single_item_input_name);
+        dlg_cmp.setTextColor(mGp.themeColorList.text_color_primary);
+        final Button btnOk = (Button) dialog.findViewById(R.id.single_item_input_ok_btn);
+        final Button btnCancel = (Button) dialog.findViewById(R.id.single_item_input_cancel_btn);
+        final EditText etDir=(EditText) dialog.findViewById(R.id.single_item_input_dir);
+
+        dlg_cmp.setText(mContext.getString(R.string.msgs_file_select_edit_parent_directory)+":"+c_dir);
         CommonDialog.setDlgBoxSizeCompact(dialog);
         btnOk.setEnabled(false);
         final Handler hndl=new Handler();
@@ -1879,7 +1885,7 @@ public class SyncTaskUtil {
                                       if (success) {
                                           btnOk.setEnabled(false);
                                           dlg_msg.setText(mContext.getString(
-                                                  com.sentaroh.android.Utilities.R.string.msgs_single_item_input_dlg_duplicate_dir));
+                                                  R.string.msgs_single_item_input_dlg_duplicate_dir));
                                       } else {
                                           btnOk.setEnabled(true);
                                           dlg_msg.setText("");
@@ -1958,7 +1964,7 @@ public class SyncTaskUtil {
                     }
                 });
                 CommonDialog cd=new CommonDialog(mContext, mFragMgr);
-                cd.showCommonDialog(true, "W", mContext.getString(com.sentaroh.android.Utilities.R.string.msgs_file_select_edit_confirm_create_directory), n_path, ntfy);
+                cd.showCommonDialog(true, "W", mContext.getString(R.string.msgs_file_select_edit_confirm_create_directory), n_path, ntfy);
             }
         });
         // CANCELボタンの指定
