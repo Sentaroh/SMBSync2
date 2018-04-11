@@ -121,9 +121,9 @@
     <string name="settings_smb_use_extended_security_summary_ena">Use extended security</string>
 	<string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
 
-	<string name="settings_smb_lm_compatibility_title">LanMan Compatibility</string>
-	<string name="settings_smb_lm_compatibility_summary">LanMan Compatibility</string>
-	<string name="settings_smb_lm_compatibility_dialog_title">Select LanMan Compatibility value</string>
+	<string name="settings_smb_lm_compatibility_title">lmCompatibility</string>
+	<string name="settings_smb_lm_compatibility_summary">lmCompatibility</string>
+	<string name="settings_smb_lm_compatibility_dialog_title">Select lmCompatibility value</string>
 	<string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
 	<string-array name="settings_smb_lm_compatibility_list_entries">
 	    <item>0(Default)</item>
