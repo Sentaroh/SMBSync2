@@ -69,4 +69,6 @@
 	<string name="msgs_mirror_remote_name_not_found">Specified remote SMB host name was not found. Hostname=</string>
 
     <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">Sync has been canceled because it is not charging.</string>
+
+    <string name="msgs_mirror_smb_folder_file_set_last_modified_failed">SmbFile#setLastModified() was failed. Please enable "Do not make the last update time of the file copied/moved to the SMB folder the same as the copy source" of the sync task.</string>
 </resources>

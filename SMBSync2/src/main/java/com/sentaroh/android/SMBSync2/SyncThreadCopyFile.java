@@ -235,7 +235,12 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
+        try {
+            if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
+        } catch(JcifsException e) {
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                    stwa.gp.appContext.getString(R.string.msgs_mirror_smb_folder_file_set_last_modified_failed));
+        }
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
@@ -301,7 +306,12 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
+        try {
+            if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
+        } catch(JcifsException e) {
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                    stwa.gp.appContext.getString(R.string.msgs_mirror_smb_folder_file_set_last_modified_failed));
+        }
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
@@ -376,7 +386,12 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.getLastModified());
+        try {
+            if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.getLastModified());
+        } catch(JcifsException e) {
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                    stwa.gp.appContext.getString(R.string.msgs_mirror_smb_folder_file_set_last_modified_failed));
+        }
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
@@ -444,7 +459,12 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.getLastModified());
+        try {
+            if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.getLastModified());
+        } catch(JcifsException e) {
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                    stwa.gp.appContext.getString(R.string.msgs_mirror_smb_folder_file_set_last_modified_failed));
+        }
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
@@ -653,7 +673,12 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
+        try {
+            if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
+        } catch(JcifsException e) {
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                    stwa.gp.appContext.getString(R.string.msgs_mirror_smb_folder_file_set_last_modified_failed));
+        }
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);
@@ -714,7 +739,12 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
+        try {
+            if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
+        } catch(JcifsException e) {
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                    stwa.gp.appContext.getString(R.string.msgs_mirror_smb_folder_file_set_last_modified_failed));
+        }
         if (sti.isSyncUseFileCopyByTempName()) {
             if (out_dest.exists()) out_dest.delete();
             out_file.renameTo(out_dest);

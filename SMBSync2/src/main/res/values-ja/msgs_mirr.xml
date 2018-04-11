@@ -66,4 +66,6 @@
 	<string name="msgs_mirror_remote_name_not_found">SMBホスト名が発見できませんでした。 ホスト名=</string>
 
     <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">充電中でないため、同期はキャンセルされました。</string>
+
+    <string name="msgs_mirror_smb_folder_file_set_last_modified_failed">SmbFile#setLastModified()が失敗しました。同期タスクの「SMBフォルダーにコピー・移動したファイルの最終更新時刻をコピー元と同じにしない」を有効にしてください。</string>
 </resources>
