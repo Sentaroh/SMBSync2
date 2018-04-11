@@ -299,11 +299,11 @@
     <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">拡張されたディレクトリ選択/除外フィルタを使用する</string>
     <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">無線LAN</string>
     <string name="msgs_profile_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
-    <string name="msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time">差分判定にファイルの最終更新時間を使用する</string>
-    <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">差分判定にファイル サイズを使用する</string>
-    <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">最終更新時刻の差(秒)</string>
+    <string name="msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time">差分ファイルの判定にファイルの最終更新時間を使用する</string>
+    <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">差分ファイルの判定にファイル サイズを使用する</string>
+    <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">許容される最終更新時刻の差(秒)</string>
     <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">強制的にSMBSync2で最終更新日時を取得</string>
-    <string name="msgs_profile_sync_task_sync_option_not_set_remote_file_last_modified">SMBフォルダーの最終更新時刻をコピー元と同じにしない</string>
+    <string name="msgs_profile_sync_task_sync_option_not_set_remote_file_last_modified">SMBフォルダーにコピー・移動したファイルの最終更新時刻をコピー元と同じにしない</string>
     <string name="msgs_profile_sync_task_sync_option_show_special_option">特別なオプションを表示する</string>
     <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">同期中ネットワークエラーが発生した場合にリトライする</string>
     <string name="msgs_profile_sync_task_sync_option_empty_directory">空のディレクトリを同期する</string>
