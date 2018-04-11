@@ -318,8 +318,9 @@ public class GlobalParameters extends CommonGlobalParms {
 
             pe.putBoolean(appContext.getString(R.string.settings_exit_clean), true);
 
-            pe.putString(appContext.getString(R.string.settings_smb_lm_compatibility), "0");
-            pe.putBoolean(appContext.getString(R.string.settings_smb_use_extended_security), false);
+            pe.putString(appContext.getString(R.string.settings_smb_lm_compatibility), "3");
+            pe.putBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true);
+            pe.putString(appContext.getString(R.string.settings_smb_client_reponse_timeout), "30000");
 
             pe.commit();
         }
@@ -388,8 +389,8 @@ public class GlobalParameters extends CommonGlobalParms {
     final public void initJcifsOption() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
 
-        settingsSmbLmCompatibility = prefs.getString(appContext.getString(R.string.settings_smb_lm_compatibility), "0");
-        boolean ues = prefs.getBoolean(appContext.getString(R.string.settings_smb_use_extended_security), false);
+        settingsSmbLmCompatibility = prefs.getString(appContext.getString(R.string.settings_smb_lm_compatibility), "3");
+        boolean ues = prefs.getBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true);
         settingsSmbClientResponseTimeout = prefs.getString(appContext.getString(R.string.settings_smb_client_reponse_timeout),"30000");
 
         settingsSmbUseExtendedSecurity = "";
