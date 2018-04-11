@@ -16,7 +16,7 @@ public class JcifsFile {
     private jcifs.smb.SmbFile mSmb1File = null;
 
     public JcifsFile(String url, JcifsAuth auth) throws MalformedURLException {
-        mSmb1 = auth.isSmb1Auth();
+        mSmb1 = auth.isSmb1();
         mAuth = auth;
 
         if (mSmb1) {

@@ -341,7 +341,13 @@ public class ActivitySettings extends PreferenceActivity {
         if (key_string.equals(c.getString(R.string.settings_smb_use_extended_security))) {
             isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_smb_lm_compatibility))) {
-            pref_key.setSummary(shared_pref.getString(key_string, "0"));
+            String lmc=shared_pref.getString(c.getString(R.string.settings_smb_lm_compatibility),"3");
+            if (lmc.equals("3") || lmc.equals("4")) {
+                mPrefFrag.findPreference(c.getString(R.string.settings_smb_use_extended_security).toString()).setEnabled(false);
+            } else {
+                mPrefFrag.findPreference(c.getString(R.string.settings_smb_use_extended_security).toString()).setEnabled(true);
+            }
+            pref_key.setSummary(lmc);
             isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_smb_client_reponse_timeout))) {
             pref_key.setSummary(shared_pref.getString(key_string, "30000")+" Millis");

@@ -118,7 +118,7 @@ public class JcifsAuth {
         }
     }
 
-    public boolean isSmb1Auth() {
+    public boolean isSmb1() {
     	return mSmb1;
     }
     

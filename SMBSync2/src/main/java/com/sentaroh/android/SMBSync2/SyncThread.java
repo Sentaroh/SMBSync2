@@ -45,7 +45,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -715,7 +714,7 @@ public class SyncThread extends Thread {
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr = sti.getMasterSmbAddr();
             if (!sti.getMasterSmbHostName().equals("")) {
-                addr = resolveHostName(mStwa.masterAuth.isSmb1Auth(), sti.getMasterSmbHostName());
+                addr = resolveHostName(mStwa.masterAuth.isSmb1(), sti.getMasterSmbHostName());
                 if (addr == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getMasterSmbHostName();
@@ -755,7 +754,7 @@ public class SyncThread extends Thread {
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr = sti.getTargetSmbAddr();
             if (!sti.getTargetSmbHostName().equals("")) {
-                addr = resolveHostName(mStwa.targetAuth.isSmb1Auth(), sti.getTargetSmbHostName());
+                addr = resolveHostName(mStwa.targetAuth.isSmb1(), sti.getTargetSmbHostName());
                 if (addr == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getTargetSmbHostName();

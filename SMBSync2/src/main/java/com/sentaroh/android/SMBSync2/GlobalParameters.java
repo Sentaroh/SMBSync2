@@ -212,10 +212,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public SafFileManager safMgr = null;
 
     public GlobalParameters() {
-//		Log.v("","constructed");
     }
-
-    ;
 
     @SuppressLint("Wakelock")
     @SuppressWarnings("deprecation")
@@ -245,16 +242,12 @@ public class GlobalParameters extends CommonGlobalParms {
 //        scheduleInfoList = ScheduleUtil.loadScheduleData(this);
     }
 
-    ;
-
     public void clearParms() {
         synchronized (msgList) {
             msgList = new ArrayList<SyncMessageItem>();
             msgListAdapter = null;
         }
     }
-
-    ;
 
     @SuppressLint("NewApi")
     public void initStorageStatus() {
@@ -274,8 +267,6 @@ public class GlobalParameters extends CommonGlobalParms {
         refreshMediaDir();
     }
 
-    ;
-
     public void refreshMediaDir() {
         if (safMgr == null) {
             safMgr = new SafFileManager(appContext, settingDebugLevel > 1);
@@ -284,8 +275,6 @@ public class GlobalParameters extends CommonGlobalParms {
             safMgr.loadSafFileList();
         }
     }
-
-    ;
 
     public void setLogParms(GlobalParameters gp) {
         setDebugLevel(gp.settingDebugLevel);
@@ -340,7 +329,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public void setSettingOptionLogEnabled(boolean enabled) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
         prefs.edit().putBoolean(appContext.getString(R.string.settings_log_option), enabled).commit();
-        if (settingDebugLevel==0 && enabled) {
+        if (settingDebugLevel == 0 && enabled) {
             prefs.edit().putString(appContext.getString(R.string.settings_log_level), "1").commit();
         }
     }
@@ -384,26 +373,30 @@ public class GlobalParameters extends CommonGlobalParms {
         settingWriteSyncResultLog = prefs.getBoolean(appContext.getString(R.string.settings_sync_history_log), true);
     }
 
-    public String settingsSmbLmCompatibility = "0", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout="30000";
+    public String settingsSmbLmCompatibility = "3", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout = "30000";
 
     final public void initJcifsOption() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
 
         settingsSmbLmCompatibility = prefs.getString(appContext.getString(R.string.settings_smb_lm_compatibility), "3");
         boolean ues = prefs.getBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true);
-        settingsSmbClientResponseTimeout = prefs.getString(appContext.getString(R.string.settings_smb_client_reponse_timeout),"30000");
+        settingsSmbClientResponseTimeout = prefs.getString(appContext.getString(R.string.settings_smb_client_reponse_timeout), "30000");
 
-        settingsSmbUseExtendedSecurity = "";
-        if (ues) settingsSmbUseExtendedSecurity = "true";
-        else settingsSmbUseExtendedSecurity = "false";
+        if (settingsSmbLmCompatibility.equals("3") || settingsSmbLmCompatibility.equals("4")) {
+            if (!ues) {
+                ues = true;
+                prefs.edit().putBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true).commit();
+            }
+        }
+
+        settingsSmbUseExtendedSecurity = ues ? "true" : "false";
 
         System.setProperty("jcifs.netbios.retryTimeout", "3000");
 
         System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
         System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);
 
-//        System.setProperty("jcifs.smb.client.responseTimeout","30000"); // default value
-        System.setProperty("jcifs.smb.client.responseTimeout",settingsSmbClientResponseTimeout);
+        System.setProperty("jcifs.smb.client.responseTimeout", settingsSmbClientResponseTimeout);
     }
 
     private boolean isDebuggable() {
@@ -420,8 +413,6 @@ public class GlobalParameters extends CommonGlobalParms {
 //        Log.v("","debuggable="+result);
         return result;
     }
-
-    ;
 
     public WakeLock mDimWakeLock = null;
     public WakeLock mPartialWakeLock = null;
@@ -441,8 +432,6 @@ public class GlobalParameters extends CommonGlobalParms {
             util.addDebugMsg(1, "I", "Wifilock released");
         }
     }
-
-    ;
 
     public void acquireWakeLock(SyncUtil util) {
         if (settingWifiLockRequired) {
@@ -465,8 +454,6 @@ public class GlobalParameters extends CommonGlobalParms {
         }
     }
 
-    ;
-
     @SuppressLint("NewApi")
     static public boolean isScreenOn(Context context, SyncUtil util) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -478,7 +465,5 @@ public class GlobalParameters extends CommonGlobalParms {
         }
         return pm.isInteractive();
     }
-
-    ;
 
 }
