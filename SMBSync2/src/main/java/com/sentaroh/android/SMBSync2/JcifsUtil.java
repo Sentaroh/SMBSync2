@@ -62,19 +62,6 @@ public class JcifsUtil {
 		return result;
 	};
 
-//	final public static boolean ping(String addr){
-//        Runtime runtime = Runtime.getRuntime();
-//        Process proc = null;
-//        int exitVal=-1;
-//        try{
-//            proc = runtime.exec("ping -c 1 -W 1 "+addr);
-//            proc.waitFor();
-//        }catch(Exception e){}
-//        exitVal= proc.exitValue();
-//        if(exitVal == 0)return true;
-//        else return false;
-//    }
-
     final static public String getSmbHostIpAddressFromName(boolean smb1, String hn) {
         if (smb1) {
             return getSmbHostIpAddressFromNameSmb1(hn);
@@ -99,9 +86,6 @@ public class JcifsUtil {
 		String ipAddress=null;
 		try {
             jcifsng.context.BaseContext bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(System.getProperties()));
-//			NbtAddress nbtAddress = NbtAddress.getByName(hn);
-//			InetAddress address = nbtAddress.getInetAddress();
-//			ipAddress= address.getHostAddress();
             ipAddress=bc.getNameServiceClient().getByName(hn).getHostAddress();
 		} catch (UnknownHostException e) {
 //			e.printStackTrace();
@@ -111,25 +95,12 @@ public class JcifsUtil {
         return ipAddress;
 	}
 	
-	@SuppressWarnings("unused")
-	final static private byte[] mNbtData=new byte[]{
-								0x00,0x00,0x00,0x10,0x00,0x01,
-								0x00,0x00,0x00,0x00,0x00,0x00,0x20,0x43,
-								0x4b,0x41,0x41,0x41,0x41,0x41,0x41,0x41,
-								0x41,0x41,0x41,0x41,0x41,0x41,0x41,0x41,
-								0x41,0x41,0x41,0x41,0x41,0x41,0x41,0x41,
-								0x41,0x41,0x41,0x41,0x41,0x41,0x41,0x00,
-								0x00,0x21,0x00,0x01};
 	final static public boolean isIpAddressAndPortConnected(String address, int port, int timeout) {
 		boolean reachable=false;
         Socket socket = new Socket();
         try {
         	socket.bind(null);
         	socket.connect((new InetSocketAddress(address, port)), timeout);
-//            OutputStream os=socket.getOutputStream();
-//            os.write(mNbtData);
-//            os.flush();
-//            os.close();
             reachable=true;
             socket.close();
         } catch (IOException e) {
@@ -139,26 +110,6 @@ public class JcifsUtil {
 		}
 		return reachable;
 	};
-
-//	final static public String getSmbHostNameFromAddress(String address) {
-//		String srv_name="";
-//    	try {
-//			UniAddress ua = UniAddress.getByName(address);
-//			String cn;
-//	        cn = ua.firstCalledName();
-//	        while(cn!=null) {
-//	            if (!cn.startsWith("*")) srv_name=cn;
-////            	Log.v("","getSmbHostName Address="+address+
-////	            		", cn="+cn+", name="+srv_name+", host="+ua.getHostName());
-//            	cn = ua.nextCalledName();
-//	        }
-////	        while(( cn = ua.nextCalledName() ) != null );
-//			
-//		} catch (UnknownHostException e) {
-////			e.printStackTrace();
-//		}
-//    	return srv_name;
-// 	};
 
     final static public String getSmbHostNameFromAddress(boolean smb1, String address) {
         if (smb1) {
@@ -177,8 +128,6 @@ public class JcifsUtil {
                     jcifs.netbios.NbtAddress ua = uax[i];
                     String hn;
                     hn = ua.firstCalledName();
-//	            	Log.v("","getSmbHostName Address="+address+
-//		            		", cn="+hn+", hn="+ua.getHostName()+", nametype="+ua.getNameType()+", nodetype="+ua.getNodeType());
                     if (ua.getNameType()==32) {
                         srv_name=hn;
                         break;
@@ -195,14 +144,11 @@ public class JcifsUtil {
 	   	try {
 	   		jcifsng.context.BaseContext bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(System.getProperties()));
 	   		jcifsng.NetbiosAddress[] uax = bc.getNameServiceClient().getNbtAllByAddress(address);
-//   			NbtAddress[] uax = NbtAddress.getAllByAddress(address);
    			if (uax!=null) {
 	   			for(int i=0;i<uax.length;i++) {
 	   				jcifsng.NetbiosAddress ua = uax[i];
 					String hn;
 			        hn = ua.firstCalledName();
-//	            	Log.v("","getSmbHostName Address="+address+
-//		            		", cn="+hn+", hn="+ua.getHostName()+", nametype="+ua.getNameType()+", nodetype="+ua.getNodeType());
 	            	if (ua.getNameType()==32) {
 	            		srv_name=hn;
 	            		break;

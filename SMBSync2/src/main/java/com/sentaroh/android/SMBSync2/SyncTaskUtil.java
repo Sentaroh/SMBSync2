@@ -1241,7 +1241,7 @@ public class SyncTaskUtil {
         if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
             auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
         } else {
-            auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB2, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password, ra.smb_ipc_signing_enforced);
+            auth=new JcifsAuth(ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password, ra.smb_ipc_signing_enforced);
         }
         try {
             JcifsFile sf = new JcifsFile(url, auth);

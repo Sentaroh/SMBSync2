@@ -378,7 +378,7 @@ public class SyncThread extends Thread {
                     if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
                         mStwa.masterAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
                     } else {
-                        mStwa.masterAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB2, mst_dom, mst_user, mst_pass, mStwa.currentSTI.isMasterSmbIpcSigningEnforced());
+                        mStwa.masterAuth=new JcifsAuth(mst_dom, mst_user, mst_pass, mStwa.currentSTI.isMasterSmbIpcSigningEnforced());
                     }
 
                     String tgt_dom=null, tgt_user=null, tgt_pass=null;
@@ -388,7 +388,7 @@ public class SyncThread extends Thread {
                     if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
                         mStwa.targetAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, tgt_dom, tgt_user, tgt_pass);
                     } else {
-                        mStwa.targetAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB2, tgt_dom, tgt_user, tgt_pass, mStwa.currentSTI.isTargetSmbIpcSigningEnforced());
+                        mStwa.targetAuth=new JcifsAuth(tgt_dom, tgt_user, tgt_pass, mStwa.currentSTI.isTargetSmbIpcSigningEnforced());
                     }
 
                     initSyncParms(mStwa.currentSTI);
