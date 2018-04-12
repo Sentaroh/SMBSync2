@@ -841,7 +841,7 @@ public class SyncThread extends Thread {
     ;
 
     private String resolveHostName(boolean smb1, String hn) {
-        String ipAddress = JcifsUtil.getSmbHostIpAddressFromName(smb1, hn);
+        String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb1, hn);
         if (ipAddress == null) {//add dns name resolve
             try {
                 InetAddress[] addr_list = Inet4Address.getAllByName(hn);

@@ -29,7 +29,6 @@ import java.util.ArrayList;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.ThreadCtrl;
@@ -131,7 +130,7 @@ public class ReadSmbFilelist implements Runnable {
                 }
             }
         } else {
-            if (JcifsUtil.getSmbHostIpAddressFromName(mSmb1, mHostName) == null) {
+            if (JcifsUtil.getSmbHostIpAddressByHostName(mSmb1, mHostName) == null) {
                 error_exit = true;
                 if (getFLCtrl.isEnabled()) {
                     getFLCtrl.setThreadResultError();

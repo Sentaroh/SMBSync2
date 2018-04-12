@@ -82,7 +82,6 @@ import android.widget.Toast;
 
 import com.sentaroh.android.Utilities.Base64Compat;
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
-import com.sentaroh.android.Utilities.Dialog.CommonFileSelector;
 import com.sentaroh.android.Utilities.EncryptUtil;
 import com.sentaroh.android.Utilities.EncryptUtil.CipherParms;
 import com.sentaroh.android.Utilities.NotifyEvent;
@@ -1183,7 +1182,7 @@ public class SyncTaskUtil {
                     }
                 } else {
                     boolean smb1=ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)? true:false;
-                    String ipAddress = JcifsUtil.getSmbHostIpAddressFromName(smb1, host);
+                    String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb1, host);
                     if (ipAddress == null) {
                         try {
                             InetAddress[] addr_list = Inet4Address.getAllByName(host);
@@ -3668,7 +3667,7 @@ public class SyncTaskUtil {
     }
 
     private String getSmbHostName(boolean smb1, String address) {
-        String srv_name = JcifsUtil.getSmbHostNameFromAddress(smb1, address);
+        String srv_name = JcifsUtil.getSmbHostNameByAddress(smb1, address);
         mUtil.addDebugMsg(1, "I", "getSmbHostName Address=" + address + ", name=" + srv_name);
         return srv_name;
     }

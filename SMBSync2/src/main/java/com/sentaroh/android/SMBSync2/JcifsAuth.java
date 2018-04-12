@@ -29,12 +29,11 @@ public class JcifsAuth {
         if (mSmb1) {
             mSmb1Auth = new jcifs.smb.NtlmPasswordAuthentication(domain, user, pass);
         } else {
-            jcifsng.context.BaseContext bc;
             try {
                 Properties prop = new Properties();
                 prop.setProperty("jcifs.smb.client.minVersion", "SMB210");
                 prop.setProperty("jcifs.smb.client.maxVersion", "SMB210");
-                bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
+                jcifsng.context.BaseContext bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
                 jcifsng.smb.NtlmPasswordAuthentication creds = new jcifsng.smb.NtlmPasswordAuthentication(bc, domain, user, pass);
                 mSmb2Auth = bc.withCredentials(creds);
             } catch (jcifsng.CIFSException e) {
@@ -58,7 +57,6 @@ public class JcifsAuth {
         mDomain = domain;
         mUserName = user;
         mUserPass = pass;
-        jcifsng.context.BaseContext bc;
         try {
             Properties prop = new Properties();
             if (ipc_signing_enforced)
@@ -67,7 +65,7 @@ public class JcifsAuth {
             prop.setProperty("jcifs.smb.client.minVersion", "SMB210");
             prop.setProperty("jcifs.smb.client.maxVersion", "SMB210");
 
-            bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
+            jcifsng.context.BaseContext bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
             jcifsng.smb.NtlmPasswordAuthentication creds = new jcifsng.smb.NtlmPasswordAuthentication(bc, domain, user, pass);
             mSmb2Auth = bc.withCredentials(creds);
         } catch (jcifsng.CIFSException e) {
@@ -92,7 +90,6 @@ public class JcifsAuth {
         mDomain = domain;
         mUserName = user;
         mUserPass = pass;
-        jcifsng.context.BaseContext bc;
         try {
             Properties prop = new Properties();
             if (ipc_signing_enforced)
@@ -101,7 +98,7 @@ public class JcifsAuth {
             prop.setProperty("jcifs.smb.client.minVersion", min_version);
             prop.setProperty("jcifs.smb.client.maxVersion", max_version);
 
-            bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
+            jcifsng.context.BaseContext bc = new jcifsng.context.BaseContext(new jcifsng.config.PropertyConfiguration(prop));
             jcifsng.smb.NtlmPasswordAuthentication creds = new jcifsng.smb.NtlmPasswordAuthentication(bc, domain, user, pass);
             mSmb2Auth = bc.withCredentials(creds);
         } catch (jcifsng.CIFSException e) {

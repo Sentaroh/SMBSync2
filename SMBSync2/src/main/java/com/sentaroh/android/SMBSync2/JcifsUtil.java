@@ -62,7 +62,7 @@ public class JcifsUtil {
         return result;
     }
 
-    final static public String getSmbHostIpAddressFromName(boolean smb1, String hn) {
+    final static public String getSmbHostIpAddressByHostName(boolean smb1, String hn) {
         if (smb1) {
             return getSmbHostIpAddressFromNameSmb1(hn);
         } else {
@@ -111,7 +111,7 @@ public class JcifsUtil {
         return reachable;
     }
 
-    final static public String getSmbHostNameFromAddress(boolean smb1, String address) {
+    final static public String getSmbHostNameByAddress(boolean smb1, String address) {
         if (smb1) {
             return getSmbHostNameFromAddressSmb1(address);
         } else {
@@ -162,7 +162,7 @@ public class JcifsUtil {
         return srv_name;
     }
 
-    final static public boolean isNbtAddressActive(boolean smb1, String address) {
+    final static public boolean isNetbiosAddress(boolean smb1, String address) {
         if (smb1) {
             return isNbtAddressActiveSmb1(address);
         } else {
