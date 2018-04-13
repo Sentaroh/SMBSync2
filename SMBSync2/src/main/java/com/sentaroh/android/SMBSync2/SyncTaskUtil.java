@@ -881,8 +881,7 @@ public class SyncTaskUtil {
                 mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_export_file), ntfy);
     }
 
-    public void exportSyncTaskListToFile(final String profile_dir,
-                                         final String profile_filename, final boolean encrypt_required) {
+    public void exportSyncTaskListToFile(final String profile_dir, final String profile_filename, final boolean encrypt_required) {
 
         File lf = new File(profile_dir + "/" + profile_filename);
         if (lf.exists()) {
@@ -983,7 +982,6 @@ public class SyncTaskUtil {
         }
 
         NotifyEvent ntfy = new NotifyEvent(mContext);
-        // set mCommonDlg.showCommonDialog response
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -1209,8 +1207,7 @@ public class SyncTaskUtil {
         th.start();
     }
 
-    private void testSmbAuth(final String host, String port, String share,
-                             RemoteAuthInfo ra, final NotifyEvent ntfy) {
+    private void testSmbAuth(final String host, String port, String share, RemoteAuthInfo ra, final NotifyEvent ntfy) {
         final UncaughtExceptionHandler defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
         Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
@@ -5419,8 +5416,6 @@ public class SyncTaskUtil {
         return result;
     }
 
-    ;
-
     static private void addImportSettingsParm(String pl, ArrayList<PreferenceParmListIItem> ispl) {
         String tmp_ps = pl;//pl.substring(7,pl.length());
         String[] tmp_pl = tmp_ps.split("\t");// {"type","name","active",options...};
@@ -5437,35 +5432,28 @@ public class SyncTaskUtil {
         }
     }
 
-    ;
-
-    public class FilterAdapterSort implements Comparator<String> {
-        @Override
-        public int compare(String s1, String s2) {
-            return s1.compareTo(s2);
-        }
-    }
-
     public static void saveSettingsParmsToFile(Context c, PrintWriter pw, boolean encrypt_required, final CipherParms cp) {
-        saveSettingsParmsToFileBoolean(c, pw, false, encrypt_required, cp, c.getString(R.string.settings_error_option));
-        saveSettingsParmsToFileBoolean(c, pw, false, encrypt_required, cp, c.getString(R.string.settings_wifi_lock));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_error_option));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_wifi_lock));
 
-        saveSettingsParmsToFileBoolean(c, pw, false, encrypt_required, cp, c.getString(R.string.settings_log_option));
-        saveSettingsParmsToFileBoolean(c, pw, false, encrypt_required, cp, c.getString(R.string.settings_put_logcat_option));
-        saveSettingsParmsToFileString(c, pw, "0", encrypt_required, cp, c.getString(R.string.settings_log_level));
-        saveSettingsParmsToFileString(c, pw, "", encrypt_required, cp, c.getString(R.string.settings_mgt_dir));
-        saveSettingsParmsToFileString(c, pw, "10", encrypt_required, cp, c.getString(R.string.settings_log_file_max_count));
-        saveSettingsParmsToFileString(c, pw, "0", encrypt_required, cp, c.getString(R.string.settings_playback_ringtone_when_sync_ended));
-        saveSettingsParmsToFileString(c, pw, "0", encrypt_required, cp, c.getString(R.string.settings_vibrate_when_sync_ended));
-        saveSettingsParmsToFileBoolean(c, pw, false, encrypt_required, cp, c.getString(R.string.settings_use_light_theme));
-        saveSettingsParmsToFileBoolean(c, pw, false, encrypt_required, cp, c.getString(R.string.settings_device_orientation_portrait));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_log_option));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_put_logcat_option));
+        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_log_level));
+        saveSettingsParmsToFileString(c, pw, "",        encrypt_required, cp, c.getString(R.string.settings_mgt_dir));
+        saveSettingsParmsToFileString(c, pw, "10",      encrypt_required, cp, c.getString(R.string.settings_log_file_max_count));
+        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_playback_ringtone_when_sync_ended));
+        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_vibrate_when_sync_ended));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_use_light_theme));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_device_orientation_portrait));
 
-        saveSettingsParmsToFileBoolean(c, pw, false, encrypt_required, cp, c.getString(R.string.settings_exported_profile_encryption));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_exported_profile_encryption));
 
-        saveSettingsParmsToFileString(c, pw, "0", encrypt_required, cp, c.getString(R.string.settings_smb_lm_compatibility));
-        saveSettingsParmsToFileBoolean(c, pw, false, encrypt_required, cp, c.getString(R.string.settings_smb_use_extended_security));
+        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_smb_lm_compatibility));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_smb_use_extended_security));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_smb_disable_plain_text_passwords));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_smb_client_reponse_timeout));
 
-        saveSettingsParmsToFileString(c, pw, "-1", encrypt_required, cp, SCHEDULER_SCHEDULE_SAVED_DATA_V3);
+        saveSettingsParmsToFileString(c, pw, "-1",      encrypt_required, cp, SCHEDULER_SCHEDULE_SAVED_DATA_V3);
     }
 
     private static void saveSettingsParmsToFileString(Context c, PrintWriter pw, String dflt,
@@ -5488,8 +5476,6 @@ public class SyncTaskUtil {
         }
     }
 
-    ;
-
     @SuppressWarnings("unused")
     static private void saveSettingsParmsToFileInt(Context c, PrintWriter pw, int dflt,
                                                    boolean encrypt_required, final CipherParms cp, String key) {
@@ -5511,8 +5497,6 @@ public class SyncTaskUtil {
         }
     }
 
-    ;
-
     static private void saveSettingsParmsToFileLong(Context c, PrintWriter pw, long dflt,
                                                     boolean encrypt_required, final CipherParms cp, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
@@ -5533,8 +5517,6 @@ public class SyncTaskUtil {
         }
     }
 
-    ;
-
     static private void saveSettingsParmsToFileBoolean(Context c, PrintWriter pw, boolean dflt,
                                                        boolean encrypt_required, final CipherParms cp, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
@@ -5554,8 +5536,6 @@ public class SyncTaskUtil {
             pw.println(CURRENT_SMBSYNC2_PROFILE_VERSION + k_str);
         }
     }
-
-    ;
 
     static private class PreferenceParmListIItem {
         public String parms_key = "";

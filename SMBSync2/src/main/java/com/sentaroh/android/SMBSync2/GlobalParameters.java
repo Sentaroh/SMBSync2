@@ -310,6 +310,7 @@ public class GlobalParameters extends CommonGlobalParms {
             pe.putString(appContext.getString(R.string.settings_smb_lm_compatibility), "3");
             pe.putBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true);
             pe.putString(appContext.getString(R.string.settings_smb_client_reponse_timeout), "30000");
+            pe.putBoolean(appContext.getString(R.string.settings_smb_disable_plain_text_passwords),false);
 
             pe.commit();
         }
@@ -374,12 +375,14 @@ public class GlobalParameters extends CommonGlobalParms {
     }
 
     public String settingsSmbLmCompatibility = "3", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout = "30000";
+    public String settingsSmbDisablePlainTextPasswords="false";
 
     final public void initJcifsOption() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
 
         settingsSmbLmCompatibility = prefs.getString(appContext.getString(R.string.settings_smb_lm_compatibility), "3");
         boolean ues = prefs.getBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true);
+        boolean dpp=prefs.getBoolean(appContext.getString(R.string.settings_smb_disable_plain_text_passwords),false);
         settingsSmbClientResponseTimeout = prefs.getString(appContext.getString(R.string.settings_smb_client_reponse_timeout), "30000");
 
         if (settingsSmbLmCompatibility.equals("3") || settingsSmbLmCompatibility.equals("4")) {
@@ -391,12 +394,16 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingsSmbUseExtendedSecurity = ues ? "true" : "false";
 
+        settingsSmbDisablePlainTextPasswords=dpp ? "true" : "false";
+
         System.setProperty("jcifs.netbios.retryTimeout", "3000");
 
         System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
         System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);
 
         System.setProperty("jcifs.smb.client.responseTimeout", settingsSmbClientResponseTimeout);
+
+        System.setProperty("jcifs.smb.client.disablePlainTextPasswords",settingsSmbDisablePlainTextPasswords);
     }
 
     private boolean isDebuggable() {

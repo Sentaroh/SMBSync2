@@ -340,6 +340,8 @@ public class ActivitySettings extends PreferenceActivity {
         boolean isChecked = false;
         if (key_string.equals(c.getString(R.string.settings_smb_use_extended_security))) {
             isChecked = true;
+        } else if (key_string.equals(c.getString(R.string.settings_smb_disable_plain_text_passwords))) {
+            isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_smb_lm_compatibility))) {
             String lmc=shared_pref.getString(c.getString(R.string.settings_smb_lm_compatibility),"3");
             if (lmc.equals("3") || lmc.equals("4")) {
@@ -573,6 +575,7 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_client_reponse_timeout));
 //            findPreference(getString(R.string.settings_smb_client_reponse_timeout).toString()).setEnabled(false);
 
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_disable_plain_text_passwords));
         }
 
         @Override

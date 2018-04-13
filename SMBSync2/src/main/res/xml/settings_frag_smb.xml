@@ -12,6 +12,12 @@
 			android:key="@string/settings_smb_use_extended_security"
 			android:title="@string/settings_smb_use_extended_security_title"
 			android:summary="@string/settings_smb_use_extended_security_summary_ena" />
+
+        <CheckBoxPreference
+            android:key="@string/settings_smb_disable_plain_text_passwords"
+            android:title="@string/settings_smb_disable_plain_text_passwords_title"
+            android:summary="@string/settings_smb_disable_plain_text_passwords_summary_ena" />
+
         <ListPreference
             android:key="settings_smb_client_reponse_timeout"
             android:title="@string/settings_smb_client_reponse_timeout_title"

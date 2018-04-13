@@ -3968,12 +3968,14 @@ public class ActivityMain extends AppCompatActivity {
         String  prevSmbLmCompatibility = mGp.settingsSmbLmCompatibility,
                 prevSmbUseExtendedSecurity = mGp.settingsSmbUseExtendedSecurity;
         String p_response_timeout=mGp.settingsSmbClientResponseTimeout;
+        String p_disable_plain_text_passwords=mGp.settingsSmbDisablePlainTextPasswords;
 
         mGp.initJcifsOption();
 
         if (!mGp.settingsSmbLmCompatibility.equals(prevSmbLmCompatibility)) changed = true;
         else if (!mGp.settingsSmbUseExtendedSecurity.equals(prevSmbUseExtendedSecurity)) changed = true;
         else if (!mGp.settingsSmbClientResponseTimeout.equals(p_response_timeout)) changed = true;
+        else if (!mGp.settingsSmbDisablePlainTextPasswords.equals(p_disable_plain_text_passwords)) changed = true;
 
         if (changed) {
             listSettingsOption();

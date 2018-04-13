@@ -121,7 +121,11 @@
     <string name="settings_smb_use_extended_security_summary_ena">Use extended security</string>
 	<string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
 
-	<string name="settings_smb_lm_compatibility_title">lmCompatibility</string>
+    <string name="settings_smb_disable_plain_text_passwords_title">Disable plain text passwords</string>
+    <string name="settings_smb_disable_plain_text_passwords_summary_ena">Use plain text passwords</string>
+    <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
+
+    <string name="settings_smb_lm_compatibility_title">lmCompatibility</string>
 	<string name="settings_smb_lm_compatibility_summary">lmCompatibility</string>
 	<string name="settings_smb_lm_compatibility_dialog_title">Select lmCompatibility value</string>
 	<string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>

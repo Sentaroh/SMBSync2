@@ -565,6 +565,7 @@ public class SyncThread extends Thread {
         mStwa.util.addDebugMsg(1, "I", "   SMB1 Option, LM Compatiibility=" + mGp.settingsSmbLmCompatibility +
                 ", Use extended security=" + mGp.settingsSmbUseExtendedSecurity +
                 ", Client reponse timeout=" + mGp.settingsSmbClientResponseTimeout +
+                ", Disable plain text passwords=" + mGp.settingsSmbDisablePlainTextPasswords +
                 "");
     }
 
