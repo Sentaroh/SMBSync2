@@ -4279,7 +4279,7 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
 //			Log.v("","i="+i+", "+parm[i]);
         }
@@ -4394,7 +4394,7 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
 //			Log.v("","i="+i+", "+parm[i]);
         }
@@ -4514,7 +4514,7 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
 //			Log.v("","i="+i+", "+parm[i]);
         }
@@ -4641,7 +4641,7 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
 //			Log.v("","i="+i+", "+parm[i]);
         }
@@ -4796,7 +4796,7 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
 //			Log.v("","i="+i+", "+parm[i]);
         }
@@ -4954,7 +4954,7 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
 //			Log.v("","i="+i+", "+parm[i]);
         }
