@@ -340,6 +340,21 @@ public class ActivitySettings extends PreferenceActivity {
         boolean isChecked = false;
         if (key_string.equals(c.getString(R.string.settings_smb_use_extended_security))) {
             isChecked = true;
+        } else if (key_string.equals("settings_smb_set_default_value")) {
+            if (shared_pref.getBoolean("settings_smb_set_default_value",false)) {
+                shared_pref.edit().putBoolean("settings_smb_set_default_value",false).commit();
+                shared_pref.edit().putBoolean(c.getString(R.string.settings_smb_use_extended_security),true).commit();
+                shared_pref.edit().putBoolean(c.getString(R.string.settings_smb_disable_plain_text_passwords),false).commit();
+                shared_pref.edit().putString(c.getString(R.string.settings_smb_lm_compatibility),"3").commit();
+                shared_pref.edit().putString(c.getString(R.string.settings_smb_client_reponse_timeout),"30000").commit();
+
+                mPrefFrag.findPreference("settings_smb_set_default_value").setEnabled(false);
+                mPrefFrag.findPreference(c.getString(R.string.settings_smb_use_extended_security).toString()).setEnabled(false);
+                mPrefFrag.findPreference(c.getString(R.string.settings_smb_disable_plain_text_passwords).toString()).setEnabled(false);
+                mPrefFrag.findPreference(c.getString(R.string.settings_smb_lm_compatibility).toString()).setEnabled(false);
+                mPrefFrag.findPreference(c.getString(R.string.settings_smb_client_reponse_timeout).toString()).setEnabled(false);
+            }
+            isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_smb_disable_plain_text_passwords))) {
             isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_smb_lm_compatibility))) {
@@ -576,6 +591,7 @@ public class ActivitySettings extends PreferenceActivity {
 //            findPreference(getString(R.string.settings_smb_client_reponse_timeout).toString()).setEnabled(false);
 
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_disable_plain_text_passwords));
+            checkSettingValue(mUtil, shared_pref, "settings_smb_set_default_value");
         }
 
         @Override
