@@ -4255,22 +4255,15 @@ public class SyncTaskUtil {
     private static void addSyncTaskListVer1(String pl, ArrayList<SyncTaskItem> sync) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
         String list1 = "", list2 = "", list3 = "", npl = "";
-        //Extract ArrayList<String> field
-//		Log.v("","pl="+pl);
         int ls = pl.indexOf("[");
         int le = pl.lastIndexOf("]\t");
         String list = pl.substring(ls, le + 2);
         npl = pl.replace(list, "");
-//		Log.v("","npl="+npl);
-//		Log.v("","list="+list+", length="+list.length());
 
         String[] list_array = list.split("]\t");
         list1 = list_array[0].substring(1);
         list2 = list_array[1].substring(1);
         list3 = list_array[2].substring(1);
-//		Log.v("","list1="+list1+", length="+list1.length());
-//		Log.v("","list2="+list2+", length="+list2.length());
-//		Log.v("","list3="+list3+", length="+list3.length());
 
         String[] tmp_pl = npl.split("\t");// {"type","name","active",options...};
         String[] parm = new String[100];
@@ -4279,9 +4272,8 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
-//			Log.v("","i="+i+", "+parm[i]);
         }
 
         if (parm[0].equals(SMBSYNC2_PROF_TYPE_SYNC)) {//Sync
@@ -4370,22 +4362,15 @@ public class SyncTaskUtil {
     private static void addSyncTaskListVer2(String pl, ArrayList<SyncTaskItem> sync) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
         String list1 = "", list2 = "", list3 = "", npl = "";
-        //Extract ArrayList<String> field
-//		Log.v("","pl="+pl);
         int ls = pl.indexOf("[");
         int le = pl.lastIndexOf("]\t");
         String list = pl.substring(ls, le + 2);
         npl = pl.replace(list, "");
-//		Log.v("","npl="+npl);
-//		Log.v("","list="+list+", length="+list.length());
 
         String[] list_array = list.split("]\t");
         list1 = list_array[0].substring(1);
         list2 = list_array[1].substring(1);
         list3 = list_array[2].substring(1);
-//		Log.v("","list1="+list1+", length="+list1.length());
-//		Log.v("","list2="+list2+", length="+list2.length());
-//		Log.v("","list3="+list3+", length="+list3.length());
 
         String[] tmp_pl = npl.split("\t");// {"type","name","active",options...};
         String[] parm = new String[100];
@@ -4394,9 +4379,8 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
-//			Log.v("","i="+i+", "+parm[i]);
         }
 
         if (parm[0].equals(SMBSYNC2_PROF_TYPE_SYNC)) {//Sync
@@ -4490,22 +4474,15 @@ public class SyncTaskUtil {
     private static void addSyncTaskListVer3(String pl, ArrayList<SyncTaskItem> sync) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
         String list1 = "", list2 = "", list3 = "", npl = "";
-        //Extract ArrayList<String> field
-//		Log.v("","pl="+pl);
         int ls = pl.indexOf("[");
         int le = pl.lastIndexOf("]\t");
         String list = pl.substring(ls, le + 2);
         npl = pl.replace(list, "");
-//		Log.v("","npl="+npl);
-//		Log.v("","list="+list+", length="+list.length());
 
         String[] list_array = list.split("]\t");
         list1 = list_array[0].substring(1);
         list2 = list_array[1].substring(1);
         list3 = list_array[2].substring(1);
-//		Log.v("","list1="+list1+", length="+list1.length());
-//		Log.v("","list2="+list2+", length="+list2.length());
-//		Log.v("","list3="+list3+", length="+list3.length());
 
         String[] tmp_pl = npl.split("\t");// {"type","name","active",options...};
         String[] parm = new String[100];
@@ -4514,9 +4491,8 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
-//			Log.v("","i="+i+", "+parm[i]);
         }
 
         if (parm[0].equals(SMBSYNC2_PROF_TYPE_SYNC)) {//Sync
@@ -4617,22 +4593,15 @@ public class SyncTaskUtil {
     private static void addSyncTaskListVer4(String pl, ArrayList<SyncTaskItem> sync) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
         String list1 = "", list2 = "", list3 = "", npl = "";
-        //Extract ArrayList<String> field
-//		Log.v("","pl="+pl);
         int ls = pl.indexOf("[");
         int le = pl.lastIndexOf("]\t");
         String list = pl.substring(ls, le + 2);
         npl = pl.replace(list, "");
-//		Log.v("","npl="+npl);
-//		Log.v("","list="+list+", length="+list.length());
 
         String[] list_array = list.split("]\t");
         list1 = list_array[0].substring(1);
         list2 = list_array[1].substring(1);
         list3 = list_array[2].substring(1);
-//		Log.v("","list1="+list1+", length="+list1.length());
-//		Log.v("","list2="+list2+", length="+list2.length());
-//		Log.v("","list3="+list3+", length="+list3.length());
 
         String[] tmp_pl = npl.split("\t");// {"type","name","active",options...};
         String[] parm = new String[100];
@@ -4641,9 +4610,8 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
-//			Log.v("","i="+i+", "+parm[i]);
         }
 
         if (parm[0].equals(SMBSYNC2_PROF_TYPE_SYNC)) {//Sync
@@ -4772,22 +4740,15 @@ public class SyncTaskUtil {
     private static void addSyncTaskListVer5(String pl, ArrayList<SyncTaskItem> sync) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
         String list1 = "", list2 = "", list3 = "", npl = "";
-        //Extract ArrayList<String> field
-//		Log.v("","pl="+pl);
         int ls = pl.indexOf("[");
         int le = pl.lastIndexOf("]\t");
         String list = pl.substring(ls, le + 2);
         npl = pl.replace(list, "");
-//		Log.v("","npl="+npl);
-//		Log.v("","list="+list+", length="+list.length());
 
         String[] list_array = list.split("]\t");
         list1 = list_array[0].substring(1);
         list2 = list_array[1].substring(1);
         list3 = list_array[2].substring(1);
-//		Log.v("","list1="+list1+", length="+list1.length());
-//		Log.v("","list2="+list2+", length="+list2.length());
-//		Log.v("","list3="+list3+", length="+list3.length());
 
         String[] tmp_pl = npl.split("\t");// {"type","name","active",options...};
         String[] parm = new String[100];
@@ -4796,9 +4757,8 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
-//			Log.v("","i="+i+", "+parm[i]);
         }
 
         if (parm[0].equals(SMBSYNC2_PROF_TYPE_SYNC)) {//Sync
@@ -4930,22 +4890,15 @@ public class SyncTaskUtil {
     private static void addSyncTaskListVer6(String pl, ArrayList<SyncTaskItem> sync) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
         String list1 = "", list2 = "", list3 = "", npl = "";
-        //Extract ArrayList<String> field
-//		Log.v("","pl="+pl);
         int ls = pl.indexOf("[");
         int le = pl.lastIndexOf("]\t");
         String list = pl.substring(ls, le + 2);
         npl = pl.replace(list, "");
-//		Log.v("","npl="+npl);
-//		Log.v("","list="+list+", length="+list.length());
 
         String[] list_array = list.split("]\t");
         list1 = list_array[0].substring(1);
         list2 = list_array[1].substring(1);
         list3 = list_array[2].substring(1);
-//		Log.v("","list1="+list1+", length="+list1.length());
-//		Log.v("","list2="+list2+", length="+list2.length());
-//		Log.v("","list3="+list3+", length="+list3.length());
 
         String[] tmp_pl = npl.split("\t");// {"type","name","active",options...};
         String[] parm = new String[100];
@@ -4954,9 +4907,8 @@ public class SyncTaskUtil {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
                 if (tmp_pl[i] == null) parm[i] = "";
-                else parm[i] = convertToSpecChar(tmp_pl[i].trim());
+                else parm[i] = convertToSpecChar(tmp_pl[i]);//.trim());
             }
-//			Log.v("","i="+i+", "+parm[i]);
         }
 
         if (parm[0].equals(SMBSYNC2_PROF_TYPE_SYNC)) {//Sync
@@ -5104,8 +5056,6 @@ public class SyncTaskUtil {
         }
     }
 
-    ;
-
     private static String convertToSpecChar(String in) {
         if (in == null || in.length() == 0) return "";
         boolean cont = true;
@@ -5124,8 +5074,6 @@ public class SyncTaskUtil {
         return out;
     }
 
-    ;
-
     private static String convertToCodeChar(String in) {
         if (in == null || in.length() == 0) return "";
         boolean cont = true;
@@ -5143,8 +5091,6 @@ public class SyncTaskUtil {
         return out;
     }
 
-    ;
-
     //	public static SyncTaskItem getProfile(String pfn, AdapterSyncTask pa) {
 //		return getProfile(pfn, pa.getArrayList());
 //	};
@@ -5160,8 +5106,6 @@ public class SyncTaskUtil {
                                            ArrayList<SyncTaskItem> pfl) {
         return saveSyncTaskListToFile(mGp, c, util, false, "", "", pfl, false);
     }
-
-    ;
 
     public static boolean saveSyncTaskListToFile(GlobalParameters mGp, Context c, SyncUtil util,
                                                  boolean sdcard, String fd, String fp,
@@ -5419,9 +5363,7 @@ public class SyncTaskUtil {
     static private void addImportSettingsParm(String pl, ArrayList<PreferenceParmListIItem> ispl) {
         String tmp_ps = pl;//pl.substring(7,pl.length());
         String[] tmp_pl = tmp_ps.split("\t");// {"type","name","active",options...};
-//		Log.v("","0="+tmp_pl[0]+", l="+tmp_pl.length+", 1="+tmp_pl[1]+", 2="+tmp_pl[2]);//+", 3="+tmp_pl[3]);
         if (tmp_pl[0] != null && tmp_pl.length >= 3 && tmp_pl[0].equals(SMBSYNC2_PROF_TYPE_SETTINGS)) {
-//			String[] val = new String[]{parm[2],parm[3],parm[4]};
             PreferenceParmListIItem ppli = new PreferenceParmListIItem();
             if (tmp_pl[1] != null) ppli.parms_key = tmp_pl[1];
             if (tmp_pl[2] != null) ppli.parms_type = tmp_pl[2];
