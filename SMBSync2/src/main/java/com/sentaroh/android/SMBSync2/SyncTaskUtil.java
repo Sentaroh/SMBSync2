@@ -5451,7 +5451,7 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_smb_lm_compatibility));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_smb_use_extended_security));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_smb_disable_plain_text_passwords));
-        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_smb_client_reponse_timeout));
+        saveSettingsParmsToFileString(c, pw, "30000",   encrypt_required, cp, c.getString(R.string.settings_smb_client_reponse_timeout));
 
         saveSettingsParmsToFileString(c, pw, "-1",      encrypt_required, cp, SCHEDULER_SCHEDULE_SAVED_DATA_V3);
     }

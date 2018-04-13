@@ -1,5 +1,7 @@
 package com.sentaroh.android.SMBSync2;
 
+import android.util.Log;
+
 import java.util.Properties;
 
 public class JcifsAuth {

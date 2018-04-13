@@ -388,21 +388,17 @@ public class GlobalParameters extends CommonGlobalParms {
         if (settingsSmbLmCompatibility.equals("3") || settingsSmbLmCompatibility.equals("4")) {
             if (!ues) {
                 ues = true;
-                prefs.edit().putBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true).commit();
+//                prefs.edit().putBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true).commit();
             }
         }
 
         settingsSmbUseExtendedSecurity = ues ? "true" : "false";
-
         settingsSmbDisablePlainTextPasswords=dpp ? "true" : "false";
 
         System.setProperty("jcifs.netbios.retryTimeout", "3000");
-
         System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
         System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);
-
         System.setProperty("jcifs.smb.client.responseTimeout", settingsSmbClientResponseTimeout);
-
         System.setProperty("jcifs.smb.client.disablePlainTextPasswords",settingsSmbDisablePlainTextPasswords);
     }
 

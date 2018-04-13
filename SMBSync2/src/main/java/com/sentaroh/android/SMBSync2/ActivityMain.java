@@ -3996,7 +3996,6 @@ public class ActivityMain extends AppCompatActivity {
             });
             commonDlg.showCommonDialog(true, "W",
                     mContext.getString(R.string.msgs_smbsync_main_settings_jcifs_changed_restart), "", ntfy);
-            mGp.settingExitClean = true;
         }
 
         return changed;
