@@ -7,6 +7,14 @@
     android:orientation="horizontal"
     tools:ignore="DisableBaselineAlignment" >
 
+    <ImageButton
+        android:id="@+id/schedule_list_edit_dlg_save"
+        android:layout_width="@dimen/context_button_width"
+        android:layout_height="@dimen/context_button_height"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_64_save" />
+
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"

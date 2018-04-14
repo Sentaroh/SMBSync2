@@ -29,13 +29,6 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <ImageButton
-                android:id="@+id/schedule_list_edit_dlg_save"
-                android:layout_width="43dp"
-                android:layout_height="42dp"
-                android:layout_gravity="center"
-                android:src="@android:drawable/ic_menu_save" />
-
-            <ImageButton
                 android:id="@+id/schedule_list_edit_dlg_close"
                 android:layout_width="43dp"
                 android:layout_height="42dp"

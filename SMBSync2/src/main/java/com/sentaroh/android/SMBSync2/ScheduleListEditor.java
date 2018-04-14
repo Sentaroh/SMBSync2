@@ -184,7 +184,7 @@ public class ScheduleListEditor {
         dlg_title.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
         final ImageButton btn_ok = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_save);
-        btn_ok.setBackgroundColor(Color.TRANSPARENT);//.DKGRAY);
+//        btn_ok.setBackgroundColor(Color.DKGRAY);
         final ImageButton btn_cancel = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_close);
         btn_cancel.setBackgroundColor(Color.TRANSPARENT);//.DKGRAY);
         final TextView tv_msg = (TextView) mDialog.findViewById(R.id.schedule_list_edit_dlg_msg);
