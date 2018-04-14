@@ -1,5 +1,28 @@
 package com.sentaroh.android.SMBSync2;
 
+/*
+The MIT License (MIT)
+Copyright (c) 2011-2018 Sentaroh
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -382,12 +405,12 @@ public class JcifsFile {
         try {
             if (mSmb1) {
                 if (d.getSmb1File() == null)
-                    throw new JcifsException(new Exception("Null SMB1 authentication"), 0, null);
-                mSmb1File.renameTo(d.getSmb1File());
+                    throw new JcifsException(new Exception("Null SMB1 file"), 0, null);
+                else mSmb1File.renameTo(d.getSmb1File());
             } else {
                 if (d.getSmb2File() == null)
-                    throw new JcifsException(new Exception("Null SMB2 authentication"), 0, null);
-                mSmb2File.renameTo(d.getSmb2File());
+                    throw new JcifsException(new Exception("Null SMB2 file"), 0, null);
+                else mSmb2File.renameTo(d.getSmb2File());
             }
         } catch (jcifsng.smb.SmbException e) {
             throw (new JcifsException(e, e.getNtStatus(), e.getCause()));
