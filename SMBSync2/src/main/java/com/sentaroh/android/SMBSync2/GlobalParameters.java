@@ -309,7 +309,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
             pe.putString(appContext.getString(R.string.settings_smb_lm_compatibility), "3");
             pe.putBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true);
-            pe.putString(appContext.getString(R.string.settings_smb_client_reponse_timeout), "30000");
+            pe.putString(appContext.getString(R.string.settings_smb_client_response_timeout), "30000");
             pe.putBoolean(appContext.getString(R.string.settings_smb_disable_plain_text_passwords),false);
 
             pe.commit();
@@ -383,7 +383,7 @@ public class GlobalParameters extends CommonGlobalParms {
         settingsSmbLmCompatibility = prefs.getString(appContext.getString(R.string.settings_smb_lm_compatibility), "3");
         boolean ues = prefs.getBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true);
         boolean dpp=prefs.getBoolean(appContext.getString(R.string.settings_smb_disable_plain_text_passwords),false);
-        settingsSmbClientResponseTimeout = prefs.getString(appContext.getString(R.string.settings_smb_client_reponse_timeout), "30000");
+        settingsSmbClientResponseTimeout = prefs.getString(appContext.getString(R.string.settings_smb_client_response_timeout), "30000");
 
         if (settingsSmbLmCompatibility.equals("3") || settingsSmbLmCompatibility.equals("4")) {
             if (!ues) {

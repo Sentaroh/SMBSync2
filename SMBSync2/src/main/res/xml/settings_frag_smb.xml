@@ -25,10 +25,10 @@
 
     <ListPreference
         android:key="settings_smb_client_reponse_timeout"
-        android:title="@string/settings_smb_client_reponse_timeout_title"
-        android:summary="@string/settings_smb_client_reponse_timeout_summary"
-        android:dialogTitle="@string/settings_smb_client_reponse_timeout_dialog_title"
-        android:entries="@array/settings_smb_client_reponse_timeout_list_entries"
-        android:entryValues="@array/settings_smb_client_reponse_timeout_list_values" />
+        android:title="@string/settings_smb_client_response_timeout_title"
+        android:summary="@string/settings_smb_client_response_timeout_summary"
+        android:dialogTitle="@string/settings_smb_client_response_timeout_dialog_title"
+        android:entries="@array/settings_smb_client_response_timeout_list_entries"
+        android:entryValues="@array/settings_smb_client_response_timeout_list_values" />
 
 </PreferenceScreen>

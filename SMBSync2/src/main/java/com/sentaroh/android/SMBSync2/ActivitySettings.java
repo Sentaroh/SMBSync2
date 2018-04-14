@@ -36,12 +36,10 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.text.InputType;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -346,13 +344,13 @@ public class ActivitySettings extends PreferenceActivity {
                 shared_pref.edit().putBoolean(c.getString(R.string.settings_smb_use_extended_security),true).commit();
                 shared_pref.edit().putBoolean(c.getString(R.string.settings_smb_disable_plain_text_passwords),false).commit();
                 shared_pref.edit().putString(c.getString(R.string.settings_smb_lm_compatibility),"3").commit();
-                shared_pref.edit().putString(c.getString(R.string.settings_smb_client_reponse_timeout),"30000").commit();
+                shared_pref.edit().putString(c.getString(R.string.settings_smb_client_response_timeout),"30000").commit();
 
                 mPrefFrag.findPreference("settings_smb_set_default_value").setEnabled(false);
                 mPrefFrag.findPreference(c.getString(R.string.settings_smb_use_extended_security).toString()).setEnabled(false);
                 mPrefFrag.findPreference(c.getString(R.string.settings_smb_disable_plain_text_passwords).toString()).setEnabled(false);
                 mPrefFrag.findPreference(c.getString(R.string.settings_smb_lm_compatibility).toString()).setEnabled(false);
-                mPrefFrag.findPreference(c.getString(R.string.settings_smb_client_reponse_timeout).toString()).setEnabled(false);
+                mPrefFrag.findPreference(c.getString(R.string.settings_smb_client_response_timeout).toString()).setEnabled(false);
             }
             isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_smb_disable_plain_text_passwords))) {
@@ -366,7 +364,7 @@ public class ActivitySettings extends PreferenceActivity {
             }
             pref_key.setSummary(lmc);
             isChecked = true;
-        } else if (key_string.equals(c.getString(R.string.settings_smb_client_reponse_timeout))) {
+        } else if (key_string.equals(c.getString(R.string.settings_smb_client_response_timeout))) {
             pref_key.setSummary(shared_pref.getString(key_string, "30000")+" Millis");
             isChecked = true;
         }
@@ -587,7 +585,7 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_lm_compatibility));
 //            findPreference(getString(R.string.settings_smb_lm_compatibility).toString()).setEnabled(false);
 
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_client_reponse_timeout));
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_client_response_timeout));
 //            findPreference(getString(R.string.settings_smb_client_reponse_timeout).toString()).setEnabled(false);
 
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_disable_plain_text_passwords));
