@@ -28,7 +28,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 import java.util.ArrayList;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
-import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThemeUtil;
 
@@ -182,6 +181,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             holder.tv_mtype_copy = mContext.getString(R.string.msgs_main_sync_list_array_mtype_copy);
             holder.tv_mtype_move = mContext.getString(R.string.msgs_main_sync_list_array_mtype_move);
             holder.tv_mtype_sync = mContext.getString(R.string.msgs_main_sync_list_array_mtype_sync);
+            holder.tv_mtype_archive = mContext.getString(R.string.msgs_main_sync_list_array_mtype_archive);
 
             holder.ll_sync = (LinearLayout) v.findViewById(R.id.profile_list_sync_layout);
             holder.ll_entry = (LinearLayout) v.findViewById(R.id.profile_list_entry_layout);
@@ -236,6 +236,8 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 synctp = holder.tv_mtype_copy;
             else if (o.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC))
                 synctp = holder.tv_mtype_sync;
+            else if (o.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE))
+                synctp = holder.tv_mtype_archive;
             else synctp = "ERR";
 
             holder.tv_row_synctype.setText(synctp);
@@ -390,7 +392,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         TextView tv_row_synctype, tv_row_master, tv_row_target;
         ImageView iv_row_sync_dir_image;
         ImageView iv_row_image_master, iv_row_image_target;
-        String tv_mtype_mirror, tv_mtype_move, tv_mtype_copy, tv_mtype_sync;
+        String tv_mtype_mirror, tv_mtype_move, tv_mtype_copy, tv_mtype_sync, tv_mtype_archive;
 
         TextView tv_dir_name, tv_dir_const;
 

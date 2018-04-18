@@ -90,23 +90,17 @@ public class ShortcutAutoSync extends FragmentActivity {
 
     }
 
-    ;
-
     @Override
     public void onStart() {
         super.onStart();
         util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
     }
 
-    ;
-
     @Override
     public void onRestart() {
-        super.onStart();
+        super.onRestart();
         util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
     }
-
-    ;
 
     final public void onResume() {
         super.onResume();

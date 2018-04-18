@@ -27,9 +27,11 @@ import static com.sentaroh.android.SMBSync2.Constants.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -42,9 +44,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,13 +74,16 @@ import android.os.storage.StorageManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.mp4.Mp4Directory;
 import com.sentaroh.android.Utilities.MiscUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
-import com.sentaroh.android.Utilities.SafFileManager.SafFileItem;
-import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.ZipFileListItem;
 
@@ -207,8 +215,8 @@ public class SyncThread extends Thread {
     ;
 
     private void listSafMgrList() {
-        ArrayList<SafFileItem> sfl = mGp.safMgr.getSafList();
-        for (SafFileItem item : sfl) {
+        ArrayList<SafFileManager.SafFileItem> sfl = mGp.safMgr.getSafList();
+        for (SafFileManager.SafFileItem item : sfl) {
             String saf_name = null;
             if (item.storageRootFile != null) saf_name = item.storageRootFile.getName();
             mStwa.util.addDebugMsg(1, "I", "SafFile list uuid=" + item.storageUuid +
@@ -794,8 +802,6 @@ public class SyncThread extends Thread {
         return sync_result;
     }
 
-    ;
-
     private boolean isIpaddressConnectable(String addr, int port) {
         int cnt = 7;
         boolean result = false;
@@ -806,8 +812,6 @@ public class SyncThread extends Thread {
         }
         return result;
     }
-
-    ;
 
     final public boolean isIpAddressAndPortConnected(String address, int port, int timeout) {
         boolean reachable = false;
@@ -838,8 +842,6 @@ public class SyncThread extends Thread {
         }
         return reachable;
     }
-
-    ;
 
     private String resolveHostName(boolean smb1, String hn) {
         String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb1, hn);
@@ -896,8 +898,8 @@ public class SyncThread extends Thread {
                         if (mGp.safMgr.getSdcardSafFile() != null)
                             end_msg += "\n" + "getSdcardSafFile name=" + mGp.safMgr.getSdcardSafFile().getName();
 
-                        ArrayList<SafFileItem> sfl = mGp.safMgr.getSafList();
-                        for (SafFileItem item : sfl) {
+                        ArrayList<SafFileManager.SafFileItem> sfl = mGp.safMgr.getSafList();
+                        for (SafFileManager.SafFileItem item : sfl) {
                             end_msg += "\n" + "SafFile list uuid=" + item.storageUuid +
                                     ", root=" + item.storageRootDirectory +
                                     ", mounted=" + item.storageIsMounted +
@@ -946,8 +948,6 @@ public class SyncThread extends Thread {
         });
     }
 
-    ;
-
     private int performSync(SyncTaskItem sti) {
         int sync_result = 0;
         long time_millis = System.currentTimeMillis();
@@ -967,6 +967,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMoveInternalToInternal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                 sync_result = SyncThreadSyncFile.syncMirrorInternalToInternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveInternalToInternal(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
@@ -983,6 +985,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncZip.syncMoveInternalToInternalZip(mStwa, sti, from, replaceKeywordValue(sti.getTargetZipOutputFileName(), time_millis));
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                 sync_result = SyncThreadSyncZip.syncMirrorInternalToInternalZip(mStwa, sti, from, replaceKeywordValue(sti.getTargetZipOutputFileName(), time_millis));
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                showMsg(mStwa, false, sti.getSyncTaskName(), "W", "", "","The request was ignored because Zip can not be used as a target for the archive.");
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
@@ -999,6 +1003,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMoveInternalToExternal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                 sync_result = SyncThreadSyncFile.syncMirrorInternalToExternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveInternalToExternal(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
@@ -1017,6 +1023,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMoveInternalToSmb(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                 sync_result = SyncThreadSyncFile.syncMirrorInternalToSmb(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveInternalToSmb(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
@@ -1034,6 +1042,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMoveExternalToInternal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                 sync_result = SyncThreadSyncFile.syncMirrorExternalToInternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveExternalToInternal(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
@@ -1051,6 +1061,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMoveExternalToExternal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                 sync_result = SyncThreadSyncFile.syncMirrorExternalToExternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveExternalToExternal(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
@@ -1070,6 +1082,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMoveExternalToSmb(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                 sync_result = SyncThreadSyncFile.syncMirrorExternalToSmb(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveExternalToSmb(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
@@ -1089,6 +1103,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMoveSmbToInternal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                 sync_result = SyncThreadSyncFile.syncMirrorSmbToInternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveSmbToInternal(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
@@ -1108,6 +1124,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMoveSmbToExternal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                 sync_result = SyncThreadSyncFile.syncMirrorSmbToExternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveSmbToExternal(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
@@ -1128,6 +1146,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMoveSmbToSmb(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                 sync_result = SyncThreadSyncFile.syncMirrorSmbToSmb(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveSmbToSmb(mStwa, sti, from, to);
             }
         }
         return sync_result;
@@ -1877,11 +1897,8 @@ public class SyncThread extends Thread {
         return diff;
     }
 
-    ;
-
     static final public boolean isFileChangedForLocalToRemote(SyncThreadWorkArea stwa, SyncTaskItem sti,
-                                                              String fp, File lf, JcifsFile hf, boolean ac)
-            throws JcifsException {
+                                                              String fp, File lf, JcifsFile hf, boolean ac) throws JcifsException {
         boolean diff = false;
         long hf_time = 0, hf_length = 0;
         boolean hf_exists = hf.exists();
@@ -1900,8 +1917,6 @@ public class SyncThread extends Thread {
         }
         long time_diff = Math.abs((hf_time - lf_time));
         long length_diff = Math.abs((hf_length - lf_length));
-//		long time_diff_tz1=Math.abs(hf_time-lf_time);
-//		long diff_tz_2=Math.abs(hf_time-(lf_time-(timeZone*2)));
 
         if (hf_exists != lf_exists) exists_diff = true;
         if (exists_diff || (sti.isSyncDifferentFileBySize() && length_diff > 0) || ac) {
@@ -1930,9 +1945,6 @@ public class SyncThread extends Thread {
         return diff;
     }
 
-    ;
-
-
     static public boolean isHiddenDirectory(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
         boolean result = false;
         if (sti.isSyncHiddenDirectory()) result = false;
@@ -1943,8 +1955,6 @@ public class SyncThread extends Thread {
             stwa.util.addDebugMsg(2, "I", "isHiddenDirectory(Local) result=" + result + ", Name=" + lf.getName());
         return result;
     }
-
-    ;
 
     static public boolean isHiddenDirectory(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile hf) throws JcifsException {
         boolean result = false;
@@ -1959,8 +1969,6 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    ;
-
     static public boolean isHiddenFile(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
         boolean result = false;
         if (sti.isSyncHiddenFile()) result = false;
@@ -1973,29 +1981,22 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    ;
-
     static public boolean isHiddenFile(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile hf) throws JcifsException {
         boolean result = false;
         if (sti.isSyncHiddenFile()) result = false;
         else {
             if (hf.isHidden()) result = true;
         }
-//		if (!sti.isSyncHiddenFile() && hf.isHidden()) result=true;
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "isHiddenFile(Remote) result=" + result + ", Name=" + hf.getName().replace("/", ""));
         return result;
     }
-
-    ;
-
 
     static final public boolean isFileSelected(SyncThreadWorkArea stwa, SyncTaskItem sti, String url) {
         boolean filtered = false;
         Matcher mt;
 
         if (!sti.isSyncProcessRootDirFile()) {//「root直下のファイルは処理するオプションが無効
-//			Log.v("","url="+url);
             String tmp_d = "", tmp_url = url;
             if (url.startsWith("/")) tmp_url = url.substring(1);
 
@@ -2003,29 +2004,22 @@ public class SyncThread extends Thread {
                 if (tmp_url.substring(tmp_url.length()).equals("/"))
                     tmp_d = tmp_url.substring(0, tmp_url.length() - 1);
                 else tmp_d = tmp_url;
-//				if (tmp_url.endsWith("/")) tmp_d=tmp_url.substring(0, tmp_url.length()-1);
             } else {
                 if (tmp_url.substring(tmp_url.length()).equals("/"))
                     tmp_d = tmp_url.replace(sti.getMasterDirectoryName() + "/", "");
                 else tmp_d = tmp_url.replace(sti.getMasterDirectoryName(), "");
-//				if (tmp_url.endsWith("/")) tmp_d=tmp_url.replace(sti.getMasterDirectoryName()+"/","");
             }
 
-//			Log.v("","tmp_d="+tmp_d+", tmp_url="+tmp_url+", url="+url);
             if (tmp_d.indexOf("/") < 0) {
                 //root直下なので処理しない
                 if (stwa.gp.settingDebugLevel >= 2)
                     stwa.util.addDebugMsg(2, "I", "isFileSelected not filtered, " +
                             "because Master Dir not processed was effective");
-//				String npe=null;
-//				npe.length();
                 return false;
             }
         }
-        ;
 
         String temp_fid = url.substring(url.lastIndexOf("/") + 1, url.length());
-//		Log.v("","t="+temp_fid+", url="+url+", pattern="+fileFilterInclude);
         if (stwa.fileFilterInclude == null) {
             // nothing filter
             filtered = true;
@@ -2048,8 +2042,6 @@ public class SyncThread extends Thread {
         return filtered;
     }
 
-    ;
-
     static final public boolean isDirectorySelectedByFileName(SyncThreadWorkArea stwa, String f_dir_name) {
 
         String n_fp = "";
@@ -2060,15 +2052,9 @@ public class SyncThread extends Thread {
         else n_fp = t_dir;
 
         if (n_fp.lastIndexOf("/") > 0) n_dir = n_fp.substring(0, n_fp.lastIndexOf("/"));
-//		Log.v("","by file f_dir="+f_dir_name+", n_dir="+n_dir+", t_dir="+t_dir);
         boolean result = isDirectorySelectedByDirectoryName(stwa, n_dir);
-//		if (!result) {
-//			Thread.dumpStack();
-//		}
         return result;
     }
-
-    ;
 
     static final private boolean isDirectorySelectedByDirectoryName(SyncThreadWorkArea stwa, String f_dir) {
         boolean filtered = false;
@@ -2080,7 +2066,6 @@ public class SyncThread extends Thread {
         if (!t_dir.endsWith("/")) n_dir = t_dir + "/";
         else n_dir = t_dir;
 
-//		Log.v("","by dir f_dir="+f_dir+", n_dir="+n_dir+", t_dir="+t_dir);
         if (n_dir.equals("/")) {
             //not filtered
             filtered = true;
@@ -2102,7 +2087,6 @@ public class SyncThread extends Thread {
                         for (int j = 0; j < inc.length; j++) {
                             filter += inc[j].toString() + "/";
                         }
-//                        Log.v("","inc length="+inc.length+", include pattern="+filter);
                         filtered = true;
                         break;
                     }
@@ -2125,7 +2109,6 @@ public class SyncThread extends Thread {
                             for (int j = 0; j < exc.length; j++) {
                                 filter += exc[j].toString() + "/";
                             }
-//                            Log.v("","inc length="+inc.length+", exc length="+exc.length+", filter="+filter);
                             if (inc.length > exc.length) {
                                 //Selected this entry
                             } else {
@@ -2144,28 +2127,6 @@ public class SyncThread extends Thread {
         }
         return filtered;
     }
-
-    ;
-
-//	static final public boolean isDirectoryExcluded(SyncThreadWorkArea stwa, String fp) {
-//		boolean result=false;
-//
-//		Matcher mt;
-//
-//		if (stwa.dirExcludeFilterPatternList.size()==0) {
-//			//nop
-//		} else {
-//		    for(int i=0;i<stwa.dirExcludeFilterPatternList.size();i++) {
-//                mt = stwa.dirExcludeFilterPatternList.get(i).matcher(fp);
-//                if (mt.find()) {
-//                    result=true;
-//                }
-//            }
-//		}
-//		if (stwa.gp.settingDebugLevel>=2) stwa.util.addDebugMsg(2,"I","isDirectoryExcluded result:"+result);
-//
-//		return result;
-//	}
 
     static final public boolean isDirectoryToBeProcessed(SyncThreadWorkArea stwa, String abs_dir) {
         boolean inc = false, exc = false, result = false;
@@ -2187,7 +2148,6 @@ public class SyncThread extends Thread {
                     Pattern[] pattern_array = stwa.dirIncludeFilterArrayList.get(i);
                     boolean found = true;
                     for (int j = 0; j < Math.min(dir_array.length, pattern_array.length); j++) {
-//						Log.v("","no="+i+", pat="+pattern_array[j]+", dir="+dir_array[j]);
                         Matcher mt = pattern_array[j].matcher(dir_array[j]);
                         if (dir_array[j].length() != 0) {
                             found = mt.find();
@@ -2206,14 +2166,10 @@ public class SyncThread extends Thread {
             if (stwa.dirExcludeFilterPatternList.size() == 0) exc = false;
             else {
                 exc = false;
-//                Log.v("","exc size="+stwa.dirExcludeFilterPatternList.size());
                 for (int i = 0; i < stwa.dirExcludeFilterPatternList.size(); i++) {
                     Pattern filter_pattern = stwa.dirExcludeFilterPatternList.get(i);
                     Matcher mt = filter_pattern.matcher(filter_dir);
                     if (mt.find()) {
-//                        Log.v("","i="+i+", pattern="+filter_pattern.toString()+", dir="+filter_dir);
-//					    Log.v("","i="+i+", array="+stwa.dirExcludeFilterArrayList.get(i)[0]);
-//                        Log.v("","inc len="+matched_inc_array.length+", exc len="+stwa.dirExcludeFilterArrayList.get(i).toString());
                         if (stwa.currentSTI.isSyncUseExtendedDirectoryFilter1()) {
                             if (matched_inc_array != null) {
                                 if (matched_inc_array.length > stwa.dirExcludeFilterArrayList.get(i).length) {
@@ -2246,8 +2202,6 @@ public class SyncThread extends Thread {
                     " include=" + inc + ", exclude=" + exc + ", result=" + result + ", dir=" + abs_dir);
         return result;
     }
-
-    ;
 
     private void addPresetFileFilter(ArrayList<String> ff, String[] preset_ff) {
         for (String add_str : preset_ff) {
@@ -2328,13 +2282,10 @@ public class SyncThread extends Thread {
         }
 
         mStwa.fileFilterInclude = mStwa.fileFilterExclude = null;
-//		mStwa.dirFilterInclude = mStwa.dirFilterExclude = null;
         if (ffinc.length() != 0)
             mStwa.fileFilterInclude = Pattern.compile("(" + ffinc + ")", flags);
         if (ffexc.length() != 0)
             mStwa.fileFilterExclude = Pattern.compile("(" + ffexc + ")", flags);
-//		if (dfinc.length() != 0) mStwa.dirFilterInclude = Pattern.compile("(" + dfinc + ")", flags);
-//		if (dfexc.length() != 0) mStwa.dirFilterExclude = Pattern.compile("(" + dfexc + ")", flags);
 
         if (mStwa.gp.settingDebugLevel >= 1)
             mStwa.util.addDebugMsg(1, "I", "compileFilter" + " File include=" + ffinc + ", exclude=" + ffexc);
@@ -2343,7 +2294,6 @@ public class SyncThread extends Thread {
 
     final private void createDirFilterArrayList(String prefix, String filter) {
         int flags = Pattern.CASE_INSENSITIVE | Pattern.MULTILINE;
-//		String[] filter_array=filter.split("/");
         String[] filter_array = null;
         if (filter.startsWith("/")) filter_array = filter.replaceFirst("/", "").split("/");
         else filter_array = filter.split("/");
@@ -2368,8 +2318,6 @@ public class SyncThread extends Thread {
         }
     }
 
-    ;
-
     private void waitMediaScannerConnected() {
         int cnt = 100;
         while (!mStwa.mediaScanner.isConnected() && cnt > 0) {
@@ -2377,8 +2325,6 @@ public class SyncThread extends Thread {
             cnt--;
         }
     }
-
-    ;
 
     private void prepareMediaScanner() {
         mStwa.mediaScanner = new MediaScannerConnection(mGp.appContext, new MediaScannerConnectionClient() {
@@ -2394,7 +2340,6 @@ public class SyncThread extends Thread {
             public void onScanCompleted(final String fp, final Uri uri) {
                 if (mGp.settingDebugLevel >= 2)
                     mStwa.util.addDebugMsg(2, "I", "MediaScanner scan completed. fn=", fp, ", Uri=" + uri);
-//				checkMediaScannerReult(fp,uri);
             }
 
             ;
@@ -2403,23 +2348,12 @@ public class SyncThread extends Thread {
 
     }
 
-    ;
-
     @SuppressLint("DefaultLocale")
     static final public void scanMediaFile(SyncThreadWorkArea stwa, String fp) {
-//		defaultSettingScanExternalStorage
         if (!stwa.mediaScanner.isConnected()) {
             stwa.util.addLogMsg("W", fp, "Media scanner not not invoked, because mdeia scanner was not connected.");
             return;
         }
-//		String fid=(fp.lastIndexOf(".")>=0)?fp.substring(fp.lastIndexOf(".")+1):"";
-//		if (!fid.equals("")) {
-//			String mt=MimeTypeMap.getSingleton().getMimeTypeFromExtension(fid.toLowerCase());
-//			if (stwa.gp.settingDebugLevel>=2)
-//				stwa.util.addDebugMsg(2,"I","scanMediaFile ext="+fid+", mime type="+mt);
-//			if (mt!=null && (mt.startsWith("audio") || mt.startsWith("image") || mt.startsWith("video") ))
-//				stwa.mediaScanner.scanFile(fp, null);
-//		}
         stwa.mediaScanner.scanFile(fp, null);
     }
 
@@ -2453,7 +2387,6 @@ public class SyncThread extends Thread {
             };
             th.start();
             mStwa.syncHistoryWriter = null;
-//			Log.v("","close exit");
         }
     }
 

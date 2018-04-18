@@ -31,7 +31,9 @@ import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -86,7 +88,6 @@ import com.sentaroh.android.Utilities.Dialog.ProgressBarDialogFragment;
 import com.sentaroh.android.Utilities.LocalMountPoint;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
-import com.sentaroh.android.Utilities.SafFileManager.SafFileItem;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.Widget.CustomTabContentView;
@@ -435,12 +436,13 @@ public class ActivityMain extends AppCompatActivity {
         final Button btn_copy=(Button)dialog.findViewById(R.id.common_dialog_btn_ok);
         final Button btn_close=(Button)dialog.findViewById(R.id.common_dialog_btn_cancel);
 
-        tv_title.setText(mContext.getString(R.string.msgs_info_storage_title));
+        tv_title.setText(mContext.getString(R.string.msgs_menu_list_storage_info));
         btn_close.setText(mContext.getString(R.string.msgs_common_dialog_close));
         btn_copy.setText(mContext.getString(R.string.msgs_info_storage_copy_clipboard));
 
         String si="";
-        si+="Storage information begin, API=" + Build.VERSION.SDK_INT+"\n";
+        si+="System information begin" +" Application="+ getApplVersionName() +
+                ", API=" + Build.VERSION.SDK_INT+"\n";
 
         si+=listsMountPoint();
 
@@ -459,10 +461,37 @@ public class ActivityMain extends AppCompatActivity {
         si+=getRemovableStoragePaths(mContext, true);
         si+="Storage information end"+"\n";
 
-        mUtil.addLogMsg("I",si);
+        if (Build.VERSION.SDK_INT >= 23) {
+            String packageName = mContext.getPackageName();
+            PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+            if (pm.isIgnoringBatteryOptimizations(packageName)) si+="Battery optimization=true"+"\n";
+            else si+="Battery optimization=false"+"\n";
+        } else si+="Battery optimization=false"+"\n";
+
+        try {
+            ContentResolver contentResolver = mGp.appContext.getContentResolver();
+            int policy = Settings.System.getInt(contentResolver, Settings.Global.WIFI_SLEEP_POLICY);
+            switch (policy) {
+                case Settings.Global.WIFI_SLEEP_POLICY_DEFAULT:
+                    // スリープ中のWiFi接続を維持しない
+                    si+="WIFI_SLEEP_POLICY_DEFAULT"+"\n";
+                    break;
+                case Settings.Global.WIFI_SLEEP_POLICY_NEVER_WHILE_PLUGGED:
+                    // スリープ中のWiFi接続を電源接続時にのみ維持する
+                    si+="WIFI_SLEEP_POLICY_NEVER_WHILE_PLUGGED"+"\n";
+                    break;
+                case Settings.Global.WIFI_SLEEP_POLICY_NEVER:
+                    // スリープ中のWiFi接続を常に維持する
+                    si+="WIFI_SLEEP_POLICY_NEVER"+"\n";
+                    break;
+            }
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+
+//        mUtil.addLogMsg("I",si);
 
         tv_msg.setText(si);
-        final String si_copy=si;
 
         CommonDialog.setDlgBoxSizeLimit(dialog,true);
 
@@ -470,7 +499,8 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 android.content.ClipboardManager cm=(android.content.ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                cm.setText(si_copy);
+                ClipData cd=cm.getPrimaryClip();
+                cm.setPrimaryClip(ClipData.newPlainText("SMBSync2 storage info", tv_msg.getText().toString()));
                 Toast.makeText(mContext,
                         mContext.getString(R.string.msgs_info_storage_copy_completed), Toast.LENGTH_LONG).show();
             }
@@ -495,8 +525,8 @@ public class ActivityMain extends AppCompatActivity {
 
     private String listSafMgrList() {
         String mpi="";
-        ArrayList<SafFileItem> sfl = mGp.safMgr.getSafList();
-        for (SafFileItem item : sfl) {
+        ArrayList<SafFileManager.SafFileItem> sfl = mGp.safMgr.getSafList();
+        for (SafFileManager.SafFileItem item : sfl) {
             String saf_name = null;
             if (item.storageRootFile != null) saf_name = item.storageRootFile.getName();
             mpi+="SafFile list uuid=" + item.storageUuid +
@@ -1067,28 +1097,25 @@ public class ActivityMain extends AppCompatActivity {
         ;
     }
 
-    ;
-
     private class MainPageChangeListener implements ViewPager.OnPageChangeListener {
         @Override
         public void onPageSelected(int position) {
-//	    	mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
+	    	mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
             mMainTabWidget.setCurrentTab(position);
             mMainTabHost.setCurrentTab(position);
+            if (isUiEnabled()) setUiEnabled();
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
-//	    	mUtil.addDebugMsg(2,"I","onPageScrollStateChanged entered, state="+state);
+	    	mUtil.addDebugMsg(2,"I","onPageScrollStateChanged entered, state="+state);
         }
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//	    	mUtil.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
+	    	mUtil.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
         }
     }
-
-    ;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -1097,8 +1124,6 @@ public class ActivityMain extends AppCompatActivity {
         inflater.inflate(R.menu.menu_top, menu);
         return true;//super.onCreateOptionsMenu(menu);
     }
-
-    ;
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -1174,8 +1199,6 @@ public class ActivityMain extends AppCompatActivity {
         menu.findItem(R.id.menu_top_add_shortcut).setVisible(false);
         return super.onPrepareOptionsMenu(menu);
     }
-
-    ;
 
     private boolean mScheduleEditorAvailable = true;
 
@@ -1253,7 +1276,6 @@ public class ActivityMain extends AppCompatActivity {
                 listStorageInfo();
                 return true;
             case R.id.menu_top_select_storage:
-                listStorageInfo();
                 Intent intent2 = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
                 startActivityForResult(intent2, (ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS + 1));
                 return true;
@@ -1262,8 +1284,6 @@ public class ActivityMain extends AppCompatActivity {
         }
         return false;
     }
-
-    ;
 
     private void addShortcut() {
 
@@ -1311,8 +1331,6 @@ public class ActivityMain extends AppCompatActivity {
 //        }
     }
 
-    ;
-
     private void houseKeepThreadOpenDialog() {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
         setUiDisabled();
@@ -1351,8 +1369,6 @@ public class ActivityMain extends AppCompatActivity {
         LogUtil.flushLog(mContext, mGp);
     }
 
-    ;
-
 //	private void housekeepThreadSendMsg(final String msg) {
 //		mUiHandler.post(new Runnable(){
 //			@Override
@@ -1378,8 +1394,6 @@ public class ActivityMain extends AppCompatActivity {
 
         setUiEnabled();
     }
-
-    ;
 
     private int mResultLogDeleteCount = 0;
 
@@ -1448,8 +1462,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     private boolean deleteResultLogFile(String fp) {
         boolean result = false;
         File lf = new File(fp);
@@ -1493,8 +1505,6 @@ public class ActivityMain extends AppCompatActivity {
         return result;
     }
 
-    ;
-
     private void houseKeepLocalFileLastModList() {
         ArrayList<FileLastModifiedTimeEntry> mCurrLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
         ArrayList<FileLastModifiedTimeEntry> mNewLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
@@ -1535,8 +1545,6 @@ public class ActivityMain extends AppCompatActivity {
                 FileLastModifiedTime.saveLastModifiedList(mGp.settingMgtFileDir, mCurrLastModifiedList, mNewLastModifiedList);
         }
     }
-
-    ;
 
     private ThreadCtrl mTcHousekeep = null;
 

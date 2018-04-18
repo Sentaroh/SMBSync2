@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import com.sentaroh.android.Utilities.CommonGlobalParms;
-import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 
@@ -110,7 +109,7 @@ public class GlobalParameters extends CommonGlobalParms {
 //	public ArrayList<ScheduleItem> scheduleInfoList =new ArrayList<ScheduleItem>();
 
     //	Settings parameter
-    public boolean settingExitClean = false;
+    public boolean settingExitClean = true;
     public int settingDebugLevel = 0;
     public boolean settingUseLightTheme = false;
     public int settingLogMaxFileCount = 10;
@@ -218,6 +217,7 @@ public class GlobalParameters extends CommonGlobalParms {
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate() {
+        super.onCreate();
 //		Log.v("","onCreate dir="+getFilesDir().toString());
         appContext = this.getApplicationContext();
         uiHandler = new Handler();

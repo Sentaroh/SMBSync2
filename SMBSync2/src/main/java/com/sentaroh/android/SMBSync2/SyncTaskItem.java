@@ -48,13 +48,14 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_TASK_TYPE_MIRROR = "M";
     public final static String SYNC_TASK_TYPE_COPY = "C";
     public final static String SYNC_TASK_TYPE_MOVE = "X";
-    public final static String SYNC_TASK_TYPE_SYNC = "S";
+    public final static String SYNC_TASK_TYPE_SYNC = "S";//Twoway sync - Not implemented
+    public final static String SYNC_TASK_TYPE_ARCHIVE = "A";
     private String syncTaskType = SYNC_TASK_TYPE_MIRROR;
 
-    public final static String SYNC_TASK_TWO_WAY_OPTION_MASTER_KEEP_TARGET = "M";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_MASTER_OVERRIDE_TARGET = "M";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_TARGET_KEEP_MASTER = "M";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_TARGET_OVERRIDE_MASTER = "M";
+    public final static String SYNC_TASK_TWO_WAY_OPTION_MASTER_KEEP_TARGET = "KT";
+    public final static String SYNC_TASK_TWO_WAY_OPTION_MASTER_OVERRIDE_TARGET = "OT";
+    public final static String SYNC_TASK_TWO_WAY_OPTION_TARGET_KEEP_MASTER = "KM";
+    public final static String SYNC_TASK_TWO_WAY_OPTION_TARGET_OVERRIDE_MASTER = "OM";
     private String syncTwoWayConflictOption = SYNC_TASK_TWO_WAY_OPTION_MASTER_KEEP_TARGET;
 
     private boolean syncTaskTwoWay = false;
@@ -117,7 +118,6 @@ class SyncTaskItem implements Serializable, Cloneable {
     private boolean syncTaskTargetZipUseExternalSdcard = false;
 //	private boolean syncTaskTargetFolderUseInternalUsbFolder=false;
 
-
     private boolean syncFileTypeAudio = false;
     private boolean syncFileTypeImage = false;
     private boolean syncFileTypeVideo = false;
@@ -172,571 +172,295 @@ class SyncTaskItem implements Serializable, Cloneable {
         isChecked = ic;
     }
 
-    ;
-
     public SyncTaskItem() {
     }
 
-    public String getSyncTaskName() {
-        return syncTasｋName;
-    }
-
-    public String getSyncTaskType() {
-        return syncTaskType;
-    }
-
-    public void setSyncTaskType(String p) {
-        syncTaskType = p;
-    }
-
-    public void setSyncTaskAuto(boolean p) {
-        syncTaskEnabled = p;
-    }
-
-    public boolean isSyncTaskAuto() {
-        return syncTaskEnabled;
-    }
-
-    public String getSyncTaskGroup() {
-        return syncTasｋGroup;
-    }
-
-    public void setSyncTaskGroup(String grp_name) {
-        syncTasｋGroup = grp_name;
-    }
-
-    public void setSyncTaskTwoWay(boolean p) {
-        syncTaskTwoWay = p;
-    }
-
-    public boolean isSyncTaskTwoWay() {
-        return syncTaskTwoWay;
-    }
-
-    public void setSyncTwoWayConflictOption(String p) {
-        syncTwoWayConflictOption = p;
-    }
-
-    public String getSyncTwoWayConflictOption() {
-        return syncTwoWayConflictOption;
-    }
-
-    public String getMasterSmbUserName() {
-        return syncTaskMasterFolderRemoteUserName;
-    }
-
-    public String getMasterSmbPassword() {
-        return syncTaskMasterFolderRemotePassword;
-    }
-
-    public String getMasterRemoteSmbShareName() {
-        return syncTaskMasterFolderRemoteSmbShareName;
-    }
-
-    public String getMasterDirectoryName() {
-        return syncTaskMasterFolderDirName;
-    }
-
-    public String getMasterLocalMountPoint() {
-        return syncTaskMasterLocalMountPoint;
-    }
-
-    public String getMasterSmbAddr() {
-        return syncTaskMasterFolderRemoteIpAddress;
-    }
-
-    public String getMasterSmbPort() {
-        return syncTaskMasterFolderRemotePortNumber;
-    }
-
-    public String getMasterSmbHostName() {
-        return syncTaskMasterFolderRemoteHostName;
-    }
-
-    public String getMasterSmbDomain() {
-        return syncTaskMasterFolderRemoteDomain;
-    }
-
-    public String getMasterSmbProtocol() {
-        return syncTaskMasterFolderSmbProtocol;
-    }
-
-    public void setMasterSmbProtocol(String proto) {
-        syncTaskMasterFolderSmbProtocol=proto;
-    }
-
-    public String getMasterRemovableStorageID() {
-        return syncTaskMasterFolderRemovableStorageID;
-    }
-
-    public boolean isMasterSmbIpcSigningEnforced() {
-        return syncTaskMasterFolderSmbIpcSigningEnforced;
-    }
-
-    public void setMasterSmbIpcSigningEnforced(boolean enforced) {
-        syncTaskMasterFolderSmbIpcSigningEnforced=enforced;
-    }
-
-    public String getMasterFolderType() {
-        return syncTaskMasterFolderType;
-    }
-
-    public String getTargetSmbUserName() {
-        return syncTaskTargetFolderRemoteUserName;
-    }
-
-    public String getTargetSmbPassword() {
-        return syncTaskTargetFolderRemotePassword;
-    }
-
-    public String getTargetSmbShareName() {
-        return syncTaskTargetFolderRemoteSmbShareName;
-    }
-
-    public String getTargetDirectoryName() {
-        return syncTaskTargetFolderDirName;
-    }
-
-    public String getTargetLocalMountPoint() {
-        return syncTaskTargetLocalMountPoint;
-    }
-
-    public String getTargetSmbAddr() {
-        return syncTaskTargetFolderRemoteIpAddress;
-    }
-
-    public String getTargetSmbPort() {
-        return syncTaskTargetFolderRemotePortNumber;
-    }
-
-    public String getTargetSmbHostName() {
-        return syncTaskTargetFolderRemoteHostName;
-    }
-
-    public String getTargetSmbDomain() {
-        return syncTaskTargetFolderRemoteDomain;
-    }
-
-    public String getTargetSmbProtocol() {
-        return syncTaskTargetFolderSmbProtocol;
-    }
-
-    public void setTargetSmbProtocol(String proto) {
-        syncTaskTargetFolderSmbProtocol=proto;
-    }
-
-    public boolean isTargetSmbIpcSigningEnforced() {
-        return syncTaskTargetFolderSmbIpcSigningEnforced;
-    }
-
-    public void setTargetSmbIpcSigningEnforced(boolean enforced) {
-        syncTaskTargetFolderSmbIpcSigningEnforced=enforced;
-    }
-
-    public String getTargetRemovableStorageID() {
-        return syncTaskTargetFolderRemovableStorageID;
-    }
-
-    public String getTargetZipOutputFileName() {
-        return syncTaskTargetZipFileName;
-    }
-
-    public String getTargetFolderType() {
-        return syncTaskTargetFolderType;
-    }
-
-    public String getTargetZipCompressionLevel() {
-        return syncTaskTargetZipCompOptionCompLevel;
-    }
-
-    public String getTargetZipCompressionMethod() {
-        return syncTaskTargetZipCompOptionCompMethod;
-    }
+    public String getSyncTaskName() {return syncTasｋName;}
 
-    public String getTargetZipEncryptMethod() {
-        return syncTaskTargetZipCompOptionEncrypt;
-    }
+    public String getSyncTaskType() {return syncTaskType;}
 
-    public String getTargetZipPassword() {
-        return syncTaskTargetZipCompOptionPassword;
-    }
+    public void setSyncTaskType(String p) {syncTaskType = p;}
 
-    public void setTargetZipCompressionLevel(String p) {
-        syncTaskTargetZipCompOptionCompLevel = p;
-    }
+    public void setSyncTaskAuto(boolean p) {syncTaskEnabled = p;}
 
-    public void setTargetZipCompressionMethod(String p) {
-        syncTaskTargetZipCompOptionCompMethod = p;
-    }
+    public boolean isSyncTaskAuto() {return syncTaskEnabled;}
 
-    public void setTargetZipEncryptMethod(String p) {
-        syncTaskTargetZipCompOptionEncrypt = p;
-    }
+    public String getSyncTaskGroup() {return syncTasｋGroup;}
 
-    public void setTargetZipPassword(String p) {
-        syncTaskTargetZipCompOptionPassword = p;
-    }
+    public void setSyncTaskGroup(String grp_name) {syncTasｋGroup = grp_name;}
 
-    public boolean isTargetZipUseExternalSdcard() {
-        return syncTaskTargetZipUseExternalSdcard;
-    }
+    public void setSyncTaskTwoWay(boolean p) {syncTaskTwoWay = p;}
 
-    public void setTargetZipUseExternalSdcard(boolean p) {
-        syncTaskTargetZipUseExternalSdcard = p;
-    }
+    public boolean isSyncTaskTwoWay() {return syncTaskTwoWay;}
 
-    public String getTargetZipFileNameEncoding() {
-        return syncTaskTargetZipCompOptionEncoding;
-    }
+    public void setSyncTwoWayConflictOption(String p) {syncTwoWayConflictOption = p;}
 
-    public void setTargetZipFileNameEncoding(String p) {
-        syncTaskTargetZipCompOptionEncoding = p;
-    }
+    public String getSyncTwoWayConflictOption() {return syncTwoWayConflictOption;}
 
-    public ArrayList<String> getFileFilter() {
-        return syncFileFilter;
-    }
+    public String getMasterSmbUserName() {return syncTaskMasterFolderRemoteUserName;}
 
-    public ArrayList<String> getDirFilter() {
-        return syncDirFilter;
-    }
+    public String getMasterSmbPassword() {return syncTaskMasterFolderRemotePassword;}
 
-    public boolean isSyncProcessRootDirFile() {
-        return syncOptionRootDirFileToBeProcessed;
-    }
+    public String getMasterRemoteSmbShareName() {return syncTaskMasterFolderRemoteSmbShareName;}
 
-    public void setSyncProcessRootDirFile(boolean p) {
-        syncOptionRootDirFileToBeProcessed = p;
-    }
+    public String getMasterDirectoryName() {return syncTaskMasterFolderDirName;}
 
-    public boolean isSyncOverrideCopyMoveFile() {
-        return syncOptionProcessOverrideCopyMove;
-    }
+    public String getMasterLocalMountPoint() {return syncTaskMasterLocalMountPoint;}
 
-    public void setSyncOverrideCopyMoveFile(boolean p) {
-        syncOptionProcessOverrideCopyMove = p;
-    }
+    public String getMasterSmbAddr() {return syncTaskMasterFolderRemoteIpAddress;}
 
-    public boolean isSyncConfirmOverrideOrDelete() {
-        return syncOptionConfirmOverrideDelete;
-    }
+    public String getMasterSmbPort() {return syncTaskMasterFolderRemotePortNumber;}
 
-    public void setSyncConfirmOverrideOrDelete(boolean p) {
-        syncOptionConfirmOverrideDelete = p;
-    }
+    public String getMasterSmbHostName() {return syncTaskMasterFolderRemoteHostName;}
 
-    public boolean isSyncDetectLastModifiedBySmbsync() {
-        return syncOptionForceLastModifiedUseSmbsync;
-    }
+    public String getMasterSmbDomain() {return syncTaskMasterFolderRemoteDomain;}
 
-    public void setSyncDetectLastModidiedBySmbsync(boolean p) {
-        syncOptionForceLastModifiedUseSmbsync = p;
-    }
+    public String getMasterSmbProtocol() {return syncTaskMasterFolderSmbProtocol;}
 
-    public boolean isChecked() {
-        return isChecked;
-    }
+    public void setMasterSmbProtocol(String proto) {syncTaskMasterFolderSmbProtocol=proto;}
 
-    public void setChecked(boolean p) {
-        isChecked = p;
-    }
+    public String getMasterRemovableStorageID() {return syncTaskMasterFolderRemovableStorageID;}
 
-    public boolean isSyncDoNotResetLastModifiedSmbFile() {
-        return syncOptionNotUsedLastModifiedForRemote;
-    }
+    public boolean isMasterSmbIpcSigningEnforced() {return syncTaskMasterFolderSmbIpcSigningEnforced;}
 
-    public void setSyncDoNotResetLastModifiedSmbFile(boolean p) {
-        syncOptionNotUsedLastModifiedForRemote = p;
-    }
+    public void setMasterSmbIpcSigningEnforced(boolean enforced) {syncTaskMasterFolderSmbIpcSigningEnforced=enforced;}
 
+    public String getMasterFolderType() {return syncTaskMasterFolderType;}
 
-    public void setSyncTaskName(String p) {
-        syncTasｋName = p;
-    }
+    public String getTargetSmbUserName() {return syncTaskTargetFolderRemoteUserName;}
 
-    public void setMasterSmbUserName(String p) {
-        syncTaskMasterFolderRemoteUserName = p;
-    }
+    public String getTargetSmbPassword() {return syncTaskTargetFolderRemotePassword;}
 
-    public void setMasterSmbPassword(String p) {
-        syncTaskMasterFolderRemotePassword = p;
-    }
+    public String getTargetSmbShareName() {return syncTaskTargetFolderRemoteSmbShareName;}
 
-    public void setMasterSmbShareName(String p) {
-        syncTaskMasterFolderRemoteSmbShareName = p;
-    }
+    public String getTargetDirectoryName() {return syncTaskTargetFolderDirName;}
 
-    public void setMasterDirectoryName(String p) {
-        syncTaskMasterFolderDirName = p;
-    }
+    public String getTargetLocalMountPoint() {return syncTaskTargetLocalMountPoint;}
 
-    public void setMasterLocalMountPoint(String mp) {
-        syncTaskMasterLocalMountPoint = mp;
-    }
+    public String getTargetSmbAddr() {return syncTaskTargetFolderRemoteIpAddress;}
 
-    public void setMasterSmbAddr(String p) {
-        syncTaskMasterFolderRemoteIpAddress = p;
-    }
+    public String getTargetSmbPort() {return syncTaskTargetFolderRemotePortNumber;}
 
-    public void setMasterSmbPort(String p) {
-        syncTaskMasterFolderRemotePortNumber = p;
-    }
+    public String getTargetSmbHostName() {return syncTaskTargetFolderRemoteHostName;}
 
-    public void setMasterSmbHostName(String p) {
-        syncTaskMasterFolderRemoteHostName = p;
-    }
+    public String getTargetSmbDomain() {return syncTaskTargetFolderRemoteDomain;}
 
-    public void setMasterSmbDomain(String p) {
-        syncTaskMasterFolderRemoteDomain = p;
-    }
+    public String getTargetSmbProtocol() {return syncTaskTargetFolderSmbProtocol;}
 
-    public void setMasterRemovableStorageID(String p) {
-        syncTaskMasterFolderRemovableStorageID = p;
-    }
+    public void setTargetSmbProtocol(String proto) {syncTaskTargetFolderSmbProtocol=proto;}
 
-    public void setMasterFolderType(String p) {
-        syncTaskMasterFolderType = p;
-    }
+    public boolean isTargetSmbIpcSigningEnforced() {return syncTaskTargetFolderSmbIpcSigningEnforced;}
 
-    public void setTargetZipOutputFileName(String p) {
-        syncTaskTargetZipFileName = p;
-    }
+    public void setTargetSmbIpcSigningEnforced(boolean enforced) {syncTaskTargetFolderSmbIpcSigningEnforced=enforced;}
 
-    public void setTargetSmbUserName(String p) {
-        syncTaskTargetFolderRemoteUserName = p;
-    }
+    public String getTargetRemovableStorageID() {return syncTaskTargetFolderRemovableStorageID;}
 
-    public void setTargetSmbPassword(String p) {
-        syncTaskTargetFolderRemotePassword = p;
-    }
+    public String getTargetZipOutputFileName() {return syncTaskTargetZipFileName;}
 
-    public void setTargetSmbShareName(String p) {
-        syncTaskTargetFolderRemoteSmbShareName = p;
-    }
+    public String getTargetFolderType() {return syncTaskTargetFolderType;}
 
-    public void setTargetDirectoryName(String p) {
-        syncTaskTargetFolderDirName = p;
-    }
+    public String getTargetZipCompressionLevel() {return syncTaskTargetZipCompOptionCompLevel;}
+    public void setTargetZipCompressionLevel(String p) {syncTaskTargetZipCompOptionCompLevel = p;}
 
-    public void setTargetLocalMountPoint(String mp) {
-        syncTaskTargetLocalMountPoint = mp;
-    }
+    public String getTargetZipCompressionMethod() {return syncTaskTargetZipCompOptionCompMethod;}
+    public void setTargetZipCompressionMethod(String p) {syncTaskTargetZipCompOptionCompMethod = p;}
 
-    public void setTargetRemoteAddr(String p) {
-        syncTaskTargetFolderRemoteIpAddress = p;
-    }
+    public String getTargetZipEncryptMethod() {return syncTaskTargetZipCompOptionEncrypt;}
+    public void setTargetZipEncryptMethod(String p) {syncTaskTargetZipCompOptionEncrypt = p;}
 
-    public void setTargetRemotePort(String p) {
-        syncTaskTargetFolderRemotePortNumber = p;
-    }
+    public String getTargetZipPassword() {return syncTaskTargetZipCompOptionPassword;}
+    public void setTargetZipPassword(String p) {syncTaskTargetZipCompOptionPassword = p;}
 
-    public void setTargetRemoteHostname(String p) {
-        syncTaskTargetFolderRemoteHostName = p;
-    }
+    public boolean isTargetZipUseExternalSdcard() {return syncTaskTargetZipUseExternalSdcard;}
 
-    public void setTargetRemoteDomain(String p) {
-        syncTaskTargetFolderRemoteDomain = p;
-    }
+    public void setTargetZipUseExternalSdcard(boolean p) {syncTaskTargetZipUseExternalSdcard = p;}
 
-    public void setTargetRemovableStorageID(String p) {
-        syncTaskTargetFolderRemovableStorageID = p;
-    }
+    public String getTargetZipFileNameEncoding() {return syncTaskTargetZipCompOptionEncoding;}
 
-    public void setTargetFolderType(String p) {
-        syncTaskTargetFolderType = p;
-    }
+    public void setTargetZipFileNameEncoding(String p) {syncTaskTargetZipCompOptionEncoding = p;}
 
-    public boolean isSyncFileTypeAudio() {
-        return syncFileTypeAudio;
-    }
+    public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_DATE = "%DATE%";
+    public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_TIME = "%TIME%";
+    public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_ORIGINAL_NAME = "%ORIGINAL-NAME%";
+    public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_YEAR = "%YEAR%";
+    public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_MONTH = "%MONTH%";
+    public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_DAY = "%DAY%";
+    private String syncTaskArchiveRenameFileTemplate = "DSC_%DATE%";
+    private String syncTaskArchiveSaveDirectoryTemplate = "%YEAR%";
 
-    public void setSyncFileTypeAudio(boolean p) {
-        syncFileTypeAudio = p;
-    }
+    private boolean syncTaskArchiveRenameWhenArchive = true;
 
-    public boolean isSyncFileTypeImage() {
-        return syncFileTypeImage;
-    }
+    public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_0_DAYS = 0;
+    public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_7_DAYS = 1;
+    public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_30_DAYS = 2;
+    public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_60_DAYS = 3;
+    public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_90_DAYS = 4;
+    public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_180_DAYS = 5;
+    public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_1_YEARS = 6;
+    private int syncTaskArchiveRetentionPeriod = PICTURE_ARCHIVE_RETAIN_FOR_A_180_DAYS;
 
-    public void setSyncFileTypeImage(boolean p) {
-        syncFileTypeImage = p;
-    }
+    private boolean syncTaskArchiveCreateDirectory = false;
 
-    public boolean isSyncFileTypeVideo() {
-        return syncFileTypeVideo;
-    }
+    private boolean syncTaskArchiveEnable = true;
 
-    public void setSyncFileTypeVideo(boolean p) {
-        syncFileTypeVideo = p;
-    }
+    private int syncTaskArchiveSuffixDigit = 1;//4 digit
 
-    public void setFileFilter(ArrayList<String> p) {
-        syncFileFilter = p;
-    }
+    public int getArchiveSuffixOption() {return syncTaskArchiveSuffixDigit;}
+    public void setArchiveSuffixOption(int digit) {syncTaskArchiveSuffixDigit =digit;}
+    public String getArchiveRenameFileTemplate() {return syncTaskArchiveRenameFileTemplate;}
+    public void setArchiveRenameFileTemplate(String template) {syncTaskArchiveRenameFileTemplate =template;}
 
-    public void setDirFilter(ArrayList<String> p) {
-        syncDirFilter = p;
-    }
+    public String getArchiveCreateDirectoryTemplate() {return syncTaskArchiveSaveDirectoryTemplate;}
+    public void setArchiveCreateDirectoryTemplate(String template) {syncTaskArchiveSaveDirectoryTemplate=template;}
 
-    public String getSyncRetryCount() {
-        return syncOptionRetryCount;
-    }
+    public boolean isArchiveUseRename() {return syncTaskArchiveRenameWhenArchive;}
+    public void setArchiveUseRename(boolean rename) {syncTaskArchiveRenameWhenArchive =rename;}
+    public int getArchiveRetentionPeriod() {return syncTaskArchiveRetentionPeriod;}
+    public void setArchiveRetentionPeriod(int period) {syncTaskArchiveRetentionPeriod =period;}
+    public boolean isArchiveCreateDirectory() {return syncTaskArchiveCreateDirectory;}
+    public void setArchiveCreateDirectory(boolean cretae) {syncTaskArchiveCreateDirectory =cretae;}
+    public boolean isArchiveEnabled() {return syncTaskArchiveEnable;}
+    public void setArchiveEnabled(boolean enabled) {syncTaskArchiveEnable =enabled;}
 
-    public void setSyncRetryCount(String p) {
-        syncOptionRetryCount = p;
-    }
 
-    public boolean isSyncEmptyDirectory() {
-        return syncOptionSyncEmptyDir;
-    }
+    public ArrayList<String> getFileFilter() {return syncFileFilter;}
 
-    public void setSyncEmptyDirectory(boolean p) {
-        syncOptionSyncEmptyDir = p;
-    }
+    public ArrayList<String> getDirFilter() {return syncDirFilter;}
 
-    public boolean isSyncHiddenFile() {
-        return syncOptionSyncHiddenFile;
-    }
+    public boolean isSyncProcessRootDirFile() {return syncOptionRootDirFileToBeProcessed;}
 
-    public void setSyncHiddenFile(boolean p) {
-        syncOptionSyncHiddenFile = p;
-    }
+    public void setSyncProcessRootDirFile(boolean p) {syncOptionRootDirFileToBeProcessed = p;}
 
-    public boolean isSyncHiddenDirectory() {
-        return syncOptionSyncHiddenDir;
-    }
+    public boolean isSyncOverrideCopyMoveFile() {return syncOptionProcessOverrideCopyMove;}
 
-    public void setSyncHiddenDirectory(boolean p) {
-        syncOptionSyncHiddenDir = p;
-    }
+    public void setSyncOverrideCopyMoveFile(boolean p) {syncOptionProcessOverrideCopyMove = p;}
 
-    public boolean isSyncSubDirectory() {
-        return syncOptionSyncSubDir;
-    }
+    public boolean isSyncConfirmOverrideOrDelete() {return syncOptionConfirmOverrideDelete;}
 
-    public void setSyncSubDirectory(boolean p) {
-        syncOptionSyncSubDir = p;
-    }
+    public void setSyncConfirmOverrideOrDelete(boolean p) {syncOptionConfirmOverrideDelete = p;}
 
-    public boolean isSyncUseSmallIoBuffer() {
-        return syncOptionUseSmallIoBuffer;
-    }
+    public boolean isSyncDetectLastModifiedBySmbsync() {return syncOptionForceLastModifiedUseSmbsync;}
 
-    public void setSyncUseSmallIoBuffer(boolean p) {
-        syncOptionUseSmallIoBuffer = p;
-    }
+    public void setSyncDetectLastModidiedBySmbsync(boolean p) {syncOptionForceLastModifiedUseSmbsync = p;}
 
-    public boolean isSyncTestMode() {
-        return syncOptionSyncTestMode;
-    }
+    public boolean isChecked() {return isChecked;}
 
-    public void setSyncTestMode(boolean p) {
-        syncOptionSyncTestMode = p;
-    }
+    public void setChecked(boolean p) {isChecked = p;}
 
-    public boolean isSyncDifferentFileBySize() {
-        return syncOptionDeterminChangedFileBySize;
-    }
+    public boolean isSyncDoNotResetLastModifiedSmbFile() {return syncOptionNotUsedLastModifiedForRemote;}
 
-    public void setSyncDifferentFileBySize(boolean p) {
-        syncOptionDeterminChangedFileBySize = p;
-    }
+    public void setSyncDoNotResetLastModifiedSmbFile(boolean p) {syncOptionNotUsedLastModifiedForRemote = p;}
 
-    public boolean isSyncDifferentFileByTime() {
-        return syncOptionDeterminChangedFileByTime;
-    }
+    public void setSyncTaskName(String p) {syncTasｋName = p;}
 
-    public void setSyncDifferentFileByModTime(boolean p) {
-        syncOptionDeterminChangedFileByTime = p;
-    }
+    public void setMasterSmbUserName(String p) {syncTaskMasterFolderRemoteUserName = p;}
 
-    public int getSyncDifferentFileAllowableTime() {
-        return syncOptionDeterminChangedFileByTimeValue;
-    }
+    public void setMasterSmbPassword(String p) {syncTaskMasterFolderRemotePassword = p;}
 
-    public void setSyncDifferentFileAllowableTime(int p) {
-        syncOptionDeterminChangedFileByTimeValue = p;
-    }
+    public void setMasterSmbShareName(String p) {syncTaskMasterFolderRemoteSmbShareName = p;}
 
-    public boolean isSyncUseFileCopyByTempName() {
-        return syncOptionUseFileCopyByTempName;
-    }
+    public void setMasterDirectoryName(String p) {syncTaskMasterFolderDirName = p;}
 
-    public void setSyncUseFileCopyByTempName(boolean p) {
-        syncOptionUseFileCopyByTempName = p;
-    }
+    public void setMasterLocalMountPoint(String mp) {syncTaskMasterLocalMountPoint = mp;}
 
-    public boolean isSyncUseExtendedDirectoryFilter1() {
-        return syncOptionUseExtendedDirectoryFilter1;
-    }
+    public void setMasterSmbAddr(String p) {syncTaskMasterFolderRemoteIpAddress = p;}
+    public void setMasterSmbPort(String p) {syncTaskMasterFolderRemotePortNumber = p;}
 
-    public void setSyncUseExtendedDirectoryFilter1(boolean p) {
-        syncOptionUseExtendedDirectoryFilter1 = p;
-    }
+    public void setMasterSmbHostName(String p) {syncTaskMasterFolderRemoteHostName = p;}
+    public void setMasterSmbDomain(String p) {syncTaskMasterFolderRemoteDomain = p;}
 
-    public String getSyncWifiStatusOption() {
-        return syncOptionWifiStatus;
-    }
+    public void setMasterRemovableStorageID(String p) {syncTaskMasterFolderRemovableStorageID = p;}
+    public void setMasterFolderType(String p) {syncTaskMasterFolderType = p;}
 
-    public void setSyncWifiStatusOption(String p) {
-        syncOptionWifiStatus = p;
-    }
+    public void setTargetZipOutputFileName(String p) {syncTaskTargetZipFileName = p;}
+    public void setTargetSmbUserName(String p) {syncTaskTargetFolderRemoteUserName = p;}
 
-    public ArrayList<String> getSyncWifiConnectionWhiteList() {
-        return syncOptionWifiConnectionWhiteList;
-    }
+    public void setTargetSmbPassword(String p) {syncTaskTargetFolderRemotePassword = p;}
+    public void setTargetSmbShareName(String p) {syncTaskTargetFolderRemoteSmbShareName = p;}
 
-    public void setSyncWifiConnectionWhiteList(ArrayList<String> p) {
-        syncOptionWifiConnectionWhiteList = p;
-    }
+    public void setTargetDirectoryName(String p) {syncTaskTargetFolderDirName = p;}
+    public void setTargetLocalMountPoint(String mp) {syncTaskTargetLocalMountPoint = mp;}
 
-    public boolean isSyncTaskSkipIfConnectAnotherWifiSsid() {
-        return syncTaskSkipIfConnectAnotherWifiSsid;
-    }
+    public void setTargetRemoteAddr(String p) {syncTaskTargetFolderRemoteIpAddress = p;}
+    public void setTargetRemotePort(String p) {syncTaskTargetFolderRemotePortNumber = p;}
 
-    public void setSyncTaskSkipIfConnectAnotherWifiSsid(boolean skip) {
-        syncTaskSkipIfConnectAnotherWifiSsid = skip;
-    }
+    public void setTargetRemoteHostname(String p) {syncTaskTargetFolderRemoteHostName = p;}
+    public void setTargetRemoteDomain(String p) {syncTaskTargetFolderRemoteDomain = p;}
 
-    public void setSyncOptionSyncWhenCharging(boolean charging) {
-        syncOptionSyncOnlyCharging = charging;
-    }
+    public void setTargetRemovableStorageID(String p) {syncTaskTargetFolderRemovableStorageID = p;}
+    public void setTargetFolderType(String p) {syncTaskTargetFolderType = p;}
 
-    public boolean isSyncOptionSyncWhenCharging() {
-        return syncOptionSyncOnlyCharging;
-    }
+    public boolean isSyncFileTypeAudio() {return syncFileTypeAudio;}
+    public void setSyncFileTypeAudio(boolean p) {syncFileTypeAudio = p;}
 
-    public void setLastSyncTime(String p) {
-        syncLastSyncTime = p;
-    }
+    public boolean isSyncFileTypeImage() {return syncFileTypeImage;}
+    public void setSyncFileTypeImage(boolean p) {syncFileTypeImage = p;}
 
-    public void setLastSyncResult(int p) {
-        syncLastSyncResult = p;
-    }
+    public boolean isSyncFileTypeVideo() {return syncFileTypeVideo;}
+    public void setSyncFileTypeVideo(boolean p) {syncFileTypeVideo = p;}
 
-    public String getLastSyncTime() {
-        return syncLastSyncTime;
-    }
+    public void setFileFilter(ArrayList<String> p) {syncFileFilter = p;}
+    public void setDirFilter(ArrayList<String> p) {syncDirFilter = p;}
 
-    public int getLastSyncResult() {
-        return syncLastSyncResult;
-    }
+    public String getSyncRetryCount() {return syncOptionRetryCount;}
+    public void setSyncRetryCount(String p) {syncOptionRetryCount = p;}
 
-    public void setSyncTaskRunning(boolean p) {
-        syncTaskIsRunning = p;
-    }
+    public boolean isSyncEmptyDirectory() {return syncOptionSyncEmptyDir;}
+    public void setSyncEmptyDirectory(boolean p) {syncOptionSyncEmptyDir = p;}
 
-    public boolean isSyncTaskRunning() {
-        return syncTaskIsRunning;
-    }
+    public boolean isSyncHiddenFile() {return syncOptionSyncHiddenFile;}
+    public void setSyncHiddenFile(boolean p) {syncOptionSyncHiddenFile = p;}
 
-    public int getSyncTaskPosition() {
-        return syncTaskPosition;
-    }
+    public boolean isSyncHiddenDirectory() {return syncOptionSyncHiddenDir;}
+    public void setSyncHiddenDirectory(boolean p) {syncOptionSyncHiddenDir = p;}
 
-    public void setSyncTaskPosition(int p) {
-        syncTaskPosition = p;
-    }
+    public boolean isSyncSubDirectory() {return syncOptionSyncSubDir;}
+    public void setSyncSubDirectory(boolean p) {syncOptionSyncSubDir = p;}
+
+    public boolean isSyncUseSmallIoBuffer() {return syncOptionUseSmallIoBuffer;}
+    public void setSyncUseSmallIoBuffer(boolean p) {syncOptionUseSmallIoBuffer = p;}
+
+    public boolean isSyncTestMode() {return syncOptionSyncTestMode;}
+    public void setSyncTestMode(boolean p) {syncOptionSyncTestMode = p;}
+
+    public boolean isSyncDifferentFileBySize() {return syncOptionDeterminChangedFileBySize;}
+    public void setSyncDifferentFileBySize(boolean p) {syncOptionDeterminChangedFileBySize = p;}
+
+    public boolean isSyncDifferentFileByTime() {return syncOptionDeterminChangedFileByTime;}
+    public void setSyncDifferentFileByModTime(boolean p) {syncOptionDeterminChangedFileByTime = p;}
+
+    public int getSyncDifferentFileAllowableTime() {return syncOptionDeterminChangedFileByTimeValue;}
+    public void setSyncDifferentFileAllowableTime(int p) {syncOptionDeterminChangedFileByTimeValue = p;}
+
+    public boolean isSyncUseFileCopyByTempName() {return syncOptionUseFileCopyByTempName;}
+    public void setSyncUseFileCopyByTempName(boolean p) {syncOptionUseFileCopyByTempName = p;}
+
+    public boolean isSyncUseExtendedDirectoryFilter1() {return syncOptionUseExtendedDirectoryFilter1;}
+    public void setSyncUseExtendedDirectoryFilter1(boolean p) {syncOptionUseExtendedDirectoryFilter1 = p;}
+
+    public String getSyncWifiStatusOption() {return syncOptionWifiStatus;}
+    public void setSyncWifiStatusOption(String p) {syncOptionWifiStatus = p;}
+
+    public ArrayList<String> getSyncWifiConnectionWhiteList() {return syncOptionWifiConnectionWhiteList;}
+    public void setSyncWifiConnectionWhiteList(ArrayList<String> p) {syncOptionWifiConnectionWhiteList = p;}
+
+    public boolean isSyncTaskSkipIfConnectAnotherWifiSsid() {return syncTaskSkipIfConnectAnotherWifiSsid;}
+    public void setSyncTaskSkipIfConnectAnotherWifiSsid(boolean skip) {syncTaskSkipIfConnectAnotherWifiSsid = skip;}
+
+    public void setSyncOptionSyncWhenCharging(boolean charging) {syncOptionSyncOnlyCharging = charging;}
+    public boolean isSyncOptionSyncWhenCharging() {return syncOptionSyncOnlyCharging;}
+
+    public void setLastSyncTime(String p) {syncLastSyncTime = p;}
+    public void setLastSyncResult(int p) {syncLastSyncResult = p;}
+
+    public String getLastSyncTime() {return syncLastSyncTime;}
+    public int getLastSyncResult() {return syncLastSyncResult;}
+
+    public void setSyncTaskRunning(boolean p) {syncTaskIsRunning = p;}
+    public boolean isSyncTaskRunning() {return syncTaskIsRunning;}
+
+    public int getSyncTaskPosition() {return syncTaskPosition;}
+    public void setSyncTaskPosition(int p) {syncTaskPosition = p;}
 
     @Override
     public SyncTaskItem clone() {
@@ -812,6 +536,13 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncTaskTargetZipCompOptionPassword.equals(sti.getTargetZipPassword())) &&
                         (syncTaskTargetZipCompOptionEncoding.equals(sti.getTargetZipFileNameEncoding())) &&
                         (syncTaskTargetZipUseExternalSdcard==sti.isTargetZipUseExternalSdcard()) &&
+                        (syncTaskArchiveRenameWhenArchive ==sti.isArchiveUseRename()) &&
+                        (syncTaskArchiveRenameFileTemplate.equals(sti.getArchiveRenameFileTemplate())) &&
+                        (syncTaskArchiveRetentionPeriod ==sti.getArchiveRetentionPeriod()) &&
+                        (syncTaskArchiveCreateDirectory ==sti.isArchiveCreateDirectory()) &&
+                        (syncTaskArchiveSaveDirectoryTemplate.equals(sti.getArchiveCreateDirectoryTemplate())) &&
+                        (syncTaskArchiveSuffixDigit ==sti.getArchiveSuffixOption()) &&
+                        (syncTaskArchiveEnable ==sti.isArchiveEnabled()) &&
                         (syncFileTypeAudio==sti.isSyncFileTypeAudio()) &&
                         (syncFileTypeImage==sti.isSyncFileTypeImage()) &&
                         (syncFileTypeVideo==sti.isSyncFileTypeVideo()) &&
