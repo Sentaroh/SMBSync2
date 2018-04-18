@@ -22,6 +22,7 @@
     <string name="msgs_main_sync_list_array_mtype_copy">COPY</string>
     <string name="msgs_main_sync_list_array_mtype_move">MOVE</string>
     <string name="msgs_main_sync_list_array_mtype_sync">SYNC</string>
+    <string name="msgs_main_sync_list_array_mtype_archive">ARCHIVE</string>
     <string name="msgs_main_sync_list_array_activ_activ">AUTO</string>
     <string name="msgs_main_sync_list_array_activ_inact">MANUAL</string>
     
@@ -38,7 +39,7 @@
     <string name="msgs_main_sync_history_status_cancel">Cancel</string>
     <string name="msgs_main_sync_history_status_warning">Warning</string>
     <string name="msgs_main_sync_history_status_success">Success</string>
-    <string name="msgs_main_sync_history_status_running">Syncing</string>
+    <string name="msgs_main_sync_history_status_running">Running</string>
     <string name="msgs_main_sync_history_count_copied">Copied:</string>
     <string name="msgs_main_sync_history_count_deleted">Deleted:</string>
     <string name="msgs_main_sync_history_count_ignored">Ignored:</string>
@@ -183,6 +184,7 @@
     <string name="msgs_main_sync_profile_dlg_copy">Copy</string>
     <string name="msgs_main_sync_profile_dlg_move">Move</string>
     <string name="msgs_main_sync_profile_dlg_sync">Sync</string>
+    <string name="msgs_main_sync_profile_dlg_archive">Archive</string>
     <string name="msgs_filter_list_dlg_add">Add</string>
     <string name="msgs_filter_list_dlg_file_filter">File filter</string>
     <string name="msgs_filter_list_dlg_dir_filter">Directory filter</string>
@@ -296,9 +298,10 @@
     <string name="msgs_profile_sync_task_dlg_sync_type_mirror">Mirror</string> 
     <string name="msgs_profile_sync_task_dlg_sync_type_copy">Copy</string>
     <string name="msgs_profile_sync_task_dlg_sync_type_move">Move</string>
+    <string name="msgs_profile_sync_task_dlg_sync_type_archive">Archive</string>
     <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">File filter has not been specified</string>
     <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Directory filter has not been specified</string>
-    <string name="msgs_profile_sync_task_sync_option">Sync option:</string>
+    <string name="msgs_profile_sync_task_sync_option">Option:</string>
     <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">To process the file that exists directly under the directory specified by the master.</string>
     <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">To overwrite the file</string>
     <string name="msgs_profile_sync_task_sync_option_confirm_required">To confirm before the overwritten or deleted files</string>
@@ -312,11 +315,11 @@
     <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Forced to get the last update date and time in SMBSync2</string>
     <string name="msgs_profile_sync_task_sync_option_not_set_remote_file_last_modified">Do not make the last update time of the file copied/moved to the SMB folder the same as the copy source</string>
     <string name="msgs_profile_sync_task_sync_option_show_special_option">Shows special options</string>
-    <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Sync retry when network error occurred</string>
-    <string name="msgs_profile_sync_task_sync_option_empty_directory">Sync empty directory</string>
-    <string name="msgs_profile_sync_task_sync_option_hidden_directory">Sync hidden directory</string>
-    <string name="msgs_profile_sync_task_sync_option_hidden_file">Sync hidden file</string>
-    <string name="msgs_profile_sync_task_sync_option_sub_dir">Sync sub directory</string>
+    <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Retry when network error occurred</string>
+    <string name="msgs_profile_sync_task_sync_option_empty_directory">Process empty directory</string>
+    <string name="msgs_profile_sync_task_sync_option_hidden_directory">Process hidden directory</string>
+    <string name="msgs_profile_sync_task_sync_option_hidden_file">Process hidden file</string>
+    <string name="msgs_profile_sync_task_sync_option_sub_dir">Process sub directory</string>
 	<string name="msgs_profile_sync_task_sync_use_small_ioarea">Limit the IO buffer at the time of SMB folder writing to 16KB</string>
 	
 	<string name="msgs_profile_sync_task_sync_direction_two_way">Use Bi-directional synchronization</string>
@@ -325,11 +328,11 @@
 	<string name="msgs_profile_sync_task_sync_file_type_audio">Sync audio files</string>
 	<string name="msgs_profile_sync_task_sync_file_type_image">Sync image files</string>
 	<string name="msgs_profile_sync_task_sync_file_type_video">Sync video files</string>
-	<string name="msgs_profile_sync_task_sync_sub_directory_specific">Select sub directories for sync</string>
+	<string name="msgs_profile_sync_task_sync_sub_directory_specific">Select sub directories</string>
 	<string name="msgs_profile_sync_task_sync_file_type_detail_not_specified">You must specify one of the file filter and audio and image or video at least.</string>
 	<string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
 		
-	<string name="msgs_profile_sync_task_filter_title">Sync filter :</string>
+	<string name="msgs_profile_sync_task_filter_title">Filter :</string>
     <string name="msgs_profile_sync_task_filter_list_dlg_add">Add</string>
     <string name="msgs_profile_sync_task_filter_list_dlg_delete">Delete</string>
     <string name="msgs_profile_sync_task_filter_list_dlg_include">Include</string>
@@ -356,7 +359,7 @@
     <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Directory to add the following keyword (keyword will be converted at the time of execution)</string>
     <string name="msgs_profile_sync_task_dlg_keyword_insert_file">File to add the following keyword (keyword will be converted at the time of execution)</string>
 
-    <string name="msgs_profile_sync_task_sync_option_sync_when_charging">Sync is started only when charging</string>
+    <string name="msgs_profile_sync_task_sync_option_sync_when_charging">Started only when charging</string>
 
     <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">The directory name contained characters that can not be used and it was deleted.(\", :, \\, *, &lt;, &gt;, \|)</string>
     <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">The file name contained characters that can not be used and it was deleted.(\", :, \\, *, &lt;, &gt;, \|)</string>

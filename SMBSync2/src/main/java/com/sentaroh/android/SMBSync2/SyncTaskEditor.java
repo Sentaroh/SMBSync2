@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities.LocalMountPoint;
 import com.sentaroh.android.Utilities.NotifyEvent;
-import com.sentaroh.android.Utilities.SafFileManager;
+import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 
@@ -84,6 +84,8 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
+
+import it.sephiroth.android.library.easing.Linear;
 
 public class SyncTaskEditor extends DialogFragment {
     private final static String SUB_APPLICATION_TAG = "SyncTask ";
@@ -849,7 +851,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        String dir = ((String)arg1[1]).equals("/")?"":((String)arg1[1]).substring(1);
+                        String dir = ((String)arg1[1]).equals("/")?"":(((String)arg1[1]).startsWith("/")?((String)arg1[1]).substring(1):(String)arg1[1]);
                         if (dir.endsWith("/"))
                             et_sync_folder_dir_name.setText(dir.substring(0, dir.length() - 1));
                         else et_sync_folder_dir_name.setText(dir);
@@ -1153,7 +1155,9 @@ public class SyncTaskEditor extends DialogFragment {
                             zip_file=zip_path.substring(zip_path.lastIndexOf("/")+1);
                         } else {
                             zip_dir="/";
-                            if (zip_path.length()!=0) zip_file=zip_path.substring(1);
+                            if (zip_path.length()!=0) {
+                                zip_file=zip_path.startsWith(("/"))?zip_path.substring(1):zip_path;
+                            }
                         }
                         if (!ctv_zip_file_save_sdcard.isChecked()) {
                             tv_zip_dir.setText(zip_dir.replace(mGp.internalRootDirectory, ""));
@@ -1382,7 +1386,8 @@ public class SyncTaskEditor extends DialogFragment {
         String sel = sp_sync_folder_type.getSelectedItem().toString();
         if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal))) {//Internal
             nsfev.folder_directory = et_sync_folder_internal_dir_name.getText().toString().trim();
-            nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
+            if (sp_sync_folder_mp.getSelectedItem()==null) nsfev.folder_mountpoint = mGp.internalRootDirectory;
+            else nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL;
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard))) {//External sdcard
             nsfev.folder_directory = et_sync_folder_sdcard_dir_name.getText().toString().trim();
@@ -1392,25 +1397,16 @@ public class SyncTaskEditor extends DialogFragment {
             nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
             nsfev.zip_file_use_sdcard = ctv_zip_file_save_sdcard.isChecked();
             String cl = sp_comp_level.getSelectedItem().toString();
-            if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest)))
-                nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_FASTEST;
-            else if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast)))
-                nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_FAST;
-            else if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_normal)))
-                nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_NORMAL;
-            else if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_maximum)))
-                nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_MAXIMUM;
-            else if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_ultra)))
-                nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_ULTRA;
+            if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_FASTEST;
+            else if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_FAST;
+            else if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_normal))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_NORMAL;
+            else if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_maximum))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_MAXIMUM;
+            else if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_ultra))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_ULTRA;
 
-            if (rb_zip_enc_none.isChecked())
-                nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE;
-            else if (rb_zip_enc_standard.isChecked())
-                nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD;
-            else if (rb_zip_enc_aes128.isChecked())
-                nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128;
-            else if (rb_zip_enc_aes256.isChecked())
-                nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256;
+            if (rb_zip_enc_none.isChecked()) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE;
+            else if (rb_zip_enc_standard.isChecked()) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD;
+            else if (rb_zip_enc_aes128.isChecked()) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128;
+            else if (rb_zip_enc_aes256.isChecked()) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256;
 
             nsfev.zip_file_name=tv_zip_dir.getText().toString().trim()+et_zip_file.getText().toString().trim();
             if (!rb_zip_enc_none.isChecked()) {
@@ -1472,6 +1468,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         final CheckedTextView ctv_zip_file_save_sdcard = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_use_sdcard);
         final Button btn_zip_select_sdcard = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_select_document_tree);
+
 //		ctv_sync_folder_use_usb_folder.setVisibility(CheckedTextView.GONE);
         btn_sync_folder_list_dir.setEnabled(true);
         String sel = sp_sync_folder_type.getSelectedItem().toString();
@@ -2049,7 +2046,7 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.notifyDataSetChanged();
     }
 
-    private void setSyncOptionSpinner(Spinner spinnerSyncOption, String prof_syncopt) {
+    private void setSyncOptionSpinner(Spinner spinnerSyncOption, String prof_syncopt, String target_folder_type) {
         SyncUtil.setSpinnerBackground(mContext, spinnerSyncOption, mGp.themeIsLight);
         final CustomSpinnerAdapter adapterSyncOption =
                 new CustomSpinnerAdapter(mContext, R.layout.custom_simple_spinner_item);
@@ -2060,15 +2057,17 @@ public class SyncTaskEditor extends DialogFragment {
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_copy));
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_move));
 //		adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync));
+        if (!target_folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP))
+            adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive));
 
-        if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR))
-            spinnerSyncOption.setSelection(0);
-        else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_COPY))
-            spinnerSyncOption.setSelection(1);
-        else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE))
-            spinnerSyncOption.setSelection(2);
+        int sel=0;
+        if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) sel=0;
+        else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) sel=1;
+        else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) sel=2;
 //		else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) spinnerSyncOption.setSelection(3);
+        else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE) && !target_folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) sel=3;
 
+        spinnerSyncOption.setSelection(sel);
         adapterSyncOption.notifyDataSetChanged();
     }
 
@@ -2166,6 +2165,8 @@ public class SyncTaskEditor extends DialogFragment {
         dlg_msg.setTextColor(mGp.themeColorList.text_color_error);
         dlg_msg.setVisibility(TextView.GONE);
 
+        final Button btn_picture_archive_option = (Button) mDialog.findViewById(R.id.edit_sync_task_archive_option);
+
         final EditText et_sync_main_task_name = (EditText) mDialog.findViewById(R.id.edit_sync_task_task_name);
         if (type.equals("EDIT")) {
             et_sync_main_task_name.setTextColor(Color.LTGRAY);
@@ -2196,10 +2197,11 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final Spinner spinnerSyncOption = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_option);
-        setSyncOptionSpinner(spinnerSyncOption, n_sti.getSyncTaskType());
+        setSyncOptionSpinner(spinnerSyncOption, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
         spinnerSyncOption.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setSyncTaskType(spinnerSyncOption, n_sti);
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
 
@@ -2625,6 +2627,7 @@ public class SyncTaskEditor extends DialogFragment {
 //						Log.v("","mdi="+n_sti.getMasterDirectoryName());
                         master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
 
+                        setSyncOptionSpinner(spinnerSyncOption, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
 
                         if (!prev_master_folder_type.equals(n_sti.getMasterFolderType())) {
@@ -2741,6 +2744,7 @@ public class SyncTaskEditor extends DialogFragment {
                 master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                 target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
 
+                setSyncOptionSpinner(spinnerSyncOption, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
         });
@@ -2781,6 +2785,7 @@ public class SyncTaskEditor extends DialogFragment {
                             swap_master_target.setEnabled(false);
                         else swap_master_target.setEnabled(true);
 
+                        setSyncOptionSpinner(spinnerSyncOption, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
 
                         if (!prev_target_folder_type.equals(n_sti.getTargetFolderType())) {
@@ -2907,7 +2912,13 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
-        // CANCELボタンの指定
+        btn_picture_archive_option.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                invokeEditArchiveOptionDlg(mDialog, n_sti, type, dlg_msg);
+            }
+        });
+
         final Button btn_cancel = (Button) mDialog.findViewById(R.id.edit_profile_sync_dlg_btn_cancel);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -2999,6 +3010,290 @@ public class SyncTaskEditor extends DialogFragment {
         });
     }
 
+    private void invokeEditArchiveOptionDlg(final Dialog p_dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg) {
+        // カスタムダイアログの生成
+        final Dialog dialog = new Dialog(this.getActivity(), mGp.applicationTheme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.edit_sync_task_dlg_archive);
+
+        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_dlg_archive_view);
+        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+
+        LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_dlg_archive_title_view);
+        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+        TextView dlg_title = (TextView) dialog.findViewById(R.id.edit_sync_task_dlg_archive_title);
+        dlg_title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+
+        final LinearLayout archive_option_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_dlg_archive_option_view);
+        final Spinner sp_sync_retain_period = (Spinner) dialog.findViewById(R.id.edit_sync_task_dlg_archive_retention_period);
+        final Spinner sp_sync_suffix_option = (Spinner) dialog.findViewById(R.id.edit_sync_task_dlg_archive_suffix_option);
+        setSpinnerSyncSuffixSeq(sp_sync_suffix_option, n_sti.getArchiveSuffixOption());
+        setSpinnerSyncPictureRetainPeriod(sp_sync_retain_period, n_sti.getArchiveRetentionPeriod());
+
+        final CheckedTextView ctvRenameWhenArchive = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_dlg_archive_rename_when_archive);
+
+        final Button btn_date = (Button) dialog.findViewById(R.id.edit_sync_task_dlg_archive_btn_file_date);
+        final Button btn_time = (Button) dialog.findViewById(R.id.edit_sync_task_dlg_archive_btn_file_time);
+        final Button btn_original_name = (Button) dialog.findViewById(R.id.edit_sync_task_dlg_archive_btn_file_original_name);
+        final LinearLayout template_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_dlg_archive_template_view);
+        final EditText et_file_template = (EditText) dialog.findViewById(R.id.edit_sync_task_dlg_archive_file_name_template);
+        et_file_template.setText(n_sti.getArchiveRenameFileTemplate());
+        final TextView tv_template = (TextView) dialog.findViewById(R.id.edit_sync_task_dlg_archive_new_name);
+        tv_template.setTextColor(mGp.themeColorList.text_color_primary);
+
+        final CheckedTextView ctvCreateDircetory = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_dlg_archive_use_archive_directory);
+        final LinearLayout dirTemplateView = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_dlg_archive_directory_template_btn_view);
+        final Button btn_dir_year = (Button) dialog.findViewById(R.id.edit_sync_task_dlg_archive_btn_directory_year);
+        final Button btn_dir_month = (Button) dialog.findViewById(R.id.edit_sync_task_dlg_archive_btn_directory_month);
+        final Button btn_dir_day = (Button) dialog.findViewById(R.id.edit_sync_task_dlg_archive_btn_directory_day);
+        final EditText et_dir_template = (EditText) dialog.findViewById(R.id.edit_sync_task_dlg_archive_directory_name_template);
+        et_dir_template.setText(n_sti.getArchiveCreateDirectoryTemplate());
+
+        ctvRenameWhenArchive.setChecked(n_sti.isArchiveUseRename());
+
+        if (!n_sti.isArchiveUseRename()) template_view.setVisibility(LinearLayout.GONE);
+        else template_view.setVisibility(LinearLayout.VISIBLE);
+        ctvRenameWhenArchive.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctvRenameWhenArchive.toggle();
+                boolean isChecked=ctvRenameWhenArchive.isChecked();
+                if (isChecked) template_view.setVisibility(LinearLayout.VISIBLE);
+                else template_view.setVisibility(LinearLayout.GONE);
+                tv_template.setText(setTemplateNewName(isChecked, sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+        });
+
+        ctvCreateDircetory.setChecked(n_sti.isArchiveCreateDirectory());
+        if (ctvCreateDircetory.isChecked()) dirTemplateView.setVisibility(LinearLayout.VISIBLE);
+        else dirTemplateView.setVisibility(LinearLayout.GONE);
+        ctvCreateDircetory.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctvCreateDircetory.toggle();
+                boolean isChecked=ctvCreateDircetory.isChecked();
+                if (isChecked) dirTemplateView.setVisibility(LinearLayout.VISIBLE);
+                else dirTemplateView.setVisibility(LinearLayout.GONE);
+                tv_template.setText(setTemplateNewName(isChecked, sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+        });
+
+        final Button btn_ok = (Button) dialog.findViewById(R.id.edit_sync_task_dlg_picture_btn_ok);
+        final Button btn_cancel = (Button) dialog.findViewById(R.id.edit_sync_task_dlg_picture_btn_cancel);
+
+
+        setSyncTaskPictureHelpListener(dialog);
+
+        sp_sync_suffix_option.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                tv_template.setText(setTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
+        btn_date.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String kw_text=SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_DATE;
+                if (et_file_template.getSelectionStart() == et_file_template.getSelectionEnd()) et_file_template.getText().insert(et_file_template.getSelectionStart(), kw_text);
+                else et_file_template.getText().replace(et_file_template.getSelectionStart(), et_file_template.getSelectionEnd(), kw_text);
+                tv_template.setText(setTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+        });
+
+        btn_time.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String kw_text=SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_TIME;
+                if (et_file_template.getSelectionStart() == et_file_template.getSelectionEnd()) et_file_template.getText().insert(et_file_template.getSelectionStart(), kw_text);
+                else et_file_template.getText().replace(et_file_template.getSelectionStart(), et_file_template.getSelectionEnd(), kw_text);
+                tv_template.setText(setTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+        });
+
+        btn_original_name.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String kw_text=SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_ORIGINAL_NAME;
+                if (et_file_template.getSelectionStart() == et_file_template.getSelectionEnd()) et_file_template.getText().insert(et_file_template.getSelectionStart(), kw_text);
+                else et_file_template.getText().replace(et_file_template.getSelectionStart(), et_file_template.getSelectionEnd(), kw_text);
+                tv_template.setText(setTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+        });
+
+        et_file_template.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String new_temp=removeInvalidCharForFileDirName(editable.toString()).replaceAll("/","");;
+                if (new_temp.length()!=editable.length()) {
+                    et_file_template.setText(new_temp);
+                    et_file_template.setSelection(new_temp.length());
+                    mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_file_name_has_invalid_char)
+                            , "", null);
+
+                }
+                tv_template.setText(setTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+        });
+
+        btn_dir_year.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String kw_text=SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_YEAR;
+                if (et_dir_template.getSelectionStart() == et_dir_template.getSelectionEnd()) et_dir_template.getText().insert(et_dir_template.getSelectionStart(), kw_text);
+                else et_dir_template.getText().replace(et_dir_template.getSelectionStart(), et_dir_template.getSelectionEnd(), kw_text);
+                tv_template.setText(setTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+        });
+
+        btn_dir_month.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String kw_text=SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_MONTH;
+                if (et_dir_template.getSelectionStart() == et_dir_template.getSelectionEnd()) et_dir_template.getText().insert(et_dir_template.getSelectionStart(), kw_text);
+                else et_dir_template.getText().replace(et_dir_template.getSelectionStart(), et_dir_template.getSelectionEnd(), kw_text);
+                tv_template.setText(setTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+        });
+
+        btn_dir_day.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String kw_text=SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_DAY;
+                if (et_dir_template.getSelectionStart() == et_dir_template.getSelectionEnd()) et_dir_template.getText().insert(et_dir_template.getSelectionStart(), kw_text);
+                else et_dir_template.getText().replace(et_dir_template.getSelectionStart(), et_dir_template.getSelectionEnd(), kw_text);
+                tv_template.setText(setTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+        });
+
+        et_dir_template.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String new_temp=removeInvalidCharForFileDirName(editable.toString()).replaceAll("/","");
+                if (new_temp.length()!=editable.length()) {
+                    et_dir_template.setText(new_temp);
+                    et_dir_template.setSelection(new_temp.length());
+                    mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
+                            , "", null);
+
+                }
+                tv_template.setText(setTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+            }
+        });
+
+        tv_template.setText(setTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                et_file_template.getText().toString(), et_dir_template.getText().toString(), n_sti));
+
+        btn_cancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        btn_ok.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                n_sti.setArchiveCreateDirectory(ctvCreateDircetory.isChecked());
+                n_sti.setArchiveCreateDirectoryTemplate(et_dir_template.getText().toString());
+                n_sti.setArchiveUseRename(ctvRenameWhenArchive.isChecked());
+                n_sti.setArchiveRenameFileTemplate(et_file_template.getText().toString());
+                n_sti.setArchiveRetentionPeriod(sp_sync_retain_period.getSelectedItemPosition());
+                n_sti.setArchiveSuffixOption(sp_sync_suffix_option.getSelectedItemPosition());
+
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private String setTemplateNewName(boolean create_directory_option, int suffix_option, String file_template, String dir_template, SyncTaskItem n_sti) {
+        String result="";
+
+        String year="", month="", day="", hours="", minutes="", seconds="";
+        String date_time= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis());
+        year=date_time.substring(0,4);
+        month=date_time.substring(5,7);
+        day=date_time.substring(8,10);
+        hours=date_time.substring(11,13);
+        minutes=date_time.substring(14,16);
+        seconds=date_time.substring(17,19);
+
+        String suffix="";
+        if (suffix_option==1) suffix="_00001";
+        else if (suffix_option==2) suffix="_000001";
+
+        String new_name=file_template.replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_DATE, year+"-"+month+"-"+day).
+                replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_TIME, hours+"-"+minutes+"-"+seconds)
+                .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_ORIGINAL_NAME, "DSC_0001")+suffix+".jpg";
+        String temp_dir="";
+        if (create_directory_option) {
+            temp_dir=dir_template.replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_YEAR, year)
+                    .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_MONTH, month)
+                    .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_DAY, day)+"/";
+        }
+        if (n_sti.getTargetDirectoryName().equals("")) result="/"+temp_dir+new_name;
+        else result="/"+n_sti.getTargetDirectoryName()+"/"+temp_dir+new_name;
+
+        return result;
+
+    }
+
+    private void setSpinnerSyncSuffixSeq(Spinner spinner, int cv) {
+        SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        final CustomSpinnerAdapter adapter =
+                new CustomSpinnerAdapter(mContext, R.layout.custom_simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setPrompt(mContext.getString(R.string.msgs_sync_task_archive_suffix_seq_digit_prompt_title));
+        spinner.setAdapter(adapter);
+        adapter.add(mContext.getString(R.string.msgs_sync_task_archive_suffix_seq_digit_0));
+        adapter.add(mContext.getString(R.string.msgs_sync_task_archive_suffix_seq_digit_5));
+        adapter.add(mContext.getString(R.string.msgs_sync_task_archive_suffix_seq_digit_6));
+        spinner.setSelection(cv);
+    }
+
+    private void setSpinnerSyncPictureRetainPeriod(Spinner spinner, int cv) {
+        SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        final CustomSpinnerAdapter adapter =
+                new CustomSpinnerAdapter(mContext, R.layout.custom_simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setPrompt(mContext.getString(R.string.msgs_sync_task_archive_period_prompt_title));
+        spinner.setAdapter(adapter);
+        adapter.add(mContext.getString(R.string.msgs_sync_task_archive_period_0_days));
+        adapter.add(mContext.getString(R.string.msgs_sync_task_archive_period_7_days));
+        adapter.add(mContext.getString(R.string.msgs_sync_task_archive_period_30_days));
+        adapter.add(mContext.getString(R.string.msgs_sync_task_archive_period_60_days));
+        adapter.add(mContext.getString(R.string.msgs_sync_task_archive_period_90_days));
+        adapter.add(mContext.getString(R.string.msgs_sync_task_archive_period_180_days));
+        adapter.add(mContext.getString(R.string.msgs_sync_task_archive_period_1_years));
+        spinner.setSelection(cv);
+    }
+
     private SyncTaskItem buildSyncTaskListItem(Dialog dialog, SyncTaskItem base_stli) {
         final EditText et_sync_main_task_name = (EditText) dialog.findViewById(R.id.edit_sync_task_task_name);
         final CheckedTextView ctv_auto = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_ctv_auto);
@@ -3048,15 +3343,7 @@ public class SyncTaskEditor extends DialogFragment {
         nstli.setSyncTaskAuto(ctv_auto.isChecked());
         nstli.setSyncTaskName(et_sync_main_task_name.getText().toString());
 
-        String so = spinnerSyncOption.getSelectedItem().toString();
-        if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror)))
-            nstli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_MIRROR);
-        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_copy)))
-            nstli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_COPY);
-        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_move)))
-            nstli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_MOVE);
-        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync)))
-            nstli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_SYNC);
+        setSyncTaskType(spinnerSyncOption, nstli);
 
         nstli.setSyncProcessRootDirFile(ctvProcessRootDirFile.isChecked());
         nstli.setSyncSubDirectory(ctvSyncSubDir.isChecked());
@@ -3133,7 +3420,33 @@ public class SyncTaskEditor extends DialogFragment {
         dialog.show();
     }
 
-    ;
+    private void setSyncTaskType(Spinner spinner, SyncTaskItem n_stli) {
+        String so = mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror);
+        if (spinner.getSelectedItemPosition()<spinner.getAdapter().getCount()) so=spinner.getSelectedItem().toString();
+        if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror)))
+            n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_MIRROR);
+        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_copy)))
+            n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_COPY);
+        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_move)))
+            n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_MOVE);
+        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync)))
+            n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_SYNC);
+        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive)))
+            n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE);
+    }
+
+    private void setSyncTaskPictureHelpListener(Dialog dialog) {
+        final ImageButton help_sync_folder = (ImageButton) dialog.findViewById(R.id.edit_sync_task_dlg_archive_help);
+        help_sync_folder.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+//		Log.v("","f_type="+f_type);
+        help_sync_folder.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFieldHelp(mContext.getString(R.string.msgs_help_sync_task_picture_title),
+                        mContext.getString(R.string.msgs_help_sync_task_picture_file));
+            }
+        });
+    }
 
     private void setSyncTaskFieldHelpListener(Dialog dialog, SyncTaskItem sti) {
         final ImageButton help_sync_option = (ImageButton) dialog.findViewById(R.id.edit_profile_sync_help);
@@ -3149,8 +3462,6 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
     }
-
-    ;
 
     private void setSyncFolderFieldHelpListener(Dialog dialog, final String f_type) {
         final ImageButton help_sync_folder = (ImageButton) dialog.findViewById(R.id.edit_sync_folder_dlg_help);
@@ -3177,9 +3488,67 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void checkSyncTaskOkButtonEnabled(Dialog dialog, String type, SyncTaskItem n_sti, TextView dlg_msg) {
+        final LinearLayout ll_file_filter = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_detail_view);
+
+//        final CheckedTextView ctvSyncEmptyDir = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_empty_directory);
+//        final CheckedTextView ctvSyncHiddenDir = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_hidden_directory);
+//        final CheckedTextView ctvSyncHiddenFile = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_hidden_file);
+
+        final LinearLayout ll_ctvProcessOverride = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_process_override_delete_file);
+        final LinearLayout ll_ctvConfirmOverride = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_confirm_override_delete_file);
+        final LinearLayout ll_ctvCopyByRename = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_use_copy_rename);
+
+//        final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
+//        final CheckedTextView ctvShowSpecialOption = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
+        final LinearLayout ll_ctvDoNotResetRemoteFile = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_do_mot_reset_remote_file_last_mod_time);
+
+        final LinearLayout ll_ctvUseSmbsyncLastMod = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_use_smbsync_last_mod_time);
+
+//        final CheckedTextView ctvRetry = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
+//        final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
+//        final CheckedTextView ctvTestMode = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_test_mode);
+
+        final LinearLayout ll_ctvDiffUseFileSize = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_diff_use_file_size);
+        final LinearLayout ll_ctDeterminChangedFileByTime = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_diff_use_last_mod_time);
+
+        final LinearLayout ll_diff_time_allowed_time = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_diff_file_determin_time_value_view);
+
+        final Button btn_archive_option = (Button) mDialog.findViewById(R.id.edit_sync_task_archive_option);
+
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
         String t_name_msg = checkTaskNameValidity(type, n_sti.getSyncTaskName(), dlg_msg, btn_ok);
         boolean error_detected = false;
+        if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+            ll_file_filter.setVisibility(LinearLayout.GONE);
+            btn_archive_option.setVisibility(Button.VISIBLE);
+
+            ll_ctvProcessOverride.setVisibility(CheckedTextView.GONE);
+//            ll_ctvConfirmOverride.setVisibility(CheckedTextView.GONE);
+            ll_ctvCopyByRename.setVisibility(CheckedTextView.GONE);
+
+            ll_ctvDoNotResetRemoteFile.setVisibility(CheckedTextView.GONE);
+            ll_ctvUseSmbsyncLastMod.setVisibility(CheckedTextView.GONE);
+
+            ll_ctvDiffUseFileSize.setVisibility(CheckedTextView.GONE);
+            ll_ctDeterminChangedFileByTime.setVisibility(CheckedTextView.GONE);
+
+            ll_diff_time_allowed_time.setVisibility(CheckedTextView.GONE);
+        } else {
+            ll_file_filter.setVisibility(LinearLayout.VISIBLE);
+            btn_archive_option.setVisibility(Button.GONE);
+
+            ll_ctvProcessOverride.setVisibility(CheckedTextView.VISIBLE);
+//            ll_ctvConfirmOverride.setVisibility(CheckedTextView.VISIBLE);
+            ll_ctvCopyByRename.setVisibility(CheckedTextView.VISIBLE);
+
+            ll_ctvDoNotResetRemoteFile.setVisibility(CheckedTextView.VISIBLE);
+            ll_ctvUseSmbsyncLastMod.setVisibility(CheckedTextView.VISIBLE);
+
+            ll_ctvDiffUseFileSize.setVisibility(CheckedTextView.VISIBLE);
+            ll_ctDeterminChangedFileByTime.setVisibility(CheckedTextView.VISIBLE);
+
+            ll_diff_time_allowed_time.setVisibility(CheckedTextView.VISIBLE);
+        }
         if (t_name_msg.equals("")) {
             String e_msg = checkMasterTargetCombination(dialog, n_sti);
             if (!e_msg.equals("")) {

@@ -37,7 +37,6 @@ import java.util.ArrayList;
 
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
-import com.sentaroh.android.Utilities.SafFileManager.SafFileItem;
 
 public class SyncThreadCopyFile {
 
@@ -123,8 +122,8 @@ public class SyncThreadCopyFile {
             if (sf != null) saf_name = sf.getName();
             stwa.util.addLogMsg("E", "SAF file not found error. path=" + to_file_path + ", SafFile=" + saf_name +
                     ", sdcard=" + stwa.gp.safMgr.getSdcardDirectory());
-            ArrayList<SafFileItem> sl = stwa.gp.safMgr.getSafList();
-            for (SafFileItem sfi : sl) {
+            ArrayList<SafFileManager.SafFileItem> sl = stwa.gp.safMgr.getSafList();
+            for (SafFileManager.SafFileItem sfi : sl) {
                 stwa.util.addLogMsg("E", "SafFileItem UUID=" + sfi.storageUuid + ", path=" + sfi.storageRootDirectory +
                         ", mount=" + sfi.storageIsMounted + ", sdcard=" + sfi.storageTypeSdcard);
             }
@@ -483,8 +482,6 @@ public class SyncThreadCopyFile {
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
-    ;
-
     static public int copyFileExternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                                  File mf, String to_dir, String file_name)
             throws IOException {
@@ -497,7 +494,8 @@ public class SyncThreadCopyFile {
         File t_dir = new File(to_dir);
         if (!t_dir.exists()) t_dir.mkdirs();
 
-        FileInputStream is = new FileInputStream(mf);
+        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
         FileOutputStream os = new FileOutputStream(out_file);
         BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
@@ -543,8 +541,6 @@ public class SyncThreadCopyFile {
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
-    ;
-
     static public int copyFileExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                                  File mf, String to_dir, String file_name)
             throws IOException {
@@ -563,14 +559,15 @@ public class SyncThreadCopyFile {
             if (sf != null) saf_name = sf.getName();
             stwa.util.addLogMsg("E", "SAF file not found error. path=" + to_file_path + ", SafFile=" + saf_name +
                     ", sdcard=" + stwa.gp.safMgr.getSdcardDirectory());
-            ArrayList<SafFileItem> sl = stwa.gp.safMgr.getSafList();
-            for (SafFileItem sfi : sl) {
+            ArrayList<SafFileManager.SafFileItem> sl = stwa.gp.safMgr.getSafList();
+            for (SafFileManager.SafFileItem sfi : sl) {
                 stwa.util.addLogMsg("E", "SafFileItem UUID=" + sfi.storageUuid + ", path=" + sfi.storageRootDirectory +
                         ", mount=" + sfi.storageIsMounted + ", sdcard=" + sfi.storageTypeSdcard);
             }
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-        FileInputStream is = new FileInputStream(mf);
+        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
         OutputStream os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
         BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
@@ -619,8 +616,6 @@ public class SyncThreadCopyFile {
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
-    ;
-
     static public int copyFileExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                             String from_dir, File mf, String to_dir, String file_name)
             throws IOException, JcifsException {
@@ -630,8 +625,6 @@ public class SyncThreadCopyFile {
             return copyFileExternalToSmbLargeBuffer(stwa, sti, from_dir, mf, to_dir, file_name);
         }
     }
-
-    ;
 
     static private int copyFileExternalToSmbSmallBuffer(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                         String from_dir, File mf, String to_dir, String file_name)
@@ -645,7 +638,8 @@ public class SyncThreadCopyFile {
         JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
         SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
-        FileInputStream is = new FileInputStream(mf);
+        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
         OutputStream ofs = out_file.getOutputStream();
 //		BufferedOutputStream ofs=new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
@@ -711,7 +705,8 @@ public class SyncThreadCopyFile {
         JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
         SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
-        FileInputStream is = new FileInputStream(mf);
+        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
         OutputStream os = out_file.getOutputStream();
         BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
@@ -891,8 +886,8 @@ public class SyncThreadCopyFile {
             if (sf != null) saf_name = sf.getName();
             stwa.util.addLogMsg("E", "SAF file not found error. path=" + to_file_path + ", SafFile=" + saf_name +
                     ", sdcard=" + stwa.gp.safMgr.getSdcardDirectory());
-            ArrayList<SafFileItem> sl = stwa.gp.safMgr.getSafList();
-            for (SafFileItem sfi : sl) {
+            ArrayList<SafFileManager.SafFileItem> sl = stwa.gp.safMgr.getSafList();
+            for (SafFileManager.SafFileItem sfi : sl) {
                 stwa.util.addLogMsg("E", "SafFileItem UUID=" + sfi.storageUuid + ", path=" + sfi.storageRootDirectory +
                         ", mount=" + sfi.storageIsMounted + ", sdcard=" + sfi.storageTypeSdcard);
             }

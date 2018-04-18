@@ -71,8 +71,6 @@ public class FileLastModifiedTime {
         return usable;
     }
 
-    ;
-
     final public static FileLastModifiedTimeEntry getLastModifiedLisItemByFilePath(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
             ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
@@ -99,8 +97,6 @@ public class FileLastModifiedTime {
         }
         return null;
     }
-
-    ;
 
     final public static boolean isCurrentListWasDifferent(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
@@ -144,8 +140,6 @@ public class FileLastModifiedTime {
         return result;
     }
 
-    ;
-
     final public static boolean isAddedListWasDifferent(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
             ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
@@ -168,8 +162,6 @@ public class FileLastModifiedTime {
         return result;
     }
 
-    ;
-
     final public static void addLastModifiedItem(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
             ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
@@ -181,8 +173,6 @@ public class FileLastModifiedTime {
                 (fp, l_lm, r_lm, true);
         new_last_modified_list.add(fli);
     }
-
-    ;
 
     final public static void deleteLastModifiedItem(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
@@ -205,8 +195,6 @@ public class FileLastModifiedTime {
             }
         }
     }
-
-    ;
 
     final public static boolean updateLastModifiedList(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
@@ -245,12 +233,12 @@ public class FileLastModifiedTime {
 
     }
 
-    ;
-
     final public static boolean isSetLastModifiedFunctional(String lmp) {
         boolean result = false;
         File lf = new File(lmp + "/" + "SMBSyncLastModifiedTest.temp");
         File dir = new File(lmp + "/");
+//        File lf = new File(lmp + "/Android/data/com.sentaroh.android.SMBSync2/files/SMBSyncLastModifiedTest.temp");
+//        File dir = new File(lmp + "/");
         try {
             if (dir.canWrite()) {
                 if (lf.exists()) lf.delete();
@@ -261,41 +249,26 @@ public class FileLastModifiedTime {
         } catch (IOException e) {
 //			e.printStackTrace();
         }
-//		Log.v("","result="+result+", lmp="+lmp);
         return result;
     }
 
-    ;
-
-
     final static private void mergeLastModifiedList(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
-            ArrayList<FileLastModifiedTimeEntry> new_last_modified_list
-    ) {
+            ArrayList<FileLastModifiedTimeEntry> new_last_modified_list) {
         curr_last_modified_list.addAll(new_last_modified_list);
         new_last_modified_list.clear();
         Collections.sort(curr_last_modified_list,
-                new Comparator<FileLastModifiedTimeEntry>() {
-                    @Override
-                    public int compare(FileLastModifiedTimeEntry ci, FileLastModifiedTimeEntry ni) {
-                        return ci.getFilePath().compareToIgnoreCase(ni.getFilePath());
-//				if (!ci.getFullFilePath().equals(ni.getFullFilePath()))
-//					return ci.getFullFilePath().compareToIgnoreCase(ni.getFullFilePath());
-//				else {
-//					return (int)(ni.getLocalFileLastModified()-ci.getLocalFileLastModified());
-//				}
-                    }
-                });
+            new Comparator<FileLastModifiedTimeEntry>() {
+                @Override
+                public int compare(FileLastModifiedTimeEntry ci, FileLastModifiedTimeEntry ni) {
+                    return ci.getFilePath().compareToIgnoreCase(ni.getFilePath());
+                }
+            });
     }
 
-    ;
-
     final public static void saveLastModifiedList(String dir,
-                                                  ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
-                                                  ArrayList<FileLastModifiedTimeEntry> new_last_modified_list
-    ) {
-//		long b_time=System.currentTimeMillis();
-//		Log.v("","size="+new_last_modified_list.size()+", name="+lmp);
+                ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
+                ArrayList<FileLastModifiedTimeEntry> new_last_modified_list) {
         if (new_last_modified_list.size() != 0) {
             mergeLastModifiedList(curr_last_modified_list, new_last_modified_list);
         }
@@ -320,8 +293,6 @@ public class FileLastModifiedTime {
             StringBuffer pl = new StringBuffer(512);
             String last_fp = "";
             String new_fp = "";
-//		    for (int i=0;i<save_last_modified_list.size();i++) {
-//	    		FileLastModifiedTimeEntry lfme=save_last_modified_list.get(i);
             for (FileLastModifiedTimeEntry lfme : curr_last_modified_list) {
                 new_fp = lfme.getFilePath();
                 if (!last_fp.equals(new_fp)) {
@@ -341,23 +312,18 @@ public class FileLastModifiedTime {
                         bw.append(pl);
                         pl.setLength(0);
                     } else {
-//		    			Log.v(APPLICATION_TAG,"LocalMountPoint deleted entry, path="+new_fp);
                     }
                 } else {
-//		    		Log.v(APPLICATION_TAG,"LocalMountPoint duplicate entry, path="+new_fp);
                 }
             }
-//		    bw.flush();
+		    bw.flush();
             bw.close();
             lf_save.delete();
             lf_tmp.renameTo(lf_save);
-//		    Log.v("","save elapsed time="+(System.currentTimeMillis()-b_time));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    ;
 
     final public static boolean isLastModifiedFileV1Exists(String dir) {
         boolean exists = false;
@@ -369,12 +335,9 @@ public class FileLastModifiedTime {
         return exists;
     }
 
-    ;
-
     final public static boolean loadLastModifiedList(String dir,
-                                                     ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
-                                                     ArrayList<FileLastModifiedTimeEntry> new_last_modified_list, NotifyEvent p_ntfy
-    ) {
+                             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
+                             ArrayList<FileLastModifiedTimeEntry> new_last_modified_list, NotifyEvent p_ntfy) {
         boolean list_was_corrupted = false;
         curr_last_modified_list.clear();
         new_last_modified_list.clear();
@@ -388,12 +351,9 @@ public class FileLastModifiedTime {
         return list_was_corrupted;
     }
 
-    ;
-
     final public static boolean loadLastModifiedListV1(String dir,
-                                                       ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
-                                                       ArrayList<FileLastModifiedTimeEntry> new_last_modified_list, NotifyEvent p_ntfy
-    ) {
+                               ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
+                               ArrayList<FileLastModifiedTimeEntry> new_last_modified_list, NotifyEvent p_ntfy) {
         curr_last_modified_list.clear();
         new_last_modified_list.clear();
         boolean list_was_corrupted = false;
@@ -413,7 +373,6 @@ public class FileLastModifiedTime {
             while ((line = br.readLine()) != null) {
                 l_array = line.split("\t");
                 if (l_array != null && l_array.length == 3) {
-//			    	Log.v("","line="+l_array[0]);
                     if (!last_fp.equals(l_array[0])) {
                         curr_last_modified_list.add(new FileLastModifiedTimeEntry(
                                 l_array[0], Long.valueOf(l_array[1]), Long.valueOf(l_array[2]), false));
@@ -425,15 +384,11 @@ public class FileLastModifiedTime {
                 }
             }
             br.close();
-//		    Log.v("","load elapsed time="+(System.currentTimeMillis()-b_time));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list_was_corrupted;
     }
-
-    ;
-
 
 }
 

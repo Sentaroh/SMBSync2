@@ -57,7 +57,7 @@
           />
     
     <item android:id="@+id/menu_top_select_storage"
-          android:title="Show storage selector" 
+          android:title="Show storage selector"
           />
-    
+
 </menu>

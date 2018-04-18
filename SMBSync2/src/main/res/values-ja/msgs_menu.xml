@@ -10,7 +10,7 @@
 	<string name="msgs_menu_kill">強制終了&#8230;</string>
 	<string name="msgs_menu_housekeep">管理ファイルの保守&#8230;</string>
 	<string name="msgs_menu_add_shortcut">ショートカットの追加</string>
-    <string name="msgs_menu_list_storage_info">ストレージ情報</string>
+    <string name="msgs_menu_list_storage_info">システム情報</string>
 	<string name="msgs_menu_battery_optimization_disabled">バッテリー最適化を有効にする&#8230;</string>
 	<string name="msgs_menu_battery_optimization_enabled">バッテリー最適化を無効にする&#8230;</string>
 	    

@@ -2353,7 +2353,7 @@ public class SyncThreadSyncFile {
 //											tf.setLastModified(mf.lastModified());
 //											SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList,stwa.newLastModifiedList,
 //													to_path, tf.lastModified(), mf.lastModified());
-                                            SyncThread.scanMediaFile(stwa, to_path);
+//                                            SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                             SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterAuth);
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(),
@@ -2391,7 +2391,7 @@ public class SyncThreadSyncFile {
 //											tf.setLastModified(mf.lastModified());
 //											SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList,stwa.newLastModifiedList,
 //													to_path, tf.lastModified(), mf.lastModified());
-                                            SyncThread.scanMediaFile(stwa, to_path);
+//                                            SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                         }
                                     } else {

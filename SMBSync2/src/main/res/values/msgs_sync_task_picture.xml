@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="msgs_sync_task_archive_option">Archive Option</string>
+    <string name="msgs_sync_task_archive_file_type">Archive the file type: jpg, gif, png, mp4, mov</string>
+    <string name="msgs_sync_task_archive_btn_title">Edit archive option</string>
+    <string name="msgs_sync_task_archive_retention_period">To archive the</string>
+    <string name="msgs_sync_task_archive_output_image">Following are the saved directories and file names(Date/Time is not a shoot time)</string>
+    <string name="msgs_sync_task_archive_rename_rule">Change the file name when archiving</string>
+    <string name="msgs_sync_task_archive_seq_number_title">Sequence number</string>
+    <string name="msgs_sync_task_archive_create_directory">Store the file in the directory(directory is created when does not exists)</string>
+    <string name="msgs_sync_task_archive_btn_title_date">Date</string>
+    <string name="msgs_sync_task_archive_btn_title_time">Time</string>
+    <string name="msgs_sync_task_archive_btn_title_original_name">Original Name</string>
+    <string name="msgs_sync_task_archive_btn_title_seq">Seq</string>
+
+    <string name="msgs_sync_task_archive_btn_title_year">Year</string>
+    <string name="msgs_sync_task_archive_btn_title_month">Month</string>
+    <string name="msgs_sync_task_archive_btn_title_day">Day</string>
+
+    <string name="msgs_sync_task_archive_suffix_seq_digit_prompt_title">Select suffix seq number range</string>
+    <string name="msgs_sync_task_archive_suffix_seq_digit_0">Do not used</string>
+    <string name="msgs_sync_task_archive_suffix_seq_digit_5">Append 5 digits sequence number(00001-99999)</string>
+    <string name="msgs_sync_task_archive_suffix_seq_digit_6">Append 6 digits sequence number(000001-999999)</string>
+
+    <string name="msgs_sync_task_archive_period_prompt_title">Select photos to archive</string>
+    <string name="msgs_sync_task_archive_period_0_days">Immediate all</string>
+    <string name="msgs_sync_task_archive_period_7_days">Older than 7 days</string>
+    <string name="msgs_sync_task_archive_period_30_days">Older than 30 days</string>
+    <string name="msgs_sync_task_archive_period_60_days">Older than 60 days</string>
+    <string name="msgs_sync_task_archive_period_90_days">Older than 90 days</string>
+    <string name="msgs_sync_task_archive_period_180_days">Older than 180 days</string>
+    <string name="msgs_sync_task_archive_period_1_years">Older than 1 years</string>
+
+</resources>

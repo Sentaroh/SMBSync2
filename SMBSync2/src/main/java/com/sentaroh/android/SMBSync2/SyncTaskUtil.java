@@ -204,32 +204,34 @@ public class SyncTaskUtil {
         boolean result = false;
 
         File lf = new File(fpath);
-        if (lf.exists() && lf.canRead()) {
+        if (lf.exists() && lf.isFile() && lf.canRead()) {
             try {
                 BufferedReader br;
                 br = new BufferedReader(new FileReader(fpath), 8192);
                 if (br!=null) {
                     String dec_str = "";
                     String pl = br.readLine();
-                    String enc_str = pl.substring(6);
-                    if (enc_str.startsWith("ENC")) {
-                        pl = br.readLine();
-                        enc_str = pl.substring(6);
-                        byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
-                        CipherParms cp = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefix + mGp.profilePassword);
-                        dec_str = EncryptUtil.decrypt(enc_array, cp);
-                        if (dec_str == null) {
-                            CipherParms cp_old = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefixOld + mGp.profilePassword);
-                            dec_str = EncryptUtil.decrypt(enc_array, cp_old);
+                    if (pl!=null) {
+                        String enc_str = pl.substring(6);
+                        if (enc_str.startsWith("ENC")) {
+                            pl = br.readLine();
+                            enc_str = pl.substring(6);
+                            byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
+                            CipherParms cp = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefix + mGp.profilePassword);
+                            dec_str = EncryptUtil.decrypt(enc_array, cp);
+                            if (dec_str == null) {
+                                CipherParms cp_old = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefixOld + mGp.profilePassword);
+                                dec_str = EncryptUtil.decrypt(enc_array, cp_old);
+                            }
+                        } else {
+                            pl = br.readLine();
+                            if (pl.length()>15) dec_str = pl.substring(6);
+                            else dec_str="";
                         }
-                    } else {
-                        pl = br.readLine();
-                        if (pl.length()>15) dec_str = pl.substring(6);
-                        else dec_str="";
-                    }
-                    if (!dec_str.equals("")) {
-                        String[] parm = dec_str.split("\t");
-                        result = (parm[0].equals("Default") && parm[1].equals("S"));
+                        if (!dec_str.equals("")) {
+                            String[] parm = dec_str.split("\t");
+                            result = (parm[0].equals("Default") && parm[1].equals("S"));
+                        }
                     }
                     br.close();
                 }
@@ -5048,6 +5050,14 @@ public class SyncTaskUtil {
             if (!parm[66].equals("") && !parm[66].equals("end")) stli.setMasterSmbIpcSigningEnforced((parm[66].equals("1") ? true : false));
             if (!parm[67].equals("") && !parm[67].equals("end")) stli.setTargetSmbIpcSigningEnforced((parm[67].equals("1") ? true : false));
 
+            if (!parm[68].equals("") && !parm[68].equals("end")) stli.setArchiveRenameFileTemplate(parm[68]);
+            if (!parm[69].equals("") && !parm[69].equals("end")) stli.setArchiveUseRename((parm[69].equals("1") ? true : false));
+            if (!parm[70].equals("") && !parm[70].equals("end")) stli.setArchiveRetentionPeriod(Integer.parseInt(parm[70]));
+            if (!parm[71].equals("") && !parm[71].equals("end")) stli.setArchiveCreateDirectory((parm[71].equals("1") ? true : false));
+            if (!parm[72].equals("") && !parm[72].equals("end")) stli.setArchiveSuffixOption(Integer.parseInt(parm[72]));
+            if (!parm[73].equals("") && !parm[73].equals("end")) stli.setArchiveCreateDirectoryTemplate(parm[73]);
+            if (!parm[74].equals("") && !parm[74].equals("end")) stli.setArchiveEnabled((parm[74].equals("1") ? true : false));
+
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -5327,7 +5337,15 @@ public class SyncTaskUtil {
                             (item.isMasterSmbIpcSigningEnforced() ? "1" : "0") + "\t" +         //66
                             (item.isTargetSmbIpcSigningEnforced() ? "1" : "0") + "\t" +         //67
 
-                            "end"
+                            (item.getArchiveRenameFileTemplate()) + "\t" +                      //68
+                            (item.isArchiveUseRename() ? "1" : "0") + "\t" +            //69
+                            (item.getArchiveRetentionPeriod()) + "\t" +                         //70
+                            (item.isArchiveCreateDirectory() ? "1" : "0") + "\t" +              //71
+                            (item.getArchiveSuffixOption()) + "\t" +                            //72
+                            (item.getArchiveCreateDirectoryTemplate()) + "\t" +                 //73
+                            (item.isArchiveEnabled() ? "1" : "0") + "\t" +                      //73
+
+                    "end"
                     ;
 
 //					Log.v("","write pl="+pl);

@@ -138,14 +138,27 @@
                        android:paddingLeft="5dp"
                        android:textAppearance="?android:attr/textAppearanceMedium" />
                </LinearLayout>
-
-               <Button
-                   android:id="@+id/edit_sync_task_change_master_and_target_btn"
-                   android:layout_width="match_parent"
+               <LinearLayout
+                   android:layout_width="fill_parent"
                    android:layout_height="wrap_content"
-                   android:layout_weight="0.05"
-                   android:text="@string/msgs_profile_sync_task_dlg_change_master_and_target"
-                   android:textAppearance="?android:attr/textAppearanceMedium" />
+                   android:orientation="horizontal" >
+                   <Button
+                       android:id="@+id/edit_sync_task_archive_option"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:text="@string/msgs_sync_task_archive_btn_title"
+                       android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                   <Button
+                       android:id="@+id/edit_sync_task_change_master_and_target_btn"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:layout_gravity="center_vertical"
+                       android:text="@string/msgs_profile_sync_task_dlg_change_master_and_target"
+                       android:textAppearance="?android:attr/textAppearanceMedium" />
+               </LinearLayout>
 
                <TextView
                    android:layout_width="wrap_content"
