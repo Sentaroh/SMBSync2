@@ -2626,6 +2626,7 @@ public class SyncTaskEditor extends DialogFragment {
 //						n_sti.setMasterFolderUseInternalUsbFolder(nsfev.folder_use_usb_folder);
 //						Log.v("","mdi="+n_sti.getMasterDirectoryName());
                         master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
+                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
 
                         setSyncOptionSpinner(spinnerSyncOption, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
@@ -2779,10 +2780,10 @@ public class SyncTaskEditor extends DialogFragment {
                         n_sti.setTargetZipOutputFileName(nsfev.zip_file_name);
                         n_sti.setTargetZipPassword(nsfev.zip_file_password);
 
+                        master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                         target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
 
-                        if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP))
-                            swap_master_target.setEnabled(false);
+                        if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) swap_master_target.setEnabled(false);
                         else swap_master_target.setEnabled(true);
 
                         setSyncOptionSpinner(spinnerSyncOption, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
@@ -2922,6 +2923,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_cancel = (Button) mDialog.findViewById(R.id.edit_profile_sync_dlg_btn_cancel);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                mGp.syncTaskAdapter.notifyDataSetChanged();
                 if (btn_ok.isEnabled()) {
                     NotifyEvent ntfy = new NotifyEvent(mContext);
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
