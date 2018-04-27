@@ -38,13 +38,13 @@ import java.util.ArrayList;
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
 
-import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
+import static com.sentaroh.android.SMBSync2.Constants.*;
 
 public class SyncThreadCopyFile {
 
     public final static int SHOW_PROGRESS_THRESHOLD_VALUE = 1024 * 1024 * 4;
 
-    public final static int IO_AREA_SIZE = 1024 * 4 * 256;
+    public final static int IO_AREA_SIZE = 1024 * 1024;
 
     public final static int LARGE_BUFFERED_STREAM_BUFFER_SIZE = 1024 * 1024 * 4;
 
@@ -192,91 +192,10 @@ public class SyncThreadCopyFile {
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
-    ;
-
     static public int copyFileInternalToSmb(SyncThreadWorkArea stwa,
-                                            SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name)
-            throws IOException, JcifsException {
-        if (sti.isSyncUseSmallIoBuffer()) {
-            return copyFileInternalToSmbSmallBuffer(stwa, sti, from_dir, mf, to_dir, file_name);
-        } else {
-            return copyFileInternalToSmbLargeBuffer(stwa, sti, from_dir, mf, to_dir, file_name);
-        }
-    }
-
-    ;
-
-    static private int copyFileInternalToSmbSmallBuffer(SyncThreadWorkArea stwa,
                                                         SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name)
             throws IOException, JcifsException {
-        if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", "copyFileInternalToSmbSmallBuffer from_dir=" + from_dir + ", to_dir=" + to_dir + ", name=" + file_name);
-        long read_begin_time = System.currentTimeMillis();
-        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
-
-        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
-
-        FileInputStream is = new FileInputStream(mf);
-        BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
-        OutputStream ofs = out_file.getOutputStream();
-//		BufferedOutputStream ofs=new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
-
-        int buffer_read_bytes = 0;
-        long file_read_bytes = 0;
-        long file_size = mf.length();
-        boolean show_prog = (file_size > SHOW_PROGRESS_THRESHOLD_VALUE);
-        byte[] buffer = new byte[1024 * 16];
-        while ((buffer_read_bytes = ifs.read(buffer)) > 0) {
-            ofs.write(buffer, 0, buffer_read_bytes);
-            file_read_bytes += buffer_read_bytes;
-            if (show_prog && file_size > file_read_bytes) {
-                SyncThread.showProgressMsg(stwa, sti.getSyncTaskName(), file_name + " " +
-                        String.format(stwa.msgs_mirror_task_file_copying, (file_read_bytes * 100) / file_size));
-            }
-            if (!stwa.gp.syncThreadControl.isEnabled()) {
-                ifs.close();
-                ofs.flush();
-                ofs.close();
-                if (sti.isSyncUseFileCopyByTempName()) out_file.delete();
-                return SyncTaskItem.SYNC_STATUS_CANCEL;
-            }
-        }
-        ifs.close();
-        ofs.flush();
-        ofs.close();
-        try {
-            if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
-        } catch(JcifsException e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_smb_folder_file_set_last_modified_failed));
-        }
-        if (sti.isSyncUseFileCopyByTempName()) {
-            if (out_dest.exists()) out_dest.delete();
-            out_file.renameTo(out_dest);
-        }
-//        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
-
-        long file_read_time = System.currentTimeMillis() - read_begin_time;
-
-        if (stwa.gp.settingDebugLevel >= 1)
-            stwa.util.addDebugMsg(1, "I", to_file_dest + " " + file_read_bytes + " bytes transfered in ",
-                    file_read_time + " mili seconds at " +
-                            SyncThread.calTransferRate(file_read_bytes, file_read_time));
-        stwa.totalTransferByte += file_read_bytes;
-        stwa.totalTransferTime += file_read_time;
-
-        return SyncTaskItem.SYNC_STATUS_SUCCESS;
-    }
-
-    static private int copyFileInternalToSmbLargeBuffer(SyncThreadWorkArea stwa,
-                                                        SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name)
-            throws IOException, JcifsException {
-        if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", "copyFileInternalToSmbLargeBuffer from_dir=" + from_dir + ", to_dir=" + to_dir + ", name=" + file_name);
+        stwa.util.addDebugMsg(2, "I", "copyFileInternalToSmbLargeBuffer from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -291,16 +210,22 @@ public class SyncThreadCopyFile {
 //        jcifs.smb.SmbFile out_file=jout_file.getSmb1File();
         SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
+        int buffer_size=LARGE_BUFFERED_STREAM_BUFFER_SIZE, io_area_size=IO_AREA_SIZE;
+        if (sti.isSyncUseSmallIoBuffer()) {
+            buffer_size=1024*16;
+            io_area_size=1024*16;
+        }
+
         FileInputStream is = new FileInputStream(mf);
-        BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
+        BufferedInputStream ifs = new BufferedInputStream(is, buffer_size);
         OutputStream os = out_file.getOutputStream();
-        BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
+        BufferedOutputStream ofs = new BufferedOutputStream(os, buffer_size);
 
         int buffer_read_bytes = 0;
         long file_read_bytes = 0;
         long file_size = mf.length();
         boolean show_prog = (file_size > SHOW_PROGRESS_THRESHOLD_VALUE);
-        byte[] buffer = new byte[IO_AREA_SIZE];
+        byte[] buffer = new byte[io_area_size];
         while ((buffer_read_bytes = ifs.read(buffer)) > 0) {
             ofs.write(buffer, 0, buffer_read_bytes);
             file_read_bytes += buffer_read_bytes;
@@ -344,92 +269,14 @@ public class SyncThreadCopyFile {
     }
 
     static public int copyFileSmbToSmb(SyncThreadWorkArea stwa,
-                                       SyncTaskItem sti, String from_dir, String to_dir, String file_name)
+                                                   SyncTaskItem sti, String from_dir, String to_dir, String file_name)
             throws IOException, JcifsException {
+        stwa.util.addDebugMsg(2, "I", "copyFileSmbToSmbLargeBuffer from_dir=", from_dir, ", to_dir=", to_dir,", name=", file_name);
+        int buffer_size=LARGE_BUFFERED_STREAM_BUFFER_SIZE, io_area_size=IO_AREA_SIZE;
         if (sti.isSyncUseSmallIoBuffer()) {
-            return copyFileSmbToSmbSmallBuffer(stwa, sti, from_dir, to_dir, file_name);
-        } else {
-            return copyFileSmbToSmbLargeBuffer(stwa, sti, from_dir, to_dir, file_name);
+            buffer_size=1024*16-1;
+            io_area_size=1024*16-1;
         }
-    }
-
-    static private int copyFileSmbToSmbSmallBuffer(SyncThreadWorkArea stwa,
-                                                   SyncTaskItem sti, String from_dir, String to_dir, String file_name)
-            throws IOException, JcifsException {
-        if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", "copyFileSmbToSmbSmallBuffer from_dir=" + from_dir + ", to_dir=" + to_dir + ", name=" + file_name);
-        long read_begin_time = System.currentTimeMillis();
-        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
-
-        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
-
-        String in_file_path = from_dir + "/" + file_name;
-        JcifsFile mf = new JcifsFile(in_file_path, stwa.masterAuth);
-
-        InputStream is = mf.getInputStream();
-        BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
-
-        OutputStream ofs = out_file.getOutputStream();
-//		BufferedOutputStream ofs=new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
-
-        int buffer_read_bytes = 0;
-        long file_read_bytes = 0;
-        long file_size = mf.length();
-        boolean show_prog = (file_size > SHOW_PROGRESS_THRESHOLD_VALUE);
-        byte[] buffer = new byte[1024 * 16];
-        while ((buffer_read_bytes = ifs.read(buffer)) > 0) {
-            ofs.write(buffer, 0, buffer_read_bytes);
-            file_read_bytes += buffer_read_bytes;
-            if (show_prog && file_size > file_read_bytes) {
-                SyncThread.showProgressMsg(stwa, sti.getSyncTaskName(), file_name + " " +
-                        String.format(stwa.msgs_mirror_task_file_copying, (file_read_bytes * 100) / file_size));
-            }
-            if (!stwa.gp.syncThreadControl.isEnabled()) {
-                ifs.close();
-                ofs.flush();
-                ofs.close();
-                if (sti.isSyncUseFileCopyByTempName()) out_file.delete();
-                return SyncTaskItem.SYNC_STATUS_CANCEL;
-            }
-        }
-        ifs.close();
-        ofs.flush();
-        ofs.close();
-        try {
-            if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.getLastModified());
-        } catch(JcifsException e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_smb_folder_file_set_last_modified_failed));
-        }
-        if (sti.isSyncUseFileCopyByTempName()) {
-            if (out_dest.exists()) out_dest.delete();
-            out_file.renameTo(out_dest);
-        }
-//        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.getLastModified());
-
-        long file_read_time = System.currentTimeMillis() - read_begin_time;
-
-        if (stwa.gp.settingDebugLevel >= 1)
-            stwa.util.addDebugMsg(1, "I", to_file_dest + " " + file_read_bytes + " bytes transfered in ",
-                    file_read_time + " mili seconds at " +
-                            SyncThread.calTransferRate(file_read_bytes, file_read_time));
-        stwa.totalTransferByte += file_read_bytes;
-        stwa.totalTransferTime += file_read_time;
-
-        return SyncTaskItem.SYNC_STATUS_SUCCESS;
-    }
-
-    ;
-
-    static private int copyFileSmbToSmbLargeBuffer(SyncThreadWorkArea stwa,
-                                                   SyncTaskItem sti, String from_dir, String to_dir, String file_name)
-            throws IOException, JcifsException {
-        if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", "copyFileSmbToSmbLargeBuffer from_dir=" + from_dir + ", to_dir=" + to_dir + ", name=" + file_name);
 
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -444,16 +291,16 @@ public class SyncThreadCopyFile {
         JcifsFile mf = new JcifsFile(in_file_path, stwa.masterAuth);
 
         InputStream is = mf.getInputStream();
-        BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
+        BufferedInputStream ifs = new BufferedInputStream(is, buffer_size);
 
         OutputStream os = out_file.getOutputStream();
-        BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
+        BufferedOutputStream ofs = new BufferedOutputStream(os, buffer_size);
 
         int buffer_read_bytes = 0;
         long file_read_bytes = 0;
         long file_size = mf.length();
         boolean show_prog = (file_size > SHOW_PROGRESS_THRESHOLD_VALUE);
-        byte[] buffer = new byte[IO_AREA_SIZE];
+        byte[] buffer = new byte[io_area_size];
         while ((buffer_read_bytes = ifs.read(buffer)) > 0) {
             ofs.write(buffer, 0, buffer_read_bytes);
             file_read_bytes += buffer_read_bytes;
@@ -642,20 +489,17 @@ public class SyncThreadCopyFile {
     }
 
     static public int copyFileExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
-                                            String from_dir, File mf, String to_dir, String file_name)
+                                                        String from_dir, File mf, String to_dir, String file_name)
             throws IOException, JcifsException {
+        long read_begin_time = System.currentTimeMillis();
+        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
+
+        int buffer_size=LARGE_BUFFERED_STREAM_BUFFER_SIZE, io_area_size=IO_AREA_SIZE;
         if (sti.isSyncUseSmallIoBuffer()) {
-            return copyFileExternalToSmbSmallBuffer(stwa, sti, from_dir, mf, to_dir, file_name);
-        } else {
-            return copyFileExternalToSmbLargeBuffer(stwa, sti, from_dir, mf, to_dir, file_name);
+            buffer_size=1024*16-1;
+            io_area_size=1024*16-1;
         }
-    }
 
-    static private int copyFileExternalToSmbSmallBuffer(SyncThreadWorkArea stwa, SyncTaskItem sti,
-                                                        String from_dir, File mf, String to_dir, String file_name)
-            throws IOException, JcifsException {
-        long read_begin_time = System.currentTimeMillis();
-        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
         JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
         String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
@@ -665,82 +509,15 @@ public class SyncThreadCopyFile {
 
         SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
         InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
-        BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
-        OutputStream ofs = out_file.getOutputStream();
-//		BufferedOutputStream ofs=new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
-
-        int buffer_read_bytes = 0;
-        long file_read_bytes = 0;
-        long file_size = mf.length();
-        boolean show_prog = (file_size > SHOW_PROGRESS_THRESHOLD_VALUE);
-        byte[] buffer = new byte[1024 * 16];
-        while ((buffer_read_bytes = ifs.read(buffer)) > 0) {
-            ofs.write(buffer, 0, buffer_read_bytes);
-            file_read_bytes += buffer_read_bytes;
-            if (show_prog && file_size > file_read_bytes) {
-                SyncThread.showProgressMsg(stwa, sti.getSyncTaskName(), file_name + " " +
-                        String.format(stwa.msgs_mirror_task_file_copying, (file_read_bytes * 100) / file_size));
-            }
-            if (!stwa.gp.syncThreadControl.isEnabled()) {
-                ifs.close();
-                ofs.flush();
-                ofs.close();
-                if (sti.isSyncUseFileCopyByTempName()) out_file.delete();
-                return SyncTaskItem.SYNC_STATUS_CANCEL;
-            }
-        }
-        ifs.close();
-        ofs.flush();
-        ofs.close();
-        try {
-            if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.lastModified());
-        } catch(JcifsException e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_smb_folder_file_set_last_modified_failed));
-        }
-        if (sti.isSyncUseFileCopyByTempName()) {
-            if (out_dest.exists()) out_dest.delete();
-            out_file.renameTo(out_dest);
-        }
-//        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
-
-        long file_read_time = System.currentTimeMillis() - read_begin_time;
-
-        if (stwa.gp.settingDebugLevel >= 1)
-            stwa.util.addDebugMsg(1, "I", to_file_dest + " " + file_read_bytes + " bytes transfered in ",
-                    file_read_time + " mili seconds at " +
-                            SyncThread.calTransferRate(file_read_bytes, file_read_time));
-        stwa.totalTransferByte += file_read_bytes;
-        stwa.totalTransferTime += file_read_time;
-
-        return SyncTaskItem.SYNC_STATUS_SUCCESS;
-    }
-
-    ;
-
-    static private int copyFileExternalToSmbLargeBuffer(SyncThreadWorkArea stwa, SyncTaskItem sti,
-                                                        String from_dir, File mf, String to_dir, String file_name)
-            throws IOException, JcifsException {
-        long read_begin_time = System.currentTimeMillis();
-        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
-
-        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
-        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
-
-        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
-        BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
+        BufferedInputStream ifs = new BufferedInputStream(is, buffer_size);
         OutputStream os = out_file.getOutputStream();
-        BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
+        BufferedOutputStream ofs = new BufferedOutputStream(os, buffer_size);
 
         int buffer_read_bytes = 0;
         long file_read_bytes = 0;
         long file_size = mf.length();
         boolean show_prog = (file_size > SHOW_PROGRESS_THRESHOLD_VALUE);
-        byte[] buffer = new byte[IO_AREA_SIZE];
+        byte[] buffer = new byte[io_area_size];
         while ((buffer_read_bytes = ifs.read(buffer)) > 0) {
             ofs.write(buffer, 0, buffer_read_bytes);
             file_read_bytes += buffer_read_bytes;
