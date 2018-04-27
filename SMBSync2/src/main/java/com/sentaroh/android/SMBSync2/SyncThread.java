@@ -1744,8 +1744,7 @@ public class SyncThread extends Thread {
                                                               ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
                                                               ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
                                                               String fp) {
-        FileLastModifiedTime.deleteLastModifiedItem(
-                curr_last_modified_list, new_last_modified_list, fp);
+        if (FileLastModifiedTime.deleteLastModifiedItem(curr_last_modified_list, new_last_modified_list, fp)) stwa.localFileLastModListModified = true;
         if (stwa.gp.settingDebugLevel >= 3)
             stwa.util.addDebugMsg(3, "I", "deleteLocalFileLastModifiedEntry entry=" + fp);
 

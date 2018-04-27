@@ -174,10 +174,11 @@ public class FileLastModifiedTime {
         new_last_modified_list.add(fli);
     }
 
-    final public static void deleteLastModifiedItem(
+    final public static boolean deleteLastModifiedItem(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
             ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
             String fp) {
+        boolean deleted=false;
         int idx = Collections.binarySearch(curr_last_modified_list,
                 new FileLastModifiedTimeEntry(fp, 0, 0, false),
                 new Comparator<FileLastModifiedTimeEntry>() {
@@ -187,13 +188,18 @@ public class FileLastModifiedTime {
                         return ci.getFilePath().compareToIgnoreCase(ni.getFilePath());
                     }
                 });
-        if (idx >= 0) curr_last_modified_list.remove(idx);
+        if (idx >= 0) {
+            curr_last_modified_list.remove(idx);
+            deleted=true;
+        }
         else for (FileLastModifiedTimeEntry fli : new_last_modified_list) {
             if (fli.getFilePath().equals(fp)) {
                 new_last_modified_list.remove(fli);
+                deleted=true;
                 break;
             }
         }
+        return deleted;
     }
 
     final public static boolean updateLastModifiedList(
