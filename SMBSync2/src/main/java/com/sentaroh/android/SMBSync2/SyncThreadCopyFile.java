@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
 
+import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
+
 public class SyncThreadCopyFile {
 
     public final static int SHOW_PROGRESS_THRESHOLD_VALUE = 1024 * 1024 * 4;
@@ -51,8 +53,15 @@ public class SyncThreadCopyFile {
             throws IOException {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
+//        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
+//        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
+//
+//        File out_file = new File(to_file_path);
+//        File t_dir = new File(to_dir);
+//        if (!t_dir.exists()) t_dir.mkdirs();
+
+        String to_file_dest = to_dir + "/" + file_name;
+        String to_file_path = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
 
         File out_file = new File(to_file_path);
         File t_dir = new File(to_dir);
@@ -86,11 +95,16 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (sti.isSyncUseFileCopyByTempName()) {
-            File out_dest = new File(to_file_dest);
-            if (out_dest.exists()) out_dest.delete();
-            out_file.renameTo(out_dest);
-        }
+//        if (sti.isSyncUseFileCopyByTempName()) {
+//            File out_dest = new File(to_file_dest);
+//            if (out_dest.exists()) out_dest.delete();
+//            out_file.renameTo(out_dest);
+//        }
+        out_file.setLastModified(mf.lastModified());
+        File out_dest = new File(to_file_dest);
+        if (out_dest.exists()) out_dest.delete();
+        out_file.renameTo(out_dest);
+
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
         if (stwa.gp.settingDebugLevel >= 1)
@@ -487,8 +501,15 @@ public class SyncThreadCopyFile {
             throws IOException {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
+//        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
+//        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
+//
+//        File out_file = new File(to_file_path);
+//        File t_dir = new File(to_dir);
+//        if (!t_dir.exists()) t_dir.mkdirs();
+
+        String to_file_dest = to_dir + "/" + file_name;
+        String to_file_path = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
 
         File out_file = new File(to_file_path);
         File t_dir = new File(to_dir);
@@ -523,11 +544,15 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (sti.isSyncUseFileCopyByTempName()) {
-            File out_dest = new File(to_file_dest);
-            if (out_dest.exists()) out_dest.delete();
-            out_file.renameTo(out_dest);
-        }
+//        if (sti.isSyncUseFileCopyByTempName()) {
+//            File out_dest = new File(to_file_dest);
+//            if (out_dest.exists()) out_dest.delete();
+//            out_file.renameTo(out_dest);
+//        }
+        out_file.setLastModified(mf.lastModified());
+        File out_dest = new File(to_file_dest);
+        if (out_dest.exists()) out_dest.delete();
+        out_file.renameTo(out_dest);
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -809,8 +834,15 @@ public class SyncThreadCopyFile {
             throws IOException, JcifsException {
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
+//        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
+//        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
+//
+//        File out_file = new File(to_file_path);
+//        File t_dir = new File(to_dir);
+//        if (!t_dir.exists()) t_dir.mkdirs();
+
+        String to_file_dest = to_dir + "/" + file_name;
+        String to_file_path = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
 
         File out_file = new File(to_file_path);
         File t_dir = new File(to_dir);
@@ -845,11 +877,16 @@ public class SyncThreadCopyFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-        if (sti.isSyncUseFileCopyByTempName()) {
-            File out_dest = new File(to_file_dest);
-            if (out_dest.exists()) out_dest.delete();
-            out_file.renameTo(out_dest);
-        }
+//        if (sti.isSyncUseFileCopyByTempName()) {
+//            File out_dest = new File(to_file_dest);
+//            if (out_dest.exists()) out_dest.delete();
+//            out_file.renameTo(out_dest);
+//        }
+
+        out_file.setLastModified(mf.getLastModified());
+        File out_dest = new File(to_file_dest);
+        if (out_dest.exists()) out_dest.delete();
+        out_file.renameTo(out_dest);
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 

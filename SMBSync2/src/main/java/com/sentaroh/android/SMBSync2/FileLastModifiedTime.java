@@ -235,10 +235,10 @@ public class FileLastModifiedTime {
 
     final public static boolean isSetLastModifiedFunctional(String lmp) {
         boolean result = false;
-        File lf = new File(lmp + "/" + "SMBSyncLastModifiedTest.temp");
-        File dir = new File(lmp + "/");
-//        File lf = new File(lmp + "/Android/data/com.sentaroh.android.SMBSync2/files/SMBSyncLastModifiedTest.temp");
+//        File lf = new File(lmp + "/" + "SMBSyncLastModifiedTest.temp");
 //        File dir = new File(lmp + "/");
+        File lf = new File(lmp + "/Android/data/com.sentaroh.android.SMBSync2/files/SMBSyncLastModifiedTest.temp");
+        File dir = new File(lmp + "/");
         try {
             if (dir.canWrite()) {
                 if (lf.exists()) lf.delete();

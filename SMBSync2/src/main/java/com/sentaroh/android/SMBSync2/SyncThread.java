@@ -1869,8 +1869,20 @@ public class SyncThread extends Thread {
             if (sti.isSyncDifferentFileByTime()) {
                 if (stwa.setLastModifiedIsFunctional) {//Use lastModified
                     if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
-                        diff = true;
-                    } else diff = false;
+//                        diff = true;
+                        String lfp = lf_path;
+                        boolean t_diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
+                                stwa.currLastModifiedList,
+                                stwa.newLastModifiedList,
+                                lfp, lf_time, hf_time);
+                        if (t_diff) {
+                            diff = true;
+                        } else {
+                            diff = false;
+                        }
+                    } else {
+                        diff = false;
+                    }
                 } else {//Use Filelist
                     String lfp = lf_path;
                     diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
