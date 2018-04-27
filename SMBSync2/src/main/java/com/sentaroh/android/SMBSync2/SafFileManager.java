@@ -414,6 +414,7 @@ public class SafFileManager {
 			rsi.storageUuid=uuid;
 
             synchronized(removableStorageList) {
+                removableStorageList.clear();
                 removableStorageList.add(rsi);
             }
 			saveSafFileList();
