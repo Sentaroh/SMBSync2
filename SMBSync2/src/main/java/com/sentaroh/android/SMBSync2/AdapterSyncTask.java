@@ -28,6 +28,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 import java.util.ArrayList;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
+import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThemeUtil;
 

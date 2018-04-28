@@ -37,6 +37,7 @@ import java.util.ArrayList;
 
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
+import com.sentaroh.android.Utilities.SafFileManager;
 
 import static com.sentaroh.android.SMBSync2.Constants.*;
 
