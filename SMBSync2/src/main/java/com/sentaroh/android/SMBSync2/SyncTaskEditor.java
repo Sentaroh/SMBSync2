@@ -2297,6 +2297,15 @@ public class SyncTaskEditor extends DialogFragment {
             public void onClick(View v) {
                 boolean isChecked = !ctvSyncFileTypeAudio.isChecked();
                 ctvSyncFileTypeAudio.setChecked(isChecked);
+                if (isChecked) {
+                    String f_ext="", sep="";
+                    for(String item:SYNC_FILE_TYPE_AUDIO) {
+                        f_ext+=sep+item;
+                        sep=", ";
+                    }
+                    mCommonDlg.showCommonDialog(false, "I",
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_file_type_add_filter_title),f_ext,null );
+                }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
         });
@@ -2308,6 +2317,15 @@ public class SyncTaskEditor extends DialogFragment {
             public void onClick(View v) {
                 boolean isChecked = !ctvSyncFileTypeImage.isChecked();
                 ctvSyncFileTypeImage.setChecked(isChecked);
+                if (isChecked) {
+                    String f_ext="", sep="";
+                    for(String item:SYNC_FILE_TYPE_IMAGE) {
+                        f_ext+=sep+item;
+                        sep=", ";
+                    }
+                    mCommonDlg.showCommonDialog(false, "I",
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_file_type_add_filter_title),f_ext,null );
+                }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
         });
@@ -2319,6 +2337,15 @@ public class SyncTaskEditor extends DialogFragment {
             public void onClick(View v) {
                 boolean isChecked = !ctvSyncFileTypeVideo.isChecked();
                 ctvSyncFileTypeVideo.setChecked(isChecked);
+                if (isChecked) {
+                    String f_ext="", sep="";
+                    for(String item:SYNC_FILE_TYPE_VIDEO) {
+                        f_ext+=sep+item;
+                        sep=", ";
+                    }
+                    mCommonDlg.showCommonDialog(false, "I",
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_file_type_add_filter_title),f_ext,null );
+                }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
         });

@@ -134,6 +134,6 @@ public class Constants {
 						"*.pgm", "*.png", "*.pnm", "*.ppm", "*.ras", "*.rgb", "*.svg", "*.tif", "*.tiff", "*.wbmp", "*.xbm", 
 						"*.xpm", "*.xwd"};
 	public static final String[] SYNC_FILE_TYPE_VIDEO=
-			new String[]{"*.avi", "*.m4u", "*.mov", "*.movie", "*.mpe", "*.mpeg", "*.mpg", "*.mxu", "*.qt", "*.wmv"};
+			new String[]{"*.avi", "*.m4u", "*.mov", "*.mp4", "*.movie", "*.mpe", "*.mpeg", "*.mpg", "*.mxu", "*.qt", "*.wmv"};
 
 }
