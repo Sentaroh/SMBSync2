@@ -161,7 +161,7 @@ public class ActivityMain extends AppCompatActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mGp = (GlobalParameters) getApplication();
+        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         mContext = getApplicationContext();
         mActivity = this;
         if (mGp.themeColorList == null) {

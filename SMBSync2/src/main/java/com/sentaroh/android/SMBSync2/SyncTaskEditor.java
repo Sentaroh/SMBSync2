@@ -174,7 +174,7 @@ public class SyncTaskEditor extends DialogFragment {
         if (mContext == null) mContext = this.getActivity();
         mFragment = this;
         mFragMgr = this.getFragmentManager();
-        mGp = (GlobalParameters) getActivity().getApplication();
+        mGp = (GlobalParameters) getActivity().getApplicationContext();//getApplication();
         if (mUtil == null) mUtil = new SyncUtil(mContext, "SyncTaskEditor", mGp);
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
         mCommonDlg = new CommonDialog(mContext, getActivity().getSupportFragmentManager());
@@ -193,7 +193,7 @@ public class SyncTaskEditor extends DialogFragment {
     final public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (mContext == null) mContext = this.getActivity();
-        mGp = (GlobalParameters) getActivity().getApplication();
+        mGp = (GlobalParameters) getActivity().getApplicationContext();//getApplication();
         if (mUtil == null) mUtil = new SyncUtil(mContext, "SyncTaskEditor", mGp);
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
     }
@@ -1273,7 +1273,7 @@ public class SyncTaskEditor extends DialogFragment {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        btn_sync_folder_ok.setEnabled(false);
+//        btn_sync_folder_ok.setEnabled(false);
         setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
         btn_sync_folder_ok.setOnClickListener(new OnClickListener() {
             @Override
@@ -1634,8 +1634,10 @@ public class SyncTaskEditor extends DialogFragment {
             } else {
                 if (ctv_sync_folder_use_port.isChecked() && sync_folder_port.equals("")) {
                     result = false;
+                    btn_sync_folder_logon.setEnabled(false);
                     setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_port_number));
                 } else {
+                    btn_sync_folder_logon.setEnabled(true);
                     if (ctv_sync_folder_use_pswd.isChecked()) {
                         if (sync_folder_user.equals("") && sync_folder_pswd.equals("")) {
                             result = false;
@@ -1646,10 +1648,10 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_share_name));
                         result = false;
                     }
+                    if (folder_share_name.equals("")) btn_sync_folder_logon.setEnabled(false);
+//                    else btn_sync_folder_logon.setEnabled(true);
                 }
             }
-            if (folder_share_name.equals("")) btn_sync_folder_logon.setEnabled(false);
-            else btn_sync_folder_logon.setEnabled(true);
 
             boolean enabled = true;
             if (ctv_sync_folder_use_pswd.isChecked()) {
@@ -3819,23 +3821,9 @@ public class SyncTaskEditor extends DialogFragment {
         public boolean isSame(SyncFolderEditValue comp) {
             boolean result = false;
             if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
-                if (folder_type.equals(comp.folder_type) &&
-                    folder_directory.equals(comp.folder_directory) &&
-                    folder_remote_user.equals(comp.folder_remote_user) &&
-                    folder_remote_pswd.equals(comp.folder_remote_pswd) &&
-                    folder_remote_domain.equals(comp.folder_remote_domain) &&
-                    folder_remote_addr.equals(comp.folder_remote_addr) &&
-                    folder_remote_host.equals(comp.folder_remote_host) &&
-                    folder_remote_share.equals(comp.folder_remote_share) &&
-                    folder_remote_port.equals(comp.folder_remote_port) &&
-                    folder_smb_protocol.equals(comp.folder_smb_protocol) &&
-                    folder_removable_uuid.equals(comp.folder_removable_uuid) &&
-                    (folder_remote_use_pswd == comp.folder_remote_use_pswd)  &&
-                    (zip_file_use_sdcard == comp.zip_file_use_sdcard)  &&
-                    zip_comp_level.equals(comp.zip_comp_level) &&
-                    zip_enc_method.equals(comp.zip_enc_method) &&
-                    zip_file_name.equals(comp.zip_file_name) &&
-                    zip_file_password.equals(comp.zip_file_password)) result = true;
+                if (folder_type.equals(comp.folder_type)
+                    && folder_directory.equals(comp.folder_directory)
+                        ) result = true;
             } else if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                 if (folder_type.equals(comp.folder_type) &&
                     folder_directory.equals(comp.folder_directory) &&

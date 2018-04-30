@@ -4975,17 +4975,16 @@ public class SyncTaskUtil {
             stli.setSyncSubDirectory(parm[31].equals("1") ? true : false);
             stli.setSyncUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
+            try {stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));} catch(Exception e) {}
             stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
 
             stli.setSyncUseFileCopyByTempName(parm[36].equals("1") ? true : false);
             stli.setSyncWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
-            stli.setLastSyncResult(Integer.parseInt(parm[39]));
+            try {stli.setLastSyncResult(Integer.parseInt(parm[39]));} catch(Exception e) {}
 
-            if (!parm[40].equals("") && !parm[40].equals("end"))
-                stli.setSyncTaskPosition(Integer.parseInt(parm[40]));
+            try {if (!parm[40].equals("") && !parm[40].equals("end"))stli.setSyncTaskPosition(Integer.parseInt(parm[40]));} catch(Exception e) {}
 
 //            if (!parm[41].equals("") && !parm[41].equals("end")) stli.setMasterFolderUseInternalUsbFolder(parm[41].equals("1")?true:false);
 //            if (!parm[42].equals("") && !parm[42].equals("end")) stli.setTargetFolderUseInternalUsbFolder(parm[42].equals("1")?true:false);
@@ -5052,9 +5051,11 @@ public class SyncTaskUtil {
 
             if (!parm[68].equals("") && !parm[68].equals("end")) stli.setArchiveRenameFileTemplate(parm[68]);
             if (!parm[69].equals("") && !parm[69].equals("end")) stli.setArchiveUseRename((parm[69].equals("1") ? true : false));
-            if (!parm[70].equals("") && !parm[70].equals("end")) stli.setArchiveRetentionPeriod(Integer.parseInt(parm[70]));
+            try {if (!parm[70].equals("") && !parm[70].equals("end")) stli.setArchiveRetentionPeriod(Integer.parseInt(parm[70]));} catch(Exception e) {}
+
             if (!parm[71].equals("") && !parm[71].equals("end")) stli.setArchiveCreateDirectory((parm[71].equals("1") ? true : false));
-            if (!parm[72].equals("") && !parm[72].equals("end")) stli.setArchiveSuffixOption(Integer.parseInt(parm[72]));
+            try {if (!parm[72].equals("") && !parm[72].equals("end")) stli.setArchiveSuffixOption(Integer.parseInt(parm[72]));} catch(Exception e) {}
+
             if (!parm[73].equals("") && !parm[73].equals("end")) stli.setArchiveCreateDirectoryTemplate(parm[73]);
             if (!parm[74].equals("") && !parm[74].equals("end")) stli.setArchiveEnabled((parm[74].equals("1") ? true : false));
 

@@ -31,6 +31,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -40,7 +41,12 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sentaroh.android.Utilities.LocalMountPoint;
@@ -68,7 +74,7 @@ public class ActivitySettings extends PreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mContext = this;
-        mGp = (GlobalParameters) getApplication();
+        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         setTheme(mGp.applicationTheme);
         super.onCreate(savedInstanceState);
         mPrefActivity = this;
@@ -106,12 +112,11 @@ public class ActivitySettings extends PreferenceActivity {
         loadHeadersFromResource(R.xml.settings_frag, target);
     }
 
-    ;
-
     @Override
     public boolean onIsMultiPane() {
         mContext = this;
-        mGp = (GlobalParameters) getApplication();
+//        mGp = (GlobalParameters) getApplication();
+        mGp = (GlobalParameters) getApplicationContext();//getApplication();
 //    	mPrefActivity=this;
         mUtil = new SyncUtil(this, "SettingsActivity", mGp);
         if (mGp.settingDebugLevel > 0)
@@ -413,10 +418,7 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_history_log));
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_no_compress_file_type));
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_mgt_dir));
-
         }
-
-        ;
 
         @Override
         public void onStart() {
@@ -428,8 +430,6 @@ public class ActivitySettings extends PreferenceActivity {
             getActivity().setTitle(R.string.settings_sync_title);
         }
 
-        ;
-
         @Override
         public void onStop() {
             super.onStop();
@@ -439,11 +439,7 @@ public class ActivitySettings extends PreferenceActivity {
                     .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }
 
-        ;
     }
-
-    ;
-
 
     public static class SettingsLog extends PreferenceFragment {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =

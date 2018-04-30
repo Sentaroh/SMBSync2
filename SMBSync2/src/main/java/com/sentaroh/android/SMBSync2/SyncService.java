@@ -75,7 +75,7 @@ public class SyncService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mGp = (GlobalParameters) getApplication();
+        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         mContext = getApplicationContext();
         NotificationUtil.initNotification(mGp);
         NotificationUtil.clearNotification(mGp);
