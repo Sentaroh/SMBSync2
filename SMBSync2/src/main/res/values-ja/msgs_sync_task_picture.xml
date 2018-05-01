@@ -2,7 +2,7 @@
 <resources>
     <string name="msgs_sync_task_archive_option">アーカイブオプション</string>
     <string name="msgs_sync_task_archive_file_type">アーカイブするファイルタイプ : *.jpg, *.gif, *.png, *.mp4, *.mov</string>
-    <string name="msgs_sync_task_archive_btn_title">アーカイブオプションの編集</string>
+    <string name="msgs_sync_task_archive_btn_title">アーカイブ オプションの編集</string>
     <string name="msgs_sync_task_archive_retention_period">アーカイブする対象</string>
     <string name="msgs_sync_task_archive_output_image">下記は保存されるディレクトリーとファイル名(日時は撮影時のものではありまん)</string>
     <string name="msgs_sync_task_archive_rename_rule">アーカイブする時に名前を変更する</string>
@@ -11,6 +11,8 @@
     <string name="msgs_sync_task_archive_btn_title_date">年月日</string>
     <string name="msgs_sync_task_archive_btn_title_time">時刻</string>
     <string name="msgs_sync_task_archive_btn_title_original_name">元の名前</string>
+
+    <string name="msgs_sync_task_archive_zip_folder_not_supported">同期方式がアーカイブの時はZIPを使用できないため内部ストレージに変更しました。</string>
 
     <string name="msgs_sync_task_archive_btn_title_year">西暦</string>
     <string name="msgs_sync_task_archive_btn_title_month">月</string>

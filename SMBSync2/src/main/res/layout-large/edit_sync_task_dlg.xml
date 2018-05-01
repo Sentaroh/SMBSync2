@@ -127,7 +127,7 @@
                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                    <Spinner
-                       android:id="@+id/edit_sync_task_sync_option"
+                       android:id="@+id/edit_sync_task_sync_type"
                        style="?android:attr/spinnerStyle"
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
