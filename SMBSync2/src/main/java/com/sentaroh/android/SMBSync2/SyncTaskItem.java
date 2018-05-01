@@ -303,10 +303,11 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private boolean syncTaskArchiveEnable = true;
 
-    private int syncTaskArchiveSuffixDigit = 1;//4 digit
+    private String syncTaskArchiveSuffixDigit = "4";//0=Not used, 3=3 Digit, 4=4 digit, 5=5 Digit, 6=6 Digit
 
-    public int getArchiveSuffixOption() {return syncTaskArchiveSuffixDigit;}
-    public void setArchiveSuffixOption(int digit) {syncTaskArchiveSuffixDigit =digit;}
+    public String getArchiveSuffixOption() {return syncTaskArchiveSuffixDigit;}
+    public void setArchiveSuffixOption(String digit) {syncTaskArchiveSuffixDigit =digit;}
+
     public String getArchiveRenameFileTemplate() {return syncTaskArchiveRenameFileTemplate;}
     public void setArchiveRenameFileTemplate(String template) {syncTaskArchiveRenameFileTemplate =template;}
 
@@ -541,7 +542,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncTaskArchiveRetentionPeriod ==sti.getArchiveRetentionPeriod()) &&
                         (syncTaskArchiveCreateDirectory ==sti.isArchiveCreateDirectory()) &&
                         (syncTaskArchiveSaveDirectoryTemplate.equals(sti.getArchiveCreateDirectoryTemplate())) &&
-                        (syncTaskArchiveSuffixDigit ==sti.getArchiveSuffixOption()) &&
+                        (syncTaskArchiveSuffixDigit.equals(sti.getArchiveSuffixOption())) &&
                         (syncTaskArchiveEnable ==sti.isArchiveEnabled()) &&
                         (syncFileTypeAudio==sti.isSyncFileTypeAudio()) &&
                         (syncFileTypeImage==sti.isSyncFileTypeImage()) &&

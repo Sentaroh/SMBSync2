@@ -1765,10 +1765,7 @@ public class SyncThreadArchiveFile {
     static private ArrayList<ArchiveFileListItem> buildLocalFileList(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children, String to_path) {
         ArrayList<ArchiveFileListItem>fl=new ArrayList<ArchiveFileListItem>();
         for(File element:children) {
-            if (element.isFile() &&
-                    (element.getName().toLowerCase().endsWith(".jpg") || element.getName().toLowerCase().endsWith(".png") ||
-                            element.getName().toLowerCase().endsWith(".gif") || element.getName().toLowerCase().endsWith(".mp4") ||
-                            element.getName().toLowerCase().endsWith(".mov"))) {
+            if (element.isFile() && isFileTypeArchiveTarget(element.getName())) {
                 String[] date_time=getFileExifDateTime(stwa, sti, element);
                 ArchiveFileListItem afli=new ArchiveFileListItem();
                 afli.file=element;
@@ -1797,10 +1794,7 @@ public class SyncThreadArchiveFile {
     static private ArrayList<ArchiveFileListItem> buildSdcardFileList(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children, String to_path) {
         ArrayList<ArchiveFileListItem>fl=new ArrayList<ArchiveFileListItem>();
         for(File element:children) {
-            if (element.isFile() &&
-                    (element.getName().toLowerCase().endsWith(".jpg") || element.getName().toLowerCase().endsWith(".png") ||
-                            element.getName().toLowerCase().endsWith(".gif") || element.getName().toLowerCase().endsWith(".mp4") ||
-                            element.getName().toLowerCase().endsWith(".mov"))) {
+            if (element.isFile() && isFileTypeArchiveTarget(element.getName())) {
                 SafFile m_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), element.getPath(), false);
                 String[] date_time=getFileExifDateTime(stwa, sti, m_df);
                 ArchiveFileListItem afli=new ArchiveFileListItem();
@@ -1827,13 +1821,21 @@ public class SyncThreadArchiveFile {
         return fl;
     }
 
+    static final private boolean isFileTypeArchiveTarget(String name) {
+        boolean result=false;
+        for(String item:ARCHIVE_FILE_TYPE) {
+            if (name.toLowerCase().endsWith("."+item)) {
+                result=true;
+                break;
+            }
+        }
+        return result;
+    }
+
     static private ArrayList<ArchiveFileListItem> buildSmbFileList(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile[] children, String to_path) throws JcifsException {
         ArrayList<ArchiveFileListItem>fl=new ArrayList<ArchiveFileListItem>();
         for(JcifsFile element:children) {
-            if (element.isFile() &&
-                    (element.getName().toLowerCase().endsWith(".jpg") || element.getName().toLowerCase().endsWith(".png") ||
-                            element.getName().toLowerCase().endsWith(".gif") || element.getName().toLowerCase().endsWith(".mp4") ||
-                            element.getName().toLowerCase().endsWith(".mov"))) {
+            if (element.isFile() && isFileTypeArchiveTarget(element.getName())) {
                 String[] date_time=getFileExifDateTime(stwa, sti, element);
                 ArchiveFileListItem afli=new ArchiveFileListItem();
                 afli.file=element;
@@ -1915,8 +1917,10 @@ public class SyncThreadArchiveFile {
 
     static private String getFileSeqNumber(SyncThreadWorkArea stwa, SyncTaskItem sti, int seq_no) {
         String seqno="";
-        if (sti.getArchiveSuffixOption()==1) seqno=String.format("_%05d", seq_no);
-        else if (sti.getArchiveSuffixOption()==1) seqno=String.format("_%06d", seq_no);
+        if (sti.getArchiveSuffixOption().equals("3")) seqno=String.format("_%03d", seq_no);
+        else if (sti.getArchiveSuffixOption().equals("4")) seqno=String.format("_%04d", seq_no);
+        else if (sti.getArchiveSuffixOption().equals("5")) seqno=String.format("_%05d", seq_no);
+        else if (sti.getArchiveSuffixOption().equals("6")) seqno=String.format("_%06d", seq_no);
         return seqno;
     }
 

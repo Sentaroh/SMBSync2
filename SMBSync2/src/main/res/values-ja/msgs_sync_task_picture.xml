@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="msgs_sync_task_archive_option">アーカイブオプション</string>
-    <string name="msgs_sync_task_archive_file_type">アーカイブするファイルタイプ : *.jpg, *.gif, *.png, *.mp4, *.mov</string>
+    <string name="msgs_sync_task_archive_file_type">アーカイブするファイル拡張子:</string>
     <string name="msgs_sync_task_archive_btn_title">アーカイブ オプションの編集</string>
     <string name="msgs_sync_task_archive_retention_period">アーカイブする対象</string>
     <string name="msgs_sync_task_archive_output_image">下記は保存されるディレクトリーとファイル名(日時は撮影時のものではありまん)</string>
@@ -20,6 +20,8 @@
 
     <string name="msgs_sync_task_archive_suffix_seq_digit_prompt_title">順序番号の選択</string>
     <string name="msgs_sync_task_archive_suffix_seq_digit_0">使用しない</string>
+    <string name="msgs_sync_task_archive_suffix_seq_digit_3">3桁の番号を追加(001-999)</string>
+    <string name="msgs_sync_task_archive_suffix_seq_digit_4">4桁の番号を追加(0001-9999)</string>
     <string name="msgs_sync_task_archive_suffix_seq_digit_5">5桁の番号を追加(00001-99999)</string>
     <string name="msgs_sync_task_archive_suffix_seq_digit_6">6桁の番号を追加(000001-999999)</string>
 
