@@ -136,4 +136,7 @@ public class Constants {
 	public static final String[] SYNC_FILE_TYPE_VIDEO=
 			new String[]{"*.avi", "*.m4u", "*.mov", "*.mp4", "*.movie", "*.mpe", "*.mpeg", "*.mpg", "*.mxu", "*.qt", "*.wmv"};
 
+    public static final String[] ARCHIVE_FILE_TYPE=
+            new String[]{"gif", "jpg", "png", "mp4", "mov"};
+
 }

@@ -5054,7 +5054,11 @@ public class SyncTaskUtil {
             try {if (!parm[70].equals("") && !parm[70].equals("end")) stli.setArchiveRetentionPeriod(Integer.parseInt(parm[70]));} catch(Exception e) {}
 
             if (!parm[71].equals("") && !parm[71].equals("end")) stli.setArchiveCreateDirectory((parm[71].equals("1") ? true : false));
-            try {if (!parm[72].equals("") && !parm[72].equals("end")) stli.setArchiveSuffixOption(Integer.parseInt(parm[72]));} catch(Exception e) {}
+            if (!parm[72].equals("") && !parm[72].equals("end")) {
+                if (parm[72].equals("1")) stli.setArchiveSuffixOption("5");
+                else if (parm[72].equals("1")) stli.setArchiveSuffixOption("6");
+                else stli.setArchiveSuffixOption(parm[72]);
+            }
 
             if (!parm[73].equals("") && !parm[73].equals("end")) stli.setArchiveCreateDirectoryTemplate(parm[73]);
             if (!parm[74].equals("") && !parm[74].equals("end")) stli.setArchiveEnabled((parm[74].equals("1") ? true : false));

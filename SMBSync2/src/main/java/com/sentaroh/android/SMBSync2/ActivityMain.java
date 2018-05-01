@@ -184,8 +184,8 @@ public class ActivityMain extends AppCompatActivity {
 
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
 
-        Intent intent = new Intent(this, SyncService.class);
-        startService(intent);
+//        Intent intent = new Intent(this, SyncService.class);
+//        startService(intent);
 
         if (mGp.settingFixDeviceOrientationToPortrait)
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

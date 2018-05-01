@@ -7,6 +7,7 @@
     <string name="msgs_mirror_task_result_error_skipped">エラー処理オプションの設定によりエラーを無視しました。</string>
     <string name="msgs_mirror_task_file_deleted">ファイルを削除しました。</string>
     <string name="msgs_mirror_task_file_moved">ファイルを移動しました。</string>
+    <string name="msgs_mirror_task_file_archived" formatted="false">%sを%sにアーカイブしました。</string>
     <string name="msgs_mirror_task_started">同期タスクを開始しました。</string>
     <string name="msgs_mirror_task_no_of_copy" formatted="false">コピー=%s, 削除=%s, 無視=%s, 経過時間=%s(秒)</string>
     <string name="msgs_mirror_task_avg_rate">平均転送率 %s</string>

@@ -145,7 +145,8 @@ public class SyncThread extends Thread {
 
         public String msgs_mirror_task_file_replaced = null,
                 msgs_mirror_task_file_copied = null,
-                msgs_mirror_task_file_moved = null;
+                msgs_mirror_task_file_moved = null,
+                msgs_mirror_task_file_archived = null;
 
         public SyncTaskItem currentSTI = null;
 
@@ -172,6 +173,7 @@ public class SyncThread extends Thread {
         mStwa.msgs_mirror_task_file_replaced = gp.appContext.getString(R.string.msgs_mirror_task_file_replaced);
         mStwa.msgs_mirror_task_file_copied = gp.appContext.getString(R.string.msgs_mirror_task_file_copied);
         mStwa.msgs_mirror_task_file_moved = gp.appContext.getString(R.string.msgs_mirror_task_file_moved);
+        mStwa.msgs_mirror_task_file_archived = gp.appContext.getString(R.string.msgs_mirror_task_file_archived);
 
         mStwa.zipWorkFileName = gp.appContext.getCacheDir().toString() + "/zip_work_file";
 
@@ -1617,6 +1619,43 @@ public class SyncThread extends Thread {
             }
         }
         String lm = full_path.equals("") ? msg : full_path.concat(" ").concat(msg);
+        if (task_name.equals("")) {
+            stwa.util.addLogMsg(cat, lm);
+            if (stwa.gp.settingWriteSyncResultLog && stwa.syncHistoryWriter != null) {
+                String print_msg = "";
+                print_msg = stwa.util.buildPrintMsg(cat, lm);
+                stwa.syncHistoryWriter.println(print_msg);
+            }
+        } else {
+            stwa.util.addLogMsg(cat, task_name, " ", lm);
+            if (stwa.gp.settingWriteSyncResultLog && stwa.syncHistoryWriter != null) {
+                String print_msg = "";
+                print_msg = stwa.util.buildPrintMsg(cat, task_name, " ", lm);
+                stwa.syncHistoryWriter.println(print_msg);
+            }
+        }
+    }
+
+    static public void showArchiveMsg(final SyncThreadWorkArea stwa, boolean log_only,
+                               final String task_name, final String cat,
+                               final String full_path, final String archive_path, final String file_name, final String msg) {
+        stwa.gp.progressSpinSyncprofText = task_name;
+        stwa.gp.progressSpinMsgText = file_name.concat(" ").concat(msg);
+        if (!log_only) {
+            NotificationUtil.showOngoingMsg(stwa.gp, System.currentTimeMillis(), task_name, file_name, msg);
+            if (stwa.gp.dialogWindowShowed && stwa.gp.progressSpinSyncprof != null) {
+                stwa.gp.uiHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (stwa.gp.progressSpinSyncprof != null && !stwa.gp.activityIsBackground) {
+                            stwa.gp.progressSpinSyncprof.setText(stwa.gp.progressSpinSyncprofText);
+                            stwa.gp.progressSpinMsg.setText(stwa.gp.progressSpinMsgText);
+                        }
+                    }
+                });
+            }
+        }
+        String lm = String.format(msg, full_path,archive_path);
         if (task_name.equals("")) {
             stwa.util.addLogMsg(cat, lm);
             if (stwa.gp.settingWriteSyncResultLog && stwa.syncHistoryWriter != null) {

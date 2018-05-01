@@ -45,16 +45,6 @@
     </LinearLayout>
     <include layout="@layout/divider_line1_turquoise"/>
 
-    <CheckedTextView
-        android:id="@+id/edit_sync_task_dlg_archive_use_archive"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:text="@string/msgs_sync_task_archive_file_type"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    <!--android:checkMark="?android:attr/listChoiceIndicatorMultiple"-->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -65,6 +55,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_dlg_archive_use_archive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/msgs_sync_task_archive_file_type"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <!--android:checkMark="?android:attr/listChoiceIndicatorMultiple"-->
+                <TextView
+                    android:id="@+id/edit_sync_task_dlg_archive_file_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="*.gif, *.jpg, *.png, *.mp4, *.mov"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <!--android:checkMark="?android:attr/listChoiceIndicatorMultiple"-->
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -40,6 +40,9 @@
 	<string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Can not be connecting to specified remote SMB host. IP Address=%s, Port=%s</string>
 	
     <string name="msgs_mirror_task_file_moved">File was moved.</string>
+
+    <string name="msgs_mirror_task_file_archived" formatted="false">%s was archived to %s</string>
+
 	<string name="msgs_mirror_confirm_delete_file_confirm">Do you want to delete the file?\N%s\n(Please uncheck the &#8220;confirmation&#8221; if confirmation is not required for synchronization task)</string>
 	<string name="msgs_mirror_confirm_delete_dir_confirm">Do you want to delete the directory?\N%s\n(Please uncheck the &#8220;confirmation&#8221; if confirmation is not required for synchronization task)</string>
 	<string name="msgs_mirror_confirm_please_check_confirm_msg_copy">Confirmation of override a copy of the file is required. Tap here, please check.</string>
