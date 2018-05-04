@@ -1759,7 +1759,7 @@ public class SyncThreadArchiveFile {
         String shoot_date="", shoot_time="";
         String file_name="";
         String full_path="";
-
+        boolean date_from_exif=true;
     }
 
     static private ArrayList<ArchiveFileListItem> buildLocalFileList(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children, String to_path) {
@@ -1775,6 +1775,7 @@ public class SyncThreadArchiveFile {
                     String[] dt=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(element.lastModified()).split(" ");
                     afli.shoot_date=dt[0].replace("/","-");
                     afli.shoot_time=dt[1].replace(":","-");
+                    afli.date_from_exif=false;
                 } else {
                     afli.shoot_date=date_time[0].replace("/","-");
                     afli.shoot_time=date_time[1].replace(":","-");
@@ -1805,6 +1806,7 @@ public class SyncThreadArchiveFile {
                     String[] dt=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(element.lastModified()).split(" ");
                     afli.shoot_date=dt[0].replace("/","-");
                     afli.shoot_time=dt[1].replace(":","-");
+                    afli.date_from_exif=false;
                 } else {
                     afli.shoot_date=date_time[0].replace("/","-");
                     afli.shoot_time=date_time[1].replace(":","-");
@@ -1845,6 +1847,7 @@ public class SyncThreadArchiveFile {
                     String[] dt=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(element.getLastModified()).split(" ");
                     afli.shoot_date=dt[0].replace("/","-");
                     afli.shoot_time=dt[1].replace(":","-");
+                    afli.date_from_exif=false;
                 } else {
                     afli.shoot_date=date_time[0].replace("/","-");
                     afli.shoot_time=date_time[1].replace(":","-");
@@ -1882,8 +1885,10 @@ public class SyncThreadArchiveFile {
             exp_time=n_cal.getTimeInMillis()-cal.getTimeInMillis();
         }
         String n_exp=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(cal.getTimeInMillis()+exp_time);
-
-        return (System.currentTimeMillis()>cal.getTimeInMillis());
+        boolean result=(System.currentTimeMillis()>cal.getTimeInMillis());
+        stwa.util.addDebugMsg(1,"I","isFileArchiveRequired path=",afli.full_path,", shoot date=",afli.shoot_date,
+                ", shoot time=", afli.shoot_time,", exif="+afli.date_from_exif,", archive="+result, ", retention period="+sti.getArchiveRetentionPeriod());
+        return result;
     }
 
     static private String buildArchiveDirectoryName(SyncThreadWorkArea stwa, SyncTaskItem sti, ArchiveFileListItem afli) {

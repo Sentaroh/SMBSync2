@@ -2068,14 +2068,14 @@ public class SyncTaskEditor extends DialogFragment {
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_copy));
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_move));
 //		adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync));
-        adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive));
+//        adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive));
 
         int sel=0;
         if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) sel=0;
         else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) sel=1;
         else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) sel=2;
 //		else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) spinnerSyncOption.setSelection(3);
-        else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) sel=3;
+//        else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) sel=3;
 
         spinnerSyncOption.setSelection(sel);
         adapterSyncOption.notifyDataSetChanged();

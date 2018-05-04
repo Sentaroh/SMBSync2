@@ -180,7 +180,6 @@ public class SyncThreadCopyFile {
             }
             t_df.renameTo(file_name);
         }
-
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
         if (stwa.gp.settingDebugLevel >= 1)
