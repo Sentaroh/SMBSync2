@@ -88,6 +88,7 @@ import com.sentaroh.android.Utilities.Dialog.ProgressBarDialogFragment;
 import com.sentaroh.android.Utilities.LocalMountPoint;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
+import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
@@ -710,8 +711,6 @@ public class ActivityMain extends AppCompatActivity {
         btn.setOnClickListener(ocl);
     }
 
-    ;
-
     @Override
     public void onConfigurationChanged(final Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -722,8 +721,6 @@ public class ActivityMain extends AppCompatActivity {
         }
         screenReload(false);
     }
-
-    ;
 
     private void screenReload(boolean force_reload) {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " Entered");
@@ -739,7 +736,9 @@ public class ActivityMain extends AppCompatActivity {
         ArrayList<SyncTaskItem> pfl = mGp.syncTaskAdapter.getArrayList();
 
         mGp.msgListView.setAdapter(null);
-        ArrayList<SyncMessageItem> mfl = mGp.msgListAdapter.getMessageList();
+
+        ArrayList<SyncMessageItem> mfl=new ArrayList<SyncMessageItem>();
+        if (mGp.msgListAdapter!=null) mfl=mGp.msgListAdapter.getMessageList();
 
         createTabView();
         mMainTabHost.setOnTabChangedListener(null);
