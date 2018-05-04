@@ -292,7 +292,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/edit_sync_task_option_ll_use_smbsync_last_mod_time"
+                android:id="@+id/edit_sync_task_option_use_smbsync_last_mod_time_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -336,11 +336,21 @@
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_diff_file_use_file_size"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_diff_file_size_greater_than_target"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
                 <include layout="@layout/divider_line1" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/edit_sync_task_option_ll_sync_diff_use_last_mod_time"
+                android:id="@+id/edit_sync_task_option_sync_diff_use_last_mod_time_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -361,8 +371,9 @@
                 android:layout_height="wrap_content" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_allowance_last_mod_time"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -370,8 +381,9 @@
                 <Spinner
                     android:id="@+id/edit_sync_task_option_spinner_diff_file_determin_time_value"
                     style="?android:attr/spinnerStyle"
-                    android:layout_width="fill_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
                     android:layout_marginLeft="5dp"
                     android:minHeight="36dp"
                     android:textAppearance="?android:attr/textAppearanceMedium" />

@@ -323,6 +323,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isArchiveEnabled() {return syncTaskArchiveEnable;}
     public void setArchiveEnabled(boolean enabled) {syncTaskArchiveEnable =enabled;}
 
+    private boolean syncOptionDeterminChangedFileSizeGreaterThanTargetFile = false;
+    public boolean isSyncDifferentFileSizeGreaterThanTagetFile() {return syncOptionDeterminChangedFileSizeGreaterThanTargetFile;}
+    public void setSyncDifferentFileSizeGreaterThanTagetFile(boolean p) {syncOptionDeterminChangedFileSizeGreaterThanTargetFile = p;}
 
     public ArrayList<String> getFileFilter() {return syncFileFilter;}
 
@@ -553,6 +556,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionConfirmOverrideDelete==sti.isSyncConfirmOverrideOrDelete()) &&
                         (syncOptionForceLastModifiedUseSmbsync==sti.isSyncDetectLastModifiedBySmbsync()) &&
                         (syncOptionNotUsedLastModifiedForRemote==sti.isSyncDoNotResetLastModifiedSmbFile()) &&
+                        (syncOptionDeterminChangedFileSizeGreaterThanTargetFile==sti.isSyncDifferentFileSizeGreaterThanTagetFile()) &&
                         (syncOptionRetryCount.equals(sti.getSyncRetryCount())) &&
                         (syncOptionSyncEmptyDir==sti.isSyncEmptyDirectory()) &&
                         (syncOptionSyncHiddenFile==sti.isSyncHiddenFile()) &&

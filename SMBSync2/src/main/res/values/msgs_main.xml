@@ -311,6 +311,7 @@
     <string name="msgs_profile_sync_task_sync_option_test_mode">Test mode (copy or delete files is not done)</string>
     <string name="msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time"   >To use the last update time of the file to determine the difference file</string>
     <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size"       >To use the file size to the determination of the difference file</string>
+    <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Only when the file size of the master is large is determined as the difference file</string>
     <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Difference allowed last update time(in seconds)</string>
     <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Forced to get the last update date and time in SMBSync2</string>
     <string name="msgs_profile_sync_task_sync_option_not_set_remote_file_last_modified">Do not make the last update time of the file copied/moved to the SMB folder the same as the copy source</string>

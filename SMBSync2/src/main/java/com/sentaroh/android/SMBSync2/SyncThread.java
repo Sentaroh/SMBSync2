@@ -1818,7 +1818,9 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp, File lf, JcifsFile hf, boolean ac)
+    static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti,
+                                               String fp, File lf,//Target
+                                               JcifsFile hf, boolean ac) //Master
             throws JcifsException {
         long hf_time = 0, hf_length = 0;
         boolean hf_exists = hf.exists();
@@ -1830,7 +1832,9 @@ public class SyncThread extends Thread {
         return isFileChangedDetailCompare(stwa, sti, fp, lf, hf_exists, hf_time, hf_length, ac);
     }
 
-    static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp, File mf, File tf, boolean ac)
+    static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti,
+                                              String fp, File mf, //Target
+                                              File tf, boolean ac)//Master
             throws JcifsException {
         long tf_time = 0, tf_length = 0;
         boolean tf_exists = tf.exists();
@@ -1842,28 +1846,29 @@ public class SyncThread extends Thread {
         return isFileChangedDetailCompare(stwa, sti, fp, mf, tf_exists, tf_time, tf_length, ac);
     }
 
-    static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,
-                                              JcifsFile mf, JcifsFile tf, boolean ac)
+    static final public boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti,
+                                               String fp, JcifsFile mf,//Target
+                                               JcifsFile tf, boolean ac)//Master
             throws JcifsException {
 
-        long lf_time = 0, lf_length = 0;
-        boolean lf_exists = mf.exists();
+        long mf_time = 0, mf_length = 0;
+        boolean mf_exists = mf.exists();
 
-        if (lf_exists) {
-            lf_time = mf.getLastModified();
-            lf_length = mf.length();
+        if (mf_exists) {
+            mf_time = mf.getLastModified();
+            mf_length = mf.length();
         }
 
         return isFileChangedDetailCompare(stwa, sti, fp,
-                lf_exists, lf_time, lf_length, mf.getPath(),
+                mf_exists, mf_time, mf_length, mf.getPath(),
                 tf.exists(), tf.getLastModified(), tf.length(), ac);
 
     }
 
-    ;
-
-    static final public boolean isFileChangedDetailCompare(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,
-                                                           File lf, boolean hf_exists, long hf_time, long hf_length, boolean ac) throws JcifsException {
+    static final private boolean isFileChangedDetailCompare(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,
+                                                           File lf,//Target
+                                                           boolean tf_exists, long tf_time, long tf_length,//Master
+                                                           boolean ac) throws JcifsException {
         long lf_time = 0, lf_length = 0;
         boolean lf_exists = lf.exists();
 
@@ -1873,37 +1878,41 @@ public class SyncThread extends Thread {
         }
 
         return isFileChangedDetailCompare(stwa, sti, fp,
-                lf_exists, lf_time, lf_length, lf.getPath(),
-                hf_exists, hf_time, hf_length, ac);
+                lf_exists, lf_time, lf_length, lf.getPath(),//Target
+                tf_exists, tf_time, tf_length, ac);//Master
     }
 
-    ;
-
-    static final public boolean isFileChangedDetailCompare(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,
-                                                           boolean lf_exists, long lf_time, long lf_length, String lf_path,
-                                                           boolean hf_exists, long hf_time, long hf_length, boolean ac) {
+    static final private boolean isFileChangedDetailCompare(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,
+                                                           boolean lf_exists, long lf_time, long lf_length, String lf_path,//Target
+                                                           boolean tf_exists, long tf_time, long tf_length, boolean ac) {//Master
         boolean diff = false;
         boolean exists_diff = false;
 
-        long time_diff = Math.abs((hf_time - lf_time));
-        long length_diff = Math.abs((hf_length - lf_length));
+        long time_diff = Math.abs((tf_time - lf_time));
+        long length_diff = Math.abs((tf_length - lf_length));
 
-        if (hf_exists != lf_exists) exists_diff = true;
+        if (tf_exists != lf_exists) exists_diff = true;
         if (exists_diff || (sti.isSyncDifferentFileBySize() && length_diff > 0) || ac) {
-            if (!stwa.setLastModifiedIsFunctional) {//Use lastModified
+            if (sti.isSyncDifferentFileSizeGreaterThanTagetFile()) {
+                if (tf_length>lf_length) {
+                    diff = true;
+                }
+            } else {
+                diff = true;
+            }
+            if (diff && !stwa.setLastModifiedIsFunctional) {//Use lastModified
                 if (lf_exists) {
                     updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                            lf_path, lf_time, hf_time);
+                            lf_path, lf_time, tf_time);
                 } else {
                     boolean updated =
                             updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                    lf_path, lf_time, hf_time);
+                                    lf_path, lf_time, tf_time);
                     if (!updated)
                         addLastModifiedItem(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                lf_path, lf_time, hf_time);
+                                lf_path, lf_time, tf_time);
                 }
             }
-            diff = true;
         } else {//Check lastModified()
             if (sti.isSyncDifferentFileByTime()) {
                 if (stwa.setLastModifiedIsFunctional) {//Use lastModified
@@ -1913,7 +1922,7 @@ public class SyncThread extends Thread {
                         boolean t_diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
                                 stwa.currLastModifiedList,
                                 stwa.newLastModifiedList,
-                                lfp, lf_time, hf_time);
+                                lfp, lf_time, tf_time);
                         if (t_diff) {
                             diff = true;
                         } else {
@@ -1927,20 +1936,20 @@ public class SyncThread extends Thread {
                     diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
                             stwa.currLastModifiedList,
                             stwa.newLastModifiedList,
-                            lfp, lf_time, hf_time);
+                            lfp, lf_time, tf_time);
 //					Log.v("","lfp="+lfp+", lf_time="+lf_time+", hf_time="+hf_time);
                 }
             }
         }
         if (stwa.gp.settingDebugLevel >= 3) {
             stwa.util.addDebugMsg(3, "I", "isFileChangedDetailCompare");
-            if (hf_exists) stwa.util.addDebugMsg(3, "I", "Master file length=" + hf_length +
-                    ", last modified(ms)=" + hf_time +
-                    ", date=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec((hf_time / 1000) * 1000));
-            else stwa.util.addDebugMsg(3, "I", "Master file was not exists");
-            if (lf_exists) stwa.util.addDebugMsg(3, "I", "Target file length=" + lf_length +
+            if (lf_exists) stwa.util.addDebugMsg(3, "I", "Master file length=" + lf_length +
                     ", last modified(ms)=" + lf_time +
                     ", date=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec((lf_time / 1000) * 1000));
+            else stwa.util.addDebugMsg(3, "I", "Master file was not exists");
+            if (tf_exists) stwa.util.addDebugMsg(3, "I", "Target file length=" + tf_length +
+                    ", last modified(ms)=" + tf_time +
+                    ", date=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec((tf_time / 1000) * 1000));
             else stwa.util.addDebugMsg(3, "I", "Target file was not exists");
             stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",exists_diff=" + exists_diff +
                     ",time_diff=" + time_diff + ",length_diff=" + length_diff + ", diff=" + diff);
@@ -1952,14 +1961,14 @@ public class SyncThread extends Thread {
                                                               String fp, File lf, JcifsFile hf, boolean ac) throws JcifsException {
         boolean diff = false;
         long hf_time = 0, hf_length = 0;
-        boolean hf_exists = hf.exists();
+        boolean hf_exists = hf.exists();//Target
 
         if (hf_exists) {
             hf_time = hf.getLastModified();
             hf_length = hf.length();
         }
         long lf_time = 0, lf_length = 0;
-        boolean lf_exists = lf.exists();
+        boolean lf_exists = lf.exists();//Master
         boolean exists_diff = false;
 
         if (lf_exists) {
