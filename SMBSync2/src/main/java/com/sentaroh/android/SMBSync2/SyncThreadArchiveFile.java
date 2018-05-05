@@ -94,6 +94,10 @@ public class SyncThreadArchiveFile {
         int file_seq_no=0, sync_result=0;
         ArrayList<ArchiveFileListItem>fl=buildLocalFileList(stwa, sti, children, to_path);
         for(ArchiveFileListItem item:fl) {
+            if (!stwa.gp.syncThreadControl.isEnabled()) {
+                sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                break;
+            }
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -260,6 +264,10 @@ public class SyncThreadArchiveFile {
         int file_seq_no=0, sync_result=0;
         ArrayList<ArchiveFileListItem>fl=buildLocalFileList(stwa, sti, children, to_path);
         for(ArchiveFileListItem item:fl) {
+            if (!stwa.gp.syncThreadControl.isEnabled()) {
+                sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                break;
+            }
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -382,6 +390,10 @@ public class SyncThreadArchiveFile {
         int file_seq_no=0, sync_result=0;
         ArrayList<ArchiveFileListItem>fl=buildLocalFileList(stwa, sti, children, to_path);
         for(ArchiveFileListItem item:fl) {
+            if (!stwa.gp.syncThreadControl.isEnabled()) {
+                sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                break;
+            }
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -626,6 +638,10 @@ public class SyncThreadArchiveFile {
         int file_seq_no=0, sync_result=0;
         ArrayList<ArchiveFileListItem>fl=buildSdcardFileList(stwa, sti, children, to_path);
         for(ArchiveFileListItem item:fl) {
+            if (!stwa.gp.syncThreadControl.isEnabled()) {
+                sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                break;
+            }
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -787,6 +803,10 @@ public class SyncThreadArchiveFile {
         int file_seq_no=0, sync_result=0;
         ArrayList<ArchiveFileListItem>fl=buildSdcardFileList(stwa, sti, children, to_path);
         for(ArchiveFileListItem item:fl) {
+            if (!stwa.gp.syncThreadControl.isEnabled()) {
+                sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                break;
+            }
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -966,6 +986,10 @@ public class SyncThreadArchiveFile {
         int file_seq_no=0, sync_result=0;
         ArrayList<ArchiveFileListItem>fl=buildSdcardFileList(stwa, sti, children, to_path);
         for(ArchiveFileListItem item:fl) {
+            if (!stwa.gp.syncThreadControl.isEnabled()) {
+                sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                break;
+            }
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -1158,6 +1182,10 @@ public class SyncThreadArchiveFile {
         int file_seq_no=0, sync_result=0;
         ArrayList<ArchiveFileListItem>fl=buildSmbFileList(stwa, sti, children, to_path);
         for(ArchiveFileListItem item:fl) {
+            if (!stwa.gp.syncThreadControl.isEnabled()) {
+                sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                break;
+            }
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -1363,6 +1391,10 @@ public class SyncThreadArchiveFile {
         int file_seq_no=0, sync_result=0;
         ArrayList<ArchiveFileListItem>fl=buildSmbFileList(stwa, sti, children, to_path);
         for(ArchiveFileListItem item:fl) {
+            if (!stwa.gp.syncThreadControl.isEnabled()) {
+                sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                break;
+            }
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -1553,6 +1585,10 @@ public class SyncThreadArchiveFile {
         int file_seq_no=0, sync_result=0;
         ArrayList<ArchiveFileListItem>fl=buildSmbFileList(stwa, sti, children, to_path);
         for(ArchiveFileListItem item:fl) {
+            if (!stwa.gp.syncThreadControl.isEnabled()) {
+                sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                break;
+            }
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
