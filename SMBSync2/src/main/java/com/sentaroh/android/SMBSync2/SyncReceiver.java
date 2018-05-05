@@ -111,9 +111,11 @@ public class SyncReceiver extends BroadcastReceiver {
                     send_intent.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
                     send_intent.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, received_intent.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY));
                     mContext.startService(send_intent);
-                    String sched_name = received_intent.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY);
-                    if (ScheduleUtil.getScheduleInformation(mSchedList, sched_name) != null) {
-                        ScheduleUtil.getScheduleInformation(mSchedList, sched_name).scheduleLastExecTime = System.currentTimeMillis();
+                    String[] schedule_list=received_intent.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY).split(",");
+                    for (String sched_name:schedule_list) {
+                        if (ScheduleUtil.getScheduleInformation(mSchedList, sched_name) != null) {
+                            ScheduleUtil.getScheduleInformation(mSchedList, sched_name).scheduleLastExecTime = System.currentTimeMillis();
+                        }
                     }
                     ScheduleUtil.saveScheduleData(mGp, mSchedList);
                     setTimer();
@@ -202,30 +204,22 @@ public class SyncReceiver extends BroadcastReceiver {
                 }
             }
             if (begin_sched_list.size() > 0) {
-                String[] schedule_list = new String[begin_sched_list.size()];
-                String sched_name = "(";
-                int cnt = 0;
+                String sched_names = "", sep="";
                 for (ScheduleItem si : begin_sched_list) {
-                    schedule_list[cnt] = si.scheduleName;
-                    if (sched_name.length() == 1) sched_name += si.scheduleName;
-                    else sched_name += "," + si.scheduleName;
-                    cnt++;
+                    sched_names += sep + si.scheduleName;
+                    sep=",";
                 }
-                sched_name += ")";
 
                 long time = ScheduleUtil.getNextSchedule(begin_sched_list.get(0));
-                if (mGp.settingDebugLevel > 0)
-                    mLog.addDebugMsg(1, "I", "getNextSchedule result=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec(time) + ", name=" + sched_name);
-                for (String sln : schedule_list) {
-                    Intent in = new Intent();
-                    in.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
-                    in.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, sln);
-                    PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_UPDATE_CURRENT);
-                    AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-                    if (Build.VERSION.SDK_INT >= 23)
-                        am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
-                    else am.set(AlarmManager.RTC_WAKEUP, time, pi);
-                }
+                mLog.addDebugMsg(1, "I", "setTimer result=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec(time) + ", name=(" + sched_names+")");
+                Intent in = new Intent();
+                in.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
+                in.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, sched_names);
+                PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_UPDATE_CURRENT);
+                AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                if (Build.VERSION.SDK_INT >= 23)
+                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
+                else am.set(AlarmManager.RTC_WAKEUP, time, pi);
             }
         }
     }

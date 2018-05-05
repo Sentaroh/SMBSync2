@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="msgs_svc_can_not_start_sync_task_disabled">Because sync task is disabled, it was unable to start the sync task.</string>
-	<string name="msgs_svc_received_start_request_from_scheduler">zz request received from the SMBSync2 scheduler.</string>
+	<string name="msgs_svc_received_start_request_from_scheduler">Sync request received from the SMBSync2 scheduler.</string>
 	<string name="msgs_svc_received_start_request_from_scheduler_task_not_found">Sync request received from the SMBSync2 scheduler, but has been specified task was ignored because it does not exist. Task=</string>
 	<string name="msgs_svc_received_start_request_from_scheduler_no_task_list">Aborted because it can synchronize the task does not exist.</string>
 

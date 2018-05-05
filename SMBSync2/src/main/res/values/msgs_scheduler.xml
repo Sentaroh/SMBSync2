@@ -41,6 +41,7 @@
     <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Please specify the profile to be sync by pressing the &#8216;Edit sync list&#8217; button in the .</string>
     
     <string name="msgs_scheduler_info_next_schedule_time">Next sync time is %s</string>
+    <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Next sync : Time=%s, Name=(%s)</string>
     <string name="msgs_scheduler_info_schedule_disabled">Schedule sync:disabled</string>
     <string name="msgs_scheduler_info_schedule_enabled">Schedule sync:enabled</string>
     <string name="msgs_scheduler_info_sync_all_active_profile">Sync all auto task</string>

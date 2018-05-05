@@ -112,23 +112,26 @@ public class ShortcutAutoSync extends FragmentActivity {
             ntfy.setListener(new NotifyEventListener() {
                 @Override
                 public void positiveResponse(Context c, Object[] o) {
-                    if (SyncService.isDuplicateRequest(mGp, SMBSYNC2_SYNC_REQUEST_SHORTCUT)) {
-                        util.addLogMsg("W",
-                                String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
-                                        SMBSYNC2_SYNC_REQUEST_SHORTCUT));
-                        Toast.makeText(mContext,
-                                String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
-                                        SMBSYNC2_SYNC_REQUEST_SHORTCUT), Toast.LENGTH_LONG)
-                                .show();
-                    } else {
-//						Toast.makeText(mContext, 
-//								mContext.getString(R.string.msgs_svc_received_start_request_from_shortcut), 
-//							Toast.LENGTH_LONG)
-//							.show();
-                        Intent in = new Intent(mContext, SyncService.class);
-                        in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
-                        mContext.startService(in);
-                    }
+//                    if (SyncService.isDuplicateRequest(mGp, SMBSYNC2_SYNC_REQUEST_SHORTCUT)) {
+//                        util.addLogMsg("W",
+//                                String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
+//                                        SMBSYNC2_SYNC_REQUEST_SHORTCUT));
+//                        Toast.makeText(mContext,
+//                                String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
+//                                        SMBSYNC2_SYNC_REQUEST_SHORTCUT), Toast.LENGTH_LONG)
+//                                .show();
+//                    } else {
+////						Toast.makeText(mContext,
+////								mContext.getString(R.string.msgs_svc_received_start_request_from_shortcut),
+////							Toast.LENGTH_LONG)
+////							.show();
+//                        Intent in = new Intent(mContext, SyncService.class);
+//                        in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
+//                        mContext.startService(in);
+//                    }
+                    Intent in = new Intent(mContext, SyncService.class);
+                    in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
+                    mContext.startService(in);
                     terminateShortcut();
                 }
 

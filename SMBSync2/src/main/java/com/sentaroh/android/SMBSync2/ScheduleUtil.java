@@ -209,8 +209,12 @@ public class ScheduleUtil {
     }
 
     final static public long getNextSchedule(ScheduleItem sp) {
+        return getNextSchedule(sp, 0L);
+    }
+
+    final static public long getNextSchedule(ScheduleItem sp, long offset) {
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(System.currentTimeMillis());
+        cal.setTimeInMillis(System.currentTimeMillis()+offset);
         long result = 0;
         int s_hrs = Integer.parseInt(sp.scheduleHours);
         int s_min = Integer.parseInt(sp.scheduleMinutes);
@@ -381,7 +385,7 @@ public class ScheduleUtil {
 //        gp.scheduleInfoList =loadScheduleData(gp);
         ArrayList<ScheduleItem> sl = loadScheduleData(gp);
         ScheduleItem sp = null;
-
+        String sched_items="", sep="";
         long latest_sched_time = -1;
         for (ScheduleItem si : sl) {
             if (si.scheduleEnabled) {
@@ -389,9 +393,13 @@ public class ScheduleUtil {
                 if (latest_sched_time == -1) {
                     latest_sched_time = time;
                     sp = si;
-                } else if (time < latest_sched_time) {
-                    latest_sched_time = time;
+                    sched_items+=sep+si.scheduleName;
+                    sep=",";
+                } else if (time <= latest_sched_time) {
+//                    latest_sched_time = time;
                     sp = si;
+                    sched_items+=sep+si.scheduleName;
+                    sep=",";
                 }
             }
         }
@@ -399,16 +407,17 @@ public class ScheduleUtil {
             long nst = nst = ScheduleUtil.getNextSchedule(sp);
             String sched_time = "";
             if (nst != -1) {
-                sched_time = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_time),
-                        StringUtil.convDateTimeTo_YearMonthDayHourMin(nst));
-                String sync_prof = "";
-                if (sp.syncTaskList.equals("")) {
-                    sync_prof = gp.appContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
-                } else {
-                    sync_prof = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_sync_selected_profile),
-                            sp.syncTaskList);
-                }
-                gp.scheduleInfoText = sched_time + ", " + sync_prof;
+                sched_time = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_main_info),
+                        StringUtil.convDateTimeTo_YearMonthDayHourMin(nst), sched_items);
+//                String sync_prof = "";
+//                if (sp.syncTaskList.equals("")) {
+//                    sync_prof = gp.appContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
+//                } else {
+//                    sync_prof = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_sync_selected_profile),
+//                            sp.syncTaskList);
+//                }
+//                gp.scheduleInfoText = sched_time + ", " + sync_prof;
+                gp.scheduleInfoText = sched_time;
             } else {
                 gp.scheduleInfoText = gp.appContext.getString(R.string.msgs_scheduler_info_schedule_disabled);
             }
@@ -418,8 +427,6 @@ public class ScheduleUtil {
             gp.scheduleInfoView.setText(gp.scheduleInfoText);
         }
     }
-
-    ;
 
     public static String buildSchedulerNextInfo(Context c, ScheduleItem sp) {
         long nst = -1;
