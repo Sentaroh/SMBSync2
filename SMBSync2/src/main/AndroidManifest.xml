@@ -22,11 +22,11 @@
         android:icon="@drawable/smbsync"
         android:label="@string/app_name"
         android:theme="@style/Main" 
-        android:name=".GlobalParameters"
+        android:name="com.sentaroh.android.SMBSync2.GlobalParameters"
         android:largeHeap="true"
         android:allowBackup="true">
         <receiver 
-    	    android:name=".SyncReceiver"
+    	    android:name="com.sentaroh.android.SMBSync2.SyncReceiver"
     	    android:label="SyncReceiver"
     	    android:exported="true">
 			<intent-filter>
@@ -68,7 +68,7 @@
         
         <activity
             android:label="@string/app_name"
-            android:name=".ActivityMain"
+            android:name="com.sentaroh.android.SMBSync2.ActivityMain"
             android:launchMode="singleTask"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
             android:screenOrientation="unspecified" 
@@ -82,30 +82,30 @@
             </intent-filter>
         </activity>
         <activity 
-	        android:name=".ActivitySettings"
+	        android:name="com.sentaroh.android.SMBSync2.ActivitySettings"
             android:label="@string/app_name"
             android:screenOrientation="unspecified" 
             android:icon="@drawable/smbsync">
         </activity>
         <!-- android:noHistory="true"  -->
         
-        <service android:name=".SyncService"/>
+        <service android:name="com.sentaroh.android.SMBSync2.SyncService"/>
 
         <activity 
-	        android:name=".ShortcutAutoSync"
+	        android:name="com.sentaroh.android.SMBSync2.ShortcutAutoSync"
             android:label="@string/app_name_auto_sync"
             android:screenOrientation="unspecified"
             android:launchMode="singleTop"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent"
-            android:taskAffinity=".ShortcutAutoSync"
+            android:taskAffinity="com.sentaroh.android.SMBSync2.ShortcutAutoSync"
             android:configChanges="orientation|keyboardHidden" android:excludeFromRecents="true">
    			<intent-filter >
 				<action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         <activity
-	        android:name=".ShortcutMakeAutoSync"
+	        android:name="com.sentaroh.android.SMBSync2.ShortcutMakeAutoSync"
             android:label="@string/app_name_auto_sync"
             android:exported="true"
             android:icon="@drawable/auto_sync"

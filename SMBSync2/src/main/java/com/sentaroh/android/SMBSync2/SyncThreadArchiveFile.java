@@ -68,11 +68,17 @@ public class SyncThreadArchiveFile {
                 String dir=tf.getParent();
                 File lf_dir=new File(dir);
                 if (!lf_dir.exists()) lf_dir.mkdirs();
-                sync_result= copyFile(stwa, sti, new FileInputStream(mf), new FileOutputStream(tf), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+
+                File temp_file=new File(stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp");
+                sync_result= copyFile(stwa, sti, new FileInputStream(mf),
+                        new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                    temp_file.setLastModified(mf.lastModified());
+                    temp_file.renameTo(tf);
+                }
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
-                SyncThread.scanMediaFile(stwa, tf.getPath());
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, tf.getName(),
                         stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
@@ -80,6 +86,7 @@ public class SyncThreadArchiveFile {
                     mf.delete();
                     stwa.totalDeleteCount++;
                     SyncThread.scanMediaFile(stwa, mf.getPath());
+                    SyncThread.scanMediaFile(stwa, tf.getPath());
                 }
             }
         } else {
@@ -243,7 +250,6 @@ public class SyncThreadArchiveFile {
                         stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                SyncThread.scanMediaFile(stwa, tf.getPath());
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, tf.getName(),
                         stwa.msgs_mirror_task_file_archived);
@@ -251,6 +257,7 @@ public class SyncThreadArchiveFile {
                     mf.delete();
                     stwa.totalDeleteCount++;
                     SyncThread.scanMediaFile(stwa, mf.getPath());
+                    SyncThread.scanMediaFile(stwa, tf.getPath());
                 }
             }
         } else {
@@ -613,11 +620,15 @@ public class SyncThreadArchiveFile {
             SafFile m_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), from_path, false);
             if (!sti.isSyncTestMode()) {
                 SyncThread.createDirectoryToInternalStorage(stwa, sti, tf.getParent());
+                File temp_file=new File(stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp");
                 sync_result= copyFile(stwa, sti,  stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
-                        new FileOutputStream(tf), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                        new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                    temp_file.setLastModified(mf.lastModified());
+                    temp_file.renameTo(tf);
+                }
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                SyncThread.scanMediaFile(stwa, tf.getPath());
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, tf.getName(),
                         stwa.msgs_mirror_task_file_archived);
@@ -625,6 +636,7 @@ public class SyncThreadArchiveFile {
                     m_df.delete();
                     stwa.totalDeleteCount++;
                     SyncThread.scanMediaFile(stwa, from_path);
+                    SyncThread.scanMediaFile(stwa, tf.getPath());
                 }
             }
         } else {
@@ -782,7 +794,6 @@ public class SyncThreadArchiveFile {
                         stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                SyncThread.scanMediaFile(stwa, tf.getPath());
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, tf.getName(),
                         stwa.msgs_mirror_task_file_archived);
@@ -790,6 +801,7 @@ public class SyncThreadArchiveFile {
                     m_df.delete();
                     stwa.totalDeleteCount++;
                     SyncThread.scanMediaFile(stwa, from_path);
+                    SyncThread.scanMediaFile(stwa, tf.getPath());
                 }
             }
         } else {
@@ -1141,8 +1153,13 @@ public class SyncThreadArchiveFile {
                 String dir=tf.getParent();
                 File lf_dir=new File(dir);
                 if (!lf_dir.exists()) lf_dir.mkdirs();
+                File temp_file=new File(stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp");
                 while (stwa.syncTaskRetryCount > 0) {
-                    sync_result= copyFile(stwa, sti, mf.getInputStream(), new FileOutputStream(tf), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                    sync_result= copyFile(stwa, sti, mf.getInputStream(), new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                    if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                        temp_file.setLastModified(mf.getLastModified());
+                        temp_file.renameTo(tf);
+                    }
                     if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
@@ -1156,7 +1173,6 @@ public class SyncThreadArchiveFile {
                 }
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                SyncThread.scanMediaFile(stwa, tf.getPath());
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, tf.getName(),
                         stwa.msgs_mirror_task_file_archived);
@@ -1168,6 +1184,7 @@ public class SyncThreadArchiveFile {
                     }
                     mf.delete();
                     stwa.totalDeleteCount++;
+                    SyncThread.scanMediaFile(stwa, tf.getPath());
                 }
             }
         } else {
@@ -1365,7 +1382,6 @@ public class SyncThreadArchiveFile {
                 }
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                SyncThread.scanMediaFile(stwa, tf.getPath());
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, tf.getName(),
                         stwa.msgs_mirror_task_file_archived);
@@ -1377,6 +1393,7 @@ public class SyncThreadArchiveFile {
                     }
                     mf.delete();
                     stwa.totalDeleteCount++;
+                    SyncThread.scanMediaFile(stwa, tf.getPath());
                 }
             }
         } else {
