@@ -53,7 +53,7 @@
                 android:id="@+id/schedule_list_time_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="1"
+                android:maxLines="2"
                 android:ellipsize="end"
                 android:text="TextView" />
 

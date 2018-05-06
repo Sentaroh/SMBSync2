@@ -214,13 +214,38 @@ public class GlobalParameters extends CommonGlobalParms {
     public GlobalParameters() {
     }
 
-    @SuppressLint("Wakelock")
-    @SuppressWarnings("deprecation")
-    @Override
-    public void onCreate() {
-        super.onCreate();
+//    @SuppressLint("Wakelock")
+//    @SuppressWarnings("deprecation")
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+////		Log.v("","onCreate dir="+getFilesDir().toString());
+//        appContext = this.getApplicationContext();
+//        uiHandler = new Handler();
+//        debuggable = isDebuggable();
+//
+//        mDimWakeLock = ((PowerManager) appContext.getSystemService(Context.POWER_SERVICE))
+//                .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-thread-dim");
+//        mPartialWakeLock = ((PowerManager) appContext.getSystemService(Context.POWER_SERVICE))
+//                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-thread-partial");
+//        WifiManager wm = (WifiManager) appContext.getSystemService(Context.WIFI_SERVICE);
+//        mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "SMBSync2-thread");
+//
+//        internalRootDirectory = Environment.getExternalStorageDirectory().toString();//getInternalStorageRootDirectory();
+//        applicationRootDirectory = getFilesDir().toString();
+//
+//        initStorageStatus();
+//
+//        initSettingsParms();
+//        loadSettingsParms();
+//        setLogParms(this);
+//
+////        scheduleInfoList = ScheduleUtil.loadScheduleData(this);
+//    }
+
+    public void initGlobalParamter(Context c) {
 //		Log.v("","onCreate dir="+getFilesDir().toString());
-        appContext = this.getApplicationContext();
+        appContext = c;
         uiHandler = new Handler();
         debuggable = isDebuggable();
 
@@ -232,7 +257,7 @@ public class GlobalParameters extends CommonGlobalParms {
         mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "SMBSync2-thread");
 
         internalRootDirectory = Environment.getExternalStorageDirectory().toString();//getInternalStorageRootDirectory();
-        applicationRootDirectory = getFilesDir().toString();
+        applicationRootDirectory = appContext.getFilesDir().toString();
 
         initStorageStatus();
 
@@ -405,10 +430,10 @@ public class GlobalParameters extends CommonGlobalParms {
 
     private boolean isDebuggable() {
         boolean result = false;
-        PackageManager manager = getPackageManager();
+        PackageManager manager = appContext.getPackageManager();
         ApplicationInfo appInfo = null;
         try {
-            appInfo = manager.getApplicationInfo(getPackageName(), 0);
+            appInfo = manager.getApplicationInfo(appContext.getPackageName(), 0);
         } catch (NameNotFoundException e) {
             result = false;
         }

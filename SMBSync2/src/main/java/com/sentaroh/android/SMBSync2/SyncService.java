@@ -27,7 +27,6 @@ import static com.sentaroh.android.SMBSync2.Constants.*;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import android.annotation.SuppressLint;
@@ -38,7 +37,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SyncRequest;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -77,8 +75,9 @@ public class SyncService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         mContext = getApplicationContext();
+        mGp= CommonStaticPointer.initGlobalParameters(mContext);
+//        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         NotificationUtil.initNotification(mGp);
         NotificationUtil.clearNotification(mGp);
         mUtil = new SyncUtil(getApplicationContext(), "Service", mGp);

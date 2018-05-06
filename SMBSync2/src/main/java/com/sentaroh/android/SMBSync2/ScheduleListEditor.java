@@ -511,7 +511,7 @@ public class ScheduleListEditor {
                     }
                 });
                 String del_list = "";
-                for (int i = mScheduleAdapter.getCount() - 1; i >= 0; i--) {
+                for (int i=0;i<mScheduleAdapter.getCount();i++) {
                     if (mScheduleAdapter.getItem(i).isChecked && !mScheduleAdapter.getItem(i).scheduleEnabled) {
                         del_list += mScheduleAdapter.getItem(i).scheduleName + "\n";
                     }
@@ -546,7 +546,7 @@ public class ScheduleListEditor {
                     }
                 });
                 String del_list = "";
-                for (int i = mScheduleAdapter.getCount() - 1; i >= 0; i--) {
+                for (int i=0;i<mScheduleAdapter.getCount();i++) {
                     if (mScheduleAdapter.getItem(i).isChecked && mScheduleAdapter.getItem(i).scheduleEnabled) {
                         del_list += mScheduleAdapter.getItem(i).scheduleName + "\n";
                     }

@@ -31,7 +31,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -41,12 +40,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sentaroh.android.Utilities.LocalMountPoint;
@@ -74,7 +68,9 @@ public class ActivitySettings extends PreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mContext = this;
-        mGp = (GlobalParameters) getApplicationContext();//getApplication();
+//        mGp = (GlobalParameters) getApplicationContext();//getApplication();
+        mGp= CommonStaticPointer.initGlobalParameters(mContext);
+
         setTheme(mGp.applicationTheme);
         super.onCreate(savedInstanceState);
         mPrefActivity = this;
@@ -116,7 +112,9 @@ public class ActivitySettings extends PreferenceActivity {
     public boolean onIsMultiPane() {
         mContext = this;
 //        mGp = (GlobalParameters) getApplication();
-        mGp = (GlobalParameters) getApplicationContext();//getApplication();
+//        mGp = (GlobalParameters) getApplicationContext();//getApplication();
+        mGp= CommonStaticPointer.initGlobalParameters(mContext);
+
 //    	mPrefActivity=this;
         mUtil = new SyncUtil(this, "SettingsActivity", mGp);
         if (mGp.settingDebugLevel > 0)

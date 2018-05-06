@@ -88,7 +88,6 @@ import com.sentaroh.android.Utilities.Dialog.ProgressBarDialogFragment;
 import com.sentaroh.android.Utilities.LocalMountPoint;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
-import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
@@ -162,8 +161,9 @@ public class ActivityMain extends AppCompatActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mGp = (GlobalParameters) getApplicationContext();//getApplication();
+//        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         mContext = getApplicationContext();
+        mGp= CommonStaticPointer.initGlobalParameters(mContext);
         mActivity = this;
         if (mGp.themeColorList == null) {
             mGp.themeColorList = ThemeUtil.getThemeColorList(this);
@@ -172,6 +172,7 @@ public class ActivityMain extends AppCompatActivity {
         setTheme(mGp.applicationTheme);
 
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.main_screen);
 

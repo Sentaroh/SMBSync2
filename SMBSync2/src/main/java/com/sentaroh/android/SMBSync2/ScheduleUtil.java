@@ -27,6 +27,7 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import com.sentaroh.android.Utilities.StringUtil;
 
@@ -384,43 +385,31 @@ public class ScheduleUtil {
     public static void setSchedulerInfo(GlobalParameters gp) {
 //        gp.scheduleInfoList =loadScheduleData(gp);
         ArrayList<ScheduleItem> sl = loadScheduleData(gp);
-        ScheduleItem sp = null;
-        String sched_items="", sep="";
+        String sched_list="", sep="", first="";
         long latest_sched_time = -1;
+        ArrayList<String>sched_array=new ArrayList<String>();
         for (ScheduleItem si : sl) {
             if (si.scheduleEnabled) {
                 long time = ScheduleUtil.getNextSchedule(si);
-                if (latest_sched_time == -1) {
-                    latest_sched_time = time;
-                    sp = si;
-                    sched_items+=sep+si.scheduleName;
-                    sep=",";
-                } else if (time <= latest_sched_time) {
-//                    latest_sched_time = time;
-                    sp = si;
-                    sched_items+=sep+si.scheduleName;
+                String dt=StringUtil.convDateTimeTo_YearMonthDayHourMin(time);
+                String item=dt+","+si.scheduleName;
+                sched_array.add(item);
+            }
+        }
+        Collections.sort(sched_array);
+
+        if (sched_array.size()>0) {
+            String[] key=sched_array.get(0).split(",");
+            for(String item:sched_array) {
+                String[] s_key=item.split(",");
+                if (key[0].equals(s_key[0])) {
+                    sched_list+=sep+s_key[1];
                     sep=",";
                 }
             }
-        }
-        if (sp != null) {
-            long nst = nst = ScheduleUtil.getNextSchedule(sp);
-            String sched_time = "";
-            if (nst != -1) {
-                sched_time = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_main_info),
-                        StringUtil.convDateTimeTo_YearMonthDayHourMin(nst), sched_items);
-//                String sync_prof = "";
-//                if (sp.syncTaskList.equals("")) {
-//                    sync_prof = gp.appContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
-//                } else {
-//                    sync_prof = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_sync_selected_profile),
-//                            sp.syncTaskList);
-//                }
-//                gp.scheduleInfoText = sched_time + ", " + sync_prof;
-                gp.scheduleInfoText = sched_time;
-            } else {
-                gp.scheduleInfoText = gp.appContext.getString(R.string.msgs_scheduler_info_schedule_disabled);
-            }
+            String sched_info = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_main_info),
+                    key[0], sched_list);
+            gp.scheduleInfoText = sched_info;
             gp.scheduleInfoView.setText(gp.scheduleInfoText);
         } else {
             gp.scheduleInfoText = gp.appContext.getString(R.string.msgs_scheduler_info_schedule_disabled);
