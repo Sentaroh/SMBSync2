@@ -172,8 +172,6 @@ public class SyncTaskEditor extends DialogFragment {
         if (mContext == null) mContext = this.getActivity();
         mFragment = this;
         mFragMgr = this.getFragmentManager();
-//        mGp = (GlobalParameters) getActivity().getApplicationContext();//getApplication();
-        mGp= GlobalWorkArea.getGlobalParameters(mContext);
         if (mUtil == null) mUtil = new SyncUtil(mContext, "SyncTaskEditor", mGp);
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
         mCommonDlg = new CommonDialog(mContext, getActivity().getSupportFragmentManager());
@@ -192,8 +190,7 @@ public class SyncTaskEditor extends DialogFragment {
     final public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (mContext == null) mContext = this.getActivity();
-//        mGp = (GlobalParameters) getActivity().getApplicationContext();//getApplication();
-        mGp= GlobalWorkArea.getGlobalParameters(mContext);
+        mGp=GlobalWorkArea.getGlobalParameters(mContext);
         if (mUtil == null) mUtil = new SyncUtil(mContext, "SyncTaskEditor", mGp);
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
     }
