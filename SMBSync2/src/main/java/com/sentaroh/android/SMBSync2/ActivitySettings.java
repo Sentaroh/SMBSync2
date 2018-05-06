@@ -69,7 +69,7 @@ public class ActivitySettings extends PreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
         mContext = this;
 //        mGp = (GlobalParameters) getApplicationContext();//getApplication();
-        mGp= CommonStaticPointer.initGlobalParameters(mContext);
+        mGp= CommonStaticVariable.getGlobalParameters(mContext);
 
         setTheme(mGp.applicationTheme);
         super.onCreate(savedInstanceState);
@@ -113,7 +113,7 @@ public class ActivitySettings extends PreferenceActivity {
         mContext = this;
 //        mGp = (GlobalParameters) getApplication();
 //        mGp = (GlobalParameters) getApplicationContext();//getApplication();
-        mGp= CommonStaticPointer.initGlobalParameters(mContext);
+        mGp= CommonStaticVariable.getGlobalParameters(mContext);
 
 //    	mPrefActivity=this;
         mUtil = new SyncUtil(this, "SettingsActivity", mGp);

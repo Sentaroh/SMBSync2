@@ -37,7 +37,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.Window;
-import android.widget.Toast;
 
 public class ShortcutAutoSync extends FragmentActivity {
 
@@ -78,7 +77,7 @@ public class ShortcutAutoSync extends FragmentActivity {
 //        mGp = (GlobalParameters) getApplication();
 //        mGp = (GlobalParameters) getApplicationContext();
         mContext = getApplicationContext();
-        mGp=CommonStaticPointer.initGlobalParameters(mContext);
+        mGp= CommonStaticVariable.getGlobalParameters(mContext);
         if (mGp.themeColorList == null) {
             mGp.themeColorList = ThemeUtil.getThemeColorList(this);
         }

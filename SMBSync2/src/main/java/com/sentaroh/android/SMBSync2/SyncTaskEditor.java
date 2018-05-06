@@ -173,7 +173,7 @@ public class SyncTaskEditor extends DialogFragment {
         mFragment = this;
         mFragMgr = this.getFragmentManager();
 //        mGp = (GlobalParameters) getActivity().getApplicationContext();//getApplication();
-        mGp=CommonStaticPointer.initGlobalParameters(mContext);
+        mGp= CommonStaticVariable.getGlobalParameters(mContext);
         if (mUtil == null) mUtil = new SyncUtil(mContext, "SyncTaskEditor", mGp);
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
         mCommonDlg = new CommonDialog(mContext, getActivity().getSupportFragmentManager());
@@ -193,7 +193,7 @@ public class SyncTaskEditor extends DialogFragment {
         super.onAttach(activity);
         if (mContext == null) mContext = this.getActivity();
 //        mGp = (GlobalParameters) getActivity().getApplicationContext();//getApplication();
-        mGp=CommonStaticPointer.initGlobalParameters(mContext);
+        mGp= CommonStaticVariable.getGlobalParameters(mContext);
         if (mUtil == null) mUtil = new SyncUtil(mContext, "SyncTaskEditor", mGp);
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
     }
