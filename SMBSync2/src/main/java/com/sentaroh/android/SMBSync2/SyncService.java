@@ -40,7 +40,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.hardware.usb.UsbManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -104,7 +103,7 @@ public class SyncService extends Service {
 
         initWifiStatus();
 
-        initUsbDeviceList();
+//        initUsbDeviceList();
 
         IntentFilter int_filter = new IntentFilter();
         int_filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
@@ -230,22 +229,22 @@ public class SyncService extends Service {
         } else if (action.equals(SMBSYNC2_SERVICE_HEART_BEAT)) {
 //			mUtil.addDebugMsg(0,"I","onStartCommand entered, action="+action);
             if (mHeartBeatActive) setHeartBeat();
-        } else if (action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED) ||
-                action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)) {
-            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
-            initUsbDeviceList();
+//        } else if (action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED) ||
+//                action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)) {
+//            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
+//            initUsbDeviceList();
         } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) ||
                 action.equals(Intent.ACTION_MEDIA_EJECT)) {
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             final String sdcard = mGp.safMgr.getSdcardDirectory();
-            final String usb = mGp.safMgr.getUsbFileSystemDirectory();
+//            final String usb = mGp.safMgr.getUsbFileSystemDirectory();
             Thread th = new Thread() {
                 @Override
                 public void run() {
                     int count = 10;
                     while (count > 0) {
                         mGp.refreshMediaDir();
-                        if (!usb.equals(mGp.safMgr.getUsbFileSystemDirectory()) ||
+                        if (//!usb.equals(mGp.safMgr.getUsbFileSystemDirectory()) ||
                                 !sdcard.equals(mGp.safMgr.getSdcardDirectory())) {
                             mUtil.addDebugMsg(1, "I", "New media directory, sdcard=" + mGp.safMgr.getSdcardDirectory() +
                                     ", usb=" + mGp.safMgr.getUsbFileSystemDirectory());
@@ -272,19 +271,19 @@ public class SyncService extends Service {
         return START_STICKY;
     }
 
-    private void initUsbDeviceList() {
-        mGp.safMgr.loadSafFileList();
-//		UsbManager um = (UsbManager) getSystemService(Context.USB_SERVICE);
-//		if (um!=null) {
-////			RemovableStorageUtil rsu=new RemovableStorageUtil(mContext,true);
-//			HashMap<String, UsbDevice> dl = um.getDeviceList();
-//			Iterator<UsbDevice> deviceIterator = dl.values().iterator();
-//			while(deviceIterator.hasNext()){
-//			    UsbDevice device = deviceIterator.next();
-//				mUtil.addDebugMsg(1,"I", "id="+device.getDeviceId()+", name="+device.getDeviceName());
-//			}
-//		}
-    }
+//    private void initUsbDeviceList() {
+//        mGp.safMgr.loadSafFileList();
+////		UsbManager um = (UsbManager) getSystemService(Context.USB_SERVICE);
+////		if (um!=null) {
+//////			RemovableStorageUtil rsu=new RemovableStorageUtil(mContext,true);
+////			HashMap<String, UsbDevice> dl = um.getDeviceList();
+////			Iterator<UsbDevice> deviceIterator = dl.values().iterator();
+////			while(deviceIterator.hasNext()){
+////			    UsbDevice device = deviceIterator.next();
+////				mUtil.addDebugMsg(1,"I", "id="+device.getDeviceId()+", name="+device.getDeviceName());
+////			}
+////		}
+//    }
 
     @Override
     public IBinder onBind(Intent intent) {

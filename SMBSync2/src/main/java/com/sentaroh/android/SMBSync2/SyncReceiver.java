@@ -35,7 +35,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.usb.UsbManager;
 import android.os.Build;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -141,14 +140,14 @@ public class SyncReceiver extends BroadcastReceiver {
                 in.setAction(SMBSYNC2_SERVICE_HEART_BEAT);
                 if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
                 mContext.startService(in);
-            } else if (action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED) ||
-                    action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)) {
-                if (mGp.settingDebugLevel >= 1)
-                    mLog.addDebugMsg(1, "I", "Receiver action=" + action);
-                Intent in = new Intent(mContext, SyncService.class);
-                in.setAction(action);
-                if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
-                mContext.startService(in);
+//            } else if (action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED) ||
+//                    action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)) {
+//                if (mGp.settingDebugLevel >= 1)
+//                    mLog.addDebugMsg(1, "I", "Receiver action=" + action);
+//                Intent in = new Intent(mContext, SyncService.class);
+//                in.setAction(action);
+//                if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
+//                mContext.startService(in);
             } else {
                 if (mGp.settingDebugLevel >= 1)
                     mLog.addDebugMsg(1, "I", "Receiver action=" + action);
