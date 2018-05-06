@@ -163,7 +163,7 @@ public class ActivityMain extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
 //        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         mContext = getApplicationContext();
-        mGp=CommonStaticVariable.getGlobalParameters(mContext);
+        mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mActivity = this;
         if (mGp.themeColorList == null) {
             mGp.themeColorList = ThemeUtil.getThemeColorList(this);

@@ -75,7 +75,7 @@ public class SyncService extends Service {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
-        mGp= CommonStaticVariable.getGlobalParameters(mContext);
+        mGp= GlobalWorkArea.getGlobalParameters(mContext);
 //        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         NotificationUtil.initNotification(mGp);
         NotificationUtil.clearNotification(mGp);
