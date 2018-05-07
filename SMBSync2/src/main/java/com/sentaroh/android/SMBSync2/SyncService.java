@@ -863,9 +863,19 @@ public class SyncService extends Service {
     final private class WifiReceiver extends BroadcastReceiver {
         @Override
         final public void onReceive(Context c, Intent in) {
-            String tssid = mWifiMgr.getConnectionInfo().getSSID();
+            String tssid =null;
+            try {
+                tssid=mWifiMgr.getConnectionInfo().getSSID();
+            } catch(Exception e){
+                mUtil.addLogMsg("W", "WIFI receiver, getSSID() failed. msg="+e.getMessage());
+            }
             String wssid = "";
-            String ss = mWifiMgr.getConnectionInfo().getSupplicantState().toString();
+            String ss = "";
+            try {
+                ss=mWifiMgr.getConnectionInfo().getSupplicantState().toString();
+            } catch(Exception e){
+                mUtil.addLogMsg("W", "WIFI receiver, getSupplicantState() failed. msg="+e.getMessage());
+            }
             if (tssid == null || tssid.equals("<unknown ssid>")) wssid = "";
             else wssid = tssid.replaceAll("\"", "");
             if (wssid.equals("0x")) wssid = "";
