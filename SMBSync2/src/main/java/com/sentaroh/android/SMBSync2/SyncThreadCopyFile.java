@@ -101,7 +101,21 @@ public class SyncThreadCopyFile {
 //            if (out_dest.exists()) out_dest.delete();
 //            out_file.renameTo(out_dest);
 //        }
-        out_file.setLastModified(mf.lastModified());
+        try {
+            out_file.setLastModified(mf.lastModified());
+        } catch(Exception e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_dir + ", To=" + to_dir+", name="+file_name);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", "Length="+mf.length()+", LastModified="+mf.lastModified()+
+                    ", File="+mf.isFile());
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            out_file.delete();
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
         File out_dest = new File(to_file_dest);
         if (out_dest.exists()) out_dest.delete();
         out_file.renameTo(out_dest);
@@ -362,8 +376,15 @@ public class SyncThreadCopyFile {
         File t_dir = new File(to_dir);
         if (!t_dir.exists()) t_dir.mkdirs();
 
-        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+//        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+//        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        InputStream is =null;
+        if (mf.getPath().startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
+            is=new FileInputStream(mf);
+        } else {
+            SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        }
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
         FileOutputStream os = new FileOutputStream(out_file);
         BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
@@ -396,7 +417,22 @@ public class SyncThreadCopyFile {
 //            if (out_dest.exists()) out_dest.delete();
 //            out_file.renameTo(out_dest);
 //        }
-        out_file.setLastModified(mf.lastModified());
+        try {
+            out_file.setLastModified(mf.lastModified());
+        } catch(Exception e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_dir + ", To=" + to_dir+", name="+file_name);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", "Length="+mf.length()+", LastModified="+mf.lastModified()+
+                    ", File="+mf.isFile());
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            out_file.delete();
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
+
         File out_dest = new File(to_file_dest);
         if (out_dest.exists()) out_dest.delete();
         out_file.renameTo(out_dest);
@@ -438,8 +474,16 @@ public class SyncThreadCopyFile {
             }
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+//        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+//        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        InputStream is =null;
+        if (mf.getPath().startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
+            is=new FileInputStream(mf);
+        } else {
+            SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        }
+
         BufferedInputStream ifs = new BufferedInputStream(is, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
         OutputStream os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
         BufferedOutputStream ofs = new BufferedOutputStream(os, LARGE_BUFFERED_STREAM_BUFFER_SIZE);
@@ -507,8 +551,13 @@ public class SyncThreadCopyFile {
         JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
         SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
-        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        InputStream is =null;
+        if (mf.getPath().startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
+            is=new FileInputStream(mf);
+        } else {
+            SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        }
         BufferedInputStream ifs = new BufferedInputStream(is, buffer_size);
         OutputStream os = out_file.getOutputStream();
         BufferedOutputStream ofs = new BufferedOutputStream(os, buffer_size);
@@ -660,7 +709,21 @@ public class SyncThreadCopyFile {
 //            out_file.renameTo(out_dest);
 //        }
 
-        out_file.setLastModified(mf.getLastModified());
+        try {
+            out_file.setLastModified(mf.getLastModified());
+        } catch(Exception e) {
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    SyncUtil.getExecutedMethodName() + " From=" + from_dir + ", To=" + to_dir+", name="+file_name);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", "Length="+mf.length()+", LastModified="+mf.getLastModified()+
+                    ", File="+mf.isFile()+", Attribute="+mf.getAttributes());
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            out_file.delete();
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
         File out_dest = new File(to_file_dest);
         if (out_dest.exists()) out_dest.delete();
         out_file.renameTo(out_dest);

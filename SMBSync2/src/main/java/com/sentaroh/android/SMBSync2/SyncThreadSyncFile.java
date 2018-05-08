@@ -1399,7 +1399,7 @@ public class SyncThreadSyncFile {
     static public int syncMirrorExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                               String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = moveCopyInternalToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+        int sync_result = moveCopyExternalToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
             JcifsFile tf = null;
             try {

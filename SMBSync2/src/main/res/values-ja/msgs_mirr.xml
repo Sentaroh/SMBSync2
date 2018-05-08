@@ -21,8 +21,8 @@
     <string name="msgs_mirror_task_dir_create_failed">ディレクトリー作成に失敗しました。</string>
     <string name="msgs_mirror_task_file_copying">ファイル コピー中、 %s%%終了。</string>
     <string name="msgs_mirror_task_result_stats" formatted="false">コピー=%s, 削除=%s, 無視=%s, 警告=%s, リトライ=%s, エラー=%s</string>
-    <string name="msgs_mirror_ignore_override_move_file">同期オプションで上書きが無効になっているためファイルの移動は無視されました。</string>
-    <string name="msgs_mirror_ignore_override_copy_file">同期オプションで上書きが無効になっているためファイルのコピーは無視されました。</string>
+    <string name="msgs_mirror_ignore_override_move_file"> 同期オプションで上書きが無効になっているためファイルの移動は無視されました。</string>
+    <string name="msgs_mirror_ignore_override_copy_file"> 同期オプションで上書きが無効になっているためファイルのコピーは無視されました。</string>
     <string name="msgs_mirror_confirm_copy_cancel">コピーがユーザーによりキャンセルされました。</string>
     <string name="msgs_mirror_confirm_move_cancel">移動がユーザーによりキャンセルされました。</string>
 	<string name="msgs_mirror_confirm_delete_cancel">削除がユーザーによりキャンセルされました。</string>
