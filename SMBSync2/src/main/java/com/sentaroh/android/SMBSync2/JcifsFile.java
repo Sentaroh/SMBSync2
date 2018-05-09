@@ -38,8 +38,11 @@ public class JcifsFile {
     private jcifsng.smb.SmbFile mSmb2File = null;
     private jcifs.smb.SmbFile mSmb1File = null;
 
-    public JcifsFile(String url, JcifsAuth auth) throws MalformedURLException {
+    public JcifsFile(String url, JcifsAuth auth) throws MalformedURLException, JcifsException {
         mSmb1 = auth.isSmb1();
+        if (auth==null || !auth.isSmb1()) {
+            throw new JcifsException("JcifsAuth is null.");
+        }
         mAuth = auth;
 
         if (mSmb1) {
@@ -49,14 +52,20 @@ public class JcifsFile {
         }
     }
 
-    private JcifsFile(jcifs.smb.SmbFile smb1File, JcifsAuth auth) {
+    private JcifsFile(jcifs.smb.SmbFile smb1File, JcifsAuth auth) throws JcifsException {
         mSmb1 = JcifsAuth.JCIFS_FILE_SMB1;
+        if (auth==null || !auth.isSmb1()) {
+            throw new JcifsException("JcifsAuth is null or SMB2.");
+        }
         mAuth = auth;
         mSmb1File = smb1File;
     }
 
-    private JcifsFile(jcifsng.smb.SmbFile smb2File, JcifsAuth auth) {
+    private JcifsFile(jcifsng.smb.SmbFile smb2File, JcifsAuth auth) throws JcifsException {
         mSmb1 = JcifsAuth.JCIFS_FILE_SMB2;
+        if (auth==null || auth.isSmb1()) {
+            throw new JcifsException("JcifsAuth is null or SMB1.");
+        }
         mAuth = auth;
         mSmb2File = smb2File;
     }
@@ -405,11 +414,11 @@ public class JcifsFile {
         try {
             if (mSmb1) {
                 if (d.getSmb1File() == null)
-                    throw new JcifsException(new Exception("Null SMB1 file"), 0, null);
+                    throw new JcifsException("Null SMB1 file specified.");
                 else mSmb1File.renameTo(d.getSmb1File());
             } else {
                 if (d.getSmb2File() == null)
-                    throw new JcifsException(new Exception("Null SMB2 file"), 0, null);
+                    throw new JcifsException("Null SMB2 file specified.");
                 else mSmb2File.renameTo(d.getSmb2File());
             }
         } catch (jcifsng.smb.SmbException e) {

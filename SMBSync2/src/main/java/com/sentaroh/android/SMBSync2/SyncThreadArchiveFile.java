@@ -1139,6 +1139,12 @@ public class SyncThreadArchiveFile {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
         int sync_result = archiveDirectorySmbToInternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
@@ -1336,6 +1342,12 @@ public class SyncThreadArchiveFile {
         try {
             mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
+            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
@@ -1544,6 +1556,12 @@ public class SyncThreadArchiveFile {
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() +
                     " From=" + from_path + ", Master file error");
+            stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());

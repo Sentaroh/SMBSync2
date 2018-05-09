@@ -39,6 +39,12 @@ public class JcifsException extends Exception {
         mMessage = e.getMessage();
     }
 
+    public JcifsException(String msg) {
+        mException = new Exception(msg);
+        mMessage = msg;
+        mNtStatus = -1;
+    }
+
     public int getNtStatus() {
         return mNtStatus;
     }
