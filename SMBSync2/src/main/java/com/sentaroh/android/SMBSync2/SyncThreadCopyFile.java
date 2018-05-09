@@ -61,44 +61,50 @@ public class SyncThreadCopyFile {
         File out_file = new File(to_file_path);
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
-        SafFile t_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_path, false);
-        if (t_df == null) {
-            String saf_name = "";
-            SafFile sf = stwa.gp.safMgr.getSdcardSafFile();
-            if (sf != null) saf_name = sf.getName();
-            stwa.util.addLogMsg("E", "SAF file not found error. path=" + to_file_path + ", SafFile=" + saf_name +
-                    ", sdcard=" + stwa.gp.safMgr.getSdcardDirectory());
-            ArrayList<SafFileManager.SafFileItem> sl = stwa.gp.safMgr.getSafList();
-            for (SafFileManager.SafFileItem sfi : sl) {
-                stwa.util.addLogMsg("E", "SafFileItem UUID=" + sfi.storageUuid + ", path=" + sfi.storageRootDirectory +
-                        ", mount=" + sfi.storageIsMounted + ", sdcard=" + sfi.storageTypeSdcard);
-            }
-            return SyncTaskItem.SYNC_STATUS_ERROR;
-        }
-//        SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-//        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
         InputStream is =null;
         if (mf.getPath().startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
             is=new FileInputStream(mf);
         } else {
-            SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            if (m_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
             is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
         }
-        OutputStream os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+
+        OutputStream os =null;
+        boolean output_use_file=false;
+        File t_file=new File(to_file_path);
+        SafFile t_df=null;
+        if (to_file_path.startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
+            os=new FileOutputStream(t_file);
+            output_use_file=true;
+        } else {
+            t_df = getSafFile(stwa, sti, to_file_path);
+            if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+            os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+        }
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) out_file.delete();
+            if (sti.isSyncUseFileCopyByTempName()) {
+                if (output_use_file) t_file.delete();
+                else t_df.delete();
+            }
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
-            SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
-            if (out_dest.exists()) {
-                o_df.delete();
+            if (output_use_file) {
+                t_file.setLastModified(mf.lastModified());
+                if (out_dest.exists()) out_dest.delete();
+                t_file.renameTo(out_dest);
+            } else {
+                SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+                if (out_dest.exists()) {
+                    o_df.delete();
+                }
+                t_df.renameTo(file_name);
             }
-            t_df.renameTo(file_name);
         }
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -121,7 +127,8 @@ public class SyncThreadCopyFile {
         if (mf.getPath().startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
             is=new FileInputStream(mf);
         } else {
-            SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            if (m_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
             is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
         }
         FileOutputStream os = new FileOutputStream(out_file);
@@ -172,7 +179,8 @@ public class SyncThreadCopyFile {
         if (mf.getPath().startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
             is=new FileInputStream(mf);
         } else {
-            SafFile m_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            if (m_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
             is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
         }
         OutputStream os = out_file.getOutputStream();
@@ -254,39 +262,63 @@ public class SyncThreadCopyFile {
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
-        SafFile t_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_path, false);
+        FileInputStream is = new FileInputStream(mf);
+        OutputStream os =null;
+        boolean output_use_file=false;
+        File t_file=new File(to_file_path);
+        SafFile t_df=null;
+        if (to_file_path.startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
+            os=new FileOutputStream(t_file);
+            output_use_file=true;
+        } else {
+            t_df = getSafFile(stwa, sti, to_file_path);
+            if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+            os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+        }
+
+        int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
+        if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
+            if (sti.isSyncUseFileCopyByTempName()) {
+                if (output_use_file) t_file.delete();
+                else t_df.delete();
+            }
+            return SyncTaskItem.SYNC_STATUS_CANCEL;
+        }
+
+        if (sti.isSyncUseFileCopyByTempName()) {
+            File out_dest = new File(to_file_dest);
+            if (output_use_file) {
+                t_file.setLastModified(mf.lastModified());
+                if (out_dest.exists()) out_dest.delete();
+                t_file.renameTo(out_dest);
+            } else {
+                SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+                if (out_dest.exists()) {
+                    o_df.delete();
+                }
+                t_df.renameTo(file_name);
+            }
+        }
+
+        return SyncTaskItem.SYNC_STATUS_SUCCESS;
+    }
+
+    static private SafFile getSafFile(SyncThreadWorkArea stwa, SyncTaskItem sti,String fp) {
+        SafFile t_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), fp, false);
         if (t_df == null) {
             String saf_name = "";
             SafFile sf = stwa.gp.safMgr.getSdcardSafFile();
             if (sf != null) saf_name = sf.getName();
-            stwa.util.addLogMsg("E", "SAF file not found error. path=" + to_file_path + ", SafFile=" + saf_name +
+            stwa.util.addLogMsg("E", "SAF file not found error. path=" + fp + ", SafFile=" + saf_name +
                     ", sdcard=" + stwa.gp.safMgr.getSdcardDirectory());
             ArrayList<SafFileManager.SafFileItem> sl = stwa.gp.safMgr.getSafList();
             for (SafFileManager.SafFileItem sfi : sl) {
                 stwa.util.addLogMsg("E", "SafFileItem UUID=" + sfi.storageUuid + ", path=" + sfi.storageRootDirectory +
                         ", mount=" + sfi.storageIsMounted + ", sdcard=" + sfi.storageTypeSdcard);
             }
-            return SyncTaskItem.SYNC_STATUS_ERROR;
+            return null;
         }
-        FileInputStream is = new FileInputStream(mf);
-        OutputStream os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
-
-        int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
-        if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) t_df.delete();
-            return SyncTaskItem.SYNC_STATUS_CANCEL;
-        }
-
-        if (sti.isSyncUseFileCopyByTempName()) {
-            File out_dest = new File(to_file_dest);
-            SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
-            if (out_dest.exists()) {
-                o_df.delete();
-            }
-            t_df.renameTo(file_name);
-        }
-
-        return SyncTaskItem.SYNC_STATUS_SUCCESS;
+        return t_df;
     }
 
     static public int copyFileInternalToSmb(SyncThreadWorkArea stwa,
@@ -418,39 +450,42 @@ public class SyncThreadCopyFile {
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
-        SafFile r_saf = stwa.gp.safMgr.getSdcardSafFile();
-        SafFile t_df = stwa.gp.safMgr.getSafFileBySdcardPath(r_saf, to_file_path, false);
-        stwa.util.addDebugMsg(2, "I", "SafDebugMsg:\n" + stwa.gp.safMgr.getSafDebugMsg());
-        stwa.util.addDebugMsg(2, "I", "SafDebugMsg: ended");
-
-        if (t_df == null) {
-            String saf_name = "";
-            SafFile sf = stwa.gp.safMgr.getSdcardSafFile();
-            if (sf != null) saf_name = sf.getName();
-            stwa.util.addLogMsg("E", "SAF file not found error. path=" + to_file_path + ", SafFile=" + saf_name +
-                    ", sdcard=" + stwa.gp.safMgr.getSdcardDirectory());
-            ArrayList<SafFileManager.SafFileItem> sl = stwa.gp.safMgr.getSafList();
-            for (SafFileManager.SafFileItem sfi : sl) {
-                stwa.util.addLogMsg("E", "SafFileItem UUID=" + sfi.storageUuid + ", path=" + sfi.storageRootDirectory +
-                        ", mount=" + sfi.storageIsMounted + ", sdcard=" + sfi.storageTypeSdcard);
-            }
-            return SyncTaskItem.SYNC_STATUS_ERROR;
-        }
         InputStream is = mf.getInputStream();
-        OutputStream os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+        OutputStream os =null;
+        boolean output_use_file=false;
+        File t_file=new File(to_file_path);
+        SafFile t_df=null;
+        if (to_file_path.startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
+            os=new FileOutputStream(t_file);
+            output_use_file=true;
+        } else {
+            t_df = getSafFile(stwa, sti, to_file_path);
+            if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+            os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+        }
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) t_df.delete();
+            if (sti.isSyncUseFileCopyByTempName()) {
+                if (output_use_file) t_file.delete();
+                else t_df.delete();
+            }
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
+
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
-            SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
-            if (out_dest.exists()) {
-                o_df.delete();
+            if (output_use_file) {
+                t_file.setLastModified(mf.getLastModified());
+                if (out_dest.exists()) out_dest.delete();
+                t_file.renameTo(out_dest);
+            } else {
+                SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+                if (out_dest.exists()) {
+                    o_df.delete();
+                }
+                t_df.renameTo(file_name);
             }
-            t_df.renameTo(file_name);
         }
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
