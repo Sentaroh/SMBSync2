@@ -58,6 +58,7 @@ import android.os.StrictMode;
 import android.os.storage.StorageManager;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -660,8 +661,6 @@ public class ActivityMain extends AppCompatActivity {
             }
         }
     }
-
-    ;
 
     class ViewSaveArea {
         public int current_tab_pos = 0;
@@ -1955,10 +1954,17 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.settingLogOption) {
             Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-            intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(mGp)), "text/plain");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             try {
 //                startActivity(intent);
-                startActivity(Intent.createChooser(intent, LogUtil.getLogFilePath(mGp)));
+                if (Build.VERSION.SDK_INT>=26) {
+                    Uri uri= FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(LogUtil.getLogFilePath(mGp)));
+                    intent.setDataAndType(uri, "text/plain");
+//                    startActivity(Intent.createChooser(intent, LogUtil.getLogFilePath(mGp)));
+                } else {
+                    intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
+                }
+                startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 commonDlg.showCommonDialog(false, "E",
                         mContext.getString(R.string.msgs_log_file_browse_app_can_not_found), e.getMessage(), null);
@@ -2029,8 +2035,6 @@ public class ActivityMain extends AppCompatActivity {
         mTaskUtil.showSelectSdcardMsg(ntfy);
 
     }
-
-    ;
 
     private final int REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
 
@@ -2187,8 +2191,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     private void setHistoryViewItemClickListener() {
         mGp.syncHistoryListView.setEnabled(true);
         mGp.syncHistoryListView
@@ -2206,12 +2208,15 @@ public class ActivityMain extends AppCompatActivity {
                             if (item.sync_result_file_path!=null && !item.sync_result_file_path.equals("")) {
                                 File lf=new File(item.sync_result_file_path);
                                 if (lf.exists()) {
-                                    Intent intent =
-                                            new Intent(android.content.Intent.ACTION_VIEW);
-                                    intent.setDataAndType(
-                                            Uri.parse("file://" + item.sync_result_file_path),
-                                            "text/plain");
-                                    startActivityForResult(intent, 1);
+                                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+                                    if (Build.VERSION.SDK_INT>=26) {
+                                        Uri uri=FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(item.sync_result_file_path));
+                                        intent.setDataAndType(uri, "text/plain");
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                    } else {
+                                        intent.setDataAndType(Uri.parse("file://"+item.sync_result_file_path),"text/plain");
+                                    }
+                                    mActivity.startActivity(intent);
                                 }
                             }
                             mUiHandler.postDelayed(new Runnable() {
@@ -2355,12 +2360,20 @@ public class ActivityMain extends AppCompatActivity {
                 if (tc.isEnabled()) {
                     Intent intent = new Intent();
                     intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent.setAction(Intent.ACTION_SEND);
 //				    intent.setType("message/rfc822");
 //				    intent.setType("text/plain");
                     intent.setType("application/zip");
-                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
+
+                    if (Build.VERSION.SDK_INT>=26) {
+                        Uri uri=FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", lf);
+                        intent.putExtra(Intent.EXTRA_STREAM, uri);
+                    } else {
+                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
+                    }
                     mContext.startActivity(intent);
+
                 } else {
                     lf.delete();
                     MessageDialogFragment mdf = MessageDialogFragment.newInstance(false, "W",

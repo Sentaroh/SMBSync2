@@ -97,7 +97,8 @@ public class NotificationUtil {
             );
             channel.enableLights(false);
             channel.setSound(null,null);
-//            channel.setLightColor(Color.GREEN);
+            channel.enableLights(true);
+            channel.setLightColor(Color.GREEN);
             channel.enableVibration(false);
             channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             gwa.notificationManager.deleteNotificationChannel("SMBSync2");
@@ -212,7 +213,7 @@ public class NotificationUtil {
 //			.addAction(action_icon, action_title, action_pi)
         ;
         if (Build.VERSION.SDK_INT>=26) {
-            gwa.notificationBuilder.setChannelId("SMBSync2");
+            builder.setChannelId("SMBSync2");
         }
         if (gwa.callbackStub != null || (gwa.msgList != null && gwa.msgList.size() > 0)) {
             Intent activity_intent = new Intent(gwa.appContext, ActivityMain.class);
