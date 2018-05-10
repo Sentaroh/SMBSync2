@@ -23,6 +23,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.media.ExifInterface;
+import android.util.Log;
+
 import static com.sentaroh.android.SMBSync2.Constants.*;
 
 import java.io.BufferedInputStream;
@@ -40,11 +43,13 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.TimeZone;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.mp4.Mp4Directory;
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
@@ -90,7 +95,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -261,7 +266,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -602,7 +607,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -640,7 +645,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -805,7 +810,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -987,7 +992,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -1194,7 +1199,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -1409,7 +1414,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -1609,7 +1614,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -1842,12 +1847,13 @@ public class SyncThreadArchiveFile {
                 afli.file=element;
                 afli.file_name=element.getName();
                 afli.full_path=element.getPath();
-                if (date_time==null) {
+                if (date_time[0]==null) {
                     String[] dt=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(element.lastModified()).split(" ");
                     afli.shoot_date=dt[0].replace("/","-");
                     afli.shoot_time=dt[1].replace(":","-");
                     afli.date_from_exif=false;
                 } else {
+                    Log.v("SMBSync2","name="+afli.file_name+", 0="+date_time[0]+", 1="+date_time[1]);
                     afli.shoot_date=date_time[0].replace("/","-");
                     afli.shoot_time=date_time[1].replace(":","-");
                 }
@@ -2000,10 +2006,139 @@ public class SyncThreadArchiveFile {
         return seqno;
     }
 
-    static private String[] getExifDateTime(InputStream fis) {
+
+    static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
+        String[] date_time=null;
+        try {
+            FileInputStream fis=new FileInputStream(lf);
+            date_time=getFileExifDateTime(stwa, sti, fis, lf.lastModified(), lf.getName());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return date_time;
+    }
+
+    static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, SafFile sf) {
+        String[] date_time=null;
+        try {
+            InputStream fis=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
+            date_time=getFileExifDateTime(stwa, sti, fis, sf.lastModified(), sf.getName());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return date_time;
+    }
+
+    static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile lf) throws JcifsException {
+        String[] date_time=null;
+        InputStream fis=lf.getInputStream();
+        date_time=getFileExifDateTime(stwa, sti, fis, lf.getLastModified(), lf.getName());
+        return date_time;
+    }
+
+    static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, InputStream fis, long last_mod, String file_name) {
+        String[] date_time=null;
+        if (file_name.endsWith(".mp4") || file_name.endsWith(".mov") ) {
+            date_time=getMp4ExifDateTime(stwa, sti, fis);
+        } else {
+            date_time=getExifDateTime(fis, 8);
+            if (date_time==null) {
+                date_time=getExifDateTime(fis, 64);
+            }
+        }
+        if (date_time==null || date_time[0]==null) {
+            date_time= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(last_mod).split(" ");
+        }
+        return date_time;
+    }
+
+    static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile lf) throws JcifsException {
+        String[] result=null;
+        InputStream fis=lf.getInputStream();
+        result=getMp4ExifDateTime(stwa, sti, fis);
+        return result;
+    }
+
+    static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, InputStream fis)  {
         String[] result=null;
         try {
-            int buf_sz=1024*4;
+            Metadata metaData;
+            metaData = ImageMetadataReader.readMetadata(fis);
+            Mp4Directory directory=null;
+            if (metaData!=null) {
+                directory=metaData.getFirstDirectoryOfType(Mp4Directory.class);
+                if (directory!=null) {
+                    String date = directory.getString(Mp4Directory.TAG_CREATION_TIME);
+                    result=parseDateValue(date);
+                }
+            }
+        } catch (ImageProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    static final private String[] parseDateValue(String date_val) {
+        String[] result=null;
+        String[] dt=date_val.split(" ");
+        int year=Integer.parseInt(dt[5]);
+        int month=0;
+        int day=Integer.parseInt(dt[2]);
+        if      (dt[1].equals("Jan")) month=0;
+        else if (dt[1].equals("Feb")) month=1;
+        else if (dt[1].equals("Mar")) month=2;
+        else if (dt[1].equals("Apr")) month=3;
+        else if (dt[1].equals("May")) month=4;
+        else if (dt[1].equals("Jun")) month=5;
+        else if (dt[1].equals("Jul")) month=6;
+        else if (dt[1].equals("Aug")) month=7;
+        else if (dt[1].equals("Sep")) month=8;
+        else if (dt[1].equals("Oct")) month=9;
+        else if (dt[1].equals("Nov")) month=10;
+        else if (dt[1].equals("Dec")) month=11;
+
+        String[] tm=dt[3].split(":");
+        int hours=  Integer.parseInt(tm[0]);
+        int minutes=Integer.parseInt(tm[1]);
+        int seconds=Integer.parseInt(tm[2]);
+
+        Calendar cal=Calendar.getInstance() ;
+        TimeZone tz=TimeZone.getDefault();
+        tz.setID(dt[3]);
+        cal.setTimeZone(tz);
+        cal.set(year, month, day, hours, minutes, seconds);
+        result=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(cal.getTimeInMillis()).split(" ");
+        return result;
+    }
+
+    static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
+        String[] result=null;
+        try {
+            InputStream fis=new FileInputStream(lf);
+            result=getMp4ExifDateTime(stwa, sti, fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, SafFile sf) {
+        String[] result=null;
+        try {
+            InputStream fis=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
+            result=getMp4ExifDateTime(stwa, sti, fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    static private String[] getExifDateTime(InputStream fis, int bsz) {
+        String[] result=null;
+        try {
+            int buf_sz=1024*bsz;
             byte[] buff=new byte[buf_sz];
             fis.read(buff);
             fis.close();
@@ -2085,157 +2220,6 @@ public class SyncThreadArchiveFile {
             i++;
         }
         return date_time;
-    }
-
-    static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
-        String[] date_time=null;
-        try {
-            FileInputStream fis=new FileInputStream(lf);
-            if (lf.getName().endsWith(".mp4") || lf.getName().endsWith(".mov") ) {
-                date_time=getMp4ExifDateTime(stwa, sti, lf);
-            } else {
-                date_time=getExifDateTime(fis);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        if (date_time==null) {
-            date_time= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(lf.lastModified()).split(" ");
-        }
-        return date_time;
-    }
-
-    static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, SafFile sf) {
-        String[] date_time=null;
-        try {
-            InputStream fis=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
-            if (sf.getName().endsWith(".mp4") || sf.getName().endsWith(".mov") ) {
-                date_time=getMp4ExifDateTime(stwa, sti, sf);
-            } else {
-                date_time=getExifDateTime(fis);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        if (date_time==null) {
-            date_time= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(sf.lastModified()).split(" ");
-        }
-        return date_time;
-    }
-
-    static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile lf) throws JcifsException {
-        String[] date_time=null;
-        InputStream fis=lf.getInputStream();
-        if (lf.getName().endsWith(".mp4") || lf.getName().endsWith(".mov") ) {
-            date_time=getMp4ExifDateTime(stwa, sti, lf);
-        } else {
-            date_time=getExifDateTime(fis);
-        }
-        if (date_time==null) {
-            date_time= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(lf.getLastModified()).split(" ");
-        }
-        return date_time;
-    }
-
-    static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile lf) throws JcifsException {
-        String[] result=null;
-        try {
-            Metadata metaData;
-            InputStream fis=lf.getInputStream();
-            metaData = ImageMetadataReader.readMetadata(fis);
-            Mp4Directory directory=null;
-            if (metaData!=null) {
-                directory=metaData.getFirstDirectoryOfType(Mp4Directory.class);
-                if (directory!=null) {
-                    String date = directory.getString(Mp4Directory.TAG_CREATION_TIME);
-                    result=parseDateValue(date);
-                }
-            }
-        } catch (ImageProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    static final private String[] parseDateValue(String date_val) {
-        String[] result=null;
-        String[] dt=date_val.split(" ");
-        int year=Integer.parseInt(dt[5]);
-        int month=0;
-        int day=Integer.parseInt(dt[2]);
-        if      (dt[1].equals("Jan")) month=0;
-        else if (dt[1].equals("Feb")) month=1;
-        else if (dt[1].equals("Mar")) month=2;
-        else if (dt[1].equals("Apr")) month=3;
-        else if (dt[1].equals("May")) month=4;
-        else if (dt[1].equals("Jun")) month=5;
-        else if (dt[1].equals("Jul")) month=6;
-        else if (dt[1].equals("Aug")) month=7;
-        else if (dt[1].equals("Sep")) month=8;
-        else if (dt[1].equals("Oct")) month=9;
-        else if (dt[1].equals("Nov")) month=10;
-        else if (dt[1].equals("Dec")) month=11;
-
-        String[] tm=dt[3].split(":");
-        int hours=  Integer.parseInt(tm[0]);
-        int minutes=Integer.parseInt(tm[1]);
-        int seconds=Integer.parseInt(tm[2]);
-
-        Calendar cal=Calendar.getInstance() ;
-        TimeZone tz=TimeZone.getDefault();
-        tz.setID(dt[3]);
-        cal.setTimeZone(tz);
-        cal.set(year, month, day, hours, minutes, seconds);
-        result=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(cal.getTimeInMillis()).split(" ");
-        return result;
-    }
-
-    static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
-        String[] result=null;
-        try {
-//            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", "fname="+lf.getName());
-            Metadata metaData;
-            InputStream fis=new FileInputStream(lf);
-            metaData = ImageMetadataReader.readMetadata(fis);
-            Mp4Directory directory=null;
-            if (metaData!=null) {
-                directory=metaData.getFirstDirectoryOfType(Mp4Directory.class);
-                if (directory!=null) {
-                    String date = directory.getString(Mp4Directory.TAG_CREATION_TIME);
-                    result=parseDateValue(date);
-                }
-            }
-        } catch (ImageProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-    static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, SafFile sf) {
-        String[] result=null;
-        try {
-//            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", "fname="+lf.getName());
-            Metadata metaData;
-            InputStream fis=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
-            metaData = ImageMetadataReader.readMetadata(fis);
-            Mp4Directory directory=null;
-            if (metaData!=null) {
-                directory=metaData.getFirstDirectoryOfType(Mp4Directory.class);
-                if (directory!=null) {
-                    String date = directory.getString(Mp4Directory.TAG_CREATION_TIME);
-                    result=parseDateValue(date);
-                }
-            }
-        } catch (ImageProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
     }
 
 }

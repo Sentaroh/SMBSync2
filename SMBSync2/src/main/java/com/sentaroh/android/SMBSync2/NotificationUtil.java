@@ -29,12 +29,15 @@ import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.SMBSync2.R;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 public class NotificationUtil {
@@ -47,7 +50,6 @@ public class NotificationUtil {
         return gwa.notificationEnabled;
     }
 
-    @SuppressWarnings("deprecation")
     static final public void initNotification(GlobalParameters gwa) {
         gwa.notificationManager = (NotificationManager) gwa.appContext.getSystemService(Context.NOTIFICATION_SERVICE);
         gwa.notification = new Notification(R.drawable.ic_48_smbsync_wait,
@@ -77,6 +79,9 @@ public class NotificationUtil {
                 .setWhen(0)
 //			.addAction(action_icon, action_title, action_pi)
         ;
+        if (Build.VERSION.SDK_INT>=26) {
+            gwa.notificationBuilder.setChannelId("SMBSync2");
+        }
         gwa.notification = gwa.notificationBuilder.build();
         gwa.notificationBigTextStyle =
                 new NotificationCompat.BigTextStyle(gwa.notificationBuilder);
@@ -84,9 +89,23 @@ public class NotificationUtil {
                 .setBigContentTitle(gwa.notificationLastShowedTitle)
                 .bigText(gwa.notificationLastShowedMessage);
 
-    }
+        if (Build.VERSION.SDK_INT>=26) {
+            NotificationChannel channel = new NotificationChannel(
+                    "SMBSync2",
+                    "SMBSync2",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            channel.enableLights(false);
+            channel.setSound(null,null);
+//            channel.setLightColor(Color.GREEN);
+            channel.enableVibration(false);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            gwa.notificationManager.deleteNotificationChannel("SMBSync2");
+            gwa.notificationManager.createNotificationChannel(channel);
 
-    ;
+        }
+
+    }
 
     static final public void setNotificationIcon(GlobalParameters gwa,
                                                  int small_icon, int large_icon) {
@@ -97,6 +116,9 @@ public class NotificationUtil {
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
                 .setLargeIcon(gwa.notificationLargeIcon);
         ;
+        if (Build.VERSION.SDK_INT>=26) {
+            gwa.notificationBuilder.setChannelId("SMBSync2");
+        }
         gwa.notification = gwa.notificationBuilder.build();
         gwa.notificationBigTextStyle =
                 new NotificationCompat.BigTextStyle(gwa.notificationBuilder);
@@ -105,13 +127,9 @@ public class NotificationUtil {
                 .bigText(gwa.notificationLastShowedMessage);
     }
 
-    ;
-
     final static public Notification getNotification(GlobalParameters gwa) {
         return gwa.notification;
     }
-
-    ;
 
     final static public void setNotificationMessage(GlobalParameters gwa, long when,
                                                     String prof, String fp, String msg) {
@@ -124,27 +142,19 @@ public class NotificationUtil {
         gwa.notificationLastShowedWhen = when;
     }
 
-    ;
-
     final static public Notification showOngoingMsg(GlobalParameters gwa, long when,
                                                     String msg) {
         return showOngoingMsg(gwa, when, "", "", msg);
     }
-
-    ;
 
     final static public Notification showOngoingMsg(GlobalParameters gwa, long when,
                                                     String prof, String msg) {
         return showOngoingMsg(gwa, when, prof, "", msg);
     }
 
-    ;
-
     final static public Notification showOngoingMsg(GlobalParameters gwa, long when,
                                                     String prof, String fp, String msg) {
         setNotificationMessage(gwa, when, prof, fp, msg);
-//		if (gwa.notificationNextShowedTime<=System.currentTimeMillis()) {
-//			gwa.notificationNextShowedTime=System.currentTimeMillis()+500;
         gwa.notificationBuilder
                 .setContentTitle(gwa.notificationLastShowedTitle)
                 .setContentText(gwa.notificationLastShowedMessage)
@@ -152,18 +162,18 @@ public class NotificationUtil {
                 .setLargeIcon(gwa.notificationLargeIcon)
         ;
         if (when != 0) gwa.notificationBuilder.setWhen(when);
+        if (Build.VERSION.SDK_INT>=26) {
+            gwa.notificationBuilder.setChannelId("SMBSync2");
+        }
         gwa.notificationBigTextStyle
                 .setBigContentTitle(gwa.notificationLastShowedTitle)
                 .bigText(gwa.notificationLastShowedMessage);
         gwa.notification = gwa.notificationBigTextStyle.build();
         if (isNotificationEnabled(gwa))
             gwa.notificationManager.notify(R.string.app_name, gwa.notification);
-//		}
 
         return gwa.notification;
     }
-
-    ;
 
     final static public Notification reShowOngoingMsg(GlobalParameters gwa) {
         gwa.notificationBuilder
@@ -172,6 +182,9 @@ public class NotificationUtil {
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
                 .setLargeIcon(gwa.notificationLargeIcon)
         ;
+        if (Build.VERSION.SDK_INT>=26) {
+            gwa.notificationBuilder.setChannelId("SMBSync2");
+        }
         gwa.notificationBuilder.setWhen(gwa.notificationLastShowedWhen);
         gwa.notificationBigTextStyle
                 .setBigContentTitle(gwa.notificationLastShowedTitle)
@@ -183,8 +196,6 @@ public class NotificationUtil {
 
         return gwa.notification;
     }
-
-    ;
 
     final static public void showNoticeMsg(Context context, GlobalParameters gwa, String msg) {
         clearNotification(gwa);
@@ -200,6 +211,9 @@ public class NotificationUtil {
                 .setWhen(System.currentTimeMillis())
 //			.addAction(action_icon, action_title, action_pi)
         ;
+        if (Build.VERSION.SDK_INT>=26) {
+            gwa.notificationBuilder.setChannelId("SMBSync2");
+        }
         if (gwa.callbackStub != null || (gwa.msgList != null && gwa.msgList.size() > 0)) {
             Intent activity_intent = new Intent(gwa.appContext, ActivityMain.class);
             PendingIntent activity_pi = PendingIntent.getActivity(context, 0, activity_intent,
@@ -227,12 +241,8 @@ public class NotificationUtil {
             gwa.notificationManager.notify(R.string.app_name, builder.build());
     }
 
-    ;
-
     final static public void clearNotification(GlobalParameters gwa) {
         gwa.notificationManager.cancelAll();
     }
-
-    ;
 
 }

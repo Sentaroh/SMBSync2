@@ -23,10 +23,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.content.Context;
+import android.content.Intent;
+
 import com.sentaroh.android.Utilities.CommonGlobalParms;
 import com.sentaroh.android.Utilities.LogUtil.CommonLogUtil;
+import com.sentaroh.android.Utilities.LogUtil.CommonLogWriter;
 
-public class LogUtil extends CommonLogUtil{
+public class LogUtil extends CommonLogUtil {
 
 	public LogUtil(Context c, String li, CommonGlobalParms gp) {
 		super(c, li, gp);

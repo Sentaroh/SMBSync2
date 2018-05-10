@@ -369,6 +369,7 @@ public class ScheduleUtil {
 
     public static void sendTimerRequest(Context c, String act) {
         Intent intent = new Intent(act);
+        intent.setClass(c, SyncReceiver.class);
         c.sendBroadcast(intent);
     }
 

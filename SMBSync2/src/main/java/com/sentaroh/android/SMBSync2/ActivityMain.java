@@ -29,6 +29,9 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -43,6 +46,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -50,6 +54,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
+import android.os.StrictMode;
 import android.os.storage.StorageManager;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
@@ -162,6 +167,9 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 //        mGp = (GlobalParameters) getApplicationContext();//getApplication();
+//        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+//        StrictMode.setVmPolicy(builder.build());
+
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mActivity = this;
@@ -1949,7 +1957,8 @@ public class ActivityMain extends AppCompatActivity {
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
             intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(mGp)), "text/plain");
             try {
-                startActivity(intent);
+//                startActivity(intent);
+                startActivity(Intent.createChooser(intent, LogUtil.getLogFilePath(mGp)));
             } catch (ActivityNotFoundException e) {
                 commonDlg.showCommonDialog(false, "E",
                         mContext.getString(R.string.msgs_log_file_browse_app_can_not_found), e.getMessage(), null);

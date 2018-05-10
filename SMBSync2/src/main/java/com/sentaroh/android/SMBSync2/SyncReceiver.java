@@ -214,6 +214,7 @@ public class SyncReceiver extends BroadcastReceiver {
                 Intent in = new Intent();
                 in.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
                 in.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, sched_names);
+                in.setClass(mContext, SyncReceiver.class);
                 PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
                 if (Build.VERSION.SDK_INT >= 23)
@@ -237,6 +238,7 @@ public class SyncReceiver extends BroadcastReceiver {
     private static boolean isTimerScheduled() {
         Intent iw = new Intent();
         iw.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
+        iw.setClass(mContext, SyncReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, iw, PendingIntent.FLAG_NO_CREATE);
         if (pi == null) {
             return false;
@@ -250,6 +252,7 @@ public class SyncReceiver extends BroadcastReceiver {
     static private void cancelTimer() {
         if (mGp.settingDebugLevel > 0) mLog.addDebugMsg(1, "I", "cancelTimer entered");
         Intent in = new Intent();
+        in.setClass(mContext, SyncReceiver.class);
         in.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
         PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);

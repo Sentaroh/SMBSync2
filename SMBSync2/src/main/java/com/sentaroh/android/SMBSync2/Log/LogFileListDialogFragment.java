@@ -22,11 +22,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import com.sentaroh.android.Utilities.LogUtil.CommonLogFileListDialogFragment;
 
 import android.os.Bundle;
 
-public class LogFileListDialogFragment extends CommonLogFileListDialogFragment{
+import com.sentaroh.android.Utilities.LogUtil.CommonLogFileListDialogFragment;
+
+
+public class LogFileListDialogFragment extends CommonLogFileListDialogFragment {
 	public static LogFileListDialogFragment newInstance(boolean retainInstance, String title) {
 		LogFileListDialogFragment frag = new LogFileListDialogFragment();
         Bundle bundle = new Bundle();

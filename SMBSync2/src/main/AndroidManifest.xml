@@ -72,7 +72,8 @@
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
             android:screenOrientation="unspecified" 
             android:alwaysRetainTaskState="true"
-            android:icon="@drawable/smbsync" >
+            android:icon="@drawable/smbsync">
+            <!--drawable/smbsync" >-->
 
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
@@ -115,20 +116,6 @@
 		    </intent-filter>
         </activity>
 
-        <receiver 
-    	    android:name="com.sentaroh.android.SMBSync2.Log.LogReceiver"
-    	    android:exported="false">
-			<intent-filter>
-			    <action android:name="android.intent.action.ACTION_SHUTDOWN" />
-				<action android:name="com.sentaroh.android.SMBSync2.ACTION_LOG_SEND" />
-				<action android:name="com.sentaroh.android.SMBSync2.ACTION_LOG_RESET" />
-				<action android:name="com.sentaroh.android.SMBSync2.ACTION_LOG_DELETE" />
-				<action android:name="com.sentaroh.android.SMBSync2.ACTION_LOG_ROTATE" />
-				<action android:name="com.sentaroh.android.SMBSync2.ACTION_LOG_FLUSH" />
-				<action android:name="com.sentaroh.android.SMBSync2.ACTION_LOG_CLOSE" />
-			</intent-filter>
-		</receiver>
-        
     </application>
 
 </manifest>

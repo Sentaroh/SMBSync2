@@ -317,7 +317,6 @@ public class GlobalParameters extends CommonGlobalParms {
                 BROADCAST_LOG_ROTATE,
                 BROADCAST_LOG_SEND,
                 BROADCAST_LOG_CLOSE);
-
     }
 
     public void initSettingsParms() {
