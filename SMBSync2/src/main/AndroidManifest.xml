@@ -18,6 +18,8 @@
     
     <!--<uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />-->
 
+    <!--android:icon="@drawable/smbsync"-->
+    <!--android:roundIcon="@mipmap/ic_launcher"-->
     <application
         android:icon="@drawable/smbsync"
         android:label="@string/app_name"
@@ -72,7 +74,7 @@
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
             android:screenOrientation="unspecified" 
             android:alwaysRetainTaskState="true"
-            android:icon="@drawable/smbsync">
+            >
             <!--drawable/smbsync" >-->
 
             <intent-filter >
