@@ -378,7 +378,8 @@ public class SyncThreadCopyFile {
         }
 
         try {
-            if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_file.setLastModified(mf.getLastModified());
+            if (!sti.isSyncDoNotResetLastModifiedSmbFile())
+                out_file.setLastModified(mf.getLastModified());
         } catch(JcifsException e) {
             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
                     stwa.gp.appContext.getString(R.string.msgs_mirror_smb_folder_file_set_last_modified_failed));

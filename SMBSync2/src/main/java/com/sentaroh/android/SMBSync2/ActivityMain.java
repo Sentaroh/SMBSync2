@@ -63,6 +63,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -86,6 +87,7 @@ import android.widget.Toast;
 
 import com.sentaroh.android.SMBSync2.Log.LogFileListDialogFragment;
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
+import com.sentaroh.android.Utilities.ContentProviderUtil;
 import com.sentaroh.android.Utilities.ContextButton.ContextButtonUtil;
 import com.sentaroh.android.Utilities.ContextMenu.CustomContextMenu;
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
@@ -182,27 +184,21 @@ public class ActivityMain extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.main_screen);
 
         mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
-
-        mActionBar = getSupportActionBar();
-        mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setHomeButtonEnabled(false);
 
         mUtil = new SyncUtil(this.getApplicationContext(), "Main", mGp);
 
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
 
-//        Intent intent = new Intent(this, SyncService.class);
-//        startService(intent);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setHomeButtonEnabled(false);
 
         if (mGp.settingFixDeviceOrientationToPortrait)
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-
-//		SafUtil.initWorkArea(mContext, mSafCA, mGp.settingDebugLevel>0);
 
         ccMenu = new CustomContextMenu(getResources(), getSupportFragmentManager());
         commonDlg = new CommonDialog(this, getSupportFragmentManager());
@@ -361,7 +357,19 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
     }
 
-    ;
+//    @Override
+//    protected void onNewIntent(Intent received_intent) {
+//        super.onNewIntent(received_intent);
+//        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+//
+////        if (received_intent.getAction()!=null && !received_intent.getAction().equals("")) {
+////            Intent in=new Intent(received_intent.getAction());
+////            in.setClass(this, SyncReceiver.class);
+////            if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
+////            sendBroadcast(in,null);
+////        }
+//
+//    }
 
     @Override
     protected void onDestroy() {

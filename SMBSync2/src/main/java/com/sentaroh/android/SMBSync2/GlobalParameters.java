@@ -64,6 +64,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import jcifs.Config;
+
 public class GlobalParameters extends CommonGlobalParms {
     public Context appContext = null;
 
@@ -420,6 +422,7 @@ public class GlobalParameters extends CommonGlobalParms {
         settingsSmbUseExtendedSecurity = ues ? "true" : "false";
         settingsSmbDisablePlainTextPasswords=dpp ? "true" : "false";
 
+        System.setProperty("jcifs.smb.client.attrExpirationPeriod", "0");
         System.setProperty("jcifs.netbios.retryTimeout", "3000");
         System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
         System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);
