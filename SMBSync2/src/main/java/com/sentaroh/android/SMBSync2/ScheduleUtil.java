@@ -84,6 +84,7 @@ public class ScheduleUtil {
     final static public ArrayList<ScheduleItem> buildScheduleListV2(GlobalParameters gp, String v2_data) {
         ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
         String[] sd_array = v2_data.split("\n");
+        int nc=0;
         for (String sd_sub : sd_array) {
 //            Log.v("","sub="+sd_sub);
             if (sd_sub.equals("end")) break;
@@ -94,6 +95,8 @@ public class ScheduleUtil {
                 ScheduleItem si = new ScheduleItem();
                 si.scheduleEnabled = sub_array[0].replace("\u0000", "").equals("1") ? true : false;
                 si.scheduleName = sub_array[1].replace("\u0000", "");
+                nc++;
+                if (si.scheduleName==null || si.scheduleName.equals("")) si.scheduleName="NO NAME"+nc;
                 if (sub_array[2].length() > 0)
                     si.schedulePosition = Integer.valueOf(sub_array[2].replace("\u0000", ""));
                 si.scheduleType = sub_array[3].replace("\u0000", "");
@@ -128,6 +131,7 @@ public class ScheduleUtil {
     final static public ArrayList<ScheduleItem> buildScheduleListV3(GlobalParameters gp, String v3_data) {
         ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
         String[] sd_array = v3_data.split("\u0001");
+        int nc=0;
         for (String sd_sub : sd_array) {
 //            Log.v("","sub="+sd_sub);
             if (sd_sub.equals("end")) break;
@@ -138,6 +142,9 @@ public class ScheduleUtil {
                 ScheduleItem si = new ScheduleItem();
                 si.scheduleEnabled = sub_array[0].replace("\u0000", "").equals("1") ? true : false;
                 si.scheduleName = sub_array[1].replace("\u0000", "");
+                nc++;
+                if (si.scheduleName==null || si.scheduleName.equals("")) si.scheduleName="NO NAME"+nc;
+
                 if (sub_array[2].length() > 0)
                     si.schedulePosition = Integer.valueOf(sub_array[2].replace("\u0000", ""));
                 si.scheduleType = sub_array[3].replace("\u0000", "");
