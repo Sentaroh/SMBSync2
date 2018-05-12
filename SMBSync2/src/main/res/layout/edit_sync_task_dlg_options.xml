@@ -210,38 +210,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/edit_sync_task_option_ll_sync_use_copy_rename"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <CheckedTextView
-                android:id="@+id/edit_sync_task_option_ctv_sync_use_copy_rename"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:gravity="center_vertical"
-                android:text="@string/msgs_profile_sync_task_sync_option_copy_by_rename"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-            <include layout="@layout/divider_line1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/edit_sync_task_option_ll_sync_use_extended_filter1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <CheckedTextView
-                android:id="@+id/edit_sync_task_option_ctv_sync_use_extended_filter1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:gravity="center_vertical"
-                android:text="@string/msgs_profile_sync_task_sync_option_use_extended_filter1"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-            <include layout="@layout/divider_line1" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/edit_sync_task_option_ll_retry_if_error_occured"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -272,8 +240,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:orientation="vertical"
-             >
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_sync_use_extended_filter1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_use_extended_filter1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_use_extended_filter1"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_sync_use_copy_rename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_use_copy_rename"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_copy_by_rename"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/edit_sync_task_option_ll_do_mot_reset_remote_file_last_mod_time"
