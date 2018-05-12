@@ -78,7 +78,7 @@ public class SyncThreadSyncTwoway {
                                 } else {
                                     return sync_result;
                                 }
-                                if (!stwa.gp.syncThreadControl.isEnabled()) {
+                                if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                                     sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                                     break;
                                 }
@@ -117,13 +117,13 @@ public class SyncThreadSyncTwoway {
                                 stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
                             }
                         }
-                        if (!stwa.gp.syncThreadControl.isEnabled())
+                        if (!stwa.gp.syncThreadCtrl.isEnabled())
                             sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                     }
                 }
             } else {
-                stwa.gp.syncThreadControl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
-                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadControl.getThreadMessage());
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
         } catch (IOException e) {
@@ -131,14 +131,14 @@ public class SyncThreadSyncTwoway {
                     SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         } catch (JcifsException e) {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 

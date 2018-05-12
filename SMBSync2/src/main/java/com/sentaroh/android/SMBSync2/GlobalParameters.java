@@ -83,7 +83,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public ArrayBlockingQueue<SyncRequestItem> syncRequestQueue = new ArrayBlockingQueue<SyncRequestItem>(1000);
 
     public ThreadCtrl syncThreadConfirm = new ThreadCtrl();
-    public ThreadCtrl syncThreadControl = new ThreadCtrl();
+    public ThreadCtrl syncThreadCtrl = new ThreadCtrl();
 
     public boolean activityIsBackground = true;
     public boolean syncThreadEnabled = true;

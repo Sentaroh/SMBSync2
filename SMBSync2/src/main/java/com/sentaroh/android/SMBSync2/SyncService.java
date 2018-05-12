@@ -68,15 +68,11 @@ public class SyncService extends Service {
 
     private SleepReceiver mSleepReceiver = new SleepReceiver();
 
-//	private final String SERVICE_STATUS_FILE_NAME="service_status_file";
-
-
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
-//        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         NotificationUtil.initNotification(mGp);
         NotificationUtil.clearNotification(mGp);
         mUtil = new SyncUtil(getApplicationContext(), "Service", mGp);
@@ -96,14 +92,10 @@ public class SyncService extends Service {
             mGp.syncHistoryList = mUtil.loadHistoryList();
 
         NotificationUtil.setNotificationIcon(mGp, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
-//		NotificationUtil.showOngoingMsg(mGp, 0, mContext.getString(R.string.msgs_notification_smbsync_active));
-//		startForeground(R.string.app_name, mGp.notification);
 
         mWifiMgr = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
 
         initWifiStatus();
-
-//        initUsbDeviceList();
 
         IntentFilter int_filter = new IntentFilter();
         int_filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
@@ -122,35 +114,6 @@ public class SyncService extends Service {
 
     }
 
-//	private boolean isSvcStatusFileExists() {
-//		String ofp=mGp.applicationRootDirectory+"/"+SERVICE_STATUS_FILE_NAME;
-//		File lf=new File(ofp);
-////		Log.v("","exists="+lf.exists());
-//		return lf.exists();
-//	};
-//
-//	private void deleteSvcStatusFileExists() {
-//		String ofp=mGp.applicationRootDirectory+"/"+SERVICE_STATUS_FILE_NAME;
-//		File lf=new File(ofp);
-//		lf.delete();
-////		Log.v("","deleted"+lf.exists());
-//	};
-//
-//	private void createSvcStatusFile() {
-//		String ofp=mGp.applicationRootDirectory+"/"+SERVICE_STATUS_FILE_NAME;
-//		File lf=new File(mGp.applicationRootDirectory);
-//		if (!lf.exists()) lf.mkdir();
-//		lf=new File(ofp);
-//		if (!lf.exists()) {
-//			try {
-//				lf.createNewFile();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-////		Log.v("","create="+lf.exists());
-//	};
-
     private String getApplVersionName() {
         String result = "Unknown";
         try {
@@ -163,15 +126,11 @@ public class SyncService extends Service {
         return result;
     }
 
-//	WakeLock wake_lock=null;
-
     private boolean mHeartBeatActive = false;
 
-    @SuppressLint("NewApi")
     private void setHeartBeat() {
         if (Build.VERSION.SDK_INT >= 21) {
             if (Build.VERSION.SDK_INT >= 23) {
-                Intent intent = new Intent();
                 String packageName = mContext.getPackageName();
                 PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
                 if (pm.isIgnoringBatteryOptimizations(packageName)) {
@@ -179,15 +138,11 @@ public class SyncService extends Service {
                     return;
                 }
             }
-//            mUtil.addDebugMsg(1,"I", "HeartBeat started");
             mHeartBeatActive = true;
-//			Thread.dumpStack();
             long time = System.currentTimeMillis() + 1000 * 300;
-//			Intent in = new Intent(mContext, SyncService.class);
             Intent in = new Intent();
             in.setAction(SMBSYNC2_SERVICE_HEART_BEAT);
             PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_UPDATE_CURRENT);
-//			PendingIntent pi = PendingIntent.getService(mContext, 0, in, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
             if (Build.VERSION.SDK_INT >= 23)
                 am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
@@ -197,12 +152,9 @@ public class SyncService extends Service {
 
     private void cancelHeartBeat() {
         mHeartBeatActive = false;
-//		Thread.dumpStack();
-//		Intent in = new Intent(mContext, SyncService.class);
         Intent in = new Intent();
         in.setAction(SMBSYNC2_SERVICE_HEART_BEAT);
         PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_CANCEL_CURRENT);
-//		PendingIntent pi = PendingIntent.getService(mContext, 0, in, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
     }
@@ -229,15 +181,10 @@ public class SyncService extends Service {
         } else if (action.equals(SMBSYNC2_SERVICE_HEART_BEAT)) {
 //			mUtil.addDebugMsg(0,"I","onStartCommand entered, action="+action);
             if (mHeartBeatActive) setHeartBeat();
-//        } else if (action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED) ||
-//                action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)) {
-//            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
-//            initUsbDeviceList();
         } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) ||
                 action.equals(Intent.ACTION_MEDIA_EJECT)) {
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             final String sdcard = mGp.safMgr.getSdcardDirectory();
-//            final String usb = mGp.safMgr.getUsbFileSystemDirectory();
             Thread th = new Thread() {
                 @Override
                 public void run() {
@@ -266,40 +213,20 @@ public class SyncService extends Service {
         } else {
             mUtil.addDebugMsg(2, "I", "onStartCommand entered, action=" + action);
         }
-//		wl.release();
-//		if (isServiceToBeStopped()) stopSelf();
         return START_STICKY;
     }
-
-//    private void initUsbDeviceList() {
-//        mGp.safMgr.loadSafFileList();
-////		UsbManager um = (UsbManager) getSystemService(Context.USB_SERVICE);
-////		if (um!=null) {
-//////			RemovableStorageUtil rsu=new RemovableStorageUtil(mContext,true);
-////			HashMap<String, UsbDevice> dl = um.getDeviceList();
-////			Iterator<UsbDevice> deviceIterator = dl.values().iterator();
-////			while(deviceIterator.hasNext()){
-////			    UsbDevice device = deviceIterator.next();
-////				mUtil.addDebugMsg(1,"I", "id="+device.getDeviceId()+", name="+device.getDeviceName());
-////			}
-////		}
-//    }
 
     @Override
     public IBinder onBind(Intent intent) {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered,action=" + intent.getAction());
         setActivityForeground();
-//		if (arg0.getAction().equals("MessageConnection")) 
         return mSvcClientStub;
-//		else return svcInterface;
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, qs=" + mGp.syncRequestQueue.size());
-
         if (isServiceToBeStopped()) stopSelf();
-
         return super.onUnbind(intent);
     }
 
@@ -328,13 +255,11 @@ public class SyncService extends Service {
             }, 100);
         } else {
             mGp.clearParms();
-//			mGp=null;
             System.gc();
         }
     }
 
     private boolean isServiceToBeStopped() {
-//		Log.v("","size="+mGp.syncRequestQueue.size()+", active="+mGp.syncThreadActive+", cb="+mGp.callbackStub);
         boolean result = false;
         if (mGp.callbackStub == null) {
             synchronized (mGp.syncRequestQueue) {
@@ -375,22 +300,12 @@ public class SyncService extends Service {
                         if (getSyncTask(pl[i]) != null) {
                             n_tl += sep + pl[i];
                             sep = ",";
-//					Log.v("","tl="+n_tl);
                         } else {
                             mUtil.addLogMsg("W",
                                     mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_task_not_found) + pl[i]);
                         }
                     }
                     if (!n_tl.equals("")) {
-//                        if (isDuplicateRequest(mGp, SMBSYNC2_SYNC_REQUEST_SCHEDULE)) {
-//                            mUtil.addLogMsg("W",
-//                                    String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
-//                                            SMBSYNC2_SYNC_REQUEST_SCHEDULE));
-//                        } else {
-//                            String[] n_pl = n_tl.split(",");
-//                            queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE,
-//                                    si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
-//                        }
                         String[] n_pl = n_tl.split(",");
                         queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE,
                                 si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
@@ -398,14 +313,6 @@ public class SyncService extends Service {
                         mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
                     }
                 } else {
-//                    if (isDuplicateRequest(mGp, SMBSYNC2_SYNC_REQUEST_SCHEDULE)) {
-//                        mUtil.addLogMsg("W",
-//                                String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
-//                                        SMBSYNC2_SYNC_REQUEST_SCHEDULE));
-//                    } else {
-//                        queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE,
-//                                si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
-//                    }
                     queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE,
                             si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
                 }
@@ -442,17 +349,6 @@ public class SyncService extends Service {
                     if (pl.size() > 0) {
                         String[] nspl = new String[pl.size()];
                         for (int i = 0; i < pl.size(); i++) nspl[i] = pl.get(i);
-//                        if (isDuplicateRequest(mGp, SMBSYNC2_SYNC_REQUEST_EXTERNAL)) {
-//                            mUtil.addLogMsg("W",
-//                                    String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
-//                                            SMBSYNC2_SYNC_REQUEST_EXTERNAL));
-//                        } else {
-//                            queueSpecificSyncTask(nspl, SMBSYNC2_SYNC_REQUEST_EXTERNAL);
-//                            if (!mGp.syncThreadActive) {
-//                                sendStartNotificationIntent();
-//                                startSyncThread();
-//                            }
-//                        }
                         queueSpecificSyncTask(nspl, SMBSYNC2_SYNC_REQUEST_EXTERNAL);
                         if (!mGp.syncThreadActive) {
                             sendStartNotificationIntent();
@@ -476,18 +372,6 @@ public class SyncService extends Service {
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
             }
         } else {
-//            if (isDuplicateRequest(mGp, SMBSYNC2_SYNC_REQUEST_EXTERNAL)) {
-//                mUtil.addLogMsg("W",
-//                        String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
-//                                SMBSYNC2_SYNC_REQUEST_EXTERNAL));
-//            } else {
-//                mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_external_auto_task));
-//                queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_EXTERNAL);
-//                if (!mGp.syncThreadActive) {
-//                    sendStartNotificationIntent();
-//                    startSyncThread();
-//                }
-//            }
             mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_external_auto_task));
             queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_EXTERNAL);
             if (!mGp.syncThreadActive) {
@@ -498,42 +382,8 @@ public class SyncService extends Service {
         if (isServiceToBeStopped()) stopSelf();
     }
 
-//    static public boolean isDuplicateRequest(GlobalParameters mGp, String req_id) {
-//        boolean result = false;
-//        synchronized (mGp.syncRequestQueue) {
-//            if (mGp.syncRequestQueue.size() > 0) {
-//                Iterator<SyncRequestItem> sr_o = mGp.syncRequestQueue.iterator();
-//                SyncRequestItem sr = null;
-//                while ((sr = sr_o.next()) != null) {
-////					Log.v("","id="+sr.request_id+", rid="+req_id);
-//                    if (sr.request_id.equals(req_id)) {
-//                        result = true;
-//                        break;
-//                    }
-//                    if (!sr_o.hasNext()) break;
-//                }
-//            } else {
-//                if (mGp.syncThreadActive && mGp.syncThreadRequestID.equals(req_id)) {
-//                    result = true;
-//                }
-//            }
-//        }
-//        return result;
-//    }
-
     private void startSyncByShortcut(Intent in) {
         mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_shortcut));
-//        if (isDuplicateRequest(mGp, SMBSYNC2_SYNC_REQUEST_SHORTCUT)) {
-//            mUtil.addLogMsg("W",
-//                    String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
-//                            SMBSYNC2_SYNC_REQUEST_SHORTCUT));
-//        } else {
-//            queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SHORTCUT);
-//            if (!mGp.syncThreadActive) {
-//                sendStartNotificationIntent();
-//                startSyncThread();
-//            }
-//        }
         queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SHORTCUT);
         if (!mGp.syncThreadActive) {
             sendStartNotificationIntent();
@@ -626,9 +476,9 @@ public class SyncService extends Service {
     }
 
     private void cancelSyncTask() {
-        synchronized (mGp.syncThreadControl) {
-            mGp.syncThreadControl.setDisabled();
-            mGp.syncThreadControl.notify();
+        synchronized (mGp.syncThreadCtrl) {
+            mGp.syncThreadCtrl.setDisabled();
+            mGp.syncThreadCtrl.notify();
         }
     }
 
@@ -677,10 +527,6 @@ public class SyncService extends Service {
             }
             if (sri.sync_task_list.size() > 0) {
                 mGp.syncRequestQueue.add(sri);
-//                if (!mGp.syncThreadActive) {
-//                    sendStartNotificationIntent();
-//                    startSyncThread();
-//                }
             } else {
                 mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile));
             }
@@ -720,15 +566,10 @@ public class SyncService extends Service {
             }
             if (cnt == 0) {
                 mUtil.addLogMsg("E", mContext.getString(R.string.msgs_active_sync_prof_not_found));
-//	    		NotificationUtil.setNotificationIcon(mGp, R.drawable.ic_48_smbsync_run_anim, R.drawable.ic_48_smbsync_run);
                 NotificationUtil.showOngoingMsg(mGp, System.currentTimeMillis(),
                         mContext.getString(R.string.msgs_active_sync_prof_not_found));
             } else {
                 mGp.syncRequestQueue.add(sri);
-//                if (!mGp.syncThreadActive) {
-//                    sendStartNotificationIntent();
-//                    startSyncThread();
-//                }
             }
         }
     }

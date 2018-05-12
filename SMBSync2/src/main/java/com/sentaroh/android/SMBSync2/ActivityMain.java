@@ -372,23 +372,6 @@ public class ActivityMain extends AppCompatActivity {
         setActivityForeground(false);
         unsetCallbackListener();
 
-//		mGp.msgListView.setAdapter(null);
-//		mGp.msgListAdapter=null;
-//		mGp.msgListView=null;
-//		mGp.syncHistoryAdapter=null;
-//		mGp.syncHistoryListView.setAdapter(null);
-//		mGp.syncHistoryListView=null;
-//		mGp.syncTaskAdapter=null;
-//		mGp.syncTaskListView.setAdapter(null);
-//		mGp.syncTaskListView=null;
-
-//		mGp.msgListAdapter=null;
-//		mGp.msgListView=null;
-//		mGp.syncHistoryAdapter=null;
-//		mGp.syncHistoryListView=null;
-//		mGp.syncTaskAdapter=null;
-//		mGp.syncTaskListView=null;
-
         if (isFinishing()) {
             deleteTaskData();
             mGp.clearParms();
@@ -397,35 +380,9 @@ public class ActivityMain extends AppCompatActivity {
         closeService();
         LogUtil.flushLog(mContext, mGp);
 
-//		mGp=null;
-
         System.gc();
 
-
-//		if (isTaskTermination) {
-//			unsetCallbackListener();
-//			mGp.msgListAdapter=null;
-//			mGp.msgListView=null;
-//			mGp.syncHistoryAdapter=null;
-//			mGp.syncHistoryListView=null;
-//			mGp.syncTaskListAdapter=null;
-//			mGp.syncTaskListView=null;
-//			deleteTaskData();
-//			closeService();
-//			LogUtil.flushLog(mContext,mGp);
-//		} else {
-//    		unbindService(mSvcConnection);
-//	    	mSvcConnection=null;
-//	    	if (mGp.settingDebugLevel>0) {
-//				mUtil.addLogMsg("W","Unpredictable onDestroy was called" +
-//						", isFinishing="+isFinishing()+
-//						", changingConfigurations="+String.format("0x%08x", getChangingConfigurations()));
-//	    	}
-//	    	LogUtil.flushLog(mContext, mGp);
-//		}
     }
-
-    ;
 
     private void setActivityForeground(boolean fore_ground) {
         if (mSvcClient != null) {
@@ -500,8 +457,6 @@ public class ActivityMain extends AppCompatActivity {
         } catch (Settings.SettingNotFoundException e) {
             e.printStackTrace();
         }
-
-//        mUtil.addLogMsg("I",si);
 
         tv_msg.setText(si);
 
@@ -643,7 +598,6 @@ public class ActivityMain extends AppCompatActivity {
         return mpi;
     }
 
-    @SuppressLint("NewApi")
     private void showBatteryOptimization() {
         if (Build.VERSION.SDK_INT >= 23) {
             Intent intent = new Intent();
@@ -692,14 +646,10 @@ public class ActivityMain extends AppCompatActivity {
         public ButtonViewContent prog_spin_cancel = new ButtonViewContent();
     }
 
-    ;
-
     class ButtonViewContent {
         public String button_text = "";
         public boolean button_visible = true, button_enabled = true, button_clickable = true;
     }
-
-    ;
 
     private void saveButtonStatus(Button btn, ButtonViewContent sv) {
         sv.button_text = btn.getText().toString();
@@ -707,8 +657,6 @@ public class ActivityMain extends AppCompatActivity {
         sv.button_enabled = btn.isEnabled();
         sv.button_visible = btn.isShown();
     }
-
-    ;
 
     private void restoreButtonStatus(Button btn, ButtonViewContent sv, OnClickListener ocl) {
         btn.setText(sv.button_text);
@@ -800,8 +748,6 @@ public class ActivityMain extends AppCompatActivity {
         vsa = null;
     }
 
-    ;
-
     private int newSyncTaskListViewPos = -1;
 
     private ViewSaveArea saveViewContent() {
@@ -830,9 +776,6 @@ public class ActivityMain extends AppCompatActivity {
         vsa.confirm_view_visibility = mGp.confirmView.getVisibility();
         vsa.prog_spin_view_visibility = mGp.progressSpinView.getVisibility();
 
-//		Log.v("","prog_bar="+vsa.prog_bar_view_visibility+
-//				", prog_spin="+vsa.prog_spin_view_visibility+", confirm="+vsa.confirm_view_visibility);
-
         saveButtonStatus(mGp.confirmCancel, vsa.confirm_cancel);
         saveButtonStatus(mGp.confirmYes, vsa.confirm_yes);
         saveButtonStatus(mGp.confirmYesAll, vsa.confirm_yes_all);
@@ -850,8 +793,6 @@ public class ActivityMain extends AppCompatActivity {
 
         return vsa;
     }
-
-    ;
 
     private void restoreViewContent(ViewSaveArea vsa) {
         mMainTabHost.setCurrentTab(vsa.current_tab_pos);
@@ -901,11 +842,7 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    ;
-
     private void initAdapterAndView() {
-//        if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
-
         mGp.msgListView.setAdapter(mGp.msgListAdapter);
         mGp.msgListView.setDrawingCacheEnabled(true);
 
@@ -915,8 +852,6 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryListView.setAdapter(mGp.syncHistoryAdapter);
         mGp.syncHistoryAdapter.notifyDataSetChanged();
     }
-
-    ;
 
     private String getApplVersionName() {
         String vn = "Unknown";
@@ -941,8 +876,6 @@ public class ActivityMain extends AppCompatActivity {
 
     private TabWidget mMainTabWidget;
 
-    @SuppressLint("InflateParams")
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void createTabView() {
         mMainTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mMainTabHost.setup();
@@ -1045,15 +978,11 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    ;
-
     private void setButtonColor(Button btn) {
 //		if (Build.VERSION.SDK_INT<11) {
 //			btn.setBackgroundColor(Color.DKGRAY);
 //		}
     }
-
-    ;
 
     private class MainOnTabChange implements OnTabChangeListener {
         @Override
@@ -1377,16 +1306,6 @@ public class ActivityMain extends AppCompatActivity {
         LogUtil.flushLog(mContext, mGp);
     }
 
-//	private void housekeepThreadSendMsg(final String msg) {
-//		mUiHandler.post(new Runnable(){
-//			@Override
-//			public void run() {
-//				if (msg.equals("")) mGp.progressSpinMsg.setText(getString(R.string.msgs_progress_spin_dlg_housekeep_running));
-//				else mGp.progressSpinMsg.setText(getString(R.string.msgs_progress_spin_dlg_housekeep_running)+"\n"+msg);
-//			}
-//		});
-//	};
-
     private void houseKeepThreadCloseDialog() {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " ended");
         LogUtil.flushLog(mContext, mGp);
@@ -1619,8 +1538,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     private void setContextButtonNormalMode() {
         mActionBar.setIcon(R.drawable.smbsync);
         mActionBar.setHomeButtonEnabled(false);
@@ -1636,8 +1553,6 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryAdapter.notifyDataSetChanged();
         setHistoryContextButtonNormalMode();
     }
-
-    ;
 
     private void processHomeButtonPress() {
         if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK)) {
@@ -1659,8 +1574,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     private void invokeLogManagement() {
         NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
@@ -1679,8 +1592,6 @@ public class ActivityMain extends AppCompatActivity {
                 LogFileListDialogFragment.newInstance(false, getString(R.string.msgs_log_management_title));
         lfm.showDialog(getSupportFragmentManager(), lfm, mGp, ntfy);
     }
-
-    ;
 
     private void importSyncTaskAndParms() {
         NotifyEvent ntfy = new NotifyEvent(this);
@@ -1706,8 +1617,6 @@ public class ActivityMain extends AppCompatActivity {
         mTaskUtil.importSyncTaskListDlg(ntfy);
     }
 
-    ;
-
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         mUtil.addDebugMsg(9, "i", "main onKeyDown enterd, kc=" + keyCode);
         switch (keyCode) {
@@ -1728,8 +1637,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     private void checkStorageStatus() {
         if (mGp.externalStorageAccessIsPermitted) {
             if (!mGp.externalStorageIsMounted) {
@@ -1740,9 +1647,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
-    @SuppressLint({"InflateParams", "NewApi"})
     private void aboutSMBSync() {
         final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1837,8 +1741,6 @@ public class ActivityMain extends AppCompatActivity {
         dialog.show();
     }
 
-    ;
-
     private void terminateApplication() {
         if (mMainTabHost.getCurrentTabTag().equals(SMBSYNC2_TAB_NAME_TASK)) {//
             if (mGp.syncTaskAdapter.isShowCheckBox()) {
@@ -1861,8 +1763,6 @@ public class ActivityMain extends AppCompatActivity {
         isTaskTermination = true; // exit cleanly
         finish();
     }
-
-    ;
 
     private void killTerminateApplication() {
 
@@ -1889,8 +1789,6 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
     }
-
-    ;
 
     private void reloadSettingParms() {
 
@@ -1945,9 +1843,6 @@ public class ActivityMain extends AppCompatActivity {
                 "");
     }
 
-    ;
-
-    @SuppressLint("SdCardPath")
     private void invokeLogFileBrowser() {
         mUtil.addDebugMsg(1, "I", "Invoke log file browser.");
         LogUtil.flushLog(mContext, mGp);
@@ -1978,33 +1873,6 @@ public class ActivityMain extends AppCompatActivity {
         intent = new Intent(this, ActivitySettings.class);
         startActivityForResult(intent, 0);
     }
-
-//	@SuppressLint("InlinedApi")
-//	private void checkSafExternalSdcardTreeUri(final NotifyEvent p_ntfy) {
-//		if (profUtil.isExternalSdcardUsedByOutput()) {
-////			Log.v("","saf="+mGp.safMgr.getSdcardSafFile());
-//			if (mGp.safMgr.getSdcardSafFile()==null) {
-//        		NotifyEvent ntfy=new NotifyEvent(mContext);
-//        		ntfy.setListener(new NotifyEventListener(){
-//					@Override
-//					public void positiveResponse(Context c, Object[] o) {
-//						Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-//					    startActivityForResult(intent, REQUEST_CODE_SDCARD_STORAGE_ACCESS);
-//					    if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-//					}
-//					@Override
-//					public void negativeResponse(Context c, Object[] o) {
-//						if (p_ntfy!=null) p_ntfy.notifyToListener(false, null);
-//					}
-//        		});
-//        		profUtil.showSelectSdcardMsg(ntfy);
-//			} else {
-//				if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-//			}
-//		} else {
-//			if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-//		}
-//	};
 
     private boolean mIsStorageSelectorActivityNotFound = false;
 
@@ -2079,8 +1947,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE == requestCode) {
@@ -2114,6 +1980,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private NotifyEvent mSafSelectActivityNotify = null;
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0) {
             mUtil.addDebugMsg(1, "I", "Return from Settings.");
@@ -2244,8 +2111,6 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryAdapter.setNotifyCheckBoxEventHandler(ntfy);
     }
 
-    ;
-
     private void setHistoryViewLongClickListener() {
         mGp.syncHistoryListView
                 .setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -2298,8 +2163,6 @@ public class ActivityMain extends AppCompatActivity {
                     }
                 });
     }
-
-    ;
 
     private void sendHistoryFile() {
         final String zip_file_name = mGp.getLogDirName() + "log.zip";
@@ -2513,8 +2376,6 @@ public class ActivityMain extends AppCompatActivity {
         ContextButtonUtil.setButtonLabelListener(mContext, mContextHistiryButtonUnselectAll, mContext.getString(R.string.msgs_hist_cont_label_unselect_all));
     }
 
-    ;
-
     private void setHistoryContextButtonSelectMode() {
         int sel_cnt = mGp.syncHistoryAdapter.getItemSelectedCount();
         int tot_cnt = mGp.syncHistoryAdapter.getCount();
@@ -2542,8 +2403,6 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    ;
-
     private void setHistoryContextButtonNormalMode() {
         setActionBarNormalMode();
 
@@ -2569,8 +2428,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     private void setHistoryItemUnselectAll() {
         mGp.syncHistoryAdapter.setAllItemChecked(false);
 //		for (int i=0;i<mGp.syncHistoryAdapter.getCount();i++) mGp.syncHistoryAdapter.getItem(i).isChecked=false;
@@ -2578,8 +2435,6 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryAdapter.notifyDataSetChanged();
         setHistoryContextButtonSelectMode();
     }
-
-    ;
 
     private void setHistoryItemSelectAll() {
         mGp.syncHistoryAdapter.setAllItemChecked(true);
@@ -2589,14 +2444,10 @@ public class ActivityMain extends AppCompatActivity {
         setHistoryContextButtonSelectMode();
     }
 
-    ;
-
     @SuppressWarnings("unused")
     private void setHistoryItemChecked(int pos, boolean p) {
         mGp.syncHistoryAdapter.getItem(pos).isChecked = p;
     }
-
-    ;
 
     private void confirmDeleteHistory() {
         String conf_list = "";
@@ -2654,20 +2505,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
-
-//	private void setMsglistLongClickListener() {
-//		mGp.msgListView
-//			.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//			@Override
-//			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-//					int arg2, long arg3) {
-//				return true;
-//			}
-//		});
-//	};
-
     private void setSyncTaskListItemClickListener() {
         mGp.syncTaskListView.setEnabled(true);
         mGp.syncTaskListView
@@ -2715,8 +2552,6 @@ public class ActivityMain extends AppCompatActivity {
         });
         mGp.syncTaskAdapter.setNotifyCheckBoxEventHandler(ntfy);
     }
-
-    ;
 
     private void setSyncTaskListLongClickListener() {
         mGp.syncTaskListView
@@ -2771,8 +2606,6 @@ public class ActivityMain extends AppCompatActivity {
                     }
                 });
     }
-
-    ;
 
     private ImageButton mContextSyncTaskButtonActivete = null;
     private ImageButton mContextSyncTaskButtonInactivete = null;
@@ -2864,8 +2697,6 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryListView.setAdapter(null);
     }
 
-    ;
-
     private void releaseImageBtnRes(ImageButton ib) {
 //    	((BitmapDrawable) ib.getDrawable()).getBitmap().recycle();
         ib.setImageDrawable(null);
@@ -2873,8 +2704,6 @@ public class ActivityMain extends AppCompatActivity {
         ib.setBackgroundDrawable(null);
         ib.setImageBitmap(null);
     }
-
-    ;
 
     private void createContextView() {
         mContextSyncTaskButtonActivete = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_activate);
@@ -2927,8 +2756,6 @@ public class ActivityMain extends AppCompatActivity {
         mContextMessageViewClear = (LinearLayout) mMessageView.findViewById(R.id.context_button_clear_view);
     }
 
-    ;
-
     private void setContextButtonEnabled(final ImageButton btn, boolean enabled) {
         if (enabled) {
             btn.postDelayed(new Runnable() {
@@ -2941,8 +2768,6 @@ public class ActivityMain extends AppCompatActivity {
             btn.setEnabled(false);
         }
     }
-
-    ;
 
     private void setSyncTaskContextButtonListener() {
         final NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -3154,8 +2979,6 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    ;
-
     private void confirmActivate(AdapterSyncTask pa, final NotifyEvent p_ntfy) {
         NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
@@ -3184,8 +3007,6 @@ public class ActivityMain extends AppCompatActivity {
                 msg, ntfy);
     }
 
-    ;
-
     private void confirmInactivate(AdapterSyncTask pa, final NotifyEvent p_ntfy) {
         NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
@@ -3213,8 +3034,6 @@ public class ActivityMain extends AppCompatActivity {
                 mContext.getString(R.string.msgs_prof_cont_to_inactivate_profile),
                 msg, ntfy);
     }
-
-    ;
 
     private void setSyncTaskContextButtonSelectMode() {
         int sel_cnt = SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter);
@@ -3280,8 +3099,6 @@ public class ActivityMain extends AppCompatActivity {
         refreshOptionMenu();
     }
 
-    ;
-
     private void setSyncTaskContextButtonHide() {
         mActionBar.setIcon(R.drawable.smbsync);
         mActionBar.setHomeButtonEnabled(false);
@@ -3304,8 +3121,6 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    ;
-
     private void setActionBarSelectMode(int sel_cnt, int tot_cnt) {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -3314,17 +3129,12 @@ public class ActivityMain extends AppCompatActivity {
         actionBar.setTitle(sel_txt);
     }
 
-    ;
-
     private void setActionBarNormalMode() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.app_name);
         actionBar.setHomeButtonEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(false);
     }
-
-    ;
-
 
     private void setSyncTaskContextButtonNormalMode() {
         setActionBarNormalMode();
@@ -3354,9 +3164,6 @@ public class ActivityMain extends AppCompatActivity {
         refreshOptionMenu();
     }
 
-    ;
-
-    @SuppressLint("ShowToast")
     private void setMessageContextButtonListener() {
         final Toast toast_active = Toast.makeText(mContext, mContext.getString(R.string.msgs_log_activate_pinned),
                 Toast.LENGTH_SHORT);
@@ -3427,8 +3234,6 @@ public class ActivityMain extends AppCompatActivity {
         ContextButtonUtil.setButtonLabelListener(mContext, mContextMessageButtonClear, mContext.getString(R.string.msgs_msg_cont_label_clear));
     }
 
-    ;
-
     private void setMessageContextButtonNormalMode() {
         mContextMessageViewPinned.setVisibility(LinearLayout.VISIBLE);
         if (mGp.freezeMessageViewScroll) {
@@ -3440,8 +3245,6 @@ public class ActivityMain extends AppCompatActivity {
         mContextMessageViewMoveBottom.setVisibility(LinearLayout.VISIBLE);
         mContextMessageViewClear.setVisibility(LinearLayout.VISIBLE);
     }
-
-    ;
 
     private void editSyncTask(String prof_name,
                               boolean prof_act, int prof_num) {
@@ -3463,8 +3266,6 @@ public class ActivityMain extends AppCompatActivity {
                 mTaskUtil, mUtil, commonDlg, mGp, ntfy);
     }
 
-    ;
-
     private void syncSelectedSyncTask() {
         final ArrayList<SyncTaskItem> t_list = new ArrayList<SyncTaskItem>();
         SyncTaskItem item;
@@ -3481,7 +3282,6 @@ public class ActivityMain extends AppCompatActivity {
             }
         }
         final String sync_list = sync_list_tmp;
-        ;
 
         NotifyEvent ntfy_test_mode = new NotifyEvent(mContext);
         ntfy_test_mode.setListener(new NotifyEventListener() {
@@ -3515,81 +3315,6 @@ public class ActivityMain extends AppCompatActivity {
         }
 
     }
-
-    ;
-
-//	private void confirmUseAppSpecificDir(final ArrayList<SyncTaskItem> alp, final NotifyEvent p_ntfy) {
-//		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-//		if (!prefs.getBoolean(getString(R.string.settings_suppress_warning_app_specific_dir), false)) {
-//			boolean app_specific_used=false;
-//			String prof_list="", sep="";
-//			for(int i=0;i<alp.size();i++) {
-//				if (alp.get(i).getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) ||
-//						alp.get(i).getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
-//					if (alp.get(i).getTargetDirectoryName().startsWith(APP_SPECIFIC_DIRECTORY)) {
-//						app_specific_used=true;
-//						prof_list+=sep+alp.get(i).getSyncTaskName();
-//						sep=",";
-//					}
-//				}
-//			}
-//			if (app_specific_used) {
-//				final Dialog dialog = new Dialog(mActivity);//, android.R.style.Theme_Black);
-//				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//				dialog.setContentView(R.layout.confirm_app_specific_dir_dlg);
-//
-//				final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.confirm_app_specific_dlg_title_view);
-//				final TextView title = (TextView) dialog.findViewById(R.id.confirm_app_specific_dlg_title);
-//				title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-//				title.setText(mContext.getString(R.string.msgs_main_app_specific_dir_used_title));
-//				title.setTextColor(mGp.themeColorList.text_color_warning);
-//
-//				((TextView)dialog.findViewById(R.id.confirm_app_specific_dlg_msg))
-//				.setText(mContext.getString(R.string.msgs_main_app_specific_dir_used_msg)+
-//						"\n\n"+prof_list+"\n");
-//
-//				final Button btnOk = (Button) dialog.findViewById(R.id.confirm_app_specific_dlg_ok);
-//				final Button btnCancel = (Button) dialog.findViewById(R.id.confirm_app_specific_dlg_cancel);
-//				final CheckedTextView ctvSuppr= (CheckedTextView) dialog.findViewById(R.id.confirm_app_specific_dlg_ctv_suppress);
-//				SyncUtil.setCheckedTextView(ctvSuppr);
-//
-//				CommonDialog.setDlgBoxSizeCompact(dialog);
-//				ctvSuppr.setChecked(false);
-//				// OKボタンの指定
-//				btnOk.setOnClickListener(new View.OnClickListener() {
-//					public void onClick(View v) {
-//						dialog.dismiss();
-//						if (ctvSuppr.isChecked()) {
-//							SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-//							prefs.edit().putBoolean(getString(R.string.settings_suppress_warning_app_specific_dir), true).commit();
-//						}
-//						p_ntfy.notifyToListener(true, null);
-//					}
-//				});
-//				// Cancelボタンの指定
-//				btnCancel.setOnClickListener(new View.OnClickListener() {
-//					public void onClick(View v) {
-//						dialog.dismiss();
-//						p_ntfy.notifyToListener(false, null);
-//					}
-//				});
-//				// Cancelリスナーの指定
-//				dialog.setOnCancelListener(new Dialog.OnCancelListener() {
-//					@Override
-//					public void onCancel(DialogInterface arg0) {
-//						btnOk.performClick();
-//					}
-//				});
-////				dialog.setOnKeyListener(new DialogOnKeyListener(mContext));
-////				dialog.setCancelable(false);
-//				dialog.show();
-//			} else {
-//				p_ntfy.notifyToListener(true, null);
-//			}
-//		} else {
-//			p_ntfy.notifyToListener(true, null);
-//		}
-//	};
 
     private void syncAutoSyncTask() {
         final ArrayList<SyncTaskItem> t_list = new ArrayList<SyncTaskItem>();

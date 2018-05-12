@@ -23,8 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import android.util.Log;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -150,7 +148,7 @@ public class SyncThreadCopyFile {
             if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
 
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             out_file.delete();
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
@@ -239,7 +237,7 @@ public class SyncThreadCopyFile {
             if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
 
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             out_file.delete();
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
@@ -429,7 +427,7 @@ public class SyncThreadCopyFile {
             if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
 
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             out_file.delete();
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
@@ -516,7 +514,7 @@ public class SyncThreadCopyFile {
                 SyncThread.showProgressMsg(stwa, sti.getSyncTaskName(), file_name + " " +
                         String.format(stwa.msgs_mirror_task_file_copying, (file_read_bytes * 100) / file_size));
             }
-            if (!stwa.gp.syncThreadControl.isEnabled()) {
+            if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                 ifs.close();
                 ofs.flush();
                 ofs.close();

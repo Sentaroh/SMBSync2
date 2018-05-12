@@ -110,7 +110,7 @@ public class SyncThreadSyncZip {
                     SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + dest_path);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
         }
 //		Log.v("","zf path="+zf.getFile().getPath());
         return zf;
@@ -136,14 +136,14 @@ public class SyncThreadSyncZip {
             byte[] buff = new byte[1024 * 1024 * 8];
             int rc = fis.read(buff);
             while (rc > 0) {
-                if (!stwa.gp.syncThreadControl.isEnabled()) break;
+                if (!stwa.gp.syncThreadCtrl.isEnabled()) break;
                 fos.write(buff, 0, rc);
                 rc = fis.read(buff);
             }
             fis.close();
             fos.flush();
             fos.close();
-            if (!stwa.gp.syncThreadControl.isEnabled()) out.delete();
+            if (!stwa.gp.syncThreadCtrl.isEnabled()) out.delete();
             stwa.zipFileCopyBackRequired = false;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -152,7 +152,7 @@ public class SyncThreadSyncZip {
                     SyncUtil.getExecutedMethodName() + " from=" + from_dir + file_path);
             SyncThread.showMsg(stwa, true, stwa.currentSTI.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
         }
     }
 
@@ -171,14 +171,14 @@ public class SyncThreadSyncZip {
                 byte[] buff = new byte[1024 * 1024 * 8];
                 int rc = fis.read(buff);
                 while (rc > 0) {
-                    if (!stwa.gp.syncThreadControl.isEnabled()) break;
+                    if (!stwa.gp.syncThreadCtrl.isEnabled()) break;
                     fos.write(buff, 0, rc);
                     rc = fis.read(buff);
                 }
                 fis.close();
                 fos.flush();
                 fos.close();
-                if (stwa.gp.syncThreadControl.isEnabled()) {
+                if (stwa.gp.syncThreadCtrl.isEnabled()) {
                     dest.delete();
                     out.renameTo(dest_file_name);
                 } else {
@@ -192,7 +192,7 @@ public class SyncThreadSyncZip {
                         SyncUtil.getExecutedMethodName() + " to=" + to_dir + file_path);
                 SyncThread.showMsg(stwa, true, stwa.currentSTI.getSyncTaskName(), "I", "", "", e.getMessage());
                 SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-                stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+                stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             }
         } else {
             stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " copy was ignored, because file was not modififed.");
@@ -213,7 +213,7 @@ public class SyncThreadSyncZip {
         } else {
             zf = setZipEnvironment(stwa, sti, from_path, stwa.gp.internalRootDirectory + dest_file, zp);
         }
-        if (stwa.gp.syncThreadControl.isEnabled() && zf != null) {
+        if (stwa.gp.syncThreadCtrl.isEnabled() && zf != null) {
             File mf = new File(from_path);
             sync_result = moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
@@ -241,7 +241,7 @@ public class SyncThreadSyncZip {
         } else {
             zf = setZipEnvironment(stwa, sti, from_path, stwa.gp.internalRootDirectory + dest_file, zp);
         }
-        if (stwa.gp.syncThreadControl.isEnabled() && zf != null) {
+        if (stwa.gp.syncThreadCtrl.isEnabled() && zf != null) {
             File mf = new File(from_path);
             sync_result = moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
@@ -266,7 +266,7 @@ public class SyncThreadSyncZip {
         } else {
             zf = setZipEnvironment(stwa, sti, from_path, stwa.gp.internalRootDirectory + dest_file, zp);
         }
-        if (stwa.gp.syncThreadControl.isEnabled() && zf != null) {
+        if (stwa.gp.syncThreadCtrl.isEnabled() && zf != null) {
             File mf = new File(from_path);
             sync_result = moveCopyInternalToInternalZip(stwa, sti, true, from_path, from_path, mf, zf, zp);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
@@ -394,7 +394,7 @@ public class SyncThreadSyncZip {
                             SyncUtil.getExecutedMethodName() + " directory=" + to_dir + ", Zip=" + zf.getFile().getPath());
                     SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
                     SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-                    stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+                    stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
                 }
             }
         } else {
@@ -443,7 +443,7 @@ public class SyncThreadSyncZip {
                                 } else {
                                     return sync_result;
                                 }
-                                if (!stwa.gp.syncThreadControl.isEnabled()) {
+                                if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                                     sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                                     break;
                                 }
@@ -509,14 +509,14 @@ public class SyncThreadSyncZip {
                                     }
                                 }
                             }
-                            if (!stwa.gp.syncThreadControl.isEnabled())
+                            if (!stwa.gp.syncThreadCtrl.isEnabled())
                                 sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                         }
                     }
                 }
             } else {
-                stwa.gp.syncThreadControl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
-                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadControl.getThreadMessage());
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
         } catch (IOException e) {
@@ -524,7 +524,7 @@ public class SyncThreadSyncZip {
                     SyncUtil.getExecutedMethodName() + " From=" + from_path);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
@@ -588,14 +588,14 @@ public class SyncThreadSyncZip {
                     SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + zf.getFile().getPath());
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + zf.getFile().getPath());
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
         }
         return sync_result;
     }
@@ -636,7 +636,7 @@ public class SyncThreadSyncZip {
             zf.addFile(mf, n_zp);
 
             while (zf.getProgressMonitor().getState() == ProgressMonitor.STATE_BUSY) {
-                if (!stwa.gp.syncThreadControl.isEnabled()) {
+                if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                     zf.getProgressMonitor().cancelAllTasks();
                     while (zf.getProgressMonitor().getState() == ProgressMonitor.STATE_BUSY) {
                         SystemClock.sleep(100);
@@ -663,7 +663,7 @@ public class SyncThreadSyncZip {
                     SyncUtil.getExecutedMethodName() + " master=" + from_dir + ", target=" + to_dir);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-            stwa.gp.syncThreadControl.setThreadMessage(e.getMessage());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
