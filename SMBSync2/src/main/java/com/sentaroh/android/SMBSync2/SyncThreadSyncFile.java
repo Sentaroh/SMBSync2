@@ -524,13 +524,21 @@ public class SyncThreadSyncFile {
     static public int syncMirrorInternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                    String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = moveCopyInternalToInternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            File tf = new File(to_path);
-            sync_result = syncDeleteInternalToInternal(stwa, sti, from_path,
-                    from_path, to_path, to_path, tf);
+        int sync_result =0;
+        File tf = new File(to_path);
 
+        if (sti.isSyncOptionDeleteFirstWhenMirror()) {
+            sync_result = syncDeleteInternalToInternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result =moveCopyInternalToInternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+            }
+        } else {
+            sync_result = moveCopyInternalToInternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result = syncDeleteInternalToInternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
+            }
         }
+
         return sync_result;
     }
 
@@ -687,10 +695,19 @@ public class SyncThreadSyncFile {
     static public int syncMirrorInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                    String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = moveCopyInternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            File tf = new File(to_path);
-            sync_result = syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
+        int sync_result =0;
+
+        File tf = new File(to_path);
+        if (sti.isSyncOptionDeleteFirstWhenMirror()) {
+            sync_result =  syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result =moveCopyInternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+            }
+        } else {
+            sync_result = moveCopyInternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result = syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
+            }
         }
         return sync_result;
     }
@@ -864,26 +881,33 @@ public class SyncThreadSyncFile {
     static public int syncMirrorInternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                               String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = moveCopyInternalToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            JcifsFile tf = null;
-            try {
-                tf = new JcifsFile(to_path + "/", stwa.targetAuth);
-                sync_result = syncDeleteInternalToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf);
-            } catch (MalformedURLException e) {
-                stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + to_path);
-                stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
-                SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-                stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
-                return SyncTaskItem.SYNC_STATUS_ERROR;
-            } catch (JcifsException e) {
-                stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
-                stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
-                SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-                stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
-                return SyncTaskItem.SYNC_STATUS_ERROR;
+        int sync_result =0;
+        JcifsFile tf = null;
+        try {
+            tf = new JcifsFile(to_path + "/", stwa.targetAuth);
+        } catch (MalformedURLException e) {
+            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + to_path);
+            stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
+        if (sti.isSyncOptionDeleteFirstWhenMirror()) {
+            sync_result =syncDeleteInternalToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result = moveCopyInternalToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
             }
-
+        } else {
+            sync_result = moveCopyInternalToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result = syncDeleteInternalToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf);
+            }
         }
         return sync_result;
     }
@@ -1066,13 +1090,24 @@ public class SyncThreadSyncFile {
     static public int syncMirrorExternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                    String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = moveCopyExternalToInternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            File tf = new File(to_path);
+        File tf = new File(to_path);
+        int sync_result=0;
+        if (sti.isSyncOptionDeleteFirstWhenMirror()) {
             sync_result = syncDeleteInternalToInternal(stwa, sti, from_path,
                     from_path, to_path, to_path, tf);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result =moveCopyExternalToInternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
 
+            }
+        } else {
+            sync_result = moveCopyExternalToInternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result = syncDeleteInternalToInternal(stwa, sti, from_path,
+                        from_path, to_path, to_path, tf);
+
+            }
         }
+
         return sync_result;
     }
 
@@ -1220,11 +1255,21 @@ public class SyncThreadSyncFile {
     static public int syncMirrorExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                    String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = moveCopyExternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            File tf = new File(to_path);
+        int sync_result =0;
+
+        File tf = new File(to_path);
+        if (sti.isSyncOptionDeleteFirstWhenMirror()) {
             sync_result = syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result =moveCopyExternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+            }
+        } else {
+            sync_result = moveCopyExternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result = syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
+            }
         }
+
         return sync_result;
     }
 
@@ -1404,27 +1449,35 @@ public class SyncThreadSyncFile {
     static public int syncMirrorExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                               String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = moveCopyExternalToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            JcifsFile tf = null;
-            try {
-                tf = new JcifsFile(to_path + "/", stwa.targetAuth);
-                sync_result = syncDeleteInternalToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf);
-            } catch (MalformedURLException e) {
-                stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + to_path);
-                stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
-                SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-                stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
-                return SyncTaskItem.SYNC_STATUS_ERROR;
-            } catch (JcifsException e) {
-                stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
-                stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
-                SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-                stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
-                return SyncTaskItem.SYNC_STATUS_ERROR;
-            }
-
+        int sync_result =0;
+        JcifsFile tf = null;
+        try {
+            tf = new JcifsFile(to_path + "/", stwa.targetAuth);
+        } catch (MalformedURLException e) {
+            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + to_path);
+            stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
+        if (sti.isSyncOptionDeleteFirstWhenMirror()) {
+            sync_result = syncDeleteInternalToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result =moveCopyExternalToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+            }
+        } else {
+            sync_result = moveCopyExternalToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result = syncDeleteInternalToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf);
+            }
+        }
+
         return sync_result;
     }
 
@@ -1622,14 +1675,24 @@ public class SyncThreadSyncFile {
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
         stwa.smbFileList = new ArrayList<String>();
-        int sync_result = moveCopySmbToInternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            Collections.sort(stwa.smbFileList);
-            File tf = new File(to_path);
-            sync_result = syncDeleteSmbToInternal(stwa, sti,
-                    from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
+        int sync_result =0;
+
+        File tf = new File(to_path);
+        if (sti.isSyncOptionDeleteFirstWhenMirror()) {
+            sync_result = syncDeleteSmbToInternal(stwa, sti,from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result =moveCopySmbToInternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
+            }
+        } else {
+            sync_result = moveCopySmbToInternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                Collections.sort(stwa.smbFileList);
+                sync_result = syncDeleteSmbToInternal(stwa, sti,from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
+            }
         }
+
         stwa.smbFileList = null;
+
         return sync_result;
     }
 
@@ -1864,13 +1927,22 @@ public class SyncThreadSyncFile {
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-        int sync_result = moveCopySmbToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-//			sync_result=SyncThreadSyncFile.syncDeleteSmbToExternal(stwa, sti, from_path, to_path);
-            File tf = new File(to_path);
-            Collections.sort(stwa.smbFileList);
-            sync_result = syncDeleteSmbToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
+        int sync_result =0;
+
+        File tf = new File(to_path);
+        if (sti.isSyncOptionDeleteFirstWhenMirror()) {
+            sync_result =syncDeleteSmbToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result = moveCopySmbToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
+            }
+        } else {
+            sync_result = moveCopySmbToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                Collections.sort(stwa.smbFileList);
+                sync_result = syncDeleteSmbToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
+            }
         }
+
         stwa.smbFileList = null;
         return sync_result;
     }
@@ -2126,31 +2198,37 @@ public class SyncThreadSyncFile {
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-        stwa.smbFileList = new ArrayList<String>();
-        int sync_result = moveCopySmbToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            Collections.sort(stwa.smbFileList);
-            JcifsFile tf = null;
-            try {
-                tf = new JcifsFile(from_path, stwa.masterAuth);
-            } catch (MalformedURLException e) {
-                stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() +
-                        " To=" + to_path + ", Target file instance creation error occurred during sync delete process");
-                stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
-                SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-                stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
-                return SyncTaskItem.SYNC_STATUS_ERROR;
-            } catch (JcifsException e) {
-                stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
-                stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
-                SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-                stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
-                return SyncTaskItem.SYNC_STATUS_ERROR;
-            }
-//            for(String item:stwa.smbFileList) Log.v("","fp="+item);
-            sync_result = syncDeleteSmbToSmb(stwa, sti,
-                    from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
+        JcifsFile tf = null;
+        try {
+            tf = new JcifsFile(to_path, stwa.targetAuth);
+        } catch (MalformedURLException e) {
+            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() +
+                    " To=" + to_path + ", Target file instance creation error occurred during sync delete process");
+            stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
+        stwa.smbFileList = new ArrayList<String>();
+        int sync_result =0;
+
+        if (sti.isSyncOptionDeleteFirstWhenMirror()) {
+            sync_result = syncDeleteSmbToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
+            if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS)
+                sync_result =moveCopySmbToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
+        } else {
+            sync_result =sync_result =moveCopySmbToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
+            Collections.sort(stwa.smbFileList);
+            if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS)
+                syncDeleteSmbToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
+        }
+
         stwa.smbFileList = null;
         return sync_result;
     }
@@ -2439,7 +2517,7 @@ public class SyncThreadSyncFile {
                         if (!isSmbFileExitst(stwa, smb_fl, master_dir)) {
                             if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
-                                    SyncThread.deleteSmbItem(stwa, true, sti, target_dir, target_dir, stwa.targetAuth);
+                                    SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
                                 } else {
                                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
                                             stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));

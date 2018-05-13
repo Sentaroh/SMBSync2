@@ -298,6 +298,7 @@
     <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">マスターで指定されたディレクトリの直下に存在するファイルを処理する</string>
     <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">ファイルを上書きする</string>
     <string name="msgs_profile_sync_task_sync_option_confirm_required">ファイルの上書または削除の前に確認する</string>
+    <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">ミラーの時は削除を最初に行う</string>
     <string name="msgs_profile_sync_task_sync_option_copy_by_rename">コピー/移動が完了するまでファイル内容を変更しない</string>
     <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">拡張されたディレクトリ選択/除外フィルタを使用する</string>
     <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">無線LAN</string>

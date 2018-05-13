@@ -264,7 +264,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         public int sync_opt = -1;
         public boolean sync_process_root_dir_file, sync_conf_required, sync_use_smbsync_last_mod, sync_do_not_reset_remote_file,
-                sync_retry, sync_empty_dir, sync_hidden_dir, sync_hidden_file, sync_sub_dir, sync_use_ext_dir_fileter;
+                sync_retry, sync_empty_dir, sync_hidden_dir, sync_hidden_file, sync_sub_dir, sync_use_ext_dir_fileter, sync_delete_first;
         public boolean sync_UseRemoteSmallIoArea;
         public int sync_master_pos = -1, sync_target_pos = -1;
 
@@ -318,6 +318,7 @@ public class SyncTaskEditor extends DialogFragment {
 //        final CheckedTextView ctvProcessOverride = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_process_override_delete_file);
         final CheckedTextView ctvConfirmOverride = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_confirm_override_delete_file);
         final CheckedTextView ctvCopyByRename = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_copy_rename);
+        final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
         final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_remote_file_last_mod_time);
         final CheckedTextView ctvUseSmbsyncLastMod = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_use_smbsync_last_mod_time);
@@ -358,6 +359,7 @@ public class SyncTaskEditor extends DialogFragment {
 //        sv.sync_process_override=ctvProcessOverride.isChecked();
         sv.sync_conf_required = ctvConfirmOverride.isChecked();
         sv.sync_copy_by_rename = ctvCopyByRename.isChecked();
+        sv.sync_delete_first = ctvDeleteFirst.isChecked();
 
         sv.sync_wifi_option = spinnerSyncWifiStatus.getSelectedItemPosition();
 
@@ -404,6 +406,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvProcessOverride = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_process_override_delete_file);
         final CheckedTextView ctvConfirmOverride = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_confirm_override_delete_file);
         final CheckedTextView ctvCopyByRename = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_copy_rename);
+        final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
         final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_remote_file_last_mod_time);
         final CheckedTextView ctvUseSmbsyncLastMod = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_use_smbsync_last_mod_time);
@@ -447,6 +450,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ctvProcessOverride.setChecked(sv.sync_process_override);
                 ctvConfirmOverride.setChecked(sv.sync_conf_required);
                 ctvCopyByRename.setChecked(sv.sync_copy_by_rename);
+                ctvDeleteFirst.setChecked(sv.sync_delete_first);
 
                 spinnerSyncWifiStatus.setEnabled(false);
                 spinnerSyncWifiStatus.setSelection(sv.sync_wifi_option);
@@ -2501,6 +2505,18 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
+        final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
+        SyncUtil.setCheckedTextView(ctvDeleteFirst);
+        ctvDeleteFirst.setChecked(n_sti.isSyncOptionDeleteFirstWhenMirror());
+        ctvDeleteFirst.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !((CheckedTextView) v).isChecked();
+                ((CheckedTextView) v).setChecked(isChecked);
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+        });
+
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
         SyncUtil.setCheckedTextView(ctUseExtendedDirectoryFilter1);
         ctUseExtendedDirectoryFilter1.setChecked(n_sti.isSyncUseExtendedDirectoryFilter1());
@@ -3488,6 +3504,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvProcessOverride = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_process_override_delete_file);
         final CheckedTextView ctvConfirmOverride = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_confirm_override_delete_file);
         final CheckedTextView ctvCopyByRename = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_copy_rename);
+        final CheckedTextView ctvDeleteFirst = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
         final CheckedTextView ctvShowSpecialOption = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
         final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_remote_file_last_mod_time);
@@ -3519,6 +3536,7 @@ public class SyncTaskEditor extends DialogFragment {
         nstli.setSyncConfirmOverrideOrDelete(ctvConfirmOverride.isChecked());
 
         nstli.setSyncUseFileCopyByTempName(ctvCopyByRename.isChecked());
+        nstli.setSyncOptionDeleteFirstWhenMirror(ctvDeleteFirst.isChecked());
 
         nstli.setSyncUseExtendedDirectoryFilter1(ctUseExtendedDirectoryFilter1.isChecked());
 
