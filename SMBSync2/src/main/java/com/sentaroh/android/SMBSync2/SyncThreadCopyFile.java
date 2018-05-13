@@ -41,11 +41,6 @@ import static com.sentaroh.android.SMBSync2.Constants.*;
 
 public class SyncThreadCopyFile {
 
-    public final static int SHOW_PROGRESS_THRESHOLD_VALUE = 1024 * 1024 * 4;
-
-    public final static int IO_AREA_SIZE = 1024 * 1024;
-
-    public final static int LARGE_BUFFERED_STREAM_BUFFER_SIZE = 1024 * 1024 * 4;
 
     static public int copyFileExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                                  File mf, String to_dir, String file_name) throws IOException {
@@ -490,15 +485,21 @@ public class SyncThreadCopyFile {
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
+    private final static int SHOW_PROGRESS_THRESHOLD_VALUE = 1024 * 1024 * 4;
+    private final static int IO_AREA_SIZE = 1024 * 1024;
+    public final static int LARGE_BUFFERED_STREAM_BUFFER_SIZE = 1024 * 1024 * 4;
+
     static private int copyFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir, String to_dir,
                                 String file_name, long file_size, InputStream is, OutputStream os) throws IOException {
 
         long read_begin_time = System.currentTimeMillis();
 
         int buffer_size=LARGE_BUFFERED_STREAM_BUFFER_SIZE, io_area_size=IO_AREA_SIZE;
+        boolean show_prog = (file_size > SHOW_PROGRESS_THRESHOLD_VALUE);
         if (sti.isSyncUseSmallIoBuffer() && sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             buffer_size=1024*16-1;
             io_area_size=1024*16-1;
+            show_prog=(file_size > 1024*64);
         }
 
         BufferedInputStream ifs = new BufferedInputStream(is, buffer_size);
@@ -506,7 +507,6 @@ public class SyncThreadCopyFile {
 
         int buffer_read_bytes = 0;
         long file_read_bytes = 0;
-        boolean show_prog = (file_size > SHOW_PROGRESS_THRESHOLD_VALUE);
         byte[] buffer = new byte[io_area_size];
         while ((buffer_read_bytes = ifs.read(buffer)) > 0) {
             ofs.write(buffer, 0, buffer_read_bytes);
