@@ -215,12 +215,24 @@ public class SyncThreadSyncZip {
         }
         if (stwa.gp.syncThreadCtrl.isEnabled() && zf != null) {
             File mf = new File(from_path);
-            sync_result = moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
-            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                sync_result = syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
+            if (sti.isSyncOptionDeleteFirstWhenMirror()) {
+                sync_result =syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                    if (sti.isTargetZipUseExternalSdcard()) {
-                        copyZipFileToDestination(stwa, stwa.gp.safMgr.getExternalSdcardPath(), dest_file);
+                    sync_result =moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
+                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                        if (sti.isTargetZipUseExternalSdcard()) {
+                            copyZipFileToDestination(stwa, stwa.gp.safMgr.getExternalSdcardPath(), dest_file);
+                        }
+                    }
+                }
+            } else {
+                sync_result = moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
+                if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                    sync_result = syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
+                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                        if (sti.isTargetZipUseExternalSdcard()) {
+                            copyZipFileToDestination(stwa, stwa.gp.safMgr.getExternalSdcardPath(), dest_file);
+                        }
                     }
                 }
             }
