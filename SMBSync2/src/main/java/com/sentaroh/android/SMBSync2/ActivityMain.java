@@ -200,7 +200,7 @@ public class ActivityMain extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-        ccMenu = new CustomContextMenu(getResources(), getSupportFragmentManager());
+        ccMenu = new CustomContextMenu(this.getResources(), getSupportFragmentManager());
         commonDlg = new CommonDialog(this, getSupportFragmentManager());
 
         checkRequiredPermissions();

@@ -1728,7 +1728,7 @@ public class SyncTaskEditor extends DialogFragment {
 
     private void confirmUseAppSpecificDir(SyncTaskItem sti, String dir, final NotifyEvent p_ntfy) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        if (!prefs.getBoolean(getString(R.string.settings_suppress_warning_app_specific_dir), false)) {
+        if (!prefs.getBoolean(mContext.getString(R.string.settings_suppress_warning_app_specific_dir), false)) {
             if (dir.startsWith(APP_SPECIFIC_DIRECTORY)) {
                 final Dialog dialog = new Dialog(getActivity());//, android.R.style.Theme_Black);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1756,7 +1756,7 @@ public class SyncTaskEditor extends DialogFragment {
                         dialog.dismiss();
                         if (ctvSuppr.isChecked()) {
                             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-                            prefs.edit().putBoolean(getString(R.string.settings_suppress_warning_app_specific_dir), true).commit();
+                            prefs.edit().putBoolean(mContext.getString(R.string.settings_suppress_warning_app_specific_dir), true).commit();
                         }
                         if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
                     }

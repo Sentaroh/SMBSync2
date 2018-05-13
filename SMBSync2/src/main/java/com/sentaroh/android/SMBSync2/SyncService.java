@@ -284,11 +284,11 @@ public class SyncService extends Service {
 
         ArrayList<ScheduleItem> scheduleInfoList = ScheduleUtil.loadScheduleData(mGp);
         if (in.getExtras().containsKey(SCHEDULER_SCHEDULE_NAME_KEY)) {
-            String schedule_names = in.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY);
+            String schedule_name_list = in.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY);
 
-            mUtil.addLogMsg("I", "Schedule information, name=" + schedule_names);
+            mUtil.addLogMsg("I", "Schedule information, name=" + schedule_name_list);
 
-            String[] schedule_list=schedule_names.split(",");
+            String[] schedule_list=schedule_name_list.split(",");
 
             for(String schedule_name:schedule_list) {
                 ScheduleItem si = getScheduleInformation(scheduleInfoList, schedule_name);
