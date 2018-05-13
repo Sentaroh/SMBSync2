@@ -23,10 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import java.io.File;
-
-import com.sentaroh.android.SMBSync2.Log.LogUtil;
-import com.sentaroh.android.SMBSync2.R;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -38,7 +34,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
+
+import com.sentaroh.android.SMBSync2.Log.LogUtil;
+
+import java.io.File;
 
 public class NotificationUtil {
 
@@ -71,7 +70,7 @@ public class NotificationUtil {
                 .setOngoing(true)
                 .setAutoCancel(false)
                 .setSmallIcon(R.drawable.ic_48_smbsync_wait)//smbsync_animation)
-                .setLargeIcon(gwa.notificationLargeIcon)
+//                .setLargeIcon(gwa.notificationLargeIcon)
                 .setContentTitle(gwa.notificationAppName)
                 .setContentText("")
 //		    .setSubText("subtext")
@@ -112,10 +111,10 @@ public class NotificationUtil {
                                                  int small_icon, int large_icon) {
         gwa.notificationSmallIcon = small_icon;
         if (gwa.notificationLargeIcon != null) gwa.notificationLargeIcon.recycle();
-        gwa.notificationLargeIcon = BitmapFactory.decodeResource(gwa.appContext.getResources(), large_icon);
+//        gwa.notificationLargeIcon = BitmapFactory.decodeResource(gwa.appContext.getResources(), large_icon);
         gwa.notificationBuilder.setContentIntent(gwa.notificationPendingIntent)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-                .setLargeIcon(gwa.notificationLargeIcon);
+                ;//.setLargeIcon(gwa.notificationLargeIcon);
         ;
         if (Build.VERSION.SDK_INT>=26) {
             gwa.notificationBuilder.setChannelId("SMBSync2");
@@ -157,10 +156,11 @@ public class NotificationUtil {
                                                     String prof, String fp, String msg) {
         setNotificationMessage(gwa, when, prof, fp, msg);
         gwa.notificationBuilder
+                .setContentIntent(gwa.notificationPendingIntent)
                 .setContentTitle(gwa.notificationLastShowedTitle)
                 .setContentText(gwa.notificationLastShowedMessage)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-                .setLargeIcon(gwa.notificationLargeIcon)
+//                .setLargeIcon(gwa.notificationLargeIcon)
         ;
         if (when != 0) gwa.notificationBuilder.setWhen(when);
         if (Build.VERSION.SDK_INT>=26) {
@@ -178,10 +178,11 @@ public class NotificationUtil {
 
     final static public Notification reShowOngoingMsg(GlobalParameters gwa) {
         gwa.notificationBuilder
+                .setContentIntent(gwa.notificationPendingIntent)
                 .setContentTitle(gwa.notificationLastShowedTitle)
                 .setContentText(gwa.notificationLastShowedMessage)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-                .setLargeIcon(gwa.notificationLargeIcon)
+//                .setLargeIcon(gwa.notificationLargeIcon)
         ;
         if (Build.VERSION.SDK_INT>=26) {
             gwa.notificationBuilder.setChannelId("SMBSync2");
@@ -206,7 +207,7 @@ public class NotificationUtil {
                 .setOngoing(false)
                 .setAutoCancel(true)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-                .setLargeIcon(gwa.notificationLargeIcon)
+//                .setLargeIcon(gwa.notificationLargeIcon)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(msg)
                 .setWhen(System.currentTimeMillis())
