@@ -23,6 +23,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import java.io.File;
+
+import com.sentaroh.android.SMBSync2.Log.LogUtil;
+import com.sentaroh.android.SMBSync2.R;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -34,10 +38,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-
-import com.sentaroh.android.SMBSync2.Log.LogUtil;
-
-import java.io.File;
+import android.support.v4.app.NotificationCompat;
 
 public class NotificationUtil {
 
@@ -63,7 +64,7 @@ public class NotificationUtil {
 
         gwa.notificationPendingIntent = PendingIntent.getActivity(gwa.appContext, 0, gwa.notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        gwa.notificationLargeIcon = BitmapFactory.decodeResource(gwa.appContext.getResources(), gwa.notificationSmallIcon);
+//        gwa.notificationLargeIcon = BitmapFactory.decodeResource(gwa.appContext.getResources(), gwa.notificationSmallIcon);
         gwa.notificationBuilder = new NotificationCompat.Builder(gwa.appContext);
         gwa.notificationBuilder.setContentIntent(gwa.notificationPendingIntent)
 //		   	.setTicker(gwa.notificationAppName)
@@ -110,7 +111,7 @@ public class NotificationUtil {
     static final public void setNotificationIcon(GlobalParameters gwa,
                                                  int small_icon, int large_icon) {
         gwa.notificationSmallIcon = small_icon;
-        if (gwa.notificationLargeIcon != null) gwa.notificationLargeIcon.recycle();
+//        if (gwa.notificationLargeIcon != null) gwa.notificationLargeIcon.recycle();
 //        gwa.notificationLargeIcon = BitmapFactory.decodeResource(gwa.appContext.getResources(), large_icon);
         gwa.notificationBuilder.setContentIntent(gwa.notificationPendingIntent)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)

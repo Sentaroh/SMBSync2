@@ -159,7 +159,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public String notificationAppName = "";
     //	public boolean notiifcationEnabled=false;
     public long notificationNextShowedTime = 0;
-    public Bitmap notificationLargeIcon = null;
+//    public Bitmap notificationLargeIcon = null;
 
     public ArrayList<SyncMessageItem> msgList = new ArrayList<SyncMessageItem>();
     public boolean freezeMessageViewScroll = false;
