@@ -2885,12 +2885,12 @@ public class SyncTaskEditor extends DialogFragment {
                                         public void positiveResponse(Context context, Object[] objects) {
                                             n_sti.setSyncWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF);
                                             spinnerSyncWifiStatus.setSelection(0);
-                                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
+                                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                                         }
 
                                         @Override
                                         public void negativeResponse(Context context, Object[] objects) {
-                                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
+                                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                                         }
                                     });
                                     mCommonDlg.showCommonDialog(true, "W",
@@ -2905,12 +2905,12 @@ public class SyncTaskEditor extends DialogFragment {
                                         public void positiveResponse(Context context, Object[] objects) {
                                             n_sti.setSyncWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP);
                                             spinnerSyncWifiStatus.setSelection(1);
-                                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
+                                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                                         }
 
                                         @Override
                                         public void negativeResponse(Context context, Object[] objects) {
-                                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
+                                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                                         }
                                     });
                                     mCommonDlg.showCommonDialog(true, "W",
@@ -2918,7 +2918,7 @@ public class SyncTaskEditor extends DialogFragment {
                                 }
                             }
                         } else {
-                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
+                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                         }
                     }
 
