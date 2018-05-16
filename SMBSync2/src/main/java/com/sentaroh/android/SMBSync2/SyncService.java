@@ -91,7 +91,7 @@ public class SyncService extends Service {
         if (mGp.syncHistoryList == null)
             mGp.syncHistoryList = mUtil.loadHistoryList();
 
-        NotificationUtil.setNotificationIcon(mGp, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
+//        NotificationUtil.setNotificationIcon(mGp, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
 
         mWifiMgr = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
 
