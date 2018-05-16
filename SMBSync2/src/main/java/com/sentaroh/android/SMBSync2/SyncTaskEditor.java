@@ -320,7 +320,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvCopyByRename = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_copy_rename);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
-        final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_remote_file_last_mod_time);
+        final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time);
         final CheckedTextView ctvUseSmbsyncLastMod = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_use_smbsync_last_mod_time);
         final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
         final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
@@ -408,7 +408,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvCopyByRename = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_copy_rename);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
-        final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_remote_file_last_mod_time);
+        final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time);
         final CheckedTextView ctvUseSmbsyncLastMod = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_use_smbsync_last_mod_time);
         final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
         final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
@@ -2543,10 +2543,10 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
-        final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_remote_file_last_mod_time);
-        SyncUtil.setCheckedTextView(ctvDoNotResetRemoteFile);
-        ctvDoNotResetRemoteFile.setChecked(n_sti.isSyncDoNotResetLastModifiedSmbFile());
-        ctvDoNotResetRemoteFile.setOnClickListener(new OnClickListener() {
+        final CheckedTextView ctvDoNotResetFileLastMod = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time);
+        SyncUtil.setCheckedTextView(ctvDoNotResetFileLastMod);
+        ctvDoNotResetFileLastMod.setChecked(n_sti.isSyncDoNotResetFileLastModified());
+        ctvDoNotResetFileLastMod.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isChecked = !((CheckedTextView) v).isChecked();
@@ -3507,7 +3507,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
         final CheckedTextView ctvShowSpecialOption = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
-        final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_remote_file_last_mod_time);
+        final CheckedTextView ctvDoNotResetFileLasyMod = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time);
         final CheckedTextView ctvUseSmbsyncLastMod = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_use_smbsync_last_mod_time);
         final CheckedTextView ctvDeterminChangedFileSizeGtTarget = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_file_size_greater_than_target);
         final CheckedTextView ctvRetry = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
@@ -3546,7 +3546,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         nstli.setSyncOptionSyncWhenCharging(ctv_task_sync_when_cahrging.isChecked());
 
-        nstli.setSyncDoNotResetLastModifiedSmbFile(ctvDoNotResetRemoteFile.isChecked());
+        nstli.setSyncDoNotResetFileLastModified(ctvDoNotResetFileLasyMod.isChecked());
         nstli.setSyncDetectLastModidiedBySmbsync(ctvUseSmbsyncLastMod.isChecked());
         if (ctvRetry.isChecked()) nstli.setSyncRetryCount("3");
         else nstli.setSyncRetryCount("0");
@@ -3682,7 +3682,7 @@ public class SyncTaskEditor extends DialogFragment {
 
 //        final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
 //        final CheckedTextView ctvShowSpecialOption = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
-        final LinearLayout ll_ctvDoNotResetRemoteFile = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_do_mot_reset_remote_file_last_mod_time);
+        final LinearLayout ll_ctvDoNotResetFileLasyMod = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_do_mot_reset_file_last_mod_time);
 
         final LinearLayout ll_ctvUseSmbsyncLastMod = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_use_smbsync_last_mod_time_view);
 
@@ -3711,7 +3711,7 @@ public class SyncTaskEditor extends DialogFragment {
 //            ll_ctvConfirmOverride.setVisibility(CheckedTextView.GONE);
             ll_ctvCopyByRename.setVisibility(CheckedTextView.GONE);
 
-            ll_ctvDoNotResetRemoteFile.setVisibility(CheckedTextView.GONE);
+            ll_ctvDoNotResetFileLasyMod.setVisibility(CheckedTextView.GONE);
             ll_ctvUseSmbsyncLastMod.setVisibility(CheckedTextView.GONE);
 
             ll_ctvDiffUseFileSize.setVisibility(CheckedTextView.GONE);
@@ -3726,7 +3726,7 @@ public class SyncTaskEditor extends DialogFragment {
 //            ll_ctvConfirmOverride.setVisibility(CheckedTextView.VISIBLE);
             ll_ctvCopyByRename.setVisibility(CheckedTextView.VISIBLE);
 
-            ll_ctvDoNotResetRemoteFile.setVisibility(CheckedTextView.VISIBLE);
+            ll_ctvDoNotResetFileLasyMod.setVisibility(CheckedTextView.VISIBLE);
             ll_ctvUseSmbsyncLastMod.setVisibility(CheckedTextView.VISIBLE);
 
             ll_ctvDiffUseFileSize.setVisibility(CheckedTextView.VISIBLE);

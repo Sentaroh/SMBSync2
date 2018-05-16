@@ -315,7 +315,7 @@
     <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Only when the file size of the master is large is determined as the difference file</string>
     <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Difference allowed last update time(in seconds)</string>
     <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Forced to get the last update date and time in SMBSync2</string>
-    <string name="msgs_profile_sync_task_sync_option_not_set_remote_file_last_modified">Do not make the last update time of the file copied/moved to the SMB folder the same as the copy source</string>
+    <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">To not set the last update time of the target file the same as the master</string>
     <string name="msgs_profile_sync_task_sync_option_show_special_option">Shows special options</string>
     <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Retry when network error occurred</string>
     <string name="msgs_profile_sync_task_sync_option_empty_directory">Process empty directory</string>

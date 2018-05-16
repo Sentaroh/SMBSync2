@@ -4329,7 +4329,7 @@ public class SyncTaskUtil {
 
             stli.setSyncDetectLastModidiedBySmbsync(parm[25].equals("1") ? true : false);
 
-            stli.setSyncDoNotResetLastModifiedSmbFile(parm[26].equals("1") ? true : false);
+            stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
             stli.setSyncRetryCount(parm[27]);
 
@@ -4436,7 +4436,7 @@ public class SyncTaskUtil {
 
             stli.setSyncDetectLastModidiedBySmbsync(parm[25].equals("1") ? true : false);
 
-            stli.setSyncDoNotResetLastModifiedSmbFile(parm[26].equals("1") ? true : false);
+            stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
             stli.setSyncRetryCount(parm[27]);
 
@@ -4548,7 +4548,7 @@ public class SyncTaskUtil {
 
             stli.setSyncDetectLastModidiedBySmbsync(parm[25].equals("1") ? true : false);
 
-            stli.setSyncDoNotResetLastModifiedSmbFile(parm[26].equals("1") ? true : false);
+            stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
             stli.setSyncRetryCount(parm[27]);
 
@@ -4667,7 +4667,7 @@ public class SyncTaskUtil {
 
             stli.setSyncDetectLastModidiedBySmbsync(parm[25].equals("1") ? true : false);
 
-            stli.setSyncDoNotResetLastModifiedSmbFile(parm[26].equals("1") ? true : false);
+            stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
             stli.setSyncRetryCount(parm[27]);
 
@@ -4814,7 +4814,7 @@ public class SyncTaskUtil {
 
             stli.setSyncDetectLastModidiedBySmbsync(parm[25].equals("1") ? true : false);
 
-            stli.setSyncDoNotResetLastModifiedSmbFile(parm[26].equals("1") ? true : false);
+            stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
             stli.setSyncRetryCount(parm[27]);
 
@@ -4964,7 +4964,7 @@ public class SyncTaskUtil {
 
             stli.setSyncDetectLastModidiedBySmbsync(parm[25].equals("1") ? true : false);
 
-            stli.setSyncDoNotResetLastModifiedSmbFile(parm[26].equals("1") ? true : false);
+            stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
             stli.setSyncRetryCount(parm[27]);
 
@@ -5223,7 +5223,7 @@ public class SyncTaskUtil {
 
                     String sync_confirm_override_delete = item.isSyncConfirmOverrideOrDelete() ? "1" : "0";
                     String sync_force_last_mod_use_smbsync = item.isSyncDetectLastModifiedBySmbsync() ? "1" : "0";
-                    String sync_not_used_last_mod_for_remote = item.isSyncDoNotResetLastModifiedSmbFile() ? "1" : "0";
+                    String sync_not_used_last_mod_for_remote = item.isSyncDoNotResetFileLastModified() ? "1" : "0";
                     String sync_retry_count = item.getSyncRetryCount();
                     String sync_sync_empty_dir = item.isSyncEmptyDirectory() ? "1" : "0";
                     String sync_sync_hidden_file = item.isSyncHiddenFile() ? "1" : "0";

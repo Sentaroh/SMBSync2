@@ -291,17 +291,17 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/edit_sync_task_option_ll_do_mot_reset_remote_file_last_mod_time"
+                android:id="@+id/edit_sync_task_option_ll_do_mot_reset_file_last_mod_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_ctv_do_mot_reset_remote_file_last_mod_time"
+                    android:id="@+id/edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
-                    android:text="@string/msgs_profile_sync_task_sync_option_not_set_remote_file_last_modified"
+                    android:text="@string/msgs_profile_sync_task_sync_option_not_set_file_last_modified"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
                 <include layout="@layout/divider_line1" />
             </LinearLayout>

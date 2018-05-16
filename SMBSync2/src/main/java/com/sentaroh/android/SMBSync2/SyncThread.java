@@ -548,7 +548,7 @@ public class SyncThread extends Thread {
                 ", UseLastMod=" + sti.isSyncDifferentFileByTime() ,
                 ", UseFileSize=" + sti.isSyncDifferentFileBySize() ,
                 ", UseFileSizeGreaterThanTagetFile=" + sti.isSyncDifferentFileSizeGreaterThanTagetFile() ,
-                ", DoNotResetRemote=" + sti.isSyncDoNotResetFileLastModified() ,
+                ", DoNotResetFileLastMod=" + sti.isSyncDoNotResetFileLastModified() ,
                 ", SyncEmptyDir=" + sti.isSyncEmptyDirectory() ,
                 ", SyncHiddenDir=" + sti.isSyncHiddenDirectory() ,
                 ", SyncProcessOverride=" + sti.isSyncOverrideCopyMoveFile() ,

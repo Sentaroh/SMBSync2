@@ -353,9 +353,9 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public void setChecked(boolean p) {isChecked = p;}
 
-    public boolean isSyncDoNotResetLastModifiedSmbFile() {return syncOptionNotUsedLastModifiedForRemote;}
+    public boolean isSyncDoNotResetFileLastModified() {return syncOptionNotUsedLastModifiedForRemote;}
 
-    public void setSyncDoNotResetLastModifiedSmbFile(boolean p) {syncOptionNotUsedLastModifiedForRemote = p;}
+    public void setSyncDoNotResetFileLastModified(boolean p) {syncOptionNotUsedLastModifiedForRemote = p;}
 
     public void setSyncTaskName(String p) {syncTasｋName = p;}
 
@@ -560,7 +560,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionProcessOverrideCopyMove==sti.isSyncOverrideCopyMoveFile()) &&
                         (syncOptionConfirmOverrideDelete==sti.isSyncConfirmOverrideOrDelete()) &&
                         (syncOptionForceLastModifiedUseSmbsync==sti.isSyncDetectLastModifiedBySmbsync()) &&
-                        (syncOptionNotUsedLastModifiedForRemote==sti.isSyncDoNotResetLastModifiedSmbFile()) &&
+                        (syncOptionNotUsedLastModifiedForRemote==sti.isSyncDoNotResetFileLastModified()) &&
                         (syncOptionDeterminChangedFileSizeGreaterThanTargetFile==sti.isSyncDifferentFileSizeGreaterThanTagetFile()) &&
                         (syncOptionRetryCount.equals(sti.getSyncRetryCount())) &&
                         (syncOptionSyncEmptyDir==sti.isSyncEmptyDirectory()) &&

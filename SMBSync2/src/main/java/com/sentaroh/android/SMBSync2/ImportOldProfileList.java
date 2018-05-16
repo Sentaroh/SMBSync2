@@ -86,7 +86,7 @@ public class ImportOldProfileList {
                 sti.setFileFilter(pli.getFileFilter());
 
                 sti.setSyncDetectLastModidiedBySmbsync(pli.isForceLastModifiedUseSmbsync());
-                sti.setSyncDoNotResetLastModifiedSmbFile(pli.isNotUseLastModifiedForRemote());
+                sti.setSyncDoNotResetFileLastModified(pli.isNotUseLastModifiedForRemote());
                 sti.setSyncUseSmallIoBuffer(pli.isSyncUseRemoteSmallIoArea());
 
                 ProfileListItem m_pli = getProfile(pli.getMasterName(), pfl);
