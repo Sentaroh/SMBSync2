@@ -21,8 +21,8 @@
     <string name="msgs_mirror_task_file_copying" >Copying file. %s %% complete.</string>
     <string name="msgs_mirror_task_result_stats" formatted="false">No of copies=%s, No of deletes=%s, No of ignores=%s, No of warnings=%s, No of retries=%s, No of errors=%s</string>
     
-    <string name="msgs_mirror_ignore_override_move_file"> Moving of the file was ignored. Because the overwritten with the synchronization option it is disabled.</string>
-    <string name="msgs_mirror_ignore_override_copy_file"> Copying of the file was ignored. Because the overwritten with the synchronization option it is disabled.</string>
+    <string name="msgs_mirror_ignore_override_move_file">Moving of the file was ignored. Because the overwritten with the synchronization option it is disabled.</string>
+    <string name="msgs_mirror_ignore_override_copy_file">Copying of the file was ignored. Because the overwritten with the synchronization option it is disabled.</string>
     
     <string name="msgs_mirror_confirm_copy_cancel">Copy cancelled by user request.</string>
     <string name="msgs_mirror_confirm_move_cancel">Move cancelled by user request.</string>

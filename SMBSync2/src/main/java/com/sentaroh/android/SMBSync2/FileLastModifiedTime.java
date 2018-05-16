@@ -249,7 +249,7 @@ public class FileLastModifiedTime {
             if (dir.canWrite()) {
                 if (lf.exists()) lf.delete();
                 lf.createNewFile();
-                result = lf.setLastModified(0);
+                result = lf.setLastModified(1000*1000);
                 lf.delete();
             }
         } catch (IOException e) {

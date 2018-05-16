@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.os.Build;
 import android.os.SystemClock;
 
 import static com.sentaroh.android.SMBSync2.Constants.*;
@@ -106,7 +107,7 @@ public class SyncThreadSyncFile {
                             SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
                         } else {
                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                    stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                    " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                         }
                     }
                 }
@@ -124,7 +125,7 @@ public class SyncThreadSyncFile {
                                     SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
                                 } else {
                                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                            stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                                 }
                             }
                         }
@@ -209,7 +210,7 @@ public class SyncThreadSyncFile {
                             SyncThread.deleteInternalStorageItem(stwa, true, sti, target_dir);
                         } else {
                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                    stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                    " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                         }
                     }
                 }
@@ -227,7 +228,7 @@ public class SyncThreadSyncFile {
                                     SyncThread.deleteInternalStorageItem(stwa, true, sti, target_dir);
                                 } else {
                                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                            stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                                 }
                             }
                         }
@@ -302,7 +303,7 @@ public class SyncThreadSyncFile {
                         SyncThread.deleteInternalStorageItem(stwa, true, sti, target_dir);
                     } else {
                         SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                     }
                 }
             }
@@ -322,7 +323,7 @@ public class SyncThreadSyncFile {
                                 SyncThread.deleteInternalStorageItem(stwa, true, sti, target_dir);
                             } else {
                                 SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                        stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                        " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                             }
                         }
                     }
@@ -404,7 +405,7 @@ public class SyncThreadSyncFile {
                             SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir + "/", stwa.targetAuth);
                         } else {
                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                    stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                    " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                         }
                     }
                 }
@@ -424,7 +425,7 @@ public class SyncThreadSyncFile {
                                     SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
                                 } else {
                                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                            stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                                 }
                             }
                         }
@@ -492,7 +493,7 @@ public class SyncThreadSyncFile {
                     SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
                 } else {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                            stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                 }
             }
         } else { // file Delete
@@ -510,7 +511,7 @@ public class SyncThreadSyncFile {
                                 SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
                             } else {
                                 SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                        stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                        " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                             }
                         }
                     }
@@ -622,9 +623,9 @@ public class SyncThreadSyncFile {
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
                             if (move_file)
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
                             else
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -648,7 +649,7 @@ public class SyncThreadSyncFile {
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
@@ -666,7 +667,7 @@ public class SyncThreadSyncFile {
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }
@@ -784,9 +785,9 @@ public class SyncThreadSyncFile {
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
                             if (move_file)
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
                             else
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -796,19 +797,13 @@ public class SyncThreadSyncFile {
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                for (int i = 0; i <= 50; i++) {
-                                                    sf = stwa.gp.safMgr.getSafFileBySdcardPath(
-                                                            stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
-                                                    if (sf == null) {
-                                                        SystemClock.sleep(20);
-                                                    } else {
-                                                        if (i > 0)
-                                                            stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " wait count=" + i);
-                                                        break;
-                                                    }
+                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                if (Build.VERSION.SDK_INT>=24) {
+                                                    SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                                } else {
+                                                    SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
+                                                            to_path, sf.lastModified(), mf.lastModified());
                                                 }
-                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                        to_path, sf.lastModified(), mf.lastModified());
                                                 SyncThread.scanMediaFile(stwa, to_path);
                                             }
                                             stwa.totalCopyCount++;
@@ -822,7 +817,7 @@ public class SyncThreadSyncFile {
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
@@ -834,26 +829,19 @@ public class SyncThreadSyncFile {
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                for (int i = 0; i <= 50; i++) {
-//												sf= SafUtil.getSafDocumentFileByPath(mSyncThreadCA.safCA, to_path, false);
-                                                    sf = stwa.gp.safMgr.getSafFileBySdcardPath(
-                                                            stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
-                                                    if (sf == null) {
-                                                        SystemClock.sleep(20);
-                                                    } else {
-                                                        if (i > 0)
-                                                            stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " wait count=" + i);
-                                                        break;
-                                                    }
+                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                if (Build.VERSION.SDK_INT>=24) {
+                                                    SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                                } else {
+                                                    SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
+                                                            to_path, sf.lastModified(), mf.lastModified());
                                                 }
-                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                        to_path, sf.lastModified(), mf.lastModified());
                                                 SyncThread.scanMediaFile(stwa, to_path);
                                             }
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }
@@ -998,9 +986,9 @@ public class SyncThreadSyncFile {
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
                             if (move_file)
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                stwa.util.addLogMsg("W", " ", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
                             else
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                                stwa.util.addLogMsg("W", " ", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -1034,7 +1022,7 @@ public class SyncThreadSyncFile {
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY)) {
@@ -1062,7 +1050,7 @@ public class SyncThreadSyncFile {
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }
@@ -1183,9 +1171,9 @@ public class SyncThreadSyncFile {
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
                             if (move_file)
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
                             else
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -1209,7 +1197,7 @@ public class SyncThreadSyncFile {
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
@@ -1227,7 +1215,7 @@ public class SyncThreadSyncFile {
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }
@@ -1353,9 +1341,9 @@ public class SyncThreadSyncFile {
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
                             if (move_file)
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
                             else
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -1365,19 +1353,12 @@ public class SyncThreadSyncFile {
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                for (int i = 0; i <= 50; i++) {
-                                                    sf = stwa.gp.safMgr.getSafFileBySdcardPath(
-                                                            stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
-                                                    if (sf == null) {
-                                                        SystemClock.sleep(20);
-                                                    } else {
-                                                        if (i > 0)
-                                                            stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " wait count=" + i);
-                                                        break;
-                                                    }
+                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                if (Build.VERSION.SDK_INT>=24) {
+                                                    SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                                } else {
+                                                    SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path, sf.lastModified(), mf.lastModified());
                                                 }
-                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                        to_path, sf.lastModified(), mf.lastModified());
                                                 SyncThread.scanMediaFile(stwa, to_path);
                                             }
                                             stwa.totalCopyCount++;
@@ -1391,7 +1372,7 @@ public class SyncThreadSyncFile {
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
@@ -1403,25 +1384,18 @@ public class SyncThreadSyncFile {
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                for (int i = 0; i <= 50; i++) {
-                                                    sf = stwa.gp.safMgr.getSafFileBySdcardPath(
-                                                            stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
-                                                    if (sf == null) {
-                                                        SystemClock.sleep(20);
-                                                    } else {
-                                                        if (i > 0)
-                                                            stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " wait count=" + i);
-                                                        break;
-                                                    }
+                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                if (Build.VERSION.SDK_INT>=24) {
+                                                    SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                                } else {
+                                                    SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path, sf.lastModified(), mf.lastModified());
                                                 }
-                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                        to_path, sf.lastModified(), mf.lastModified());
                                                 SyncThread.scanMediaFile(stwa, to_path);
                                             }
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }
@@ -1567,9 +1541,9 @@ public class SyncThreadSyncFile {
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
                             if (move_file)
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
                             else
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -1603,7 +1577,7 @@ public class SyncThreadSyncFile {
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY)) {
@@ -1631,7 +1605,7 @@ public class SyncThreadSyncFile {
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }
@@ -1815,9 +1789,9 @@ public class SyncThreadSyncFile {
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
                             if (move_file)
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
                             else
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -1854,7 +1828,7 @@ public class SyncThreadSyncFile {
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
@@ -1884,7 +1858,7 @@ public class SyncThreadSyncFile {
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }
@@ -2063,9 +2037,9 @@ public class SyncThreadSyncFile {
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
                             if (move_file)
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
                             else
-                                stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -2087,19 +2061,13 @@ public class SyncThreadSyncFile {
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                for (int i = 0; i <= 50; i++) {
-                                                    sf = stwa.gp.safMgr.getSafFileBySdcardPath(
-                                                            stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
-                                                    if (sf == null) {
-                                                        SystemClock.sleep(20);
-                                                    } else {
-                                                        if (i > 0)
-                                                            stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " wait count=" + i);
-                                                        break;
-                                                    }
+                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                if (Build.VERSION.SDK_INT>=24) {
+                                                    SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                                } else {
+                                                    SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
+                                                            to_path, sf.lastModified(), mf.getLastModified());
                                                 }
-                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                        to_path, sf.lastModified(), mf.getLastModified());
                                                 SyncThread.scanMediaFile(stwa, to_path);
                                             }
                                             stwa.totalCopyCount++;
@@ -2113,7 +2081,7 @@ public class SyncThreadSyncFile {
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
@@ -2137,24 +2105,19 @@ public class SyncThreadSyncFile {
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                for (int i = 0; i <= 50; i++) {
-                                                    sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
-                                                    if (sf == null) {
-                                                        SystemClock.sleep(20);
-                                                    } else {
-                                                        if (i > 0)
-                                                            stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " wait count=" + i);
-                                                        break;
-                                                    }
+                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                if (Build.VERSION.SDK_INT>=24) {
+                                                    SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                                } else {
+                                                    SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
+                                                            to_path, sf.lastModified(), mf.getLastModified());
                                                 }
-                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                                        to_path, sf.lastModified(), mf.getLastModified());
                                                 SyncThread.scanMediaFile(stwa, to_path);
                                             }
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }
@@ -2352,8 +2315,8 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file) stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                            else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -2389,7 +2352,7 @@ public class SyncThreadSyncFile {
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
@@ -2418,7 +2381,7 @@ public class SyncThreadSyncFile {
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }
@@ -2502,7 +2465,7 @@ public class SyncThreadSyncFile {
                             SyncThread.deleteSmbItem(stwa, true, sti, target_dir, target_dir, stwa.targetAuth);
                         } else {
                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                    stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                    " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                         }
                     }
                 }
@@ -2520,7 +2483,7 @@ public class SyncThreadSyncFile {
                                     SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
                                 } else {
                                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                            stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
                                 }
                             }
                         }

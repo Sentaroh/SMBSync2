@@ -548,7 +548,7 @@ public class SyncThread extends Thread {
                 ", UseLastMod=" + sti.isSyncDifferentFileByTime() ,
                 ", UseFileSize=" + sti.isSyncDifferentFileBySize() ,
                 ", UseFileSizeGreaterThanTagetFile=" + sti.isSyncDifferentFileSizeGreaterThanTagetFile() ,
-                ", DoNotResetRemote=" + sti.isSyncDoNotResetLastModifiedSmbFile() ,
+                ", DoNotResetRemote=" + sti.isSyncDoNotResetFileLastModified() ,
                 ", SyncEmptyDir=" + sti.isSyncEmptyDirectory() ,
                 ", SyncHiddenDir=" + sti.isSyncHiddenDirectory() ,
                 ", SyncProcessOverride=" + sti.isSyncOverrideCopyMoveFile() ,
@@ -587,7 +587,13 @@ public class SyncThread extends Thread {
 //			mStwa.setLastModifiedIsFunctional=false;
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             mStwa.setLastModifiedIsFunctional = true;
-        } else mStwa.setLastModifiedIsFunctional = false;//SDCARD
+        } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
+            if (Build.VERSION.SDK_INT>=24) {
+                mStwa.setLastModifiedIsFunctional = true;//isSetLastModifiedFunctional(mStwa.gp.safMgr.getSdcardDirectory());
+            } else {
+                mStwa.setLastModifiedIsFunctional = false;
+            }
+        } else mStwa.setLastModifiedIsFunctional = false;
         mStwa.util.addDebugMsg(1, "I", "setLastModifiedIsFunctional=" + mStwa.setLastModifiedIsFunctional);
     }
 
@@ -821,14 +827,14 @@ public class SyncThread extends Thread {
             reachable = true;
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             mStwa.util.addDebugMsg(1, "I", e.getMessage());
             StackTraceElement[] ste = e.getStackTrace();
             for (int i = 0; i < ste.length; i++) {
                 mStwa.util.addDebugMsg(1, "I", ste[i].toString());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             mStwa.util.addDebugMsg(1, "I", e.getMessage());
             StackTraceElement[] ste = e.getStackTrace();
             for (int i = 0; i < ste.length; i++) {
@@ -1630,11 +1636,11 @@ public class SyncThread extends Thread {
 
     static public void showArchiveMsg(final SyncThreadWorkArea stwa, boolean log_only,
                                final String task_name, final String cat,
-                               final String full_path, final String archive_path, final String file_name, final String msg) {
+                               final String full_path, final String archive_path, final String from_file_name, final String to_file_name, final String msg) {
         stwa.gp.progressSpinSyncprofText = task_name;
-        stwa.gp.progressSpinMsgText = file_name.concat(" ").concat(msg);
+        stwa.gp.progressSpinMsgText = String.format(msg,from_file_name,to_file_name);
         if (!log_only) {
-            NotificationUtil.showOngoingMsg(stwa.gp, System.currentTimeMillis(), task_name, file_name, msg);
+            NotificationUtil.showOngoingMsg(stwa.gp, System.currentTimeMillis(), task_name, from_file_name, msg);
             if (stwa.gp.dialogWindowShowed && stwa.gp.progressSpinSyncprof != null) {
                 stwa.gp.uiHandler.post(new Runnable() {
                     @Override
@@ -1974,7 +1980,7 @@ public class SyncThread extends Thread {
         if (exists_diff || (sti.isSyncDifferentFileBySize() && length_diff > 0) || ac) {
             diff = true;
         } else {//Check lastModified()
-            if (!sti.isSyncDoNotResetLastModifiedSmbFile() && sti.isSyncDifferentFileByTime()) {
+            if (!sti.isSyncDoNotResetFileLastModified() && sti.isSyncDifferentFileByTime()) {
                 if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
                     diff = true;
                 } else diff = false;
