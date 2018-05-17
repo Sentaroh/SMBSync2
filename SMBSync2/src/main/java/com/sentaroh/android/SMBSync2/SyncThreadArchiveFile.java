@@ -1977,8 +1977,6 @@ public class SyncThreadArchiveFile {
 
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
-//        BufferedInputStream ifs = new BufferedInputStream(is, buff_size);
-//        BufferedOutputStream ofs = new BufferedOutputStream(os, buff_size);
 
         int buffer_read_bytes = 0;
         long file_read_bytes = 0;
@@ -2002,7 +2000,6 @@ public class SyncThreadArchiveFile {
         ifs.close();
         ofs.flush();
         ofs.close();
-//        if (!sti.isSyncDoNotResetLastModifiedSmbFile()) out_dest.setLastModified(mf.lastModified());
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
@@ -2191,7 +2188,6 @@ public class SyncThreadArchiveFile {
         else if (sti.getArchiveSuffixOption().equals("6")) seqno=String.format("_%06d", seq_no);
         return seqno;
     }
-
 
     static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
         String[] date_time=null;
