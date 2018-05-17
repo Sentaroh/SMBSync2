@@ -667,7 +667,7 @@ public class SyncThreadCopyFile {
 
     private final static int SHOW_PROGRESS_THRESHOLD_VALUE = 1024 * 1024 * 4;
     private final static int IO_AREA_SIZE = 1024 * 1024;
-    private final static int LARGE_BUFFERED_STREAM_BUFFER_SIZE = 1024 * 1024 * 4;
+    public final static int LARGE_BUFFERED_STREAM_BUFFER_SIZE = 1024 * 1024 * 4;
 
     static public int copyFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir, String to_dir,
                                 String file_name, long file_size, InputStream ifs, OutputStream ofs) throws IOException {
