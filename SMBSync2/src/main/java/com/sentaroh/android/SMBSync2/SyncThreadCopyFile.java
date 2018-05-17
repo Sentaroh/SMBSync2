@@ -75,40 +75,49 @@ public class SyncThreadCopyFile {
         }
 
         OutputStream os =null;
-        boolean output_use_file=false;
+//        boolean output_use_file=false;
         File t_file=new File(to_file_path);
         SafFile t_df=null;
-        if (to_file_path.startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
-            os=new FileOutputStream(t_file);
-            output_use_file=true;
-        } else {
-            t_df = getSafFile(stwa, sti, to_file_path);
-            if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-            os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
-        }
+//        if (to_file_path.startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
+//            os=new FileOutputStream(t_file);
+//            output_use_file=true;
+//        } else {
+//            t_df = getSafFile(stwa, sti, to_file_path);
+//            if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+//            os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+//        }
+        t_df = getSafFile(stwa, sti, to_file_path);
+        if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+        os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
             if (sti.isSyncUseFileCopyByTempName()) {
-                if (output_use_file) t_file.delete();
-                else t_df.delete();
+//                if (output_use_file) t_file.delete();
+//                else t_df.delete();
+                t_df.delete();
             }
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
-            if (output_use_file) {
-                t_file.setLastModified(mf.lastModified());
-                if (out_dest.exists()) out_dest.delete();
-                t_file.renameTo(out_dest);
-            } else {
-                SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
-                if (out_dest.exists()) {
-                    o_df.delete();
-                }
-                t_df.renameTo(file_name);
+//            if (output_use_file) {
+//                t_file.setLastModified(mf.lastModified());
+//                if (out_dest.exists()) out_dest.delete();
+//                t_file.renameTo(out_dest);
+//            } else {
+//                SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+//                if (out_dest.exists()) {
+//                    o_df.delete();
+//                }
+//                t_df.renameTo(file_name);
+//            }
+            SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+            if (out_dest.exists()) {
+                o_df.delete();
             }
+            t_df.renameTo(file_name);
         }
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -315,41 +324,51 @@ public class SyncThreadCopyFile {
 
         FileInputStream is = new FileInputStream(mf);
         OutputStream os =null;
-        boolean output_use_file=false;
+//        boolean output_use_file=false;
         File t_file=new File(to_file_path);
         SafFile t_df=null;
-        if (to_file_path.startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
-            os=new FileOutputStream(t_file);
-            output_use_file=true;
-        } else {
-            t_df = getSafFile(stwa, sti, to_file_path);
-            if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-            os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
-        }
+//        if (to_file_path.startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
+//            os=new FileOutputStream(t_file);
+//            output_use_file=true;
+//        } else {
+//            t_df = getSafFile(stwa, sti, to_file_path);
+//            if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+//            os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+//        }
+        t_df = getSafFile(stwa, sti, to_file_path);
+        if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+        os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
             if (sti.isSyncUseFileCopyByTempName()) {
-                if (output_use_file) t_file.delete();
-                else t_df.delete();
+//                if (output_use_file) t_file.delete();
+//                else t_df.delete();
+                t_df.delete();
             }
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
-            if (output_use_file) {
-                t_file.setLastModified(mf.lastModified());
-                if (out_dest.exists()) out_dest.delete();
-                t_file.renameTo(out_dest);
-            } else {
-                SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
-                boolean rc=false;
-                if (o_df.exists()) {
-                    rc=o_df.delete();
-                }
-                t_df.renameTo(file_name);
+//            if (output_use_file) {
+//                t_file.setLastModified(mf.lastModified());
+//                if (out_dest.exists()) out_dest.delete();
+//                t_file.renameTo(out_dest);
+//            } else {
+//                SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+//                boolean rc=false;
+//                if (o_df.exists()) {
+//                    rc=o_df.delete();
+//                }
+//                t_df.renameTo(file_name);
+//            }
+            SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+            boolean rc=false;
+            if (o_df.exists()) {
+                rc=o_df.delete();
             }
+            t_df.renameTo(file_name);
         }
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -554,40 +573,49 @@ public class SyncThreadCopyFile {
 
         InputStream is = mf.getInputStream();
         OutputStream os =null;
-        boolean output_use_file=false;
+//        boolean output_use_file=false;
         File t_file=new File(to_file_path);
         SafFile t_df=null;
-        if (to_file_path.startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
-            os=new FileOutputStream(t_file);
-            output_use_file=true;
-        } else {
-            t_df = getSafFile(stwa, sti, to_file_path);
-            if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-            os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
-        }
+//        if (to_file_path.startsWith(stwa.gp.safMgr.getExternalSdcardPath()+"/"+"Android/data/")) {
+//            os=new FileOutputStream(t_file);
+//            output_use_file=true;
+//        } else {
+//            t_df = getSafFile(stwa, sti, to_file_path);
+//            if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+//            os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+//        }
+        t_df = getSafFile(stwa, sti, to_file_path);
+        if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+        os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
             if (sti.isSyncUseFileCopyByTempName()) {
-                if (output_use_file) t_file.delete();
-                else t_df.delete();
+//                if (output_use_file) t_file.delete();
+//                else t_df.delete();
+                t_df.delete();
             }
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
-            if (output_use_file) {
-                t_file.setLastModified(mf.getLastModified());
-                if (out_dest.exists()) out_dest.delete();
-                t_file.renameTo(out_dest);
-            } else {
-                SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
-                if (out_dest.exists()) {
-                    o_df.delete();
-                }
-                t_df.renameTo(file_name);
+//            if (output_use_file) {
+//                t_file.setLastModified(mf.getLastModified());
+//                if (out_dest.exists()) out_dest.delete();
+//                t_file.renameTo(out_dest);
+//            } else {
+//                SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+//                if (out_dest.exists()) {
+//                    o_df.delete();
+//                }
+//                t_df.renameTo(file_name);
+//            }
+            SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+            if (out_dest.exists()) {
+                o_df.delete();
             }
+            t_df.renameTo(file_name);
         }
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -639,9 +667,9 @@ public class SyncThreadCopyFile {
 
     private final static int SHOW_PROGRESS_THRESHOLD_VALUE = 1024 * 1024 * 4;
     private final static int IO_AREA_SIZE = 1024 * 1024;
-    public final static int LARGE_BUFFERED_STREAM_BUFFER_SIZE = 1024 * 1024 * 4;
+    private final static int LARGE_BUFFERED_STREAM_BUFFER_SIZE = 1024 * 1024 * 4;
 
-    static private int copyFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir, String to_dir,
+    static public int copyFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir, String to_dir,
                                 String file_name, long file_size, InputStream ifs, OutputStream ofs) throws IOException {
         stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
