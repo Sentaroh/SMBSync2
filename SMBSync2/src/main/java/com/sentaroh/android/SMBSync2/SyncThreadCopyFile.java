@@ -55,7 +55,7 @@ public class SyncThreadCopyFile {
 
     static private int copyFileExternalToExternal_API21(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                                  File mf, String to_dir, String file_name) throws IOException {
-        stwa.util.addDebugMsg(2, "I", "copyFileExternalToExternal from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+        stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
@@ -116,7 +116,7 @@ public class SyncThreadCopyFile {
 
     static private int copyFileExternalToExternal_API24(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                                        File mf, String to_dir, String file_name) throws IOException {
-        stwa.util.addDebugMsg(2, "I", "copyFileExternalToExternal from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+        stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
@@ -169,7 +169,7 @@ public class SyncThreadCopyFile {
 
     static public int copyFileExternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                                  File mf, String to_dir, String file_name) throws IOException {
-        stwa.util.addDebugMsg(2, "I", "copyFileExternalToInternal from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+        stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
@@ -213,7 +213,7 @@ public class SyncThreadCopyFile {
 
     static public int copyFileExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                             String from_dir, File mf, String to_dir, String file_name) throws IOException, JcifsException {
-        stwa.util.addDebugMsg(2, "I", "copyFileExternalToSmb from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+        stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
@@ -258,7 +258,7 @@ public class SyncThreadCopyFile {
 
     static public int copyFileInternalToInternal(SyncThreadWorkArea stwa,
                                                  SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException {
-        stwa.util.addDebugMsg(2, "I", "copyFileInternalToInternal from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+        stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
@@ -422,7 +422,7 @@ public class SyncThreadCopyFile {
 
     static public int copyFileInternalToSmb(SyncThreadWorkArea stwa,
                              SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException, JcifsException {
-        stwa.util.addDebugMsg(2, "I", "copyFileInternalToSmb from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+        stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
@@ -460,7 +460,7 @@ public class SyncThreadCopyFile {
 
     static public int copyFileSmbToSmb(SyncThreadWorkArea stwa,
                                    SyncTaskItem sti, String from_dir, String to_dir, String file_name) throws IOException, JcifsException {
-        stwa.util.addDebugMsg(2, "I", "copyFileSmbToSmb from_dir=", from_dir, ", to_dir=", to_dir,", name=", file_name);
+        stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
@@ -498,7 +498,7 @@ public class SyncThreadCopyFile {
 
     static public int copyFileSmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                             JcifsFile mf, String to_dir, String file_name) throws IOException, JcifsException {
-        stwa.util.addDebugMsg(2, "I", "copyFileSmbToInternal from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+        stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         long read_begin_time = System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -544,7 +544,7 @@ public class SyncThreadCopyFile {
 
     static private int copyFileSmbToExternal_API21(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                             JcifsFile mf, String to_dir, String file_name) throws IOException, JcifsException {
-        stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+        stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
@@ -643,6 +643,7 @@ public class SyncThreadCopyFile {
 
     static private int copyFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir, String to_dir,
                                 String file_name, long file_size, InputStream ifs, OutputStream ofs) throws IOException {
+        stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         long read_begin_time = System.currentTimeMillis();
 
@@ -681,8 +682,7 @@ public class SyncThreadCopyFile {
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
         if (stwa.gp.settingDebugLevel >= 1)
-            stwa.util.addDebugMsg(1, "I", to_dir+"/"+file_name + " " + file_read_bytes + " bytes transfered in ",
-                    file_read_time + " mili seconds at " +
+            stwa.util.addDebugMsg(1, "I", to_dir+"/"+file_name + " " + file_read_bytes + " bytes transfered in ",file_read_time + " mili seconds at " +
                             SyncThread.calTransferRate(file_read_bytes, file_read_time));
         stwa.totalTransferByte += file_read_bytes;
         stwa.totalTransferTime += file_read_time;
