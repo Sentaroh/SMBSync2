@@ -205,8 +205,6 @@ public class SyncThread extends Thread {
 
     }
 
-    ;
-
     private void listSafMgrList() {
         ArrayList<SafFileManager.SafFileItem> sfl = mGp.safMgr.getSafList();
         for (SafFileManager.SafFileItem item : sfl) {
@@ -220,8 +218,6 @@ public class SyncThread extends Thread {
                     ", saf name=" + saf_name);
         }
     }
-
-    ;
 
     private String[] getRemovableStoragePaths(Context context, boolean debug) {
         ArrayList<String> paths = new ArrayList<String>();
@@ -256,8 +252,6 @@ public class SyncThread extends Thread {
         }
         return paths.toArray(new String[paths.size()]);
     }
-
-    ;
 
     private void listsMountPoint() {
         mStwa.util.addDebugMsg(1, "I", "/ directory:");
@@ -314,8 +308,6 @@ public class SyncThread extends Thread {
             }
         }
     }
-
-    ;
 
     @Override
     public void run() {
@@ -453,40 +445,33 @@ public class SyncThread extends Thread {
 
             NotificationUtil.setNotificationIcon(mGp, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
             NotificationUtil.reShowOngoingMsg(mGp);
-            @SuppressWarnings("unused")
-            boolean delay_term = false;
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS) ||
                         mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_SUCCESS)) {
                     playBackDefaultNotification();
-                    delay_term = true;
                 }
                 if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
                         mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_SUCCESS)) {
                     vibrateDefaultPattern();
-                    delay_term = true;
                 }
             } else if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL) {
                 if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS)) {
                     playBackDefaultNotification();
-                    delay_term = true;
                 }
                 if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS)) {
                     vibrateDefaultPattern();
-                    delay_term = true;
                 }
             } else if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR) {
                 if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS) ||
                         mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ERROR)) {
                     playBackDefaultNotification();
-                    delay_term = true;
                 }
                 if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
                         mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR)) {
                     vibrateDefaultPattern();
-                    delay_term = true;
                 }
             }
+
             mGp.syncThreadRequestID = "";
             mGp.syncThreadActive = false;
 
@@ -2448,6 +2433,11 @@ public class SyncThread extends Thread {
         }
     }
 
+    private void notifySyncResult() {
+//        if (mNotificationSound) playBackDefaultNotification(wait_value1);
+//        if (mNotificationVibrate) vibrateDefaultPattern(wait_value2);
+    }
+
     private void playBackDefaultNotification() {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         if (uri != null) {
@@ -2456,7 +2446,7 @@ public class SyncThread extends Thread {
                 float vol = (float) mGp.settingNotificationVolume / 100.0f;
                 player.setVolume(vol, vol);
                 if (player != null) {
-                    Thread th = new Thread() {
+                    final Thread th = new Thread() {
                         @Override
                         public void run() {
                             int dur = player.getDuration();
@@ -2476,8 +2466,6 @@ public class SyncThread extends Thread {
         }
     }
 
-    ;
-
     private void vibrateDefaultPattern() {
         Thread th = new Thread() {
             @SuppressWarnings("deprecation")
@@ -2487,10 +2475,9 @@ public class SyncThread extends Thread {
                 vibrator.vibrate(new long[]{0, 200, 400, 200, 400, 200}, -1);
             }
         };
+        th.setPriority(Thread.MAX_PRIORITY);
         th.start();
     }
-
-    ;
 
     final private void addHistoryList(SyncTaskItem sti,
                                       int status, int copy_cnt, int del_cnt, int ignore_cnt,
