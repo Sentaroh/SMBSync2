@@ -1030,7 +1030,8 @@ public class ActivityMain extends AppCompatActivity {
                     mGp.uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mGp.msgListView.setSelection(mGp.msgListAdapter.getCount() - 1);
+                            if (mGp!=null && mGp.msgListView!=null && mGp.msgListAdapter!=null)
+                                mGp.msgListView.setSelection(mGp.msgListAdapter.getCount() - 1);
                         }
                     });
                 }
@@ -1038,8 +1039,6 @@ public class ActivityMain extends AppCompatActivity {
             mCurrentTab = tabId;
             refreshOptionMenu();
         }
-
-        ;
     }
 
     private class MainPageChangeListener implements ViewPager.OnPageChangeListener {
