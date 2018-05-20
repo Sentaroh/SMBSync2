@@ -127,7 +127,8 @@ public class ScheduleListEditor {
                                 ((org_item.syncWifiOffAfterEnd && curr_item.syncWifiOffAfterEnd) || (!org_item.syncWifiOffAfterEnd && !curr_item.syncWifiOffAfterEnd)) &&
                                 ((org_item.syncWifiOnBeforeStart && curr_item.syncWifiOnBeforeStart) || (!org_item.syncWifiOnBeforeStart && !curr_item.syncWifiOnBeforeStart)) &&
                                 ((org_item.scheduleIntervalFirstRunImmed && curr_item.scheduleIntervalFirstRunImmed) || (!org_item.scheduleIntervalFirstRunImmed && !curr_item.scheduleIntervalFirstRunImmed)) &&
-                                (org_item.syncDelayAfterWifiOn==curr_item.syncDelayAfterWifiOn)
+                                (org_item.syncDelayAfterWifiOn==curr_item.syncDelayAfterWifiOn) &&
+                                (org_item.scheduleLastExecTime==curr_item.scheduleLastExecTime)
                                 ){
                             // No change found
                         } else {

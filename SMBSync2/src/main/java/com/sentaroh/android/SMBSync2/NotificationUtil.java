@@ -104,41 +104,41 @@ public class NotificationUtil {
             gwa.notificationManager.deleteNotificationChannel("SMBSync2");
             gwa.notificationManager.createNotificationChannel(def_ch);
 
-            NotificationChannel sound_ch = new NotificationChannel(
-                    "Sound",
-                    "Sound",
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-            sound_ch.enableLights(false);
-            sound_ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
-            sound_ch.enableVibration(false);
-            sound_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            gwa.notificationManager.deleteNotificationChannel("Sound");
-            gwa.notificationManager.createNotificationChannel(sound_ch);
-
-            NotificationChannel vibrate_ch = new NotificationChannel(
-                    "Vibrate",
-                    "Vibrate",
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-            vibrate_ch.enableLights(false);
-            vibrate_ch.setSound(null, null);
-            vibrate_ch.enableVibration(true);
-            vibrate_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            gwa.notificationManager.deleteNotificationChannel("Vibrate");
-            gwa.notificationManager.createNotificationChannel(vibrate_ch);
-
-            NotificationChannel vibrate_sound_ch = new NotificationChannel(
-                    "Vibrate_Sound",
-                    "Vibrate_Sound",
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-            vibrate_sound_ch.enableLights(false);
-            vibrate_sound_ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
-            vibrate_sound_ch.enableVibration(true);
-            vibrate_sound_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            gwa.notificationManager.deleteNotificationChannel("Vibrate_Sound");
-            gwa.notificationManager.createNotificationChannel(vibrate_sound_ch);
+//            NotificationChannel sound_ch = new NotificationChannel(
+//                    "Sound",
+//                    "Sound",
+//                    NotificationManager.IMPORTANCE_DEFAULT
+//            );
+//            sound_ch.enableLights(false);
+//            sound_ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
+//            sound_ch.enableVibration(false);
+//            sound_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+//            gwa.notificationManager.deleteNotificationChannel("Sound");
+//            gwa.notificationManager.createNotificationChannel(sound_ch);
+//
+//            NotificationChannel vibrate_ch = new NotificationChannel(
+//                    "Vibrate",
+//                    "Vibrate",
+//                    NotificationManager.IMPORTANCE_DEFAULT
+//            );
+//            vibrate_ch.enableLights(false);
+//            vibrate_ch.setSound(null, null);
+//            vibrate_ch.enableVibration(true);
+//            vibrate_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+//            gwa.notificationManager.deleteNotificationChannel("Vibrate");
+//            gwa.notificationManager.createNotificationChannel(vibrate_ch);
+//
+//            NotificationChannel vibrate_sound_ch = new NotificationChannel(
+//                    "Vibrate_Sound",
+//                    "Vibrate_Sound",
+//                    NotificationManager.IMPORTANCE_DEFAULT
+//            );
+//            vibrate_sound_ch.enableLights(false);
+//            vibrate_sound_ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
+//            vibrate_sound_ch.enableVibration(true);
+//            vibrate_sound_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+//            gwa.notificationManager.deleteNotificationChannel("Vibrate_Sound");
+//            gwa.notificationManager.createNotificationChannel(vibrate_sound_ch);
 
         }
 

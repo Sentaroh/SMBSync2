@@ -4,7 +4,8 @@
 
     <string name="msgs_terminate_application">Terminate application?</string>
     
-	<string name="msgs_main_sync_select_prof_no_active_profile">Auto sync task was not found.</string>
+	<string name="msgs_main_sync_select_prof_no_active_profile">Sync task was not selected.</string>
+    <string name="msgs_main_sync_specified_sync_task_not_scheduled">The specified sync task will not be executed because it was ignored.</string>
 	<string name="msgs_main_sync_prof_name_list">The name of the task that started the sync:</string>
 	
 	<string name="msgs_main_sync_cancel_confirm">Do you want to cancel sync?</string>

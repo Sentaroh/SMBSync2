@@ -168,7 +168,6 @@ public class ScheduleItemEditor {
 
         final CheckedTextView ctv_reset_interval = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_reset);
         ctv_reset_interval.setTextColor(mGp.themeColorList.text_color_primary);
-        SyncUtil.setCheckedTextView(ctv_reset_interval);
 
         final CheckedTextView ctv_sync_all_prof = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_sync_all_sync_task);
         ctv_sync_all_prof.setTextColor(mGp.themeColorList.text_color_primary);

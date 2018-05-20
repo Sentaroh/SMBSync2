@@ -38,8 +38,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SyncReceiver extends BroadcastReceiver {
 
@@ -187,18 +189,37 @@ public class SyncReceiver extends BroadcastReceiver {
         for (ScheduleItem si : mSchedList) if (si.scheduleEnabled) scheduleEnabled = true;
         if (scheduleEnabled) {
             ArrayList<ScheduleItem> begin_sched_list = new ArrayList<ScheduleItem>();
-            long sched_time = -1;
+            ArrayList<String> sched_list=new ArrayList<String>();
             for (ScheduleItem si : mSchedList) {
                 if (si.scheduleEnabled) {
                     long time = ScheduleUtil.getNextSchedule(si);
-                    if (sched_time == -1) {
-                        sched_time = time;
+                    sched_list.add(StringUtil.convDateTimeTo_YearMonthDayHourMin(time)+","+si.scheduleName);
+//                    if (sched_time == -1) {
+//                        sched_time = time;
+//                        begin_sched_list.add(si);
+//                    } else if (time < sched_time) {
+//                        sched_time = time;
+//                        begin_sched_list.add(si);
+//                    } else if (time == sched_time) {
+//                        begin_sched_list.add(si);
+//                    }
+                }
+            }
+            if (sched_list.size()>0) {
+                Collections.sort(sched_list);
+                String sched_time="";
+
+                for(String item:sched_list) {
+                    String[]sa=item.split(",");
+                    if (sched_time.equals("")) {
+                        sched_time=sa[0];
+                        ScheduleItem si=ScheduleUtil.getScheduleInformation(mSchedList, sa[1]);
                         begin_sched_list.add(si);
-                    } else if (time < sched_time) {
-                        sched_time = time;
+                        Log.v("ScheduleNextTime","Name="+si.scheduleName+", "+sa[0]);
+                    } else if (sched_time.equals(sa[0])) {
+                        ScheduleItem si=ScheduleUtil.getScheduleInformation(mSchedList, sa[1]);
                         begin_sched_list.add(si);
-                    } else if (time == sched_time) {
-                        begin_sched_list.add(si);
+                        Log.v("ScheduleNextTime","Name="+si.scheduleName+", "+sa[0]);
                     }
                 }
             }

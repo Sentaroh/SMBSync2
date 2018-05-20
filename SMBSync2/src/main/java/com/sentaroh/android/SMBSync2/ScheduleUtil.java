@@ -35,6 +35,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class ScheduleUtil {
 
@@ -277,9 +278,15 @@ public class ScheduleUtil {
                 }
             } else {
                 long nt = sp.scheduleLastExecTime;
-                if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
-                    nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000);
-                result = nt + s_min * (60 * 1000);
+                long m_nt=0l;
+                if ((sp.scheduleLastExecTime % (60 * 1000)) > 0){
+                    m_nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000);
+                    result = m_nt + s_min * (60 * 1000);
+                } else {
+                    result = nt + s_min * (60 * 1000);
+                }
+
+                Log.v("ScheduleNextTime","name="+sp.scheduleName+", m_nt="+m_nt+", nt="+nt+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
             }
 //    		Log.v("","last="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(sp.scheduleLastExecTime));
 //    		Log.v("","result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
@@ -362,8 +369,6 @@ public class ScheduleUtil {
 //		result=System.currentTimeMillis()+(1000*60*5);//SchedulerReceiverも修正（SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET)
         return result;
     }
-
-    ;
 
     public static ScheduleItem getScheduleInformation(ArrayList<ScheduleItem> sl, String name) {
         for (ScheduleItem si : sl) {

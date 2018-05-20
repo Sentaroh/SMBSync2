@@ -78,6 +78,7 @@
     <string name="msgs_smnsync_main_kill_application">SMBSync2を強制終了しますか？</string>
 
     <string name="msgs_main_sync_select_prof_no_active_profile">同期タスクが選択されていません。</string>
+    <string name="msgs_main_sync_specified_sync_task_not_scheduled">指定された同期タスクは無視されたため実行されません。</string>
     <string name="msgs_main_sync_prof_name_list">同期を開始したタスク：</string>
     <string name="msgs_main_sync_selected_task_not_found">選択されたタスクは存在しません。タスク=</string>
     <string name="msgs_main_sync_cancel_confirm">同期を中止しますか？</string>

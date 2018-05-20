@@ -286,11 +286,12 @@ public class SyncService extends Service {
         if (in.getExtras().containsKey(SCHEDULER_SCHEDULE_NAME_KEY)) {
             String schedule_name_list = in.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY);
 
-            mUtil.addLogMsg("I", "Schedule information, name=" + schedule_name_list);
+            mUtil.addDebugMsg(1,"I", "Schedule information, name=" + schedule_name_list);
 
             String[] schedule_list=schedule_name_list.split(",");
 
             for(String schedule_name:schedule_list) {
+                mUtil.addLogMsg("I", "Schedule start, name=" + schedule_name);
                 ScheduleItem si = getScheduleInformation(scheduleInfoList, schedule_name);
                 if (si!=null) {
                     if (si.syncTaskList != null && si.syncTaskList.length() > 0) {
@@ -508,8 +509,7 @@ public class SyncService extends Service {
         return result;
     }
 
-    private void queueSpecificSyncTask(String job_name[], String req_id,
-                                       boolean wifi_on, int delay_time, boolean wifi_off) {
+    private void queueSpecificSyncTask(String job_name[], String req_id, boolean wifi_on, int delay_time, boolean wifi_off) {
         SyncRequestItem sri = new SyncRequestItem();
         sri.request_id = req_id;
         sri.wifi_off_after_sync_ended = wifi_off;
@@ -519,10 +519,10 @@ public class SyncService extends Service {
             for (int i = 0; i < job_name.length; i++) {
                 if (getSyncTask(job_name[i]) != null) {
                     if (isSyncTaskAlreadyScheduled(mGp.syncRequestQueue, job_name[i])) {
-                        mUtil.addLogMsg("W", "Sync task was ignored because Sync task was already queued, job=" + job_name[i] + ", Requestor=" + req_id);
+                        mUtil.addLogMsg("W", "Sync task was ignored because Sync task was already queued, Sync task=" + job_name[i] + ", Requestor=" + req_id);
                     } else {
                         sri.sync_task_list.add(getSyncTask(job_name[i]).clone());
-                        mUtil.addDebugMsg(1, "I", "queueSpecificSyncTask Sync task was queued, job=" + job_name[i] + ", Requestor=" + req_id);
+                        mUtil.addLogMsg("I", "Sync task was queued, Sync task=" + job_name[i] + ", Requestor=" + req_id);
                     }
                 } else {
                     mUtil.addLogMsg("W", mContext.getString(R.string.msgs_main_sync_selected_task_not_found) + job_name[i]);
@@ -531,10 +531,10 @@ public class SyncService extends Service {
             if (sri.sync_task_list.size() > 0) {
                 mGp.syncRequestQueue.add(sri);
             } else {
-                mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile));
+//                mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_specified_sync_task_not_scheduled));
             }
         } else {
-            mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile));
+//            mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_specified_sync_task_not_scheduled));
         }
     }
 
