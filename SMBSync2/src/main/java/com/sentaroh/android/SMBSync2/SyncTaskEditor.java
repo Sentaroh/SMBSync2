@@ -888,6 +888,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
 
         final Button btn_sync_folder_list_dir = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_sdcard_directory_btn);
+        if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) btn_sync_folder_list_dir.setEnabled(false);
 
         final EditText et_sync_folder_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_sdcard_directory_name);
         et_sync_folder_dir_name.setText(sfev.folder_directory);
@@ -1006,7 +1007,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
 
-        final Button btn_sdcard_select_sdcard = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_sdcard_select_document_tree);
+        final Button btn_sdcard_select_sdcard = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_select_document_tree);
 
         final LinearLayout ll_zip_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_view);
 

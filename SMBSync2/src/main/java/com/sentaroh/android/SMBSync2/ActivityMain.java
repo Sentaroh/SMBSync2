@@ -41,6 +41,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.UriPermission;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -108,6 +109,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.*;
@@ -125,7 +127,7 @@ public class ActivityMain extends AppCompatActivity {
     private GlobalParameters mGp = null;
     private SyncTaskUtil mTaskUtil = null;
 
-    private static SyncUtil mUtil = null;
+    private SyncUtil mUtil = null;
     private CustomContextMenu ccMenu = null;
 
     private final static int NORMAL_START = 0;
@@ -134,9 +136,9 @@ public class ActivityMain extends AppCompatActivity {
     private final static int RESTART_BY_DESTROYED = 3;
     private int restartType = NORMAL_START;
 
-    private static ServiceConnection mSvcConnection = null;
+    private ServiceConnection mSvcConnection = null;
     private CommonDialog commonDlg = null;
-    private static Handler mUiHandler = new Handler();
+    private Handler mUiHandler = new Handler();
 
     private ActionBar mActionBar = null;
 
@@ -175,6 +177,7 @@ public class ActivityMain extends AppCompatActivity {
 
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
+        mGp.safMgr.loadSafFileList();
         mActivity = this;
         if (mGp.themeColorList == null) {
             mGp.themeColorList = ThemeUtil.getThemeColorList(this);
@@ -255,6 +258,7 @@ public class ActivityMain extends AppCompatActivity {
         super.onResume();
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
         if (restartType == RESTART_WITH_OUT_INITIALYZE) {
+            mGp.safMgr.loadSafFileList();
             setActivityForeground(true);
             ScheduleUtil.setSchedulerInfo(mGp);
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
@@ -511,6 +515,8 @@ public class ActivityMain extends AppCompatActivity {
                     ", saf=" + item.storageRootFile +
                     ", saf name=" + saf_name+"\n";
         }
+        List<UriPermission> permissions = getContentResolver().getPersistedUriPermissions();
+        for(UriPermission item:permissions) mpi+=item.toString()+"\n";
         return mpi;
     }
 
@@ -2001,7 +2007,11 @@ public class ActivityMain extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 mUtil.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
                 if (mGp.safMgr.isRootTreeUri(data.getData())) {
-                    mGp.safMgr.addSafFileFromUri(data.getData());
+                    boolean rc=mGp.safMgr.addSafFileFromUri(data.getData());
+                    if (!rc) {
+                        String saf_msg=mGp.safMgr.getSafDebugMsg();
+                        commonDlg.showCommonDialog(false, "W", "External SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
+                    }
                     if (mSafSelectActivityNotify != null)
                         mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
                 } else {
@@ -3529,7 +3539,7 @@ public class ActivityMain extends AppCompatActivity {
 
     };
 
-    private static ISvcClient mSvcClient = null;
+    private ISvcClient mSvcClient = null;
 
     private void openService(final NotifyEvent p_ntfy) {
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
@@ -3713,12 +3723,6 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmCancelListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
-//				try {
-//					mSvcClient.aidlCancelThread();
-//				} catch (RemoteException e) {
-//					e.printStackTrace();
-//				}
-//				mGp.progressSpinCancel.performClick();
                 ntfy.notifyToListener(false, new Object[]{SMBSYNC2_CONFIRM_RESP_CANCEL});
             }
         };

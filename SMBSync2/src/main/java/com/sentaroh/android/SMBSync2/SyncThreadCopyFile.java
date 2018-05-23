@@ -67,8 +67,12 @@ public class SyncThreadCopyFile {
 
         InputStream is =null;
         SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        if (m_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-        is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        if (m_saf == null) {
+            is=new FileInputStream(mf);
+//            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } else {
+            is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        }
 
         OutputStream os =null;
         File t_file=new File(to_file_path);
@@ -109,8 +113,13 @@ public class SyncThreadCopyFile {
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
         SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        if (m_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-        InputStream is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        InputStream is =null;
+        if (m_saf == null) {
+            is=new FileInputStream(mf);
+//            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } else {
+            is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        }
 
         OutputStream os =null;
         File temp_file=new File(to_file_temp);
@@ -160,8 +169,11 @@ public class SyncThreadCopyFile {
 
         InputStream is =null;
         SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        if (m_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-        is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        if (m_saf == null) {
+            is=new FileInputStream(mf);
+        } else {
+            is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        }
 
         FileOutputStream os = new FileOutputStream(out_file);
 
@@ -201,8 +213,12 @@ public class SyncThreadCopyFile {
 
         InputStream is =null;
         SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        if (m_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-        is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        if (m_saf == null) {
+            is=new FileInputStream(mf);
+//            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } else {
+            is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+        }
 
         OutputStream os = out_file.getOutputStream();
 
@@ -373,6 +389,7 @@ public class SyncThreadCopyFile {
                 stwa.util.addLogMsg("E", "SafFileItem UUID=" + sfi.storageUuid + ", path=" + sfi.storageRootDirectory +
                         ", mount=" + sfi.storageIsMounted + ", sdcard=" + sfi.storageTypeSdcard);
             }
+            stwa.util.addLogMsg("E", "SafFileManager msg=="+stwa.gp.safMgr.getSafDebugMsg() );
             return null;
         }
         return t_df;

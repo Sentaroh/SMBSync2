@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,6 +53,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.UriPermission;
 import android.media.MediaPlayer;
 import android.media.MediaScannerConnection;
 import android.media.RingtoneManager;
@@ -217,6 +219,8 @@ public class SyncThread extends Thread {
                     ", saf=" + item.storageRootFile +
                     ", saf name=" + saf_name);
         }
+        List<UriPermission> permissions = mGp.appContext.getContentResolver().getPersistedUriPermissions();
+        for(UriPermission item:permissions) mStwa.util.addDebugMsg(1, "I", item.toString());
     }
 
     private String[] getRemovableStoragePaths(Context context, boolean debug) {

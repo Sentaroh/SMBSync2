@@ -307,7 +307,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public void setLogParms(GlobalParameters gp) {
         setDebugLevel(gp.settingDebugLevel);
         setLogcatEnabled(gp.settingPutLogcatOption);
-        setLogLimitSize(2 * 1024 * 1024);
+        setLogLimitSize(5 * 1024 * 1024);
         setLogMaxFileCount(gp.settingLogMaxFileCount);
         setLogEnabled(gp.settingLogOption);
         setLogDirName(gp.settingMgtFileDir);

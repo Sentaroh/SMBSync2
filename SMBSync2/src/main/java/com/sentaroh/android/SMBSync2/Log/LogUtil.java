@@ -27,7 +27,7 @@ import android.content.Intent;
 
 import com.sentaroh.android.Utilities.CommonGlobalParms;
 import com.sentaroh.android.Utilities.LogUtil.CommonLogUtil;
-import com.sentaroh.android.Utilities.LogUtil.CommonLogWriter;
+
 
 public class LogUtil extends CommonLogUtil {
 
