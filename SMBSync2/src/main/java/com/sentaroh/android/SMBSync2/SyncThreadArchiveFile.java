@@ -28,8 +28,6 @@ import android.util.Log;
 
 import static com.sentaroh.android.SMBSync2.Constants.*;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -233,13 +231,13 @@ public class SyncThreadArchiveFile {
     static private int moveFileInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                   File mf, File tf, String to_path, String file_name) throws IOException {
         int result=0;
-        if (Build.VERSION.SDK_INT>=26) result=moveFileInternalToExternal_API26(stwa, sti, from_path, mf, tf, to_path, file_name);
-        else result=moveFileInternalToExternal_API21(stwa, sti, from_path, mf, tf, to_path, file_name);
+        if (Build.VERSION.SDK_INT>=24) result= moveFileInternalToExternal_move_method(stwa, sti, from_path, mf, tf, to_path, file_name);
+        else result= moveFileInternalToExternal_copy_method(stwa, sti, from_path, mf, tf, to_path, file_name);
         return result;
     }
 
-    static private int moveFileInternalToExternal_API21(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                                  File mf, File tf, String to_path, String file_name) throws IOException {
+    static private int moveFileInternalToExternal_copy_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+                                                              File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
             if (!sti.isSyncTestMode()) {
@@ -277,31 +275,32 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int moveFileInternalToExternal_API26(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                                        File mf, File tf, String to_path, String file_name) throws IOException {
+    static private int moveFileInternalToExternal_move_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+                                                              File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
             if (!sti.isSyncTestMode()) {
                 SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
 
                 File temp_file=new File(stwa.gp.safMgr.getExternalSdcardPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/archive_temp.tmp");
-                OutputStream os=new FileOutputStream(temp_file);
+                OutputStream os=null;
+                try {
+                    os=new FileOutputStream(temp_file);
+                } catch (Exception e) {
+                    SafFile sf=stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), temp_file.getPath(), false);
+                    os=stwa.gp.appContext.getContentResolver().openOutputStream(sf.getUri());
+                }
+
+                SafFile to_saf=getSafFile(stwa, sti, tf.getPath());
+                if (to_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
 
                 sync_result= copyFile(stwa, sti, new FileInputStream(mf), os, from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
 
                 temp_file.setLastModified(mf.lastModified());
                 SafFile from_saf = getSafFile(stwa, sti, temp_file.getPath());
                 if (from_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                SafFile from_parent = getSafFile(stwa, sti, temp_file.getParent());
-                if (from_parent == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                SafFile to_parent = getSafFile(stwa, sti, tf.getParent());
-                if (to_parent == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                from_saf.moveTo(from_parent, to_parent);
 
-                SafFile to_saf = getSafFile(stwa, sti, tf.getPath());
-                if (to_parent == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                if (to_saf.exists()) to_saf.delete();
-                from_saf.renameTo(tf.getName());
+                from_saf.moveTo(to_saf);
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
@@ -844,13 +843,13 @@ public class SyncThreadArchiveFile {
     static private int moveFileExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                   File mf, File tf, String to_path, String file_name) throws IOException {
         int result=0;
-        if (Build.VERSION.SDK_INT>=26) result=moveFileExternalToExternal_API26(stwa, sti, from_path, mf, tf, to_path, file_name);
-        else result=moveFileExternalToExternal_API21(stwa, sti, from_path, mf, tf, to_path, file_name);
+        if (Build.VERSION.SDK_INT>=24) result= moveFileExternalToExternal_move_method(stwa, sti, from_path, mf, tf, to_path, file_name);
+        else result= moveFileExternalToExternal_copy_method(stwa, sti, from_path, mf, tf, to_path, file_name);
         return result;
     }
 
-    static private int moveFileExternalToExternal_API21(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                                  File mf, File tf, String to_path, String file_name) throws IOException {
+    static private int moveFileExternalToExternal_copy_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+                                                              File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
             SafFile m_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), from_path, false);
@@ -889,32 +888,35 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int moveFileExternalToExternal_API26(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                                        File mf, File tf, String to_path, String file_name) throws IOException {
+    static private int moveFileExternalToExternal_move_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+                                                              File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
             SafFile m_df = getSafFile(stwa, sti, from_path);
             if (!sti.isSyncTestMode()) {
                 SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
+
                 File temp_file=new File(stwa.gp.safMgr.getExternalSdcardPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/archive_temp.tmp");
-                OutputStream os=new FileOutputStream(temp_file);
+                OutputStream os=null;
+                try {
+                    os=new FileOutputStream(temp_file);
+                } catch (Exception e) {
+                    SafFile sf=stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), temp_file.getPath(), false);
+                    os=stwa.gp.appContext.getContentResolver().openOutputStream(sf.getUri());
+                }
 
                 sync_result= copyFile(stwa, sti, stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
                         os, from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
 
                 temp_file.setLastModified(mf.lastModified());
+
                 SafFile from_saf = getSafFile(stwa, sti, temp_file.getPath());
                 if (from_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                SafFile from_parent = getSafFile(stwa, sti, temp_file.getParent());
-                if (from_parent == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                SafFile to_parent = getSafFile(stwa, sti, tf.getParent());
-                if (to_parent == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                from_saf.moveTo(from_parent, to_parent);
-
                 SafFile to_saf = getSafFile(stwa, sti, tf.getPath());
-                if (to_parent == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                if (to_saf.exists()) to_saf.delete();
-                from_saf.renameTo(tf.getName());
+                if (to_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+
+                from_saf.moveTo(to_saf);
+
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
@@ -1484,13 +1486,13 @@ public class SyncThreadArchiveFile {
     static private int moveFileSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                   JcifsFile mf, File tf, String to_path, String file_name) throws IOException, JcifsException {
         int result=0;
-        if (Build.VERSION.SDK_INT>=26) result=moveFileSmbToExternal_API26(stwa, sti, from_path, mf, tf, to_path, file_name);
-        else result=moveFileSmbToExternal_API21(stwa, sti, from_path, mf, tf, to_path, file_name);
+        if (Build.VERSION.SDK_INT>=24) result= moveFileSmbToExternal_move_method(stwa, sti, from_path, mf, tf, to_path, file_name);
+        else result= moveFileSmbToExternal_copy_method(stwa, sti, from_path, mf, tf, to_path, file_name);
         return result;
     }
 
-    static private int moveFileSmbToExternal_API21(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                             JcifsFile mf, File tf, String to_path, String file_name) throws IOException, JcifsException {
+    static private int moveFileSmbToExternal_copy_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+                                                         JcifsFile mf, File tf, String to_path, String file_name) throws IOException, JcifsException {
         int sync_result=0;
 
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
@@ -1546,16 +1548,22 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int moveFileSmbToExternal_API26(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                                   JcifsFile mf, File tf, String to_path, String file_name) throws IOException, JcifsException {
+    static private int moveFileSmbToExternal_move_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+                                                         JcifsFile mf, File tf, String to_path, String file_name) throws IOException, JcifsException {
         int sync_result=0;
 
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
             if (!sti.isSyncTestMode()) {
                 SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
 
+                OutputStream os=null;
                 File temp_file=new File(stwa.gp.safMgr.getExternalSdcardPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/archive_temp.tmp");
-                OutputStream os=new FileOutputStream(temp_file);
+                try {
+                    os=new FileOutputStream(temp_file);
+                } catch (Exception e) {
+                    SafFile sf=stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), temp_file.getPath(), false);
+                    os=stwa.gp.appContext.getContentResolver().openOutputStream(sf.getUri());
+                }
 
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, mf.getInputStream(), os, from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
@@ -1572,18 +1580,13 @@ public class SyncThreadArchiveFile {
                 }
                 if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                     temp_file.setLastModified(mf.getLastModified());
+
                     SafFile from_saf = getSafFile(stwa, sti, temp_file.getPath());
                     if (from_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                    SafFile from_parent = getSafFile(stwa, sti, temp_file.getParent());
-                    if (from_parent == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                    SafFile to_parent = getSafFile(stwa, sti, tf.getParent());
-                    if (to_parent == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                    from_saf.moveTo(from_parent, to_parent);
-
                     SafFile to_saf = getSafFile(stwa, sti, tf.getPath());
-                    if (to_parent == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                    if (to_saf.exists()) to_saf.delete();
-                    from_saf.renameTo(tf.getName());
+                    if (to_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+
+                    from_saf.moveTo(to_saf);
                 }
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
