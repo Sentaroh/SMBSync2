@@ -851,7 +851,10 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String sel = sp_sync_folder_type.getSelectedItem().toString();
-                String url = sp_sync_folder_mp.getSelectedItem().toString();
+
+                String url = "";
+                if (sp_sync_folder_mp.getSelectedItem()==null) url=mGp.internalRootDirectory;
+                else url=sp_sync_folder_mp.getSelectedItem().toString();
                 String p_dir = et_sync_folder_dir_name.getText().toString();
 
                 NotifyEvent ntfy = new NotifyEvent(mContext);
