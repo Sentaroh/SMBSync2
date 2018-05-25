@@ -1407,7 +1407,7 @@ public class SyncTaskEditor extends DialogFragment {
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL;
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard))) {//External sdcard
             nsfev.folder_directory = et_sync_folder_sdcard_dir_name.getText().toString().trim();
-            nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
+//            nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD;
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {//ZIP
             nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
