@@ -225,6 +225,7 @@ public class SyncTaskUtil {
                             }
                         } else {
                             pl = br.readLine();
+                            if (pl==null) return false;
                             if (pl.length()>15) dec_str = pl.substring(6);
                             else dec_str="";
                         }
