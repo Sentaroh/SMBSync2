@@ -23,13 +23,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import android.net.Uri;
 import android.os.Build;
-import android.os.SystemClock;
-import android.provider.DocumentsContract;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -50,13 +45,13 @@ public class SyncThreadCopyFile {
     static public int copyFileExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                                  File mf, String to_dir, String file_name) throws IOException {
             int sync_result=0;
-            if (Build.VERSION.SDK_INT>=24) sync_result=copyFileExternalToExternal_move_method(stwa, sti, from_dir, mf, to_dir, file_name);
-            else sync_result=copyFileExternalToExternal_copy_method(stwa, sti, from_dir, mf, to_dir, file_name);
+            if (Build.VERSION.SDK_INT>=24) sync_result= copyFileExternalToExternal_API24(stwa, sti, from_dir, mf, to_dir, file_name);
+            else sync_result= copyFileExternalToExternal_API21(stwa, sti, from_dir, mf, to_dir, file_name);
             return sync_result;
     }
 
-    static private int copyFileExternalToExternal_copy_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
-                                                 File mf, String to_dir, String file_name) throws IOException {
+    static private int copyFileExternalToExternal_API21(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
+                                                        File mf, String to_dir, String file_name) throws IOException {
         stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -103,8 +98,8 @@ public class SyncThreadCopyFile {
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
-    static private int copyFileExternalToExternal_move_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
-                                                       File mf, String to_dir, String file_name) throws IOException {
+    static private int copyFileExternalToExternal_API24(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
+                                                        File mf, String to_dir, String file_name) throws IOException {
         stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -128,8 +123,6 @@ public class SyncThreadCopyFile {
         SafFile temp_sf=getSafFile(stwa, sti, temp_file.getPath());
         os=stwa.gp.appContext.getContentResolver().openOutputStream(temp_sf.getUri());
 
-        SafFile to_sf=getSafFile(stwa, sti, to_file_dest);
-
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
             temp_file.delete();
@@ -144,6 +137,7 @@ public class SyncThreadCopyFile {
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
 
+        SafFile to_sf=getSafFile(stwa, sti, to_file_dest);
         temp_sf.moveTo(to_sf);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -278,13 +272,13 @@ public class SyncThreadCopyFile {
     static public int copyFileInternalToExternal(SyncThreadWorkArea stwa,
                                                        SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException {
         int result=0;
-        if (Build.VERSION.SDK_INT>=24) result=copyFileInternalToExternal_move_method(stwa,sti,from_dir, mf, to_dir, file_name);
-        else result=copyFileInternalToExternal_copy_method(stwa,sti,from_dir, mf, to_dir, file_name);
+        if (Build.VERSION.SDK_INT>=24) result= copyFileInternalToExternal_API24(stwa,sti,from_dir, mf, to_dir, file_name);
+        else result= copyFileInternalToExternal_API21(stwa,sti,from_dir, mf, to_dir, file_name);
         return result;
     }
 
-    static private int copyFileInternalToExternal_copy_method(SyncThreadWorkArea stwa,
-                                                 SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException {
+    static private int copyFileInternalToExternal_API21(SyncThreadWorkArea stwa,
+                                                        SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         File tlf = new File(to_dir + "/" + file_name);
@@ -324,8 +318,8 @@ public class SyncThreadCopyFile {
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
-    static private int copyFileInternalToExternal_move_method(SyncThreadWorkArea stwa,
-                                                 SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException {
+    static private int copyFileInternalToExternal_API24(SyncThreadWorkArea stwa,
+                                                        SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         File tlf = new File(to_dir + "/" + file_name);
@@ -343,8 +337,6 @@ public class SyncThreadCopyFile {
         SafFile from_sf=getSafFile(stwa, sti, to_file_temp);
         os=stwa.gp.appContext.getContentResolver().openOutputStream(from_sf.getUri());
 
-        SafFile to_sf=getSafFile(stwa, sti, to_file_dest);
-
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
             temp_file.delete();
@@ -361,6 +353,7 @@ public class SyncThreadCopyFile {
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
 
+        SafFile to_sf=getSafFile(stwa, sti, to_file_dest);
         from_sf.moveTo(to_sf);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -502,13 +495,13 @@ public class SyncThreadCopyFile {
     static public int copyFileSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                             JcifsFile mf, String to_dir, String file_name) throws IOException, JcifsException {
         int sync_result=0;
-        if (Build.VERSION.SDK_INT>=24) sync_result=copyFileSmbToExternal_move_method(stwa, sti, from_dir, mf, to_dir, file_name);
-        else sync_result=copyFileSmbToExternal_copy_method(stwa, sti, from_dir, mf, to_dir, file_name);
+        if (Build.VERSION.SDK_INT>=24) sync_result= copyFileSmbToExternal_API24(stwa, sti, from_dir, mf, to_dir, file_name);
+        else sync_result= copyFileSmbToExternal_API21(stwa, sti, from_dir, mf, to_dir, file_name);
         return sync_result;
     }
 
-    static private int copyFileSmbToExternal_copy_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
-                                            JcifsFile mf, String to_dir, String file_name) throws IOException, JcifsException {
+    static private int copyFileSmbToExternal_API21(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
+                                                   JcifsFile mf, String to_dir, String file_name) throws IOException, JcifsException {
         stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -545,7 +538,7 @@ public class SyncThreadCopyFile {
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
-    static private int copyFileSmbToExternal_move_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
+    static private int copyFileSmbToExternal_API24(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                                    JcifsFile mf, String to_dir, String file_name) throws IOException, JcifsException {
         stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
