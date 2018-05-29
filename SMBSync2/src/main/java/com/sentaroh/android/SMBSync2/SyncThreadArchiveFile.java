@@ -57,7 +57,7 @@ public class SyncThreadArchiveFile {
     static public int syncArchiveInternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                    String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = archiveDirectoryInternalToInternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
+        int sync_result = buildArchiveListInternalToInternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
     }
 
@@ -155,7 +155,7 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int archiveDirectoryInternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
+    static private int buildArchiveListInternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                           String from_base, String from_path, File mf, String to_base, String to_path) {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         int sync_result = 0;
@@ -180,7 +180,7 @@ public class SyncThreadArchiveFile {
                                         if (!from_path.equals(to_path)) {
                                             if (element.isDirectory()) {
                                                 if (sti.isSyncSubDirectory()) {
-                                                    sync_result = archiveDirectoryInternalToInternal(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                    sync_result = buildArchiveListInternalToInternal(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                             element, to_base, to_path + "/" + element.getName());
                                                 } else {
                                                     stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=", from_path);
@@ -224,7 +224,7 @@ public class SyncThreadArchiveFile {
     static public int syncArchiveInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                    String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = archiveDirectoryInternalToExternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
+        int sync_result = buildArchiveListInternalToExternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
     }
 
@@ -395,7 +395,7 @@ public class SyncThreadArchiveFile {
     }
 
 
-    static private int archiveDirectoryInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
+    static private int buildArchiveListInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                           String from_base, String from_path, File mf, String to_base, String to_path) {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         int sync_result = 0;
@@ -419,7 +419,7 @@ public class SyncThreadArchiveFile {
                                     if (!element.getName().equals(".android_secure")) {
                                         if (element.isDirectory()) {
                                             if (sti.isSyncSubDirectory()) {
-                                                sync_result = archiveDirectoryInternalToExternal(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                sync_result = buildArchiveListInternalToExternal(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName());
                                             } else {
                                                 if (stwa.gp.settingDebugLevel >= 1)
@@ -458,7 +458,7 @@ public class SyncThreadArchiveFile {
 
     static public int syncArchiveInternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = archiveDirectoryInternalToSmb(stwa, sti, from_path, from_path, mf, to_path, to_path);
+        int sync_result = buildArchiveListInternalToSmb(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
     }
 
@@ -519,7 +519,7 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int archiveDirectoryInternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
+    static private int buildArchiveListInternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                      String from_base, String from_path, File mf, String to_base, String to_path) {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         stwa.jcifsNtStatusCode=0;
@@ -543,7 +543,7 @@ public class SyncThreadArchiveFile {
                                     if (!element.getName().equals(".android_secure")) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             if (sti.isSyncSubDirectory()) {
-                                                sync_result = archiveDirectoryInternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                sync_result = buildArchiveListInternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName());
                                             }
                                             if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
@@ -679,7 +679,7 @@ public class SyncThreadArchiveFile {
 
     static public int syncArchiveExternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = archiveDirectoryExternalToInternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
+        int sync_result = buildArchiveListExternalToInternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
     }
 
@@ -773,7 +773,7 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int archiveDirectoryExternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
+    static private int buildArchiveListExternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                           String from_base, String from_path, File mf, String to_base, String to_path) {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         int sync_result = 0;
@@ -797,7 +797,7 @@ public class SyncThreadArchiveFile {
                                     if (!element.getName().equals(".android_secure")) {
                                         if (element.isDirectory()) {
                                             if (sti.isSyncSubDirectory()) {
-                                                sync_result = archiveDirectoryExternalToInternal(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                sync_result = buildArchiveListExternalToInternal(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName());
                                             } else {
                                                 stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=", from_path);
@@ -836,7 +836,7 @@ public class SyncThreadArchiveFile {
     static public int syncArchiveExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                    String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = archiveDirectoryExternalToExternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
+        int sync_result = buildArchiveListExternalToExternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
     }
 
@@ -993,7 +993,7 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int archiveDirectoryExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
+    static private int buildArchiveListExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                           String from_base, String from_path, File mf, String to_base, String to_path) {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=" + to_path);
         int sync_result = 0;
@@ -1018,7 +1018,7 @@ public class SyncThreadArchiveFile {
                                         if (!from_path.equals(to_path)) {
                                             if (element.isDirectory()) {
                                                 if (sti.isSyncSubDirectory()) {
-                                                    sync_result = archiveDirectoryExternalToExternal(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                    sync_result = buildArchiveListExternalToExternal(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                             element, to_base, to_path + "/" + element.getName());
                                                 } else {
                                                     stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
@@ -1062,7 +1062,7 @@ public class SyncThreadArchiveFile {
     static public int syncArchiveExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                               String from_path, String to_path) {
         File mf = new File(from_path);
-        int sync_result = archiveDirectoryExternalToSmb(stwa, sti, from_path, from_path, mf, to_path, to_path);
+        int sync_result = buildArchiveListExternalToSmb(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
     }
 
@@ -1176,7 +1176,7 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int archiveDirectoryExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
+    static private int buildArchiveListExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                      String from_base, String from_path, File mf, String to_base, String to_path) {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         int sync_result = 0;
@@ -1201,7 +1201,7 @@ public class SyncThreadArchiveFile {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             if (element.isDirectory()) {
                                                 if (sti.isSyncSubDirectory()) {
-                                                    sync_result = archiveDirectoryExternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                    sync_result = buildArchiveListExternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                             element, to_base, to_path + "/" + element.getName());
                                                 } else {
                                                     if (stwa.gp.settingDebugLevel >= 1)
@@ -1271,7 +1271,7 @@ public class SyncThreadArchiveFile {
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-        int sync_result = archiveDirectorySmbToInternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
+        int sync_result = buildArchiveListSmbToInternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
     }
 
@@ -1383,7 +1383,7 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int archiveDirectorySmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
+    static private int buildArchiveListSmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                      String from_base, String from_path, JcifsFile mf, String to_base, String to_path) {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path);
@@ -1407,7 +1407,7 @@ public class SyncThreadArchiveFile {
                                     while (stwa.syncTaskRetryCount > 0) {
                                         if (element.isDirectory()) {
                                             if (sti.isSyncSubDirectory()) {
-                                                sync_result = archiveDirectorySmbToInternal(stwa, sti, from_base, from_path + element.getName(),
+                                                sync_result = buildArchiveListSmbToInternal(stwa, sti, from_base, from_path + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName().replace("/", ""));
                                             } else {
                                                 if (stwa.gp.settingDebugLevel >= 1)
@@ -1479,7 +1479,7 @@ public class SyncThreadArchiveFile {
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-        int sync_result = archiveDirectorySmbToExternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
+        int sync_result = buildArchiveListSmbToExternal(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
     }
 
@@ -1669,7 +1669,7 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int archiveDirectorySmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
+    static private int buildArchiveListSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                      String from_base, String from_path, JcifsFile mf, String to_base, String to_path) {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path + ", to=", to_path);
         int sync_result = 0;
@@ -1693,7 +1693,7 @@ public class SyncThreadArchiveFile {
                                     while (stwa.syncTaskRetryCount > 0) {
                                         if (element.isDirectory()) {
                                             if (sti.isSyncSubDirectory()) {
-                                                sync_result = archiveDirectorySmbToExternal(stwa, sti, from_base, from_path + element.getName(),
+                                                sync_result = buildArchiveListSmbToExternal(stwa, sti, from_base, from_path + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName().replace("/", ""));
                                             } else {
                                                 if (stwa.gp.settingDebugLevel >= 1)
@@ -1763,7 +1763,7 @@ public class SyncThreadArchiveFile {
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-        int sync_result = archiveDirectorySmbToSmb(stwa, sti, from_path, from_path, mf, to_path, to_path);
+        int sync_result = buildArchiveListSmbToSmb(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
     }
 
@@ -1869,7 +1869,7 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int archiveDirectorySmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
+    static private int buildArchiveListSmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                 String from_base, String from_path, JcifsFile mf, String to_base, String to_path) {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         int sync_result = 0;
@@ -1893,7 +1893,7 @@ public class SyncThreadArchiveFile {
                                     while (stwa.syncTaskRetryCount > 0) {
                                         if (element.isDirectory()) {
                                             if (sti.isSyncSubDirectory()) {
-                                                sync_result = archiveDirectorySmbToSmb(stwa, sti, from_base, from_path + element.getName(),
+                                                sync_result = buildArchiveListSmbToSmb(stwa, sti, from_base, from_path + element.getName(),
                                                         element, to_base, to_path + element.getName());
                                             } else {
                                                 if (stwa.gp.settingDebugLevel >= 1)
@@ -2039,7 +2039,7 @@ public class SyncThreadArchiveFile {
                     afli.shoot_time=dt[1].replace(":","-");
                     afli.date_from_exif=false;
                 } else {
-                    Log.v("SMBSync2","name="+afli.file_name+", 0="+date_time[0]+", 1="+date_time[1]);
+//                    Log.v("SMBSync2","name="+afli.file_name+", 0="+date_time[0]+", 1="+date_time[1]);
                     afli.shoot_date=date_time[0].replace("/","-");
                     afli.shoot_time=date_time[1].replace(":","-");
                 }
