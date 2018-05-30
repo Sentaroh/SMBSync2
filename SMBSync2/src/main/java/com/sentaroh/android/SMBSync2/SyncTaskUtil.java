@@ -2769,7 +2769,7 @@ public class SyncTaskUtil {
         final String m_dir = sti.getMasterDirectoryName();
         String localBaseDir_t = sti.getMasterLocalMountPoint();//mGp.internalRootDirectory;
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD))
-            localBaseDir_t = mGp.safMgr.getSdcardDirectory();
+            localBaseDir_t = mGp.safMgr.getSdcardRootPath();
         final String localBaseDir = localBaseDir_t;
 
         ArrayList<TreeFilelistItem> tfl = createLocalFilelist(true, localBaseDir, "/" + m_dir);

@@ -73,7 +73,7 @@ public class SyncService extends Service {
         super.onCreate();
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
-        mGp.safMgr.loadSafFileList();
+        mGp.safMgr.loadSafFile();
 
         NotificationUtil.initNotification(mGp);
         NotificationUtil.clearNotification(mGp);
@@ -186,7 +186,7 @@ public class SyncService extends Service {
         } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) ||
                 action.equals(Intent.ACTION_MEDIA_EJECT)) {
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
-            final String sdcard = mGp.safMgr.getSdcardDirectory();
+            final String sdcard = mGp.safMgr.getSdcardRootPath();
             Thread th = new Thread() {
                 @Override
                 public void run() {
@@ -194,9 +194,8 @@ public class SyncService extends Service {
                     while (count > 0) {
                         mGp.refreshMediaDir();
                         if (//!usb.equals(mGp.safMgr.getUsbFileSystemDirectory()) ||
-                                !sdcard.equals(mGp.safMgr.getSdcardDirectory())) {
-                            mUtil.addDebugMsg(1, "I", "New media directory, sdcard=" + mGp.safMgr.getSdcardDirectory() +
-                                    ", usb=" + mGp.safMgr.getUsbFileSystemDirectory());
+                                !sdcard.equals(mGp.safMgr.getSdcardRootPath())) {
+                            mUtil.addDebugMsg(1, "I", "New media directory, sdcard=" + mGp.safMgr.getSdcardRootPath() );
                             if (mGp.callbackStub != null) {
                                 try {
                                     mGp.callbackStub.cbMediaStatusChanged();

@@ -41,7 +41,6 @@ import java.util.ArrayList;
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities.LocalMountPoint;
 import com.sentaroh.android.Utilities.NotifyEvent;
-import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
@@ -891,7 +890,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
 
         final Button btn_sync_folder_list_dir = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_sdcard_directory_btn);
-        if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) btn_sync_folder_list_dir.setEnabled(false);
+        if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) btn_sync_folder_list_dir.setEnabled(false);
 
         final EditText et_sync_folder_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_sdcard_directory_name);
         et_sync_folder_dir_name.setText(sfev.folder_directory);
@@ -939,7 +938,7 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String sel = sp_sync_folder_type.getSelectedItem().toString();
-                String url = mGp.safMgr.getSdcardDirectory();
+                String url = mGp.safMgr.getSdcardRootPath();
                 String p_dir = et_sync_folder_dir_name.getText().toString();
 
                 NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -974,8 +973,8 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                            if (SafFileManager.isSdcardMountPointExisted(mContext, mGp.settingDebugLevel > 0)) {
+                        if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                            if (mGp.safMgr.hasExternalSdcardPath()) {
                                 dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
                                 dlg_msg.setVisibility(TextView.VISIBLE);
                                 btn_sdcard_select_sdcard.setEnabled(true);
@@ -1045,7 +1044,7 @@ public class SyncTaskEditor extends DialogFragment {
             tv_zip_dir.setText(zip_dir.replace(mGp.internalRootDirectory, ""));
             et_zip_file.setText(zip_file);
         } else {
-            tv_zip_dir.setText(zip_dir.replace(mGp.safMgr.getExternalSdcardPath(), ""));
+            tv_zip_dir.setText(zip_dir.replace(mGp.safMgr.getSdcardRootPath(), ""));
             et_zip_file.setText(zip_file);
         }
 
@@ -1098,8 +1097,8 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                            if (SafFileManager.isSdcardMountPointExisted(mContext, mGp.settingDebugLevel > 0)) {
+                        if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                            if (mGp.safMgr.hasExternalSdcardPath()) {
                                 dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
                                 dlg_msg.setVisibility(TextView.VISIBLE);
                                 btn_sdcard_select_sdcard.setEnabled(true);
@@ -1175,7 +1174,7 @@ public class SyncTaskEditor extends DialogFragment {
                             tv_zip_dir.setText(zip_dir.replace(mGp.internalRootDirectory, ""));
                             et_zip_file.setText(zip_file);
                         } else {
-                            tv_zip_dir.setText(zip_dir.replace(mGp.safMgr.getExternalSdcardPath(), ""));
+                            tv_zip_dir.setText(zip_dir.replace(mGp.safMgr.getSdcardRootPath(), ""));
                             et_zip_file.setText(zip_file);
                         }
                         setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
@@ -1189,7 +1188,7 @@ public class SyncTaskEditor extends DialogFragment {
                 if (!ctv_zip_file_save_sdcard.isChecked())
                     mCommonDlg.fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.internalRootDirectory, "", "", title, ntfy);
                 else
-                    mCommonDlg.fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.safMgr.getExternalSdcardPath(), "", "", title, ntfy);
+                    mCommonDlg.fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.safMgr.getSdcardRootPath(), "", "", title, ntfy);
             }
         });
         et_zip_file.addTextChangedListener(new TextWatcher() {
@@ -1532,8 +1531,8 @@ public class SyncTaskEditor extends DialogFragment {
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD);
 
             ll_sync_folder_mp.setVisibility(LinearLayout.GONE);
-            if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                if (SafFileManager.isSdcardMountPointExisted(mContext, mGp.settingDebugLevel > 0)) {
+            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                if (mGp.safMgr.hasExternalSdcardPath()) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
                     dlg_msg.setVisibility(TextView.VISIBLE);
                     btn_sdcard_select_sdcard.setEnabled(true);
@@ -1564,8 +1563,8 @@ public class SyncTaskEditor extends DialogFragment {
             if (ctv_zip_file_save_sdcard.isChecked()) {
                 ll_sync_folder_mp.setVisibility(Spinner.GONE);
                 btn_zip_select_sdcard.setVisibility(Button.VISIBLE);
-                if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                    if (SafFileManager.isSdcardMountPointExisted(mContext, mGp.settingDebugLevel > 0)) {
+                if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                    if (mGp.safMgr.hasExternalSdcardPath()) {
                         dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
                         dlg_msg.setVisibility(TextView.VISIBLE);
                         btn_zip_select_sdcard.setEnabled(true);
@@ -1686,7 +1685,7 @@ public class SyncTaskEditor extends DialogFragment {
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {
             result = false;
             if (ctv_zip_file_save_sdcard.isChecked()) {
-                if (mGp.safMgr.getSdcardSafFile() == null) {
+                if (mGp.safMgr.getSdcardRootSafFile() == null) {
                     btn_zip_filelist.setEnabled(false);
                 } else {
                     btn_zip_filelist.setEnabled(true);
@@ -1834,9 +1833,9 @@ public class SyncTaskEditor extends DialogFragment {
                     mContext.getResources().getDrawable(R.drawable.ic_32_mobile, null), null, null, null);
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             String dir = sti.getMasterDirectoryName();
-            if (dir.equals("")) info = mGp.safMgr.getSdcardDirectory();
-            else info = mGp.safMgr.getSdcardDirectory() + "/" + dir;
-            if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
+            if (dir.equals("")) info = mGp.safMgr.getSdcardRootPath();
+            else info = mGp.safMgr.getSdcardRootPath() + "/" + dir;
+            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                 ib.setCompoundDrawablePadding(32);
                 ib.setCompoundDrawablesWithIntrinsicBounds(
                         mContext.getResources().getDrawable(R.drawable.ic_32_bad_media, null), null, null, null);
@@ -1870,9 +1869,9 @@ public class SyncTaskEditor extends DialogFragment {
                     mContext.getResources().getDrawable(R.drawable.ic_32_mobile, null), null, null, null);
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             String dir = sti.getTargetDirectoryName();
-            if (dir.equals("")) info = mGp.safMgr.getSdcardDirectory();
-            else info = mGp.safMgr.getSdcardDirectory() + "/" + dir;
-            if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
+            if (dir.equals("")) info = mGp.safMgr.getSdcardRootPath();
+            else info = mGp.safMgr.getSdcardRootPath() + "/" + dir;
+            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                 ib.setCompoundDrawablePadding(32);
                 ib.setCompoundDrawablesWithIntrinsicBounds(
                         mContext.getResources().getDrawable(R.drawable.ic_32_bad_media, null), null, null, null);
@@ -1885,10 +1884,10 @@ public class SyncTaskEditor extends DialogFragment {
             if (!sti.isTargetZipUseExternalSdcard())
                 info = mGp.internalRootDirectory + sti.getTargetZipOutputFileName();
             else {
-                info = mGp.safMgr.getSdcardDirectory() + sti.getTargetZipOutputFileName();
+                info = mGp.safMgr.getSdcardRootPath() + sti.getTargetZipOutputFileName();
             }
             if (sti.isTargetZipUseExternalSdcard() &&
-                    mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                    mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                 ib.setCompoundDrawablePadding(32);
                 ib.setCompoundDrawablesWithIntrinsicBounds(
                         mContext.getResources().getDrawable(R.drawable.ic_32_bad_media, null), null, null, null);
@@ -1939,7 +1938,7 @@ public class SyncTaskEditor extends DialogFragment {
     private void setSpinnerSyncFolderMountPoint(SyncTaskItem sti, Spinner spinner, String cv, boolean write_only) {
         SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mContext, R.layout.custom_simple_spinner_item);
-        mGp.safMgr.loadSafFileList();
+        mGp.safMgr.loadSafFile();
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
         spinner.setAdapter(adapter);
@@ -1981,7 +1980,7 @@ public class SyncTaskEditor extends DialogFragment {
         SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, R.layout.custom_simple_spinner_item);
-        mGp.safMgr.loadSafFileList();
+        mGp.safMgr.loadSafFile();
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
         spinner.setAdapter(adapter);
@@ -1999,7 +1998,7 @@ public class SyncTaskEditor extends DialogFragment {
         SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, R.layout.custom_simple_spinner_item);
-        mGp.safMgr.loadSafFileList();
+        mGp.safMgr.loadSafFile();
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
         spinner.setAdapter(adapter);
@@ -2168,7 +2167,7 @@ public class SyncTaskEditor extends DialogFragment {
     public void editSyncTask(final String type, final SyncTaskItem pfli) {
         final SyncTaskItem n_sti = pfli.clone();
 
-        mGp.safMgr.loadSafFileList();
+        mGp.safMgr.loadSafFile();
 
         // カスタムダイアログの生成
         mDialog.setContentView(R.layout.edit_sync_task_dlg);
@@ -2770,7 +2769,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
-                        mGp.safMgr.loadSafFileList();
+                        mGp.safMgr.loadSafFile();
                         master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                     }
 
@@ -2928,7 +2927,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
-                        mGp.safMgr.loadSafFileList();
+                        mGp.safMgr.loadSafFile();
                         target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
                         confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                     }
@@ -3831,8 +3830,8 @@ public class SyncTaskEditor extends DialogFragment {
     private String checkStorageStatus(Dialog dialog, String type, SyncTaskItem n_sti) {
         String emsg = "";
         if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
-            if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                if (SafFileManager.isSdcardMountPointExisted(mContext, mGp.settingDebugLevel > 0)) {
+            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                if (mGp.safMgr.hasExternalSdcardPath()) {
                     emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master);
                 } else {
                     emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted);
@@ -3841,8 +3840,8 @@ public class SyncTaskEditor extends DialogFragment {
         }
         if (emsg.equals("")) {
             if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
-                if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                    if (SafFileManager.isSdcardMountPointExisted(mContext, mGp.settingDebugLevel > 0)) {
+                if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                    if (mGp.safMgr.hasExternalSdcardPath()) {
                         emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target);
                     } else {
                         emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted);

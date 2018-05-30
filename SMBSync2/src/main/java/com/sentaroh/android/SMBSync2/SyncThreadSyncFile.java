@@ -797,7 +797,7 @@ public class SyncThreadSyncFile {
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
                                                 if (Build.VERSION.SDK_INT>=24) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
@@ -829,7 +829,7 @@ public class SyncThreadSyncFile {
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
                                                 if (Build.VERSION.SDK_INT>=24) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
@@ -1353,7 +1353,7 @@ public class SyncThreadSyncFile {
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
                                                 if (Build.VERSION.SDK_INT>=24) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
@@ -1384,7 +1384,7 @@ public class SyncThreadSyncFile {
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
                                                 if (Build.VERSION.SDK_INT>=24) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
@@ -2061,7 +2061,7 @@ public class SyncThreadSyncFile {
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
                                                 if (Build.VERSION.SDK_INT>=24) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
@@ -2105,7 +2105,7 @@ public class SyncThreadSyncFile {
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
-                                                sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_path, false);
+                                                sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
                                                 if (Build.VERSION.SDK_INT>=24) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {

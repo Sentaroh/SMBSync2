@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import com.sentaroh.android.Utilities.CommonGlobalParms;
-import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 
@@ -46,7 +45,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Bitmap;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.WifiLock;
 import android.os.Build;
@@ -63,8 +61,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import jcifs.Config;
 
 public class GlobalParameters extends CommonGlobalParms {
     public Context appContext = null;
@@ -211,7 +207,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public Button progressSpinCancel = null;
     public OnClickListener progressSpinCancelListener = null;
 
-    public SafFileManager safMgr = null;
+    public SafManager safMgr = null;
 
     public GlobalParameters() {
     }
@@ -297,10 +293,10 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public void refreshMediaDir() {
         if (safMgr == null) {
-            safMgr = new SafFileManager(appContext, settingDebugLevel > 1);
+            safMgr = new SafManager(appContext, settingDebugLevel > 1);
         } else {
             safMgr.setDebugEnabled(settingDebugLevel > 1);
-            safMgr.loadSafFileList();
+            safMgr.loadSafFile();
         }
     }
 

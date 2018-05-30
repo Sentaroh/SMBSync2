@@ -31,11 +31,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
-import com.sentaroh.android.Utilities.SafFileManager;
 
 import static com.sentaroh.android.SMBSync2.Constants.*;
 
@@ -88,7 +86,7 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
-            SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+            SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
             if (out_dest.exists()) {
                 o_df.delete();
             }
@@ -105,7 +103,7 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_file_temp = stwa.gp.safMgr.getExternalSdcardPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/SMBSync2_temp.tmp";
+        String to_file_temp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/SMBSync2_temp.tmp";
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
@@ -307,7 +305,7 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
-            SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+            SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
             boolean rc=false;
             if (o_df.exists()) {
                 rc=o_df.delete();
@@ -326,7 +324,7 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name;
-        String to_file_temp = stwa.gp.safMgr.getExternalSdcardPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/SMBSync2_temp.tmp";
+        String to_file_temp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/SMBSync2_temp.tmp";
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
@@ -360,19 +358,14 @@ public class SyncThreadCopyFile {
     }
 
     static private SafFile getSafFile(SyncThreadWorkArea stwa, SyncTaskItem sti,String fp) {
-        SafFile t_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), fp, false);
+        SafFile t_df = stwa.gp.safMgr.createSdcardItem(fp, false);
         if (t_df == null) {
             String saf_name = "";
-            SafFile sf = stwa.gp.safMgr.getSdcardSafFile();
+            SafFile sf = stwa.gp.safMgr.getSdcardRootSafFile();
             if (sf != null) saf_name = sf.getName();
             stwa.util.addLogMsg("E", "SAF file not found error. path=" + fp + ", SafFile=" + saf_name +
-                    ", sdcard=" + stwa.gp.safMgr.getSdcardDirectory());
-            ArrayList<SafFileManager.SafFileItem> sl = stwa.gp.safMgr.getSafList();
-            for (SafFileManager.SafFileItem sfi : sl) {
-                stwa.util.addLogMsg("E", "SafFileItem UUID=" + sfi.storageUuid + ", path=" + sfi.storageRootDirectory +
-                        ", mount=" + sfi.storageIsMounted + ", sdcard=" + sfi.storageTypeSdcard);
-            }
-            stwa.util.addLogMsg("E", "SafFileManager msg=="+stwa.gp.safMgr.getSafDebugMsg() );
+                    ", sdcard=" + stwa.gp.safMgr.getSdcardRootPath());
+            stwa.util.addLogMsg("E", "SafManager msg=="+stwa.gp.safMgr.getMessages() );
             return null;
         }
         return t_df;
@@ -528,7 +521,7 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
-            SafFile o_df = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), to_file_dest, false);
+            SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
             if (out_dest.exists()) {
                 o_df.delete();
             }
@@ -544,12 +537,12 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
-        String nomedia_path = stwa.gp.safMgr.getExternalSdcardPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/.nomedia";
+        String nomedia_path = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/.nomedia";
         File nomedia=new File(nomedia_path);
         nomedia.createNewFile();
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_file_temp = stwa.gp.safMgr.getExternalSdcardPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/SMBSync2_temp.tmp";
+        String to_file_temp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/SMBSync2_temp.tmp";
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 

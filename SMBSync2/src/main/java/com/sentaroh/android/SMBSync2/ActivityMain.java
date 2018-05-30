@@ -25,13 +25,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -47,7 +43,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,7 +50,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
-import android.os.StrictMode;
 import android.os.storage.StorageManager;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
@@ -64,7 +58,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -88,7 +81,6 @@ import android.widget.Toast;
 
 import com.sentaroh.android.SMBSync2.Log.LogFileListDialogFragment;
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
-import com.sentaroh.android.Utilities.ContentProviderUtil;
 import com.sentaroh.android.Utilities.ContextButton.ContextButtonUtil;
 import com.sentaroh.android.Utilities.ContextMenu.CustomContextMenu;
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
@@ -97,7 +89,7 @@ import com.sentaroh.android.Utilities.Dialog.ProgressBarDialogFragment;
 import com.sentaroh.android.Utilities.LocalMountPoint;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
-import com.sentaroh.android.Utilities.SafFileManager;
+import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.Widget.CustomTabContentView;
@@ -177,7 +169,7 @@ public class ActivityMain extends AppCompatActivity {
 
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
-        mGp.safMgr.loadSafFileList();
+        mGp.safMgr.loadSafFile();
         mActivity = this;
         if (mGp.themeColorList == null) {
             mGp.themeColorList = ThemeUtil.getThemeColorList(this);
@@ -258,7 +250,7 @@ public class ActivityMain extends AppCompatActivity {
         super.onResume();
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
         if (restartType == RESTART_WITH_OUT_INITIALYZE) {
-            mGp.safMgr.loadSafFileList();
+            mGp.safMgr.loadSafFile();
             setActivityForeground(true);
             ScheduleUtil.setSchedulerInfo(mGp);
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
@@ -427,8 +419,7 @@ public class ActivityMain extends AppCompatActivity {
 
         si+=listsMountPoint();
 
-        si+="getExternalSdcardPath=" + mGp.safMgr.getExternalSdcardPath()+"\n";
-        si+="getSdcardDirectory=" + mGp.safMgr.getSdcardDirectory()+"\n";
+        si+="getSdcardRootPath=" + mGp.safMgr.getSdcardRootPath()+"\n";
 
         File[] fl = ContextCompat.getExternalFilesDirs(mContext, null);
         if (fl != null) {
@@ -436,8 +427,8 @@ public class ActivityMain extends AppCompatActivity {
                 if (f != null) si+="ExternalFilesDirs=" + f.getPath()+"\n";
             }
         }
-        if (mGp.safMgr.getSdcardSafFile() != null)
-            si+="getSdcardSafFile name=" + mGp.safMgr.getSdcardSafFile().getName()+"\n";
+        if (mGp.safMgr.getSdcardRootSafFile() != null)
+            si+="getSdcardSafFile name=" + mGp.safMgr.getSdcardRootSafFile().getName()+"\n";
         si+=listSafMgrList();
         si+=getRemovableStoragePaths(mContext, true);
         si+="Storage information end"+"\n";
@@ -504,17 +495,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private String listSafMgrList() {
         String mpi="";
-        ArrayList<SafFileManager.SafFileItem> sfl = mGp.safMgr.getSafList();
-        for (SafFileManager.SafFileItem item : sfl) {
-            String saf_name = null;
-            if (item.storageRootFile != null) saf_name = item.storageRootFile.getName();
-            mpi+="SafFile list uuid=" + item.storageUuid +
-                    ", root=" + item.storageRootDirectory +
-                    ", mounted=" + item.storageIsMounted +
-                    ", isSDCARD=" + item.storageTypeSdcard +
-                    ", saf=" + item.storageRootFile +
-                    ", saf name=" + saf_name+"\n";
-        }
+        mGp.safMgr.getSdcardRootSafFile();
         List<UriPermission> permissions = getContentResolver().getPersistedUriPermissions();
         for(UriPermission item:permissions) mpi+=item.toString()+"\n";
         return mpi;
@@ -2006,61 +1987,23 @@ public class ActivityMain extends AppCompatActivity {
             mUtil.addDebugMsg(1, "I", "Return from Storage Picker. id=" + requestCode + ", result=" + resultCode);
             if (resultCode == Activity.RESULT_OK) {
                 mUtil.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
-                if (mGp.safMgr.isRootTreeUri(data.getData())) {
-                    boolean rc=mGp.safMgr.addSafFileFromUri(data.getData());
-                    if (!rc) {
-                        String saf_msg=mGp.safMgr.getSafDebugMsg();
-                        commonDlg.showCommonDialog(false, "W", "External SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
-                    }
-                    if (mSafSelectActivityNotify != null)
-                        mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
+                if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
+                    reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
                 } else {
-                    NotifyEvent ntfy_retry = new NotifyEvent(mContext);
-                    ntfy_retry.setListener(new NotifyEventListener() {
-                        @Override
-                        public void positiveResponse(Context c, Object[] o) {
-                            NotifyEvent ntfy = new NotifyEvent(mContext);
-                            ntfy.setListener(new NotifyEventListener() {
-                                @Override
-                                public void positiveResponse(Context c, Object[] o) {
-                                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                                    startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
-                                }
-
-                                @Override
-                                public void negativeResponse(Context c, Object[] o) {
-                                    SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
-                                    if (pli != null) {
-                                        String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
-                                                pli.getSyncTaskName());
-                                        commonDlg.showCommonDialog(false, "W",
-                                                mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
-                                                msg,
-                                                null);
-                                    }
-                                }
-                            });
-                            mTaskUtil.showSelectSdcardMsg(ntfy);
+                    if (mGp.safMgr.isRootTreeUri(data.getData())) {
+                        boolean rc=mGp.safMgr.addSdcardUuid(data.getData());
+                        if (!rc) {
+                            String saf_msg=mGp.safMgr.getMessages();
+                            commonDlg.showCommonDialog(false, "W", "External SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
                         }
-
-                        @Override
-                        public void negativeResponse(Context c, Object[] o) {
-                            SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
-                            if (pli != null) {
-                                String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
-                                        pli.getSyncTaskName());
-                                commonDlg.showCommonDialog(false, "W",
-                                        mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
-                                        msg,
-                                        null);
-                            }
-                        }
-                    });
-                    commonDlg.showCommonDialog(true, "W",
-                            mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg), "", ntfy_retry);
+                        if (mSafSelectActivityNotify != null)
+                            mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
+                    } else {
+                        reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
+                    }
                 }
             } else {
-                if (mGp.safMgr.getSdcardSafFile() == null && !mIsStorageSelectorActivityNotFound) {
+                if (mGp.safMgr.getSdcardRootSafFile() == null && !mIsStorageSelectorActivityNotFound) {
                     SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
                     if (pli != null) {
                         String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
@@ -2073,6 +2016,52 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void reselectSdcard(String msg) {
+        NotifyEvent ntfy_retry = new NotifyEvent(mContext);
+        ntfy_retry.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context c, Object[] o) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context c, Object[] o) {
+                        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                        startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context c, Object[] o) {
+                        SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
+                        if (pli != null) {
+                            String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
+                                    pli.getSyncTaskName());
+                            commonDlg.showCommonDialog(false, "W",
+                                    mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
+                                    msg,
+                                    null);
+                        }
+                    }
+                });
+                mTaskUtil.showSelectSdcardMsg(ntfy);
+            }
+
+            @Override
+            public void negativeResponse(Context c, Object[] o) {
+                SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
+                if (pli != null) {
+                    String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
+                            pli.getSyncTaskName());
+                    commonDlg.showCommonDialog(false, "W",
+                            mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
+                            msg,
+                            null);
+                }
+            }
+        });
+        commonDlg.showCommonDialog(true, "W", msg, "", ntfy_retry);
+
     }
 
     private void setHistoryViewItemClickListener() {

@@ -28,7 +28,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 import java.util.ArrayList;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
-import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThemeUtil;
 
@@ -292,9 +291,9 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 //                	}
             } else if (o.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
                 String dir = o.getMasterDirectoryName();
-                if (dir.equals("")) holder.tv_row_master.setText((mGp.safMgr.getSdcardDirectory()));
-                else holder.tv_row_master.setText((mGp.safMgr.getSdcardDirectory() + "/" + dir));
-                if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                if (dir.equals("")) holder.tv_row_master.setText((mGp.safMgr.getSdcardRootPath()));
+                else holder.tv_row_master.setText((mGp.safMgr.getSdcardRootPath() + "/" + dir));
+                if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                     holder.iv_row_image_master.setImageResource(R.drawable.ic_32_bad_media);
                 } else {
                     holder.iv_row_image_master.setImageResource(R.drawable.ic_32_sdcard);
@@ -330,9 +329,9 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 //                	}
             } else if (o.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
                 String dir = o.getTargetDirectoryName();
-                if (dir.equals("")) holder.tv_row_target.setText((mGp.safMgr.getSdcardDirectory()));
-                else holder.tv_row_target.setText((mGp.safMgr.getSdcardDirectory() + "/" + dir));
-                if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                if (dir.equals("")) holder.tv_row_target.setText((mGp.safMgr.getSdcardRootPath()));
+                else holder.tv_row_target.setText((mGp.safMgr.getSdcardRootPath() + "/" + dir));
+                if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_bad_media);
                 } else {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_sdcard);
@@ -344,7 +343,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 else
                     holder.tv_row_target.setText((o.getTargetLocalMountPoint() + o.getTargetZipOutputFileName()));
                 if (o.isTargetZipUseExternalSdcard() &&
-                        mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                        mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_bad_media);
                 } else {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_archive);

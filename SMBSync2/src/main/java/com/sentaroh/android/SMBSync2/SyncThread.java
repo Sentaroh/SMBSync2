@@ -76,7 +76,6 @@ import com.sentaroh.android.Utilities.MiscUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
-import com.sentaroh.android.Utilities.SafFileManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.ZipFileListItem;
 
@@ -157,7 +156,7 @@ public class SyncThread extends Thread {
         mStwa.gp = mGp;
 
         mGp.safMgr.setDebugEnabled(mGp.settingDebugLevel > 1);
-        mGp.safMgr.loadSafFileList();
+        mGp.safMgr.loadSafFile();
         mGp.initJcifsOption();
         prepareMediaScanner();
 
@@ -176,7 +175,7 @@ public class SyncThread extends Thread {
 
     private void printSafDebugInfo() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mGp.appContext);
-        String uuid_list = prefs.getString(SafFileManager.REMOVABLE_UUID_KEY, "");
+        String uuid_list = prefs.getString(SafManager.SDCARD_UUID_KEY, "");
 
         mStwa.util.addDebugMsg(1, "I", "SafFile SafManager=" + mGp.safMgr +
                 ", uuid_list=" + uuid_list);
@@ -187,8 +186,7 @@ public class SyncThread extends Thread {
 
         listsMountPoint();
 
-        mStwa.util.addDebugMsg(1, "I", "getExternalSdcardPath=" + mGp.safMgr.getExternalSdcardPath());
-        mStwa.util.addDebugMsg(1, "I", "getSdcardDirectory=" + mGp.safMgr.getSdcardDirectory());
+        mStwa.util.addDebugMsg(1, "I", "getSdcardRootPath=" + mGp.safMgr.getSdcardRootPath());
 
         File[] fl = ContextCompat.getExternalFilesDirs(mGp.appContext, null);
         if (fl != null) {
@@ -196,9 +194,6 @@ public class SyncThread extends Thread {
                 if (f != null) mStwa.util.addDebugMsg(1, "I", "ExternalFilesDirs=" + f.getPath());
             }
         }
-        if (mGp.safMgr.getSdcardSafFile() != null)
-            mStwa.util.addDebugMsg(1, "I", "getSdcardSafFile name=" + mGp.safMgr.getSdcardSafFile().getName());
-
         listSafMgrList();
 
         getRemovableStoragePaths(mGp.appContext, true);
@@ -208,17 +203,8 @@ public class SyncThread extends Thread {
     }
 
     private void listSafMgrList() {
-        ArrayList<SafFileManager.SafFileItem> sfl = mGp.safMgr.getSafList();
-        for (SafFileManager.SafFileItem item : sfl) {
-            String saf_name = null;
-            if (item.storageRootFile != null) saf_name = item.storageRootFile.getName();
-            mStwa.util.addDebugMsg(1, "I", "SafFile list uuid=" + item.storageUuid +
-                    ", root=" + item.storageRootDirectory +
-                    ", mounted=" + item.storageIsMounted +
-                    ", isSDCARD=" + item.storageTypeSdcard +
-                    ", saf=" + item.storageRootFile +
-                    ", saf name=" + saf_name);
-        }
+        if (mGp.safMgr.getSdcardRootSafFile() != null)
+            mStwa.util.addDebugMsg(1, "I", "getSdcardSafFile " + mGp.safMgr.getSdcardRootSafFile());
         List<UriPermission> permissions = mGp.appContext.getContentResolver().getPersistedUriPermissions();
         for(UriPermission item:permissions) mStwa.util.addDebugMsg(1, "I", item.toString());
     }
@@ -578,7 +564,7 @@ public class SyncThread extends Thread {
             mStwa.setLastModifiedIsFunctional = true;
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             if (Build.VERSION.SDK_INT>=24) {
-                mStwa.setLastModifiedIsFunctional = true;//isSetLastModifiedFunctional(mStwa.gp.safMgr.getSdcardDirectory());
+                mStwa.setLastModifiedIsFunctional = true;//isSetLastModifiedFunctional(mStwa.gp.safMgr.getSdcardRootPath());
             } else {
                 mStwa.setLastModifiedIsFunctional = false;
             }
@@ -667,10 +653,10 @@ public class SyncThread extends Thread {
         int sync_result = 0;
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) ||
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
-            if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
+            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                 sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                 String e_msg = "";
-                if (SafFileManager.isSdcardMountPointExisted(mGp.appContext, mGp.settingDebugLevel > 0)) {
+                if (mGp.safMgr.hasExternalSdcardPath()) {
                     e_msg = mGp.appContext.getString(R.string.msgs_mirror_external_sdcard_select_required);
                 } else {
                     e_msg = mGp.appContext.getString(R.string.msgs_mirror_external_sdcard_not_mounted);
@@ -678,7 +664,7 @@ public class SyncThread extends Thread {
                 showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
                 mGp.syncThreadCtrl.setThreadMessage(e_msg);
                 return sync_result;
-            } else if (mGp.safMgr.getSdcardSafFile() == null) {
+            } else if (mGp.safMgr.getSdcardRootSafFile() == null) {
                 sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                 showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
                         mGp.appContext.getString(R.string.msgs_mirror_external_sdcard_select_required));
@@ -689,10 +675,10 @@ public class SyncThread extends Thread {
         }
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP) &&
                 sti.isTargetZipUseExternalSdcard()) {
-            if (mGp.safMgr.getSdcardDirectory().equals(SafFileManager.UNKNOWN_SDCARD_DIRECTORY)) {
+            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                 sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                 String e_msg = "";
-                if (SafFileManager.isSdcardMountPointExisted(mGp.appContext, mGp.settingDebugLevel > 0)) {
+                if (mGp.safMgr.hasExternalSdcardPath()) {
                     e_msg = mGp.appContext.getString(R.string.msgs_mirror_external_sdcard_select_required);
                 } else {
                     e_msg = mGp.appContext.getString(R.string.msgs_mirror_external_sdcard_not_mounted);
@@ -700,7 +686,7 @@ public class SyncThread extends Thread {
                 showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
                 mGp.syncThreadCtrl.setThreadMessage(e_msg);
                 return sync_result;
-            } else if (mGp.safMgr.getSdcardSafFile() == null) {
+            } else if (mGp.safMgr.getSdcardRootSafFile() == null) {
                 sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                 showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
                         mGp.appContext.getString(R.string.msgs_mirror_external_sdcard_select_required));
@@ -874,10 +860,9 @@ public class SyncThread extends Thread {
                     mGp.syncThreadCtrl.setThreadResultError();
                     String end_msg = ex.toString() + st_msg;
                     if (mStwa.gp.safMgr != null) {
-                        if (!mStwa.gp.safMgr.getSafDebugMsg().equals(""))
-                            end_msg += "\n" + mStwa.gp.safMgr.getSafDebugMsg();
+                        end_msg += "\n" + mStwa.gp.safMgr.getMessages();
 
-                        end_msg += "\n" + "getExternalSdcardPath=" + mGp.safMgr.getExternalSdcardPath() + ", getSdcardDirectory=" + mGp.safMgr.getSdcardDirectory();
+                        end_msg += "\n" + "getSdcardRootPath=" + mGp.safMgr.getSdcardRootPath();
 
                         File[] fl = ContextCompat.getExternalFilesDirs(mGp.appContext, null);
                         if (fl != null) {
@@ -885,17 +870,9 @@ public class SyncThread extends Thread {
                                 if (f != null) end_msg += "\n" + "ExternalFilesDirs=" + f.getPath();
                             }
                         }
-                        if (mGp.safMgr.getSdcardSafFile() != null)
-                            end_msg += "\n" + "getSdcardSafFile name=" + mGp.safMgr.getSdcardSafFile().getName();
+                        if (mGp.safMgr.getSdcardRootSafFile() != null)
+                            end_msg += "\n" + "getSdcardSafFile name=" + mGp.safMgr.getSdcardRootSafFile().getName();
 
-                        ArrayList<SafFileManager.SafFileItem> sfl = mGp.safMgr.getSafList();
-                        for (SafFileManager.SafFileItem item : sfl) {
-                            end_msg += "\n" + "SafFile list uuid=" + item.storageUuid +
-                                    ", root=" + item.storageRootDirectory +
-                                    ", mounted=" + item.storageIsMounted +
-                                    ", isSDCARD=" + item.storageTypeSdcard +
-                                    ", saf=" + item.storageRootFile;
-                        }
                     }
 
                     mGp.syncThreadCtrl.setThreadMessage(end_msg);
@@ -981,7 +958,7 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
-            to_temp = buildStorageDir(mGp.safMgr.getSdcardDirectory(), sti.getTargetDirectoryName());
+            to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
             to = replaceKeywordValue(to_temp, time_millis);
 
@@ -1019,7 +996,7 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             //External to Internal
-            from = buildStorageDir(mGp.safMgr.getSdcardDirectory(), sti.getMasterDirectoryName());
+            from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
 
             to = replaceKeywordValue(to_temp, time_millis);
@@ -1038,8 +1015,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             //External to External
-            from = buildStorageDir(mGp.safMgr.getSdcardDirectory(), sti.getMasterDirectoryName());
-            to_temp = buildStorageDir(mGp.safMgr.getSdcardDirectory(), sti.getTargetDirectoryName());
+            from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
+            to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
             to = replaceKeywordValue(to_temp, time_millis);
 
@@ -1057,7 +1034,7 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             //External to SMB
-            from = buildStorageDir(mGp.safMgr.getSdcardDirectory(), sti.getMasterDirectoryName());
+            from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
 
             to_temp = buildSmbHostUrl(sti.getTargetSmbAddr(), sti.getTargetSmbHostName(),
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName());
@@ -1099,7 +1076,7 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             //External to External
-            to_temp = buildStorageDir(mGp.safMgr.getSdcardDirectory(), sti.getTargetDirectoryName());
+            to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
             from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
                     sti.getMasterSmbPort(), sti.getMasterRemoteSmbShareName(), sti.getMasterDirectoryName()) + "/";
@@ -1213,7 +1190,7 @@ public class SyncThread extends Thread {
         if (!sti.isSyncTestMode()) {
             File lf = new File(dir);
             boolean i_exists = lf.exists();
-            SafFile new_saf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), dir, true);
+            SafFile new_saf = stwa.gp.safMgr.createSdcardItem(dir, true);
             result = (new_saf != null) ? true : false;
             if (result && !i_exists && stwa.gp.settingDebugLevel >= 1)
                 stwa.util.addDebugMsg(1, "I", "createDirectoryToExternalStorage directory created, dir=" + dir);
@@ -1250,7 +1227,7 @@ public class SyncThread extends Thread {
     static public void deleteExternalStorageItem(SyncThreadWorkArea stwa, boolean del_dir, SyncTaskItem sti, String tmp_target) {
         if (stwa.gp.settingDebugLevel >= 1)
             stwa.util.addDebugMsg(1, "I", "deleteExternalStorageItem entered, del=" + tmp_target);
-        if (!tmp_target.equals(stwa.gp.safMgr.getSdcardDirectory())) {
+        if (!tmp_target.equals(stwa.gp.safMgr.getSdcardRootPath())) {
             File lf_tmp = new File(tmp_target);
             if (lf_tmp.exists()) {
                 deleteExternalStorageFile(stwa, sti, tmp_target, lf_tmp);
@@ -1275,7 +1252,7 @@ public class SyncThread extends Thread {
 //								stwa.gp.appContext.getString(R.string.msgs_mirror_task_dir_deleted));
                     } else {
                         stwa.totalDeleteCount++;
-                        SafFile sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), c_item.getPath(), false);
+                        SafFile sf = stwa.gp.safMgr.createSdcardItem(c_item.getPath(), false);
                         if (!sti.isSyncTestMode()) {
                             sf.delete();
                             scanMediaFile(stwa, fp);
@@ -1288,7 +1265,7 @@ public class SyncThread extends Thread {
                     }
                 }
                 stwa.totalDeleteCount++;
-                SafFile sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), df.getPath(), true);
+                SafFile sf = stwa.gp.safMgr.createSdcardItem(df.getPath(), true);
                 if (!sti.isSyncTestMode()) {
                     sf.delete();
                     scanMediaFile(stwa, fp);
@@ -1296,7 +1273,7 @@ public class SyncThread extends Thread {
                 showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, df.getName(),
                         stwa.gp.appContext.getString(R.string.msgs_mirror_task_dir_deleted));
             } else {
-                SafFile sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), df.getPath(), true);
+                SafFile sf = stwa.gp.safMgr.createSdcardItem(df.getPath(), true);
                 if (!sti.isSyncTestMode()) {
                     sf.delete();
                     scanMediaFile(stwa, fp);
@@ -1306,7 +1283,7 @@ public class SyncThread extends Thread {
                         stwa.gp.appContext.getString(R.string.msgs_mirror_task_dir_deleted));
             }
         } else {
-            SafFile sf = stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), df.getPath(), false);
+            SafFile sf = stwa.gp.safMgr.createSdcardItem(df.getPath(), false);
             if (!sti.isSyncTestMode()) sf.delete();
             stwa.totalDeleteCount++;
             showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, df.getName(),
