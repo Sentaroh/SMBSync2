@@ -254,7 +254,7 @@ public class SyncTaskUtil {
                 BufferedReader br;
                 br = new BufferedReader(new FileReader(fpath), 8192);
                 String pl = br.readLine();
-                if (pl != null) {
+                if (pl != null && pl.length()==9 && pl.startsWith("PROF")) {
                     if (pl.substring(6).startsWith(SMBSYNC2_PROF_ENC)) result = true;
                 }
                 br.close();
