@@ -2128,7 +2128,7 @@ public class SyncThreadArchiveFile {
         String n_exp=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(cal.getTimeInMillis()+exp_time);
         boolean result=(System.currentTimeMillis()>cal.getTimeInMillis());
         stwa.util.addDebugMsg(1,"I","isFileArchiveRequired path=",afli.full_path,", shoot date=",afli.shoot_date,
-                ", shoot time=", afli.shoot_time,", exif="+afli.date_from_exif,", archive="+result, ", retention period="+sti.getArchiveRetentionPeriod());
+                ", shoot time=", afli.shoot_time,", exif="+afli.date_from_exif,", archive required="+result, ", retention period="+sti.getArchiveRetentionPeriod());
         return result;
     }
 

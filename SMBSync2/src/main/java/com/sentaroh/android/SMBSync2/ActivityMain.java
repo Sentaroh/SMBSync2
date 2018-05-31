@@ -98,6 +98,7 @@ import com.sentaroh.android.Utilities.Widget.CustomViewPagerAdapter;
 import com.sentaroh.android.Utilities.ZipUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -311,22 +312,11 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    ;
-
     @Override
     protected void onRestart() {
         super.onRestart();
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
     }
-
-    ;
-
-//	@Override
-//	public void onTrimMemory(int level) {
-//		super.onTrimMemory(level);
-//		mUtil.addDebugMsg(1, "I", "onTrimMemory entered, level="+level);
-//       // Application process is follow
-//	};
 
     @Override
     protected void onPause() {
@@ -337,15 +327,11 @@ public class ActivityMain extends AppCompatActivity {
         if (!isTaskTermination) saveTaskData();
     }
 
-    ;
-
     @Override
     protected void onStop() {
         super.onStop();
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
     }
-
-    ;
 
     @Override
     public void onLowMemory() {
@@ -860,8 +846,6 @@ public class ActivityMain extends AppCompatActivity {
         return vn;
     }
 
-    ;
-
     private LinearLayout mSyncTaskView;
     private LinearLayout mHistoryView;
     private LinearLayout mMessageView;
@@ -1208,7 +1192,7 @@ public class ActivityMain extends AppCompatActivity {
                 return true;
             case R.id.menu_top_select_storage:
                 Intent intent2 = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                startActivityForResult(intent2, (ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS + 1));
+                startActivityForResult(intent2, (ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS));
                 return true;
         }
         if (isUiEnabled()) {
