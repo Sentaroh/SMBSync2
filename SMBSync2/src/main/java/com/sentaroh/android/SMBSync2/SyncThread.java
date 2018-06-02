@@ -436,42 +436,11 @@ public class SyncThread extends Thread {
 
             NotificationUtil.setNotificationIcon(mGp, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
             NotificationUtil.reShowOngoingMsg(mGp);
-            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS) ||
-                        mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_SUCCESS)) {
-                    playBackDefaultNotification();
-                }
-                if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
-                        mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_SUCCESS)) {
-                    vibrateDefaultPattern();
-                }
-            } else if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL) {
-                if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS)) {
-                    playBackDefaultNotification();
-                }
-                if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS)) {
-                    vibrateDefaultPattern();
-                }
-            } else if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR) {
-                if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS) ||
-                        mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ERROR)) {
-                    playBackDefaultNotification();
-                }
-                if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
-                        mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR)) {
-                    vibrateDefaultPattern();
-                }
-            }
 
             mGp.syncThreadRequestID = "";
             mGp.syncThreadActive = false;
 
             mStwa.mediaScanner.disconnect();
-
-
-//			if (delay_term && mGp.callbackStub==null) SystemClock.sleep(1000);
-
-//	        Thread.currentThread().setUncaughtExceptionHandler(defaultUEH);
 
             mNotifyToService.notifyToListener(true, new Object[]{sync_result});
         }
@@ -2420,46 +2389,6 @@ public class SyncThread extends Thread {
 //        if (mNotificationVibrate) vibrateDefaultPattern(wait_value2);
     }
 
-    private void playBackDefaultNotification() {
-        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        if (uri != null) {
-            final MediaPlayer player = MediaPlayer.create(mGp.appContext, uri);
-            if (player != null) {
-                float vol = (float) mGp.settingNotificationVolume / 100.0f;
-                player.setVolume(vol, vol);
-                if (player != null) {
-                    final Thread th = new Thread() {
-                        @Override
-                        public void run() {
-                            int dur = player.getDuration();
-                            player.start();
-                            SystemClock.sleep(dur + 10);
-                            player.stop();
-                            player.reset();
-                            player.release();
-                        }
-                    };
-                    th.setPriority(Thread.MAX_PRIORITY);
-                    th.start();
-                }
-            } else {
-                mStwa.util.addLogMsg("I", "Default notification can not playback, because default playback is not initialized.");
-            }
-        }
-    }
-
-    private void vibrateDefaultPattern() {
-        Thread th = new Thread() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public void run() {
-                Vibrator vibrator = (Vibrator) mGp.appContext.getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(new long[]{0, 200, 400, 200, 400, 200}, -1);
-            }
-        };
-        th.setPriority(Thread.MAX_PRIORITY);
-        th.start();
-    }
 
     final private void addHistoryList(SyncTaskItem sti,
                                       int status, int copy_cnt, int del_cnt, int ignore_cnt,

@@ -40,6 +40,9 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,6 +52,7 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
+import android.os.Vibrator;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
@@ -547,8 +551,7 @@ public class SyncService extends Service {
         }
     }
 
-    private void queueAutoSyncTask(String req_id,
-                                   boolean wifi_on, int delay_time, boolean wifi_off) {
+    private void queueAutoSyncTask(String req_id, boolean wifi_on, int delay_time, boolean wifi_off) {
         int cnt = 0;
         SyncRequestItem sri = new SyncRequestItem();
         sri.request_id = req_id;
@@ -614,6 +617,7 @@ public class SyncService extends Service {
                     hideDialogWindow();
                     synchronized (mGp.syncRequestQueue) {
                         if (mGp.syncRequestQueue.size() > 0) {
+                            showSyncEndNotificationMessage();
                             startSyncThread();
                         } else {
                             sendEndNotificationIntent();
@@ -665,18 +669,65 @@ public class SyncService extends Service {
     private int mSyncThreadResult = 0;
 
     private void showSyncEndNotificationMessage() {
-//		Log.v("","statue="+mSyncThreadResult+", option="+mGp.settingNotificationMessageWhenSyncEnded);
+        boolean sound=false, vibration=false;
         if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            if (mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
-                    mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
-                NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage);
-            }
+            if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS) ||
+                    mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_SUCCESS)) sound=true;
+            if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
+                    mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_SUCCESS)) vibration=true;
+        } else if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_CANCEL) {
+            if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS)) sound=true;
+            if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS)) vibration=true;
         } else if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_ERROR) {
-            if (mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
-                    mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
-                NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage);
+            if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS) ||
+                    mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ERROR)) sound=true;
+            if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
+                    mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR)) vibration=true;
+        }
+        NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage, sound, vibration);
+        if (mGp.callbackStub != null && sound) playBackDefaultNotification();
+        if (mGp.callbackStub != null && vibration) vibrateDefaultPattern();
+    }
+
+    private void playBackDefaultNotification() {
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        if (uri != null) {
+            final MediaPlayer player = MediaPlayer.create(mGp.appContext, uri);
+            if (player != null) {
+                float vol = (float) mGp.settingNotificationVolume / 100.0f;
+                player.setVolume(vol, vol);
+                if (player != null) {
+                    final Thread th = new Thread() {
+                        @Override
+                        public void run() {
+                            int dur = player.getDuration();
+                            player.start();
+                            SystemClock.sleep(dur + 10);
+                            player.stop();
+                            player.reset();
+                            player.release();
+                        }
+                    };
+                    th.setPriority(Thread.MAX_PRIORITY);
+                    th.start();
+                }
+            } else {
+                mUtil.addLogMsg("I", "Default notification can not playback, because default playback is not initialized.");
             }
         }
+    }
+
+    private void vibrateDefaultPattern() {
+        Thread th = new Thread() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void run() {
+                Vibrator vibrator = (Vibrator) mGp.appContext.getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(new long[]{0, 300, 200, 300}, -1);
+            }
+        };
+        th.setPriority(Thread.MAX_PRIORITY);
+        th.start();
     }
 
     private void showDialogWindow() {
