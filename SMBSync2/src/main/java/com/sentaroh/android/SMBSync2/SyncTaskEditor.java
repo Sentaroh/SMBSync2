@@ -1058,7 +1058,7 @@ public class SyncTaskEditor extends DialogFragment {
         final RadioButton rb_zip_enc_aes256 = (RadioButton) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_aes256);
         final EditText et_zip_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
-        final Button btn_zip_select_sdcard = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_select_document_tree);
+//        final Button btn_zip_select_sdcard = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_select_document_tree);
 
 
         if (sfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
@@ -1146,12 +1146,12 @@ public class SyncTaskEditor extends DialogFragment {
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
         });
-        btn_zip_select_sdcard.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_sdcard_select_sdcard.performClick();
-            }
-        });
+//        btn_zip_select_sdcard.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                btn_sdcard_select_sdcard.performClick();
+//            }
+//        });
         btn_zip_filelist.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
