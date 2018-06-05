@@ -74,4 +74,8 @@
     <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">Sync has been canceled because it is not charging.</string>
 
     <string name="msgs_mirror_file_set_last_modified_failed">setLastModified() was failed. Please enable "To not set the last update time of the target file the same as the master" of the sync task.</string>
+
+    <string name="msgs_mirror_file_zip_copy_back_from_work">Copying the ZIP file to the target file. %s%% done.</string>
+    <string name="msgs_mirror_file_zip_copy_to_work">Copying the ZIP file to the work file. %s%% done.</string>
+
 </resources>

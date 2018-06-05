@@ -403,6 +403,8 @@ public class ActivityMain extends AppCompatActivity {
         si+="System information begin" +" Application="+ getApplVersionName() +
                 ", API=" + Build.VERSION.SDK_INT+"\n";
 
+        si+="Manufacturer="+Build.MANUFACTURER+", Model="+Build.MODEL+"\n";
+
         si+=listsMountPoint();
 
         si+="getSdcardRootPath=" + mGp.safMgr.getSdcardRootPath()+"\n";
@@ -1972,8 +1974,12 @@ public class ActivityMain extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 mUtil.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
                 if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
+                    mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                    mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
                     reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
                 } else {
+                    mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                    mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
                     if (mGp.safMgr.isRootTreeUri(data.getData())) {
                         boolean rc=mGp.safMgr.addSdcardUuid(data.getData());
                         if (!rc) {

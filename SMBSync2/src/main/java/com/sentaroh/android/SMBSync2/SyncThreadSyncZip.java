@@ -116,10 +116,6 @@ public class SyncThreadSyncZip {
         return zf;
     }
 
-    ;
-
-//	static private final String WORK_DIRECTORY="/Android/data/com.sentaroh.android."+APPLICATION_TAG+"/files";
-
     private static void copyZipFileToWorkDirectory(SyncThreadWorkArea stwa, String from_dir, String file_path) {
         stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, from=" + from_dir + file_path);
         File in = new File(from_dir + file_path);
@@ -135,9 +131,13 @@ public class SyncThreadSyncZip {
             FileOutputStream fos = new FileOutputStream(out);
             byte[] buff = new byte[1024 * 1024 * 8];
             int rc = fis.read(buff);
+            long read_byte=0, tot_byte=in.length();
             while (rc > 0) {
                 if (!stwa.gp.syncThreadCtrl.isEnabled()) break;
                 fos.write(buff, 0, rc);
+                read_byte+=rc;
+                SyncThread.showProgressMsg(stwa, stwa.currentSTI.getSyncTaskName(),
+                        String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_zip_copy_to_work),(read_byte*100/tot_byte)));
                 rc = fis.read(buff);
             }
             fis.close();
@@ -156,8 +156,6 @@ public class SyncThreadSyncZip {
         }
     }
 
-    ;
-
     private static void copyZipFileToDestination(SyncThreadWorkArea stwa, String to_dir, String file_path) {
         stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, to=" + to_dir + file_path);
         File in = new File(stwa.zipWorkFileName);
@@ -166,14 +164,19 @@ public class SyncThreadSyncZip {
             SafFile dest = stwa.gp.safMgr.createSdcardItem(to_dir + file_path, false);
             String dest_file_name = file_path.lastIndexOf("/") >= 0 ? file_path.substring(file_path.lastIndexOf("/") + 1) : file_path;
             try {
+                long tot_byte=in.length();
                 FileInputStream fis = new FileInputStream(in);
                 OutputStream fos = stwa.gp.appContext.getContentResolver().openOutputStream(out.getUri());
-                byte[] buff = new byte[1024 * 1024 * 8];
+                byte[] buff = new byte[1024 * 1024 * 2];
                 int rc = fis.read(buff);
+                long read_byte=0;
                 while (rc > 0) {
                     if (!stwa.gp.syncThreadCtrl.isEnabled()) break;
+                    read_byte+=rc;
                     fos.write(buff, 0, rc);
                     rc = fis.read(buff);
+                    SyncThread.showProgressMsg(stwa, stwa.currentSTI.getSyncTaskName(),
+                            String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_zip_copy_back_from_work),(read_byte*100/tot_byte)));
                 }
                 fis.close();
                 fos.flush();
@@ -199,8 +202,6 @@ public class SyncThreadSyncZip {
         }
         in.delete();
     }
-
-    ;
 
     static public int syncMirrorInternalToInternalZip(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                       String from_path, String dest_file) {
@@ -240,8 +241,6 @@ public class SyncThreadSyncZip {
         return sync_result;
     }
 
-    ;
-
     static public int syncCopyInternalToInternalZip(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                     String from_path, String dest_file) {
         int sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
@@ -264,8 +263,6 @@ public class SyncThreadSyncZip {
         }
         return sync_result;
     }
-
-    ;
 
     static public int syncMoveInternalToInternalZip(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                     String from_path, String dest_file) {
@@ -290,8 +287,6 @@ public class SyncThreadSyncZip {
         return sync_result;
     }
 
-    ;
-
     static private ZipFileListItem getZipFileListItem(SyncThreadWorkArea stwa, String fp) {
         ZipFileListItem zfli = null;
         for (ZipFileListItem item : stwa.zipFileList) {
@@ -304,8 +299,6 @@ public class SyncThreadSyncZip {
 //		Log.v("","fp="+fp+", result="+zfli);
         return zfli;
     }
-
-    ;
 
     static private boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String to_path,
                                          File mf, boolean ac) {
@@ -321,8 +314,6 @@ public class SyncThreadSyncZip {
         }
         return result;
     }
-
-    ;
 
     static final private boolean isFileChangedDetailCompare(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                             String lf_path, boolean lf_exists, long lf_time, long lf_length,
@@ -360,8 +351,6 @@ public class SyncThreadSyncZip {
         return diff;
     }
 
-    ;
-
     static private boolean createDirectoryToZip(SyncThreadWorkArea stwa, SyncTaskItem sti, String to_dir, ZipFile zf, ZipParameters zp) {
         boolean result = false;
         if (!sti.isSyncTestMode()) {
@@ -377,9 +366,6 @@ public class SyncThreadSyncZip {
                     String zip_dir_name = to_dir.replace(zp.getDefaultFolderPath() + "/", "");
                     try {
                         fh = zf.getFileHeader(zip_dir_name + "/");
-//						Log.v("","to_dir="+zip_dir_name+", fh="+fh);
-//						List<FileHeader> fhl=zf.getFileHeaders();
-//						for(FileHeader item:fhl) Log.v("","fh name="+item.getFileName());
                     } catch (ZipException e) {
 //							e.printStackTrace();
                         error = true;
@@ -414,8 +400,6 @@ public class SyncThreadSyncZip {
         }
         return result;
     }
-
-    ;
 
     static private int moveCopyInternalToInternalZip(SyncThreadWorkArea stwa, SyncTaskItem sti, boolean move_file,
                                                      String from_base, String from_path, File mf, ZipFile zf, ZipParameters zp) {
@@ -543,9 +527,6 @@ public class SyncThreadSyncZip {
         return sync_result;
     }
 
-    ;
-
-    @SuppressWarnings("unchecked")
     static final private int syncDeleteInternalToInternalZip(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                              ZipFile zf, ZipParameters zp) {
         int sync_result = 0;
@@ -612,9 +593,6 @@ public class SyncThreadSyncZip {
         return sync_result;
     }
 
-    ;
-
-    @SuppressLint("DefaultLocale")
     static private int copyFileInternalToInternalZip(SyncThreadWorkArea stwa,
                                                      SyncTaskItem sti, String from_dir, File mf, String to_dirx, String dest_path, ZipFile zf, ZipParameters zp)
             throws IOException {
@@ -666,8 +644,6 @@ public class SyncThreadSyncZip {
 
 //			Log.v("","name="+fh.getFileName()+", fh_lastmod="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(ZipUtil.dosToJavaTme(fh.getLastModFileTime()))+
 //					", file_lastMod="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(mf.lastModified()));
-
-
             ifs.close();
         } catch (ZipException e) {
             e.printStackTrace();
@@ -690,8 +666,5 @@ public class SyncThreadSyncZip {
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
-
-    ;
-
 
 }
