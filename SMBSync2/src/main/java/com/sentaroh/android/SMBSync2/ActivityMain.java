@@ -482,15 +482,15 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private String listSafMgrList() {
-        String mpi="";
-        mGp.safMgr.getSdcardRootSafFile();
+        String mpi="Uri permissions:\n";
+//        mGp.safMgr.getSdcardRootSafFile();
         List<UriPermission> permissions = getContentResolver().getPersistedUriPermissions();
-        for(UriPermission item:permissions) mpi+=item.toString()+"\n";
+        for(UriPermission item:permissions) mpi+="   "+item.toString()+"\n";
         return mpi;
     }
 
     private String getRemovableStoragePaths(Context context, boolean debug) {
-        String mpi="";
+        String mpi="Storage Manager:\n";
         ArrayList<String> paths = new ArrayList<String>();
         try {
             StorageManager sm = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
