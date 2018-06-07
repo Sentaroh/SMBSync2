@@ -1804,11 +1804,21 @@ public class SyncThread extends Thread {
                                                            boolean tf_exists, long tf_time, long tf_length,//Master
                                                            boolean ac) throws JcifsException {
         long lf_time = 0, lf_length = 0;
-        boolean lf_exists = lf.exists();
+        boolean lf_exists=false;
 
-        if (lf_exists) {
-            lf_time = lf.lastModified();
-            lf_length = lf.length();
+        if (lf.getPath().startsWith(stwa.gp.safMgr.getSdcardRootPath())) {
+            SafFile sf=stwa.gp.safMgr.findSdcardItem(lf.getPath());
+            if (sf!=null) {
+                lf_exists=true;
+                lf_time = sf.lastModified();
+                lf_length = sf.length();
+            }
+        } else {
+            lf_exists=lf.exists();
+            if (lf_exists) {
+                lf_time = lf.lastModified();
+                lf_length = lf.length();
+            }
         }
 
         return isFileChangedDetailCompare(stwa, sti, fp,
@@ -2327,19 +2337,13 @@ public class SyncThread extends Thread {
                 if (mGp.settingDebugLevel >= 1)
                     mStwa.util.addDebugMsg(1, "I", "MediaScanner connected.");
             }
-
-            ;
-
             @Override
             public void onScanCompleted(final String fp, final Uri uri) {
                 if (mGp.settingDebugLevel >= 2)
                     mStwa.util.addDebugMsg(2, "I", "MediaScanner scan completed. fn=", fp, ", Uri=" + uri);
             }
-
-            ;
         });
         mStwa.mediaScanner.connect();
-
     }
 
     @SuppressLint("DefaultLocale")

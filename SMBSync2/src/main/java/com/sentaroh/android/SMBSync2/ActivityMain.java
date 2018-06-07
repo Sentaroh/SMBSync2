@@ -146,8 +146,6 @@ public class ActivityMain extends AppCompatActivity {
         out.putString("currentTab", mCurrentTab);
     }
 
-    ;
-
     @Override
     protected void onRestoreInstanceState(Bundle in) {
         super.onRestoreInstanceState(in);
@@ -157,17 +155,11 @@ public class ActivityMain extends AppCompatActivity {
         else restartType = RESTART_BY_DESTROYED;
     }
 
-    ;
-
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//        mGp = (GlobalParameters) getApplicationContext();//getApplication();
-//        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-//        StrictMode.setVmPolicy(builder.build());
-
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mGp.safMgr.loadSafFile();
