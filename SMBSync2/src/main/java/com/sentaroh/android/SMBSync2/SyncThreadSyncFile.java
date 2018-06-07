@@ -697,17 +697,21 @@ public class SyncThreadSyncFile {
                                                    String from_path, String to_path) {
         File mf = new File(from_path);
         int sync_result =0;
+        stwa.lastWriteSafFile=null;
+        stwa.lastWriteFile=null;
 
         File tf = new File(to_path);
         if (sti.isSyncOptionDeleteFirstWhenMirror()) {
             sync_result =  syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 sync_result =moveCopyInternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+                waitSdcardFileSynced(stwa, sti);
             }
         } else {
             sync_result = moveCopyInternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 sync_result = syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
+                waitSdcardFileSynced(stwa, sti);
             }
         }
         return sync_result;
@@ -715,14 +719,24 @@ public class SyncThreadSyncFile {
 
     static public int syncCopyInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                  String from_path, String to_path) {
+        stwa.lastWriteSafFile=null;
+        stwa.lastWriteFile=null;
+
         File mf = new File(from_path);
-        return moveCopyInternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+        int sync_result=moveCopyInternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        return sync_result;
     }
 
     static public int syncMoveInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                  String from_path, String to_path) {
+        stwa.lastWriteSafFile=null;
+        stwa.lastWriteFile=null;
+
         File mf = new File(from_path);
-        return moveCopyInternalToExternal(stwa, sti, true, from_path, from_path, mf, to_path, to_path);
+        int sync_result=moveCopyInternalToExternal(stwa, sti, true, from_path, from_path, mf, to_path, to_path);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        return sync_result;
     }
 
     static private int moveCopyInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, boolean move_file,
@@ -805,6 +819,8 @@ public class SyncThreadSyncFile {
                                                             to_path, sf.lastModified(), mf.lastModified());
                                                 }
                                                 SyncThread.scanMediaFile(stwa, to_path);
+                                                stwa.lastWriteSafFile=sf;
+                                                stwa.lastWriteFile=tf;
                                             }
                                             stwa.totalCopyCount++;
                                             SyncThread.deleteInternalStorageItem(stwa, false, sti, from_path);
@@ -836,6 +852,8 @@ public class SyncThreadSyncFile {
                                                     SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
                                                             to_path, sf.lastModified(), mf.lastModified());
                                                 }
+                                                stwa.lastWriteSafFile=sf;
+                                                stwa.lastWriteFile=tf;
                                                 SyncThread.scanMediaFile(stwa, to_path);
                                             }
                                             stwa.totalCopyCount++;
@@ -1244,17 +1262,21 @@ public class SyncThreadSyncFile {
                                                    String from_path, String to_path) {
         File mf = new File(from_path);
         int sync_result =0;
+        stwa.lastWriteSafFile=null;
+        stwa.lastWriteFile=null;
 
         File tf = new File(to_path);
         if (sti.isSyncOptionDeleteFirstWhenMirror()) {
             sync_result = syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 sync_result =moveCopyExternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+                waitSdcardFileSynced(stwa, sti);
             }
         } else {
             sync_result = moveCopyExternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 sync_result = syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
+                waitSdcardFileSynced(stwa, sti);
             }
         }
 
@@ -1263,14 +1285,24 @@ public class SyncThreadSyncFile {
 
     static public int syncCopyExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                  String from_path, String to_path) {
+        stwa.lastWriteSafFile=null;
+        stwa.lastWriteFile=null;
+
         File mf = new File(from_path);
-        return moveCopyExternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+        int sync_result=moveCopyExternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        return sync_result;
     }
 
     static public int syncMoveExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                  String from_path, String to_path) {
+        stwa.lastWriteSafFile=null;
+        stwa.lastWriteFile=null;
+
         File mf = new File(from_path);
-        return moveCopyExternalToExternal(stwa, sti, true, from_path, from_path, mf, to_path, to_path);
+        int sync_result=moveCopyExternalToExternal(stwa, sti, true, from_path, from_path, mf, to_path, to_path);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        return sync_result;
     }
 
     static private int moveCopyExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, boolean move_file,
@@ -1360,6 +1392,8 @@ public class SyncThreadSyncFile {
                                                     SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path, sf.lastModified(), mf.lastModified());
                                                 }
                                                 SyncThread.scanMediaFile(stwa, to_path);
+                                                stwa.lastWriteSafFile=sf;
+                                                stwa.lastWriteFile=tf;
                                             }
                                             stwa.totalCopyCount++;
                                             SyncThread.deleteExternalStorageItem(stwa, false, sti, from_path);
@@ -1391,6 +1425,8 @@ public class SyncThreadSyncFile {
                                                     SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path, sf.lastModified(), mf.lastModified());
                                                 }
                                                 SyncThread.scanMediaFile(stwa, to_path);
+                                                stwa.lastWriteSafFile=sf;
+                                                stwa.lastWriteFile=tf;
                                             }
                                             stwa.totalCopyCount++;
                                         }
@@ -1902,18 +1938,22 @@ public class SyncThreadSyncFile {
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
         int sync_result =0;
+        stwa.lastWriteSafFile=null;
+        stwa.lastWriteFile=null;
 
         File tf = new File(to_path);
         if (sti.isSyncOptionDeleteFirstWhenMirror()) {
             sync_result =syncDeleteSmbToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 sync_result = moveCopySmbToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
+                waitSdcardFileSynced(stwa, sti);
             }
         } else {
             sync_result = moveCopySmbToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 Collections.sort(stwa.smbFileList);
                 sync_result = syncDeleteSmbToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
+                waitSdcardFileSynced(stwa, sti);
             }
         }
 
@@ -1921,9 +1961,38 @@ public class SyncThreadSyncFile {
         return sync_result;
     }
 
+    static private void waitSdcardFileSynced(SyncThreadWorkArea stwa, SyncTaskItem sti) {
+        if (stwa.lastWriteSafFile!=null) {
+            long b_time=System.currentTimeMillis();
+            int count=30;
+            String fp=stwa.lastWriteFile.getPath();
+            File lf=stwa.lastWriteFile;
+            SafFile sf=null;
+//            while(count>0 && (stwa.lastWriteSafFile.lastModified()!=stwa.lastWriteFile.lastModified() ||
+//                              stwa.lastWriteSafFile.length()!=stwa.lastWriteFile.length() ) )  {
+//                SystemClock.sleep(100);
+//                count--;
+//            }
+            while(count>0)  {
+                if (sf==null) sf=stwa.gp.safMgr.findSdcardItem(fp);
+                if (sf!=null) {
+                    if (sf.lastModified()==lf.lastModified() && sf.length()==lf.length()) {
+                        break;
+                    }
+                }
+                SystemClock.sleep(500);
+                count--;
+            }
+            if (count==0) stwa.util.addDebugMsg(1,"I","SDCARD File sync wait time over occured");
+            else stwa.util.addDebugMsg(1,"I","SDCARD File sync ended, elapsed time="+(System.currentTimeMillis()-b_time));
+        }
+    }
+
     static public int syncCopySmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                             String from_path, String to_path) {
         JcifsFile mf = null;
+        stwa.lastWriteSafFile=null;
+        stwa.lastWriteFile=null;
         try {
             mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
@@ -1940,12 +2009,17 @@ public class SyncThreadSyncFile {
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
-        return moveCopySmbToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, null);
+        int sync_result=moveCopySmbToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, null);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        return sync_result;
     }
 
     static public int syncMoveSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                             String from_path, String to_path) {
         JcifsFile mf = null;
+        stwa.lastWriteSafFile=null;
+        stwa.lastWriteFile=null;
+
         try {
             mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
@@ -1961,7 +2035,10 @@ public class SyncThreadSyncFile {
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-        return moveCopySmbToExternal(stwa, sti, true, from_path, from_path, mf, to_path, to_path, null);
+
+        int sync_result=moveCopySmbToExternal(stwa, sti, true, from_path, from_path, mf, to_path, to_path, null);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        return sync_result;
     }
 
     static private int moveCopySmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, boolean move_file,
@@ -2069,6 +2146,8 @@ public class SyncThreadSyncFile {
                                                             to_path, sf.lastModified(), mf.getLastModified());
                                                 }
                                                 SyncThread.scanMediaFile(stwa, to_path);
+                                                stwa.lastWriteSafFile=sf;
+                                                stwa.lastWriteFile=tf;
                                             }
                                             stwa.totalCopyCount++;
                                             SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterAuth);
@@ -2113,6 +2192,8 @@ public class SyncThreadSyncFile {
                                                             to_path, sf.lastModified(), mf.getLastModified());
                                                 }
                                                 SyncThread.scanMediaFile(stwa, to_path);
+                                                stwa.lastWriteSafFile=sf;
+                                                stwa.lastWriteFile=tf;
                                             }
                                             stwa.totalCopyCount++;
                                         }

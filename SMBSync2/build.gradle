@@ -10,7 +10,7 @@ android {
         targetSdkVersion 23  //Android 6.0
 //        targetSdkVersion 26  //Android 8.0
 
-        versionCode 92
+        versionCode 93
         versionName "1.59"
 
 //        compileOptions {

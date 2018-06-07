@@ -146,6 +146,9 @@ public class SyncThread extends Thread {
         public String zipFileNameEncoding = "";
         public boolean zipFileCopyBackRequired = false;
         public String zipWorkFileName = "";
+
+        public SafFile lastWriteSafFile=null;
+        public File lastWriteFile=null;
     }
 
     private SyncThreadWorkArea mStwa = new SyncThreadWorkArea();
@@ -1806,19 +1809,24 @@ public class SyncThread extends Thread {
         long lf_time = 0, lf_length = 0;
         boolean lf_exists=false;
 
-        if (lf.getPath().startsWith(stwa.gp.safMgr.getSdcardRootPath())) {
-            SafFile sf=stwa.gp.safMgr.findSdcardItem(lf.getPath());
-            if (sf!=null) {
-                lf_exists=true;
-                lf_time = sf.lastModified();
-                lf_length = sf.length();
-            }
-        } else {
-            lf_exists=lf.exists();
-            if (lf_exists) {
-                lf_time = lf.lastModified();
-                lf_length = lf.length();
-            }
+//        if (lf.getPath().startsWith(stwa.gp.safMgr.getSdcardRootPath())) {
+//            SafFile sf=stwa.gp.safMgr.findSdcardItem(lf.getPath());
+//            if (sf!=null) {
+//                lf_exists=true;
+//                lf_time = sf.lastModified();
+//                lf_length = sf.length();
+//            }
+//        } else {
+//            lf_exists=lf.exists();
+//            if (lf_exists) {
+//                lf_time = lf.lastModified();
+//                lf_length = lf.length();
+//            }
+//        }
+        lf_exists=lf.exists();
+        if (lf_exists) {
+            lf_time = lf.lastModified();
+            lf_length = lf.length();
         }
 
         return isFileChangedDetailCompare(stwa, sti, fp,
