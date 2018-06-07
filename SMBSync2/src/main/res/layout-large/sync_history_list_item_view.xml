@@ -75,7 +75,7 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="@string/msgs_main_sync_history_mode"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:textAppearance="?android:attr/textAppearanceSmall"
 	            />	
 	        <TextView
 	            android:id="@+id/sync_history_list_view_mode"
@@ -84,7 +84,7 @@
 	            android:layout_marginLeft="5dp"
 	            android:gravity="right"
 	            android:text="Normal"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
 	            tools:ignore="HardcodedText" />
 	        	        	
 	        <TextView
@@ -92,7 +92,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="5dp"
 	            android:text="@string/msgs_main_sync_history_count_copied"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
 	            />
 	        
 	        <TextView
@@ -102,7 +102,7 @@
 	            android:ellipsize="end"
 	            android:maxLines="1"
 	            android:text="100"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
 	            tools:ignore="HardcodedText" />
 	
 	        <TextView
@@ -110,7 +110,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="5dp"
 	            android:text="@string/msgs_main_sync_history_count_deleted"
-	            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 	        
 	        <TextView
 	            android:id="@+id/sync_history_list_view_count_deleted"
@@ -119,14 +119,14 @@
 	            android:ellipsize="end"
 	            android:maxLines="1"
 	            android:text="900"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
 	            tools:ignore="HardcodedText" />
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="5dp"
 	            android:text="@string/msgs_main_sync_history_elapsed_time"
-	            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 	        
 	        <TextView
 	            android:id="@+id/sync_history_list_view_elapsed_time"
@@ -135,7 +135,7 @@
 	            android:ellipsize="end"
 	            android:maxLines="1"
 	            android:text="900"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
 	            tools:ignore="HardcodedText" />
 	        
 	        <TextView
@@ -145,7 +145,7 @@
 	            android:layout_marginLeft="5dp"
 	            android:gravity="right"
 	            android:text="Activity"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
 	            tools:ignore="HardcodedText" />
 	        	
 	    </LinearLayout>
