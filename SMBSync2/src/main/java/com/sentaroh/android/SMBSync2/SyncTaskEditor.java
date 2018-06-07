@@ -823,13 +823,9 @@ public class SyncTaskEditor extends DialogFragment {
 
         et_sync_folder_dir_name.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > 0) {
@@ -847,6 +843,16 @@ public class SyncTaskEditor extends DialogFragment {
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
         });
+
+        sp_sync_folder_mp.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
         btn_sync_folder_list_dir.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
