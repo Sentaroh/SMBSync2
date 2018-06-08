@@ -38,7 +38,7 @@
     
     <string name="msgs_smbsync_main_no_external_storage">外部メディアが使用できないため、いくつかの機能が使用できません。</string>
     
-    <string name="msgs_smbsync_main_settings_jcifs_changed_restart"	>SMB1パラメーターが変更されました。アプリケーションを再起動するまで有効になりません。今すぐ再起動しますか？</string>
+    <string name="msgs_smbsync_main_settings_jcifs_changed_restart"	>SMB1パラメーターが変更されましたがアプリケーションを再起動するまで有効になりません。アプリケーションを終了しますか?</string>
     
     <string name="msgs_hist_cont_label_share">共有</string>
 	<string name="msgs_hist_cont_label_move_top">最上部に移動</string>

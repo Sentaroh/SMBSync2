@@ -3726,12 +3726,14 @@ public class ActivityMain extends AppCompatActivity {
                 @Override
                 public void positiveResponse(Context context, Object[] objects) {
                     mUtil.flushLog();
-                    Intent in_act = new Intent(context, ActivityMain.class);
-                    int pi_id = R.string.app_name;
-                    PendingIntent pi = PendingIntent.getActivity(context, pi_id, in_act, PendingIntent.FLAG_CANCEL_CURRENT);
-                    AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                    am.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pi);
-                    Runtime.getRuntime().exit(0);
+//                    Intent in_act = new Intent(context, ActivityMain.class);
+//                    int pi_id = R.string.app_name;
+//                    PendingIntent pi = PendingIntent.getActivity(context, pi_id, in_act, PendingIntent.FLAG_CANCEL_CURRENT);
+//                    AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+//                    am.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pi);
+//                    Runtime.getRuntime().exit(0);
+                    mGp.settingExitClean=true;
+                    finish();
                 }
                 @Override
                 public void negativeResponse(Context context, Object[] objects) {}
