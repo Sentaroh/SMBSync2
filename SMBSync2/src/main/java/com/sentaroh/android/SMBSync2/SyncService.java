@@ -684,9 +684,28 @@ public class SyncService extends Service {
             if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
                     mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR)) vibration=true;
         }
-        NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage, sound, vibration);
-        if (mGp.callbackStub != null && sound) playBackDefaultNotification();
-        if (mGp.callbackStub != null && vibration) vibrateDefaultPattern();
+        boolean is_notice_message_showed=false;
+        if (mGp.activityIsBackground) {
+            if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                if (mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
+                        mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
+                    NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage, sound, vibration);
+                    is_notice_message_showed=true;
+                }
+            } else if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_ERROR) {
+                if (mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
+                        mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
+                    NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage, sound, vibration);
+                    is_notice_message_showed=true;
+                }
+            }
+        }
+//        if (mGp.callbackStub != null && sound) playBackDefaultNotification();
+//        if (mGp.callbackStub != null && vibration) vibrateDefaultPattern();
+        if (!is_notice_message_showed) {
+            if (sound) playBackDefaultNotification();
+            if (vibration) vibrateDefaultPattern();
+        }
     }
 
     private void playBackDefaultNotification() {
