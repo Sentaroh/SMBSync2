@@ -229,7 +229,7 @@ public class SyncTaskUtil {
                             if (pl.length()>15) dec_str = pl.substring(6);
                             else dec_str="";
                         }
-                        if (!dec_str.equals("")) {
+                        if (dec_str!=null && !dec_str.equals("")) {
                             String[] parm = dec_str.split("\t");
                             result = (parm[0].equals("Default") && parm[1].equals("S"));
                         }
