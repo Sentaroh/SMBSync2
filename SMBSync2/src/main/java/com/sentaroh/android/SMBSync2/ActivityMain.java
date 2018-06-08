@@ -93,6 +93,7 @@ import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.Widget.CustomTabContentView;
+import com.sentaroh.android.Utilities.Widget.CustomTextView;
 import com.sentaroh.android.Utilities.Widget.CustomViewPager;
 import com.sentaroh.android.Utilities.Widget.CustomViewPagerAdapter;
 import com.sentaroh.android.Utilities.ZipUtil;
@@ -383,7 +384,10 @@ public class ActivityMain extends AppCompatActivity {
         dialog.setContentView(R.layout.common_dialog);
 
         final TextView tv_title=(TextView)dialog.findViewById(R.id.common_dialog_title);
-        final TextView tv_msg=(TextView)dialog.findViewById(R.id.common_dialog_msg);
+        final TextView tv_msg_old=(TextView)dialog.findViewById(R.id.common_dialog_msg);
+        tv_msg_old.setVisibility(TextView.GONE);
+        final CustomTextView tv_msg=(CustomTextView)dialog.findViewById(R.id.common_dialog_custom_text_view);
+        tv_msg.setVisibility(TextView.VISIBLE);
         final Button btn_copy=(Button)dialog.findViewById(R.id.common_dialog_btn_ok);
         final Button btn_close=(Button)dialog.findViewById(R.id.common_dialog_btn_cancel);
 
