@@ -168,34 +168,24 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.themeColorList == null) {
             mGp.themeColorList = ThemeUtil.getThemeColorList(this);
         }
-
         setTheme(mGp.applicationTheme);
-
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.main_screen);
 
         mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
-
         mUtil = new SyncUtil(this.getApplicationContext(), "Main", mGp);
-
         mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
-
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setHomeButtonEnabled(false);
-
         if (mGp.settingFixDeviceOrientationToPortrait)
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         ccMenu = new CustomContextMenu(this.getResources(), getSupportFragmentManager());
         commonDlg = new CommonDialog(this, getSupportFragmentManager());
-
         checkRequiredPermissions();
-
         mTaskUtil = new SyncTaskUtil(mUtil, this, commonDlg, ccMenu, mGp, getSupportFragmentManager());
-
         mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mGp.msgList);
 
         if (mGp.syncTaskList == null)
@@ -209,14 +199,11 @@ public class ActivityMain extends AppCompatActivity {
         mCurrentTab = SMBSYNC2_TAB_NAME_TASK;
 
         createTabView();
-
         initAdapterAndView();
-
         mGp.initJcifsOption();
         listSettingsOption();
 
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET);
-
         setSyncTaskContextButtonHide();
 
         Thread th1 = new Thread() {
@@ -228,7 +215,6 @@ public class ActivityMain extends AppCompatActivity {
             }
         };
         th1.start();
-
     }
 
     @SuppressLint("NewApi")
@@ -256,13 +242,10 @@ public class ActivityMain extends AppCompatActivity {
                 public void positiveResponse(Context c, Object[] o) {
                     setCallbackListener();
                     setActivityForeground(true);
-
                     if (restartType == NORMAL_START) {
                         setUiEnabled();
                         checkStorageStatus();
-                        if (mGp.msgList.size() > 1)
-                            mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-
+                        if (mGp.msgList.size()>1) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
                     } else if (restartType == RESTART_BY_KILLED) {
                         setUiEnabled();
                         restoreTaskData();
@@ -274,7 +257,6 @@ public class ActivityMain extends AppCompatActivity {
                         mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_destroyed));
                         mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
                     }
-
                     setMessageContextButtonListener();
                     setMessageContextButtonNormalMode();
 
@@ -291,15 +273,12 @@ public class ActivityMain extends AppCompatActivity {
                     deleteTaskData();
                     ScheduleUtil.setSchedulerInfo(mGp);
                     restartType = RESTART_WITH_OUT_INITIALYZE;
-
                     reshowDialogWindow();
-
                     if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
                 }
 
                 @Override
-                public void negativeResponse(Context c, Object[] o) {
-                }
+                public void negativeResponse(Context c, Object[] o) {}
             });
             openService(svc_ntfy);
         }
