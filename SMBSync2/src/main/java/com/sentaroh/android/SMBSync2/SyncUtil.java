@@ -31,10 +31,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -65,12 +68,8 @@ import com.sentaroh.android.Utilities.StringUtil;
 
 public final class SyncUtil {
     private Context mContext = null;
-
     private LogUtil mLog = null;
-
     private GlobalParameters mGp = null;
-
-    @SuppressWarnings("unused")
     private String mLogIdent = "";
 
     public SyncUtil(Context c, String li, GlobalParameters gp) {
@@ -90,10 +89,6 @@ public final class SyncUtil {
         else spinner.setBackground(c.getDrawable(R.drawable.spinner_color_background));
     }
 
-    ;
-
-    @SuppressWarnings("deprecation")
-    @SuppressLint("InlinedApi")
     final static public SharedPreferences getPrefMgr(Context c) {
         return c.getSharedPreferences(DEFAULT_PREFS_FILENAME, Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
     }
@@ -101,8 +96,6 @@ public final class SyncUtil {
     final public void setLogId(String li) {
         mLog.setLogId(li);
     }
-
-    ;
 
     final static public String getExecutedMethodName() {
         String name = Thread.currentThread().getStackTrace()[3].getMethodName();
@@ -112,46 +105,6 @@ public final class SyncUtil {
     final public void resetLogReceiver() {
         mLog.resetLogReceiver();
     }
-
-//    static public BaseContext buildBaseContextWithSmbProtocol(RemoteAuthInfo ra) {
-//        BaseContext bc=null;
-//        try {
-//            Properties prop=new Properties();
-////            prop_master.setProperty("jcifs.smb.lmCompatibility", "0");
-////            prop_master.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
-////            prop_master.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
-////            prop_master.setProperty("jcifs.smb.client.signingPreferred", "false");
-////            prop_master.setProperty("jcifs.smb.client.signingEnforced", "false");
-////            prop_master.setProperty("jcifs.smb.client.encryptionEnabled", "false");
-////            prop_master.setProperty("jcifs.smb.useRawNTLM", "true");
-////
-////            prop_master.setProperty("jcifs.smb.client.forceExtendedSecurity", "false");
-////
-////            prop_master.setProperty("jcifs.smb.client.useSMB2Negotiation", "false");
-//
-////            prop_master.setProperty("jcifs.smb.client.minVersion","SMB1");
-////            prop_master.setProperty("jcifs.smb.client.maxVersion","SMB1");
-//            if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM)) {
-//                if (ra.smb_ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced","true");
-//                else prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
-//                prop.setProperty("jcifs.smb.client.minVersion","SMB1");
-//                prop.setProperty("jcifs.smb.client.maxVersion","SMB210");
-//            } else if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
-//                prop.setProperty("jcifs.smb.client.minVersion","SMB1");
-//                prop.setProperty("jcifs.smb.client.maxVersion","SMB1");
-//                prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
-//            } else if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY)) {
-//                if (ra.smb_ipc_signing_enforced) prop.setProperty("jcifs.smb.client.ipcSigningEnforced","true");
-//                else prop.setProperty("jcifs.smb.client.ipcSigningEnforced","false");
-//                prop.setProperty("jcifs.smb.client.minVersion","SMB210");
-//                prop.setProperty("jcifs.smb.client.maxVersion","SMB210");
-//            }
-//            bc = new BaseContext(new PropertyConfiguration(prop));
-//        } catch (CIFSException e) {
-//            e.printStackTrace();
-//        }
-//        return bc;
-//    }
 
     final public void flushLog() {
         mLog.flushLog();
@@ -181,19 +134,13 @@ public final class SyncUtil {
         return false;
     }
 
-    ;
-
     final public void deleteLogFile() {
         mLog.deleteLogFile();
     }
 
-    ;
-
     public String buildPrintMsg(String cat, String... msg) {
         return mLog.buildPrintLogMsg(cat, msg);
     }
-
-    ;
 
     private final int MAX_MSG_COUNT = 5000;
 
@@ -223,13 +170,9 @@ public final class SyncUtil {
         });
     }
 
-    ;
-
     final public void addDebugMsg(int lvl, String cat, String... msg) {
         mLog.addDebugMsg(lvl, cat, msg);
     }
-
-    ;
 
     final public boolean isLogFileExists() {
         boolean result = false;
@@ -238,16 +181,12 @@ public final class SyncUtil {
         return result;
     }
 
-    ;
-
     final public boolean getSettingsLogOption() {
         boolean result = false;
         result = getPrefMgr().getBoolean(mContext.getString(R.string.settings_log_option), false);
         if (mGp.settingDebugLevel >= 2) addDebugMsg(2, "I", "LogOption=" + result);
         return result;
     }
-
-    ;
 
     final public boolean setSettingsLogOption(boolean enabled) {
         boolean result = false;
@@ -256,68 +195,9 @@ public final class SyncUtil {
         return result;
     }
 
-    ;
-
     final public String getLogFilePath() {
         return mLog.getLogFilePath();
     }
-
-    ;
-
-
-//	static public ArrayList<PreferenceParmListIItem> loadSettingsParmFromFile(Context c, String dir, String fn) {
-//		ArrayList<PreferenceParmListIItem>ispl=new ArrayList<PreferenceParmListIItem>();
-//		File lf=new File(dir+"/"+fn);
-//		if (lf.exists()) {
-//			BufferedReader br;
-//			try {
-//				Editor prefs = getPrefMgr(c).edit();
-//				br = new BufferedReader(new FileReader(lf),8192);
-//				String pl;
-//				while ((pl = br.readLine()) != null) {
-//					String tmp_ps=pl.substring(7,pl.length());
-//					String[] tmp_pl=tmp_ps.split("\t");// {"type","name","active",options...};
-//					if (tmp_pl[1]!=null && tmp_pl.length>=5 && tmp_pl[1].equals(SMBSYNC2_PROF_TYPE_SETTINGS)) {
-////						String[] val = new String[]{parm[2],parm[3],parm[4]};
-//						PreferenceParmListIItem ppli=new PreferenceParmListIItem();
-//						if (tmp_pl[2]!=null) ppli.parms_key=tmp_pl[2];
-//						if (tmp_pl[3]!=null) ppli.parms_type=tmp_pl[3];
-//						if (tmp_pl[4]!=null) {
-//							if (ppli.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING)) {
-//								byte[] enc_array=Base64Compat.decode(tmp_pl[4], Base64Compat.NO_WRAP);
-//								ppli.parms_value=new String(enc_array);
-//							} else {
-//								ppli.parms_value=tmp_pl[4];
-//							}
-//						}
-//						if (!ppli.parms_key.equals("") && !ppli.parms_type.equals("")) {
-////							Log.v("","key="+tmp_pl[2]+", value="+ppli.parms_value+", type="+tmp_pl[3]);
-////							Log.v("","key="+ppli.parms_key+", value="+ppli.parms_value+", type="+ppli.parms_type);
-//							ispl.add(ppli);
-//							if (ppli.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING)) {
-//								prefs.putString(ppli.parms_key, ppli.parms_value).commit();
-//							} else if (ppli.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_LONG)) {
-//								prefs.putLong(ppli.parms_key, Long.parseLong(ppli.parms_value)).commit();
-//							} else if (ppli.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_INT)) {
-//								prefs.putInt(ppli.parms_key, Integer.parseInt(ppli.parms_value)).commit();
-//							} else if (ppli.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_BOOLEAN)) {
-//								if (ppli.parms_value.equals("true")) prefs.putBoolean(ppli.parms_key, true).commit();
-//								else prefs.putBoolean(ppli.parms_key, false).commit();
-//							}
-//						}
-//					}
-//				}
-//				br.close();
-//			} catch (FileNotFoundException e) {
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		} else {
-//			ispl=null;
-//		}
-//		return ispl;
-//	};
 
     static public long getSettingsParmSaveDate(Context c, String dir, String fn) {
         File lf = new File(dir + "/" + fn);
@@ -329,9 +209,6 @@ public final class SyncUtil {
         }
         return result;
     }
-
-    ;
-
 
     public boolean isDebuggable() {
         PackageManager manager = mContext.getPackageManager();
@@ -346,8 +223,6 @@ public final class SyncUtil {
         return false;
     }
 
-    ;
-
     public void initAppSpecificExternalDirectory(Context c) {
 //		if (Build.VERSION.SDK_INT>=19) {
 //			c.getExternalFilesDirs(null);
@@ -356,8 +231,6 @@ public final class SyncUtil {
         ContextCompat.getExternalFilesDirs(c, null);
     }
 
-    ;
-
     public boolean isWifiActive() {
         boolean ret = false;
         WifiManager mWifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
@@ -365,8 +238,6 @@ public final class SyncUtil {
         addDebugMsg(2, "I", "isWifiActive WifiEnabled=" + ret);
         return ret;
     }
-
-    ;
 
     public String getConnectedWifiSsid() {
         String ret = "";
@@ -385,8 +256,6 @@ public final class SyncUtil {
         return ret;
     }
 
-    ;
-
     public static boolean isSmbHostAddressConnected(String addr) {
         boolean result = false;
         if (JcifsUtil.isIpAddressAndPortConnected(addr, 139, 3500) ||
@@ -394,16 +263,12 @@ public final class SyncUtil {
         return result;
     }
 
-    ;
-
     public static boolean isSmbHostAddressConnected(String addr, int port) {
         boolean result = false;
         result = JcifsUtil.isIpAddressAndPortConnected(addr, port, 3500);
 //		Log.v("","addr="+addr+", port="+port+", result="+result);
         return result;
     }
-
-    ;
 
     public static String getLocalIpAddress() {
         String result = "";
@@ -442,8 +307,6 @@ public final class SyncUtil {
         return result;
     }
 
-    ;
-
     public static String getIfIpAddress() {
         String result = "";
         try {
@@ -474,7 +337,48 @@ public final class SyncUtil {
         return result;
     }
 
-    ;
+    private void sendMagicPacket(final String target_mac, final String if_network) {
+//                sendMagicPacket("08:bd:43:f6:48:2a", if_ip);
+        Thread th=new Thread(){
+            @Override
+            public void run() {
+                byte[] broadcastMacAddress=new byte[6];
+                for(int i=0;i<6;i++) broadcastMacAddress[i]=(byte)0xff;
+                InetAddress broadcastIpAddress = null;
+                try {
+                    int j=if_network.lastIndexOf(".");
+                    String if_ba=if_network.substring(0,if_network.lastIndexOf("."))+".255";
+                    broadcastIpAddress = InetAddress.getByName(if_ba);//.getByAddress(new byte[]{-1,-1,-1,-1});
+
+                    byte[] targetMacAddress=new byte[6];
+                    String[] m_array=target_mac.split(":");
+                    for(int i=0;i<6;i++) {
+                        targetMacAddress[i]=Integer.decode("0x"+m_array[i]).byteValue();
+                    }
+
+                    byte[] magicPacket=new byte[102];
+                    System.arraycopy(broadcastMacAddress,0, magicPacket,0,6);
+                    for (int i=0;i<16;i++) {
+                        System.arraycopy(targetMacAddress,0, magicPacket,(i*6)+6, 6);
+                    }
+
+// マジックパケットを任意のポートにブロードキャストするための UDPデータグラムパケット
+                    DatagramPacket packet = new DatagramPacket(magicPacket, magicPacket.length, broadcastIpAddress, 9);
+
+// マジックパケット 送信
+                    DatagramSocket socket = new DatagramSocket();
+                    socket.send(packet);
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                } catch (SocketException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        th.start();
+    }
 
     static public void setCheckedTextView(final CheckedTextView ctv) {
         ctv.setOnClickListener(new OnClickListener() {
@@ -485,10 +389,6 @@ public final class SyncUtil {
         });
     }
 
-    ;
-
-
-    @SuppressLint("SdCardPath")
     public ArrayList<SyncHistoryItem> loadHistoryList() {
 //		Log.v("","load hist started");
         ArrayList<SyncHistoryItem> hl = new ArrayList<SyncHistoryItem>();
@@ -560,8 +460,6 @@ public final class SyncUtil {
         return hl;
     }
 
-    ;
-
     final public String createSyncResultFilePath(String syncProfName) {
         String dir = mGp.settingMgtFileDir + "/result_log";
         File tlf = new File(dir);
@@ -576,11 +474,7 @@ public final class SyncUtil {
         return fp;
     }
 
-    ;
-
-    @SuppressLint("SdCardPath")
     final public void saveHistoryList(final ArrayList<SyncHistoryItem> hl) {
-//		Log.v("","save hist started");
         if (hl == null) return;
         try {
             String dir = mGp.settingMgtFileDir;
@@ -592,16 +486,11 @@ public final class SyncUtil {
             int max = 500;
             StringBuilder sb_buf = new StringBuilder(1024 * 2);
             SyncHistoryItem shli = null;
-//			String cpy_str, del_str, ign_str;
             final ArrayList<SyncHistoryItem> del_list = new ArrayList<SyncHistoryItem>();
             for (int i = 0; i < hl.size(); i++) {
-//				Log.v("","i="+i+", n="+hl.get(i).sync_prof);
                 if (!hl.get(i).sync_prof.equals("")) {
                     shli = hl.get(i);
                     if (i < max) {
-//						cpy_str=array2String(sb_buf,shli.sync_copied_file);
-//						del_str=array2String(sb_buf,shli.sync_deleted_file);
-//						ign_str=array2String(sb_buf,shli.sync_ignored_file);
                         String lfp = "";
                         if (shli.isLogFileAvailable) lfp = shli.sync_log_file_path;
                         sb_buf.setLength(0);
@@ -638,13 +527,9 @@ public final class SyncUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//		Log.v("","save hist ended");
     }
 
-    ;
-
     public static boolean isCharging(Context c) {
-//        long b_time=System.currentTimeMillis();
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         Intent batteryStatus = c.registerReceiver(null, ifilter);
         // Are we charging / charged?
@@ -659,6 +544,7 @@ public final class SyncUtil {
 
         return isCharging;
     }
+
 //	final static private String array2String(StringBuilder sb_buf,String[] sa) {
 //		sb_buf.setLength(0);
 //		if (sa!=null) {
