@@ -204,35 +204,32 @@ public class SyncTaskUtil {
         boolean result = false;
 
         File lf = new File(fpath);
-        if (lf.exists() && lf.isFile() && lf.canRead()) {
+        if (lf.exists() && lf.canRead()) {
             try {
                 BufferedReader br;
                 br = new BufferedReader(new FileReader(fpath), 8192);
                 if (br!=null) {
                     String dec_str = "";
                     String pl = br.readLine();
-                    if (pl!=null) {
-                        String enc_str = pl.substring(6);
-                        if (enc_str.startsWith("ENC")) {
-                            pl = br.readLine();
-                            enc_str = pl.substring(6);
-                            byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
-                            CipherParms cp = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefix + mGp.profilePassword);
-                            dec_str = EncryptUtil.decrypt(enc_array, cp);
-                            if (dec_str == null) {
-                                CipherParms cp_old = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefixOld + mGp.profilePassword);
-                                dec_str = EncryptUtil.decrypt(enc_array, cp_old);
-                            }
-                        } else {
-                            pl = br.readLine();
-                            if (pl==null) return false;
-                            if (pl.length()>15) dec_str = pl.substring(6);
-                            else dec_str="";
+                    String enc_str = pl.substring(6);
+                    if (enc_str.startsWith("ENC")) {
+                        pl = br.readLine();
+                        enc_str = pl.substring(6);
+                        byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
+                        CipherParms cp = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefix + mGp.profilePassword);
+                        dec_str = EncryptUtil.decrypt(enc_array, cp);
+                        if (dec_str == null) {
+                            CipherParms cp_old = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefixOld + mGp.profilePassword);
+                            dec_str = EncryptUtil.decrypt(enc_array, cp_old);
                         }
-                        if (dec_str!=null && !dec_str.equals("")) {
-                            String[] parm = dec_str.split("\t");
-                            result = (parm[0].equals("Default") && parm[1].equals("S"));
-                        }
+                    } else {
+                        pl = br.readLine();
+                        if (pl.length()>15) dec_str = pl.substring(6);
+                        else dec_str="";
+                    }
+                    if (!dec_str.equals("")) {
+                        String[] parm = dec_str.split("\t");
+                        result = (parm[0].equals("Default") && parm[1].equals("S"));
                     }
                     br.close();
                 }
@@ -254,7 +251,7 @@ public class SyncTaskUtil {
                 BufferedReader br;
                 br = new BufferedReader(new FileReader(fpath), 8192);
                 String pl = br.readLine();
-                if (pl != null && pl.length()==9 && pl.startsWith("PROF")) {
+                if (pl != null && pl.length()>=9) {
                     if (pl.substring(6).startsWith(SMBSYNC2_PROF_ENC)) result = true;
                 }
                 br.close();
@@ -266,7 +263,6 @@ public class SyncTaskUtil {
         }
         return result;
     }
-
     public void promptPasswordForImport(final String fpath, final NotifyEvent ntfy_pswd) {
         final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
