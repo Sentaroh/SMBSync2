@@ -211,25 +211,29 @@ public class SyncTaskUtil {
                 if (br!=null) {
                     String dec_str = "";
                     String pl = br.readLine();
-                    String enc_str = pl.substring(6);
-                    if (enc_str.startsWith("ENC")) {
-                        pl = br.readLine();
-                        enc_str = pl.substring(6);
-                        byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
-                        CipherParms cp = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefix + mGp.profilePassword);
-                        dec_str = EncryptUtil.decrypt(enc_array, cp);
-                        if (dec_str == null) {
-                            CipherParms cp_old = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefixOld + mGp.profilePassword);
-                            dec_str = EncryptUtil.decrypt(enc_array, cp_old);
+                    if (pl!=null) {
+                        String enc_str = pl.substring(6);
+                        if (enc_str!=null) {
+                            if (enc_str.startsWith("ENC")) {
+                                pl = br.readLine();
+                                enc_str = pl.substring(6);
+                                byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
+                                CipherParms cp = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefix + mGp.profilePassword);
+                                dec_str = EncryptUtil.decrypt(enc_array, cp);
+                                if (dec_str == null) {
+                                    CipherParms cp_old = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefixOld + mGp.profilePassword);
+                                    dec_str = EncryptUtil.decrypt(enc_array, cp_old);
+                                }
+                            } else {
+                                pl = br.readLine();
+                                if (pl!=null && pl.length()>15) dec_str = pl.substring(6);
+                                else dec_str="";
+                            }
+                            if (!dec_str.equals("")) {
+                                String[] parm = dec_str.split("\t");
+                                result = (parm[0].equals("Default") && parm[1].equals("S"));
+                            }
                         }
-                    } else {
-                        pl = br.readLine();
-                        if (pl!=null && pl.length()>15) dec_str = pl.substring(6);
-                        else dec_str="";
-                    }
-                    if (!dec_str.equals("")) {
-                        String[] parm = dec_str.split("\t");
-                        result = (parm[0].equals("Default") && parm[1].equals("S"));
                     }
                     br.close();
                 }
