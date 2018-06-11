@@ -224,7 +224,7 @@ public class SyncTaskUtil {
                         }
                     } else {
                         pl = br.readLine();
-                        if (pl.length()>15) dec_str = pl.substring(6);
+                        if (pl!=null && pl.length()>15) dec_str = pl.substring(6);
                         else dec_str="";
                     }
                     if (!dec_str.equals("")) {
@@ -1349,7 +1349,7 @@ public class SyncTaskUtil {
 
     }
 
-    public void ipAddressScanButtonDlg(Dialog dialog) {
+    public void invokeScanSmbServerDlg(Dialog dialog) {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
         final EditText edithost = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
         final CheckedTextView ctv_use_port_number = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
@@ -1370,10 +1370,10 @@ public class SyncTaskUtil {
         });
         String port_num = "";
         if (ctv_use_port_number.isChecked()) port_num = editport.getText().toString();
-        scanRemoteNetworkDlg(ntfy, port_num, false);
+        scanSmbServerDlg(ntfy, port_num, false);
     }
 
-    public void invokeSelectRemoteShareDlg(Dialog dialog) {
+    public void invokeSelectSmbShareDlg(Dialog dialog) {
 //		final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
 
         final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
@@ -3294,8 +3294,8 @@ public class SyncTaskUtil {
         return result;
     }
 
-    public void scanRemoteNetworkDlg(final NotifyEvent p_ntfy,
-                                     String port_number, boolean scan_start) {
+    public void scanSmbServerDlg(final NotifyEvent p_ntfy,
+                                 String port_number, boolean scan_start) {
         //カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
