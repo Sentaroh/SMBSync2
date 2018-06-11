@@ -671,19 +671,15 @@ public class SyncService extends Service {
 
     private void showSyncEndNotificationMessage() {
         boolean sound=false, vibration=false;
-        int color= Color.DKGRAY;
         if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            color= Color.DKGRAY;
             if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS) ||
                     mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_SUCCESS)) sound=true;
             if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
                     mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_SUCCESS)) vibration=true;
         } else if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_CANCEL) {
-            color= Color.DKGRAY;
             if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS)) sound=true;
             if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS)) vibration=true;
         } else if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_ERROR) {
-            color=Color.argb(255,255,0,0);
             if (mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS) ||
                     mGp.settingRingtoneWhenSyncEnded.equals(SMBSYNC2_RINGTONE_NOTIFICATION_ERROR)) sound=true;
             if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
@@ -691,16 +687,16 @@ public class SyncService extends Service {
         }
         boolean is_notice_message_showed=false;
         if (mGp.activityIsBackground) {
-            if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+            if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_SUCCESS || mSyncThreadResult == SyncTaskItem.SYNC_STATUS_CANCEL) {
                 if (mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
                         mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
-                    NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage, sound, vibration, color);
+                    NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage, sound, vibration);
                     is_notice_message_showed=true;
                 }
             } else if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_ERROR) {
                 if (mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
                         mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
-                    NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage, sound, vibration, color);
+                    NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage, sound, vibration);
                     is_notice_message_showed=true;
                 }
             }

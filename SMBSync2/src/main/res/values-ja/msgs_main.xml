@@ -365,4 +365,5 @@
     <string name="msgs_info_storage_copy_clipboard">コピー</string>
     <string name="msgs_info_storage_copy_completed">クリップボードにコピーしました</string>
     <string name="msgs_info_storage_title">ストレージ情報</string>
+    <string name="msgs_info_storage_send_btn_title">開発者に送る</string>
 </resources>

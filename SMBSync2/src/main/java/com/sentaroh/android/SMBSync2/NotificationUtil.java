@@ -278,7 +278,7 @@ public class NotificationUtil {
             gwa.notificationManager.notify(R.string.app_name, builder.build());
     }
 
-    final static public void showNoticeMsg(Context context, GlobalParameters gwa, String msg, boolean playback_sound, boolean vibration, int color) {
+    final static public void showNoticeMsg(Context context, GlobalParameters gwa, String msg, boolean playback_sound, boolean vibration) {
         clearNotification(gwa);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 //        Bitmap bm=BitmapFactory.decodeResource(gwa.appContext.getResources(), R.drawable.ic_48_smbsync_err);
@@ -286,7 +286,6 @@ public class NotificationUtil {
                 .setAutoCancel(true)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
 //                .setLargeIcon(bm)//smbsync_animation)
-//                .setColor(color)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(msg)
                 .setWhen(System.currentTimeMillis())

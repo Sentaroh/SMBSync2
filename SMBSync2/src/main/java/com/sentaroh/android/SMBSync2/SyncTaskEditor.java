@@ -717,7 +717,7 @@ public class SyncTaskEditor extends DialogFragment {
         btn_search_host.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTaskUtil.ipAddressScanButtonDlg(dialog);
+                mTaskUtil.invokeScanSmbServerDlg(dialog);
             }
         });
 
@@ -753,7 +753,7 @@ public class SyncTaskEditor extends DialogFragment {
         btn_sync_folder_list_share.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTaskUtil.invokeSelectRemoteShareDlg(dialog);
+                mTaskUtil.invokeSelectSmbShareDlg(dialog);
             }
         });
 

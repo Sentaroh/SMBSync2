@@ -373,4 +373,6 @@
     <string name="msgs_info_storage_copy_clipboard">Copy</string>
     <string name="msgs_info_storage_copy_completed">Copied to clipboard</string>
     <string name="msgs_info_storage_title">Storage Information</string>
+    <string name="msgs_info_storage_send_btn_title">Send to developer</string>
+
 </resources>
