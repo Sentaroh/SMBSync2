@@ -369,6 +369,9 @@ public class ActivityMain extends AppCompatActivity {
         tv_msg.setVisibility(TextView.VISIBLE);
         final Button btn_copy=(Button)dialog.findViewById(R.id.common_dialog_btn_ok);
         final Button btn_close=(Button)dialog.findViewById(R.id.common_dialog_btn_cancel);
+        final Button btn_send=(Button)dialog.findViewById(R.id.common_dialog_extra_button);
+        btn_send.setText(mContext.getString(R.string.msgs_info_storage_send_btn_title));
+        btn_send.setVisibility(Button.VISIBLE);
 
         tv_title.setText(mContext.getString(R.string.msgs_menu_list_storage_info));
         btn_close.setText(mContext.getString(R.string.msgs_common_dialog_close));
@@ -443,6 +446,26 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
+            }
+        });
+
+        btn_send.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setAction(Intent.ACTION_SEND);
+//                intent.setType("message/rfc822");
+                intent.setType("text/plain");
+//                intent.setType("application/zip");
+
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"gm.developer.fhoshino@gmail.com"});
+//                intent.putExtra(Intent.EXTRA_CC, new String[]{"cc@example.com"});
+//                intent.putExtra(Intent.EXTRA_BCC, new String[]{"bcc@example.com"});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "SMBSync2 System Info");
+                intent.putExtra(Intent.EXTRA_TEXT, tv_msg.getText().toString());
+//                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
+                mContext.startActivity(intent);
             }
         });
 
