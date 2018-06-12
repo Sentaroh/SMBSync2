@@ -79,6 +79,10 @@ import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.ZipFileListItem;
+import com.sentaroh.jcifs.JcifsAuth;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
+import com.sentaroh.jcifs.JcifsUtil;
 
 public class SyncThread extends Thread {
 

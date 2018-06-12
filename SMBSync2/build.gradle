@@ -78,6 +78,7 @@ dependencies {
 //    implementation(name: 'Utilities-1.0.5', ext: 'aar')
     implementation files('libs/jcifs-ng-2.1.0-mod-05.jar')
     implementation files('libs/jcifs-1.3.17_patch.jar')
+    implementation files('libs/JcifsFile-1.0.1.jar')
     implementation files('libs/slf4j-api-1.7.7.jar')
 //    implementation files('libs/slf4j-simple-1.7.7.jar')
 //    implementation "org.bouncycastle:bcprov-jdk15on:1.56"

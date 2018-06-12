@@ -49,6 +49,8 @@ import com.drew.metadata.mp4.Mp4Directory;
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.android.Utilities.StringUtil;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
 
 public class SyncThreadArchiveFile {
 

@@ -92,6 +92,10 @@ import com.sentaroh.android.Utilities.Dialog.DialogBackKeyListener;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistAdapter;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistItem;
 import com.sentaroh.android.Utilities.Widget.CustomTextView;
+import com.sentaroh.jcifs.JcifsAuth;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
+import com.sentaroh.jcifs.JcifsUtil;
 
 public class SyncTaskUtil {
 

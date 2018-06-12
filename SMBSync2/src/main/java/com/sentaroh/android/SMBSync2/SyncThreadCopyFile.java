@@ -34,6 +34,8 @@ import java.io.OutputStream;
 
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
 
 import static com.sentaroh.android.SMBSync2.Constants.*;
 

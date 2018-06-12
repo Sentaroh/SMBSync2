@@ -65,6 +65,7 @@ import android.widget.Spinner;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.StringUtil;
+import com.sentaroh.jcifs.JcifsUtil;
 
 public final class SyncUtil {
     private Context mContext = null;

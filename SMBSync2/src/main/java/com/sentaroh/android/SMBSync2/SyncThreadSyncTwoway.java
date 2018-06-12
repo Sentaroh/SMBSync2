@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
+import com.sentaroh.jcifs.JcifsException;
 
 public class SyncThreadSyncTwoway {
 
