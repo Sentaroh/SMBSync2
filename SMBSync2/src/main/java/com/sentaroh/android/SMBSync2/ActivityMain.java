@@ -1043,9 +1043,8 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered, isUiEnabled()=" + isUiEnabled());
-//		menu.findItem(R.id.menu_top_scheduler).setVisible(false);
         boolean pm_bo = false;
-        if (Build.VERSION.SDK_INT >= 23) {
+//        if (Build.VERSION.SDK_INT >= 23) {
 //            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(true);
 //            String packageName = mContext.getPackageName();
 //            PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
@@ -1055,16 +1054,15 @@ public class ActivityMain extends AppCompatActivity {
 //                bo_title = mContext.getString(R.string.msgs_menu_battery_optimization_disabled);
 //            else bo_title = mContext.getString(R.string.msgs_menu_battery_optimization_enabled);
 //            menu.findItem(R.id.menu_top_show_battery_optimization).setTitle(bo_title);
-        } else {
+//        } else {
 //            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(false);
-        }
+//        }
         if (isUiEnabled()) {
             menu.findItem(R.id.menu_top_housekeep).setEnabled(true);
             if (mGp.syncThreadActive) menu.findItem(R.id.menu_top_housekeep).setVisible(false);
             else menu.findItem(R.id.menu_top_housekeep).setVisible(true);
             menu.findItem(R.id.menu_top_sync).setVisible(true);
             menu.findItem(R.id.menu_top_settings).setEnabled(true);
-//			menu.findItem(R.id.menu_top_scheduler).setVisible(true);//.setEnabled(true);
             if (!mGp.externalStorageIsMounted) {
                 menu.findItem(R.id.menu_top_browse_log).setEnabled(false);
                 menu.findItem(R.id.menu_top_export).setEnabled(false);
@@ -1079,10 +1077,6 @@ public class ActivityMain extends AppCompatActivity {
                 menu.findItem(R.id.menu_top_log_management).setEnabled(true);
             }
             menu.findItem(R.id.menu_top_add_shortcut).setEnabled(true);
-            if (mGp.debuggable) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
-            else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
-
-//            menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(true);
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             if (!mGp.settingLogOption) menu.findItem(R.id.menu_top_browse_log).setVisible(false);
@@ -1094,24 +1088,19 @@ public class ActivityMain extends AppCompatActivity {
             if (!mGp.settingLogOption) {
                 menu.findItem(R.id.menu_top_browse_log).setEnabled(false);
             }
-//			Log.v("","ena="+menu.findItem(R.id.menu_top_browse_log).isEnabled());
 
             menu.findItem(R.id.menu_top_export).setEnabled(false);
             menu.findItem(R.id.menu_top_import).setEnabled(false);
-//			menu.findItem(R.id.menu_top_about).setEnabled(false);
             menu.findItem(R.id.menu_top_settings).setEnabled(false);
             menu.findItem(R.id.menu_top_log_management).setEnabled(false);
             menu.findItem(R.id.menu_top_housekeep).setEnabled(false);
             menu.findItem(R.id.menu_top_add_shortcut).setEnabled(false);
-
-            if (mGp.debuggable) menu.findItem(R.id.menu_top_housekeep).setVisible(true);
-            else menu.findItem(R.id.menu_top_housekeep).setVisible(false);
-            if (mGp.debuggable) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
-            else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
-
-//            menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(false);
         }
         menu.findItem(R.id.menu_top_add_shortcut).setVisible(false);
+
+        if (mGp.debuggable) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
+        else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
+
         return super.onPrepareOptionsMenu(menu);
     }
 
