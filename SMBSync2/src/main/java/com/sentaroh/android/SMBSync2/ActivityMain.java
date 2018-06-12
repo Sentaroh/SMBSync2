@@ -455,8 +455,8 @@ public class ActivityMain extends AppCompatActivity {
                 Intent intent=new Intent();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setAction(Intent.ACTION_SEND);
-//                intent.setType("message/rfc822");
-                intent.setType("text/plain");
+                intent.setType("message/rfc822");
+//                intent.setType("text/plain");
 //                intent.setType("application/zip");
 
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"gm.developer.fhoshino@gmail.com"});
