@@ -497,11 +497,16 @@ public class ActivityMain extends AppCompatActivity {
             for (Object volume : volumeList) {
                 Method getPath = volume.getClass().getDeclaredMethod("getPath");
 //	            Method isRemovable = volume.getClass().getDeclaredMethod("isRemovable");
+                Method isPrimary = volume.getClass().getDeclaredMethod("isPrimary");
                 Method getUuid = volume.getClass().getDeclaredMethod("getUuid");
                 Method toString = volume.getClass().getDeclaredMethod("toString");
+//                Method allowMassStorage = volume.getClass().getDeclaredMethod("allowMassStorage");
+//                Method getStorageId = volume.getClass().getDeclaredMethod("getStorageId");
                 String path = (String) getPath.invoke(volume);
 //	            boolean removable = (Boolean)isRemovable.invoke(volume);
-                mpi+=(String) toString.invoke(volume)+"\n";
+//                mpi+="allowMassStorage="+(boolean) allowMassStorage.invoke(volume)+"\n";
+//                mpi+="getStorageId="+String.format("0x%8h",((int) getStorageId.invoke(volume)))+"\n";
+                mpi+=(String) toString.invoke(volume)+", isPrimary="+(boolean)isPrimary.invoke(volume)+"\n";
 //	            if ((String)getUuid.invoke(volume)!=null) {
 //	            	paths.add(path);
 //					if (debug) {
@@ -1077,6 +1082,8 @@ public class ActivityMain extends AppCompatActivity {
                 menu.findItem(R.id.menu_top_log_management).setEnabled(true);
             }
             menu.findItem(R.id.menu_top_add_shortcut).setEnabled(true);
+
+            menu.findItem(R.id.menu_top_select_storage).setVisible(true);
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             if (!mGp.settingLogOption) menu.findItem(R.id.menu_top_browse_log).setVisible(false);
@@ -1095,11 +1102,10 @@ public class ActivityMain extends AppCompatActivity {
             menu.findItem(R.id.menu_top_log_management).setEnabled(false);
             menu.findItem(R.id.menu_top_housekeep).setEnabled(false);
             menu.findItem(R.id.menu_top_add_shortcut).setEnabled(false);
+
+            menu.findItem(R.id.menu_top_select_storage).setVisible(false);
         }
         menu.findItem(R.id.menu_top_add_shortcut).setVisible(false);
-
-        if (mGp.debuggable) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
-        else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -1180,8 +1186,7 @@ public class ActivityMain extends AppCompatActivity {
                 listStorageInfo();
                 return true;
             case R.id.menu_top_select_storage:
-                Intent intent2 = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                startActivityForResult(intent2, (ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS));
+                reselectSdcard("");
                 return true;
         }
         if (isUiEnabled()) {
@@ -1872,8 +1877,8 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private final int REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
+    private final int REQUEST_PERMISSIONS_ACCESS_COARSE_LOCATION = 2;
 
-    @SuppressLint("NewApi")
     private void checkRequiredPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             mUtil.addDebugMsg(1, "I", "Prermission WriteExternalStorage=" + checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) +
@@ -1912,7 +1917,47 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_main_permission_external_storage_request_msg), ntfy);
             }
         }
+        checkLocationPermission();
     }
+
+    private void checkLocationPermission() {
+        if (Build.VERSION.SDK_INT >= 27) {
+            mUtil.addDebugMsg(1, "I", "Prermission LocationCoarseE=" + checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context c, Object[] o) {
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                                REQUEST_PERMISSIONS_ACCESS_COARSE_LOCATION);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context c, Object[] o) {
+                        NotifyEvent ntfy_term = new NotifyEvent(mContext);
+                        ntfy_term.setListener(new NotifyEventListener() {
+                            @Override
+                            public void positiveResponse(Context c, Object[] o) {
+                                isTaskTermination = true;
+                                finish();
+                            }
+
+                            @Override
+                            public void negativeResponse(Context c, Object[] o) {
+                            }
+                        });
+                        commonDlg.showCommonDialog(false, "W",
+                                mContext.getString(R.string.msgs_main_permission_coarse_location_title),
+                                mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_term);
+                    }
+                });
+                commonDlg.showCommonDialog(false, "W",
+                        mContext.getString(R.string.msgs_main_permission_coarse_location_title),
+                        mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
+            }
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -1960,7 +2005,9 @@ public class ActivityMain extends AppCompatActivity {
             mUtil.addDebugMsg(1, "I", "Return from Storage Picker. id=" + requestCode + ", result=" + resultCode);
             if (resultCode == Activity.RESULT_OK) {
                 mUtil.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
-                if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
+                if (SafManager.getUuidFromUri(data.getData().toString()).equals("0000-0000")) {
+                    reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_uuid_invalid_msg));
+                } else if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
                     mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
                     mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
                     reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
@@ -1973,6 +2020,7 @@ public class ActivityMain extends AppCompatActivity {
                             String saf_msg=mGp.safMgr.getMessages();
                             commonDlg.showCommonDialog(false, "W", "External SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
                         }
+                        mGp.syncTaskAdapter.notifyDataSetChanged();
                         if (mSafSelectActivityNotify != null)
                             mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
                     } else {
@@ -2010,14 +2058,16 @@ public class ActivityMain extends AppCompatActivity {
 
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
-                        SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
-                        if (pli != null) {
-                            String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
-                                    pli.getSyncTaskName());
-                            commonDlg.showCommonDialog(false, "W",
-                                    mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
-                                    msg,
-                                    null);
+                        if (!mGp.safMgr.isSdcardMounted()) {
+                            SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
+                            if (pli != null) {
+                                String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
+                                        pli.getSyncTaskName());
+                                commonDlg.showCommonDialog(false, "W",
+                                        mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
+                                        msg,
+                                        null);
+                            }
                         }
                     }
                 });
@@ -2026,18 +2076,21 @@ public class ActivityMain extends AppCompatActivity {
 
             @Override
             public void negativeResponse(Context c, Object[] o) {
-                SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
-                if (pli != null) {
-                    String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
-                            pli.getSyncTaskName());
-                    commonDlg.showCommonDialog(false, "W",
-                            mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
-                            msg,
-                            null);
+                if (!mGp.safMgr.isSdcardMounted()) {
+                    SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
+                    if (pli != null) {
+                        String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
+                                pli.getSyncTaskName());
+                        commonDlg.showCommonDialog(false, "W",
+                                mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
+                                msg,
+                                null);
+                    }
                 }
             }
         });
-        commonDlg.showCommonDialog(true, "W", msg, "", ntfy_retry);
+        if (msg.equals("")) ntfy_retry.notifyToListener(true, null);
+        else commonDlg.showCommonDialog(true, "W", msg, "", ntfy_retry);
 
     }
 

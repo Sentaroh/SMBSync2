@@ -57,7 +57,7 @@
           />
     
     <item android:id="@+id/menu_top_select_storage"
-          android:title="Show storage selector"
+          android:title="@string/msgs_profile_edit_sync_folder_dlg_select_sdcard"
           />
 
 </menu>
