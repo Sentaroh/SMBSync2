@@ -1928,9 +1928,9 @@ public class SyncThread extends Thread {
             else stwa.util.addDebugMsg(3, "I", "Target file was not exists");
             stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",exists_diff=" + exists_diff +
                     ",time_diff=" + time_diff + ",length_diff=" + length_diff + ", diff=" + diff);
-        } else {
-            stwa.util.addDebugMsg(1, "I", "isFileChanged fp="+fp+ ", exists_diff=" + exists_diff +
-                    ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+lf_time+", master_time="+tf_time);
+//        } else {
+//            stwa.util.addDebugMsg(1, "I", "isFileChanged fp="+fp+ ", exists_diff=" + exists_diff +
+//                    ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+lf_time+", master_time="+tf_time);
         }
         return diff;
     }
