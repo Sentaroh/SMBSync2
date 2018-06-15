@@ -110,7 +110,7 @@ public class SyncThread extends Thread {
         public long totalTransferByte = 0, totalTransferTime = 0;
         public int totalCopyCount, totalDeleteCount, totalIgnoreCount = 0, totalRetryCount = 0;
 
-        public boolean setLastModifiedIsFunctional = true;
+        public boolean lastModifiedIsFunctional = true;
 
         public JcifsAuth masterAuth=null;
         public JcifsAuth targetAuth=null;
@@ -532,21 +532,21 @@ public class SyncThread extends Thread {
         mStwa.totalCopyCount = mStwa.totalDeleteCount = mStwa.totalIgnoreCount = mStwa.totalRetryCount = 0;
 
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
-            if (sti.isSyncDetectLastModifiedBySmbsync()) mStwa.setLastModifiedIsFunctional = false;
+            if (sti.isSyncDetectLastModifiedBySmbsync()) mStwa.lastModifiedIsFunctional = false;
             else
-                mStwa.setLastModifiedIsFunctional = isSetLastModifiedFunctional(mStwa.gp.internalRootDirectory);
+                mStwa.lastModifiedIsFunctional = isSetLastModifiedFunctional(mStwa.gp.internalRootDirectory);
 //		} else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-//			mStwa.setLastModifiedIsFunctional=false;
+//			mStwa.lastModifiedIsFunctional=false;
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-            mStwa.setLastModifiedIsFunctional = true;
+            mStwa.lastModifiedIsFunctional = true;
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             if (Build.VERSION.SDK_INT>=24) {
-                mStwa.setLastModifiedIsFunctional = true;//isSetLastModifiedFunctional(mStwa.gp.safMgr.getSdcardRootPath());
+                mStwa.lastModifiedIsFunctional = true;//isSetLastModifiedFunctional(mStwa.gp.safMgr.getSdcardRootPath());
             } else {
-                mStwa.setLastModifiedIsFunctional = false;
+                mStwa.lastModifiedIsFunctional = false;
             }
-        } else mStwa.setLastModifiedIsFunctional = false;
-        mStwa.util.addDebugMsg(1, "I", "setLastModifiedIsFunctional=" + mStwa.setLastModifiedIsFunctional);
+        } else mStwa.lastModifiedIsFunctional = false;
+        mStwa.util.addDebugMsg(1, "I", "lastModifiedIsFunctional=" + mStwa.lastModifiedIsFunctional);
     }
 
     private void postProcessSyncResult(SyncTaskItem sti, int sync_result, long et) {
@@ -1708,6 +1708,20 @@ public class SyncThread extends Thread {
         return result;
     }
 
+    static final public boolean isLocalFileLastModifiedFileItemExists(SyncThreadWorkArea stwa,
+                                                                    SyncTaskItem sti,
+                                                                    ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
+                                                                    ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
+                                                                    String fp) {
+        FileLastModifiedTimeEntry item = FileLastModifiedTime.isFileItemExists(
+                curr_last_modified_list, new_last_modified_list, fp);
+        boolean result=false;
+        if (item!=null) result=true;
+        if (stwa.gp.settingDebugLevel >= 3)
+            stwa.util.addDebugMsg(3, "I", "isLocalFileLastModifiedWasDifferent result=" + result + ", item=" + fp);
+        return result;
+    }
+
     static final public boolean isLocalFileLastModifiedWasDifferent(SyncThreadWorkArea stwa,
                                                                     SyncTaskItem sti,
                                                                     ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
@@ -1735,7 +1749,7 @@ public class SyncThread extends Thread {
                                                                 ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
                                                                 ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
                                                                 String to_dir, long l_lm, long r_lm) {
-        if (stwa.setLastModifiedIsFunctional) return false;
+        if (stwa.lastModifiedIsFunctional) return false;
         stwa.localFileLastModListModified = true;
         return FileLastModifiedTime.updateLastModifiedList(
                 curr_last_modified_list, new_last_modified_list, to_dir, l_lm, r_lm);
@@ -1856,7 +1870,7 @@ public class SyncThread extends Thread {
             } else {
                 diff = true;
             }
-            if (diff && !stwa.setLastModifiedIsFunctional) {//Use lastModified
+            if (diff && !stwa.lastModifiedIsFunctional) {//Use lastModified
                 if (lf_exists) {
                     updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
                             lf_path, lf_time, tf_time);
@@ -1871,14 +1885,13 @@ public class SyncThread extends Thread {
             }
         } else {//Check lastModified()
             if (sti.isSyncDifferentFileByTime()) {
-                if (stwa.setLastModifiedIsFunctional) {//Use lastModified
+                if (stwa.lastModifiedIsFunctional) {//Use lastModified
                     if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
 //                        diff = true;
-                        String lfp = lf_path;
                         boolean t_diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
                                 stwa.currLastModifiedList,
                                 stwa.newLastModifiedList,
-                                lfp, lf_time, tf_time);
+                                lf_path, lf_time, tf_time);
                         if (t_diff) {
                             diff = true;
                         } else {
@@ -1888,12 +1901,18 @@ public class SyncThread extends Thread {
                         diff = false;
                     }
                 } else {//Use Filelist
-                    String lfp = lf_path;
-                    diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
-                            stwa.currLastModifiedList,
-                            stwa.newLastModifiedList,
-                            lfp, lf_time, tf_time);
-//					Log.v("","lfp="+lfp+", lf_time="+lf_time+", hf_time="+hf_time);
+                    boolean found=isLocalFileLastModifiedFileItemExists(stwa, sti, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path);
+                    if (!found) {
+                        if (time_diff > stwa.syncDifferentFileAllowableTime) diff=true;
+                        else diff=false;
+                        addLastModifiedItem(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path, lf_time, tf_time );
+                    } else {
+                        diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
+                                stwa.currLastModifiedList,
+                                stwa.newLastModifiedList,
+                                lf_path, lf_time, tf_time);
+                    }
+                    stwa.util.addDebugMsg(3, "I", "isFileChangedDetailCompare FilItem Exists="+found);
                 }
             }
         }
@@ -1909,6 +1928,9 @@ public class SyncThread extends Thread {
             else stwa.util.addDebugMsg(3, "I", "Target file was not exists");
             stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",exists_diff=" + exists_diff +
                     ",time_diff=" + time_diff + ",length_diff=" + length_diff + ", diff=" + diff);
+        } else {
+            stwa.util.addDebugMsg(1, "I", "isFileChanged fp="+fp+ ", exists_diff=" + exists_diff +
+                    ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+lf_time+", master_time="+tf_time);
         }
         return diff;
     }

@@ -140,6 +140,36 @@ public class FileLastModifiedTime {
         return result;
     }
 
+    final public static FileLastModifiedTimeEntry isFileItemExists(
+            ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
+            ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
+            String fp) {
+        FileLastModifiedTimeEntry result = null;
+        if (curr_last_modified_list.size() != 0) {
+            int idx = Collections.binarySearch(curr_last_modified_list,
+                    new FileLastModifiedTimeEntry(fp, 0, 0, false),
+                    new Comparator<FileLastModifiedTimeEntry>() {
+                        @Override
+                        public int compare(FileLastModifiedTimeEntry ci,
+                                           FileLastModifiedTimeEntry ni) {
+                            return ci.getFilePath().compareToIgnoreCase(ni.getFilePath());
+                        }
+                    });
+            if (idx >= 0) {
+                result=curr_last_modified_list.get(idx);
+            }
+        }
+        if (result==null) {
+            for (FileLastModifiedTimeEntry fli : new_last_modified_list) {
+                if (fli.getFilePath().equals(fp)) {
+                    result=fli;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
     final public static boolean isAddedListWasDifferent(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
             ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
