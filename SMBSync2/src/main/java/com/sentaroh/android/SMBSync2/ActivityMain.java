@@ -1988,6 +1988,14 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_main_permission_external_storage_denied_msg), ntfy_term);
             }
         }
+        if (REQUEST_PERMISSIONS_ACCESS_COARSE_LOCATION == requestCode) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            } else {
+                commonDlg.showCommonDialog(false, "W",
+                        mContext.getString(R.string.msgs_main_permission_coarse_location_title),
+                        mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), null);
+            }
+        }
     }
 
     private NotifyEvent mSafSelectActivityNotify = null;
