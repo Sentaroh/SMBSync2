@@ -192,7 +192,7 @@ public final class SyncUtil {
     final public boolean setSettingsLogOption(boolean enabled) {
         boolean result = false;
         getPrefMgr().edit().putBoolean(mContext.getString(R.string.settings_log_option), enabled).commit();
-        if (mGp.settingDebugLevel >= 2) addDebugMsg(2, "I", "setLLogOption=" + result);
+        if (mGp.settingDebugLevel >= 2) addDebugMsg(2, "I", "setLogOption=" + result);
         return result;
     }
 

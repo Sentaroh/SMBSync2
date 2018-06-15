@@ -30,7 +30,7 @@
     <string name="msgs_main_sync_list_array_last_sync_time">Last sync : </string>
     <string name="msgs_main_sync_list_array_no_last_sync_time">Sync has not been performed.</string>
     
-    <string name="msgs_main_sync_history_elapsed_time">Elpased time(Sec):</string>
+    <string name="msgs_main_sync_history_elapsed_time">Elapsed time(Sec):</string>
     
     <string name="msgs_main_sync_history_mode">Mode:</string>
     <string name="msgs_main_sync_history_mode_normal">Normal</string>
@@ -145,6 +145,7 @@
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_EN.png</string>
 	<string name="msgs_main_external_sdcard_select_required_cancel_msg">You can not perform sync until external SD card is selected. Task=%s</string>
     <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD select activity can not be started.</string>
+    <string name="msgs_main_external_sdcard_select_uuid_invalid_msg">The UUID of the selected SDCARD is 0000 - 0000, it can not be used with SMBSync 2. To use it please format it on Android terminal.</string>
 	
 	<string name="msgs_main_external_sdcard_mp_changed_title">External SDCARD</string>
 	
@@ -163,7 +164,11 @@
 	<string name="msgs_main_permission_external_storage_title">Permission</string>
 	<string name="msgs_main_permission_external_storage_request_msg">For reading and writing data and management data to be sync to the internal storage, please give permission to access the internal storage.</string>
 	<string name="msgs_main_permission_external_storage_denied_msg">It will not be possible to sync for permission to access the An internal storage is not given. Quits the application</string>
-	
+
+    <string name="msgs_main_permission_coarse_location_title">Permission</string>
+    <string name="msgs_main_permission_coarse_location_request_msg">This is the privilege required to read the WiFi SSID when scheduled synchronized or launched from an external application during sleep.</string>
+    <string name="msgs_main_permission_coarse_location_denied_msg">If until permission is granted that specifies the "connect to a specific SSID", "in connection SSID" or synchronization in sleep will exit with an error.</string>
+
     <string name="msgs_smnsync_main_kill_application">Kill application?</string>
 
     <string name="msgs_main_sync_selected_task_not_found">Selected task does not exist. Task=</string>

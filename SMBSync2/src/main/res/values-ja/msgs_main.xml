@@ -68,11 +68,17 @@
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_JA.png</string>
 	<string name="msgs_main_external_sdcard_select_required_cancel_msg">外部SDCARDが選択されるまで同期は実行できません。 タスク=%s</string>
     <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD選択アクティビティを起動できませんでした。</string>
+    <string name="msgs_main_external_sdcard_select_uuid_invalid_msg">選択されたSDCARDのUUIDが0000-0000です、SMBSync2では使用できません。使用するためにはAndroid端末でフォーマットしてください。</string>
 	
 	<string name="msgs_main_permission_external_storage_title">許可</string>
 	<string name="msgs_main_permission_external_storage_request_msg">内部ストレージに同期するデータや管理用データの読み書きを行うために、内部ストレージにアクセスする許可を与えてください。</string>
 	<string name="msgs_main_permission_external_storage_denied_msg">内部ストレージにアクセスする許可が与えられていないため同期ができません。アプリケーションを終了します。</string>
-	
+
+    <string name="msgs_main_permission_coarse_location_title">許可</string>
+    <string name="msgs_main_permission_coarse_location_request_msg">スリープ中にスケジュール同期または外部アプリケーションから起動された時にWiFiのSSIDを読み取るために必要な権限です。</string>
+    <string name="msgs_main_permission_coarse_location_denied_msg">権限が許可されるまではスリープ中の同期で「SSIDに接続」または「特定のSSIDに接続」を指定している場合はエラーで終了します。</string>
+
+
     <string name="msgs_terminate_application">SMBSync2を終了しますか？</string>
     
     <string name="msgs_smnsync_main_kill_application">SMBSync2を強制終了しますか？</string>
