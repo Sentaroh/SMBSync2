@@ -491,6 +491,7 @@ public class SyncThreadCopyFile {
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
+/* debug */stwa.util.addDebugMsg(1,"I", sti.getSyncTaskName(), " after copy fp="+out_file.getPath()+", target="+out_file.lastModified()+", master="+mf.getLastModified());
 
         File out_dest = new File(to_file_dest);
         if (out_dest.exists()) out_dest.delete();

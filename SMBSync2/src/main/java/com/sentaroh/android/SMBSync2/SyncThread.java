@@ -54,6 +54,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.UriPermission;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaScannerConnection;
 import android.media.RingtoneManager;
@@ -190,8 +192,9 @@ public class SyncThread extends Thread {
     }
 
     private void listStorageInfo() {
-        mStwa.util.addDebugMsg(1, "I", "Storage information begin, API=" + Build.VERSION.SDK_INT);
-
+        mStwa.util.addDebugMsg(1, "I", "System information begin, Application="+getApplVersionName()+", API=" + Build.VERSION.SDK_INT);
+        mStwa.util.addDebugMsg(1, "I", "Manufacturer="+Build.MANUFACTURER+", Model="+Build.MODEL);
+        mStwa.util.addDebugMsg(1, "I", "Storage information begin");
         listsMountPoint();
 
         mStwa.util.addDebugMsg(1, "I", "getSdcardRootPath=" + mGp.safMgr.getSdcardRootPath());
@@ -208,6 +211,46 @@ public class SyncThread extends Thread {
 
         mStwa.util.addDebugMsg(1, "I", "Storage information end");
 
+        if (Build.VERSION.SDK_INT >= 23) {
+            String packageName = mGp.appContext.getPackageName();
+            PowerManager pm = (PowerManager) mGp.appContext.getSystemService(Context.POWER_SERVICE);
+            if (pm.isIgnoringBatteryOptimizations(packageName)) mStwa.util.addDebugMsg(1, "I", "Battery optimization=true");
+            else mStwa.util.addDebugMsg(1, "I", "Battery optimization=false");
+        } else mStwa.util.addDebugMsg(1, "I", "Battery optimization=false");
+
+        try {
+            ContentResolver contentResolver = mGp.appContext.getContentResolver();
+            int policy = Settings.System.getInt(contentResolver, Settings.Global.WIFI_SLEEP_POLICY);
+            switch (policy) {
+                case Settings.Global.WIFI_SLEEP_POLICY_DEFAULT:
+                    // スリープ中のWiFi接続を維持しない
+                    mStwa.util.addDebugMsg(1, "I", "WIFI_SLEEP_POLICY_DEFAULT");
+                    break;
+                case Settings.Global.WIFI_SLEEP_POLICY_NEVER_WHILE_PLUGGED:
+                    // スリープ中のWiFi接続を電源接続時にのみ維持する
+                    mStwa.util.addDebugMsg(1, "I", "WIFI_SLEEP_POLICY_NEVER_WHILE_PLUGGED");
+                    break;
+                case Settings.Global.WIFI_SLEEP_POLICY_NEVER:
+                    // スリープ中のWiFi接続を常に維持する
+                    mStwa.util.addDebugMsg(1, "I", "WIFI_SLEEP_POLICY_NEVER");
+                    break;
+            }
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        mStwa.util.addDebugMsg(1, "I", "System information end");
+    }
+
+    private String getApplVersionName() {
+        String vn = "Unknown";
+        try {
+            String packegeName = mGp.appContext.getPackageName();
+            PackageInfo packageInfo = mGp.appContext.getPackageManager().getPackageInfo(packegeName, PackageManager.GET_META_DATA);
+            vn = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            mStwa.util.addDebugMsg(1, "I", "SMBSync2 package can not be found");
+        }
+        return vn;
     }
 
     private void listSafMgrList() {
@@ -1928,9 +1971,9 @@ public class SyncThread extends Thread {
             else stwa.util.addDebugMsg(3, "I", "Target file was not exists");
             stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",exists_diff=" + exists_diff +
                     ",time_diff=" + time_diff + ",length_diff=" + length_diff + ", diff=" + diff);
-//        } else {
-//            stwa.util.addDebugMsg(1, "I", "isFileChanged fp="+fp+ ", exists_diff=" + exists_diff +
-//                    ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+lf_time+", master_time="+tf_time);
+/* debug */} else {
+            stwa.util.addDebugMsg(1, "I", "isFileChanged fp="+fp+ ", exists_diff=" + exists_diff +
+                    ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+lf_time+", master_time="+tf_time);
         }
         return diff;
     }
