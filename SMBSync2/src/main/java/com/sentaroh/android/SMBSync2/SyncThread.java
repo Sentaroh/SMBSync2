@@ -192,162 +192,10 @@ public class SyncThread extends Thread {
     }
 
     private void listStorageInfo() {
-        mStwa.util.addDebugMsg(1, "I", "System information begin, Application="+getApplVersionName()+", API=" + Build.VERSION.SDK_INT);
-        mStwa.util.addDebugMsg(1, "I", "Manufacturer="+Build.MANUFACTURER+", Model="+Build.MODEL);
-        mStwa.util.addDebugMsg(1, "I", "Storage information begin");
-        listsMountPoint();
+        ArrayList<String>sil=SyncUtil.listSystemInfo(mGp);
 
-        mStwa.util.addDebugMsg(1, "I", "getSdcardRootPath=" + mGp.safMgr.getSdcardRootPath());
+        for(String item:sil) mStwa.util.addDebugMsg(1, "I", item);
 
-        File[] fl = ContextCompat.getExternalFilesDirs(mGp.appContext, null);
-        if (fl != null) {
-            for (File f : fl) {
-                if (f != null) mStwa.util.addDebugMsg(1, "I", "ExternalFilesDirs=" + f.getPath());
-            }
-        }
-        listSafMgrList();
-
-        getRemovableStoragePaths(mGp.appContext, true);
-
-        mStwa.util.addDebugMsg(1, "I", "Storage information end");
-
-        if (Build.VERSION.SDK_INT >= 23) {
-            String packageName = mGp.appContext.getPackageName();
-            PowerManager pm = (PowerManager) mGp.appContext.getSystemService(Context.POWER_SERVICE);
-            if (pm.isIgnoringBatteryOptimizations(packageName)) mStwa.util.addDebugMsg(1, "I", "Battery optimization=true");
-            else mStwa.util.addDebugMsg(1, "I", "Battery optimization=false");
-        } else mStwa.util.addDebugMsg(1, "I", "Battery optimization=false");
-
-        try {
-            ContentResolver contentResolver = mGp.appContext.getContentResolver();
-            int policy = Settings.System.getInt(contentResolver, Settings.Global.WIFI_SLEEP_POLICY);
-            switch (policy) {
-                case Settings.Global.WIFI_SLEEP_POLICY_DEFAULT:
-                    // スリープ中のWiFi接続を維持しない
-                    mStwa.util.addDebugMsg(1, "I", "WIFI_SLEEP_POLICY_DEFAULT");
-                    break;
-                case Settings.Global.WIFI_SLEEP_POLICY_NEVER_WHILE_PLUGGED:
-                    // スリープ中のWiFi接続を電源接続時にのみ維持する
-                    mStwa.util.addDebugMsg(1, "I", "WIFI_SLEEP_POLICY_NEVER_WHILE_PLUGGED");
-                    break;
-                case Settings.Global.WIFI_SLEEP_POLICY_NEVER:
-                    // スリープ中のWiFi接続を常に維持する
-                    mStwa.util.addDebugMsg(1, "I", "WIFI_SLEEP_POLICY_NEVER");
-                    break;
-            }
-        } catch (Settings.SettingNotFoundException e) {
-            e.printStackTrace();
-        }
-        mStwa.util.addDebugMsg(1, "I", "System information end");
-    }
-
-    private String getApplVersionName() {
-        String vn = "Unknown";
-        try {
-            String packegeName = mGp.appContext.getPackageName();
-            PackageInfo packageInfo = mGp.appContext.getPackageManager().getPackageInfo(packegeName, PackageManager.GET_META_DATA);
-            vn = packageInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            mStwa.util.addDebugMsg(1, "I", "SMBSync2 package can not be found");
-        }
-        return vn;
-    }
-
-    private void listSafMgrList() {
-        if (mGp.safMgr.getSdcardRootSafFile() != null)
-            mStwa.util.addDebugMsg(1, "I", "getSdcardSafFile " + mGp.safMgr.getSdcardRootSafFile());
-        List<UriPermission> permissions = mGp.appContext.getContentResolver().getPersistedUriPermissions();
-        for(UriPermission item:permissions) mStwa.util.addDebugMsg(1, "I", item.toString());
-    }
-
-    private String[] getRemovableStoragePaths(Context context, boolean debug) {
-        ArrayList<String> paths = new ArrayList<String>();
-        try {
-            StorageManager sm = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
-            Method getVolumeList = sm.getClass().getDeclaredMethod("getVolumeList");
-            Object[] volumeList = (Object[]) getVolumeList.invoke(sm);
-            for (Object volume : volumeList) {
-//	            Method getPath = volume.getClass().getDeclaredMethod("getPath");
-//	            Method isRemovable = volume.getClass().getDeclaredMethod("isRemovable");
-//	            Method getUuid = volume.getClass().getDeclaredMethod("getUuid");
-                Method toString = volume.getClass().getDeclaredMethod("toString");
-//	            String path = (String)getPath.invoke(volume);
-//	            boolean removable = (Boolean)isRemovable.invoke(volume);
-                mStwa.util.addDebugMsg(1, "I", (String) toString.invoke(volume));
-//	            if ((String)getUuid.invoke(volume)!=null) {
-//	            	paths.add(path);
-//					if (debug) {
-////						Log.v(APPLICATION_TAG, "RemovableStorages Uuid="+(String)getUuid.invoke(volume)+", removable="+removable+", path="+path);
-//						mStwa.util.addDebugMsg(1, "I", (String)toString.invoke(volume));
-//					}
-//	            }
-            }
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return paths.toArray(new String[paths.size()]);
-    }
-
-    private void listsMountPoint() {
-        mStwa.util.addDebugMsg(1, "I", "/ directory:");
-        File[] fl = (new File("/")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mStwa.util.addDebugMsg(1, "I", "   /" + item.getName() + ", read=" + item.canRead());
-            }
-        }
-
-        mStwa.util.addDebugMsg(1, "I", "/mnt directory:");
-        fl = (new File("/mnt")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mStwa.util.addDebugMsg(1, "I", "   /mnt/" + item.getName() + ", read=" + item.canRead());
-            }
-        }
-
-        mStwa.util.addDebugMsg(1, "I", "/storage directory:");
-        fl = (new File("/storage")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mStwa.util.addDebugMsg(1, "I", "   /storage/" + item.getName() + ", read=" + item.canRead());
-            }
-        }
-
-        mStwa.util.addDebugMsg(1, "I", "/storage/emulated directory:");
-        fl = (new File("/storage/emulated")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mStwa.util.addDebugMsg(1, "I", "   /storage/emulated/" + item.getName() + ", read=" + item.canRead());
-            }
-        }
-
-        mStwa.util.addDebugMsg(1, "I", "/storage/self directory:");
-        fl = (new File("/storage/self")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mStwa.util.addDebugMsg(1, "I", "   /storage/self/" + item.getName() + ", read=" + item.canRead());
-            }
-        }
-
-        mStwa.util.addDebugMsg(1, "I", "/Removable directory:");
-        fl = (new File("/Removable")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mStwa.util.addDebugMsg(1, "I", "   /Removable/" + item.getName() + ", read=" + item.canRead());
-            }
-        }
     }
 
     @Override
@@ -584,7 +432,7 @@ public class SyncThread extends Thread {
             mStwa.lastModifiedIsFunctional = true;
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             if (Build.VERSION.SDK_INT>=24) {
-                mStwa.lastModifiedIsFunctional = true;//isSetLastModifiedFunctional(mStwa.gp.safMgr.getSdcardRootPath());
+                mStwa.lastModifiedIsFunctional = isSetLastModifiedFunctional(mStwa.gp.safMgr.getSdcardRootPath());
             } else {
                 mStwa.lastModifiedIsFunctional = false;
             }

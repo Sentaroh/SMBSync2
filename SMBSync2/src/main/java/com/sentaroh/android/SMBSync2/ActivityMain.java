@@ -26,9 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ComponentName;
@@ -99,7 +97,6 @@ import com.sentaroh.android.Utilities.Widget.CustomViewPagerAdapter;
 import com.sentaroh.android.Utilities.ZipUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -357,7 +354,7 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    private void listStorageInfo() {
+    private void showSystemInfo() {
         final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.common_dialog);
@@ -377,57 +374,11 @@ public class ActivityMain extends AppCompatActivity {
         btn_close.setText(mContext.getString(R.string.msgs_common_dialog_close));
         btn_copy.setText(mContext.getString(R.string.msgs_info_storage_copy_clipboard));
 
-        String si="";
-        si+="System information begin" +" Application="+ getApplVersionName() +
-                ", API=" + Build.VERSION.SDK_INT+"\n";
+        ArrayList<String>sil=SyncUtil.listSystemInfo(mGp);
+        String si_text="";
+        for(String si_item:sil) si_text+=si_item+"\n";
 
-        si+="Manufacturer="+Build.MANUFACTURER+", Model="+Build.MODEL+"\n";
-
-        si+=listsMountPoint();
-
-        si+="getSdcardRootPath=" + mGp.safMgr.getSdcardRootPath()+"\n";
-
-        File[] fl = ContextCompat.getExternalFilesDirs(mContext, null);
-        if (fl != null) {
-            for (File f : fl) {
-                if (f != null) si+="ExternalFilesDirs=" + f.getPath()+"\n";
-            }
-        }
-        if (mGp.safMgr.getSdcardRootSafFile() != null)
-            si+="getSdcardSafFile name=" + mGp.safMgr.getSdcardRootSafFile().getName()+"\n";
-        si+=listSafMgrList();
-        si+=getRemovableStoragePaths(mContext, true);
-        si+="Storage information end"+"\n";
-
-        if (Build.VERSION.SDK_INT >= 23) {
-            String packageName = mContext.getPackageName();
-            PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-            if (pm.isIgnoringBatteryOptimizations(packageName)) si+="Battery optimization=true"+"\n";
-            else si+="Battery optimization=false"+"\n";
-        } else si+="Battery optimization=false"+"\n";
-
-        try {
-            ContentResolver contentResolver = mGp.appContext.getContentResolver();
-            int policy = Settings.System.getInt(contentResolver, Settings.Global.WIFI_SLEEP_POLICY);
-            switch (policy) {
-                case Settings.Global.WIFI_SLEEP_POLICY_DEFAULT:
-                    // スリープ中のWiFi接続を維持しない
-                    si+="WIFI_SLEEP_POLICY_DEFAULT"+"\n";
-                    break;
-                case Settings.Global.WIFI_SLEEP_POLICY_NEVER_WHILE_PLUGGED:
-                    // スリープ中のWiFi接続を電源接続時にのみ維持する
-                    si+="WIFI_SLEEP_POLICY_NEVER_WHILE_PLUGGED"+"\n";
-                    break;
-                case Settings.Global.WIFI_SLEEP_POLICY_NEVER:
-                    // スリープ中のWiFi接続を常に維持する
-                    si+="WIFI_SLEEP_POLICY_NEVER"+"\n";
-                    break;
-            }
-        } catch (Settings.SettingNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        tv_msg.setText(si);
+        tv_msg.setText(si_text);
 
         CommonDialog.setDlgBoxSizeLimit(dialog,true);
 
@@ -479,110 +430,7 @@ public class ActivityMain extends AppCompatActivity {
         dialog.show();
     }
 
-    private String listSafMgrList() {
-        String mpi="Uri permissions:\n";
-//        mGp.safMgr.getSdcardRootSafFile();
-        List<UriPermission> permissions = getContentResolver().getPersistedUriPermissions();
-        for(UriPermission item:permissions) mpi+="   "+item.toString()+"\n";
-        return mpi;
-    }
 
-    private String getRemovableStoragePaths(Context context, boolean debug) {
-        String mpi="Storage Manager:\n";
-        ArrayList<String> paths = new ArrayList<String>();
-        try {
-            StorageManager sm = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
-            Method getVolumeList = sm.getClass().getDeclaredMethod("getVolumeList");
-            Object[] volumeList = (Object[]) getVolumeList.invoke(sm);
-            for (Object volume : volumeList) {
-                Method getPath = volume.getClass().getDeclaredMethod("getPath");
-//	            Method isRemovable = volume.getClass().getDeclaredMethod("isRemovable");
-                Method isPrimary = volume.getClass().getDeclaredMethod("isPrimary");
-                Method getUuid = volume.getClass().getDeclaredMethod("getUuid");
-                Method toString = volume.getClass().getDeclaredMethod("toString");
-//                Method allowMassStorage = volume.getClass().getDeclaredMethod("allowMassStorage");
-//                Method getStorageId = volume.getClass().getDeclaredMethod("getStorageId");
-                String path = (String) getPath.invoke(volume);
-//	            boolean removable = (Boolean)isRemovable.invoke(volume);
-//                mpi+="allowMassStorage="+(boolean) allowMassStorage.invoke(volume)+"\n";
-//                mpi+="getStorageId="+String.format("0x%8h",((int) getStorageId.invoke(volume)))+"\n";
-                mpi+=(String) toString.invoke(volume)+", isPrimary="+(boolean)isPrimary.invoke(volume)+"\n";
-//	            if ((String)getUuid.invoke(volume)!=null) {
-//	            	paths.add(path);
-//					if (debug) {
-////						Log.v(APPLICATION_TAG, "RemovableStorages Uuid="+(String)getUuid.invoke(volume)+", removable="+removable+", path="+path);
-//						mUtil.addLogMsg("I", (String)toString.invoke(volume));
-//					}
-//	            }
-            }
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return mpi;
-    }
-
-    private String listsMountPoint() {
-        String mpi="/ directory:+\n";
-        File[] fl = (new File("/")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mpi+="   /" + item.getName() + ", read=" + item.canRead()+"\n";
-            }
-        }
-
-        mpi+="/mnt directory:"+"\n";
-        fl = (new File("/mnt")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mpi+="   /mnt/" + item.getName() + ", read=" + item.canRead()+"\n";
-            }
-        }
-
-        mpi+="/storage directory:"+"\n";
-        fl = (new File("/storage")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mpi+="   /storage/" + item.getName() + ", read=" + item.canRead()+"\n";
-            }
-        }
-
-        mpi+="/storage/emulated directory:"+"\n";
-        fl = (new File("/storage/emulated")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mpi+="   /storage/emulated/" + item.getName() + ", read=" + item.canRead()+"\n";
-            }
-        }
-
-        mpi+="/storage/self directory:"+"\n";
-        fl = (new File("/storage/self")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mpi+="   /storage/self/" + item.getName() + ", read=" + item.canRead()+"\n";
-            }
-        }
-
-        mpi+="/Removable directory:"+"\n";
-        fl = (new File("/Removable")).listFiles();
-        if (fl != null) {
-            for (File item : fl) {
-                if (item.isDirectory())
-                    mpi+="   /Removable/" + item.getName() + ", read=" + item.canRead()+"\n";
-            }
-        }
-        return mpi;
-    }
 
 //    private void showBatteryOptimization() {
 //        if (Build.VERSION.SDK_INT >= 23) {
@@ -837,18 +685,6 @@ public class ActivityMain extends AppCompatActivity {
 
         mGp.syncHistoryListView.setAdapter(mGp.syncHistoryAdapter);
         mGp.syncHistoryAdapter.notifyDataSetChanged();
-    }
-
-    private String getApplVersionName() {
-        String vn = "Unknown";
-        try {
-            String packegeName = getPackageName();
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(packegeName, PackageManager.GET_META_DATA);
-            vn = packageInfo.versionName;
-        } catch (NameNotFoundException e) {
-            mUtil.addDebugMsg(1, "I", "SMBSync2 package can not be found");
-        }
-        return vn;
     }
 
     private LinearLayout mSyncTaskView;
@@ -1183,7 +1019,7 @@ public class ActivityMain extends AppCompatActivity {
 //                showBatteryOptimization();
 //                return true;
             case R.id.menu_top_list_storage:
-                listStorageInfo();
+                showSystemInfo();
                 return true;
             case R.id.menu_top_select_storage:
                 reselectSdcard("");
@@ -1628,7 +1464,7 @@ public class ActivityMain extends AppCompatActivity {
         final TextView title = (TextView) dialog.findViewById(R.id.about_dialog_title);
         title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
         title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-        title.setText(getString(R.string.msgs_dlg_title_about) + "(Ver " + getApplVersionName() + ")");
+        title.setText(getString(R.string.msgs_dlg_title_about) + "(Ver " + SyncUtil.getApplVersionName(mContext) + ")");
 
         // get our tabHost from the xml
         final TabHost tab_host = (TabHost) dialog.findViewById(R.id.about_tab_host);

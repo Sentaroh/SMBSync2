@@ -50,53 +50,53 @@ public class FileLastModifiedTime {
 //	};
 
 
-    final public static boolean isLastModifiedWasUsed(GlobalParameters gp, AdapterSyncTask profile_adapter) {
-        boolean usable = false;
-        for (int i = 0; i < profile_adapter.getCount(); i++) {
-            SyncTaskItem syncprof_item = profile_adapter.getItem(i);
-            if (syncprof_item.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
-                String lmp = gp.internalRootDirectory;
-                if (!syncprof_item.getTargetDirectoryName().equals(""))
-                    lmp += "/" + syncprof_item.getTargetDirectoryName();
-//				Log.v("","lmp="+lmp);
-                if (!lmp.equals("/") && !lmp.equals("")) {
-                    if (!isSetLastModifiedFunctional(lmp) ||
-                            syncprof_item.isSyncDetectLastModifiedBySmbsync()) {
-                        usable = true;
-                        break;
-                    }
-                }
-            }
-        }
-        return usable;
-    }
-
-    final public static FileLastModifiedTimeEntry getLastModifiedLisItemByFilePath(
-            ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
-            ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
-            String fp) {
-        FileLastModifiedTimeEntry lmli = null;
-        int idx = Collections.binarySearch(curr_last_modified_list,
-                new FileLastModifiedTimeEntry(fp, 0, 0, false),
-                new Comparator<FileLastModifiedTimeEntry>() {
-                    @Override
-                    public int compare(FileLastModifiedTimeEntry ci,
-                                       FileLastModifiedTimeEntry ni) {
-                        return ci.getFilePath().compareToIgnoreCase(ni.getFilePath());
-                    }
-                });
-        if (idx >= 0) {
-            lmli = curr_last_modified_list.get(idx);
-            return lmli;
-        }
-
-        for (FileLastModifiedTimeEntry item : new_last_modified_list) {
-            if (item.getFilePath().equals(fp)) {
-                return item;
-            }
-        }
-        return null;
-    }
+//    final public static boolean isLastModifiedWasUsedX(GlobalParameters gp, AdapterSyncTask profile_adapter) {
+//        boolean usable = false;
+//        for (int i = 0; i < profile_adapter.getCount(); i++) {
+//            SyncTaskItem syncprof_item = profile_adapter.getItem(i);
+//            if (syncprof_item.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
+//                String lmp = gp.internalRootDirectory;
+//                if (!syncprof_item.getTargetDirectoryName().equals(""))
+//                    lmp += "/" + syncprof_item.getTargetDirectoryName();
+////				Log.v("","lmp="+lmp);
+//                if (!lmp.equals("/") && !lmp.equals("")) {
+//                    if (!isSetLastModifiedFunctional(lmp) ||
+//                            syncprof_item.isSyncDetectLastModifiedBySmbsync()) {
+//                        usable = true;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//        return usable;
+//    }
+//
+//    final public static FileLastModifiedTimeEntry getLastModifiedLisItemByFilePath(
+//            ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
+//            ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
+//            String fp) {
+//        FileLastModifiedTimeEntry lmli = null;
+//        int idx = Collections.binarySearch(curr_last_modified_list,
+//                new FileLastModifiedTimeEntry(fp, 0, 0, false),
+//                new Comparator<FileLastModifiedTimeEntry>() {
+//                    @Override
+//                    public int compare(FileLastModifiedTimeEntry ci,
+//                                       FileLastModifiedTimeEntry ni) {
+//                        return ci.getFilePath().compareToIgnoreCase(ni.getFilePath());
+//                    }
+//                });
+//        if (idx >= 0) {
+//            lmli = curr_last_modified_list.get(idx);
+//            return lmli;
+//        }
+//
+//        for (FileLastModifiedTimeEntry item : new_last_modified_list) {
+//            if (item.getFilePath().equals(fp)) {
+//                return item;
+//            }
+//        }
+//        return null;
+//    }
 
     final public static boolean isCurrentListWasDifferent(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
@@ -274,14 +274,14 @@ public class FileLastModifiedTime {
 //        File lf = new File(lmp + "/" + "SMBSyncLastModifiedTest.temp");
 //        File dir = new File(lmp + "/");
         File lf = new File(lmp + "/Android/data/com.sentaroh.android.SMBSync2/files/SMBSyncLastModifiedTest.temp");
-        File dir = new File(lmp + "/");
+//        File dir = new File(lmp + "/Android/data/com.sentaroh.android.SMBSync2/files");
         try {
-            if (dir.canWrite()) {
-                if (lf.exists()) lf.delete();
-                lf.createNewFile();
-                result = lf.setLastModified(1000*1000);
-                lf.delete();
-            }
+            if (lf.exists()) lf.delete();
+            lf.createNewFile();
+            result = lf.setLastModified(1000*1000);
+            lf.delete();
+//            if (dir.canWrite()) {
+//            }
         } catch (IOException e) {
 //			e.printStackTrace();
         }

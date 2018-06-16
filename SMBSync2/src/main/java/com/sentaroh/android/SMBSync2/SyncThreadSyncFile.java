@@ -635,10 +635,13 @@ public class SyncThreadSyncFile {
                                         sync_result = SyncThreadCopyFile.copyFileInternalToInternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                 mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            if (stwa.lastModifiedIsFunctional) {
+                                                SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                            } else {
+                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
+                                                        to_path, tf.lastModified(), mf.lastModified());
+                                            }
 //                                            tf.setLastModified(mf.lastModified());
-//                                            SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-//                                                    to_path, tf.lastModified(), mf.lastModified());
-                                            SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                             SyncThread.deleteInternalStorageItem(stwa, false, sti, from_path);
@@ -661,10 +664,13 @@ public class SyncThreadSyncFile {
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             String tmsg = tf_exists ? stwa.msgs_mirror_task_file_replaced : stwa.msgs_mirror_task_file_copied;
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
+                                            if (stwa.lastModifiedIsFunctional) {
+                                                SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                            } else {
+                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
+                                                        to_path, tf.lastModified(), mf.lastModified());
+                                            }
 //                                            tf.setLastModified(mf.lastModified());
-//                                            SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-//                                                    to_path, tf.lastModified(), mf.lastModified());
-                                            SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                         }
@@ -814,7 +820,7 @@ public class SyncThreadSyncFile {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
                                                 sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
-                                                if (Build.VERSION.SDK_INT>=24) {
+                                                if (Build.VERSION.SDK_INT>=24 && stwa.lastModifiedIsFunctional) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
                                                     SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
@@ -848,7 +854,7 @@ public class SyncThreadSyncFile {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
                                                 sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
-                                                if (Build.VERSION.SDK_INT>=24) {
+                                                if (Build.VERSION.SDK_INT>=24 && stwa.lastModifiedIsFunctional) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
                                                     SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
@@ -1201,10 +1207,13 @@ public class SyncThreadSyncFile {
                                         sync_result = SyncThreadCopyFile.copyFileExternalToInternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                 mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            if (stwa.lastModifiedIsFunctional) {
+                                                SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                            } else {
+                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
+                                                        to_path, tf.lastModified(), mf.lastModified());
+                                            }
 //                                            tf.setLastModified(mf.lastModified());
-//                                            SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-//                                                    to_path, tf.lastModified(), mf.lastModified());
-                                            SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                             SyncThread.deleteExternalStorageItem(stwa, false, sti, from_path);
@@ -1227,10 +1236,13 @@ public class SyncThreadSyncFile {
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             String tmsg = tf_exists ? stwa.msgs_mirror_task_file_replaced : stwa.msgs_mirror_task_file_copied;
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
+                                            if (stwa.lastModifiedIsFunctional) {
+                                                SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                            } else {
+                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
+                                                        to_path, tf.lastModified(), mf.lastModified());
+                                            }
 //                                            tf.setLastModified(mf.lastModified());
-//                                            SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-//                                                    to_path, tf.lastModified(), mf.lastModified());
-                                            SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                         }
@@ -1388,7 +1400,7 @@ public class SyncThreadSyncFile {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
                                                 sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
-                                                if (Build.VERSION.SDK_INT>=24) {
+                                                if (Build.VERSION.SDK_INT>=24 && stwa.lastModifiedIsFunctional) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
                                                     SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path, sf.lastModified(), mf.lastModified());
@@ -1421,7 +1433,7 @@ public class SyncThreadSyncFile {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
                                                 sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
-                                                if (Build.VERSION.SDK_INT>=24) {
+                                                if (Build.VERSION.SDK_INT>=24 && stwa.lastModifiedIsFunctional) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
                                                     SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path, sf.lastModified(), mf.lastModified());
@@ -1849,10 +1861,15 @@ public class SyncThreadSyncFile {
                                             }
                                         }
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            if (stwa.lastModifiedIsFunctional) {
+                                                SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                            } else {
+                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
+                                                    to_path, tf.lastModified(), mf.getLastModified());
+                                            }
 //                                            tf.setLastModified(mf.getLastModified());
 //                                            SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
 //                                                    to_path, tf.lastModified(), mf.getLastModified());
-                                            SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                             SyncThread.deleteSmbItem(stwa, false, sti, to_base, from_path, stwa.masterAuth);
@@ -1888,10 +1905,13 @@ public class SyncThreadSyncFile {
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                             String tmsg = tf_exists ? stwa.msgs_mirror_task_file_replaced : stwa.msgs_mirror_task_file_copied;
                                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", to_path, mf.getName(), tmsg);
+                                            if (stwa.lastModifiedIsFunctional) {
+                                                SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
+                                            } else {
+                                                SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
+                                                        to_path, tf.lastModified(), mf.getLastModified());
+                                            }
 //                                            tf.setLastModified(mf.getLastModified());
-//                                            SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-//                                                    to_path, tf.lastModified(), mf.getLastModified());
-                                            SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                         }
@@ -2141,7 +2161,7 @@ public class SyncThreadSyncFile {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
                                                 sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
-                                                if (Build.VERSION.SDK_INT>=24) {
+                                                if (Build.VERSION.SDK_INT>=24 && stwa.lastModifiedIsFunctional) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
                                                     SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
@@ -2187,7 +2207,7 @@ public class SyncThreadSyncFile {
                                             if (!sti.isSyncTestMode()) {
                                                 SafFile sf = null;
                                                 sf = stwa.gp.safMgr.createSdcardItem(to_path, false);
-                                                if (Build.VERSION.SDK_INT>=24) {
+                                                if (Build.VERSION.SDK_INT>=24 && stwa.lastModifiedIsFunctional) {
                                                     SyncThread.deleteLocalFileLastModifiedEntry(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, to_path);
                                                 } else {
                                                     SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
