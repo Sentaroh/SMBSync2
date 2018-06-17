@@ -45,25 +45,23 @@
         <item>3</item>
     </string-array>	    
 		
-    
-    
     <string name="settings_playback_ringtone_volume_title">Notification sound volume</string>
     <string name="settings_playback_ringtone_volume_summary">%s%% of the system volume</string>
     <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
     <string name="settings_playback_ringtone_volume_disabled">The default notification sound has not been set.</string>
     
-	<string name="settings_playback_ringtone_when_sync_ended_title">Playback notification</string>
-	<string name="settings_playback_ringtone_when_sync_ended_summary_always">To playback default notification when sync was ended</string>
-	<string name="settings_playback_ringtone_when_sync_ended_summary_error">To playback default notification when sync was ended with error</string>
-	<string name="settings_playback_ringtone_when_sync_ended_summary_success">To playback default notification when sync was ended successfully</string>
-	<string name="settings_playback_ringtone_when_sync_ended_summary_no">Do not playback default notification</string>
-	<string name="settings_playback_ringtone_when_sync_ended_dialog_title">Select playback condition</string>
+	<string name="settings_playback_ringtone_when_sync_ended_title">Notification sound</string>
+	<string name="settings_playback_ringtone_when_sync_ended_summary_always">Play a default notification sound when sync is ended</string>
+	<string name="settings_playback_ringtone_when_sync_ended_summary_error">Play a default notification sound when sync is ended with error</string>
+	<string name="settings_playback_ringtone_when_sync_ended_summary_success">Play a default notification sound when sync is ended successfully</string>
+	<string name="settings_playback_ringtone_when_sync_ended_summary_no">Do not play the default notification sound</string>
+	<string name="settings_playback_ringtone_when_sync_ended_dialog_title">Select playback sound condition</string>
 	<string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
 	<string-array name="settings_playback_ringtone_when_sync_ended_list_entries">
-        <item>Do not playback default notification</item>
-        <item>To playback default notification when sync was ended</item>
-        <item>To playback default notification when sync was ended without error</item>
-        <item>To playback default notification when sync was ended with error</item>
+        <item>Do not play the default notification sound</item>
+        <item>Play a default notification sound when sync is ended</item>
+        <item>Play a default notification sound when sync is ended successfully</item>
+        <item>Play a default notification sound when sync is ended with error</item>
     </string-array>
     <string-array name="settings_playback_ringtone_when_sync_ended_list_values">
         <item>0</item>
@@ -72,12 +70,12 @@
         <item>3</item>
     </string-array>	    
 
-	<string name="settings_vibrate_when_sync_ended_title">Vibration</string>
+	<string name="settings_vibrate_when_sync_ended_title">Notification Vibration</string>
 	<string name="settings_vibrate_when_sync_ended_summary_always">Always vibrate when sync was ended</string>
 	<string name="settings_vibrate_when_sync_ended_summary_success">Vibrate when sync was ended successfully</string>
 	<string name="settings_vibrate_when_sync_ended_summary_error">Vibrate when sync was ended with error</string>
 	<string name="settings_vibrate_when_sync_ended_summary_no">Do not vibrate</string>
-	<string name="settings_vibrate_when_sync_ended_dialog_title">Select vibration condition</string>
+	<string name="settings_vibrate_when_sync_ended_dialog_title">Select notification vibration condition</string>
 	<string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
 	<string-array name="settings_vibrate_when_sync_ended_list_entries">
         <item>Do not vibrate</item>
