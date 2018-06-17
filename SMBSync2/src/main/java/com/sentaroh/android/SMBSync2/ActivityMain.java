@@ -1758,7 +1758,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void checkLocationPermission() {
         if (Build.VERSION.SDK_INT >= 27) {
-            mUtil.addDebugMsg(1, "I", "Prermission LocationCoarseE=" + checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+            mUtil.addDebugMsg(1, "I", "Prermission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
