@@ -231,12 +231,12 @@ public class SyncThreadArchiveFile {
     static private int moveFileInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                   File mf, File tf, String to_path, String file_name) throws IOException {
         int result=0;
-        if (Build.VERSION.SDK_INT>=24) result= moveFileInternalToExternal_move_method(stwa, sti, from_path, mf, tf, to_path, file_name);
-        else result= moveFileInternalToExternal_copy_method(stwa, sti, from_path, mf, tf, to_path, file_name);
+        if (Build.VERSION.SDK_INT>=24) result= moveFileInternalToExternalSetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+        else result= moveFileInternalToExternalUnsetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
         return result;
     }
 
-    static private int moveFileInternalToExternal_copy_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+    static private int moveFileInternalToExternalUnsetLastMod(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                               File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
@@ -270,8 +270,8 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int moveFileInternalToExternal_move_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                                              File mf, File tf, String to_path, String file_name) throws IOException {
+    static private int moveFileInternalToExternalSetLastMod(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+                                                            File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
             if (!sti.isSyncTestMode()) {
@@ -833,12 +833,12 @@ public class SyncThreadArchiveFile {
     static private int moveFileExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                   File mf, File tf, String to_path, String file_name) throws IOException {
         int result=0;
-        if (Build.VERSION.SDK_INT>=24) result= moveFileExternalToExternal_move_method(stwa, sti, from_path, mf, tf, to_path, file_name);
-        else result= moveFileExternalToExternal_copy_method(stwa, sti, from_path, mf, tf, to_path, file_name);
+        if (Build.VERSION.SDK_INT>=24) result= moveFileExternalToExternalSetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+        else result= moveFileExternalToExternalUnsetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
         return result;
     }
 
-    static private int moveFileExternalToExternal_copy_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+    static private int moveFileExternalToExternalUnsetLastMod(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                               File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
@@ -873,8 +873,8 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int moveFileExternalToExternal_move_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                                              File mf, File tf, String to_path, String file_name) throws IOException {
+    static private int moveFileExternalToExternalSetLastMod(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+                                                            File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
             SafFile m_df = getSafFile(stwa, sti, from_path);
@@ -1044,8 +1044,7 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static public int syncArchiveExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
-                                              String from_path, String to_path) {
+    static public int syncArchiveExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path, String to_path) {
         File mf = new File(from_path);
         int sync_result = buildArchiveListExternalToSmb(stwa, sti, from_path, from_path, mf, to_path, to_path);
         return sync_result;
@@ -1445,8 +1444,7 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static public int syncArchiveSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
-                                              String from_path, String to_path) {
+    static public int syncArchiveSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path, String to_path) {
         stwa.smbFileList = new ArrayList<String>();
         JcifsFile mf = null;
         try {
@@ -1471,12 +1469,12 @@ public class SyncThreadArchiveFile {
     static private int moveFileSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                   JcifsFile mf, File tf, String to_path, String file_name) throws IOException, JcifsException {
         int result=0;
-        if (Build.VERSION.SDK_INT>=24) result= moveFileSmbToExternal_move_method(stwa, sti, from_path, mf, tf, to_path, file_name);
-        else result= moveFileSmbToExternal_copy_method(stwa, sti, from_path, mf, tf, to_path, file_name);
+        if (Build.VERSION.SDK_INT>=24) result= moveFileSmbToExternalSetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+        else result= moveFileSmbToExternalUnsetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
         return result;
     }
 
-    static private int moveFileSmbToExternal_copy_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+    static private int moveFileSmbToExternalUnsetLastMod(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                          JcifsFile mf, File tf, String to_path, String file_name) throws IOException, JcifsException {
         int sync_result=0;
 
@@ -1528,8 +1526,8 @@ public class SyncThreadArchiveFile {
         return sync_result;
     }
 
-    static private int moveFileSmbToExternal_move_method(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                                         JcifsFile mf, File tf, String to_path, String file_name) throws IOException, JcifsException {
+    static private int moveFileSmbToExternalSetLastMod(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
+                                                       JcifsFile mf, File tf, String to_path, String file_name) throws IOException, JcifsException {
         int sync_result=0;
 
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
@@ -1730,8 +1728,7 @@ public class SyncThreadArchiveFile {
         try {
             mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
-            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() +
-                    " From=" + from_path + ", Master file error");
+            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", Master file error");
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());

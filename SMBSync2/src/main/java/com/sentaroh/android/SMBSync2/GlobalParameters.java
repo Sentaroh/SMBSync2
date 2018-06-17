@@ -310,12 +310,6 @@ public class GlobalParameters extends CommonGlobalParms {
         setLogDirName(gp.settingMgtFileDir);
         setLogFileName(gp.settingLogMsgFilename);
         setApplicationTag(APPLICATION_TAG);
-        setLogIntent(BROADCAST_LOG_RESET,
-                BROADCAST_LOG_DELETE,
-                BROADCAST_LOG_FLUSH,
-                BROADCAST_LOG_ROTATE,
-                BROADCAST_LOG_SEND,
-                BROADCAST_LOG_CLOSE);
     }
 
     public void initSettingsParms() {
