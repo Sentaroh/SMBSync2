@@ -57,17 +57,17 @@
         <item>3</item>
     </string-array>	    
 
-	<string name="settings_vibrate_when_sync_ended_title">Vibration</string>
-	<string name="settings_vibrate_when_sync_ended_summary_always">同期終了時に常に振動させる</string>
-	<string name="settings_vibrate_when_sync_ended_summary_success">同期が正常終了した時に振動させる</string>
-	<string name="settings_vibrate_when_sync_ended_summary_error">エラーで同期が終了した時に振動させる</string>
-	<string name="settings_vibrate_when_sync_ended_summary_no">振動させない</string>
-	<string name="settings_vibrate_when_sync_ended_dialog_title">振動の条件</string>
+	<string name="settings_vibrate_when_sync_ended_title">端末の振動</string>
+	<string name="settings_vibrate_when_sync_ended_summary_always">同期終了時に常に端末を振動させる</string>
+	<string name="settings_vibrate_when_sync_ended_summary_success">同期が正常終了した時に端末を振動させる</string>
+	<string name="settings_vibrate_when_sync_ended_summary_error">エラーで同期が終了した時に端末を振動させる</string>
+	<string name="settings_vibrate_when_sync_ended_summary_no">常に端末を振動させない</string>
+	<string name="settings_vibrate_when_sync_ended_dialog_title">端末の振動の条件</string>
 	<string-array name="settings_vibrate_when_sync_ended_list_entries">
-        <item>振動させない</item>
-        <item>同期終了時に常に振動させる</item>
-        <item>同期が正常終了した時に振動させる</item>
-        <item>エラーで同期が終了した時に振動させる</item>
+        <item>端末を常に振動させない</item>
+        <item>同期終了時に常に端末を振動させる</item>
+        <item>同期が正常終了した時に端末を振動させる</item>
+        <item>エラーで同期が終了した時に端末を振動させる</item>
     </string-array>
     <string-array name="settings_vibrate_when_sync_ended_list_values">
         <item>0</item>

@@ -135,6 +135,8 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public boolean settingExportedProfileEncryptRequired = true;
 
+    public boolean settingGrantCoarseLocationRequired = true;
+
     public String settingNotificationMessageWhenSyncEnded = SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
     public String settingVibrateWhenSyncEnded = SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
     public String settingRingtoneWhenSyncEnded = SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS;
@@ -343,6 +345,8 @@ public class GlobalParameters extends CommonGlobalParms {
         if (!prefs.contains(appContext.getString(R.string.settings_sync_history_log)))
             prefs.edit().putBoolean(appContext.getString(R.string.settings_sync_history_log), true).commit();
 
+        if (!prefs.contains("settings_sync_grant_coarse_location_required"))
+            prefs.edit().putBoolean("settings_sync_grant_coarse_location_required", true).commit();
     }
 
     public void setSettingOptionLogEnabled(boolean enabled) {
@@ -351,6 +355,12 @@ public class GlobalParameters extends CommonGlobalParms {
         if (settingDebugLevel == 0 && enabled) {
             prefs.edit().putString(appContext.getString(R.string.settings_log_level), "1").commit();
         }
+    }
+
+    public void setSettingGrantCoarseLocationRequired(boolean enabled) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        prefs.edit().putBoolean("settings_sync_grant_coarse_location_required", enabled).commit();
+        settingGrantCoarseLocationRequired=enabled;
     }
 
     public void loadSettingsParms() {
@@ -390,6 +400,9 @@ public class GlobalParameters extends CommonGlobalParms {
         settingNotificationVolume = prefs.getInt(appContext.getString(R.string.settings_playback_ringtone_volume), 100);
 
         settingWriteSyncResultLog = prefs.getBoolean(appContext.getString(R.string.settings_sync_history_log), true);
+
+        settingGrantCoarseLocationRequired = prefs.getBoolean("settings_sync_grant_coarse_location_required", true);
+
     }
 
     public String settingsSmbLmCompatibility = "3", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout = "30000";

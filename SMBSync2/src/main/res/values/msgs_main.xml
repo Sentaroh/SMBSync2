@@ -161,13 +161,13 @@
    	<string name="msgs_main_app_specific_dir_used_title">Warning about the application specific directory use</string>
    	<string name="msgs_main_app_specific_dir_used_suppress">Do not show from the next time to this warning (You can re show the user interface settings)</string>
    		
-	<string name="msgs_main_permission_external_storage_title">Permission</string>
+	<string name="msgs_main_permission_external_storage_title">Internal Storage Permission</string>
 	<string name="msgs_main_permission_external_storage_request_msg">For reading and writing data and management data to be sync to the internal storage, please give permission to access the internal storage.</string>
 	<string name="msgs_main_permission_external_storage_denied_msg">It will not be possible to sync for permission to access the An internal storage is not given. Quits the application</string>
 
-    <string name="msgs_main_permission_coarse_location_title">Permission</string>
-    <string name="msgs_main_permission_coarse_location_request_msg">This is the privilege required to read the WiFi SSID when scheduled synchronized or launched from an external application during sleep.</string>
-    <string name="msgs_main_permission_coarse_location_denied_msg">If until permission is granted that specifies the "connect to a specific SSID", "in connection SSID" or synchronization in sleep will exit with an error.</string>
+    <string name="msgs_main_permission_coarse_location_title">Coarse location Permission</string>
+    <string name="msgs_main_permission_coarse_location_request_msg">This is the privilege required to read the WiFi SSID when scheduled synchronized or launched from an external application during sleep. Do you request permission?</string>
+    <string name="msgs_main_permission_coarse_location_denied_msg">Until permission is granted, if "Connect to SSID" or "Connect to specific SSID" is specified in the sleeping synchronization, it ends with an error.\n Would you like to disable this message in the future? (In order to display again, enable ”Coarse Location" request by setting.)</string>
 
     <string name="msgs_smnsync_main_kill_application">Kill application?</string>
 
@@ -308,7 +308,7 @@
     <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">File filter has not been specified</string>
     <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Directory filter has not been specified</string>
     <string name="msgs_profile_sync_task_sync_option">Option:</string>
-    <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">To process the file that exists directly under the directory specified by the master.</string>
+    <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">Sync files that exist directly under the directory specified by the master.</string>
     <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">To overwrite the file</string>
     <string name="msgs_profile_sync_task_sync_option_confirm_required">To confirm before the overwritten or deleted files</string>
     <string name="msgs_profile_sync_task_sync_option_copy_by_rename">Do not change the file contents until the copy/move is complete</string>
@@ -319,10 +319,10 @@
     <string name="msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time"   >To use the last update time of the file to determine the difference file</string>
     <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size"       >To use the file size to the determination of the difference file</string>
     <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Only when the file size of the master is large is determined as the difference file</string>
-    <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Difference allowed last update time(in seconds)</string>
+    <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Difference in the last update time allowed in the judgment of the difference file(Seconds)</string>
     <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Forced to get the last update date and time in SMBSync2</string>
     <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">To not set the last update time of the target file the same as the master</string>
-    <string name="msgs_profile_sync_task_sync_option_show_special_option">Shows special options</string>
+    <string name="msgs_profile_sync_task_sync_option_show_special_option">Show advanced options</string>
     <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Retry when network error occurred</string>
     <string name="msgs_profile_sync_task_sync_option_empty_directory">Process empty directory</string>
     <string name="msgs_profile_sync_task_sync_option_hidden_directory">Process hidden directory</string>

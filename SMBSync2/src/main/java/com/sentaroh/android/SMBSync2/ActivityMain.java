@@ -898,6 +898,16 @@ public class ActivityMain extends AppCompatActivity {
 //        } else {
 //            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(false);
 //        }
+        if (Build.VERSION.SDK_INT >= 27) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
+                menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
+            } else {
+                menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
+            }
+        } else {
+            menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
+        }
+
         if (isUiEnabled()) {
             menu.findItem(R.id.menu_top_housekeep).setEnabled(true);
             if (mGp.syncThreadActive) menu.findItem(R.id.menu_top_housekeep).setVisible(false);
@@ -919,7 +929,9 @@ public class ActivityMain extends AppCompatActivity {
             }
             menu.findItem(R.id.menu_top_add_shortcut).setEnabled(true);
 
-            menu.findItem(R.id.menu_top_select_storage).setVisible(true);
+            if (mGp.safMgr.hasExternalSdcardPath()) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
+            else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
+
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             if (!mGp.settingLogOption) menu.findItem(R.id.menu_top_browse_log).setVisible(false);
@@ -1023,6 +1035,10 @@ public class ActivityMain extends AppCompatActivity {
                 return true;
             case R.id.menu_top_select_storage:
                 reselectSdcard("");
+                return true;
+            case R.id.menu_top_request_grant_coarse_location:
+                mGp.setSettingGrantCoarseLocationRequired(true);
+                checkLocationPermission();
                 return true;
         }
         if (isUiEnabled()) {
@@ -1758,8 +1774,9 @@ public class ActivityMain extends AppCompatActivity {
 
     private void checkLocationPermission() {
         if (Build.VERSION.SDK_INT >= 27) {
-            mUtil.addDebugMsg(1, "I", "Prermission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
-            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            mUtil.addDebugMsg(1, "I", "Prermission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)+
+                                    ", settingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired);
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED && mGp.settingGrantCoarseLocationRequired) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
@@ -1770,24 +1787,22 @@ public class ActivityMain extends AppCompatActivity {
 
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
-                        NotifyEvent ntfy_term = new NotifyEvent(mContext);
-                        ntfy_term.setListener(new NotifyEventListener() {
-                            @Override
-                            public void positiveResponse(Context c, Object[] o) {
-                                isTaskTermination = true;
-                                finish();
-                            }
-
-                            @Override
-                            public void negativeResponse(Context c, Object[] o) {
-                            }
-                        });
-                        commonDlg.showCommonDialog(false, "W",
-                                mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-                                mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_term);
+//                        NotifyEvent ntfy_deny=new NotifyEvent(mContext);
+//                        ntfy_deny.setListener(new NotifyEventListener() {
+//                            @Override
+//                            public void positiveResponse(Context context, Object[] objects) {
+//                                mGp.setSettingGrantCoarseLocationRequired(false);
+//                            }
+//                            @Override
+//                            public void negativeResponse(Context context, Object[] objects) {}
+//                        });
+//                        commonDlg.showCommonDialog(true, "W",
+//                                mContext.getString(R.string.msgs_main_permission_coarse_location_title),
+//                                mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
+                        mGp.setSettingGrantCoarseLocationRequired(false);
                     }
                 });
-                commonDlg.showCommonDialog(false, "W",
+                commonDlg.showCommonDialog(true, "W",
                         mContext.getString(R.string.msgs_main_permission_coarse_location_title),
                         mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
             }
@@ -1827,9 +1842,18 @@ public class ActivityMain extends AppCompatActivity {
         if (REQUEST_PERMISSIONS_ACCESS_COARSE_LOCATION == requestCode) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             } else {
+                NotifyEvent ntfy_deny=new NotifyEvent(mContext);
+                ntfy_deny.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        mGp.setSettingGrantCoarseLocationRequired(false);
+                    }
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {}
+                });
                 commonDlg.showCommonDialog(false, "W",
                         mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-                        mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), null);
+                        mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
             }
         }
     }

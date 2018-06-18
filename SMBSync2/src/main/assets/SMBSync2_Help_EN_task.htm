@@ -385,7 +385,14 @@ select the name of the directory you want to synchronize.</span></p>
 
 <p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
 
-<p class=MsoNormal><span lang=EN-US>“To process the file that exists directory
+<p class=MsoNormal><span lang=EN-US>&quot;Sync is started only when charging&quot;</span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt'><span lang=EN-US>Start sync task only
+when charging.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US> “To process the file that exists directory
 under the directory specified by the master.”</span></p>
 
 <p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>It processes
@@ -398,7 +405,33 @@ you have not checked.</span></p>
 
 <p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
 
-<p class=MsoNormal><span lang=EN-US>“Process a subdirectory”</span></p>
+<p class=MsoNormal><span lang=EN-US>“To confirm before override copy or delete
+files”</span></p>
+
+<p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>It will
+display a confirmation dialog when you want to overwrite and delete the file if
+you have checked.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>“Wireless LAN”</span></p>
+
+<p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>&quot;Sync at
+the time of AP connection&quot; sync and are not connected to the access point
+will exit with an error. &quot;Access Point List&quot; can initiate
+synchronization when connected to a particular access point. Please enter the
+access point name by pressing the wireless LAN access point list button.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>“Shows advanced options”</span></p>
+
+<p class=MsoNormal style='margin-left:10.0mm'><b><u><span lang=EN-US
+style='color:red'>Please use it when setting detailed options.</span></u></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US> “Process a subdirectory”</span></p>
 
 <p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>Sync the
 subdirectory if you check.</span></p>
@@ -417,8 +450,8 @@ directory if you check.(Create a empty directory on the target)</span></p>
 <p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>Sync the
 hidden directory if you check.( The name of the hidden directory starts from
 &quot;.&quot; In Android, since it is represented by a bit in the directory and
-not the name of the directory on Samba and Windows, the directory that was
-created will not be in a hidden directory)</span></p>
+not the name of the directory on Samba and Windows, the directory that was created
+will not be in a hidden directory)</span></p>
 
 <p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
 
@@ -432,21 +465,6 @@ not be hidden files)</span></p>
 
 <p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
 
-<p class=MsoNormal><span lang=EN-US>“Confirm before override copy or delete”</span></p>
-
-<p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>It will
-display a confirmation dialog when you want to overwrite and delete the file if
-you have checked.</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&quot;Sync is started only when charging&quot;</span></p>
-
-<p class=MsoNormal style='margin-left:18.0pt'><span lang=EN-US>Start sync task
-only when charging.</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
 <p class=MsoNormal style='page-break-after:avoid'><span lang=EN-US> “Sync retry
 when network error occurs”</span></p>
 
@@ -457,24 +475,7 @@ each.</span></p>
 
 <p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
 
-<p class=MsoNormal><span lang=EN-US> “Wireless LAN”</span></p>
-
-<p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>&quot;Sync at
-the time of AP connection&quot; sync and are not connected to the access point
-will exit with an error. &quot;Access Point List&quot; can initiate
-synchronization when connected to a particular access point. Please enter the
-access point name by pressing the wireless LAN access point list button.</span></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>“Shows special options”</span></p>
-
-<p class=MsoNormal style='margin-left:10.0mm'><b><u><span lang=EN-US
-style='color:red'>The following options, please use in special cases.</span></u></b></p>
-
-<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN-US>“Use expanded directory selection /
+<p class=MsoNormal><span lang=EN-US> “Use expanded directory selection /
 exclusion filter”</span></p>
 
 <p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>If the
@@ -505,11 +506,11 @@ via the network. If possible, please use SMB protocol &quot;Use only SMB
 
 <p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
 
-<p class=MsoNormal><span lang=EN-US>“Not the time of the last modification to
-the SMB folder the same as the copy source”</span></p>
+<p class=MsoNormal><span lang=EN-US>“To not set the last update time of the
+target file the same as the master”</span></p>
 
 <p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>Please enable
-if SmbFile#setLastModified() to fail due to the limitation of the remote.</span></p>
+if SmbFile#setLastModified()/File#setLastModified() to fail.</span></p>
 
 <p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>As a result,
 the difference determination of local and remote files is determined by the
@@ -555,7 +556,7 @@ different as the difference file.</span></p>
 
 <p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
 
-<p class=MsoNormal><span lang=EN-US>“Last time of tolerance(Sec)”</span></p>
+<p class=MsoNormal><span lang=EN-US> “Last time of tolerance(Sec)”</span></p>
 
 <p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>It allows if
 it is within the specified time.</span></p>

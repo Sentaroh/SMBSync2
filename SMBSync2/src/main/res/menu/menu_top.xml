@@ -47,6 +47,14 @@
           android:icon="@android:drawable/ic_menu_close_clear_cancel"
           />
 
+    <item android:id="@+id/menu_top_select_storage"
+        android:title="@string/msgs_profile_edit_sync_folder_dlg_select_sdcard"
+        />
+
+    <item android:id="@+id/menu_top_request_grant_coarse_location"
+        android:title="@string/msgs_main_permission_coarse_location_title"
+        />
+
     <item android:id="@+id/menu_top_about"
           android:title="@string/msgs_menu_about" 
           android:icon="@android:drawable/ic_menu_info_details"
@@ -56,8 +64,5 @@
           android:title="@string/msgs_menu_list_storage_info"
           />
     
-    <item android:id="@+id/menu_top_select_storage"
-          android:title="@string/msgs_profile_edit_sync_folder_dlg_select_sdcard"
-          />
 
 </menu>

@@ -47,6 +47,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -74,6 +75,7 @@ import android.widget.CheckedTextView;
 import android.widget.Spinner;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
+import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.jcifs.JcifsUtil;
 
@@ -150,27 +152,27 @@ public final class SyncUtil {
 
     static public ArrayList<String> listSystemInfo(GlobalParameters mGp) {
         ArrayList<String> out=new ArrayList<String>();
-        out.add("System information begin" +" Application="+ getApplVersionName(mGp.appContext) + ", API=" + Build.VERSION.SDK_INT);
+        out.add("System information Application="+ getApplVersionName(mGp.appContext) + ", API=" + Build.VERSION.SDK_INT);
 
-        out.add("Manufacturer="+ Build.MANUFACTURER+", Model="+Build.MODEL);
+        out.add("  Manufacturer="+ Build.MANUFACTURER+", Model="+Build.MODEL);
 
         out.addAll(listsMountPoint());
 
         out.add("getSdcardRootPath=" + mGp.safMgr.getSdcardRootPath());
 
         File[] fl = ContextCompat.getExternalFilesDirs(mGp.appContext, null);
+        out.add("ExternalFilesDirs :");
         if (fl != null) {
             for (File f : fl) {
-                if (f != null) out.add("ExternalFilesDirs=" + f.getPath());
+                if (f != null) out.add("  " + f.getPath());
             }
         }
         if (mGp.safMgr.getSdcardRootSafFile() != null)
             out.add("getSdcardSafFile name=" + mGp.safMgr.getSdcardRootSafFile().getName());
 
-        String mpi="Uri permissions:\n";
+        out.add("Uri permissions:");
         List<UriPermission> permissions = mGp.appContext.getContentResolver().getPersistedUriPermissions();
-        for(UriPermission item:permissions) out.add("   "+item.toString());
-
+        for(UriPermission item:permissions) out.add("   "+ SafManager.getUuidFromUri(item.getUri().toString())+", read="+item.isReadPermission()+", write="+item.isWritePermission());
 
         out.addAll(getRemovableStoragePaths(mGp.appContext, true));
         out.add("Storage information end");
@@ -178,9 +180,14 @@ public final class SyncUtil {
         if (Build.VERSION.SDK_INT >= 23) {
             String packageName = mGp.appContext.getPackageName();
             PowerManager pm = (PowerManager) mGp.appContext.getSystemService(Context.POWER_SERVICE);
-            if (pm.isIgnoringBatteryOptimizations(packageName)) out.add("Battery optimization=true");
-            else out.add("Battery optimization=false");
-        } else out.add("Battery optimization=false");
+            if (pm.isIgnoringBatteryOptimizations(packageName)) {
+                out.add("Battery optimization=true");
+            } else {
+                out.add("Battery optimization=false");
+            }
+        } else {
+            out.add("Battery optimization=false");
+        }
 
         try {
             ContentResolver contentResolver = mGp.appContext.getContentResolver();
@@ -202,7 +209,11 @@ public final class SyncUtil {
         } catch (Settings.SettingNotFoundException e) {
             e.printStackTrace();
         }
-        out.add("System information end");
+
+        if (Build.VERSION.SDK_INT>=27) {
+            out.add("setSettingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired);
+            out.add("ACCESS_COARSE_LOCATION Permission="+mGp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+        }
         return out;
     }
 
@@ -225,7 +236,7 @@ public final class SyncUtil {
 //	            boolean removable = (Boolean)isRemovable.invoke(volume);
 //                mpi+="allowMassStorage="+(boolean) allowMassStorage.invoke(volume)+"\n";
 //                mpi+="getStorageId="+String.format("0x%8h",((int) getStorageId.invoke(volume)))+"\n";
-                out.add((String) toString.invoke(volume)+", isPrimary="+(boolean)isPrimary.invoke(volume));
+                out.add("  "+((String)toString.invoke(volume)+", isPrimary="+(boolean)isPrimary.invoke(volume)));
 //	            if ((String)getUuid.invoke(volume)!=null) {
 //	            	paths.add(path);
 //					if (debug) {
