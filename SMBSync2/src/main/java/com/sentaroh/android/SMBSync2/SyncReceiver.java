@@ -157,8 +157,6 @@ public class SyncReceiver extends BroadcastReceiver {
         }
     }
 
-    ;
-
     static private void loadScheduleData() {
         mSchedList = ScheduleUtil.loadScheduleData(mGp);
         if (mGp.settingDebugLevel >= 2)
@@ -179,8 +177,6 @@ public class SyncReceiver extends BroadcastReceiver {
             }
     }
 
-    ;
-
     @SuppressLint("NewApi")
     static private void setTimer() {
         if (mGp.settingDebugLevel > 0) mLog.addDebugMsg(1, "I", "setTimer entered");
@@ -193,7 +189,9 @@ public class SyncReceiver extends BroadcastReceiver {
             for (ScheduleItem si : mSchedList) {
                 if (si.scheduleEnabled) {
                     long time = ScheduleUtil.getNextSchedule(si);
-                    sched_list.add(StringUtil.convDateTimeTo_YearMonthDayHourMin(time)+","+si.scheduleName);
+                    String item=StringUtil.convDateTimeTo_YearMonthDayHourMin(time)+","+si.scheduleName;
+                    sched_list.add(item);
+                    mLog.addDebugMsg(1,"I", "setTimer Schedule item added. item="+item);
 //                    if (sched_time == -1) {
 //                        sched_time = time;
 //                        begin_sched_list.add(si);
@@ -214,12 +212,20 @@ public class SyncReceiver extends BroadcastReceiver {
                     if (sched_time.equals("")) {
                         sched_time=sa[0];
                         ScheduleItem si=ScheduleUtil.getScheduleInformation(mSchedList, sa[1]);
-                        begin_sched_list.add(si);
-                        Log.v("ScheduleNextTime","Name="+si.scheduleName+", "+sa[0]);
+                        if (si!=null) {
+                            begin_sched_list.add(si);
+                            mLog.addDebugMsg(1,"I", "setTimer NextSchedule added. Name="+si.scheduleName+", "+sa[0]);
+                        } else {
+                            mLog.addLogMsg("E", "setTimer Schedule can not be found. Name="+sa[1]);
+                        }
                     } else if (sched_time.equals(sa[0])) {
                         ScheduleItem si=ScheduleUtil.getScheduleInformation(mSchedList, sa[1]);
-                        begin_sched_list.add(si);
-                        Log.v("ScheduleNextTime","Name="+si.scheduleName+", "+sa[0]);
+                        if (si!=null) {
+                            begin_sched_list.add(si);
+                            mLog.addDebugMsg(1,"I", "setTimer NextSchedule added. Name="+si.scheduleName+", "+sa[0]);
+                        } else {
+                            mLog.addLogMsg("E", "setTimer Schedule can not be found. Name="+sa[1]);
+                        }
                     }
                 }
             }
@@ -245,8 +251,6 @@ public class SyncReceiver extends BroadcastReceiver {
         }
     }
 
-    ;
-
     static private SyncTaskItem getSyncTask(String job_name) {
         for (SyncTaskItem sji : mGp.syncTaskList) {
             if (sji.getSyncTaskName().equals(job_name)) {
@@ -268,8 +272,6 @@ public class SyncReceiver extends BroadcastReceiver {
         }
     }
 
-    ;
-
     static private void cancelTimer() {
         if (mGp.settingDebugLevel > 0) mLog.addDebugMsg(1, "I", "cancelTimer entered");
         Intent in = new Intent();
@@ -279,9 +281,6 @@ public class SyncReceiver extends BroadcastReceiver {
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
     }
-
-    ;
-
 
 //	private static PrintWriter log_writer=null;
 

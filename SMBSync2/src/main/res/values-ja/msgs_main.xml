@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE msg_string>
 <resources>
     <string name="msgs_main_sync_list_array_mtype_mirr">ミラー</string>
     <string name="msgs_main_sync_list_array_mtype_copy">コピー</string>
