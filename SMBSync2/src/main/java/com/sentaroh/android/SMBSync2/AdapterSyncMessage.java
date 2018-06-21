@@ -23,19 +23,19 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.sentaroh.android.Utilities.ThemeColorList;
-import com.sentaroh.android.Utilities.ThemeUtil;
-import com.sentaroh.android.Utilities.Widget.CustomTextView;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.sentaroh.android.Utilities.ThemeColorList;
+import com.sentaroh.android.Utilities.ThemeUtil;
+import com.sentaroh.android.Utilities.Widget.CustomTextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @SuppressWarnings("ALL")

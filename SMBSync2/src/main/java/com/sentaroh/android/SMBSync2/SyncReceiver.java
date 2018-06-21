@@ -23,12 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.*;
-import static com.sentaroh.android.SMBSync2.Constants.*;
-
-import com.sentaroh.android.SMBSync2.Log.LogUtil;
-import com.sentaroh.android.Utilities.StringUtil;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -38,10 +32,20 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.util.Log;
+
+import com.sentaroh.android.SMBSync2.Log.LogUtil;
+import com.sentaroh.android.Utilities.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_AUTO_SYNC_INTENT;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SERVICE_HEART_BEAT;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_START_SYNC_INTENT;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_TIMER_EXPIRED;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_NAME_KEY;
 
 public class SyncReceiver extends BroadcastReceiver {
 

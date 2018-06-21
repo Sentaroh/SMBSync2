@@ -23,27 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import static com.sentaroh.android.SMBSync2.Constants.*;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.*;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.lang.Thread.UncaughtExceptionHandler;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -81,14 +60,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sentaroh.android.Utilities.Base64Compat;
+import com.sentaroh.android.Utilities.ContextMenu.CustomContextMenu;
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
+import com.sentaroh.android.Utilities.Dialog.DialogBackKeyListener;
 import com.sentaroh.android.Utilities.EncryptUtil;
 import com.sentaroh.android.Utilities.EncryptUtil.CipherParms;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.ThreadCtrl;
-import com.sentaroh.android.Utilities.ContextMenu.CustomContextMenu;
-import com.sentaroh.android.Utilities.Dialog.DialogBackKeyListener;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistAdapter;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistItem;
 import com.sentaroh.android.Utilities.Widget.CustomTextView;
@@ -96,6 +75,52 @@ import com.sentaroh.jcifs.JcifsAuth;
 import com.sentaroh.jcifs.JcifsException;
 import com.sentaroh.jcifs.JcifsFile;
 import com.sentaroh.jcifs.JcifsUtil;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.lang.Thread.UncaughtExceptionHandler;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
+import static com.sentaroh.android.SMBSync2.Constants.BUILD_FOR_AMAZON;
+import static com.sentaroh.android.SMBSync2.Constants.CURRENT_SMBSYNC2_PROFILE_FILE_NAME;
+import static com.sentaroh.android.SMBSync2.Constants.CURRENT_SMBSYNC2_PROFILE_VERSION;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROFILE_FILE_NAME_V1;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROFILE_FILE_NAME_V2;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROFILE_FILE_NAME_V3;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROFILE_FILE_NAME_V4;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROFILE_FILE_NAME_V5;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROFILE_FILE_NAME_V6;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_DEC;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_ENC;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_EXCLUDE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_INCLUDE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_TYPE_SETTINGS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_TYPE_SYNC;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_VER1;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_VER2;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_VER3;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_VER4;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_VER5;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_VER6;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_BOOLEAN;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_INT;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_LONG;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V3;
 
 public class SyncTaskUtil {
 

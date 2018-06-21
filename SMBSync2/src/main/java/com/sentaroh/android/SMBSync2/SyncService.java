@@ -23,12 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import static com.sentaroh.android.SMBSync2.Constants.*;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.*;
-
-import java.util.ArrayList;
-import java.util.concurrent.ArrayBlockingQueue;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -40,7 +34,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -50,14 +43,39 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.os.SystemClock;
 import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.os.Vibrator;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
+
+import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
+
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_AUTO_SYNC_INTENT;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_EXTRA_PARM_SYNC_PROFILE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_ERROR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_SUCCESS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SERVICE_HEART_BEAT;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_START_SYNC_INTENT;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_ENDED;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_REQUEST_ACTIVITY;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_REQUEST_EXTERNAL;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_REQUEST_SCHEDULE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_REQUEST_SHORTCUT;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_STARTED;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_SUCCESS;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_TIMER_EXPIRED;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_NAME_KEY;
 
 @SuppressLint("Wakelock")
 public class SyncService extends Service {

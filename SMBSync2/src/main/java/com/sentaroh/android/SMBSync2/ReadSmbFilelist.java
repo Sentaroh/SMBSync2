@@ -23,11 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import java.lang.Thread.UncaughtExceptionHandler;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-
-
 import android.content.Context;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
@@ -37,6 +32,10 @@ import com.sentaroh.jcifs.JcifsAuth;
 import com.sentaroh.jcifs.JcifsException;
 import com.sentaroh.jcifs.JcifsFile;
 import com.sentaroh.jcifs.JcifsUtil;
+
+import java.lang.Thread.UncaughtExceptionHandler;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 public class ReadSmbFilelist implements Runnable {
     private ThreadCtrl getFLCtrl = null;

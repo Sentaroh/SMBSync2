@@ -23,8 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +32,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
+
+import java.util.ArrayList;
 
 public class AdapterExportImportTask extends ArrayAdapter<AdapterExportImportTask.ExportImportListItem> {
     private Context c;

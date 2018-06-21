@@ -23,17 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import static com.sentaroh.android.SMBSync2.Constants.*;
-import static com.sentaroh.android.SMBSync2.Log.LogConstants.*;
-
-import java.util.ArrayList;
-import java.util.concurrent.ArrayBlockingQueue;
-
-import com.sentaroh.android.Utilities.CommonGlobalParms;
-import com.sentaroh.android.Utilities.SafManager;
-import com.sentaroh.android.Utilities.ThemeColorList;
-import com.sentaroh.android.Utilities.ThreadCtrl;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -62,6 +51,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.sentaroh.android.Utilities.CommonGlobalParms;
+import com.sentaroh.android.Utilities.SafManager;
+import com.sentaroh.android.Utilities.ThemeColorList;
+import com.sentaroh.android.Utilities.ThreadCtrl;
+
+import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
+
+import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
+import static com.sentaroh.android.SMBSync2.Constants.LOG_FILE_NAME;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
 
 public class GlobalParameters extends CommonGlobalParms {
     public Context appContext = null;

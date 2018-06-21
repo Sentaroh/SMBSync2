@@ -42,7 +42,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import static com.sentaroh.android.SMBSync2.Constants.*;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_LOCAL_FILE_LAST_MODIFIED_NAME_V1;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_LOCAL_FILE_LAST_MODIFIED_WAS_FORCE_LASTEST;
 
 public class FileLastModifiedTime {
 

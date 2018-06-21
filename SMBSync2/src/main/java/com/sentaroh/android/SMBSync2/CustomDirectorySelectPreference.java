@@ -25,8 +25,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.EditText;
 
 import com.sentaroh.android.Utilities.Preference.DirectorySelectPreference;
 

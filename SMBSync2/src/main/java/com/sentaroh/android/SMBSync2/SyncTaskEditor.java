@@ -23,30 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import static android.view.KeyEvent.KEYCODE_BACK;
-import static com.sentaroh.android.SMBSync2.Constants.*;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_YEAR;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-
-import com.sentaroh.android.Utilities.Dialog.CommonDialog;
-import com.sentaroh.android.Utilities.LocalMountPoint;
-import com.sentaroh.android.Utilities.NotifyEvent;
-import com.sentaroh.android.Utilities.SafManager;
-import com.sentaroh.android.Utilities.StringUtil;
-import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
-import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
-import com.sentaroh.jcifs.JcifsUtil;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -69,12 +45,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
@@ -85,7 +62,38 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.sentaroh.android.Utilities.Dialog.CommonDialog;
+import com.sentaroh.android.Utilities.LocalMountPoint;
+import com.sentaroh.android.Utilities.NotifyEvent;
+import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
+import com.sentaroh.android.Utilities.SafManager;
+import com.sentaroh.android.Utilities.StringUtil;
+import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
+import com.sentaroh.jcifs.JcifsUtil;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import static android.view.KeyEvent.KEYCODE_BACK;
+import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
+import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
+import static com.sentaroh.android.SMBSync2.Constants.ARCHIVE_FILE_TYPE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_MONTH;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_YEAR;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_AUDIO;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_IMAGE;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_VIDEO;
 
 public class SyncTaskEditor extends DialogFragment {
     private final static String SUB_APPLICATION_TAG = "SyncTask ";

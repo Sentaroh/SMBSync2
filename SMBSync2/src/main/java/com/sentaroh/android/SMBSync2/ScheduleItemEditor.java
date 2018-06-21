@@ -23,9 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import static com.sentaroh.android.SMBSync2.Constants.*;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.*;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,8 +33,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -56,12 +53,19 @@ import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.ContextMenu.CustomContextMenu;
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
-import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
+import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
 
 import java.util.ArrayList;
+
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TASK_DISABLED;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TASK_ENABLED;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_INTERVAL;
 
 public class ScheduleItemEditor {
     private CommonDialog commonDlg = null;

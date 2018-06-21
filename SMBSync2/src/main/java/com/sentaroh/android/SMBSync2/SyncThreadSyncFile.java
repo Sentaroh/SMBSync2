@@ -26,7 +26,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 import android.os.Build;
 import android.os.SystemClock;
 
-import static com.sentaroh.android.SMBSync2.Constants.*;
+import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
+import com.sentaroh.android.Utilities.SafFile;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,10 +37,10 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
-import com.sentaroh.android.Utilities.SafFile;
-import com.sentaroh.jcifs.JcifsException;
-import com.sentaroh.jcifs.JcifsFile;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_MOVE;
 
 public class SyncThreadSyncFile {
 

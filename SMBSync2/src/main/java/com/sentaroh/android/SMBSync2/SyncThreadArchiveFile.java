@@ -25,7 +25,15 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import android.os.Build;
 
-import static com.sentaroh.android.SMBSync2.Constants.*;
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.mp4.Mp4Directory;
+import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
+import com.sentaroh.android.Utilities.SafFile;
+import com.sentaroh.android.Utilities.StringUtil;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,15 +50,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.TimeZone;
 
-import com.drew.imaging.ImageMetadataReader;
-import com.drew.imaging.ImageProcessingException;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.mp4.Mp4Directory;
-import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
-import com.sentaroh.android.Utilities.SafFile;
-import com.sentaroh.android.Utilities.StringUtil;
-import com.sentaroh.jcifs.JcifsException;
-import com.sentaroh.jcifs.JcifsFile;
+import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
+import static com.sentaroh.android.SMBSync2.Constants.ARCHIVE_FILE_TYPE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_MOVE;
 
 public class SyncThreadArchiveFile {
 

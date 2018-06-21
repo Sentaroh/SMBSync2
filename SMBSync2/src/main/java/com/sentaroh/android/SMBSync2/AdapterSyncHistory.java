@@ -23,12 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import java.util.ArrayList;
-
-import com.sentaroh.android.Utilities.ThemeUtil;
-import com.sentaroh.android.Utilities.NotifyEvent;
-import com.sentaroh.android.Utilities.ThemeColorList;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -41,6 +35,12 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.sentaroh.android.Utilities.NotifyEvent;
+import com.sentaroh.android.Utilities.ThemeColorList;
+import com.sentaroh.android.Utilities.ThemeUtil;
+
+import java.util.ArrayList;
 
 @SuppressWarnings("ALL")
 public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {

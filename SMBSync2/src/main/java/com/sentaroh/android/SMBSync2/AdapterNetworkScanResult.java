@@ -23,10 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +32,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 @SuppressWarnings("ALL")
 public class AdapterNetworkScanResult extends ArrayAdapter<AdapterNetworkScanResult.NetworkScanListItem> {

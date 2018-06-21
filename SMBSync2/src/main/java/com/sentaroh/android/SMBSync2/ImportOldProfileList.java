@@ -23,6 +23,12 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.annotation.SuppressLint;
+
+import com.sentaroh.android.Utilities.Base64Compat;
+import com.sentaroh.android.Utilities.EncryptUtil;
+import com.sentaroh.android.Utilities.EncryptUtil.CipherParms;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,12 +38,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
-
-import android.annotation.SuppressLint;
-
-import com.sentaroh.android.Utilities.Base64Compat;
-import com.sentaroh.android.Utilities.EncryptUtil;
-import com.sentaroh.android.Utilities.EncryptUtil.CipherParms;
 
 public class ImportOldProfileList {
 

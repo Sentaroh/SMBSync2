@@ -25,6 +25,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import android.os.Build;
 
+import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
+import com.sentaroh.android.Utilities.SafFile;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -32,12 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
-import com.sentaroh.android.Utilities.SafFile;
-import com.sentaroh.jcifs.JcifsException;
-import com.sentaroh.jcifs.JcifsFile;
-
-import static com.sentaroh.android.SMBSync2.Constants.*;
+import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
 
 public class SyncThreadCopyFile {
 

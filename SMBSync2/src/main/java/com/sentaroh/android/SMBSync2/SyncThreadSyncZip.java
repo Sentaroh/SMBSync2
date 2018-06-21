@@ -23,7 +23,21 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import static com.sentaroh.android.SMBSync2.Constants.*;
+import android.os.SystemClock;
+
+import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
+import com.sentaroh.android.Utilities.BufferedZipFile;
+import com.sentaroh.android.Utilities.SafFile;
+import com.sentaroh.android.Utilities.StringUtil;
+import com.sentaroh.android.Utilities.ZipFileListItem;
+import com.sentaroh.android.Utilities.ZipUtil;
+
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.FileHeader;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.progress.ProgressMonitor;
+import net.lingala.zip4j.util.Zip4jConstants;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -34,22 +48,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import net.lingala.zip4j.core.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
-import net.lingala.zip4j.model.FileHeader;
-import net.lingala.zip4j.model.ZipParameters;
-import net.lingala.zip4j.progress.ProgressMonitor;
-import net.lingala.zip4j.util.Zip4jConstants;
-
-import android.annotation.SuppressLint;
-import android.os.SystemClock;
-
-import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
-import com.sentaroh.android.Utilities.BufferedZipFile;
-import com.sentaroh.android.Utilities.SafFile;
-import com.sentaroh.android.Utilities.StringUtil;
-import com.sentaroh.android.Utilities.ZipFileListItem;
-import com.sentaroh.android.Utilities.ZipUtil;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_MOVE;
 
 public class SyncThreadSyncZip {
 

@@ -25,13 +25,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 //import static com.sentaroh.android.SMBSync2.Constants.*;
 
-import java.util.ArrayList;
-
-import com.sentaroh.android.Utilities.NotifyEvent;
-import com.sentaroh.android.Utilities.SafManager;
-import com.sentaroh.android.Utilities.ThemeColorList;
-import com.sentaroh.android.Utilities.ThemeUtil;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -45,6 +38,13 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.sentaroh.android.Utilities.NotifyEvent;
+import com.sentaroh.android.Utilities.SafManager;
+import com.sentaroh.android.Utilities.ThemeColorList;
+import com.sentaroh.android.Utilities.ThemeUtil;
+
+import java.util.ArrayList;
 
 public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 

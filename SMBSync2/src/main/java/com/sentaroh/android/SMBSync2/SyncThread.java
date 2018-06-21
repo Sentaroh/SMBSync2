@@ -23,7 +23,35 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import static com.sentaroh.android.SMBSync2.Constants.*;
+import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.media.MediaScannerConnection;
+import android.media.MediaScannerConnection.MediaScannerConnectionClient;
+import android.net.Uri;
+import android.net.wifi.SupplicantState;
+import android.net.wifi.WifiManager;
+import android.os.Build;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
+import android.os.RemoteException;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
+
+import com.sentaroh.android.Utilities.MiscUtil;
+import com.sentaroh.android.Utilities.NotifyEvent;
+import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
+import com.sentaroh.android.Utilities.SafFile;
+import com.sentaroh.android.Utilities.SafManager;
+import com.sentaroh.android.Utilities.StringUtil;
+import com.sentaroh.android.Utilities.ZipFileListItem;
+import com.sentaroh.jcifs.JcifsAuth;
+import com.sentaroh.jcifs.JcifsException;
+import com.sentaroh.jcifs.JcifsFile;
+import com.sentaroh.jcifs.JcifsUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,8 +59,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -45,46 +71,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.annotation.SuppressLint;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.UriPermission;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
-import android.media.MediaScannerConnection;
-import android.media.RingtoneManager;
-import android.media.MediaScannerConnection.MediaScannerConnectionClient;
-import android.net.Uri;
-import android.net.wifi.SupplicantState;
-import android.net.wifi.WifiManager;
-import android.os.Build;
-import android.os.PowerManager.WakeLock;
-import android.os.PowerManager;
-import android.os.RemoteException;
-import android.os.SystemClock;
-import android.os.Vibrator;
-import android.os.storage.StorageManager;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
-
-import com.sentaroh.android.Utilities.MiscUtil;
-import com.sentaroh.android.Utilities.NotifyEvent;
-import com.sentaroh.android.Utilities.SafFile;
-import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
-import com.sentaroh.android.Utilities.SafManager;
-import com.sentaroh.android.Utilities.StringUtil;
-import com.sentaroh.android.Utilities.ZipFileListItem;
-import com.sentaroh.jcifs.JcifsAuth;
-import com.sentaroh.jcifs.JcifsException;
-import com.sentaroh.jcifs.JcifsFile;
-import com.sentaroh.jcifs.JcifsUtil;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_MOVE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_CANCEL;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_NOALL;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YESALL;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_MONTH;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_YEAR;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_AUDIO;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_IMAGE;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_VIDEO;
 
 public class SyncThread extends Thread {
 

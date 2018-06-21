@@ -26,13 +26,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class ShortcutMakeAutoSync extends Activity {
 

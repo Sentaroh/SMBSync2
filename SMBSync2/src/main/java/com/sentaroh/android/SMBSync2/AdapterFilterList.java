@@ -23,10 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import java.util.ArrayList;
-
-import com.sentaroh.android.Utilities.NotifyEvent;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +33,10 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.sentaroh.android.Utilities.NotifyEvent;
+
+import java.util.ArrayList;
 
 @SuppressWarnings("ALL")
 public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterListItem> {

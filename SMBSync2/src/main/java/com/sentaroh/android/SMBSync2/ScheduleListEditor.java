@@ -55,7 +55,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.*;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_INTERVAL;
 
 /**
  * Created by sentaroh on 2018/03/07.
