@@ -85,6 +85,7 @@ public class SyncThreadCopyFile {
             }
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
+/* debug */stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+to_file_dest+", target="+t_df.lastModified()+", master="+mf.lastModified()+", target_size="+t_df.length());
 
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
@@ -137,6 +138,7 @@ public class SyncThreadCopyFile {
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
+        /* debug */stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+to_file_temp+", target="+temp_sf.lastModified()+", master="+mf.lastModified()+", target_size="+temp_sf.length());
 
         SafFile to_sf=getSafFile(stwa, sti, to_file_dest);
         if (to_sf.exists()) to_sf.delete();
@@ -301,7 +303,7 @@ public class SyncThreadCopyFile {
 
         FileInputStream is = new FileInputStream(mf);
         OutputStream os =null;
-        File t_file=new File(to_file_path);
+//        File t_file=new File(to_file_path);
         SafFile t_df=null;
         t_df = getSafFile(stwa, sti, to_file_path);
         if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
@@ -314,7 +316,7 @@ public class SyncThreadCopyFile {
             }
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
-
+/* debug */stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+to_file_dest+", target="+t_df.lastModified()+", master="+mf.lastModified()+", target_size="+t_df.length());
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
             SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
@@ -363,7 +365,7 @@ public class SyncThreadCopyFile {
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
-
+/* debug */stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+to_file_temp+", target="+from_sf.lastModified()+", master="+mf.lastModified()+", target_size="+from_sf.length());
         SafFile to_sf=getSafFile(stwa, sti, to_file_dest);
         if (to_sf.exists()) to_sf.delete();
         if (!from_sf.moveTo(to_sf)) {
@@ -497,8 +499,7 @@ public class SyncThreadCopyFile {
                 stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
             }
         }
-/* debug */stwa.util.addDebugMsg(1,"I", sti.getSyncTaskName(), " after copy fp="+out_file.getPath()+", target="+out_file.lastModified()+", master="+mf.getLastModified());
-
+/* debug */stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+out_file.getPath()+", target="+out_file.lastModified()+", master="+mf.getLastModified()+", target_size="+out_file.length());
         File out_dest = new File(to_file_dest);
         if (out_dest.exists()) out_dest.delete();
         out_file.renameTo(out_dest);
@@ -539,7 +540,7 @@ public class SyncThreadCopyFile {
             }
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
-
+/* debug */stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+to_file_dest+", target="+t_df.lastModified()+", master="+mf.getLastModified()+", target_size="+t_df.length());
         if (sti.isSyncUseFileCopyByTempName()) {
             File out_dest = new File(to_file_dest);
             SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
@@ -580,6 +581,7 @@ public class SyncThreadCopyFile {
             temp_file.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
+/* debug */stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+to_file_temp+", target="+from_sf.lastModified()+", master="+mf.getLastModified()+", target_size="+from_sf.length());
         stwa.util.addDebugMsg(1, "I",SyncUtil.getExecutedMethodName()+" copy elapsed="+(System.currentTimeMillis()-b_time));
         File out_dest = new File(to_file_dest);
         try {
