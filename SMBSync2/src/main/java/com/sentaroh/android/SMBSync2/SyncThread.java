@@ -402,7 +402,7 @@ public class SyncThread extends Thread {
                 ", SyncSubDir=" + sti.isSyncSubDirectory() ,
                 ", AutoSync=" + sti.isSyncTaskAuto() ,
                 ", TestMode=" + sti.isSyncTestMode() ,
-                ", UseTempName=" + sti.isSyncUseFileCopyByTempName() ,
+//                ", UseTempName=" + sti.isSyncUseFileCopyByTempName() ,
                 ", UseSmallBuffer=" + sti.isSyncUseSmallIoBuffer() ,
                 ", AllowableTime=" + sti.getSyncDifferentFileAllowableTime() ,
                 ", RetryCount=" + sti.getSyncRetryCount() ,

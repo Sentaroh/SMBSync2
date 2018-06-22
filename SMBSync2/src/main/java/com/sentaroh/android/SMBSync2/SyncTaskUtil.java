@@ -4373,7 +4373,7 @@ public class SyncTaskUtil {
             stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
             stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
 
-            stli.setSyncUseFileCopyByTempName(parm[36].equals("1") ? true : false);
+//            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
             stli.setSyncWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
@@ -4480,7 +4480,7 @@ public class SyncTaskUtil {
             stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
             stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
 
-            stli.setSyncUseFileCopyByTempName(parm[36].equals("1") ? true : false);
+//            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
             stli.setSyncWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
@@ -4592,7 +4592,7 @@ public class SyncTaskUtil {
             stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
             stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
 
-            stli.setSyncUseFileCopyByTempName(parm[36].equals("1") ? true : false);
+//            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
             stli.setSyncWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
@@ -4711,7 +4711,7 @@ public class SyncTaskUtil {
             stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
             stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
 
-            stli.setSyncUseFileCopyByTempName(parm[36].equals("1") ? true : false);
+//            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
             stli.setSyncWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
@@ -4858,7 +4858,7 @@ public class SyncTaskUtil {
             stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
             stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
 
-            stli.setSyncUseFileCopyByTempName(parm[36].equals("1") ? true : false);
+//            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
             stli.setSyncWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
@@ -5008,7 +5008,7 @@ public class SyncTaskUtil {
             try {stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));} catch(Exception e) {}
             stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
 
-            stli.setSyncUseFileCopyByTempName(parm[36].equals("1") ? true : false);
+//            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
             stli.setSyncWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
@@ -5266,7 +5266,7 @@ public class SyncTaskUtil {
                     String sync_sync_diff_file_by_file_size = item.isSyncDifferentFileBySize() ? "1" : "0";
                     String sync_sync_diff_file_by_last_mod = item.isSyncDifferentFileByTime() ? "1" : "0";
 
-                    String sync_sync_use_file_copy_by_temp_name = item.isSyncUseFileCopyByTempName() ? "1" : "0";
+//                    String sync_sync_use_file_copy_by_temp_name = "0";//item.isSyncUseFileCopyByTempNamex() ? "1" : "0";
                     String sync_sync_wifi_status_option = item.getSyncWifiStatusOption();
 
                     String sync_result_last_time = item.getLastSyncTime();
@@ -5322,11 +5322,11 @@ public class SyncTaskUtil {
                             sync_use_small_io_buf + "\t" +//32
 
                             sync_sync_test_mode + "\t" +//33
-                            sync_file_copy_by_diff_file + "\t" +//34
+                            sync_file_copy_by_diff_file + "\t" +    //34
                             sync_sync_diff_file_by_last_mod + "\t" +//35
 
-                            sync_sync_use_file_copy_by_temp_name + "\t" +//36
-                            sync_sync_wifi_status_option + "\t" +//37
+                            "-" + "\t" +                            //36
+                            sync_sync_wifi_status_option + "\t" +   //37
 
                             sync_result_last_time + "\t" +//38
                             sync_result_last_status + "\t" +//39

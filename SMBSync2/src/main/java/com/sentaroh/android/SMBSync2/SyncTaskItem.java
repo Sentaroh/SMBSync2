@@ -143,7 +143,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private boolean syncOptionDeterminChangedFileByTime = true;
     private int syncOptionDeterminChangedFileByTimeValue = 3;//Seconds
 
-    private boolean syncOptionUseFileCopyByTempName = true;
+//    private boolean syncOptionUseFileCopyByTempName = true;
 
     private boolean syncOptionUseExtendedDirectoryFilter1 = false;
 
@@ -438,8 +438,8 @@ class SyncTaskItem implements Serializable, Cloneable {
     public int getSyncDifferentFileAllowableTime() {return syncOptionDeterminChangedFileByTimeValue;}
     public void setSyncDifferentFileAllowableTime(int p) {syncOptionDeterminChangedFileByTimeValue = p;}
 
-    public boolean isSyncUseFileCopyByTempName() {return syncOptionUseFileCopyByTempName;}
-    public void setSyncUseFileCopyByTempName(boolean p) {syncOptionUseFileCopyByTempName = p;}
+//    public boolean isSyncUseFileCopyByTempNamex() {return syncOptionUseFileCopyByTempName;}
+//    public void setSyncUseFileCopyByTempNamex(boolean p) {syncOptionUseFileCopyByTempName = p;}
 
     public boolean isSyncUseExtendedDirectoryFilter1() {return syncOptionUseExtendedDirectoryFilter1;}
     public void setSyncUseExtendedDirectoryFilter1(boolean p) {syncOptionUseExtendedDirectoryFilter1 = p;}
@@ -571,7 +571,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionDeterminChangedFileBySize==sti.isSyncDifferentFileBySize()) &&
                         (syncOptionDeterminChangedFileByTime==sti.isSyncDifferentFileByTime()) &&
                         (syncOptionDeterminChangedFileByTimeValue == sti.getSyncDifferentFileAllowableTime()) &&
-                        (syncOptionUseFileCopyByTempName==sti.isSyncUseFileCopyByTempName()) &&
+//                        (syncOptionUseFileCopyByTempName==sti.isSyncUseFileCopyByTempName()) &&
                         (syncOptionDeleteFirstWhenMirror==sti.isSyncOptionDeleteFirstWhenMirror()) &&
                         (syncOptionUseExtendedDirectoryFilter1==sti.isSyncUseExtendedDirectoryFilter1()) &&
 

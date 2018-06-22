@@ -53,48 +53,39 @@ public class SyncThreadCopyFile {
     static private int copyFileExternalToExternalUnsetLastMod(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir,
                                                               File mf, String to_dir, String file_name) throws IOException {
         stwa.util.addDebugMsg(2, "I",SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
-
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        File out_file = new File(to_file_path);
+        File out_file = new File(to_file_temp);
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
         InputStream is =null;
         SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
         if (m_saf == null) {
             is=new FileInputStream(mf);
-//            return SyncTaskItem.SYNC_STATUS_ERROR;
         } else {
             is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
         }
 
         OutputStream os =null;
-        File t_file=new File(to_file_path);
+        File t_file=new File(to_file_temp);
         SafFile t_df=null;
-        t_df = getSafFile(stwa, sti, to_file_path);
+        t_df = getSafFile(stwa, sti, to_file_temp);
         if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
         os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) {
-                t_df.delete();
-            }
+            t_df.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 /* debug */stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+to_file_dest+", target="+t_df.lastModified()+", master="+mf.lastModified()+", target_size="+t_df.length());
 
-        if (sti.isSyncUseFileCopyByTempName()) {
-            File out_dest = new File(to_file_dest);
-            SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
-            if (out_dest.exists()) {
-                o_df.delete();
-            }
-            t_df.renameTo(file_name);
-        }
+        File out_dest = new File(to_file_dest);
+        SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
+        if (out_dest.exists()) o_df.delete();
+        t_df.renameTo(file_name);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
@@ -176,7 +167,7 @@ public class SyncThreadCopyFile {
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) out_file.delete();
+            out_file.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 
@@ -205,9 +196,8 @@ public class SyncThreadCopyFile {
 
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
         JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
+        JcifsFile out_file = new JcifsFile(to_file_temp, stwa.targetAuth);
         SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
         InputStream is =null;
@@ -223,7 +213,7 @@ public class SyncThreadCopyFile {
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) out_file.delete();
+            out_file.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 
@@ -234,10 +224,8 @@ public class SyncThreadCopyFile {
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
-        if (sti.isSyncUseFileCopyByTempName()) {
-            if (out_dest.exists()) out_dest.delete();
-            out_file.renameTo(out_dest);
-        }
+        if (out_dest.exists()) out_dest.delete();
+        out_file.renameTo(out_dest);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
@@ -260,7 +248,7 @@ public class SyncThreadCopyFile {
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) temp_file.delete();
+            temp_file.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 
@@ -297,7 +285,6 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
@@ -305,27 +292,20 @@ public class SyncThreadCopyFile {
         OutputStream os =null;
 //        File t_file=new File(to_file_path);
         SafFile t_df=null;
-        t_df = getSafFile(stwa, sti, to_file_path);
+        t_df = getSafFile(stwa, sti, to_file_temp);
         if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
         os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) {
-                t_df.delete();
-            }
+            t_df.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 /* debug */stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+to_file_dest+", target="+t_df.lastModified()+", master="+mf.lastModified()+", target_size="+t_df.length());
-        if (sti.isSyncUseFileCopyByTempName()) {
-            File out_dest = new File(to_file_dest);
-            SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
-            boolean rc=false;
-            if (o_df.exists()) {
-                rc=o_df.delete();
-            }
-            t_df.renameTo(file_name);
-        }
+        SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
+        boolean rc=false;
+        if (o_df.exists()) rc=o_df.delete();
+        t_df.renameTo(file_name);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
@@ -333,12 +313,10 @@ public class SyncThreadCopyFile {
     static private int copyFileInternalToExternalSetLastMod(SyncThreadWorkArea stwa,
                                                             SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException {
         stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
-//        long b_time=System.currentTimeMillis();
         File tlf = new File(to_dir + "/" + file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name;
-//        String to_file_temp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/SMBSync2_temp.tmp";
         String to_file_temp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/"+file_name;
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
@@ -349,13 +327,11 @@ public class SyncThreadCopyFile {
         File temp_file=new File(to_file_temp);
         SafFile from_sf=getSafFile(stwa, sti, to_file_temp);
         os=stwa.gp.appContext.getContentResolver().openOutputStream(from_sf.getUri());
-//        stwa.util.addDebugMsg(1, "I",SyncUtil.getExecutedMethodName()+" prepare elapsed="+(System.currentTimeMillis()-b_time));
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
             temp_file.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
-//        stwa.util.addDebugMsg(1, "I",SyncUtil.getExecutedMethodName()+" copy elapsed="+(System.currentTimeMillis()-b_time));
         File out_dest = new File(to_file_dest);
 
         try {
@@ -373,7 +349,6 @@ public class SyncThreadCopyFile {
             if (temp_file.exists()) temp_file.delete();
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-//        stwa.util.addDebugMsg(1, "I",SyncUtil.getExecutedMethodName()+" post process elapsed="+(System.currentTimeMillis()-b_time));
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
@@ -399,9 +374,8 @@ public class SyncThreadCopyFile {
 
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
         JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
+        JcifsFile out_file = new JcifsFile(to_file_temp, stwa.targetAuth);
         SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
         FileInputStream is = new FileInputStream(mf);
@@ -409,7 +383,7 @@ public class SyncThreadCopyFile {
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) out_file.delete();
+            out_file.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 
@@ -420,11 +394,8 @@ public class SyncThreadCopyFile {
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
-        if (sti.isSyncUseFileCopyByTempName()) {
-            if (out_dest.exists()) out_dest.delete();
-            out_file.renameTo(out_dest);
-        }
-//        if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.lastModified());
+        if (out_dest.exists()) out_dest.delete();
+        out_file.renameTo(out_dest);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
@@ -436,9 +407,8 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
         JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
-        JcifsFile out_file = new JcifsFile(to_file_path, stwa.targetAuth);
+        JcifsFile out_file = new JcifsFile(to_file_temp, stwa.targetAuth);
         SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
 
         String in_file_path = from_dir + "/" + file_name;
@@ -446,7 +416,7 @@ public class SyncThreadCopyFile {
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), mf.getInputStream(), out_file.getOutputStream());
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) out_file.delete();
+            out_file.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 
@@ -457,12 +427,8 @@ public class SyncThreadCopyFile {
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
-        if (sti.isSyncUseFileCopyByTempName()) {
-            if (out_dest.exists()) out_dest.delete();
-            out_file.renameTo(out_dest);
-        }
-//        if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.getLastModified());
-
+        if (out_dest.exists()) out_dest.delete();
+        out_file.renameTo(out_dest);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
@@ -475,9 +441,9 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_file_path = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
+        String to_file_temp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
 
-        File out_file = new File(to_file_path);
+        File out_file = new File(to_file_temp);
         File t_dir = new File(to_dir);
         if (!t_dir.exists()) t_dir.mkdirs();
 
@@ -486,7 +452,7 @@ public class SyncThreadCopyFile {
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) out_file.delete();
+            out_file.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 
@@ -521,34 +487,25 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
-        String to_file_path = (sti.isSyncUseFileCopyByTempName()) ? to_file_temp : to_file_dest;
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
         InputStream is = mf.getInputStream();
         OutputStream os =null;
-        File t_file=new File(to_file_path);
         SafFile t_df=null;
-        t_df = getSafFile(stwa, sti, to_file_path);
+        t_df = getSafFile(stwa, sti, to_file_temp);
         if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
         os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
-            if (sti.isSyncUseFileCopyByTempName()) {
-                t_df.delete();
-            }
+            t_df.delete();
             return SyncTaskItem.SYNC_STATUS_CANCEL;
         }
 /* debug */stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+to_file_dest+", target="+t_df.lastModified()+", master="+mf.getLastModified()+", target_size="+t_df.length());
-        if (sti.isSyncUseFileCopyByTempName()) {
-            File out_dest = new File(to_file_dest);
-            SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
-            if (out_dest.exists()) {
-                o_df.delete();
-            }
-            t_df.renameTo(file_name);
-        }
+        SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
+        if (o_df.exists()) o_df.delete();
+        t_df.renameTo(file_name);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
@@ -559,18 +516,12 @@ public class SyncThreadCopyFile {
         long b_time=System.currentTimeMillis();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
-        String nomedia_path = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/.nomedia";
-//        File nomedia=new File(nomedia_path);
-//        nomedia.createNewFile();
-
         String to_file_dest = to_dir + "/" + file_name;
-//        String to_file_temp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/SMBSync2_temp.tmp";
         String to_file_temp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/"+file_name;
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
         InputStream is = mf.getInputStream();
-
         OutputStream os =null;
         File temp_file=new File(to_file_temp);
         SafFile from_sf=getSafFile(stwa, sti, temp_file.getPath());
@@ -591,11 +542,6 @@ public class SyncThreadCopyFile {
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
-
-//        SafFile to_parent_sf=getSafFile(stwa, sti, out_dest.getParent());
-//        SafFile from_parent_sf=getSafFile(stwa, sti, temp_file.getParent());
-//        Uri move=DocumentsContract.moveDocument(stwa.gp.appContext.getContentResolver(), from_sf.getUri(), from_parent_sf.getUri(), to_parent_sf.getUri());
-//        Uri rename=DocumentsContract.renameDocument(stwa.gp.appContext.getContentResolver(), from_sf.getUri(), out_dest.getName());
 
         SafFile to_sf=getSafFile(stwa, sti, to_file_dest);
         if (to_sf.exists()) to_sf.delete();
