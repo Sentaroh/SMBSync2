@@ -228,6 +228,7 @@ public final class SyncUtil {
 //	            Method isRemovable = volume.getClass().getDeclaredMethod("isRemovable");
                 Method isPrimary = volume.getClass().getDeclaredMethod("isPrimary");
                 Method getUuid = volume.getClass().getDeclaredMethod("getUuid");
+                Method getId = volume.getClass().getDeclaredMethod("getId");
                 Method toString = volume.getClass().getDeclaredMethod("toString");
 //                Method allowMassStorage = volume.getClass().getDeclaredMethod("allowMassStorage");
 //                Method getStorageId = volume.getClass().getDeclaredMethod("getStorageId");

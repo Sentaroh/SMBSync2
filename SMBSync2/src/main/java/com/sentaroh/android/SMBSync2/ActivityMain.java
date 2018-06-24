@@ -1877,9 +1877,10 @@ public class ActivityMain extends AppCompatActivity {
             mUtil.addDebugMsg(1, "I", "Return from Storage Picker. id=" + requestCode + ", result=" + resultCode);
             if (resultCode == Activity.RESULT_OK) {
                 mUtil.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
-                if (SafManager.getUuidFromUri(data.getData().toString()).equals("0000-0000")) {
-                    reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_uuid_invalid_msg));
-                } else if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
+//                if (SafManager.getUuidFromUri(data.getData().toString()).equals("0000-0000")) {
+//                    reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_uuid_invalid_msg));
+//                } else
+                if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
                     mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
                     mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
                     reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
