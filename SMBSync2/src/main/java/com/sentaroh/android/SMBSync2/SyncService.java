@@ -98,7 +98,7 @@ public class SyncService extends Service {
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mGp.safMgr.loadSafFile();
 
-        NotificationUtil.initNotification(mGp);
+        NotificationUtil.initNotification(mGp, mContext);
         NotificationUtil.clearNotification(mGp);
         mUtil = new SyncUtil(getApplicationContext(), "Service", mGp);
 

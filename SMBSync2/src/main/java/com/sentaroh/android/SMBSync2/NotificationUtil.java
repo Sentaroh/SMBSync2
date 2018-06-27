@@ -52,8 +52,8 @@ public class NotificationUtil {
         return gwa.notificationEnabled;
     }
 
-    static final public void initNotification(GlobalParameters gwa) {
-        gwa.notificationManager = (NotificationManager) gwa.appContext.getSystemService(Context.NOTIFICATION_SERVICE);
+    static final public void initNotification(GlobalParameters gwa, Context c) {
+        gwa.notificationManager = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
         gwa.notification = new Notification(R.drawable.ic_48_smbsync_wait,
                 gwa.appContext.getString(R.string.app_name), 0);
 
