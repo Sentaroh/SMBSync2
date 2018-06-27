@@ -78,4 +78,5 @@
     <string name="msgs_mirror_file_zip_copy_back_from_work">Copying the ZIP file to the target file. %s%% done.</string>
     <string name="msgs_mirror_file_zip_copy_to_work">Copying the ZIP file to the work file. %s%% done.</string>
 
+    <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">It seems that the file information on SDCARD is not reflected in the media store, execute media scan and reflect the information of the file in the media store.</string>
 </resources>
