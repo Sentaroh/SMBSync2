@@ -311,7 +311,7 @@
     <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">Sync files that exist directly under the directory specified by the master.</string>
     <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">To overwrite the file</string>
     <string name="msgs_profile_sync_task_sync_option_confirm_required">To confirm before the overwritten or deleted files</string>
-    <string name="msgs_profile_sync_task_sync_option_copy_by_rename">Do not change the file contents until the copy/move is complete</string>
+    <!--<string name="msgs_profile_sync_task_sync_option_copy_by_rename">Do not change the file contents until the copy/move is complete</string>-->
     <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">When it is a mirror, delete first</string>
     <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Using the enhanced directory select/exclude filter</string>
     <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Wireless LAN</string>
