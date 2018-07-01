@@ -2219,6 +2219,11 @@ public class SyncThreadArchiveFile {
             } else {
                 date_time=getExifDateTime(stwa, fis, 8);
                 if (date_time==null) {
+                    try {
+                        fis.reset();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     date_time=getExifDateTime(stwa, fis, 256);
                 }
             }

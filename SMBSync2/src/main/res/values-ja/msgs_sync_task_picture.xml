@@ -13,7 +13,7 @@
     <string name="msgs_sync_task_archive_btn_title_original_name">元の名前</string>
 
     <string name="msgs_sync_task_archive_zip_folder_not_supported">同期方式がアーカイブの時はZIPを使用できないため内部ストレージに変更しました。</string>
-    <string name="msgs_sync_task_archive_smb_folder_not_supported">同期方式がアーカイブの時はSMBを使用できないため内部ストレージに変更しました。</string>
+    <!--<string name="msgs_sync_task_archive_smb_folder_not_supported">同期方式がアーカイブの時はSMBを使用できないため内部ストレージに変更しました。</string>-->
 
     <string name="msgs_sync_task_archive_btn_title_year">西暦</string>
     <string name="msgs_sync_task_archive_btn_title_month">月</string>

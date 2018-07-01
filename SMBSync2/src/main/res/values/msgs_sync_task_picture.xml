@@ -13,7 +13,7 @@
     <string name="msgs_sync_task_archive_btn_title_original_name">Original Name</string>
 
     <string name="msgs_sync_task_archive_zip_folder_not_supported">When sync type is Archive, ZIP can not be used, so it changed to internal storage.</string>
-    <string name="msgs_sync_task_archive_smb_folder_not_supported">When sync type is Archive, SMB can not be used, so it changed to internal storage.</string>
+    <!--<string name="msgs_sync_task_archive_smb_folder_not_supported">When sync type is Archive, SMB can not be used, so it changed to internal storage.</string>-->
 
     <string name="msgs_sync_task_archive_btn_title_year">Year</string>
     <string name="msgs_sync_task_archive_btn_title_month">Month</string>
