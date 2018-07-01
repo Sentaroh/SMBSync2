@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.media.ExifInterface;
 import android.os.Build;
 
 import com.drew.imaging.ImageMetadataReader;
@@ -2205,9 +2206,21 @@ public class SyncThreadArchiveFile {
         if (file_name.endsWith(".mp4") || file_name.endsWith(".mov") ) {
             date_time=getMp4ExifDateTime(stwa, sti, fis);
         } else {
-            date_time=getExifDateTime(fis, 8);
-            if (date_time==null) {
-                date_time=getExifDateTime(fis, 64);
+            if (Build.VERSION.SDK_INT>=24) {
+                try {
+                    ExifInterface ei = new ExifInterface(fis);
+                    String dt=ei.getAttribute(ExifInterface.TAG_DATETIME);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    StackTraceElement[] st = e.getStackTrace();
+                    String st_msg=formatStackTrace(st);
+                    stwa.util.addDebugMsg(1,"E",stwa.currentSTI.getSyncTaskName()," Error="+e.getMessage()+st_msg);
+                }
+            } else {
+                date_time=getExifDateTime(stwa, fis, 8);
+                if (date_time==null) {
+                    date_time=getExifDateTime(stwa, fis, 256);
+                }
             }
         }
         if (date_time==null || date_time[0]==null) {
@@ -2299,7 +2312,7 @@ public class SyncThreadArchiveFile {
         return result;
     }
 
-    static private String[] getExifDateTime(InputStream fis, int bsz) {
+    static private String[] getExifDateTime(SyncThreadWorkArea stwa, InputStream fis, int bsz) {
         String[] result=null;
         try {
             int buf_sz=1024*bsz;
@@ -2327,8 +2340,28 @@ public class SyncThreadArchiveFile {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            StackTraceElement[] st = e.getStackTrace();
+            String st_msg=formatStackTrace(st);
+            stwa.util.addDebugMsg(1,"E",stwa.currentSTI.getSyncTaskName()," Error="+e.getMessage()+st_msg);
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            StackTraceElement[] st = e.getStackTrace();
+            String st_msg=formatStackTrace(st);
+            stwa.util.addDebugMsg(1,"E",stwa.currentSTI.getSyncTaskName()," Error="+e.getMessage()+st_msg);
+            return null;
         }
         return result;
+    }
+
+    static private String formatStackTrace(StackTraceElement[] st) {
+        String st_msg = "";
+        for (int i = 0; i < st.length; i++) {
+            st_msg += "\n at " + st[i].getClassName() + "." +
+                    st[i].getMethodName() + "(" + st[i].getFileName() +
+                    ":" + st[i].getLineNumber() + ")";
+        }
+        return st_msg;
     }
 
     static private int getIntFrom2Byte(boolean little_endian, byte b1, byte b2) {

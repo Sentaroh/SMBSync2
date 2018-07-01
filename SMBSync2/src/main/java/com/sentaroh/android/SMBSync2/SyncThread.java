@@ -569,6 +569,7 @@ public class SyncThread extends Thread {
 
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr = sti.getMasterSmbAddr();
+//            if (sti.getMasterSmbHostName().equals("") && !sti.getMasterSmbHostName().equals("")) {
             if (!sti.getMasterSmbHostName().equals("")) {
                 addr = resolveHostName(mStwa.masterAuth.isSmb1(), sti.getMasterSmbHostName());
                 if (addr == null) {

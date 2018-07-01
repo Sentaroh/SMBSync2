@@ -1271,6 +1271,8 @@ public class SyncTaskEditor extends DialogFragment {
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
 
+        final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
+
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
         setSpinnerSyncFolderType(sti, sp_sync_folder_type, sfev.folder_type, sfev.folder_master);
 
@@ -1450,8 +1452,10 @@ public class SyncTaskEditor extends DialogFragment {
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SMB;
             if (JcifsUtil.isValidIpAddress(et_remote_host.getText().toString())) {
                 nsfev.folder_remote_addr = et_remote_host.getText().toString().trim();
+                nsfev.folder_remote_host="";
             } else {
                 nsfev.folder_remote_host = et_remote_host.getText().toString().trim();
+                nsfev.folder_remote_addr="";
             }
             nsfev.folder_remote_domain = et_sync_folder_domain.getText().toString().trim();
             if (ctv_sync_folder_use_port.isChecked())
@@ -2007,6 +2011,8 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncFolderType(SyncTaskItem sti, Spinner spinner, String cv, boolean master) {
+        final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
+        String sync_type=spinnerSyncType.getSelectedItem().toString();
         SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
@@ -2019,23 +2025,21 @@ public class SyncTaskEditor extends DialogFragment {
             if (!sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
                 if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                     adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal));
-                    adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
+                    if (!sync_type.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive)))
+                        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
                     adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard));
-//					adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_usb));
                     if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) sel = 0;
                     else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
                     else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) sel = 2;
-//					else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) sel=2;
                 } else {
                     adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal));
-                    adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
+                    if (!sync_type.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive)))
+                        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
                     adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard));
-//					adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_usb));
 
                     if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) sel = 0;
                     else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
                     else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) sel = 2;
-//					else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) sel=3;
                 }
             } else {
 //				adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal));
@@ -2243,7 +2247,13 @@ public class SyncTaskEditor extends DialogFragment {
                         mCommonDlg.showCommonDialog(false, "W",
                                 mContext.getString(R.string.msgs_sync_task_archive_zip_folder_not_supported), "", null);
                         target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                    } if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                        n_sti.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL);
+                        mCommonDlg.showCommonDialog(false, "W",
+                                mContext.getString(R.string.msgs_sync_task_archive_smb_folder_not_supported), "", null);
+                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
                     }
+
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
