@@ -1364,7 +1364,11 @@ public class SyncThread extends Thread {
                         Matcher mt;
                         boolean found = false;
                         for (Pattern pat : inc) {
-                            mt = pat.matcher(mGp.wifiSsid);
+                            if (Build.VERSION.SDK_INT>=27) {
+                                mt = pat.matcher(getWifiConnectedAP());
+                            } else {
+                                mt = pat.matcher(mGp.wifiSsid);
+                            }
                             if (mt.find()) {
                                 found = true;
                                 mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied include matched=" + pat.toString());
