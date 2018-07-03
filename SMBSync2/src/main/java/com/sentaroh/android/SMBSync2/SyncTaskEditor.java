@@ -986,15 +986,18 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                            if (mGp.safMgr.hasExternalSdcardPath()) {
-                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
-                                dlg_msg.setVisibility(TextView.VISIBLE);
-                                btn_sdcard_select_sdcard.setEnabled(true);
-                            } else {
-                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
-                                dlg_msg.setVisibility(TextView.VISIBLE);
-                                btn_sdcard_select_sdcard.setEnabled(false);
-                            }
+                            dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                            dlg_msg.setVisibility(TextView.VISIBLE);
+                            btn_sdcard_select_sdcard.setEnabled(true);
+//                            if (mGp.safMgr.hasExternalSdcardPath()) {
+//                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+//                                dlg_msg.setVisibility(TextView.VISIBLE);
+//                                btn_sdcard_select_sdcard.setEnabled(true);
+//                            } else {
+//                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+//                                dlg_msg.setVisibility(TextView.VISIBLE);
+//                                btn_sdcard_select_sdcard.setEnabled(false);
+//                            }
                             btn_sync_folder_list_dir.setEnabled(false);
                         } else {
                             btn_sync_folder_list_dir.setEnabled(true);
@@ -1110,15 +1113,18 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                            if (mGp.safMgr.hasExternalSdcardPath()) {
-                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
-                                dlg_msg.setVisibility(TextView.VISIBLE);
-                                btn_sdcard_select_sdcard.setEnabled(true);
-                            } else {
-                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
-                                dlg_msg.setVisibility(TextView.VISIBLE);
-                                btn_sdcard_select_sdcard.setEnabled(false);
-                            }
+                            dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                            dlg_msg.setVisibility(TextView.VISIBLE);
+                            btn_sdcard_select_sdcard.setEnabled(true);
+//                            if (mGp.safMgr.hasExternalSdcardPath()) {
+//                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+//                                dlg_msg.setVisibility(TextView.VISIBLE);
+//                                btn_sdcard_select_sdcard.setEnabled(true);
+//                            } else {
+//                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+//                                dlg_msg.setVisibility(TextView.VISIBLE);
+//                                btn_sdcard_select_sdcard.setEnabled(false);
+//                            }
                             btn_zip_filelist.setEnabled(false);
                         } else {
                             btn_zip_filelist.setEnabled(true);
@@ -1548,15 +1554,18 @@ public class SyncTaskEditor extends DialogFragment {
 
             ll_sync_folder_mp.setVisibility(LinearLayout.GONE);
             if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                if (mGp.safMgr.hasExternalSdcardPath()) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
-                    dlg_msg.setVisibility(TextView.VISIBLE);
-                    btn_sdcard_select_sdcard.setEnabled(true);
-                } else {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
-                    dlg_msg.setVisibility(TextView.VISIBLE);
-                    btn_sdcard_select_sdcard.setEnabled(false);
-                }
+                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                dlg_msg.setVisibility(TextView.VISIBLE);
+                btn_sdcard_select_sdcard.setEnabled(true);
+//                if (mGp.safMgr.hasExternalSdcardPath()) {
+//                    dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+//                    dlg_msg.setVisibility(TextView.VISIBLE);
+//                    btn_sdcard_select_sdcard.setEnabled(true);
+//                } else {
+//                    dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+//                    dlg_msg.setVisibility(TextView.VISIBLE);
+//                    btn_sdcard_select_sdcard.setEnabled(false);
+//                }
                 btn_sync_folder_list_dir.setEnabled(false);
             } else {
                 btn_sync_folder_list_dir.setEnabled(true);
@@ -1580,15 +1589,18 @@ public class SyncTaskEditor extends DialogFragment {
                 ll_sync_folder_mp.setVisibility(Spinner.GONE);
                 btn_zip_select_sdcard.setVisibility(Button.VISIBLE);
                 if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                    if (mGp.safMgr.hasExternalSdcardPath()) {
-                        dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
-                        dlg_msg.setVisibility(TextView.VISIBLE);
-                        btn_zip_select_sdcard.setEnabled(true);
-                    } else {
-                        dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
-                        dlg_msg.setVisibility(TextView.VISIBLE);
-                        btn_zip_select_sdcard.setEnabled(false);
-                    }
+                    dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                    dlg_msg.setVisibility(TextView.VISIBLE);
+                    btn_zip_select_sdcard.setEnabled(true);
+//                    if (mGp.safMgr.hasExternalSdcardPath()) {
+//                        dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+//                        dlg_msg.setVisibility(TextView.VISIBLE);
+//                        btn_zip_select_sdcard.setEnabled(true);
+//                    } else {
+//                        dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+//                        dlg_msg.setVisibility(TextView.VISIBLE);
+//                        btn_zip_select_sdcard.setEnabled(false);
+//                    }
                     btn_sync_folder_list_dir.setEnabled(false);
                 } else {
                     btn_sync_folder_list_dir.setEnabled(true);
@@ -3836,21 +3848,23 @@ public class SyncTaskEditor extends DialogFragment {
         String emsg = "";
         if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                if (mGp.safMgr.hasExternalSdcardPath()) {
-                    emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master);
-                } else {
-                    emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted);
-                }
+                emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master);
+//                if (mGp.safMgr.hasExternalSdcardPath()) {
+//                    emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master);
+//                } else {
+//                    emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted);
+//                }
             }
         }
         if (emsg.equals("")) {
             if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
                 if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                    if (mGp.safMgr.hasExternalSdcardPath()) {
-                        emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target);
-                    } else {
-                        emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted);
-                    }
+                    emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target);
+//                    if (mGp.safMgr.hasExternalSdcardPath()) {
+//                        emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target);
+//                    } else {
+//                        emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted);
+//                    }
                 }
             }
         }

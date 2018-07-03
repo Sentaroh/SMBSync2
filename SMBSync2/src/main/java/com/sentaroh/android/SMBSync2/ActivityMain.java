@@ -933,8 +933,9 @@ public class ActivityMain extends AppCompatActivity {
             }
             menu.findItem(R.id.menu_top_add_shortcut).setEnabled(true);
 
-            if (mGp.safMgr.hasExternalSdcardPath()) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
-            else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
+            menu.findItem(R.id.menu_top_select_storage).setVisible(true);
+//            if (mGp.safMgr.hasExternalSdcardPath()) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
+//            else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
 
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
