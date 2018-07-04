@@ -2176,7 +2176,8 @@ public class SyncThreadArchiveFile {
         String[] date_time=null;
         try {
             FileInputStream fis=new FileInputStream(lf);
-            date_time=getFileExifDateTime(stwa, sti, fis, lf.lastModified(), lf.getName());
+            FileInputStream fis_retry=new FileInputStream(lf);
+            date_time=getFileExifDateTime(stwa, sti, fis, fis_retry, lf.lastModified(), lf.getName());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -2187,7 +2188,8 @@ public class SyncThreadArchiveFile {
         String[] date_time=null;
         try {
             InputStream fis=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
-            date_time=getFileExifDateTime(stwa, sti, fis, sf.lastModified(), sf.getName());
+            InputStream fis_retry=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
+            date_time=getFileExifDateTime(stwa, sti, fis, fis_retry, sf.lastModified(), sf.getName());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -2197,35 +2199,57 @@ public class SyncThreadArchiveFile {
     static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile lf) throws JcifsException {
         String[] date_time=null;
         InputStream fis=lf.getInputStream();
-        date_time=getFileExifDateTime(stwa, sti, fis, lf.getLastModified(), lf.getName());
+        InputStream fis_retry=lf.getInputStream();
+        date_time=getFileExifDateTime(stwa, sti, fis, fis_retry, lf.getLastModified(), lf.getName());
         return date_time;
     }
 
-    static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, InputStream fis, long last_mod, String file_name) {
+    static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, InputStream fis,
+                                                     InputStream fis_retry, long last_mod, String file_name) {
         String[] date_time=null;
         if (file_name.endsWith(".mp4") || file_name.endsWith(".mov") ) {
             date_time=getMp4ExifDateTime(stwa, sti, fis);
         } else {
-            if (Build.VERSION.SDK_INT>=24) {
-                try {
-                    ExifInterface ei = new ExifInterface(fis);
-                    String dt=ei.getAttribute(ExifInterface.TAG_DATETIME);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    StackTraceElement[] st = e.getStackTrace();
-                    String st_msg=formatStackTrace(st);
-                    stwa.util.addDebugMsg(1,"E",stwa.currentSTI.getSyncTaskName()," Error="+e.getMessage()+st_msg);
-                }
-            } else {
-                date_time=getExifDateTime(stwa, fis, 8);
-                if (date_time==null) {
-                    try {
-                        fis.reset();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+            try {
+                byte[] buff=new byte[1024*64];
+                int rc=fis.read(buff);
+                date_time=getExifDateTime(stwa, fis, buff);
+//                    stwa.util.addDebugMsg(2,"I","read first date="+date_time[0]+" "+date_time[1]);
+                if (date_time==null || date_time[0]==null) {
+                    if (Build.VERSION.SDK_INT>=24) {
+                        ExifInterface ei = new ExifInterface(fis_retry);
+                        String dt=ei.getAttribute(ExifInterface.TAG_DATETIME);
+                        if (dt!=null) {
+                            date_time=new String[2];
+                            if (dt.endsWith("Z")) {
+                                String[] date=dt.split("T");
+                                date_time[0]=date[0].replaceAll(":", "/");//Date
+                                date_time[1]=date[1].substring(0,date[1].length()-1);//Time
+                            } else {
+                                String[] date=dt.split(" ");
+                                date_time[0]=date[0].replaceAll(":", "/");//Date
+                                date_time[1]=date[1];//Time
+                            }
+//                            stwa.util.addDebugMsg(2,"I","read exif date="+dt+", date_time="+date_time[0]+" "+date_time[0]);
+                        } else {
+                            stwa.util.addDebugMsg(1,"I","Read exif failed by ExifInterface, name="+file_name);
+                        }
+                    } else {
+                        byte[] next=new byte[1024*2048];
+                        System.arraycopy(buff, 0, next, 0, rc);
+                        int rc_next=fis.read(next, rc, 1024*2048);
+                        if (rc_next>0) {
+                            date_time=getExifDateTime(stwa, fis, next);
+                        }
+                        if (date_time==null || date_time[0]==null) stwa.util.addDebugMsg(1,"I","Read exif failed by AppLogic, name="+file_name);
+                        fis.close();
                     }
-                    date_time=getExifDateTime(stwa, fis, 256);
+//                        stwa.util.addDebugMsg(1,"E","read next date="+date_time[0]+" "+date_time[1]+", rc_next="+rc_next);
                 }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
             }
         }
         if (date_time==null || date_time[0]==null) {
@@ -2256,10 +2280,23 @@ public class SyncThreadArchiveFile {
             }
         } catch (ImageProcessingException e) {
             e.printStackTrace();
+            putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
+            putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
+        }
+        try {
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
         }
         return result;
+    }
+
+    static private void putExceptionMessage(SyncThreadWorkArea stwa, StackTraceElement[] st, String e_msg) {
+        String st_msg=formatStackTrace(st);
+        stwa.util.addDebugMsg(1,"E",stwa.currentSTI.getSyncTaskName()," Error="+e_msg+st_msg);
     }
 
     static final private String[] parseDateValue(String date_val) {
@@ -2302,31 +2339,30 @@ public class SyncThreadArchiveFile {
             result=getMp4ExifDateTime(stwa, sti, fis);
         } catch (IOException e) {
             e.printStackTrace();
+            putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
         }
         return result;
     }
 
     static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, SafFile sf) {
         String[] result=null;
+        InputStream fis=null;
         try {
-            InputStream fis=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
+            fis=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
             result=getMp4ExifDateTime(stwa, sti, fis);
         } catch (IOException e) {
             e.printStackTrace();
+            putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
         }
         return result;
     }
 
-    static private String[] getExifDateTime(SyncThreadWorkArea stwa, InputStream fis, int bsz) {
+    static private String[] getExifDateTime(SyncThreadWorkArea stwa, InputStream fis, byte[] buff) {
         String[] result=null;
         try {
-            int buf_sz=1024*bsz;
-            byte[] buff=new byte[buf_sz];
-            fis.read(buff);
-            fis.close();
             if (buff[0]==(byte)0xff && buff[1]==(byte)0xd8) {//if jpeg header
                 int i=2;
-                while(i<buf_sz-3) {// find dde1 jpeg segemnt
+                while(i<buff.length-3) {// find dde1 jpeg segemnt
                     if (buff[i]==(byte)0xff && buff[i+1]==(byte)0xe1) {
                         int seg_size=getIntFrom2Byte(false, buff[i+2], buff[i+3]);
                         boolean little_endian=false;
@@ -2343,17 +2379,9 @@ public class SyncThreadArchiveFile {
                 }
 
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            StackTraceElement[] st = e.getStackTrace();
-            String st_msg=formatStackTrace(st);
-            stwa.util.addDebugMsg(1,"E",stwa.currentSTI.getSyncTaskName()," Error="+e.getMessage()+st_msg);
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            StackTraceElement[] st = e.getStackTrace();
-            String st_msg=formatStackTrace(st);
-            stwa.util.addDebugMsg(1,"E",stwa.currentSTI.getSyncTaskName()," Error="+e.getMessage()+st_msg);
+            putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
             return null;
         }
         return result;
