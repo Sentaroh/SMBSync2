@@ -2215,7 +2215,7 @@ public class SyncThreadArchiveFile {
                 date_time=getExifDateTime(stwa, fis);//, buff);
                 fis.close();
                 if (date_time==null || date_time[0]==null) {
-                    stwa.util.addDebugMsg(1,"I","Read exif date and time failed by AppLogic, name="+file_name);
+                    stwa.util.addDebugMsg(1,"W","Read exif date and time failed, name="+file_name);
                     if (Build.VERSION.SDK_INT>=24) {
                         ExifInterface ei = new ExifInterface(fis_retry);
                         String dt=ei.getAttribute(ExifInterface.TAG_DATETIME);
@@ -2357,32 +2357,45 @@ public class SyncThreadArchiveFile {
         String[] result=null;
         try {
             byte[] buff=readExifData(bis, 2);
-            if (buff!=null && buff[0]==(byte)0xff && buff[1]==(byte)0xd8) {//if jpeg header
+            if (buff!=null && buff[0]==(byte)0xff && buff[1]==(byte)0xd8) { //JPEG SOI
                 while(buff!=null) {// find dde1 jpeg segemnt
                     buff=readExifData(bis, 4);
                     if (buff!=null) {
-                        if (buff[0]==(byte)0xff && buff[1]==(byte)0xe1) {
+                        if (buff[0]==(byte)0xff && buff[1]==(byte)0xe1) { //APP1マーカ
                             int seg_size=getIntFrom2Byte(false, buff[2], buff[3]);
                             buff=readExifData(bis, 14);
-                            boolean little_endian=false;
-                            if (buff[6]==(byte)0x49 && buff[7]==(byte)0x49) little_endian=true;
-                            int ifd_offset=getIntFrom4Byte(little_endian, buff[10], buff[11], buff[12], buff[13]);
+                            if (buff!=null) {
+                                boolean little_endian=false;
+                                if (buff[6]==(byte)0x49 && buff[7]==(byte)0x49) little_endian=true;
+                                int ifd_offset=getIntFrom4Byte(little_endian, buff[10], buff[11], buff[12], buff[13]);
 
-                            byte[] ifd_buff=new byte[seg_size+ifd_offset];
-                            System.arraycopy(buff,6,ifd_buff,0,8);
-                            buff=readExifData(bis, seg_size);
-                            System.arraycopy(buff,0,ifd_buff,8,seg_size);
-                            result=process0thIfdTag(little_endian, ifd_buff, ifd_offset);
-                            break;
+                                byte[] ifd_buff=new byte[seg_size+ifd_offset];
+                                System.arraycopy(buff,6,ifd_buff,0,8);
+                                buff=readExifData(bis, seg_size);
+                                if (buff!=null) {
+                                    System.arraycopy(buff,0,ifd_buff,8,seg_size);
+                                    result=process0thIfdTag(little_endian, ifd_buff, ifd_offset);
+                                    break;
+                                } else {
+                                    stwa.util.addDebugMsg(1,"W","Read Exif date and time failed, because unpredical EOF reached.");
+                                    return null;
+                                }
+                            } else {
+                                stwa.util.addDebugMsg(1,"W","Read Exif date and time failed, because unpredical EOF reached.");
+                                return null;
+                            }
                         } else {
                             int offset=((int)buff[2]&0xff)*256+((int)buff[3]&0xff)-2;
                             buff=readExifData(bis, offset);
                         }
                     } else {
+                        stwa.util.addDebugMsg(1,"W","Read Exif date and time failed, because unpredical EOF reached.");
                         return null;
                     }
                 }
 
+            } else {
+                stwa.util.addDebugMsg(1,"W","Read exif date and time failed, because Exif header can not be found.");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -2455,7 +2468,7 @@ public class SyncThreadArchiveFile {
             int tag_number=getIntFrom2Byte(little_endian, ifd_buff[ba+0], ifd_buff[ba+1]);
             int tag_offset=getIntFrom4Byte(little_endian, ifd_buff[ba+8], ifd_buff[ba+9], ifd_buff[ba+10], ifd_buff[ba+11]);
 
-            if (tag_number==(0x8769&0xffff)) {
+            if (tag_number==(0x8769&0xffff)) {//Exif IFD
                 result=processExifIfdTag(little_endian, ifd_buff, tag_offset);
                 break;
             }
@@ -2473,7 +2486,7 @@ public class SyncThreadArchiveFile {
         while(i<count) {
             int tag_number=getIntFrom2Byte(little_endian, ifd_buff[ba+0], ifd_buff[ba+1]);
             int tag_offset=getIntFrom4Byte(little_endian, ifd_buff[ba+8], ifd_buff[ba+9], ifd_buff[ba+10], ifd_buff[ba+11]);
-            if (tag_number==(0x9003&0xffff)) {
+            if (tag_number==(0x9003&0xffff)) {//Date&Time TAG
                 String[] date = new String(ifd_buff, tag_offset, 19).split(" ");
                 if (date.length==2) {
                     date_time[0]=date[0].replaceAll(":", "/");//Date
