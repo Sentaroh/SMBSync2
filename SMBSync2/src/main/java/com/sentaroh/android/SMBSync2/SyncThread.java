@@ -1527,10 +1527,9 @@ public class SyncThread extends Thread {
     static final public boolean sendConfirmRequest(SyncThreadWorkArea stwa, SyncTaskItem sti, String type, String url) {
         boolean result = true;
         int rc = 0;
-        if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", "sendConfirmRequest entered type=" + type +
-                    ", Override=" + sti.isSyncOverrideCopyMoveFile() + ", Confirm=" + sti.isSyncConfirmOverrideOrDelete() +
-                    ", fp=", url);
+        stwa.util.addDebugMsg(2, "I", "sendConfirmRequest entered type=" , type ,
+                ", Override="+sti.isSyncOverrideCopyMoveFile(), ", Confirm=" + sti.isSyncConfirmOverrideOrDelete(),
+                ", fp=", url);
         if (sti.isSyncConfirmOverrideOrDelete()) {
             boolean ignore_confirm = true;
             if (type.equals(SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR) || type.equals(SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE)) {
@@ -1601,8 +1600,7 @@ public class SyncThread extends Thread {
                 }
             }
         }
-        if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", "sendConfirmRequest result=" + result, ", rc=" + rc);
+        stwa.util.addDebugMsg(2, "I", "sendConfirmRequest result=" + result, ", rc=" + rc);
 
         return result;
     }

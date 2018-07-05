@@ -255,13 +255,28 @@ public class SyncThreadCopyFile {
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
-        stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp="+to_file_dest+
-                ", target="+out_file.getLastModified()+", master="+mf.lastModified()+", target_size="+out_file.length()+", master_size="+mf.length()+
+        stwa.util.addDebugMsg(1,"I", SyncUtil.getExecutedMethodName(), " After copy fp=",to_file_dest,
+                ", target="+out_file.getLastModified(),", master="+mf.lastModified(),", target_size="+out_file.length(),", master_size="+mf.length(),
                 ", m_saf_size="+m_saf.length());
         if (out_dest.exists()) out_dest.delete();
         out_file.renameTo(out_dest);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
+    }
+
+    static private void putExceptionMessage(SyncThreadWorkArea stwa, StackTraceElement[] st, String e_msg) {
+        String st_msg=formatStackTrace(st);
+        stwa.util.addDebugMsg(1,"E",stwa.currentSTI.getSyncTaskName()," Error="+e_msg+st_msg);
+    }
+
+    static private String formatStackTrace(StackTraceElement[] st) {
+        String st_msg = "";
+        for (int i = 0; i < st.length; i++) {
+            st_msg += "\n at " + st[i].getClassName() + "." +
+                    st[i].getMethodName() + "(" + st[i].getFileName() +
+                    ":" + st[i].getLineNumber() + ")";
+        }
+        return st_msg;
     }
 
     static public int copyFileInternalToInternal(SyncThreadWorkArea stwa,
