@@ -1613,6 +1613,7 @@ public class ActivityMain extends AppCompatActivity {
         hndl.post(new Runnable() {
             @Override
             public void run() {
+                LogUtil.flushLog(mContext, mGp);
                 commonDlg.showCommonDialog(true, "W",
                         mContext.getString(R.string.msgs_smnsync_main_kill_application), "", ntfy);
             }
