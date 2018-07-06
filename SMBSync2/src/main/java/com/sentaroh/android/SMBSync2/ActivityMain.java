@@ -337,6 +337,7 @@ public class ActivityMain extends AppCompatActivity {
 
         if (isFinishing()) {
             deleteTaskData();
+            mGp.logCatActive=false;
             mGp.clearParms();
         }
         mGp.activityIsFinished = isFinishing();
@@ -433,8 +434,6 @@ public class ActivityMain extends AppCompatActivity {
 
         dialog.show();
     }
-
-
 
 //    private void showBatteryOptimization() {
 //        if (Build.VERSION.SDK_INT >= 23) {
@@ -879,7 +878,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_top, menu);
         return true;//super.onCreateOptionsMenu(menu);
@@ -887,7 +886,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered, isUiEnabled()=" + isUiEnabled());
+        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, isUiEnabled()="+isUiEnabled());
         boolean pm_bo = false;
 //        if (Build.VERSION.SDK_INT >= 23) {
 //            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(true);
@@ -902,6 +901,8 @@ public class ActivityMain extends AppCompatActivity {
 //        } else {
 //            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(false);
 //        }
+        LogCatUtil.prepareOptionMenu(mGp, mUtil, menu);
+
         if (Build.VERSION.SDK_INT >= 27) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
                 menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
@@ -1045,11 +1046,21 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.setSettingGrantCoarseLocationRequired(true);
                 checkLocationPermission();
                 return true;
+            case R.id.menu_top_start_logcat:
+                LogCatUtil.startLogCat(mGp, mGp.getLogDirName(),"logcat.txt");
+                return true;
+            case R.id.menu_top_stop_logcat:
+                LogCatUtil.stopLogCat(mGp, mUtil);
+                return true;
+            case R.id.menu_top_send_logcat:
+                LogCatUtil.sendLogCat(mActivity, mGp, mUtil, mGp.getLogDirName(), "logcat.txt");
+                return true;
         }
         if (isUiEnabled()) {
         }
         return false;
     }
+
 
     private void addShortcut() {
 

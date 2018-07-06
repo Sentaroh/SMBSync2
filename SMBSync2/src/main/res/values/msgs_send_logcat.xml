@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="msgs_send_logcat_menu_start_logcat">Start LogCat</string>
+    <string name="msgs_send_logcat_menu_stop_logcat">Stop LogCat</string>
+    <string name="msgs_send_logcat_menu_send_logcat">Send LogCat</string>
+    <string name="msgs_send_logcat_btn_send">Send</string>
+    <string name="msgs_send_logcat_btn_preview_logcat">Preview LogCat</string>
+    <string name="msgs_send_logcat_btn_preview_applog">Preview AppLog</string>
+    <string name="msgs_send_logcat_title">Send a Logcat and AppLog</string>
+    <string name="msgs_send_logcat_message">Send LogCat and AppLog to developers by e-mail\n
+1. Please check the contents by pressing the LogCat display button and AppLog display button (Please select the application when the application selection screen for displaying the text file is displayed)\n
+2. After confirming the contents to be sent, press the send button and select E-Mail in the E-Mail selection dialog\n
+3. Please enter a message in the body of E - Mail if necessary and send an E - Mail. (The log is compressed to zip and it is attached file)</string>
+</resources>

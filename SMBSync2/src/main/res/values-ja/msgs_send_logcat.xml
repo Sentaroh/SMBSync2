@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="msgs_send_logcat_menu_start_logcat">LogCatの開始</string>
+    <string name="msgs_send_logcat_menu_stop_logcat">LogCatの停止</string>
+    <string name="msgs_send_logcat_menu_send_logcat">LogCatの送信</string>
+
+    <string name="msgs_send_logcat_btn_send">送信</string>
+    <string name="msgs_send_logcat_btn_preview_logcat">LogCatの表示</string>
+    <string name="msgs_send_logcat_btn_preview_applog">AppLogの表示</string>
+    <string name="msgs_send_logcat_title">LogCatとAppLogの送信</string>
+    <string name="msgs_send_logcat_message">LogCatとAppLogを開発者にE-Mailで送信します\n
+１．LogCat表示ボタンとAppLog表示ボタンを押し内容を確認してください（テキストファイルを表示するためのアプリケーション選択の画面が表示されたら、アプリケーションを選択してください）\n
+２．送信する内容を確認したら、送信ボタンを押しE-Mail選択ダイアログでE-Mailを選択\n
+３．必要ならばE-Mail本文にメッセージを入力し送信してください。（ログはzipに圧縮し、添付ファイルになっています）</string>
+</resources>

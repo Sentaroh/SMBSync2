@@ -72,6 +72,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean debuggable = false;
 
     public boolean activityIsFinished = true;
+    public boolean logCatActive=false;
 
     public boolean externalStorageIsMounted = false;
     public boolean externalStorageAccessIsPermitted = false;
@@ -428,7 +429,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingsSmbUseExtendedSecurity = ues ? "true" : "false";
         settingsSmbDisablePlainTextPasswords=dpp ? "true" : "false";
-
+//        System.setProperty("jcifs.util.loglevel","3");
         System.setProperty("jcifs.smb.client.attrExpirationPeriod", "0");
         System.setProperty("jcifs.netbios.retryTimeout", "3000");
         System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
