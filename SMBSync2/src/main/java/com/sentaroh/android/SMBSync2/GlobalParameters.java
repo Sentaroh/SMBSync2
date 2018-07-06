@@ -57,8 +57,13 @@ import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
+
+import jcifs.util.LogStream;
 
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.LOG_FILE_NAME;
@@ -367,10 +372,26 @@ public class GlobalParameters extends CommonGlobalParms {
         settingGrantCoarseLocationRequired=enabled;
     }
 
+    private static LogStream logStream=null;
     public void loadSettingsParms() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        if (logStream==null) logStream=LogStream.getInstance();
 
         settingDebugLevel = Integer.parseInt(prefs.getString(appContext.getString(R.string.settings_log_level), "0"));
+        log.setAppendTime(false);
+        if (settingDebugLevel==0) {
+            LogStream.setLevel(1);
+            log.setLogOption(false, false, false, false, false);
+        } else if (settingDebugLevel==1) {
+            LogStream.setLevel(1);
+            log.setLogOption(false, false, true, false, false);
+        } else if (settingDebugLevel==2) {
+            LogStream.setLevel(3);
+            log.setLogOption(true, true, true, true, true);
+        } else if (settingDebugLevel==3) {
+            LogStream.setLevel(4);
+            log.setLogOption(true, true, true, true, true);
+        }
         settingLogMaxFileCount = Integer.valueOf(prefs.getString(appContext.getString(R.string.settings_log_file_max_count), "10"));
         settingMgtFileDir = prefs.getString(appContext.getString(R.string.settings_mgt_dir), internalRootDirectory + "/" + APPLICATION_TAG);
         settingLogOption = prefs.getBoolean(appContext.getString(R.string.settings_log_option), false);
@@ -412,6 +433,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public String settingsSmbLmCompatibility = "3", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout = "30000";
     public String settingsSmbDisablePlainTextPasswords="false";
 
+    private static Logger log = LoggerFactory.getLogger(GlobalParameters.class);
     final public void initJcifsOption() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
 
@@ -429,7 +451,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingsSmbUseExtendedSecurity = ues ? "true" : "false";
         settingsSmbDisablePlainTextPasswords=dpp ? "true" : "false";
-//        System.setProperty("jcifs.util.loglevel","3");
+
         System.setProperty("jcifs.smb.client.attrExpirationPeriod", "0");
         System.setProperty("jcifs.netbios.retryTimeout", "3000");
         System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);

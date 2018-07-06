@@ -65,7 +65,7 @@ public class LogCatUtil {
                     File log_out=new File(log_cat_dir+"/"+log_cat_file);
                     bos=new BufferedOutputStream(new FileOutputStream(log_out), 1024*1024*2);
 //                    String[] command = { "logcat", "-v", "time", "*:V" };
-                    String[] command = { "logcat"};
+                    String[] command = { "logcat", "-v", "time"};
 
                     // Logcat を出力する
                     process = Runtime.getRuntime().exec(command);
@@ -114,7 +114,8 @@ public class LogCatUtil {
             public void onClick(View view) {
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.parse("file://"+mGp.getLogDirName()+"/logcat.txt"), "text/plain");
-                mGp.appContext.startActivity(Intent.createChooser(intent, mGp.getLogDirName()+"/logcat.txt"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mActivity.startActivity(Intent.createChooser(intent, mGp.getLogDirName()+"/logcat.txt"));
             }
         });
 
@@ -124,7 +125,8 @@ public class LogCatUtil {
                 mUtil.flushLog();
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.parse("file://"+mGp.getLogDirName()+"/"+mGp.getLogFileName()+".txt"), "text/plain");
-                mGp.appContext.startActivity(Intent.createChooser(intent, mGp.getLogDirName()+"/"+mGp.getLogFileName()+".txt"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mActivity.startActivity(Intent.createChooser(intent, mGp.getLogDirName()+"/"+mGp.getLogFileName()+".txt"));
             }
         });
 
