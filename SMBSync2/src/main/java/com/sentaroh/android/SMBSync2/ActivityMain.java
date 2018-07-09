@@ -122,7 +122,7 @@ public class ActivityMain extends AppCompatActivity {
     private GlobalParameters mGp = null;
     private SyncTaskUtil mTaskUtil = null;
 
-    private SyncUtil mUtil = null;
+    private CommonUtilities mUtil = null;
     private CustomContextMenu ccMenu = null;
 
     private final static int NORMAL_START = 0;
@@ -144,14 +144,14 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle out) {
         super.onSaveInstanceState(out);
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered.");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered.");
         out.putString("currentTab", mCurrentTab);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle in) {
         super.onRestoreInstanceState(in);
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered.");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered.");
         mCurrentTab = in.getString("currentTab");
         if (mGp.activityIsFinished) restartType = RESTART_BY_KILLED;
         else restartType = RESTART_BY_DESTROYED;
@@ -174,8 +174,8 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(R.layout.main_screen);
 
         mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
-        mUtil = new SyncUtil(this.getApplicationContext(), "Main", mGp);
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil = new CommonUtilities(this.getApplicationContext(), "Main", mGp);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setHomeButtonEnabled(false);
@@ -222,14 +222,14 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
         if (restartType == RESTART_WITH_OUT_INITIALYZE) {
             mGp.safMgr.loadSafFile();
             setActivityForeground(true);
@@ -288,13 +288,13 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered " + ",currentView=" + mCurrentTab +
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered " + ",currentView=" + mCurrentTab +
                 ", getChangingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
         setActivityForeground(false);
         if (!isTaskTermination) saveTaskData();
@@ -303,19 +303,19 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
 //    @Override
 //    protected void onNewIntent(Intent received_intent) {
 //        super.onNewIntent(received_intent);
-//        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+//        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 //
 ////        if (received_intent.getAction()!=null && !received_intent.getAction().equals("")) {
 ////            Intent in=new Intent(received_intent.getAction());
@@ -329,7 +329,7 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, " +
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " +
                 "isFinishing=" + isFinishing() +
                 ", changingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
         setActivityForeground(false);
@@ -379,7 +379,7 @@ public class ActivityMain extends AppCompatActivity {
         btn_close.setText(mContext.getString(R.string.msgs_common_dialog_close));
         btn_copy.setText(mContext.getString(R.string.msgs_info_storage_copy_clipboard));
 
-        ArrayList<String>sil=SyncUtil.listSystemInfo(mGp);
+        ArrayList<String>sil= CommonUtilities.listSystemInfo(mGp);
         String si_text="";
         for(String si_item:sil) si_text+=si_item+"\n";
 
@@ -508,7 +508,7 @@ public class ActivityMain extends AppCompatActivity {
     public void onConfigurationChanged(final Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (mUtil != null) {
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " Entered, ",
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Entered, ",
                     "New orientation=" + newConfig.orientation +
                             ", New language=", newConfig.locale.getLanguage());
         }
@@ -516,7 +516,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void screenReload(boolean force_reload) {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " Entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Entered");
         ViewSaveArea vsa = null;
         vsa = saveViewContent();
         releaseImageResource();
@@ -810,7 +810,7 @@ public class ActivityMain extends AppCompatActivity {
     private class MainOnTabChange implements OnTabChangeListener {
         @Override
         public void onTabChanged(String tabId) {
-            mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered. tab=" + tabId + ",v=" + mCurrentTab);
+            mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered. tab=" + tabId + ",v=" + mCurrentTab);
 
             mActionBar.setIcon(R.drawable.smbsync);
             mActionBar.setHomeButtonEnabled(false);
@@ -878,7 +878,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered");
+        mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_top, menu);
         return true;//super.onCreateOptionsMenu(menu);
@@ -886,7 +886,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, isUiEnabled()="+isUiEnabled());
+        mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, isUiEnabled()="+isUiEnabled());
         boolean pm_bo = false;
 //        if (Build.VERSION.SDK_INT >= 23) {
 //            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(true);
@@ -1109,7 +1109,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void houseKeepThreadOpenDialog() {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         setUiDisabled();
         mGp.progressSpinView.setVisibility(LinearLayout.VISIBLE);
         mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
@@ -1147,7 +1147,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void houseKeepThreadCloseDialog() {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " ended");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " ended");
         LogUtil.flushLog(mContext, mGp);
 
         mGp.progressBarCancelListener = null;
@@ -1496,7 +1496,7 @@ public class ActivityMain extends AppCompatActivity {
         final TextView title = (TextView) dialog.findViewById(R.id.about_dialog_title);
         title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
         title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-        title.setText(getString(R.string.msgs_dlg_title_about) + "(Ver " + SyncUtil.getApplVersionName(mContext) + ")");
+        title.setText(getString(R.string.msgs_dlg_title_about) + "(Ver " + CommonUtilities.getApplVersionName(mContext) + ")");
 
         // get our tabHost from the xml
         final TabHost tab_host = (TabHost) dialog.findViewById(R.id.about_tab_host);
@@ -1633,7 +1633,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void reloadSettingParms() {
 
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
         String p_dir = mGp.settingMgtFileDir;
         boolean p_light_theme = mGp.themeIsLight;
@@ -3269,7 +3269,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setUiEnabled() {
-        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered");
         enableMainUi = true;
 
         if (!mGp.syncTaskAdapter.isShowCheckBox()) setSyncTaskContextButtonNormalMode();
@@ -3282,7 +3282,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setUiDisabled() {
-        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered");
         enableMainUi = false;
 
         if (!mGp.syncTaskAdapter.isShowCheckBox()) setSyncTaskContextButtonNormalMode();
@@ -3300,7 +3300,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @SuppressLint("NewApi")
     final private void refreshOptionMenu() {
-        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered");
 //		if (Build.VERSION.SDK_INT>=11)
 //			this.invalidateOptionsMenu();
         supportInvalidateOptionsMenu();
@@ -3318,7 +3318,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void syncThreadStarted() {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         setUiDisabled();
         mGp.progressSpinView.setVisibility(LinearLayout.VISIBLE);
         mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
@@ -3361,7 +3361,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void syncThreadEnded() {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         LogUtil.flushLog(mContext, mGp);
 
         mGp.progressBarCancelListener = null;
@@ -3448,17 +3448,17 @@ public class ActivityMain extends AppCompatActivity {
     private ISvcClient mSvcClient = null;
 
     private void openService(final NotifyEvent p_ntfy) {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         mSvcConnection = new ServiceConnection() {
             public void onServiceConnected(ComponentName arg0, IBinder service) {
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
                 mSvcClient = ISvcClient.Stub.asInterface(service);
                 p_ntfy.notifyToListener(true, null);
             }
 
             public void onServiceDisconnected(ComponentName name) {
                 mSvcConnection = null;
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 //    	    	mSvcClient=null;
 //    	    	synchronized(tcService) {
 //        	    	tcService.notify();
@@ -3473,7 +3473,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void closeService() {
 
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, conn=" + mSvcConnection);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, conn=" + mSvcConnection);
 
         if (mSvcConnection != null) {
 //    		try {
@@ -3495,7 +3495,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     final private void setCallbackListener() {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         try {
             mSvcClient.setCallBack(mSvcCallbackStub);
         } catch (RemoteException e) {
@@ -3505,7 +3505,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     final private void unsetCallbackListener() {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (mSvcClient != null) {
             try {
                 mSvcClient.removeCallBack(mSvcCallbackStub);
@@ -3531,7 +3531,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void showConfirmDialog(String fp, String method) {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         mGp.confirmDialogShowed = true;
         mGp.confirmDialogFilePath = fp;
         mGp.confirmDialogMethod = method;
@@ -3677,7 +3677,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void saveTaskData() {
-        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
         if (!isTaskTermination) {
             if (!isTaskDataExisted() || mGp.msgListAdapter.resetDataChanged()) {
@@ -3712,7 +3712,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void restoreTaskData() {
-        mUtil.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered");
         File lf = new File(mGp.applicationRootDirectory + "/" + SMBSYNC2_SERIALIZABLE_FILE_NAME);
         if (lf.exists()) {
 //            try {

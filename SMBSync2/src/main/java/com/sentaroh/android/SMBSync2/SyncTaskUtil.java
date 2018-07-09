@@ -130,7 +130,7 @@ public class SyncTaskUtil {
     private Context mContext;
     private Activity mActivity;
 
-    private SyncUtil mUtil;
+    private CommonUtilities mUtil;
 
     private ArrayList<PreferenceParmListIItem>
             importedSettingParmList = new ArrayList<PreferenceParmListIItem>();
@@ -139,7 +139,7 @@ public class SyncTaskUtil {
     private GlobalParameters mGp = null;
     private FragmentManager mFragMgr = null;
 
-    SyncTaskUtil(SyncUtil mu, Activity a,
+    SyncTaskUtil(CommonUtilities mu, Activity a,
                  CommonDialog cd, CustomContextMenu ccm, GlobalParameters gp, FragmentManager fm) {
         mContext = a.getApplicationContext();
         mGp = gp;
@@ -2223,7 +2223,7 @@ public class SyncTaskUtil {
             @Override
             public void onClick(View v) {
                 WifiManager wm = (WifiManager) mGp.appContext.getSystemService(Context.WIFI_SERVICE);
-                String ssid = SyncUtil.getWifiSsidName(wm);
+                String ssid = CommonUtilities.getWifiSsidName(wm);
                 if (!ssid.equals("")) {
                     if (isFilterExists(ssid, filterAdapter)) {
                         String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_duplicate_ap_specified);
@@ -3358,7 +3358,7 @@ public class SyncTaskUtil {
         tvmsg.setText(mContext.getString(R.string.msgs_scan_ip_address_press_scan_btn));
         tv_result.setVisibility(TextView.GONE);
 
-        final String from = SyncUtil.getLocalIpAddress();
+        final String from = CommonUtilities.getLocalIpAddress();
         String subnet = from.substring(0, from.lastIndexOf("."));
         String subnet_o1, subnet_o2, subnet_o3;
         subnet_o1 = subnet.substring(0, subnet.indexOf("."));
@@ -4069,11 +4069,11 @@ public class SyncTaskUtil {
         }
     }
 
-    public static ArrayList<SyncTaskItem> createSyncTaskList(Context context, GlobalParameters gp, SyncUtil util) {
+    public static ArrayList<SyncTaskItem> createSyncTaskList(Context context, GlobalParameters gp, CommonUtilities util) {
         return createSyncTaskListFromFile(context, gp, util, false, "", null);
     }
 
-    public static ArrayList<SyncTaskItem> createSyncTaskListFromFile(Context context, GlobalParameters gp, SyncUtil util,
+    public static ArrayList<SyncTaskItem> createSyncTaskListFromFile(Context context, GlobalParameters gp, CommonUtilities util,
                                                                      boolean sdcard, String fp, ArrayList<PreferenceParmListIItem> ispl) {
         ArrayList<SyncTaskItem> sync = new ArrayList<SyncTaskItem>();
         if (ispl != null) ispl.clear();
@@ -5159,12 +5159,12 @@ public class SyncTaskUtil {
 //		return null;
 //	};
 //
-    public static boolean saveSyncTaskList(GlobalParameters mGp, Context c, SyncUtil util,
+    public static boolean saveSyncTaskList(GlobalParameters mGp, Context c, CommonUtilities util,
                                            ArrayList<SyncTaskItem> pfl) {
         return saveSyncTaskListToFile(mGp, c, util, false, "", "", pfl, false);
     }
 
-    public static boolean saveSyncTaskListToFile(GlobalParameters mGp, Context c, SyncUtil util,
+    public static boolean saveSyncTaskListToFile(GlobalParameters mGp, Context c, CommonUtilities util,
                                                  boolean sdcard, String fd, String fp,
                                                  ArrayList<SyncTaskItem> pfl, boolean encrypt_required) {
         boolean result = true;

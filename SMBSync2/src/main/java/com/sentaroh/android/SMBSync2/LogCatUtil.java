@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class LogCatUtil {
-    public static void prepareOptionMenu(GlobalParameters mGp, SyncUtil mUtil, Menu menu) {
+    public static void prepareOptionMenu(GlobalParameters mGp, CommonUtilities mUtil, Menu menu) {
         if (mGp.logCatActive) {
             menu.findItem(R.id.menu_top_start_logcat).setEnabled(false);
             menu.findItem(R.id.menu_top_stop_logcat).setEnabled(true);
@@ -45,7 +45,7 @@ public class LogCatUtil {
 
     }
 
-    public static void stopLogCat(GlobalParameters gp, SyncUtil mUtil) {
+    public static void stopLogCat(GlobalParameters gp, CommonUtilities mUtil) {
         gp.logCatActive=false;
         mUtil.flushLog();
     }
@@ -95,7 +95,7 @@ public class LogCatUtil {
         th.start();
     }
 
-    public static void sendLogCat(final AppCompatActivity mActivity, final GlobalParameters mGp, final SyncUtil mUtil,
+    public static void sendLogCat(final AppCompatActivity mActivity, final GlobalParameters mGp, final CommonUtilities mUtil,
                                   String log_cat_dir, String log_cat_name) {
         final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

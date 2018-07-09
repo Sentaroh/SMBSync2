@@ -46,7 +46,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -161,7 +160,7 @@ public class SyncThreadArchiveFile {
 
     static private int buildArchiveListInternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                           String from_base, String from_path, File mf, String to_base, String to_path) {
-        stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
         File tf;
@@ -391,7 +390,7 @@ public class SyncThreadArchiveFile {
 
     static private int buildArchiveListInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                           String from_base, String from_path, File mf, String to_base, String to_path) {
-        stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
         File tf;
@@ -515,7 +514,7 @@ public class SyncThreadArchiveFile {
 
     static private int buildArchiveListInternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                      String from_base, String from_path, File mf, String to_base, String to_path) {
-        stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         stwa.jcifsNtStatusCode=0;
         int sync_result = 0;
         JcifsFile tf;
@@ -586,7 +585,7 @@ public class SyncThreadArchiveFile {
 
     static private void putExceptionMsg(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path, String to_path, Exception e) {
         SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
-                SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+                CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
         SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
         if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
         if (e instanceof JcifsException) stwa.jcifsNtStatusCode=((JcifsException)e).getNtStatus();
@@ -769,7 +768,7 @@ public class SyncThreadArchiveFile {
 
     static private int buildArchiveListExternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                           String from_base, String from_path, File mf, String to_base, String to_path) {
-        stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
         File tf;
@@ -984,7 +983,7 @@ public class SyncThreadArchiveFile {
 
     static private int buildArchiveListExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                           String from_base, String from_path, File mf, String to_base, String to_path) {
-        stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=" + to_path);
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, from=", from_path, ", to=" + to_path);
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
         File tf;
@@ -1166,7 +1165,7 @@ public class SyncThreadArchiveFile {
 
     static private int buildArchiveListExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                      String from_base, String from_path, File mf, String to_base, String to_path) {
-        stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
         JcifsFile tf;
@@ -1247,13 +1246,13 @@ public class SyncThreadArchiveFile {
         try {
             mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
-            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            stwa.util.addLogMsg("E", "", CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         } catch (JcifsException e) {
-            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            stwa.util.addLogMsg("E", "", CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
@@ -1374,7 +1373,7 @@ public class SyncThreadArchiveFile {
     static private int buildArchiveListSmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                      String from_base, String from_path, JcifsFile mf, String to_base, String to_path) {
         if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path);
+            stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path);
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
         try {
@@ -1454,13 +1453,13 @@ public class SyncThreadArchiveFile {
         try {
             mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
-            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            stwa.util.addLogMsg("E", "", CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         } catch (JcifsException e) {
-            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            stwa.util.addLogMsg("E", "", CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
@@ -1653,7 +1652,7 @@ public class SyncThreadArchiveFile {
 
     static private int buildArchiveListSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                      String from_base, String from_path, JcifsFile mf, String to_base, String to_path) {
-        stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path + ", to=", to_path);
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, from=", from_path + ", to=", to_path);
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
         File tf;
@@ -1732,13 +1731,13 @@ public class SyncThreadArchiveFile {
         try {
             mf = new JcifsFile(from_path, stwa.masterAuth);
         } catch (MalformedURLException e) {
-            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", Master file error");
+            stwa.util.addLogMsg("E", "", CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", Master file error");
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         } catch (JcifsException e) {
-            stwa.util.addLogMsg("E", "", SyncUtil.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
+            stwa.util.addLogMsg("E", "", CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", "", e.getMessage());//e.toString());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
@@ -1852,7 +1851,7 @@ public class SyncThreadArchiveFile {
 
     static private int buildArchiveListSmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                 String from_base, String from_path, JcifsFile mf, String to_base, String to_path) {
-        stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
         JcifsFile tf;

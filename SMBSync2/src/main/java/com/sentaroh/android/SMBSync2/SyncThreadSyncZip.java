@@ -108,7 +108,7 @@ public class SyncThreadSyncZip {
 
         } catch (ZipException e) {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
-                    SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + dest_path);
+                    CommonUtilities.getExecutedMethodName() + " master=" + from_path + ", target=" + dest_path);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
@@ -118,7 +118,7 @@ public class SyncThreadSyncZip {
     }
 
     private static void copyZipFileToWorkDirectory(SyncThreadWorkArea stwa, String from_dir, String file_path) {
-        stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, from=" + from_dir + file_path);
+        stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, from=" + from_dir + file_path);
         File in = new File(from_dir + file_path);
         File out = new File(stwa.zipWorkFileName);
 //		Log.v("","copy to work from="+in.getPath()+", out="+out.getPath());
@@ -150,7 +150,7 @@ public class SyncThreadSyncZip {
             e.printStackTrace();
         } catch (IOException e) {
             SyncThread.showMsg(stwa, true, stwa.currentSTI.getSyncTaskName(), "I", "", "",
-                    SyncUtil.getExecutedMethodName() + " from=" + from_dir + file_path);
+                    CommonUtilities.getExecutedMethodName() + " from=" + from_dir + file_path);
             SyncThread.showMsg(stwa, true, stwa.currentSTI.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
@@ -158,7 +158,7 @@ public class SyncThreadSyncZip {
     }
 
     private static void copyZipFileToDestination(SyncThreadWorkArea stwa, String to_dir, String file_path) {
-        stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, to=" + to_dir + file_path);
+        stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, to=" + to_dir + file_path);
         File in = new File(stwa.zipWorkFileName);
         if ((stwa.totalCopyCount > 0 || stwa.totalDeleteCount > 0) || stwa.zipFileCopyBackRequired) {
             SafFile out = stwa.gp.safMgr.createSdcardItem(to_dir + file_path + ".tmp", false);
@@ -188,18 +188,18 @@ public class SyncThreadSyncZip {
                 } else {
                     out.delete();
                 }
-                stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " copy was completed");
+                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " copy was completed");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 SyncThread.showMsg(stwa, true, stwa.currentSTI.getSyncTaskName(), "I", "", "",
-                        SyncUtil.getExecutedMethodName() + " to=" + to_dir + file_path);
+                        CommonUtilities.getExecutedMethodName() + " to=" + to_dir + file_path);
                 SyncThread.showMsg(stwa, true, stwa.currentSTI.getSyncTaskName(), "I", "", "", e.getMessage());
                 SyncThread.printStackTraceElement(stwa, e.getStackTrace());
                 stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             }
         } else {
-            stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " copy was ignored, because file was not modififed.");
+            stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " copy was ignored, because file was not modififed.");
         }
         in.delete();
     }
@@ -358,7 +358,7 @@ public class SyncThreadSyncZip {
             File mf = new File(to_dir);
 //			Log.v("","from="+to_dir+", base="+zp.getDefaultFolderPath());
             if (zp.getDefaultFolderPath().equals(to_dir)) {
-                stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " directory not created, Directory=" + to_dir +
+                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " directory not created, Directory=" + to_dir +
                         ", Base=" + zp.getDefaultFolderPath());
             } else {
                 try {
@@ -377,20 +377,20 @@ public class SyncThreadSyncZip {
                             zf.setFileNameCharset(ZipUtil.DEFAULT_ZIP_FILENAME_ENCODING);
                             zf.addFile(mf, zp);
                             stwa.zipFileCopyBackRequired = true;
-                            stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " directory created, dir=" + to_dir);
+                            stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " directory created, dir=" + to_dir);
                         } else {
 //							Log.v("","name="+fh.getFileName());
-                            stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " directory was already exist, dir=" + to_dir);
+                            stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " directory was already exist, dir=" + to_dir);
                         }
                     } else {
                         zf.getFile().delete();
                         zf.setFileNameCharset(ZipUtil.DEFAULT_ZIP_FILENAME_ENCODING);
                         zf.createZipFile(mf, zp);
-                        stwa.util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " directory created, dir=" + to_dir);
+                        stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " directory created, dir=" + to_dir);
                     }
                 } catch (ZipException e) {
                     SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
-                            SyncUtil.getExecutedMethodName() + " directory=" + to_dir + ", Zip=" + zf.getFile().getPath());
+                            CommonUtilities.getExecutedMethodName() + " directory=" + to_dir + ", Zip=" + zf.getFile().getPath());
                     SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
                     SyncThread.printStackTraceElement(stwa, e.getStackTrace());
                     stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
@@ -405,7 +405,7 @@ public class SyncThreadSyncZip {
     static private int moveCopyInternalToInternalZip(SyncThreadWorkArea stwa, SyncTaskItem sti, boolean move_file,
                                                      String from_base, String from_path, File mf, ZipFile zf, ZipParameters zp) {
         if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " entered, from=" + from_path +
+            stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered, from=" + from_path +
                     ", dest=" + zf.getFile().getPath() + ", move=" + move_file);
         int sync_result = 0;
         try {
@@ -518,7 +518,7 @@ public class SyncThreadSyncZip {
             }
         } catch (IOException e) {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
-                    SyncUtil.getExecutedMethodName() + " From=" + from_path);
+                    CommonUtilities.getExecutedMethodName() + " From=" + from_path);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
@@ -532,7 +532,7 @@ public class SyncThreadSyncZip {
                                                              ZipFile zf, ZipParameters zp) {
         int sync_result = 0;
         if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", SyncUtil.getExecutedMethodName() + " master=", from_path, ", target=", zf.getFile().getPath());
+            stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " master=", from_path, ", target=", zf.getFile().getPath());
         try {
             String root_dir = from_path.replace(stwa.gp.internalRootDirectory + "/", "");
 //			Log.v("","root="+root_dir);
@@ -579,14 +579,14 @@ public class SyncThreadSyncZip {
         } catch (ZipException e) {
             e.printStackTrace();
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
-                    SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + zf.getFile().getPath());
+                    CommonUtilities.getExecutedMethodName() + " master=" + from_path + ", target=" + zf.getFile().getPath());
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
-                    SyncUtil.getExecutedMethodName() + " master=" + from_path + ", target=" + zf.getFile().getPath());
+                    CommonUtilities.getExecutedMethodName() + " master=" + from_path + ", target=" + zf.getFile().getPath());
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
@@ -649,7 +649,7 @@ public class SyncThreadSyncZip {
         } catch (ZipException e) {
             e.printStackTrace();
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
-                    SyncUtil.getExecutedMethodName() + " master=" + from_dir + ", target=" + to_dir);
+                    CommonUtilities.getExecutedMethodName() + " master=" + from_dir + ", target=" + to_dir);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());

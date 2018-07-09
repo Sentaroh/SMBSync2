@@ -42,7 +42,7 @@ public class ShortcutAutoSync extends FragmentActivity {
 
     private Context mContext;
 
-    private SyncUtil util = null;
+    private CommonUtilities util = null;
     private GlobalParameters mGp = null;
     private CommonDialog commonDlg = null;
 
@@ -73,7 +73,7 @@ public class ShortcutAutoSync extends FragmentActivity {
         setContentView(R.layout.activity_transrucent);
 
 //        envParms.loadSettingParms(context);
-//        util=new SyncUtil(context, "ShortCutSleep", envParms);
+//        util=new CommonUtilities(context, "ShortCutSleep", envParms);
 //        mGp = (GlobalParameters) getApplication();
 //        mGp = (GlobalParameters) getApplicationContext();
         mContext = getApplicationContext();
@@ -82,11 +82,11 @@ public class ShortcutAutoSync extends FragmentActivity {
             mGp.themeColorList = ThemeUtil.getThemeColorList(this);
         }
 
-        util = new SyncUtil(this.getApplicationContext(), "Shortcuut", mGp);
+        util = new CommonUtilities(this.getApplicationContext(), "Shortcuut", mGp);
 
         commonDlg = new CommonDialog(this, getSupportFragmentManager());
 
-        util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
         // Application process is follow
 
     }
@@ -94,18 +94,18 @@ public class ShortcutAutoSync extends FragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
-        util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
     }
 
     @Override
     public void onRestart() {
         super.onRestart();
-        util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
     }
 
     final public void onResume() {
         super.onResume();
-        util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
 
         if (restartStatus == 0) {
             NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -165,7 +165,7 @@ public class ShortcutAutoSync extends FragmentActivity {
     @Override
     public void onPause() {
         super.onPause();
-        util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
         // Application process is follow
 
 
@@ -176,7 +176,7 @@ public class ShortcutAutoSync extends FragmentActivity {
     @Override
     public void onStop() {
         super.onStop();
-        util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
         // Application process is follow
 
 
@@ -187,7 +187,7 @@ public class ShortcutAutoSync extends FragmentActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        util.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
         // Application process is follow
         System.gc();
 //		android.os.Process.killProcess(android.os.Process.myPid());

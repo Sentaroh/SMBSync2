@@ -48,7 +48,7 @@ public class ReadSmbFilelist implements Runnable {
     private boolean readDirOnly = false;
     private boolean readSubDirCnt = true;
 
-    private SyncUtil mUtil = null;
+    private CommonUtilities mUtil = null;
 
     private String mHostName = "", mHostAddr = "", mHostPort = "";
 
@@ -62,7 +62,7 @@ public class ReadSmbFilelist implements Runnable {
                            ArrayList<TreeFilelistItem> fl, RemoteAuthInfo rauth,
                            NotifyEvent ne, boolean dironly, boolean dc, GlobalParameters gp) {
         mContext = c;
-        mUtil = new SyncUtil(mContext, "FileList", gp);
+        mUtil = new CommonUtilities(mContext, "FileList", gp);
         remoteFileList = fl;
         remoteUrl = ru;
         remoteDir = rd;
@@ -108,7 +108,7 @@ public class ReadSmbFilelist implements Runnable {
         boolean error_exit = false;
         if (mHostName.equals("")) {
             if (mHostPort.equals("")) {
-                if (!SyncUtil.isSmbHostAddressConnected(mHostAddr)) {
+                if (!CommonUtilities.isSmbHostAddressConnected(mHostAddr)) {
                     error_exit = true;
                     if (getFLCtrl.isEnabled()) {
                         getFLCtrl.setThreadResultError();
@@ -119,7 +119,7 @@ public class ReadSmbFilelist implements Runnable {
                     }
                 }
             } else {
-                if (!SyncUtil.isSmbHostAddressConnected(mHostAddr,
+                if (!CommonUtilities.isSmbHostAddressConnected(mHostAddr,
                         Integer.parseInt(mHostPort))) {
                     error_exit = true;
                     if (getFLCtrl.isEnabled()) {

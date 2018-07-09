@@ -104,7 +104,7 @@ public class SyncTaskEditor extends DialogFragment {
     private SyncTaskEditor mFragment = null;
     private GlobalParameters mGp = null;
     private SyncTaskUtil mTaskUtil = null;
-    private SyncUtil mUtil = null;
+    private CommonUtilities mUtil = null;
     private CommonDialog mCommonDlg = null;
 
     private FragmentManager mFragMgr = null;
@@ -151,7 +151,7 @@ public class SyncTaskEditor extends DialogFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 //		if(outState.isEmpty()){
 //	        outState.putBoolean("WORKAROUND_FOR_BUG_19917_KEY", true);
 //	    }
@@ -161,14 +161,14 @@ public class SyncTaskEditor extends DialogFragment {
     public void onConfigurationChanged(final Configuration newConfig) {
         // Ignore orientation change to keep activity from restarting
         super.onConfigurationChanged(newConfig);
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
         reInitViewWidget();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         View view = super.onCreateView(inflater, container, savedInstanceState);
         CommonDialog.setDlgBoxSizeLimit(mDialog, true);
         return view;
@@ -181,8 +181,8 @@ public class SyncTaskEditor extends DialogFragment {
         if (mContext == null) mContext = this.getActivity();
         mFragment = this;
         mFragMgr = this.getFragmentManager();
-        if (mUtil == null) mUtil = new SyncUtil(mContext, "SyncTaskEditor", mGp);
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        if (mUtil == null) mUtil = new CommonUtilities(mContext, "SyncTaskEditor", mGp);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         mCommonDlg = new CommonDialog(mContext, getActivity().getSupportFragmentManager());
         if (mTerminateRequired) {
             this.dismiss();
@@ -192,7 +192,7 @@ public class SyncTaskEditor extends DialogFragment {
     @Override
     final public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
     @Override
@@ -200,33 +200,33 @@ public class SyncTaskEditor extends DialogFragment {
         super.onAttach(activity);
         if (mContext == null) mContext = this.getActivity();
         mGp=GlobalWorkArea.getGlobalParameters(mContext);
-        if (mUtil == null) mUtil = new SyncUtil(mContext, "SyncTaskEditor", mGp);
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        if (mUtil == null) mUtil = new CommonUtilities(mContext, "SyncTaskEditor", mGp);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
     @Override
     final public void onDetach() {
         super.onDetach();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
     @Override
     final public void onStart() {
         CommonDialog.setDlgBoxSizeLimit(mDialog, true);
         super.onStart();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (mTerminateRequired) mDialog.cancel();
     }
 
     @Override
     final public void onStop() {
         super.onStop();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
     @Override
     public void onDestroyView() {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (getDialog() != null && getRetainInstance())
             getDialog().setDismissMessage(null);
         super.onDestroyView();
@@ -234,7 +234,7 @@ public class SyncTaskEditor extends DialogFragment {
 
     @Override
     public void onCancel(DialogInterface di) {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (!mTerminateRequired) {
             final Button btnCancel = (Button) mDialog.findViewById(R.id.edit_profile_sync_dlg_btn_cancel);
             btnCancel.performClick();
@@ -245,13 +245,13 @@ public class SyncTaskEditor extends DialogFragment {
 
     @Override
     public void onDismiss(DialogInterface di) {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         super.onDismiss(di);
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
 //    	mContext=getActivity().getApplicationContext();
         mDialog = new Dialog(getActivity(), mGp.applicationTheme);
@@ -494,7 +494,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     public void reInitViewWidget() {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (!mTerminateRequired) {
             SavedViewContents sv = null;
             sv = saveViewContents();
@@ -505,7 +505,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     public void initViewWidget() {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
         editSyncTask(mOpType, mCurrentSyncTaskItem);
     }
@@ -518,7 +518,7 @@ public class SyncTaskEditor extends DialogFragment {
                            final String op_type,
                            final SyncTaskItem pli,
                            SyncTaskUtil pm,
-                           SyncUtil ut,
+                           CommonUtilities ut,
                            CommonDialog cd,
                            GlobalParameters gp,
                            NotifyEvent ntfy) {
@@ -572,7 +572,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         //		final LinearLayout ll_sync_folder_port = (LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_port_option_view);
         final CheckedTextView ctv_sync_folder_use_port = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
-        SyncUtil.setCheckedTextView(ctv_sync_folder_use_port);
+        CommonUtilities.setCheckedTextView(ctv_sync_folder_use_port);
         final EditText et_sync_folder_port = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
         if (!sfev.folder_remote_port.equals("")) {
             ctv_sync_folder_use_port.setChecked(true);
@@ -1034,7 +1034,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_zip_view_keyword_insert_day_of_year = (Button) ll_zip_view.findViewById(R.id.edit_sync_folder_keyword_insert_day_of_year);
 
         final CheckedTextView ctv_zip_file_save_sdcard = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_use_sdcard);
-        SyncUtil.setCheckedTextView(ctv_zip_file_save_sdcard);
+        CommonUtilities.setCheckedTextView(ctv_zip_file_save_sdcard);
         ctv_zip_file_save_sdcard.setChecked(sfev.zip_file_use_sdcard);
 
         final Button btn_zip_filelist = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_filelist_btn);
@@ -1777,7 +1777,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                 final Button btnClose = (Button) dialog.findViewById(R.id.confirm_app_specific_dlg_close);
                 final CheckedTextView ctvSuppr = (CheckedTextView) dialog.findViewById(R.id.confirm_app_specific_dlg_ctv_suppress);
-                SyncUtil.setCheckedTextView(ctvSuppr);
+                CommonUtilities.setCheckedTextView(ctvSuppr);
 
                 CommonDialog.setDlgBoxSizeCompact(dialog);
                 ctvSuppr.setChecked(false);
@@ -1939,7 +1939,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncFolderZipCompressionLevel(Spinner spinner, String cv) {
-        SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -1964,7 +1964,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncFolderMountPoint(SyncTaskItem sti, Spinner spinner, String cv, boolean write_only) {
-        SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         mGp.safMgr.loadSafFile();
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2005,7 +2005,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncFolderSmbProto(SyncTaskItem sti, Spinner spinner, String cv) {
-        SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         mGp.safMgr.loadSafFile();
@@ -2025,7 +2025,7 @@ public class SyncTaskEditor extends DialogFragment {
     private void setSpinnerSyncFolderType(SyncTaskItem sti, Spinner spinner, String cv, boolean master) {
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
         String sync_type=spinnerSyncType.getSelectedItem().toString();
-        SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         mGp.safMgr.loadSafFile();
@@ -2098,7 +2098,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncTaskType(Spinner spinnerSyncOption, String prof_syncopt, String target_folder_type) {
-        SyncUtil.setSpinnerBackground(mContext, spinnerSyncOption, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinnerSyncOption, mGp.themeIsLight);
         final CustomSpinnerAdapter adapterSyncOption =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapterSyncOption.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2122,7 +2122,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncTaskWifiOption(Spinner spinner, String cv) {
-        SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2140,7 +2140,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncTaskDiffTimeValue(Spinner spinner, int cv) {
-        SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2236,7 +2236,7 @@ public class SyncTaskEditor extends DialogFragment {
             n_sti.setSyncWifiStatusOption("0");
         }
         final CheckedTextView ctv_auto = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_ctv_auto);
-        SyncUtil.setCheckedTextView(ctv_auto);
+        CommonUtilities.setCheckedTextView(ctv_auto);
         ctv_auto.setChecked(n_sti.isSyncTaskAuto());
         ctv_auto.setOnClickListener(new OnClickListener() {
             @Override
@@ -2280,11 +2280,11 @@ public class SyncTaskEditor extends DialogFragment {
         final Button edit_wifi_ap_list = (Button) mDialog.findViewById(R.id.edit_sync_task_option_btn_edit_ap_white_list);
         setWifiApWhileListInfo(n_sti.getSyncWifiConnectionWhiteList(), edit_wifi_ap_list);
         final CheckedTextView ctv_task_skip_if_ssid_invalid = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ap_list_task_skip_if_ssid_invalid);
-        SyncUtil.setCheckedTextView(ctv_task_skip_if_ssid_invalid);
+        CommonUtilities.setCheckedTextView(ctv_task_skip_if_ssid_invalid);
         ctv_task_skip_if_ssid_invalid.setChecked(n_sti.isSyncTaskSkipIfConnectAnotherWifiSsid());
 
         final CheckedTextView ctv_task_sync_when_cahrging = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
-        SyncUtil.setCheckedTextView(ctv_task_sync_when_cahrging);
+        CommonUtilities.setCheckedTextView(ctv_task_sync_when_cahrging);
         ctv_task_sync_when_cahrging.setChecked(n_sti.isSyncOptionSyncWhenCharging());
         ctv_task_sync_when_cahrging.setOnClickListener(new OnClickListener() {
             @Override
@@ -2431,11 +2431,11 @@ public class SyncTaskEditor extends DialogFragment {
         else ll_dir_filter_detail.setVisibility(Button.GONE);
 
         final CheckedTextView ctvProcessRootDirFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_master_root_dir_file);
-        SyncUtil.setCheckedTextView(ctvProcessRootDirFile);
+        CommonUtilities.setCheckedTextView(ctvProcessRootDirFile);
         ctvProcessRootDirFile.setChecked(n_sti.isSyncProcessRootDirFile());
 
         final CheckedTextView ctvSyncSubDir = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_sub_dir);
-        SyncUtil.setCheckedTextView(ctvSyncSubDir);
+        CommonUtilities.setCheckedTextView(ctvSyncSubDir);
         ctvSyncSubDir.setChecked(n_sti.isSyncSubDirectory());
 
         if (n_sti.isSyncProcessRootDirFile()) {
@@ -2472,7 +2472,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctvSyncEmptyDir = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_empty_directory);
-        SyncUtil.setCheckedTextView(ctvSyncEmptyDir);
+        CommonUtilities.setCheckedTextView(ctvSyncEmptyDir);
         ctvSyncEmptyDir.setChecked(n_sti.isSyncEmptyDirectory());
         ctvSyncEmptyDir.setOnClickListener(new OnClickListener() {
             @Override
@@ -2484,7 +2484,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctvSyncHiddenDir = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_hidden_directory);
-        SyncUtil.setCheckedTextView(ctvSyncHiddenDir);
+        CommonUtilities.setCheckedTextView(ctvSyncHiddenDir);
         ctvSyncHiddenDir.setChecked(n_sti.isSyncHiddenDirectory());
         ctvSyncHiddenDir.setOnClickListener(new OnClickListener() {
             @Override
@@ -2496,7 +2496,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctvSyncHiddenFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_hidden_file);
-        SyncUtil.setCheckedTextView(ctvSyncHiddenFile);
+        CommonUtilities.setCheckedTextView(ctvSyncHiddenFile);
         ctvSyncHiddenFile.setChecked(n_sti.isSyncHiddenFile());
         ctvSyncHiddenFile.setOnClickListener(new OnClickListener() {
             @Override
@@ -2519,7 +2519,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctvConfirmOverride = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_confirm_override_delete_file);
-        SyncUtil.setCheckedTextView(ctvConfirmOverride);
+        CommonUtilities.setCheckedTextView(ctvConfirmOverride);
         ctvConfirmOverride.setChecked(n_sti.isSyncConfirmOverrideOrDelete());
         ctvConfirmOverride.setOnClickListener(new OnClickListener() {
             @Override
@@ -2531,7 +2531,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
-        SyncUtil.setCheckedTextView(ctvDeleteFirst);
+        CommonUtilities.setCheckedTextView(ctvDeleteFirst);
         ctvDeleteFirst.setChecked(n_sti.isSyncOptionDeleteFirstWhenMirror());
         ctvDeleteFirst.setOnClickListener(new OnClickListener() {
             @Override
@@ -2543,7 +2543,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
-        SyncUtil.setCheckedTextView(ctUseExtendedDirectoryFilter1);
+        CommonUtilities.setCheckedTextView(ctUseExtendedDirectoryFilter1);
         ctUseExtendedDirectoryFilter1.setChecked(n_sti.isSyncUseExtendedDirectoryFilter1());
         ctUseExtendedDirectoryFilter1.setOnClickListener(new OnClickListener() {
             @Override
@@ -2569,7 +2569,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctvDoNotResetFileLastMod = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time);
-        SyncUtil.setCheckedTextView(ctvDoNotResetFileLastMod);
+        CommonUtilities.setCheckedTextView(ctvDoNotResetFileLastMod);
         ctvDoNotResetFileLastMod.setChecked(n_sti.isSyncDoNotResetFileLastModified());
         ctvDoNotResetFileLastMod.setOnClickListener(new OnClickListener() {
             @Override
@@ -2581,7 +2581,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctvUseSmbsyncLastMod = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_use_smbsync_last_mod_time);
-        SyncUtil.setCheckedTextView(ctvUseSmbsyncLastMod);
+        CommonUtilities.setCheckedTextView(ctvUseSmbsyncLastMod);
         ctvUseSmbsyncLastMod.setChecked(n_sti.isSyncDetectLastModifiedBySmbsync());
         ctvUseSmbsyncLastMod.setOnClickListener(new OnClickListener() {
             @Override
@@ -2593,7 +2593,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
-        SyncUtil.setCheckedTextView(ctvRetry);
+        CommonUtilities.setCheckedTextView(ctvRetry);
         if (n_sti.getSyncRetryCount().equals("0")) ctvRetry.setChecked(false);
         else ctvRetry.setChecked(true);
         ctvRetry.setOnClickListener(new OnClickListener() {
@@ -2606,7 +2606,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
-        SyncUtil.setCheckedTextView(ctvSyncUseRemoteSmallIoArea);
+        CommonUtilities.setCheckedTextView(ctvSyncUseRemoteSmallIoArea);
         ctvSyncUseRemoteSmallIoArea.setChecked(n_sti.isSyncUseSmallIoBuffer());
         ctvSyncUseRemoteSmallIoArea.setOnClickListener(new OnClickListener() {
             @Override
@@ -2644,7 +2644,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvDeterminChangedFileSizeGtTarget = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_file_size_greater_than_target);
         ctvDeterminChangedFileSizeGtTarget.setChecked(n_sti.isSyncDifferentFileSizeGreaterThanTagetFile());
         final CheckedTextView ctvDiffUseFileSize = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_file_size);
-        SyncUtil.setCheckedTextView(ctvDiffUseFileSize);
+        CommonUtilities.setCheckedTextView(ctvDiffUseFileSize);
         ctvDiffUseFileSize.setChecked(n_sti.isSyncDifferentFileBySize());
         ctvDiffUseFileSize.setOnClickListener(new OnClickListener() {
             @Override
@@ -2671,7 +2671,7 @@ public class SyncTaskEditor extends DialogFragment {
         else ctvDeterminChangedFileSizeGtTarget.setEnabled(false);
 
         final CheckedTextView ctDeterminChangedFileByTime = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_last_mod_time);
-        SyncUtil.setCheckedTextView(ctDeterminChangedFileByTime);
+        CommonUtilities.setCheckedTextView(ctDeterminChangedFileByTime);
         ctDeterminChangedFileByTime.setChecked(n_sti.isSyncDifferentFileByTime());
         ctDeterminChangedFileByTime.setOnClickListener(new OnClickListener() {
             @Override
@@ -3458,7 +3458,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncTaskArchiveSuffixSeq(Spinner spinner, String cv) {
-        SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -3481,7 +3481,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncTaskPictureRetainPeriod(Spinner spinner, int cv) {
-        SyncUtil.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);

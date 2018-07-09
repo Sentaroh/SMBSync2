@@ -65,7 +65,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     private static GlobalParameters mGp = null;
 
-    private SyncUtil mUtil = null;
+    private CommonUtilities mUtil = null;
 
 //	private GlobalParameters mGp=null;
 
@@ -85,9 +85,9 @@ public class ActivitySettings extends PreferenceActivity {
         setTheme(mGp.applicationTheme);
         super.onCreate(savedInstanceState);
         mPrefActivity = this;
-        if (mUtil == null) mUtil = new SyncUtil(this, "SettingsActivity", mGp);
+        if (mUtil == null) mUtil = new CommonUtilities(this, "SettingsActivity", mGp);
         if (mGp.settingDebugLevel > 0)
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (mGp.settingFixDeviceOrientationToPortrait)
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
@@ -97,7 +97,7 @@ public class ActivitySettings extends PreferenceActivity {
     public void onStart() {
         super.onStart();
         if (mGp.settingDebugLevel > 0)
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
     ;
@@ -106,7 +106,7 @@ public class ActivitySettings extends PreferenceActivity {
     public void onResume() {
         super.onResume();
         if (mGp.settingDebugLevel > 0)
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 //		setTitle(R.string.settings_main_title);
     }
 
@@ -115,7 +115,7 @@ public class ActivitySettings extends PreferenceActivity {
     @Override
     public void onBuildHeaders(List<Header> target) {
         if (mGp.settingDebugLevel > 0)
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         loadHeadersFromResource(R.xml.settings_frag, target);
     }
 
@@ -127,9 +127,9 @@ public class ActivitySettings extends PreferenceActivity {
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
 
 //    	mPrefActivity=this;
-        mUtil = new SyncUtil(this, "SettingsActivity", mGp);
+        mUtil = new CommonUtilities(this, "SettingsActivity", mGp);
         if (mGp.settingDebugLevel > 0)
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         return true;
     }
 
@@ -139,7 +139,7 @@ public class ActivitySettings extends PreferenceActivity {
     protected void onPause() {
         super.onPause();
         if (mGp.settingDebugLevel > 0)
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
     ;
@@ -148,7 +148,7 @@ public class ActivitySettings extends PreferenceActivity {
     final public void onStop() {
         super.onStop();
         if (mGp.settingDebugLevel > 0)
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
     ;
@@ -157,12 +157,12 @@ public class ActivitySettings extends PreferenceActivity {
     final public void onDestroy() {
         super.onDestroy();
         if (mGp.settingDebugLevel > 0)
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
     ;
 
-    private static void checkSettingValue(SyncUtil ut, SharedPreferences shared_pref, String key_string) {
+    private static void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string) {
         if (!checkSyncSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext))
             if (!checkUiSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext))
                 if (!checkLogSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext))
@@ -174,7 +174,7 @@ public class ActivitySettings extends PreferenceActivity {
     ;
 
     @SuppressLint("NewApi")
-    private static boolean checkSyncSettings(SyncUtil ut, Preference pref_key,
+    private static boolean checkSyncSettings(CommonUtilities ut, Preference pref_key,
                                              SharedPreferences shared_pref, String key_string, Context c) {
         boolean isChecked = false;
         if (key_string.equals(c.getString(R.string.settings_error_option))) {
@@ -193,7 +193,7 @@ public class ActivitySettings extends PreferenceActivity {
         return isChecked;
     }
 
-    private static boolean checkUiSettings(SyncUtil ut, Preference pref_key,
+    private static boolean checkUiSettings(CommonUtilities ut, Preference pref_key,
                                            SharedPreferences shared_pref, String key_string, Context c) {
         boolean isChecked = false;
 
@@ -305,7 +305,7 @@ public class ActivitySettings extends PreferenceActivity {
     ;
 
 
-    private static boolean checkMiscSettings(SyncUtil ut,
+    private static boolean checkMiscSettings(CommonUtilities ut,
                                              Preference pref_key, SharedPreferences shared_pref, String key_string, Context c) {
         boolean isChecked = false;
 
@@ -325,7 +325,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     ;
 
-    private static boolean checkLogSettings(SyncUtil ut,
+    private static boolean checkLogSettings(CommonUtilities ut,
                                             Preference pref_key, SharedPreferences shared_pref, String key_string, Context c) {
         boolean isChecked = false;
 
@@ -347,7 +347,7 @@ public class ActivitySettings extends PreferenceActivity {
         return isChecked;
     }
 
-    private static boolean checkSmbSettings(SyncUtil ut,
+    private static boolean checkSmbSettings(CommonUtilities ut,
                                             Preference pref_key, SharedPreferences shared_pref, String key_string, Context c) {
         boolean isChecked = false;
         if (key_string.equals(c.getString(R.string.settings_smb_use_extended_security))) {
@@ -386,7 +386,7 @@ public class ActivitySettings extends PreferenceActivity {
         return isChecked;
     }
 
-    private static boolean checkOtherSettings(SyncUtil ut,
+    private static boolean checkOtherSettings(CommonUtilities ut,
                                               Preference pref_key, SharedPreferences shared_pref, String key_string, Context c) {
         boolean isChecked = true;
         if (pref_key != null) {
@@ -407,16 +407,16 @@ public class ActivitySettings extends PreferenceActivity {
                         checkSettingValue(mUtil, shared_pref, key_string);
                     }
                 };
-        private SyncUtil mUtil = null;
+        private CommonUtilities mUtil = null;
 
         @SuppressLint("NewApi")
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new SyncUtil(mContext, "SettingsSync", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsSync", mGp);
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_sync);
 
@@ -433,7 +433,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStart() {
             super.onStart();
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(listenerAfterHc);
             getActivity().setTitle(R.string.settings_sync_title);
@@ -443,7 +443,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStop() {
             super.onStop();
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences()
                     .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }
@@ -457,15 +457,15 @@ public class ActivitySettings extends PreferenceActivity {
                         checkSettingValue(mUtil, shared_pref, key_string);
                     }
                 };
-        private SyncUtil mUtil = null;
+        private CommonUtilities mUtil = null;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new SyncUtil(mContext, "SettingsLog", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsLog", mGp);
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_log);
 
@@ -488,7 +488,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStart() {
             super.onStart();
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(listenerAfterHc);
             getActivity().setTitle(R.string.settings_log_title);
@@ -500,7 +500,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStop() {
             super.onStop();
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences()
                     .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }
@@ -517,15 +517,15 @@ public class ActivitySettings extends PreferenceActivity {
                         checkSettingValue(mUtil, shared_pref, key_string);
                     }
                 };
-        private SyncUtil mUtil = null;
+        private CommonUtilities mUtil = null;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new SyncUtil(mContext, "SettingsMisc", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsMisc", mGp);
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_misc);
 
@@ -542,7 +542,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStart() {
             super.onStart();
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(listenerAfterHc);
             getActivity().setTitle(R.string.settings_misc_title);
@@ -554,7 +554,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStop() {
             super.onStop();
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences()
                     .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }
@@ -569,15 +569,15 @@ public class ActivitySettings extends PreferenceActivity {
                         checkSettingValue(mUtil, shared_pref, key_string);
                     }
                 };
-        private SyncUtil mUtil = null;
+        private CommonUtilities mUtil = null;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new SyncUtil(mContext, "SettingsSmb", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsSmb", mGp);
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_smb);
 
@@ -601,7 +601,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStart() {
             super.onStart();
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(listenerAfterHc);
             getActivity().setTitle(R.string.settings_smb_title);
@@ -613,7 +613,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStop() {
             super.onStop();
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences()
                     .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }
@@ -632,15 +632,15 @@ public class ActivitySettings extends PreferenceActivity {
                         checkSettingValue(mUtil, shared_pref, key_string);
                     }
                 };
-        private SyncUtil mUtil = null;
+        private CommonUtilities mUtil = null;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new SyncUtil(mContext, "SettingsUi", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsUi", mGp);
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_ui);
 
@@ -664,7 +664,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStart() {
             super.onStart();
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(listenerAfterHc);
             getActivity().setTitle(R.string.settings_ui_title);
@@ -676,7 +676,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStop() {
             super.onStop();
             if (mGp.settingDebugLevel > 0)
-                mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences()
                     .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }

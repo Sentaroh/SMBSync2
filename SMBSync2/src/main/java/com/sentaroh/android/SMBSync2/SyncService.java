@@ -81,7 +81,7 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE
 public class SyncService extends Service {
     private GlobalParameters mGp = null;
 
-    private SyncUtil mUtil = null;
+    private CommonUtilities mUtil = null;
 
     private WifiManager mWifiMgr = null;
 
@@ -100,7 +100,7 @@ public class SyncService extends Service {
 
         NotificationUtil.initNotification(mGp, mContext);
         NotificationUtil.clearNotification(mGp);
-        mUtil = new SyncUtil(getApplicationContext(), "Service", mGp);
+        mUtil = new CommonUtilities(getApplicationContext(), "Service", mGp);
 
         mUtil.addDebugMsg(1, "I", "onCreate entered");
 
@@ -242,14 +242,14 @@ public class SyncService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered,action=" + intent.getAction());
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered,action=" + intent.getAction());
         setActivityForeground();
         return mSvcClientStub;
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, qs=" + mGp.syncRequestQueue.size());
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, qs=" + mGp.syncRequestQueue.size());
         if (isServiceToBeStopped()) stopSelf();
         return super.onUnbind(intent);
     }
@@ -257,7 +257,7 @@ public class SyncService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         unregisterReceiver(mWifiReceiver);
         unregisterReceiver(mSleepReceiver);
         stopForeground(true);
@@ -302,7 +302,7 @@ public class SyncService extends Service {
     }
 
     private void startSyncByScheduler(Intent in) {
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
         mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler));
 
@@ -424,21 +424,21 @@ public class SyncService extends Service {
         @Override
         public void setCallBack(ISvcCallback callback)
                 throws RemoteException {
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             mGp.callbackStub = callback;
         }
 
         @Override
         public void removeCallBack(ISvcCallback callback)
                 throws RemoteException {
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             mGp.callbackStub = null;
         }
 
         @Override
         public void aidlConfirmReply(int confirmed)
                 throws RemoteException {
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " entered, confirmed=" + confirmed);
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, confirmed=" + confirmed);
             synchronized (mGp.syncThreadConfirm) {
                 mGp.syncThreadConfirm.setExtraDataInt(confirmed);
                 mGp.syncThreadConfirm.notify();
@@ -585,7 +585,7 @@ public class SyncService extends Service {
                         mUtil.addLogMsg("W", "Sync task was ignored because Sync task was already queued, job=" + job_name[0] + ", Requestor=" + req_id);
                     } else {
                         cnt++;
-                        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " job was queued, job=" + sji.getSyncTaskName() + ", Requestor=" + req_id);
+                        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " job was queued, job=" + sji.getSyncTaskName() + ", Requestor=" + req_id);
                         sri.sync_task_list.add(sji.clone());
                     }
                 }
@@ -607,13 +607,13 @@ public class SyncService extends Service {
     private void sendEndNotificationIntent() {
         Intent in = new Intent(SMBSYNC2_SYNC_ENDED);
         sendBroadcast(in, null);
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " Send end boradcast intent");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Send end boradcast intent");
     }
 
     private void sendStartNotificationIntent() {
         Intent in = new Intent(SMBSYNC2_SYNC_STARTED);
         sendBroadcast(in, null);
-        mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " Send start boradcast intent");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Send start boradcast intent");
     }
 
     private void startSyncThread() {
@@ -681,7 +681,7 @@ public class SyncService extends Service {
             cancelHeartBeat();
             setHeartBeat();
         } else {
-            mUtil.addDebugMsg(1, "I", SyncUtil.getExecutedMethodName() + " task has not started, queued task does not exist");
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " task has not started, queued task does not exist");
         }
     }
 

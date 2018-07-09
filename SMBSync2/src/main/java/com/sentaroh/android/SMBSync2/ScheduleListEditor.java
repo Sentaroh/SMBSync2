@@ -71,7 +71,7 @@ public class ScheduleListEditor {
     private GlobalParameters mGp = null;
     private Context mContext = null;
     private AppCompatActivity mActivity = null;
-    private SyncUtil util = null;
+    private CommonUtilities util = null;
     private CustomContextMenu ccMenu = null;
     private ArrayList<ScheduleItem> mScheduleList = null;
     private ArrayList<ScheduleItem> mOrgScheduleList = null;
@@ -100,7 +100,7 @@ public class ScheduleListEditor {
     private LinearLayout mContextButtonUnselectAllView = null;
 
 
-    ScheduleListEditor(SyncUtil mu, AppCompatActivity a, Context c,
+    ScheduleListEditor(CommonUtilities mu, AppCompatActivity a, Context c,
                        CommonDialog cd, CustomContextMenu ccm, GlobalParameters gp) {
         mContext = c;
         mActivity = a;

@@ -122,7 +122,7 @@ public class SyncThread extends Thread {
 
         public int jcifsNtStatusCode=0;
 
-        public SyncUtil util = null;
+        public CommonUtilities util = null;
 
         public MediaScannerConnection mediaScanner = null;
 
@@ -165,7 +165,7 @@ public class SyncThread extends Thread {
     public SyncThread(GlobalParameters gp, NotifyEvent ne) {
         mGp = gp;
         mNotifyToService = ne;
-        mStwa.util = new SyncUtil(mGp.appContext, "SyncThread", mGp);
+        mStwa.util = new CommonUtilities(mGp.appContext, "SyncThread", mGp);
         mStwa.gp = mGp;
 
         mGp.safMgr.setDebugEnabled(mGp.settingDebugLevel > 1);
@@ -195,7 +195,7 @@ public class SyncThread extends Thread {
     }
 
     private void listStorageInfo() {
-        ArrayList<String>sil=SyncUtil.listSystemInfo(mGp);
+        ArrayList<String>sil= CommonUtilities.listSystemInfo(mGp);
 
         for(String item:sil) mStwa.util.addDebugMsg(1, "I", item);
 
@@ -279,7 +279,7 @@ public class SyncThread extends Thread {
 
                     String wifi_msg = isWifiConditionSatisfied(mStwa.currentSTI);
                     if (wifi_msg.equals("")) {
-                        if ((mStwa.currentSTI.isSyncOptionSyncWhenCharging() && SyncUtil.isCharging(mGp.appContext)) ||
+                        if ((mStwa.currentSTI.isSyncOptionSyncWhenCharging() && CommonUtilities.isCharging(mGp.appContext)) ||
                                 !mStwa.currentSTI.isSyncOptionSyncWhenCharging()) {
                             compileFilter(mStwa.currentSTI, mStwa.currentSTI.getFileFilter(), mStwa.currentSTI.getDirFilter());
                             sync_result = checkStorageAccess(mStwa.currentSTI);
@@ -1395,7 +1395,7 @@ public class SyncThread extends Thread {
     private String getWifiConnectedAP() {
         String result = "";
         WifiManager wm = (WifiManager) mGp.appContext.getSystemService(Context.WIFI_SERVICE);
-        result = SyncUtil.getWifiSsidName(wm);
+        result = CommonUtilities.getWifiSsidName(wm);
         mStwa.util.addDebugMsg(1, "I", "getWifiConnectedAP SSID=" + result);
         return result;
     }

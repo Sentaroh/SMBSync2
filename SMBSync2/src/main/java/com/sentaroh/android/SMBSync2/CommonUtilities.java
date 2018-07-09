@@ -78,13 +78,13 @@ import java.util.List;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.DEFAULT_PREFS_FILENAME;
 
-public final class SyncUtil {
+public final class CommonUtilities {
     private Context mContext = null;
     private LogUtil mLog = null;
     private GlobalParameters mGp = null;
     private String mLogIdent = "";
 
-    public SyncUtil(Context c, String li, GlobalParameters gp) {
+    public CommonUtilities(Context c, String li, GlobalParameters gp) {
         mContext = c;// ContextはApplicationContext
         mLog = new LogUtil(c, li, gp);
         mLogIdent = li;

@@ -479,7 +479,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public WakeLock mPartialWakeLock = null;
     public WifiLock mWifiLock = null;
 
-    public void releaseWakeLock(SyncUtil util) {
+    public void releaseWakeLock(CommonUtilities util) {
         if (mDimWakeLock.isHeld()) {
             mDimWakeLock.release();
             util.addDebugMsg(1, "I", "Dim wakelock released");
@@ -494,7 +494,7 @@ public class GlobalParameters extends CommonGlobalParms {
         }
     }
 
-    public void acquireWakeLock(SyncUtil util) {
+    public void acquireWakeLock(CommonUtilities util) {
         if (settingWifiLockRequired) {
             if (!mWifiLock.isHeld()) {
                 mWifiLock.acquire();
@@ -516,7 +516,7 @@ public class GlobalParameters extends CommonGlobalParms {
     }
 
     @SuppressLint("NewApi")
-    static public boolean isScreenOn(Context context, SyncUtil util) {
+    static public boolean isScreenOn(Context context, CommonUtilities util) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         if (Build.VERSION.SDK_INT >= 23) {
             util.addDebugMsg(1, "I", "isDeviceIdleMode()=" + pm.isDeviceIdleMode() +

@@ -47,7 +47,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_LOCAL_FILE_LAST_M
 
 public class FileLastModifiedTime {
 
-//	FileLastModifiedTime(GlobalParameters gp, Context c, AdapterSyncTask pa, SyncUtil ut, CommonDialog cd) {
+//	FileLastModifiedTime(GlobalParameters gp, Context c, AdapterSyncTask pa, CommonUtilities ut, CommonDialog cd) {
 //	};
 
 
