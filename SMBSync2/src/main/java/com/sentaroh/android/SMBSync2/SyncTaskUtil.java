@@ -2873,6 +2873,10 @@ public class SyncTaskUtil {
         });
         lv.setOnItemLongClickListener(new OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> items, View view, int idx, long id) {
+                final int pos = tfa.getItem(idx);
+                final TreeFilelistItem tfi = tfa.getDataItem(pos);
+                tfi.setChecked(true);
+                tfa.notifyDataSetChanged();
                 return true;
             }
         });
@@ -3050,6 +3054,10 @@ public class SyncTaskUtil {
                 });
                 lv.setOnItemLongClickListener(new OnItemLongClickListener() {
                     public boolean onItemLongClick(AdapterView<?> items, View view, int idx, long id) {
+                        final int pos = tfa.getItem(idx);
+                        final TreeFilelistItem tfi = tfa.getDataItem(pos);
+                        tfi.setChecked(true);
+                        tfa.notifyDataSetChanged();
                         return true;
                     }
                 });
