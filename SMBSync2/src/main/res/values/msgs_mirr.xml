@@ -58,7 +58,8 @@
 	<string name="msgs_mirror_smb_name_not_found">SMB host name that is specified in the SMB folder could not be found. Host name=</string>
 	<string name="msgs_mirror_smb_addr_not_connected">Unable to connect to the SMB host that is specified in the SMB folder. IP address=%s</string>
 	<string name="msgs_mirror_smb_addr_not_connected_with_port" formatted="false">Unable to connect to the SMB host that is specified in the SMB folder. IP address=%s, port=%s</string>
-	
+    <string name="msgs_mirror_smb_invalid_port_specified">Invalid port number specified. Port number=%s</string>
+
 	<string name="msgs_mirror_sync_start_was_delayed">In order to the wireless LAN is a delay time after ON has been specified, it delays the start of the synchronization %s seconds.</string>
 	
 	<string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">Stop the sync because wireless LAN is not connected to the access point.</string>

@@ -240,7 +240,7 @@ public class SyncTaskUtil {
                 if (br!=null) {
                     String dec_str = "";
                     String pl = br.readLine();
-                    if (pl!=null) {
+                    if (pl!=null && pl.length()==9) {
                         String enc_str = pl.substring(6);
                         if (enc_str!=null) {
                             if (enc_str.startsWith("ENC")) {
@@ -1191,12 +1191,23 @@ public class SyncTaskUtil {
 
                 if (host.equals("")) {
                     boolean reachable = false;
-                    if (port.equals("")) {
+                    int port_num=0;
+                    if (!port.equals("")) {
+                        try {
+                            port_num=Integer.parseInt(port);
+                        } catch(Exception e) {
+                            mUtil.addDebugMsg(1, "I", "Test logon failed, invalid port number specified");
+                            String unreachble_msg = "";
+                            unreachble_msg = String.format(mContext.getString(R.string.msgs_mirror_smb_invalid_port_specified), port);
+                            ntfy.notifyToListener(true, new Object[]{unreachble_msg});
+                        }
+                    }
+                    if (port_num==0) {
                         if (JcifsUtil.isIpAddressAndPortConnected(addr, 139, 3500) || JcifsUtil.isIpAddressAndPortConnected(addr, 445, 3500)) {
                             reachable = true;
                         }
                     } else {
-                        reachable = JcifsUtil.isIpAddressAndPortConnected(addr, Integer.parseInt(port), 3500);
+                        reachable = JcifsUtil.isIpAddressAndPortConnected(addr, port_num, 3500);
                     }
                     if (reachable) {
                         testSmbAuth(addr, port, share, ra, ntfy);
@@ -1670,6 +1681,16 @@ public class SyncTaskUtil {
                 } else {
 
                 }
+            }
+        });
+
+        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> items, View view, int idx, long id) {
+                final int pos = tfa.getItem(idx);
+                final TreeFilelistItem tfi = tfa.getDataItem(pos);
+                tfi.setChecked(true);
+                tfa.notifyDataSetChanged();
+                return true;
             }
         });
 

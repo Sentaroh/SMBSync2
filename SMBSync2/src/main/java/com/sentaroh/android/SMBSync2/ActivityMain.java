@@ -1723,18 +1723,7 @@ public class ActivityMain extends AppCompatActivity {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                try {
-                    mIsStorageSelectorActivityNotFound = false;
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                    startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
-                } catch (Exception e) {
-                    mIsStorageSelectorActivityNotFound = true;
-                    commonDlg.showCommonDialog(false, "E",
-                            mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
-                            mContext.getString(R.string.msgs_main_external_sdcard_select_activity_not_found_msg),
-                            null);
-                    p_ntfy.notifyToListener(false, null);
-                }
+                startSdcardSelectorActivity();
             }
 
             @Override
@@ -1930,6 +1919,20 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
+    private void startSdcardSelectorActivity() {
+        try {
+            mIsStorageSelectorActivityNotFound = false;
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+        } catch (Exception e) {
+            mIsStorageSelectorActivityNotFound = true;
+            commonDlg.showCommonDialog(false, "E",
+                    mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
+                    mContext.getString(R.string.msgs_main_external_sdcard_select_activity_not_found_msg),
+                    null);
+        }
+    }
+
     private void reselectSdcard(String msg) {
         NotifyEvent ntfy_retry = new NotifyEvent(mContext);
         ntfy_retry.setListener(new NotifyEventListener() {
@@ -1939,10 +1942,8 @@ public class ActivityMain extends AppCompatActivity {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                        startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+                        startSdcardSelectorActivity();
                     }
-
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
                         if (!mGp.safMgr.isSdcardMounted()) {
