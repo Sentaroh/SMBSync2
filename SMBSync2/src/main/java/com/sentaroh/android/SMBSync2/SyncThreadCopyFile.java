@@ -62,15 +62,19 @@ public class SyncThreadCopyFile {
 
         InputStream is =null;
         long m_saf_length=-1;
-        SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        if (m_saf == null) {
+        if (mf.getPath().startsWith(stwa.gp.safMgr.getSdcardRootPath()+"/"+"Android/data/")) {
             is=new FileInputStream(mf);
         } else {
-            m_saf_length=m_saf.length();
-            if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
-            else {
+            SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            if (m_saf == null) {
                 is=new FileInputStream(mf);
-                stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+            } else {
+                m_saf_length=m_saf.length();
+                if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+                else {
+                    is=new FileInputStream(mf);
+                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+                }
             }
         }
 
@@ -88,7 +92,7 @@ public class SyncThreadCopyFile {
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_dest+
                 ", target="+t_df.lastModified()+", master="+mf.lastModified()+", target_size="+t_df.length()+", master_size="+mf.length()+
-                ", m_saf_size="+m_saf.length());
+                ", m_saf_size="+m_saf_length);
 
         File out_dest = new File(to_file_dest);
         SafFile o_df = stwa.gp.safMgr.createSdcardItem(to_file_dest, false);
@@ -110,18 +114,22 @@ public class SyncThreadCopyFile {
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
-        SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        long m_saf_length=-1;
         InputStream is =null;
-        if (m_saf == null) {
+        long m_saf_length=-1;
+        if (mf.getPath().startsWith(stwa.gp.safMgr.getSdcardRootPath()+"/"+"Android/data/")) {
             is=new FileInputStream(mf);
-//            return SyncTaskItem.SYNC_STATUS_ERROR;
         } else {
-            m_saf_length=m_saf.length();
-            if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
-            else {
+            SafFile m_saf = getSafFile(stwa, sti, mf.getPath());
+            if (m_saf == null) {
                 is=new FileInputStream(mf);
-                stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+//            return SyncTaskItem.SYNC_STATUS_ERROR;
+            } else {
+                m_saf_length=m_saf.length();
+                if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+                else {
+                    is=new FileInputStream(mf);
+                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+                }
             }
         }
 
@@ -145,7 +153,7 @@ public class SyncThreadCopyFile {
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_temp+
                 ", target="+temp_sf.lastModified()+", master="+mf.lastModified()+", target_size="+temp_sf.length()+", master_size="+mf.length()+
-                ", m_saf_size="+m_saf.length());
+                ", m_saf_size="+m_saf_length);
 
         SafFile to_sf=getSafFile(stwa, sti, to_file_dest);
         if (to_sf.exists()) to_sf.delete();
@@ -173,15 +181,19 @@ public class SyncThreadCopyFile {
 
         InputStream is =null;
         long m_saf_length=-1;
-        SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        if (m_saf == null) {
+        if (mf.getPath().startsWith(stwa.gp.safMgr.getSdcardRootPath()+"/"+"Android/data/")) {
             is=new FileInputStream(mf);
         } else {
-            m_saf_length=-m_saf.length();
-            if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
-            else {
+            SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
+            if (m_saf == null) {
                 is=new FileInputStream(mf);
-                stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+            } else {
+                m_saf_length=-m_saf.length();
+                if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+                else {
+                    is=new FileInputStream(mf);
+                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+                }
             }
         }
 
@@ -227,16 +239,19 @@ public class SyncThreadCopyFile {
 
         InputStream is =null;
         long m_saf_length=-1;
-        SafFile m_saf = getSafFile(stwa, sti, mf.getPath());//stwa.gp.safMgr.getSafFileBySdcardPath(stwa.gp.safMgr.getSdcardSafFile(), mf.getPath(), false);
-        if (m_saf == null) {
+        if (mf.getPath().startsWith(stwa.gp.safMgr.getSdcardRootPath()+"/"+"Android/data/")) {
             is=new FileInputStream(mf);
-//            return SyncTaskItem.SYNC_STATUS_ERROR;
         } else {
-            m_saf_length=m_saf.length();
-            if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
-            else {
+            SafFile m_saf = getSafFile(stwa, sti, mf.getPath());
+            if (m_saf == null) {
                 is=new FileInputStream(mf);
-                stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+            } else {
+                m_saf_length=m_saf.length();
+                if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+                else {
+                    is=new FileInputStream(mf);
+                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+                }
             }
         }
 
@@ -257,7 +272,7 @@ public class SyncThreadCopyFile {
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp=",to_file_dest,
                 ", target="+out_file.getLastModified(),", master="+mf.lastModified(),", target_size="+out_file.length(),", master_size="+mf.length(),
-                ", m_saf_size="+m_saf.length());
+                ", m_saf_size="+m_saf_length);
         if (out_dest.exists()) out_dest.delete();
         out_file.renameTo(out_dest);
 
