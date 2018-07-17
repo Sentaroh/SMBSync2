@@ -2101,21 +2101,22 @@ public class SyncTaskEditor extends DialogFragment {
         CommonUtilities.setSpinnerBackground(mContext, spinnerSyncOption, mGp.themeIsLight);
         final CustomSpinnerAdapter adapterSyncOption =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
+        if (mGp.debuggable)
         adapterSyncOption.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinnerSyncOption.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_syncopt_prompt));
         spinnerSyncOption.setAdapter(adapterSyncOption);
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror));
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_copy));
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_move));
-//		adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync));
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive));
+        if (mGp.debuggable) adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync));
 
         int sel=0;
         if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) sel=0;
         else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) sel=1;
         else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) sel=2;
-//		else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) spinnerSyncOption.setSelection(3);
         else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) sel=3;
+		else if (mGp.debuggable && prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) sel=4;
 
         spinnerSyncOption.setSelection(sel);
         adapterSyncOption.notifyDataSetChanged();

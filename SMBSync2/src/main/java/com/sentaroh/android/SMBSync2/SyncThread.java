@@ -100,6 +100,9 @@ public class SyncThread extends Thread {
     class SyncThreadWorkArea {
         public GlobalParameters gp = null;
 
+        public ArrayList<SyncFileInfoItem> currSyncFileInfoList = new ArrayList<SyncFileInfoItem>();
+        public ArrayList<SyncFileInfoItem> newSyncFileInfoList = new ArrayList<SyncFileInfoItem>();
+
         public ArrayList<FileLastModifiedTimeEntry> currLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
         public ArrayList<FileLastModifiedTimeEntry> newLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
 
