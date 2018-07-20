@@ -2457,8 +2457,8 @@ public class ActivityMain extends AppCompatActivity {
                     }
                 });
 
-        NotifyEvent ntfy = new NotifyEvent(mContext);
-        ntfy.setListener(new NotifyEventListener() {
+        NotifyEvent ntfy_cb = new NotifyEvent(mContext);
+        ntfy_cb.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 if (!mGp.syncTaskAdapter.isShowCheckBox()) {
@@ -2474,7 +2474,22 @@ public class ActivityMain extends AppCompatActivity {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        mGp.syncTaskAdapter.setNotifyCheckBoxEventHandler(ntfy);
+        mGp.syncTaskAdapter.setNotifyCheckBoxEventHandler(ntfy_cb);
+
+        NotifyEvent ntfy_sync = new NotifyEvent(mContext);
+        ntfy_sync.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context c, Object[] o) {
+                SyncTaskItem sti=(SyncTaskItem)o[0];
+                syncSpecificSyncTask(sti);
+            }
+
+            @Override
+            public void negativeResponse(Context c, Object[] o) {
+            }
+        });
+        mGp.syncTaskAdapter.setNotifySyncButtonEventHandler(ntfy_sync);
+
     }
 
     private void setSyncTaskListLongClickListener() {
@@ -3190,6 +3205,19 @@ public class ActivityMain extends AppCompatActivity {
                 mTaskUtil, mUtil, commonDlg, mGp, ntfy);
     }
 
+    private void syncSpecificSyncTask(SyncTaskItem sti) {
+        final ArrayList<SyncTaskItem> t_list = new ArrayList<SyncTaskItem>();
+        t_list.add(sti);
+        mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_selected_profiles));
+        mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_prof_name_list) +
+                " " + sti.getSyncTaskName());
+        Toast.makeText(mContext,
+                mContext.getString(R.string.msgs_main_sync_selected_profiles),
+                Toast.LENGTH_SHORT)
+                .show();
+        startSyncTask(t_list);
+    }
+
     private void syncSelectedSyncTask() {
         final ArrayList<SyncTaskItem> t_list = new ArrayList<SyncTaskItem>();
         SyncTaskItem item;
@@ -3237,7 +3265,6 @@ public class ActivityMain extends AppCompatActivity {
         } else {
             ntfy_test_mode.notifyToListener(true, null);
         }
-
     }
 
     private void syncAutoSyncTask() {

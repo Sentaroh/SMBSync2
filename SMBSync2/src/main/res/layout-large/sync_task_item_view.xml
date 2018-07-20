@@ -6,6 +6,7 @@
     android:layout_height="fill_parent"
     android:layout_marginBottom="5dp"
     android:layout_marginTop="5dp"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
     tools:ignore="HardcodedText,ContentDescription,DisableBaselineAlignment,UseCompoundDrawables,UselessParent,RtlHardcoded" >
 
@@ -159,6 +160,14 @@
                 android:scrollHorizontally="true"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/sync_task_perform_sync"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_32_sync"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
         <CheckBox
             android:id="@+id/sync_task_selected"

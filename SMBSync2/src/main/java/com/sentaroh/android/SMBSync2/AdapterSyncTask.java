@@ -35,6 +35,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -96,6 +97,12 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         notifyDataSetChanged();
     }
 
+    private NotifyEvent mNotifySyncButtonEvent = null;
+
+    public void setNotifySyncButtonEventHandler(NotifyEvent ntfy) {
+        mNotifySyncButtonEvent = ntfy;
+    }
+
     private NotifyEvent mNotifyCheckBoxEvent = null;
 
     public void setNotifyCheckBoxEventHandler(NotifyEvent ntfy) {
@@ -118,8 +125,6 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         }
     }
 
-    ;
-
     public boolean isEmptyAdapter() {
         boolean result = false;
         if (items != null) {
@@ -129,8 +134,6 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         }
         return result;
     }
-
-    ;
 
     public ArrayList<SyncTaskItem> getArrayList() {
         return items;
@@ -146,10 +149,8 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 
     public void sort() {
         SyncTaskUtil.sortSyncTaskList(items);
-        ;
     }
 
-    ;
 
 //		@Override
 //		public boolean isEnabled(int idx) {
@@ -171,6 +172,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             holder.tv_row_name = (TextView) v.findViewById(R.id.sync_task_name);
             holder.tv_row_active = (TextView) v.findViewById(R.id.sync_task_enabled);
             holder.cbv_row_cb1 = (CheckBox) v.findViewById(R.id.sync_task_selected);
+            holder.ib_row_sync=(ImageButton)v.findViewById(R.id.sync_task_perform_sync);
 
             holder.tv_row_master = (TextView) v.findViewById(R.id.sync_task_master_info);
             holder.tv_row_target = (TextView) v.findViewById(R.id.sync_task_target_info);
@@ -226,6 +228,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
             holder.tv_row_active.setVisibility(LinearLayout.VISIBLE);
             holder.cbv_row_cb1.setVisibility(LinearLayout.VISIBLE);
+//            holder.ib_row_sync.setVisibility(LinearLayout.VISIBLE);
 
             String synctp = "";
 
@@ -364,9 +367,22 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 //                	holder.iv_row_image_target.setImageResource(R.drawable.ic_32_usb);
             }
 
-            if (isShowCheckBox) holder.cbv_row_cb1.setVisibility(CheckBox.VISIBLE);
-            else holder.cbv_row_cb1.setVisibility(CheckBox.INVISIBLE);
+            if (isShowCheckBox) {
+                holder.cbv_row_cb1.setVisibility(CheckBox.VISIBLE);
+                holder.ib_row_sync.setVisibility(CheckBox.GONE);
+            } else {
+                holder.cbv_row_cb1.setVisibility(CheckBox.GONE);
+                holder.ib_row_sync.setVisibility(CheckBox.VISIBLE);
+            }
             final int p = position;
+
+            holder.ib_row_sync.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mNotifySyncButtonEvent!=null) mNotifySyncButtonEvent.notifyToListener(true,new Object[]{o});
+                }
+            });
+
             // 必ずsetChecked前にリスナを登録(convertView != null の場合は既に別行用のリスナが登録されている！)
             holder.cbv_row_cb1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
@@ -389,6 +405,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
     static class ViewHolder {
         TextView tv_row_name, tv_row_active;
         CheckBox cbv_row_cb1;
+        ImageButton ib_row_sync;
 
         TextView tv_row_synctype, tv_row_master, tv_row_target;
         ImageView iv_row_sync_dir_image;

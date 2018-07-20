@@ -163,6 +163,11 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
+        <ImageButton
+            android:id="@+id/sync_task_perform_sync"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_32_sync" />
         <CheckBox
             android:id="@+id/sync_task_selected"
             android:layout_width="40dp"
