@@ -264,8 +264,8 @@
 	<string name="msgs_profile_edit_sync_folder_dlg_remote_smb_port">Port number</string>
 	<string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">Use port number</string>
     <string name="msgs_profile_edit_sync_folder_dlg_local_mount_point">Mount point</string>
-    <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">Do you change the wireless LAN condition to "Off", because target and master is not SMB folder?</string>
-    <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">Do you change the wireless LAN condition to "Connected to AP", because either target or master is SMB folder?</string>
+    <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">Do you want to change the wireless LAN condition to "Off", because target and master is not SMB folder?</string>
+    <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">Do you want to change the wireless LAN condition to "Connected to AP", because either target or master is SMB folder?</string>
 
     <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMB protocol</string>
     <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Determined by system</string>
