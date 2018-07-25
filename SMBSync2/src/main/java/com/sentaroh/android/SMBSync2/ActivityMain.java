@@ -2480,8 +2480,10 @@ public class ActivityMain extends AppCompatActivity {
         ntfy_sync.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                SyncTaskItem sti=(SyncTaskItem)o[0];
-                syncSpecificSyncTask(sti);
+                if (isUiEnabled()) {
+                    SyncTaskItem sti=(SyncTaskItem)o[0];
+                    syncSpecificSyncTask(sti);
+                }
             }
 
             @Override
