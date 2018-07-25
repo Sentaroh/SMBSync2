@@ -1886,6 +1886,11 @@ public class SyncThread extends Thread {
         return diff;
     }
 
+    static public boolean isRetryRequiredError(int sc) {
+        if (sc==0xc000006d || sc==0xc0000043) return false;
+        else return true;
+    }
+
     static public boolean isHiddenDirectory(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
         boolean result = false;
         if (sti.isSyncHiddenDirectory()) result = false;

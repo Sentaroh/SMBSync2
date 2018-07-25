@@ -539,7 +539,7 @@ public class SyncThreadArchiveFile {
                                                 sync_result = buildArchiveListInternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName());
                                             }
-                                            if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                                            if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                                                 stwa.syncTaskRetryCount--;
                                                 if (stwa.syncTaskRetryCount > 0)
                                                     sync_result = waitRetryInterval(stwa);
@@ -637,7 +637,7 @@ public class SyncThreadArchiveFile {
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, new FileInputStream(mf), tf.getOutputStream(), from_path, to_path,
                             tf.getName(), sti.isSyncUseSmallIoBuffer());
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
                             sync_result = waitRetryInterval(stwa);
@@ -1069,7 +1069,7 @@ public class SyncThreadArchiveFile {
                     sync_result= copyFile(stwa, sti, stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
                             tf.getOutputStream(), from_path, to_path,
                             tf.getName(), sti.isSyncUseSmallIoBuffer());
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
                             sync_result = waitRetryInterval(stwa);
@@ -1195,7 +1195,7 @@ public class SyncThreadArchiveFile {
                                                         stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
                                                 }
                                             }
-                                            if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                                            if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                                                 stwa.syncTaskRetryCount--;
                                                 if (stwa.syncTaskRetryCount > 0)
                                                     sync_result = waitRetryInterval(stwa);
@@ -1278,7 +1278,7 @@ public class SyncThreadArchiveFile {
                         temp_file.setLastModified(mf.getLastModified());
                         temp_file.renameTo(tf);
                     }
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
                             sync_result = waitRetryInterval(stwa);
@@ -1401,7 +1401,7 @@ public class SyncThreadArchiveFile {
                                                     stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
                                             }
                                         }
-                                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                                             stwa.syncTaskRetryCount--;
                                             if (stwa.syncTaskRetryCount > 0)
                                                 sync_result = waitRetryInterval(stwa);
@@ -1495,7 +1495,7 @@ public class SyncThreadArchiveFile {
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, mf.getInputStream(), stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()),
                             from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
                             sync_result = waitRetryInterval(stwa);
@@ -1548,7 +1548,7 @@ public class SyncThreadArchiveFile {
 
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, mf.getInputStream(), os, from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
                             sync_result = waitRetryInterval(stwa);
@@ -1681,7 +1681,7 @@ public class SyncThreadArchiveFile {
                                                     stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
                                             }
                                         }
-                                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                                             stwa.syncTaskRetryCount--;
                                             if (stwa.syncTaskRetryCount > 0)
                                                 sync_result = waitRetryInterval(stwa);
@@ -1758,7 +1758,7 @@ public class SyncThreadArchiveFile {
                 if (!jf_dir.exists()) jf_dir.mkdirs();
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, mf.getInputStream(), tf.getOutputStream(), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
                             sync_result = waitRetryInterval(stwa);
@@ -1880,7 +1880,7 @@ public class SyncThreadArchiveFile {
                                                     stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
                                             }
                                         }
-                                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && stwa.jcifsNtStatusCode!=0xc000006d) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                                             stwa.syncTaskRetryCount--;
                                             if (stwa.syncTaskRetryCount > 0)
                                                 sync_result = waitRetryInterval(stwa);
