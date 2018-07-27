@@ -180,9 +180,9 @@ public final class CommonUtilities {
             String packageName = mGp.appContext.getPackageName();
             PowerManager pm = (PowerManager) mGp.appContext.getSystemService(Context.POWER_SERVICE);
             if (pm.isIgnoringBatteryOptimizations(packageName)) {
-                out.add("Battery optimization=true");
-            } else {
                 out.add("Battery optimization=false");
+            } else {
+                out.add("Battery optimization=true");
             }
         } else {
             out.add("Battery optimization=false");

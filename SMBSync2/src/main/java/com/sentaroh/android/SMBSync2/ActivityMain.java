@@ -43,6 +43,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.provider.Settings;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -435,9 +436,9 @@ public class ActivityMain extends AppCompatActivity {
         dialog.show();
     }
 
-//    private void showBatteryOptimization() {
-//        if (Build.VERSION.SDK_INT >= 23) {
-//            Intent intent = new Intent();
+    private void showBatteryOptimization() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            Intent intent = new Intent();
 //            String packageName = mContext.getPackageName();
 //            PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
 //            if (pm.isIgnoringBatteryOptimizations(packageName)) {
@@ -450,8 +451,11 @@ public class ActivityMain extends AppCompatActivity {
 //                startActivity(intent);
 //                mUtil.addDebugMsg(1, "I", "Request ignore battery optimization");
 //            }
-//        }
-//    }
+            intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+            startActivity(intent);
+            mUtil.addDebugMsg(1, "I", "Invoke battery optimization settings");
+        }
+    }
 
     class ViewSaveArea {
         public int current_tab_pos = 0;
@@ -1033,9 +1037,9 @@ public class ActivityMain extends AppCompatActivity {
             case R.id.menu_top_add_shortcut:
                 addShortcut();
                 return true;
-//            case R.id.menu_top_show_battery_optimization:
-//                showBatteryOptimization();
-//                return true;
+            case R.id.menu_top_show_battery_optimization:
+                showBatteryOptimization();
+                return true;
             case R.id.menu_top_list_storage:
                 showSystemInfo();
                 return true;
