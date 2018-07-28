@@ -118,7 +118,7 @@ public class GlobalParameters extends CommonGlobalParms {
 //	public ArrayList<ScheduleItem> scheduleInfoList =new ArrayList<ScheduleItem>();
 
     //	Settings parameter
-    public boolean settingExitClean = false;
+    public boolean settingExitClean = true;
     public int settingDebugLevel = 0;
     public boolean settingUseLightTheme = false;
     public int settingLogMaxFileCount = 10;
