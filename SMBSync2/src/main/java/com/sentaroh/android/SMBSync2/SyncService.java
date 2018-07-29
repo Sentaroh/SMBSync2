@@ -94,15 +94,15 @@ public class SyncService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = getApplicationContext();
+        mContext = this;//getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mGp.safMgr.loadSafFile();
+        mUtil = new CommonUtilities(mContext, "Service", mGp);
+
+        mUtil.addDebugMsg(1, "I", "onCreate entered");
 
         NotificationUtil.initNotification(mGp, mUtil, mContext);
         NotificationUtil.clearNotification(mGp, mUtil);
-        mUtil = new CommonUtilities(getApplicationContext(), "Service", mGp);
-
-        mUtil.addDebugMsg(1, "I", "onCreate entered");
 
         if (mGp.msgList.size() == 0) {
             mUtil.addLogMsg("I", mContext.getString(R.string.msgs_smbsync_main_start) +
