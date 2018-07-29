@@ -16,6 +16,11 @@
         android:title="@string/settings_sync_history_log_title"
         android:summary="@string/settings_sync_history_log_summary_ena" />
 
+    <CheckBoxPreference
+        android:key="@string/settings_force_screen_on_while_sync"
+        android:title="@string/settings_force_screen_on_while_sync_title"
+        android:summary="@string/settings_force_screen_on_while_sync_summary_ena" />
+
     <EditTextPreference
         android:key="@string/settings_no_compress_file_type"
         android:title="@string/settings_no_compress_file_type_title"

@@ -160,8 +160,6 @@ public class ActivitySettings extends PreferenceActivity {
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
-    ;
-
     private static void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string) {
         if (!checkSyncSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext))
             if (!checkUiSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext))
@@ -171,13 +169,13 @@ public class ActivitySettings extends PreferenceActivity {
                             checkOtherSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext);
     }
 
-    ;
-
     @SuppressLint("NewApi")
     private static boolean checkSyncSettings(CommonUtilities ut, Preference pref_key,
                                              SharedPreferences shared_pref, String key_string, Context c) {
         boolean isChecked = false;
         if (key_string.equals(c.getString(R.string.settings_error_option))) {
+            isChecked = true;
+        } else if (key_string.equals(c.getString(R.string.settings_force_screen_on_while_sync))) {
             isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_wifi_lock))) {
             isChecked = true;
@@ -427,6 +425,7 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_history_log));
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_no_compress_file_type));
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_mgt_dir));
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_force_screen_on_while_sync));
         }
 
         @Override

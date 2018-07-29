@@ -141,6 +141,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean settingFixDeviceOrientationToPortrait = false;
 
     public boolean settingScreenOnWhileSync = true;
+    public boolean settingForceScreenOnWhileSync = false;
 
     public boolean settingExportedProfileEncryptRequired = true;
 
@@ -502,7 +503,7 @@ public class GlobalParameters extends CommonGlobalParms {
             }
         }
 
-        if (settingScreenOnWhileSync && isScreenOn(appContext, util)) {// && !activityIsBackground) {
+        if (settingForceScreenOnWhileSync || (settingScreenOnWhileSync && isScreenOn(appContext, util))) {// && !activityIsBackground) {
             if (!mDimWakeLock.isHeld()) {
                 mDimWakeLock.acquire();
                 util.addDebugMsg(1, "I", "Dim wakelock acquired");

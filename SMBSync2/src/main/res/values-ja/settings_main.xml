@@ -20,7 +20,10 @@
     <string name="settings_error_option_title">エラー時の処理</string>
 	<string name="settings_error_option_summary_ena">エラーを無視して、次の同期タスクを開始する</string>
 
-	<string name="settings_notification_message_when_sync_ended_title">通知メッセージ</string>
+    <string name="settings_force_screen_on_while_sync_title">同期の遅延防止</string>
+    <string name="settings_force_screen_on_while_sync_summary_ena">有効にすると同期開始時に画面を点灯します</string>
+
+    <string name="settings_notification_message_when_sync_ended_title">通知メッセージ</string>
 	<string name="settings_notification_message_when_sync_ended_summary_no">通知メッセージを表示しない</string>
 	<string name="settings_notification_message_when_sync_ended_summary_always">常に通知メッセージを表示する</string>
 	<string name="settings_notification_message_when_sync_ended_summary_success">正常終了したときに通知メッセージを表示する</string>

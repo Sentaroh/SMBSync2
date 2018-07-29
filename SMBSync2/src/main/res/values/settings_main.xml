@@ -25,7 +25,11 @@
 	<string name="settings_error_option_summary_ena">Ignore error, processing continued</string>
 	<string name="settings_error_option">settings_error_option</string>
 
-	<string name="settings_notification_message_when_sync_ended_title">Notification message</string>
+    <string name="settings_force_screen_on_while_sync_title">Prevent sync delay</string>
+    <string name="settings_force_screen_on_while_sync_summary_ena">When enabled, the screen lights up at the start of sync</string>
+    <string name="settings_force_screen_on_while_sync">settings_force_screen_on_while_sync</string>
+
+    <string name="settings_notification_message_when_sync_ended_title">Notification message</string>
 	<string name="settings_notification_message_when_sync_ended_summary_no">Do not show notification message</string>
 	<string name="settings_notification_message_when_sync_ended_summary_always">Always show notification message when sync was ended</string>
 	<string name="settings_notification_message_when_sync_ended_summary_success">Show notification message when sync was ended successfully</string>
