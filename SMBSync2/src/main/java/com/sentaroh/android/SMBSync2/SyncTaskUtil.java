@@ -120,6 +120,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_T
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_INT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_LONG;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING;
+import static com.sentaroh.android.SMBSync2.GlobalParameters.DEFAULT_NOCOMPRESS_FILE_TYPE;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V3;
 
 public class SyncTaskUtil {
@@ -5467,18 +5468,25 @@ public class SyncTaskUtil {
     public static void saveSettingsParmsToFile(Context c, PrintWriter pw, boolean encrypt_required, final CipherParms cp) {
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_error_option));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_wifi_lock));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_sync_history_log));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_force_screen_on_while_sync));
+        saveSettingsParmsToFileString(c, pw, DEFAULT_NOCOMPRESS_FILE_TYPE,
+                                                        encrypt_required, cp, c.getString(R.string.settings_no_compress_file_type));
+        saveSettingsParmsToFileString(c, pw, "",        encrypt_required, cp, c.getString(R.string.settings_mgt_dir));
+
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_suppress_warning_app_specific_dir));
+        saveSettingsParmsToFileString(c, pw, "1",       encrypt_required, cp, c.getString(R.string.settings_notification_message_when_sync_ended));
+        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_playback_ringtone_when_sync_ended));
+        saveSettingsParmsToFileInt(c, pw, 100,          encrypt_required, cp, c.getString(R.string.settings_playback_ringtone_volume));
+        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_vibrate_when_sync_ended));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_device_orientation_portrait));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_use_light_theme));
+        saveSettingsParmsToFileBoolean(c, pw, true,     encrypt_required, cp, c.getString(R.string.settings_dim_screen_on_while_sync));
 
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_log_option));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_put_logcat_option));
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_log_level));
-        saveSettingsParmsToFileString(c, pw, "",        encrypt_required, cp, c.getString(R.string.settings_mgt_dir));
         saveSettingsParmsToFileString(c, pw, "10",      encrypt_required, cp, c.getString(R.string.settings_log_file_max_count));
-        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_playback_ringtone_when_sync_ended));
-        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_vibrate_when_sync_ended));
-        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_use_light_theme));
-        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_device_orientation_portrait));
-
-        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_exported_profile_encryption));
 
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_smb_lm_compatibility));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_smb_use_extended_security));
@@ -5486,6 +5494,9 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileString(c, pw, "30000",   encrypt_required, cp, c.getString(R.string.settings_smb_client_response_timeout));
 
         saveSettingsParmsToFileString(c, pw, "-1",      encrypt_required, cp, SCHEDULER_SCHEDULE_SAVED_DATA_V3);
+
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_exported_profile_encryption));
+
     }
 
     private static void saveSettingsParmsToFileString(Context c, PrintWriter pw, String dflt,
