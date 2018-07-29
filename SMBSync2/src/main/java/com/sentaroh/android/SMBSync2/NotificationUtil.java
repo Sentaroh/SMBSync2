@@ -37,6 +37,8 @@ import android.support.v4.app.NotificationCompat;
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 public class NotificationUtil {
 
@@ -52,7 +54,7 @@ public class NotificationUtil {
         return gwa.notificationEnabled;
     }
 
-    static final public void initNotification(GlobalParameters gwa, Context c) {
+    static final public void initNotification(GlobalParameters gwa, CommonUtilities util, Context c) {
         gwa.notificationManager = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
         gwa.notification = new Notification(R.drawable.ic_48_smbsync_wait,
                 gwa.appContext.getString(R.string.app_name), 0);
@@ -139,7 +141,7 @@ public class NotificationUtil {
 
     }
 
-    static final public void setNotificationIcon(GlobalParameters gwa,
+    static final public void setNotificationIcon(GlobalParameters gwa, CommonUtilities util,
                                                  int small_icon, int large_icon) {
         gwa.notificationSmallIcon = small_icon;
 //        if (gwa.notificationLargeIcon != null) gwa.notificationLargeIcon.recycle();
@@ -163,7 +165,7 @@ public class NotificationUtil {
         return gwa.notification;
     }
 
-    final static public void setNotificationMessage(GlobalParameters gwa, long when,
+    final static public void setNotificationMessage(GlobalParameters gwa, CommonUtilities util, long when,
                                                     String prof, String fp, String msg) {
         if (prof.equals("")) gwa.notificationLastShowedTitle = gwa.notificationAppName;
         else gwa.notificationLastShowedTitle = prof;//gwa.notificationAppName+"       "+prof;
@@ -174,19 +176,19 @@ public class NotificationUtil {
         gwa.notificationLastShowedWhen = when;
     }
 
-    final static public Notification showOngoingMsg(GlobalParameters gwa, long when,
+    final static public Notification showOngoingMsg(GlobalParameters gwa, CommonUtilities util, long when,
                                                     String msg) {
-        return showOngoingMsg(gwa, when, "", "", msg);
+        return showOngoingMsg(gwa, util, when, "", "", msg);
     }
 
-    final static public Notification showOngoingMsg(GlobalParameters gwa, long when,
+    final static public Notification showOngoingMsg(GlobalParameters gwa, CommonUtilities util, long when,
                                                     String prof, String msg) {
-        return showOngoingMsg(gwa, when, prof, "", msg);
+        return showOngoingMsg(gwa, util, when, prof, "", msg);
     }
 
-    final static public Notification showOngoingMsg(GlobalParameters gwa, long when,
+    final static public Notification showOngoingMsg(GlobalParameters gwa, CommonUtilities util, long when,
                                                     String prof, String fp, String msg) {
-        setNotificationMessage(gwa, when, prof, fp, msg);
+        setNotificationMessage(gwa, util, when, prof, fp, msg);
         gwa.notificationBuilder
                 .setContentIntent(gwa.notificationPendingIntent)
                 .setContentTitle(gwa.notificationLastShowedTitle)
@@ -208,7 +210,7 @@ public class NotificationUtil {
         return gwa.notification;
     }
 
-    final static public Notification reShowOngoingMsg(GlobalParameters gwa) {
+    final static public Notification reShowOngoingMsg(GlobalParameters gwa, CommonUtilities util) {
         gwa.notificationBuilder
                 .setContentIntent(gwa.notificationPendingIntent)
                 .setContentTitle(gwa.notificationLastShowedTitle)
@@ -231,8 +233,8 @@ public class NotificationUtil {
         return gwa.notification;
     }
 
-    final static public void showNoticeMsg(Context context, GlobalParameters gwa, String msg) {
-        clearNotification(gwa);
+    final static public void showNoticeMsg(Context context, GlobalParameters gwa, CommonUtilities util, String msg) {
+        clearNotification(gwa, util);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setOngoing(false)
                 .setAutoCancel(true)
@@ -273,8 +275,8 @@ public class NotificationUtil {
             gwa.notificationManager.notify(R.string.app_name, builder.build());
     }
 
-    final static public void showNoticeMsg(Context context, GlobalParameters gwa, String msg, boolean playback_sound, boolean vibration) {
-        clearNotification(gwa);
+    final static public void showNoticeMsg(Context context, GlobalParameters gwa, CommonUtilities util, String msg, boolean playback_sound, boolean vibration) {
+        clearNotification(gwa, util);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 //        Bitmap bm=BitmapFactory.decodeResource(gwa.appContext.getResources(), R.drawable.ic_48_smbsync_err);
         builder.setOngoing(false)
@@ -319,8 +321,19 @@ public class NotificationUtil {
             gwa.notificationManager.notify(R.string.app_name, builder.build());
     }
 
-    final static public void clearNotification(GlobalParameters gwa) {
-        gwa.notificationManager.cancelAll();
+    final static public void clearNotification(GlobalParameters gwa, CommonUtilities util) {
+        try {
+            gwa.notificationManager.cancelAll();
+        } catch(SecurityException e) {
+            if (util!=null) {
+                final StringWriter sw = new StringWriter();
+                final PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                pw.flush();
+                pw.close();
+                util.addLogMsg("E","Error occured at clearNotification()","\n",sw.toString());
+            }
+        }
     }
 
 }

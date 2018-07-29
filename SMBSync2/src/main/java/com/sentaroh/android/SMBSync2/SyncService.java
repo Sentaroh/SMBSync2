@@ -98,8 +98,8 @@ public class SyncService extends Service {
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mGp.safMgr.loadSafFile();
 
-        NotificationUtil.initNotification(mGp, mContext);
-        NotificationUtil.clearNotification(mGp);
+        NotificationUtil.initNotification(mGp, mUtil, mContext);
+        NotificationUtil.clearNotification(mGp, mUtil);
         mUtil = new CommonUtilities(getApplicationContext(), "Service", mGp);
 
         mUtil.addDebugMsg(1, "I", "onCreate entered");
@@ -370,7 +370,7 @@ public class SyncService extends Service {
                         } else {
                             mUtil.addLogMsg("W",
                                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_task_not_found) + sp[i]);
-                            NotificationUtil.showOngoingMsg(mGp, 0,
+                            NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
                                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_task_not_found) + sp[i]);
                         }
                     }
@@ -385,18 +385,18 @@ public class SyncService extends Service {
                     } else {
                         mUtil.addLogMsg("W",
                                 mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_list));
-                        NotificationUtil.showOngoingMsg(mGp, 0,
+                        NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
                                 mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_list));
                     }
                 } else {
-                    NotificationUtil.showOngoingMsg(mGp, 0,
+                    NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
                             mContext.getString(R.string.msgs_extra_data_sync_profile_type_error));
                     mUtil.addLogMsg("W", mContext.getString(R.string.msgs_extra_data_sync_profile_type_error));
                 }
             } else {
                 mUtil.addLogMsg("W",
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
-                NotificationUtil.showOngoingMsg(mGp, 0,
+                NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
             }
         } else {
@@ -494,7 +494,7 @@ public class SyncService extends Service {
         mGp.activityIsBackground = false;
         NotificationUtil.setNotificationEnabled(mGp, false);
         stopForeground(true);
-        NotificationUtil.clearNotification(mGp);
+        NotificationUtil.clearNotification(mGp, mUtil);
     }
 
     private void setActivityBackground() {
@@ -592,7 +592,7 @@ public class SyncService extends Service {
             }
             if (cnt == 0) {
                 mUtil.addLogMsg("E", mContext.getString(R.string.msgs_active_sync_prof_not_found));
-                NotificationUtil.showOngoingMsg(mGp, System.currentTimeMillis(),
+                NotificationUtil.showOngoingMsg(mGp, mUtil, System.currentTimeMillis(),
                         mContext.getString(R.string.msgs_active_sync_prof_not_found));
             } else {
                 mGp.syncRequestQueue.add(sri);
@@ -708,13 +708,13 @@ public class SyncService extends Service {
             if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_SUCCESS || mSyncThreadResult == SyncTaskItem.SYNC_STATUS_CANCEL) {
                 if (mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
                         mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
-                    NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage, sound, vibration);
+                    NotificationUtil.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
                     is_notice_message_showed=true;
                 }
             } else if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_ERROR) {
                 if (mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
                         mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
-                    NotificationUtil.showNoticeMsg(mContext, mGp, mGp.notificationLastShowedMessage, sound, vibration);
+                    NotificationUtil.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
                     is_notice_message_showed=true;
                 }
             }

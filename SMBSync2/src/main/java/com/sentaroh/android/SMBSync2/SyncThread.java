@@ -212,7 +212,7 @@ public class SyncThread extends Thread {
 
             mGp.syncThreadActive = true;
 //			showMsg(stwa,false, "","I","","",mGp.appContext.getString(R.string.msgs_mirror_task_started));
-            NotificationUtil.setNotificationIcon(mGp, R.drawable.ic_48_smbsync_run_anim, R.drawable.ic_48_smbsync_run);
+            NotificationUtil.setNotificationIcon(mGp, mStwa.util, R.drawable.ic_48_smbsync_run_anim, R.drawable.ic_48_smbsync_run);
 
             loadLocalFileLastModList();
 
@@ -338,8 +338,8 @@ public class SyncThread extends Thread {
 
             saveLocalFileLastModList();
 
-            NotificationUtil.setNotificationIcon(mGp, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
-            NotificationUtil.reShowOngoingMsg(mGp);
+            NotificationUtil.setNotificationIcon(mGp, mStwa.util, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
+            NotificationUtil.reShowOngoingMsg(mGp, mStwa.util);
 
             mGp.syncThreadRequestID = "";
             mGp.syncThreadActive = false;
@@ -723,7 +723,7 @@ public class SyncThread extends Thread {
                 @Override
                 public void uncaughtException(Thread thread, Throwable ex) {
                     Thread.currentThread().setUncaughtExceptionHandler(defaultUEH);
-                    NotificationUtil.setNotificationIcon(mGp, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
+                    NotificationUtil.setNotificationIcon(mGp, mStwa.util, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
                     ex.printStackTrace();
                     StackTraceElement[] st = ex.getStackTrace();
                     String st_msg = "";
@@ -1425,7 +1425,7 @@ public class SyncThread extends Thread {
     }
 
     static public void showProgressMsg(final SyncThreadWorkArea stwa, final String task_name, final String msg) {
-        NotificationUtil.showOngoingMsg(stwa.gp, 0, task_name, msg);
+        NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, 0, task_name, msg);
         stwa.gp.progressSpinSyncprofText = task_name;
         stwa.gp.progressSpinMsgText = msg;
         if (stwa.gp.dialogWindowShowed && stwa.gp.progressSpinSyncprof != null) {
@@ -1448,7 +1448,7 @@ public class SyncThread extends Thread {
         stwa.gp.progressSpinSyncprofText = task_name;
         stwa.gp.progressSpinMsgText = file_name.concat(" ").concat(msg);
         if (!log_only) {
-            NotificationUtil.showOngoingMsg(stwa.gp, System.currentTimeMillis(), task_name, file_name, msg);
+            NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, System.currentTimeMillis(), task_name, file_name, msg);
             if (stwa.gp.dialogWindowShowed && stwa.gp.progressSpinSyncprof != null) {
                 stwa.gp.uiHandler.post(new Runnable() {
                     @Override
@@ -1485,7 +1485,7 @@ public class SyncThread extends Thread {
         stwa.gp.progressSpinSyncprofText = task_name;
         stwa.gp.progressSpinMsgText = String.format(msg,from_file_name,to_file_name);
         if (!log_only) {
-            NotificationUtil.showOngoingMsg(stwa.gp, System.currentTimeMillis(), task_name, from_file_name, msg);
+            NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, System.currentTimeMillis(), task_name, from_file_name, msg);
             if (stwa.gp.dialogWindowShowed && stwa.gp.progressSpinSyncprof != null) {
                 stwa.gp.uiHandler.post(new Runnable() {
                     @Override
@@ -1560,7 +1560,7 @@ public class SyncThread extends Thread {
                     } else if (type.equals(SMBSYNC2_CONFIRM_REQUEST_MOVE)) {
                         msg = stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_please_check_confirm_msg_move);
                     }
-                    NotificationUtil.showOngoingMsg(stwa.gp, 0, msg);
+                    NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, 0, msg);
                     stwa.gp.confirmDialogShowed = true;
                     stwa.gp.confirmDialogFilePath = url;
                     stwa.gp.confirmDialogMethod = type;
