@@ -373,10 +373,11 @@ public class GlobalParameters extends CommonGlobalParms {
         settingGrantCoarseLocationRequired=enabled;
     }
 
-    private static LogStream logStream=null;
+    private static LogStream logStream=null;//JCIFS logStream
+    private static Logger log = LoggerFactory.getLogger(GlobalParameters.class);
     public void loadSettingsParms() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
-        if (logStream==null) logStream=LogStream.getInstance();
+        if (logStream==null) logStream=LogStream.getInstance();//Initial create JCIFS logStream object
 
         settingDebugLevel = Integer.parseInt(prefs.getString(appContext.getString(R.string.settings_log_level), "0"));
         log.setAppendTime(false);
@@ -435,7 +436,6 @@ public class GlobalParameters extends CommonGlobalParms {
     public String settingsSmbLmCompatibility = "3", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout = "30000";
     public String settingsSmbDisablePlainTextPasswords="false";
 
-    private static Logger log = LoggerFactory.getLogger(GlobalParameters.class);
     final public void initJcifsOption() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
 
