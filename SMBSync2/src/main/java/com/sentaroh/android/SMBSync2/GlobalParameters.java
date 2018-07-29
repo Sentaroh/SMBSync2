@@ -108,8 +108,6 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean wifiIsActive = false;
     public String wifiSsid = "";
 
-    public WakeLock dimScreenWakelock = null;
-
     public boolean themeIsLight = true;
     public int applicationTheme = -1;
     public ThemeColorList themeColorList = null;
@@ -262,6 +260,8 @@ public class GlobalParameters extends CommonGlobalParms {
 
         mDimWakeLock = ((PowerManager) appContext.getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-thread-dim");
+        forceDimScreenWakelock = ((PowerManager) appContext.getSystemService(Context.POWER_SERVICE))
+                .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-thread-force-dim");
         mPartialWakeLock = ((PowerManager) appContext.getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-thread-partial");
         WifiManager wm = (WifiManager) appContext.getSystemService(Context.WIFI_SERVICE);
@@ -429,6 +429,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingGrantCoarseLocationRequired = prefs.getBoolean("settings_sync_grant_coarse_location_required", true);
 
+        settingForceScreenOnWhileSync=prefs.getBoolean(appContext.getString(R.string.settings_force_screen_on_while_sync), false);
     }
 
     public String settingsSmbLmCompatibility = "3", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout = "30000";
@@ -477,10 +478,17 @@ public class GlobalParameters extends CommonGlobalParms {
     }
 
     public WakeLock mDimWakeLock = null;
+    public WakeLock forceDimScreenWakelock = null;
+
     public WakeLock mPartialWakeLock = null;
     public WifiLock mWifiLock = null;
 
     public void releaseWakeLock(CommonUtilities util) {
+        if (forceDimScreenWakelock.isHeld()) {
+            forceDimScreenWakelock.release();
+            util.addDebugMsg(1, "I", "ForceDim wakelock released");
+        }
+
         if (mDimWakeLock.isHeld()) {
             mDimWakeLock.release();
             util.addDebugMsg(1, "I", "Dim wakelock released");
