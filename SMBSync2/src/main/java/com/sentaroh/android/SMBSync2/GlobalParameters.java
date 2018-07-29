@@ -52,6 +52,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.CommonGlobalParms;
 import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.ThemeColorList;
@@ -59,6 +60,7 @@ import com.sentaroh.android.Utilities.ThreadCtrl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.LoggerWriter;
 
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -220,6 +222,9 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public SafManager safMgr = null;
 
+    private static LogStream logStream=null;//JCIFS logStream
+    private static Logger slf4jLog = LoggerFactory.getLogger(GlobalParameters.class);
+
     public GlobalParameters() {
     }
 
@@ -269,6 +274,12 @@ public class GlobalParameters extends CommonGlobalParms {
 
         internalRootDirectory = Environment.getExternalStorageDirectory().toString();//getInternalStorageRootDirectory();
         applicationRootDirectory = appContext.getFilesDir().toString();
+
+        logStream=LogStream.getInstance();//Initial create JCIFS logStream object
+
+        LogUtil jcifs_ng_lu = new LogUtil(appContext, "JCIFS-NG", this);
+        Slf4JLoggerWriter jcifs_ng_lw=new Slf4JLoggerWriter(jcifs_ng_lu);
+        slf4jLog.setWriter(jcifs_ng_lw);
 
         initStorageStatus();
 
@@ -373,26 +384,23 @@ public class GlobalParameters extends CommonGlobalParms {
         settingGrantCoarseLocationRequired=enabled;
     }
 
-    private static LogStream logStream=null;//JCIFS logStream
-    private static Logger log = LoggerFactory.getLogger(GlobalParameters.class);
     public void loadSettingsParms() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
-        if (logStream==null) logStream=LogStream.getInstance();//Initial create JCIFS logStream object
 
         settingDebugLevel = Integer.parseInt(prefs.getString(appContext.getString(R.string.settings_log_level), "0"));
-        log.setAppendTime(false);
+        slf4jLog.setAppendTime(false);
         if (settingDebugLevel==0) {
             LogStream.setLevel(1);
-            log.setLogOption(false, false, false, false, false);
+            slf4jLog.setLogOption(false, false, false, false, false);
         } else if (settingDebugLevel==1) {
             LogStream.setLevel(1);
-            log.setLogOption(false, false, true, false, false);
+            slf4jLog.setLogOption(false, false, true, false, false);
         } else if (settingDebugLevel==2) {
             LogStream.setLevel(3);
-            log.setLogOption(true, true, true, true, true);
+            slf4jLog.setLogOption(true, true, true, true, true);
         } else if (settingDebugLevel==3) {
             LogStream.setLevel(4);
-            log.setLogOption(true, true, true, true, true);
+            slf4jLog.setLogOption(true, true, true, true, true);
         }
         settingLogMaxFileCount = Integer.valueOf(prefs.getString(appContext.getString(R.string.settings_log_file_max_count), "10"));
         settingMgtFileDir = prefs.getString(appContext.getString(R.string.settings_mgt_dir), internalRootDirectory + "/" + APPLICATION_TAG);
@@ -536,4 +544,14 @@ public class GlobalParameters extends CommonGlobalParms {
         return pm.isInteractive();
     }
 
+}
+class Slf4JLoggerWriter extends LoggerWriter {
+    private LogUtil mLog=null;
+    public Slf4JLoggerWriter(LogUtil lu) {
+        mLog=lu;
+    }
+    @Override
+    public void write(String msg) {
+        mLog.addDebugMsg(1,"I", msg);
+    }
 }
