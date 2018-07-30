@@ -1670,12 +1670,18 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", "Option: " +
                 "debugLevel=" + mGp.settingDebugLevel +
                 ", settingErrorOption=" + mGp.settingErrorOption +
+
                 ", settingWifiLockRequired=" + mGp.settingWifiLockRequired +
+                ", settingNoCompressFileType=" + mGp.settingNoCompressFileType +
+                ", settingNotificationMessageWhenSyncEnded="+mGp.settingNotificationMessageWhenSyncEnded +
                 ", settingVibrateWhenSyncEnded=" + mGp.settingVibrateWhenSyncEnded +
                 ", settingRingtoneWhenSyncEnded=" + mGp.settingRingtoneWhenSyncEnded +
+                ", settingNotificationVolume="+mGp.settingNotificationVolume +
+                ", settingScreenOnWhileSync="+mGp.settingScreenOnWhileSync +
+                ", settingForceScreenOnWhileSync="+mGp.settingForceScreenOnWhileSync +
+                ", settingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired +
 
                 ", settingSupressAppSpecifiDirWarning=" + mGp.settingSupressAppSpecifiDirWarning +
-//				", settingSuppressShortcutWarning="+mGp.settingSuppressShortcutWarning+
                 ", settingFixDeviceOrientationToPortrait=" + mGp.settingFixDeviceOrientationToPortrait +
                 ", settingExportedProfileEncryptRequired=" + mGp.settingExportedProfileEncryptRequired +
 
