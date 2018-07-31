@@ -544,14 +544,15 @@ public class GlobalParameters extends CommonGlobalParms {
         return pm.isInteractive();
     }
 
-}
-class Slf4JLoggerWriter extends LoggerWriter {
-    private LogUtil mLog=null;
-    public Slf4JLoggerWriter(LogUtil lu) {
-        mLog=lu;
+    class Slf4JLoggerWriter extends LoggerWriter {
+        private LogUtil mLog=null;
+        public Slf4JLoggerWriter(LogUtil lu) {
+            mLog=lu;
+        }
+        @Override
+        public void write(String msg) {
+            mLog.addDebugMsg(1,"I", msg);
+        }
     }
-    @Override
-    public void write(String msg) {
-        mLog.addDebugMsg(1,"I", msg);
-    }
+
 }
