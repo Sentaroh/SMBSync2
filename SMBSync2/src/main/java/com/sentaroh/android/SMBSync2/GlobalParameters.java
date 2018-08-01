@@ -278,7 +278,7 @@ public class GlobalParameters extends CommonGlobalParms {
         logStream=LogStream.getInstance();//Initial create JCIFS logStream object
 
         LogUtil jcifs_ng_lu = new LogUtil(appContext, "JCIFS-NG", this);
-        Slf4JLoggerWriter jcifs_ng_lw=new Slf4JLoggerWriter(jcifs_ng_lu);
+        JcifsNgLogWriter jcifs_ng_lw=new JcifsNgLogWriter(jcifs_ng_lu);
         slf4jLog.setWriter(jcifs_ng_lw);
 
         initStorageStatus();
@@ -544,14 +544,14 @@ public class GlobalParameters extends CommonGlobalParms {
         return pm.isInteractive();
     }
 
-    class Slf4JLoggerWriter extends LoggerWriter {
-        private LogUtil mLog=null;
-        public Slf4JLoggerWriter(LogUtil lu) {
-            mLog=lu;
+    class JcifsNgLogWriter extends LoggerWriter {
+        private LogUtil mLu =null;
+        public JcifsNgLogWriter(LogUtil lu) {
+            mLu =lu;
         }
         @Override
         public void write(String msg) {
-            mLog.addDebugMsg(1,"I", msg);
+            mLu.addDebugMsg(1,"I", msg);
         }
     }
 
