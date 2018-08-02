@@ -116,6 +116,7 @@ public class Constants {
 	public static final String SMBSYNC2_PROFILE_RETRY_COUNT="3";
 	
 	public static final int ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS=40;
+    public static final int ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS=50;
 
 	public static final String SMBSYNC2_REPLACEABLE_KEYWORD_YEAR="%YEAR%";
     public static final String SMBSYNC2_REPLACEABLE_KEYWORD_MONTH="%MONTH%";

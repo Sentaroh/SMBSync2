@@ -1119,6 +1119,65 @@ public class SyncTaskUtil {
 
     }
 
+    public void showSelectUsbMsg(final NotifyEvent ntfy) {
+        final Dialog dialog = new Dialog(mActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.show_select_sdcard_dlg);
+
+        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.show_select_sdcard_dlg_title_view);
+        final TextView title = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_title);
+        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+
+        final TextView dlg_msg = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_msg);
+        String msg = "";
+        msg = mContext.getString(R.string.msgs_main_external_usb_select_required_select_msg_api23);
+        dlg_msg.setText(msg);
+
+        final ImageView func_view = (ImageView) dialog.findViewById(R.id.show_select_sdcard_dlg_image);
+
+
+        try {
+            String fn = "";
+            fn = mContext.getString(R.string.msgs_main_external_usb_select_required_select_msg_file_api23);
+            InputStream is = mContext.getResources().getAssets().open(fn);
+            Bitmap bm = BitmapFactory.decodeStream(is);
+            func_view.setImageBitmap(bm);
+        } catch (IOException e) {
+            /* 例外処理 */
+        }
+
+        final Button btnOk = (Button) dialog.findViewById(R.id.show_select_sdcard_dlg_btn_ok);
+        final Button btnCancel = (Button) dialog.findViewById(R.id.show_select_sdcard_dlg_btn_cancel);
+
+        CommonDialog.setDlgBoxSizeLimit(dialog, true);
+
+        // OKボタンの指定
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+                ntfy.notifyToListener(true, null);
+            }
+        });
+        // Cancelボタンの指定
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+                ntfy.notifyToListener(false, null);
+            }
+        });
+        // Cancelリスナーの指定
+        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface arg0) {
+                btnCancel.performClick();
+            }
+        });
+
+        dialog.show();
+
+    }
+
     public boolean isExternalSdcardUsedByOutput() {
         boolean result = false;
         for (SyncTaskItem pli : mGp.syncTaskAdapter.getArrayList()) {
@@ -1884,6 +1943,17 @@ public class SyncTaskUtil {
         SyncTaskItem pli = null;
         for (int i = 0; i < gp.syncTaskAdapter.getCount(); i++) {
             if (gp.syncTaskAdapter.getItem(i).getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
+                pli = gp.syncTaskAdapter.getItem(i);
+                break;
+            }
+        }
+        return pli;
+    }
+
+    static public SyncTaskItem getUsbMediaUsedSyncTask(GlobalParameters gp) {
+        SyncTaskItem pli = null;
+        for (int i = 0; i < gp.syncTaskAdapter.getCount(); i++) {
+            if (gp.syncTaskAdapter.getItem(i).getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
                 pli = gp.syncTaskAdapter.getItem(i);
                 break;
             }

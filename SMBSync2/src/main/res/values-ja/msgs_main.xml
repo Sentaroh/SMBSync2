@@ -67,8 +67,19 @@
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_JA.png</string>
 	<string name="msgs_main_external_sdcard_select_required_cancel_msg">外部SDCARDが選択されるまで同期は実行できません。 タスク=%s</string>
     <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD選択アクティビティを起動できませんでした。</string>
-    <string name="msgs_main_external_sdcard_select_uuid_invalid_msg">選択されたSDCARDのUUIDが0000-0000です、SMBSync2では使用できません。使用するためにはAndroid端末でフォーマットしてください。</string>
-	
+
+    <!---->
+    <string name="msgs_main_external_usb_select_required_title">USBメディアの選択</string>
+    <string name="msgs_main_external_usb_select_required_select_msg_api23">USBメディアにアクセスするために、ステップ１.「USB」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
+(ステップ２で左上に「USB」の画面が直接表示された時は「選択」をタップしてください。左上に「USB」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
+    <string name="msgs_main_external_usb_select_retry_select_msg">USBメディアのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
+    <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_JA.png</string>
+    <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_JA.png</string>
+    <string name="msgs_main_external_usb_select_required_cancel_msg">USBメディアが選択されるまで同期は実行できません。 タスク=%s</string>
+    <string name="msgs_main_external_usb_select_activity_not_found_msg">USBメディア選択アクティビティを起動できませんでした。</string>
+    <string name="msgs_main_external_usb_select_uuid_invalid_msg">選択されたUSBメディアのUUIDが0000-0000です、SMBSync2では使用できません。使用するためにはAndroid端末でフォーマットしてください。</string>
+
+
 	<string name="msgs_main_permission_external_storage_title">内部ストレージ許可</string>
 	<string name="msgs_main_permission_external_storage_request_msg">内部ストレージに同期するデータや管理用データの読み書きを行うために、内部ストレージにアクセスする許可を与えてください。</string>
 	<string name="msgs_main_permission_external_storage_denied_msg">内部ストレージにアクセスする許可が与えられていないため同期ができません。アプリケーションを終了します。</string>
@@ -217,6 +228,7 @@
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">フォルダーの選択</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_internal">内部ストレージ</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_sdcard">外部SDCARD</string>
+    <string name="msgs_main_sync_profile_dlg_sync_folder_type_usb">USBメディア</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_smb">SMB共有</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_zip">ZIPフォルダー</string>
 	
@@ -225,6 +237,12 @@
 	<string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master">SDCARDが選択されていません、マスターフォルダーを編集してSDCARDを選択してください。</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target">SDCARDが選択されていません、ターゲットフォルダーを編集してSDCARDを選択してください。</string>
 	<string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">SDCARDの選択</string>
+
+    <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">USBメディアがマウントされていません</string>
+    <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">USBメディアが選択されていません、「SDCARDの選択」を押してSDCARDを選択してください。</string>
+    <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_master">USBメディアが選択されていません、マスターフォルダーを編集してSDCARDを選択してください。</string>
+    <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">USBメディアが選択されていません、ターゲットフォルダーを編集してSDCARDを選択してください。</string>
+    <string name="msgs_profile_edit_sync_folder_dlg_select_usb">USBメディアの選択</string>
 	
 	<string name="msgs_main_sync_profile_dlg_title_master">マスターフォルダーの編集</string>
 	<string name="msgs_main_sync_profile_dlg_title_target">ターゲットフォルダーの編集</string>

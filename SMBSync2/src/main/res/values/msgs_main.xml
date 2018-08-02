@@ -145,10 +145,24 @@
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_EN.png</string>
 	<string name="msgs_main_external_sdcard_select_required_cancel_msg">You can not perform sync until external SD card is selected. Task=%s</string>
     <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD select activity can not be started.</string>
-    <string name="msgs_main_external_sdcard_select_uuid_invalid_msg">The UUID of the selected SDCARD is 0000 - 0000, it can not be used with SMBSync 2. To use it please format it on Android terminal.</string>
-	
+
 	<string name="msgs_main_external_sdcard_mp_changed_title">External SDCARD</string>
-	
+
+    <!---->
+    <string name="msgs_main_external_usb_select_required_title">Select USB Media</string>
+    <string name="msgs_main_external_usb_select_required_select_msg_api23">In order to access the USB Media, Step 1 please tap the &#8220;USB&#8221;, Step2 then Please tap the &#8220;Select&#8221; in the displayed screen.\n
+(Please tap the &#8220;Select&#8221; when the screen of &#8220;USB Media&#8221; in step2 is displayed directly in the upper left corner. If the upper left is other than &#8220;USB&#8221; are displayed, tap the upper left corner of the menu, from step 1 please try again.)</string>
+
+    <string name="msgs_main_external_usb_select_retry_select_msg">The root directory of the USB Media was not selected. Do you wants to re select?</string>
+    <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_EN.png</string>
+    <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_EN.png</string>
+    <string name="msgs_main_external_usb_select_required_cancel_msg">You can not perform sync until USB Media is selected. Task=%s</string>
+    <string name="msgs_main_external_usb_select_activity_not_found_msg">USB Media select activity can not be started.</string>
+    <string name="msgs_main_external_usb_select_uuid_invalid_msg">The UUID of the selected USB Media is 0000 - 0000, it can not be used with SMBSync 2. To use it please format it on Android terminal.</string>
+
+    <string name="msgs_main_external_usb_mp_changed_title">USB Media</string>
+
+
     <string name="msgs_smbsync_main_no_external_storage">External storage was not mounted. Some functions are not available.</string>
 	
    	<string name="msgs_progress_spin_dlg_sync_cancel">Cancel</string>
@@ -222,6 +236,7 @@
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">Select folder type</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_internal">Internal Storage</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_sdcard">External SDCARD</string>
+    <string name="msgs_main_sync_profile_dlg_sync_folder_type_usb">USB Media</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_smb">SMB Server</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_zip">ZIP Folder</string>	
 	
@@ -230,6 +245,12 @@
 	<string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master">SDCARD is not selected, please select the SDCARD in master folder editing.</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target">SDCARD is not selected, please select the SDCARD in target folder editing.</string>
 	<string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">Select SDCARD</string>
+
+    <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">USB Media is not mounted.</string>
+    <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">USB Media is not selected, please select the SDCARD by pressing the &#8220;Select SDCARD&#8221;.</string>
+    <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_master">USB Media is not selected, please select the SDCARD in master folder editing.</string>
+    <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">USB Media is not selected, please select the SDCARD in target folder editing.</string>
+    <string name="msgs_profile_edit_sync_folder_dlg_select_usb">Select USB Media</string>
 		
 	<string name="msgs_main_sync_profile_dlg_title_master">Edit master folder</string>
 	<string name="msgs_main_sync_profile_dlg_title_target">Edit target folder</string>

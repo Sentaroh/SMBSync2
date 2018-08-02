@@ -11,7 +11,7 @@ android {
         targetSdkVersion 23  //Android 6.0
 //        targetSdkVersion 26  //Android 8.0
 
-        versionCode 124
+        versionCode 127
         versionName "1.69"
 
         compileOptions {
@@ -77,7 +77,7 @@ dependencies {
     implementation files('libs/JcifsFile-1.0.1.jar')
 //    implementation files('libs/slf4j-api-1.7.7.jar')
     implementation files('libs/bcprov-jdk15on-158.jar')
-    implementation files('libs/WrapperForSlf4j-1.0.1.jar')
+    implementation files('libs/WrapperForSlf4j-1.0.2.jar')
 
     implementation files('libs/Utilities-1.0.13.aar')
     implementation 'com.android.support:support-v4:26.1.0'

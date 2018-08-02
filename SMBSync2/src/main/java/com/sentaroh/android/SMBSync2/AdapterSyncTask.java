@@ -211,6 +211,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 //            	}
 
             holder.ll_view.setBackgroundDrawable(ll_default);
+            holder.ib_row_sync.setBackgroundDrawable(ll_default);
 
             String act = "";
             if (o.isSyncTaskAuto()) {
@@ -302,6 +303,15 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 } else {
                     holder.iv_row_image_master.setImageResource(R.drawable.ic_32_sdcard);
                 }
+            } else if (o.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
+                String dir = o.getMasterDirectoryName();
+                if (dir.equals("")) holder.tv_row_master.setText((mGp.safMgr.getUsbRootPath()));
+                else holder.tv_row_master.setText((mGp.safMgr.getUsbRootPath() + "/" + dir));
+                if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
+                    holder.iv_row_image_master.setImageResource(R.drawable.ic_32_bad_media);
+                } else {
+                    holder.iv_row_image_master.setImageResource(R.drawable.ic_32_usb);
+                }
             } else if (o.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                 String host = o.getMasterSmbAddr();
                 if (o.getMasterSmbAddr().equals("")) host = o.getMasterSmbHostName();
@@ -339,6 +349,15 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_bad_media);
                 } else {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_sdcard);
+                }
+            } else if (o.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
+                String dir = o.getTargetDirectoryName();
+                if (dir.equals("")) holder.tv_row_target.setText((mGp.safMgr.getUsbRootPath()));
+                else holder.tv_row_target.setText((mGp.safMgr.getUsbRootPath() + "/" + dir));
+                if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
+                    holder.iv_row_image_target.setImageResource(R.drawable.ic_32_bad_media);
+                } else {
+                    holder.iv_row_image_target.setImageResource(R.drawable.ic_32_usb);
                 }
             } else if (o.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
                 holder.iv_row_image_target.setImageResource(R.drawable.ic_32_archive);

@@ -24,7 +24,7 @@
           android:icon="@android:drawable/ic_menu_set_as"
           />
     <item android:id="@+id/menu_top_add_shortcut"
-          android:title="@string/msgs_menu_add_shortcut" 
+          android:title="@string/msgs_menu_add_shortcut"
           />
     <item android:id="@+id/menu_top_log_management"
           android:title="@string/msgs_menu_log_management"

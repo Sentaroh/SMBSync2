@@ -94,6 +94,7 @@ import java.util.ArrayList;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS;
+import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR;
@@ -1744,6 +1745,23 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
+    public void invokeUsbSelector(final NotifyEvent p_ntfy) {
+        mSafSelectActivityNotify = p_ntfy;
+        NotifyEvent ntfy = new NotifyEvent(mContext);
+        ntfy.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context c, Object[] o) {
+                startUsbSelectorActivity();
+            }
+
+            @Override
+            public void negativeResponse(Context c, Object[] o) {
+            }
+        });
+        mTaskUtil.showSelectUsbMsg(ntfy);
+
+    }
+
     private final int REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
     private final int REQUEST_PERMISSIONS_ACCESS_COARSE_LOCATION = 2;
 
@@ -1926,6 +1944,50 @@ public class ActivityMain extends AppCompatActivity {
                     }
                 }
             }
+        } else if (requestCode == ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS) {
+            mUtil.addDebugMsg(1, "I", "Return from Storage Picker. id=" + requestCode + ", result=" + resultCode);
+            if (resultCode == Activity.RESULT_OK) {
+                mUtil.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
+                if (!mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
+                    mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                    mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
+                    reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg));
+                } else {
+                    mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                    mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
+                    if (mGp.safMgr.isRootTreeUri(data.getData())) {
+                        String uuid=mGp.safMgr.getUuidFromUri(data.getData().toString());
+                        File tf=new File("/storage/"+uuid);
+                        if (!tf.exists()) {
+                            commonDlg.showCommonDialog(false, "W", "UUID "+uuid+" selected but path not available. please reselect other USB media.", "", null);
+                            mUtil.addLogMsg("E", "UUID "+uuid+" selected but path not available. please reselect other USB media.");
+                        } else {
+                            boolean rc=mGp.safMgr.addUsbUuid(data.getData());
+                            if (!rc) {
+                                String saf_msg=mGp.safMgr.getMessages();
+                                commonDlg.showCommonDialog(false, "W", "USB Media UUID registration failed, please reselect USB Media", saf_msg, null);
+                                mUtil.addLogMsg("E", "USB Media UUID registration failed, please reselect USB Media\n", saf_msg);
+                            }
+                            mGp.syncTaskAdapter.notifyDataSetChanged();
+                            if (mSafSelectActivityNotify != null) mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
+                        }
+                    } else {
+                        reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg));
+                    }
+                }
+            } else {
+                if (mGp.safMgr.getSdcardRootSafFile() == null && !mIsStorageSelectorActivityNotFound) {
+                    SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
+                    if (pli != null) {
+                        String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
+                                pli.getSyncTaskName());
+                        commonDlg.showCommonDialog(false, "W",
+                                mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
+                                msg,
+                                null);
+                    }
+                }
+            }
         }
     }
 
@@ -1939,6 +2001,20 @@ public class ActivityMain extends AppCompatActivity {
             commonDlg.showCommonDialog(false, "E",
                     mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
                     mContext.getString(R.string.msgs_main_external_sdcard_select_activity_not_found_msg),
+                    null);
+        }
+    }
+
+    private void startUsbSelectorActivity() {
+        try {
+            mIsStorageSelectorActivityNotFound = false;
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            startActivityForResult(intent, ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS);
+        } catch (Exception e) {
+            mIsStorageSelectorActivityNotFound = true;
+            commonDlg.showCommonDialog(false, "E",
+                    mContext.getString(R.string.msgs_main_external_usb_select_required_title),
+                    mContext.getString(R.string.msgs_main_external_usb_select_activity_not_found_msg),
                     null);
         }
     }
@@ -1981,6 +2057,55 @@ public class ActivityMain extends AppCompatActivity {
                                 pli.getSyncTaskName());
                         commonDlg.showCommonDialog(false, "W",
                                 mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
+                                msg,
+                                null);
+                    }
+                }
+            }
+        });
+        if (msg.equals("")) ntfy_retry.notifyToListener(true, null);
+        else commonDlg.showCommonDialog(true, "W", msg, "", ntfy_retry);
+
+    }
+
+    private void reselectUsb(String msg) {
+        NotifyEvent ntfy_retry = new NotifyEvent(mContext);
+        ntfy_retry.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context c, Object[] o) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context c, Object[] o) {
+                        startUsbSelectorActivity();
+                    }
+                    @Override
+                    public void negativeResponse(Context c, Object[] o) {
+                        if (!mGp.safMgr.isUsbMounted()) {
+                            SyncTaskItem pli = SyncTaskUtil.getUsbMediaUsedSyncTask(mGp);
+                            if (pli != null) {
+                                String msg = String.format(mContext.getString(R.string.msgs_main_external_usb_select_required_cancel_msg),
+                                        pli.getSyncTaskName());
+                                commonDlg.showCommonDialog(false, "W",
+                                        mContext.getString(R.string.msgs_main_external_usb_select_required_title),
+                                        msg,
+                                        null);
+                            }
+                        }
+                    }
+                });
+                mTaskUtil.showSelectUsbMsg(ntfy);
+            }
+
+            @Override
+            public void negativeResponse(Context c, Object[] o) {
+                if (!mGp.safMgr.isUsbMounted()) {
+                    SyncTaskItem pli = SyncTaskUtil.getExternalSdcardUsedSyncTask(mGp);
+                    if (pli != null) {
+                        String msg = String.format(mContext.getString(R.string.msgs_main_external_usb_select_required_cancel_msg),
+                                pli.getSyncTaskName());
+                        commonDlg.showCommonDialog(false, "W",
+                                mContext.getString(R.string.msgs_main_external_usb_select_required_title),
                                 msg,
                                 null);
                     }
