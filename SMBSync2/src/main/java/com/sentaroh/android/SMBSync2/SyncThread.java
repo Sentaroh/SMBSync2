@@ -2034,6 +2034,38 @@ public class SyncThread extends Thread {
         else return true;
     }
 
+    static public SafFile getSafFile(SyncThreadWorkArea stwa, SyncTaskItem sti,String fp) {
+        return getSafFile(stwa, sti, fp, false);
+    }
+
+    static public SafFile getSafFile(SyncThreadWorkArea stwa, SyncTaskItem sti,String fp, boolean isDirectory) {
+        SafFile t_df =null;
+        if (fp.startsWith(stwa.gp.safMgr.getSdcardRootPath())) {
+            t_df = stwa.gp.safMgr.createSdcardItem(fp, isDirectory);
+            if (t_df == null) {
+                String saf_name = "";
+                SafFile sf = stwa.gp.safMgr.getSdcardRootSafFile();
+                if (sf != null) saf_name = sf.getName();
+                stwa.util.addLogMsg("E", "SAF file not found error. path=" + fp + ", SafFile=" + saf_name +
+                        ", sdcard=" + stwa.gp.safMgr.getSdcardRootPath());
+                stwa.util.addLogMsg("E", "SafManager msg=="+stwa.gp.safMgr.getMessages() );
+                return null;
+            }
+        } else {
+            t_df = stwa.gp.safMgr.createUsbItem(fp, isDirectory);
+            if (t_df == null) {
+                String saf_name = "";
+                SafFile sf = stwa.gp.safMgr.getUsbRootSafFile();
+                if (sf != null) saf_name = sf.getName();
+                stwa.util.addLogMsg("E", "SAF file not found error. path=" + fp + ", SafFile=" + saf_name +
+                        ", sdcard=" + stwa.gp.safMgr.getUsbRootPath());
+                stwa.util.addLogMsg("E", "SafManager msg=="+stwa.gp.safMgr.getMessages() );
+                return null;
+            }
+        }
+        return t_df;
+    }
+
     static public boolean isHiddenDirectory(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
         boolean result = false;
         if (sti.isSyncHiddenDirectory()) result = false;

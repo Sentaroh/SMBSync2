@@ -245,7 +245,7 @@ public class SyncThreadArchiveFile {
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
             if (!sti.isSyncTestMode()) {
                 SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
-                SafFile t_df = getSafFile(stwa, sti, to_path, false);
+                SafFile t_df = SyncThread.getSafFile(stwa, sti, to_path, false);
                 if (t_df == null) {
                     return SyncTaskItem.SYNC_STATUS_ERROR;
                 }
@@ -289,17 +289,17 @@ public class SyncThreadArchiveFile {
                 try {
                     os=new FileOutputStream(temp_file);
                 } catch (Exception e) {
-                    SafFile sf=getSafFile(stwa, sti, temp_file.getPath(), false);
+                    SafFile sf=SyncThread.getSafFile(stwa, sti, temp_file.getPath(), false);
                     os=stwa.gp.appContext.getContentResolver().openOutputStream(sf.getUri());
                 }
 
-                SafFile to_saf=getSafFile(stwa, sti, tf.getPath());
+                SafFile to_saf=SyncThread.getSafFile(stwa, sti, tf.getPath());
                 if (to_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
 
                 sync_result= copyFile(stwa, sti, new FileInputStream(mf), os, from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
 
                 temp_file.setLastModified(mf.lastModified());
-                SafFile from_saf = getSafFile(stwa, sti, temp_file.getPath());
+                SafFile from_saf = SyncThread.getSafFile(stwa, sti, temp_file.getPath());
                 if (from_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
 
                 from_saf.moveTo(to_saf);
@@ -319,26 +319,6 @@ public class SyncThreadArchiveFile {
             stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
-    }
-
-    static private SafFile getSafFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp) {
-        return getSafFile(stwa, sti, fp, false);
-    }
-    static private SafFile getSafFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp, boolean isDirectory) {
-        SafFile out_df = null;
-        if (fp.startsWith(stwa.gp.safMgr.getSdcardRootPath())) out_df = stwa.gp.safMgr.createSdcardItem(fp, isDirectory);
-        else out_df = stwa.gp.safMgr.createUsbItem(fp, isDirectory);
-
-        if (out_df == null) {
-            String saf_name = "";
-            SafFile sf = null;
-            if (fp.startsWith(stwa.gp.safMgr.getSdcardRootPath())) sf = stwa.gp.safMgr.getSdcardRootSafFile();
-            else sf = stwa.gp.safMgr.getUsbRootSafFile();
-
-            stwa.util.addLogMsg("E", "SAF file not found error. path=", fp, ", sdcard root=", stwa.gp.safMgr.getSdcardRootPath(), ", usb root=", stwa.gp.safMgr.getUsbRootPath(), "\n", stwa.gp.safMgr.getMessages());
-            return null;
-        }
-        return out_df;
     }
 
     static private int archiveFileInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children,
@@ -692,7 +672,7 @@ public class SyncThreadArchiveFile {
                                                   File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
-            SafFile m_df =getSafFile(stwa, sti, from_path, false);
+            SafFile m_df =SyncThread.getSafFile(stwa, sti, from_path, false);
             if (!sti.isSyncTestMode()) {
                 SyncThread.createDirectoryToInternalStorage(stwa, sti, tf.getParent());
                 String temp_path=isSdcardPath(stwa,to_path)?
@@ -860,10 +840,10 @@ public class SyncThreadArchiveFile {
                                                               File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
-            SafFile m_df =getSafFile(stwa, sti, from_path, false);
+            SafFile m_df =SyncThread.getSafFile(stwa, sti, from_path, false);
             if (!sti.isSyncTestMode()) {
                 SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
-                SafFile t_df =getSafFile(stwa, sti, to_path, false);
+                SafFile t_df =SyncThread.getSafFile(stwa, sti, to_path, false);
                 if (t_df == null) {
                     return SyncTaskItem.SYNC_STATUS_ERROR;
                 }
@@ -891,7 +871,7 @@ public class SyncThreadArchiveFile {
                                                             File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
-            SafFile m_df = getSafFile(stwa, sti, from_path);
+            SafFile m_df = SyncThread.getSafFile(stwa, sti, from_path);
             if (!sti.isSyncTestMode()) {
                 SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
 
@@ -912,9 +892,9 @@ public class SyncThreadArchiveFile {
 
                 temp_file.setLastModified(mf.lastModified());
 
-                SafFile from_saf = getSafFile(stwa, sti, temp_file.getPath());
+                SafFile from_saf = SyncThread.getSafFile(stwa, sti, temp_file.getPath());
                 if (from_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                SafFile to_saf = getSafFile(stwa, sti, tf.getPath());
+                SafFile to_saf = SyncThread.getSafFile(stwa, sti, tf.getPath());
                 if (to_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
 
                 from_saf.moveTo(to_saf);
@@ -1072,7 +1052,7 @@ public class SyncThreadArchiveFile {
         int sync_result=0;
 
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
-            SafFile m_df =getSafFile(stwa, sti, from_path, false);
+            SafFile m_df =SyncThread.getSafFile(stwa, sti, from_path, false);
             if (!sti.isSyncTestMode()) {
                 String dir=tf.getParent();
                 JcifsFile jf_dir=new JcifsFile(dir,stwa.targetAuth);
@@ -1498,7 +1478,7 @@ public class SyncThreadArchiveFile {
         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
             if (!sti.isSyncTestMode()) {
                 SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
-                SafFile t_df =getSafFile(stwa, sti, to_path, false);
+                SafFile t_df =SyncThread.getSafFile(stwa, sti, to_path, false);
                 if (t_df == null) {
                     return SyncTaskItem.SYNC_STATUS_ERROR;
                 }
@@ -1555,7 +1535,7 @@ public class SyncThreadArchiveFile {
                 try {
                     os=new FileOutputStream(temp_file);
                 } catch (Exception e) {
-                    SafFile sf=getSafFile(stwa, sti, temp_file.getPath(), false);
+                    SafFile sf=SyncThread.getSafFile(stwa, sti, temp_file.getPath(), false);
                     os=stwa.gp.appContext.getContentResolver().openOutputStream(sf.getUri());
                 }
 
@@ -1575,9 +1555,9 @@ public class SyncThreadArchiveFile {
                 if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                     temp_file.setLastModified(mf.getLastModified());
 
-                    SafFile from_saf = getSafFile(stwa, sti, temp_file.getPath());
+                    SafFile from_saf = SyncThread.getSafFile(stwa, sti, temp_file.getPath());
                     if (from_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-                    SafFile to_saf = getSafFile(stwa, sti, tf.getPath());
+                    SafFile to_saf = SyncThread.getSafFile(stwa, sti, tf.getPath());
                     if (to_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
 
                     from_saf.moveTo(to_saf);
@@ -2052,7 +2032,7 @@ public class SyncThreadArchiveFile {
         ArrayList<ArchiveFileListItem>fl=new ArrayList<ArchiveFileListItem>();
         for(File element:children) {
             if (element.isFile() && isFileTypeArchiveTarget(element.getName())) {
-                SafFile m_df = getSafFile(stwa, sti, element.getPath(), false);
+                SafFile m_df = SyncThread.getSafFile(stwa, sti, element.getPath(), false);
                 String[] date_time=getFileExifDateTime(stwa, sti, m_df);
                 ArchiveFileListItem afli=new ArchiveFileListItem();
                 afli.file=element;
