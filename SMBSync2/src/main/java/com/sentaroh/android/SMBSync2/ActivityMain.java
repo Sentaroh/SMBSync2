@@ -1959,8 +1959,9 @@ public class ActivityMain extends AppCompatActivity {
                         String uuid=mGp.safMgr.getUuidFromUri(data.getData().toString());
                         File tf=new File("/storage/"+uuid);
                         if (!tf.exists()) {
-                            commonDlg.showCommonDialog(false, "W", "UUID "+uuid+" selected but path not available. please reselect other USB media.", "", null);
-                            mUtil.addLogMsg("E", "UUID "+uuid+" selected but path not available. please reselect other USB media.");
+                            String e_msg=String.format(mContext.getString(R.string.msgs_main_external_usb_select_path_not_available_msg), uuid);
+                            commonDlg.showCommonDialog(false, "W", e_msg, "", null);
+                            mUtil.addLogMsg("E", e_msg);
                         } else {
                             boolean rc=mGp.safMgr.addUsbUuid(data.getData());
                             if (!rc) {

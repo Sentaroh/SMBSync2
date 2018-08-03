@@ -158,7 +158,7 @@
     <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_EN.png</string>
     <string name="msgs_main_external_usb_select_required_cancel_msg">You can not perform sync until USB Media is selected. Task=%s</string>
     <string name="msgs_main_external_usb_select_activity_not_found_msg">USB Media select activity can not be started.</string>
-    <string name="msgs_main_external_usb_select_uuid_invalid_msg">The UUID of the selected USB Media is 0000 - 0000, it can not be used with SMBSync 2. To use it please format it on Android terminal.</string>
+    <string name="msgs_main_external_usb_select_path_not_available_msg">A mount point corresponding to UUID(%s) could not be found. USB media can not be used with this device.</string>
 
     <string name="msgs_main_external_usb_mp_changed_title">USB Media</string>
 

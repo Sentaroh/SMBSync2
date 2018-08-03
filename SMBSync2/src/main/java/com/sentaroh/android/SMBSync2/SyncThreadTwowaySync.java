@@ -79,7 +79,30 @@ public class SyncThreadTwowaySync {
                         int target_changed=isFileChengedSincePreviousSync(stwa,sti,tf.getPath(),tf.length(), tf.lastModified());
 
                         if (master_changed!=0 && target_changed!=0) {//競合ファイル
-
+                            if (master_changed==FILE_CHANGED_REASON_FILE_ADDED) {
+                                if (tf.exists()) {
+                                    if ((target_changed&FILE_CHANGED_REASON_CHANGE_FILE_LAST_MODIFIED)!=0) {
+                                        //競合フィル
+                                    }
+                                    if ((target_changed&FILE_CHANGED_REASON_CHANGE_FILE_SIZE)!=0) {
+                                        //競合フィル
+                                    }
+                                } else {//Copy file master to target
+                                    copyFileInternalToInternal(stwa, sti, from_path, mf, to_path);
+                                }
+                            } else if ((master_changed&FILE_CHANGED_REASON_CHANGE_FILE_SIZE)!=0 ||
+                                    (master_changed&FILE_CHANGED_REASON_CHANGE_FILE_LAST_MODIFIED)!=0) {
+                                if (tf.exists()) {
+                                    if ((target_changed&FILE_CHANGED_REASON_CHANGE_FILE_LAST_MODIFIED)!=0) {
+                                        //競合フィル
+                                    }
+                                    if ((target_changed&FILE_CHANGED_REASON_CHANGE_FILE_SIZE)!=0) {
+                                        //競合フィル
+                                    }
+                                } else {//Copy file master to target
+                                    copyFileInternalToInternal(stwa, sti, from_path, mf, to_path);
+                                }
+                            }
                         } else if (master_changed!=0 && target_changed==0) {//Copy master to target
                             copyFileInternalToInternal(stwa, sti, from_path, mf, to_path);
                         } else if (master_changed==0 && target_changed!=0) {//Copy target to master
@@ -170,17 +193,21 @@ public class SyncThreadTwowaySync {
     }
 
     final static int FILE_CHANGED_REASON_NO_DIFFERENCE=0;
-    final static int FILE_CHANGED_REASON_EXISTS=1;
-    final static int FILE_CHANGED_REASON_SIZE_OR_LAST_MODIFIED=2;
+    final static int FILE_CHANGED_REASON_FILE_ADDED=0x01;
+    final static int FILE_CHANGED_REASON_CHANGE_FILE_SIZE=0x02;
+    final static int FILE_CHANGED_REASON_CHANGE_FILE_LAST_MODIFIED=0x04;
     static private int isFileChengedSincePreviousSync(SyncThread.SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                       String fpath, long file_size, long file_last_modified) {
         int sync_required=0;
         SyncFileInfoItem prev_info=getSyncFileInfo(stwa,sti,fpath);
         if (prev_info==null) {//前回から追加されたファイル
-            sync_required=FILE_CHANGED_REASON_EXISTS;
+            sync_required=FILE_CHANGED_REASON_FILE_ADDED;
         } else {
-            if (prev_info.fileSize!=file_size || prev_info.fileLastModified!=file_last_modified) {//変更されたファイル
-                sync_required=FILE_CHANGED_REASON_SIZE_OR_LAST_MODIFIED;
+            if (prev_info.fileSize!=file_size) {//変更されたファイル
+                sync_required=FILE_CHANGED_REASON_CHANGE_FILE_SIZE;
+            }
+            if (prev_info.fileLastModified!=file_last_modified) {//変更されたファイル
+                sync_required=sync_required|FILE_CHANGED_REASON_CHANGE_FILE_LAST_MODIFIED;
             }
         }
         return sync_required;
