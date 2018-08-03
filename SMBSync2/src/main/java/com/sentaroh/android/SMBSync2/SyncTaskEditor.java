@@ -3940,6 +3940,9 @@ public class SyncTaskEditor extends DialogFragment {
                 } else if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
                     showFieldHelp(mContext.getString(R.string.msgs_help_sync_folder_sdcard_title),
                             mContext.getString(R.string.msgs_help_sync_folder_sdcard_file));
+                } else if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
+                    showFieldHelp(mContext.getString(R.string.msgs_help_sync_folder_usb_title),
+                            mContext.getString(R.string.msgs_help_sync_folder_usb_file));
                 } else if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                     showFieldHelp(mContext.getString(R.string.msgs_help_sync_folder_smb_title),
                             mContext.getString(R.string.msgs_help_sync_folder_smb_file));

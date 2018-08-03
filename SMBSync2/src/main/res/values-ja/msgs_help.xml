@@ -8,7 +8,10 @@
 	
 	<string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_JA_folder_sdcard.htm</string>
 	<string name="msgs_help_sync_folder_sdcard_title">SDCARDのヘルプ</string>
-	
+
+    <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_JA_folder_usb.htm</string>
+    <string name="msgs_help_sync_folder_usb_title">USBメディアのヘルプ</string>
+
 	<string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_JA_folder_smb.htm</string>
 	<string name="msgs_help_sync_folder_smb_title">SMBのヘルプ</string>
 
