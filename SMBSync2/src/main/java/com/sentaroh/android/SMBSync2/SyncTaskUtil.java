@@ -1128,6 +1128,7 @@ public class SyncTaskUtil {
         final TextView title = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_title);
         title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
         title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title.setText(R.string.msgs_main_external_usb_select_required_title);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_msg);
         String msg = "";
