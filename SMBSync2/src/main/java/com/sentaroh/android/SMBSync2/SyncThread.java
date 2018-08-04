@@ -2363,14 +2363,11 @@ public class SyncThread extends Thread {
             for (int j = 0; j < ff.size(); j++) {
                 prefix = ff.get(j).substring(0, 1);
                 filter = ff.get(j).substring(1, ff.get(j).length());
-
-                String pre_str = "";
-                if (!filter.startsWith("*")) pre_str = "^";
                 if (prefix.equals("I")) {
-                    ffinc = ffinc + cni + pre_str + MiscUtil.convertRegExp(filter);
+                    ffinc = ffinc + cni + MiscUtil.convertRegExp("^"+filter+"$");
                     cni = "|";
                 } else {
-                    ffexc = ffexc + cne + pre_str + MiscUtil.convertRegExp(filter);
+                    ffexc = ffexc + cne + MiscUtil.convertRegExp("^"+filter+"$");
                     cne = "|";
                 }
             }
