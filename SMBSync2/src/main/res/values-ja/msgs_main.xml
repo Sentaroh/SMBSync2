@@ -77,7 +77,7 @@
     <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_JA.png</string>
     <string name="msgs_main_external_usb_select_required_cancel_msg">USBメディアが選択されるまで同期は実行できません。 タスク=%s</string>
     <string name="msgs_main_external_usb_select_activity_not_found_msg">USBメディア選択アクティビティを起動できませんでした。</string>
-    <string name="msgs_main_external_usb_select_path_not_available_msg">UUID(%s)に対応するマウントポイントが見つかりません。この装置でUSBメディアは使用できません。</string>
+    <string name="msgs_main_external_usb_select_path_not_available_msg">UUID(%s)に対応するマウントポイントが見つかりません。この装置に於いてSMBSync2ではUSBメディアを使用できません。</string>
 
 
 	<string name="msgs_main_permission_external_storage_title">内部ストレージ許可</string>
