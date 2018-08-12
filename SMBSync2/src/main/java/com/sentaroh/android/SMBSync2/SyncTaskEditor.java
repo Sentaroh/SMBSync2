@@ -2038,7 +2038,7 @@ public class SyncTaskEditor extends DialogFragment {
             String dir = sti.getMasterDirectoryName();
             if (dir.equals("")) info = mGp.safMgr.getUsbRootPath();
             else info = mGp.safMgr.getUsbRootPath() + "/" + dir;
-            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
+            if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
                 ib.setCompoundDrawablePadding(32);
                 ib.setCompoundDrawablesWithIntrinsicBounds(
                         mContext.getResources().getDrawable(R.drawable.ic_32_bad_media, null), null, null, null);
