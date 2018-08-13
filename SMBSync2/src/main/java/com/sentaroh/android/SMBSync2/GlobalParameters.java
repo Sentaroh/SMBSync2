@@ -402,6 +402,8 @@ public class GlobalParameters extends CommonGlobalParms {
             LogStream.setLevel(4);
             slf4jLog.setLogOption(true, true, true, true, true);
         }
+        settingExitClean=prefs.getBoolean(appContext.getString(R.string.settings_exit_clean), true);
+
         settingLogMaxFileCount = Integer.valueOf(prefs.getString(appContext.getString(R.string.settings_log_file_max_count), "10"));
         settingMgtFileDir = prefs.getString(appContext.getString(R.string.settings_mgt_dir), internalRootDirectory + "/" + APPLICATION_TAG);
         settingLogOption = prefs.getBoolean(appContext.getString(R.string.settings_log_option), false);

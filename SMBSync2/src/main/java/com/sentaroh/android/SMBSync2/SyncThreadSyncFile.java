@@ -716,13 +716,13 @@ public class SyncThreadSyncFile {
             sync_result =  syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 sync_result =moveCopyInternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
-                waitSdcardFileSynced(stwa, sti);
+                waitExternalMediaFileFlushed(stwa, sti);
             }
         } else {
             sync_result = moveCopyInternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 sync_result = syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
-                waitSdcardFileSynced(stwa, sti);
+                waitExternalMediaFileFlushed(stwa, sti);
             }
         }
         return sync_result;
@@ -735,7 +735,7 @@ public class SyncThreadSyncFile {
 
         File mf = new File(from_path);
         int sync_result=moveCopyInternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitExternalMediaFileFlushed(stwa, sti);
         return sync_result;
     }
 
@@ -746,7 +746,7 @@ public class SyncThreadSyncFile {
 
         File mf = new File(from_path);
         int sync_result=moveCopyInternalToExternal(stwa, sti, true, from_path, from_path, mf, to_path, to_path);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitExternalMediaFileFlushed(stwa, sti);
         return sync_result;
     }
 
@@ -1289,13 +1289,13 @@ public class SyncThreadSyncFile {
             sync_result = syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 sync_result =moveCopyExternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
-                waitSdcardFileSynced(stwa, sti);
+                waitExternalMediaFileFlushed(stwa, sti);
             }
         } else {
             sync_result = moveCopyExternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 sync_result = syncDeleteInternalToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf);
-                waitSdcardFileSynced(stwa, sti);
+                waitExternalMediaFileFlushed(stwa, sti);
             }
         }
 
@@ -1309,7 +1309,7 @@ public class SyncThreadSyncFile {
 
         File mf = new File(from_path);
         int sync_result=moveCopyExternalToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitExternalMediaFileFlushed(stwa, sti);
         return sync_result;
     }
 
@@ -1320,7 +1320,7 @@ public class SyncThreadSyncFile {
 
         File mf = new File(from_path);
         int sync_result=moveCopyExternalToExternal(stwa, sti, true, from_path, from_path, mf, to_path, to_path);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitExternalMediaFileFlushed(stwa, sti);
         return sync_result;
     }
 
@@ -1975,14 +1975,14 @@ public class SyncThreadSyncFile {
             sync_result =syncDeleteSmbToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 sync_result = moveCopySmbToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
-                waitSdcardFileSynced(stwa, sti);
+                waitExternalMediaFileFlushed(stwa, sti);
             }
         } else {
             sync_result = moveCopySmbToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, stwa.smbFileList);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 Collections.sort(stwa.smbFileList);
                 sync_result = syncDeleteSmbToExternal(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
-                waitSdcardFileSynced(stwa, sti);
+                waitExternalMediaFileFlushed(stwa, sti);
             }
         }
 
@@ -1990,7 +1990,7 @@ public class SyncThreadSyncFile {
         return sync_result;
     }
 
-    static private void waitSdcardFileSynced(SyncThreadWorkArea stwa, SyncTaskItem sti) {
+    static private void waitExternalMediaFileFlushed(SyncThreadWorkArea stwa, SyncTaskItem sti) {
         if (stwa.lastWriteSafFile!=null) {
             long b_time=System.currentTimeMillis();
             int count=30;
@@ -2003,7 +2003,11 @@ public class SyncThreadSyncFile {
 //                count--;
 //            }
             while(count>0)  {
-                if (sf==null) sf=stwa.gp.safMgr.findSdcardItem(fp);
+//                if (sf==null) sf=stwa.gp.safMgr.findSdcardItem(fp);
+                if (sf==null) {
+                    if (fp.startsWith(stwa.gp.safMgr.getSdcardRootPath())) sf=stwa.gp.safMgr.findSdcardItem(fp);
+                    else sf=stwa.gp.safMgr.findUsbItem(fp);
+                }
                 if (sf!=null) {
                     if (sf.lastModified()==lf.lastModified() && sf.length()==lf.length()) {
                         break;
@@ -2012,8 +2016,8 @@ public class SyncThreadSyncFile {
                 SystemClock.sleep(500);
                 count--;
             }
-            if (count==0) stwa.util.addDebugMsg(1,"I","SDCARD File sync wait time over occured");
-            else stwa.util.addDebugMsg(1,"I","SDCARD File sync ended, elapsed time="+(System.currentTimeMillis()-b_time));
+            if (count==0) stwa.util.addDebugMsg(1,"I","External media file flush wait time over occured");
+            else stwa.util.addDebugMsg(1,"I","External media file flush wait ended, elapsed time="+(System.currentTimeMillis()-b_time));
         }
     }
 
@@ -2039,7 +2043,7 @@ public class SyncThreadSyncFile {
         }
 
         int sync_result=moveCopySmbToExternal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, null);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitExternalMediaFileFlushed(stwa, sti);
         return sync_result;
     }
 
@@ -2066,7 +2070,7 @@ public class SyncThreadSyncFile {
         }
 
         int sync_result=moveCopySmbToExternal(stwa, sti, true, from_path, from_path, mf, to_path, to_path, null);
-        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitSdcardFileSynced(stwa, sti);
+        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) waitExternalMediaFileFlushed(stwa, sti);
         return sync_result;
     }
 
