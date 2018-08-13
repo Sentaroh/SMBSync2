@@ -81,6 +81,7 @@ import com.sentaroh.android.Utilities.LocalMountPoint;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
+import com.sentaroh.android.Utilities.SystemInfo;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.Widget.CustomTabContentView;
@@ -1501,7 +1502,7 @@ public class ActivityMain extends AppCompatActivity {
         final TextView title = (TextView) dialog.findViewById(R.id.about_dialog_title);
         title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
         title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-        title.setText(getString(R.string.msgs_dlg_title_about) + "(Ver " + CommonUtilities.getApplVersionName(mContext) + ")");
+        title.setText(getString(R.string.msgs_dlg_title_about) + "(Ver " + SystemInfo.getApplVersionName(mContext) + ")");
 
         // get our tabHost from the xml
         final TabHost tab_host = (TabHost) dialog.findViewById(R.id.about_tab_host);
