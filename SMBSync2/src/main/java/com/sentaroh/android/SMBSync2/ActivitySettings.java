@@ -531,7 +531,7 @@ public class ActivitySettings extends PreferenceActivity {
             SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
             shared_pref.edit().putBoolean(getString(R.string.settings_exit_clean), true).commit();
-            findPreference(getString(R.string.settings_exit_clean).toString()).setEnabled(false);
+//            findPreference(getString(R.string.settings_exit_clean).toString()).setEnabled(false);
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_exit_clean));
         }
 
