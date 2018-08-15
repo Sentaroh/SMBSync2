@@ -2364,10 +2364,12 @@ public class SyncThread extends Thread {
                 prefix = ff.get(j).substring(0, 1);
                 filter = ff.get(j).substring(1, ff.get(j).length());
                 if (prefix.equals("I")) {
-                    ffinc = ffinc + cni + MiscUtil.convertRegExp("^"+filter+"$");
+//                    ffinc = ffinc + cni + MiscUtil.convertRegExp("^"+filter+"$");
+                    ffinc = ffinc + cni + "^"+ MiscUtil.convertRegExp(filter)+"$";
                     cni = "|";
                 } else {
-                    ffexc = ffexc + cne + MiscUtil.convertRegExp("^"+filter+"$");
+//                    ffexc = ffexc + cne + MiscUtil.convertRegExp("^"+filter+"$");
+                    ffexc = ffexc + cne + "^"+ MiscUtil.convertRegExp(filter)+"$";
                     cne = "|";
                 }
             }
