@@ -121,7 +121,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean settingExitClean = true;
     public int settingDebugLevel = 0;
     public boolean settingUseLightTheme = false;
-    public int settingLogMaxFileCount = 10;
+    public int settingLogMaxFileCount = 5;
     public String settingMgtFileDir = "", settingLogMsgFilename = LOG_FILE_NAME;
     public boolean settingLogOption = false;
     public int settingLogFileMaxSize = 1024 * 1024 * 20;
@@ -327,7 +327,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public void setLogParms(GlobalParameters gp) {
         setDebugLevel(gp.settingDebugLevel);
         setLogcatEnabled(gp.settingPutLogcatOption);
-        setLogLimitSize(5 * 1024 * 1024);
+        setLogLimitSize(10 * 1024 * 1024);
         setLogMaxFileCount(gp.settingLogMaxFileCount);
         setLogEnabled(gp.settingLogOption);
         setLogDirName(gp.settingMgtFileDir);
@@ -404,7 +404,7 @@ public class GlobalParameters extends CommonGlobalParms {
         }
         settingExitClean=prefs.getBoolean(appContext.getString(R.string.settings_exit_clean), true);
 
-        settingLogMaxFileCount = Integer.valueOf(prefs.getString(appContext.getString(R.string.settings_log_file_max_count), "10"));
+        settingLogMaxFileCount = Integer.valueOf(prefs.getString(appContext.getString(R.string.settings_log_file_max_count), "5"));
         settingMgtFileDir = prefs.getString(appContext.getString(R.string.settings_mgt_dir), internalRootDirectory + "/" + APPLICATION_TAG);
         settingLogOption = prefs.getBoolean(appContext.getString(R.string.settings_log_option), false);
         settingPutLogcatOption = prefs.getBoolean(appContext.getString(R.string.settings_put_logcat_option), false);
