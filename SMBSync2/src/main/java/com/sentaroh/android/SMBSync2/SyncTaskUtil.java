@@ -5198,6 +5198,8 @@ public class SyncTaskUtil {
 
             if (!parm[76].equals("") && !parm[76].equals("end")) stli.setSyncOptionDeleteFirstWhenMirror((parm[76].equals("1") ? true : false));
 
+            if (!parm[77].equals("") && !parm[77].equals("end")) stli.setSyncOptionConfirmNotExistsExifDate((parm[77].equals("1") ? true : false));
+
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -5488,6 +5490,8 @@ public class SyncTaskUtil {
                             (item.isSyncDifferentFileSizeGreaterThanTagetFile() ? "1" : "0") + "\t" + //75
 
                             (item.isSyncOptionDeleteFirstWhenMirror() ? "1" : "0") + "\t" +     //76
+
+                            (item.isSyncOptionConfirmNotExistsExifDate() ? "1" : "0") + "\t" +     //77
 
                     "end"
                     ;

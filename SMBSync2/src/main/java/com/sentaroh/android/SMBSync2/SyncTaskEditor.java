@@ -3386,6 +3386,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner sp_sync_retain_period = (Spinner) dialog.findViewById(R.id.edit_sync_task_dlg_archive_retention_period);
         final Spinner sp_sync_suffix_option = (Spinner) dialog.findViewById(R.id.edit_sync_task_dlg_archive_suffix_option);
 
+        final CheckedTextView ctvConfirmExifDate = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_dlg_archive_confirm_exif_date);
         final CheckedTextView ctvRenameWhenArchive = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_dlg_archive_rename_when_archive);
 
         final EditText et_file_template = (EditText) dialog.findViewById(R.id.edit_sync_task_dlg_archive_file_name_template);
@@ -3406,6 +3407,7 @@ public class SyncTaskEditor extends DialogFragment {
             if (!seqopt.equals(n_sti.getArchiveSuffixOption())) changed=true;
             else {
                 if (ctvRenameWhenArchive.isChecked()!=n_sti.isArchiveUseRename()) changed=true;
+                else if (ctvConfirmExifDate.isChecked()!=n_sti.isSyncOptionConfirmNotExistsExifDate()) changed=true;
                 else if (ctvCreateDircetory.isChecked()!=n_sti.isArchiveCreateDirectory()) changed=true;
                 else if (!et_file_template.getText().toString().equals(n_sti.getArchiveRenameFileTemplate())) changed=true;
                 else if (!et_dir_template.getText().toString().equals(n_sti.getArchiveCreateDirectoryTemplate())) changed=true;
@@ -3423,6 +3425,9 @@ public class SyncTaskEditor extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.edit_sync_task_dlg_archive);
+        dialog.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_dlg_archive_view);
         ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
@@ -3446,6 +3451,7 @@ public class SyncTaskEditor extends DialogFragment {
         setSpinnerSyncTaskArchiveSuffixSeq(sp_sync_suffix_option, n_sti.getArchiveSuffixOption());
         setSpinnerSyncTaskPictureRetainPeriod(sp_sync_retain_period, n_sti.getArchiveRetentionPeriod());
 
+        final CheckedTextView ctvConfirmExifDate = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_dlg_archive_confirm_exif_date);
         final CheckedTextView ctvRenameWhenArchive = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_dlg_archive_rename_when_archive);
 
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_sync_task_dlg_picture_btn_ok);
@@ -3468,6 +3474,16 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_dir_day = (Button) dialog.findViewById(R.id.edit_sync_task_dlg_archive_btn_directory_day);
         final EditText et_dir_template = (EditText) dialog.findViewById(R.id.edit_sync_task_dlg_archive_directory_name_template);
         et_dir_template.setText(n_sti.getArchiveCreateDirectoryTemplate());
+
+        ctvConfirmExifDate.setChecked(n_sti.isSyncOptionConfirmNotExistsExifDate());
+        ctvConfirmExifDate.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctvConfirmExifDate.toggle();
+                boolean isChecked=ctvConfirmExifDate.isChecked();
+                checkArchiveOkButtonEnabled(n_sti, dialog, btn_ok);
+            }
+        });
 
         ctvRenameWhenArchive.setChecked(n_sti.isArchiveUseRename());
 
@@ -3653,6 +3669,7 @@ public class SyncTaskEditor extends DialogFragment {
         btn_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                n_sti.setSyncOptionConfirmNotExistsExifDate(ctvConfirmExifDate.isChecked());
                 n_sti.setArchiveCreateDirectory(ctvCreateDircetory.isChecked());
                 n_sti.setArchiveCreateDirectoryTemplate(et_dir_template.getText().toString());
                 n_sti.setArchiveUseRename(ctvRenameWhenArchive.isChecked());

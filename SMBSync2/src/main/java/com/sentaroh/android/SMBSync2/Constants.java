@@ -41,6 +41,7 @@ public class Constants {
 	public static final String SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE="DeleteFile";
 	public static final String SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR="DeleteDir";
 	public static final String SMBSYNC2_CONFIRM_REQUEST_MOVE="Move";
+    public static final String SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE ="Archive";
 	public static final int SMBSYNC2_CONFIRM_RESP_YES = 1;
 	public static final int SMBSYNC2_CONFIRM_RESP_YESALL = 2;
 	public static final int SMBSYNC2_CONFIRM_RESP_NO = -1;

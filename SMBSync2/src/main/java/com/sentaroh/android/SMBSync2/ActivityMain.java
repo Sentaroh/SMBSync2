@@ -81,6 +81,7 @@ import com.sentaroh.android.Utilities.LocalMountPoint;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
+import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.SystemInfo;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
@@ -97,6 +98,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS;
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE;
@@ -3757,6 +3759,10 @@ public class ActivityMain extends AppCompatActivity {
             msg_text = String.format(getString(R.string.msgs_mirror_confirm_delete_dir_confirm), fp);
         } else if (method.equals(SMBSYNC2_CONFIRM_REQUEST_MOVE)) {
             msg_text = String.format(getString(R.string.msgs_mirror_confirm_move_confirm), fp);
+        } else if (method.equals(SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE)) {
+            long fd=(new File(fp)).lastModified();
+            String date_time= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(fd);
+            msg_text = String.format(getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_confirm), date_time, fp);
         }
         mGp.confirmMsg.setText(msg_text);
 

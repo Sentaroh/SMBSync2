@@ -74,6 +74,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE;
@@ -137,7 +138,7 @@ public class SyncThread extends Thread {
 
         public boolean localFileLastModListModified = false;
 
-        public int confirmCopyResult = 0, confirmDeleteResult = 0, confirmMoveResult = 0;
+        public int confirmCopyResult = 0, confirmDeleteResult = 0, confirmMoveResult = 0, confirmArchiveResult=0;
 
         public ArrayList<String> smbFileList = null;
 //		public StringBuilder strBldMaster=new StringBuilder(256);
@@ -1747,6 +1748,58 @@ public class SyncThread extends Thread {
             }
         }
         stwa.util.addDebugMsg(2, "I", "sendConfirmRequest result=" + result, ", rc=" + rc);
+
+        return result;
+    }
+
+    static final public boolean sendArchiveConfirmRequest(SyncThreadWorkArea stwa, SyncTaskItem sti, String type, String url) {
+        boolean result = true;
+        int rc = 0;
+        stwa.util.addDebugMsg(2, "I", "sendArchiveConfirmRequest entered type=" , type ,
+                ", fp=", url);
+        boolean ignore_confirm = true;
+        if (type.equals(SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE)) {
+            if (stwa.confirmArchiveResult == SMBSYNC2_CONFIRM_RESP_YESALL) result = true;
+            else if (stwa.confirmArchiveResult == SMBSYNC2_CONFIRM_RESP_NOALL) result = false;
+            else ignore_confirm = false;
+        }
+        if (!ignore_confirm) {
+            try {
+                String msg = "";
+                if (type.equals(SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE)) {
+                    msg = stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_please_check_confirm_msg_archive);
+                }
+                NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, 0, msg);
+                stwa.gp.confirmDialogShowed = true;
+                stwa.gp.confirmDialogFilePath = url;
+                stwa.gp.confirmDialogMethod = type;
+                stwa.gp.syncThreadConfirm.initThreadCtrl();
+                stwa.gp.releaseWakeLock(stwa.util);
+                if (stwa.gp.callbackStub != null) {
+                    stwa.gp.callbackStub.cbShowConfirmDialog(url, type);
+                }
+                synchronized (stwa.gp.syncThreadConfirm) {
+                    stwa.gp.syncThreadConfirmWait = true;
+                    stwa.gp.syncThreadConfirm.wait();//Posted by SMBSyncService#aidlConfirmResponse()
+                    stwa.gp.syncThreadConfirmWait = false;
+                }
+                stwa.gp.acquireWakeLock(stwa.util);
+                if (type.equals(SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE)) {
+                    rc = stwa.confirmArchiveResult = stwa.gp.syncThreadConfirm.getExtraDataInt();
+                    if (stwa.confirmArchiveResult > 0) result = true;
+                    else result = false;
+                    if (stwa.confirmArchiveResult == SMBSYNC2_CONFIRM_RESP_CANCEL)
+                        stwa.gp.syncThreadCtrl.setDisabled();
+                }
+            } catch (RemoteException e) {
+                stwa.util.addLogMsg("E", "", "RemoteException occured");
+                printStackTraceElement(stwa, e.getStackTrace());
+            } catch (InterruptedException e) {
+                stwa.util.addLogMsg("E", "", "InterruptedException occured");
+                printStackTraceElement(stwa, e.getStackTrace());
+            }
+        }
+        stwa.util.addDebugMsg(2, "I", "sendArchiveConfirmRequest result=" + result, ", rc=" + rc);
 
         return result;
     }

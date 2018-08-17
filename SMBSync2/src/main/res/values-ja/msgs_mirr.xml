@@ -23,6 +23,7 @@
     <string name="msgs_mirror_task_result_stats" formatted="false">コピー=%s, 削除=%s, 無視=%s, 警告=%s, リトライ=%s, エラー=%s</string>
     <string name="msgs_mirror_ignore_override_move_file"> 同期オプションで上書きが無効になっているためファイルの移動は無視されました。</string>
     <string name="msgs_mirror_ignore_override_copy_file"> 同期オプションで上書きが無効になっているためファイルのコピーは無視されました。</string>
+
     <string name="msgs_mirror_confirm_copy_cancel">コピーがユーザーによりキャンセルされました。</string>
     <string name="msgs_mirror_confirm_move_cancel">移動がユーザーによりキャンセルされました。</string>
 	<string name="msgs_mirror_confirm_delete_cancel">削除がユーザーによりキャンセルされました。</string>
@@ -39,6 +40,10 @@
 	<string name="msgs_mirror_confirm_please_check_confirm_msg_delete_dir">ディレクトリ削除の確認が必要です。ここをタップし、確認してください。</string>
 	<string name="msgs_mirror_confirm_please_check_confirm_msg_delete_file">ファイル削除の確認が必要です。ここをタップし、確認してください。</string>
 	<string name="msgs_mirror_confirm_please_check_confirm_msg_move">ファイル移動の確認が必要です。ここをタップし、確認してください。</string>
+
+    <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">ファイルの撮影日時がExif情報から取得できませんでした。ファイルの最終更新時刻(%s)を撮影日時として処理を継続してよろしいでしょうか？ ファイル=%s\n(確認が不要な場合は同期タスクのアーカイブオプションで「確認」のチェックを外してください)</string>
+    <string name="msgs_mirror_confirm_please_check_confirm_msg_archive">ファイルアーカイブの確認が必要です。ここをタップし、確認してください。</string>
+    <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">アーカイブがユーザーによりキャンセルされました。</string>
 
 	<string name="msgs_mirror_external_sdcard_select_required">外部SDCARDの選択がなされていないため同期を中止します。</string>		
 	<string name="msgs_mirror_external_sdcard_not_mounted">外部SDCARDがマウントされていないため同期を中止します。</string>
