@@ -2087,11 +2087,11 @@ public class SyncThread extends Thread {
         else return true;
     }
 
-    static public SafFile getSafFile(SyncThreadWorkArea stwa, SyncTaskItem sti,String fp) {
-        return getSafFile(stwa, sti, fp, false);
+    static public SafFile createSafFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp) {
+        return createSafFile(stwa, sti, fp, false);
     }
 
-    static public SafFile getSafFile(SyncThreadWorkArea stwa, SyncTaskItem sti,String fp, boolean isDirectory) {
+    static public SafFile createSafFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp, boolean isDirectory) {
         SafFile t_df =null;
         if (fp.startsWith(stwa.gp.safMgr.getSdcardRootPath())) {
             t_df = stwa.gp.safMgr.createSdcardItem(fp, isDirectory);
