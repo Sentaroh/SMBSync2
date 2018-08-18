@@ -115,7 +115,8 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskTargetZipCompOptionPassword = "";
     private String syncTaskTargetZipCompOptionEncoding = "UTF-8";
     //	private boolean syncTaskTargetZipUseInternalUsbFolder=false;
-    private boolean syncTaskTargetZipUseExternalSdcard = false;
+    private boolean syncTaskTargetZipUseSdcard = false;
+    private boolean syncTaskTargetZipUseUsb = false;
 //	private boolean syncTaskTargetFolderUseInternalUsbFolder=false;
 
     private boolean syncFileTypeAudio = false;
@@ -275,9 +276,11 @@ class SyncTaskItem implements Serializable, Cloneable {
     public String getTargetZipPassword() {return syncTaskTargetZipCompOptionPassword;}
     public void setTargetZipPassword(String p) {syncTaskTargetZipCompOptionPassword = p;}
 
-    public boolean isTargetZipUseExternalSdcard() {return syncTaskTargetZipUseExternalSdcard;}
+    public boolean isTargetZipUseExternalSdcard() {return syncTaskTargetZipUseSdcard;}
+    public void setTargetZipUseExternalSdcard(boolean p) {syncTaskTargetZipUseSdcard = p;}
 
-    public void setTargetZipUseExternalSdcard(boolean p) {syncTaskTargetZipUseExternalSdcard = p;}
+    public boolean isTargetZipUseUsb() {return syncTaskTargetZipUseUsb;}
+    public void setTargetZipUseUsb(boolean p) {syncTaskTargetZipUseUsb = p;}
 
     public String getTargetZipFileNameEncoding() {return syncTaskTargetZipCompOptionEncoding;}
 
@@ -549,7 +552,8 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncTaskTargetZipCompOptionEncrypt.equals(sti.getTargetZipEncryptMethod())) &&
                         (syncTaskTargetZipCompOptionPassword.equals(sti.getTargetZipPassword())) &&
                         (syncTaskTargetZipCompOptionEncoding.equals(sti.getTargetZipFileNameEncoding())) &&
-                        (syncTaskTargetZipUseExternalSdcard==sti.isTargetZipUseExternalSdcard()) &&
+                        (syncTaskTargetZipUseSdcard ==sti.isTargetZipUseExternalSdcard()) &&
+                        (syncTaskTargetZipUseUsb ==sti.isTargetZipUseUsb()) &&
                         (syncTaskArchiveRenameWhenArchive ==sti.isArchiveUseRename()) &&
                         (syncTaskArchiveRenameFileTemplate.equals(sti.getArchiveRenameFileTemplate())) &&
                         (syncTaskArchiveRetentionPeriod ==sti.getArchiveRetentionPeriod()) &&
