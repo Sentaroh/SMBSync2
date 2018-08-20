@@ -2111,7 +2111,7 @@ public class SyncThread extends Thread {
                 SafFile sf = stwa.gp.safMgr.getUsbRootSafFile();
                 if (sf != null) saf_name = sf.getName();
                 stwa.util.addLogMsg("E", "SAF file not found error. path=" + fp + ", SafFile=" + saf_name +
-                        ", sdcard=" + stwa.gp.safMgr.getUsbRootPath());
+                        ", usb=" + stwa.gp.safMgr.getUsbRootPath());
                 stwa.util.addLogMsg("E", "SafManager msg=="+stwa.gp.safMgr.getMessages() );
                 return null;
             }
