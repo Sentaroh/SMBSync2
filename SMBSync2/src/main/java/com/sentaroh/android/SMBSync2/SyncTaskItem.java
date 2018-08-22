@@ -150,8 +150,6 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private boolean syncOptionDeleteFirstWhenMirror = false;
 
-    private boolean syncOptionConfirmNotExistsExifDate = true;
-
     public final static String SYNC_WIFI_STATUS_WIFI_OFF = "0";
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP = "1";
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP = "2";
@@ -464,8 +462,13 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setSyncOptionDeleteFirstWhenMirror(boolean first) {syncOptionDeleteFirstWhenMirror = first;}
     public boolean isSyncOptionDeleteFirstWhenMirror() {return syncOptionDeleteFirstWhenMirror;}
 
+    private boolean syncOptionConfirmNotExistsExifDate = true;
     public void setSyncOptionConfirmNotExistsExifDate(boolean enabled) {syncOptionConfirmNotExistsExifDate=enabled;}
     public boolean isSyncOptionConfirmNotExistsExifDate() {return syncOptionConfirmNotExistsExifDate;}
+
+    private boolean syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile = false;
+    public void setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(boolean enabled) {syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile=enabled;}
+    public boolean isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile() {return syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile;}
 
     public void setLastSyncTime(String p) {syncLastSyncTime = p;}
     public void setLastSyncResult(int p) {syncLastSyncResult = p;}
@@ -583,7 +586,10 @@ class SyncTaskItem implements Serializable, Cloneable {
 //                        (syncOptionUseFileCopyByTempName==sti.isSyncUseFileCopyByTempName()) &&
                         (syncOptionDeleteFirstWhenMirror==sti.isSyncOptionDeleteFirstWhenMirror()) &&
                         (syncOptionConfirmNotExistsExifDate==sti.isSyncOptionConfirmNotExistsExifDate()) &&
+
                         (syncOptionUseExtendedDirectoryFilter1==sti.isSyncUseExtendedDirectoryFilter1()) &&
+
+                        (syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile==sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) &&
 
                         (syncOptionWifiStatus.equals(sti.getSyncWifiStatusOption())) &&
 

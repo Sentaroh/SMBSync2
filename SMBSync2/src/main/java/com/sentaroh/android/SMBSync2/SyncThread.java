@@ -1818,6 +1818,18 @@ public class SyncThread extends Thread {
         return result;
     }
 
+    static final public FileLastModifiedTimeEntry getLocalFileLastModifiedFileItemExists(SyncThreadWorkArea stwa,
+                                                                      SyncTaskItem sti,
+                                                                      ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
+                                                                      ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
+                                                                      String fp) {
+        FileLastModifiedTimeEntry item = FileLastModifiedTime.isFileItemExists(
+                curr_last_modified_list, new_last_modified_list, fp);
+        if (stwa.gp.settingDebugLevel >= 3)
+            stwa.util.addDebugMsg(3, "I", "isLocalFileLastModifiedWasDifferent result=" + item + ", item=" + fp);
+        return item;
+    }
+
     static final public boolean isLocalFileLastModifiedWasDifferent(SyncThreadWorkArea stwa,
                                                                     SyncTaskItem sti,
                                                                     ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
@@ -1914,6 +1926,30 @@ public class SyncThread extends Thread {
                 mf_exists, mf_time, mf_length, mf.getPath(),
                 tf.exists(), tf.getLastModified(), tf.length(), ac);
 
+    }
+
+    static final public boolean checkMasterFileNewerThanTargetFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,
+                                                                   long master_time, long target_time) {
+        boolean result=true;
+        if (sti.isSyncDifferentFileByTime() && sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) {
+            if (stwa.lastModifiedIsFunctional) {//Use lastModified
+                if (master_time>target_time) result=true;
+                else result=false;
+            } else {
+                FileLastModifiedTimeEntry flme=getLocalFileLastModifiedFileItemExists(stwa, sti, stwa.currLastModifiedList, stwa.newLastModifiedList, fp);
+                if (flme==null) result=true;
+                else {
+                    if (target_time==flme.getRemoteFileLastModified()) {
+                        if (master_time>target_time) result=true;
+                        else result=false;
+                    } else {
+                        if (master_time>target_time) result=true;
+                        else result=false;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     static final private boolean isFileChangedDetailCompare(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,

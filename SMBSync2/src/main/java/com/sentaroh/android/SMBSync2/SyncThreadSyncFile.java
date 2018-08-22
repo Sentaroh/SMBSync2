@@ -634,7 +634,8 @@ public class SyncThreadSyncFile {
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
-                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.lastModified())) {
                                         sync_result = SyncThreadCopyFile.copyFileInternalToInternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                 mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
@@ -660,7 +661,8 @@ public class SyncThreadSyncFile {
                                     stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
-                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                        SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.lastModified())) {
                                     if (!tf_exists || SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_COPY, to_path)) {
                                         sync_result = SyncThreadCopyFile.copyFileInternalToInternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                 mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
@@ -815,8 +817,9 @@ public class SyncThreadSyncFile {
                                 stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
-                                if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
-                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path) ) {
+                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.lastModified())) {
                                         sync_result = SyncThreadCopyFile.copyFileInternalToExternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                 mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
@@ -848,7 +851,8 @@ public class SyncThreadSyncFile {
                                     stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
-                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                        SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.lastModified())) {
                                     if (!tf_exists || SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_COPY, to_path)) {
                                         sync_result = SyncThreadCopyFile.copyFileInternalToExternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                 mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
@@ -1023,7 +1027,8 @@ public class SyncThreadSyncFile {
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
-                                    if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY)) {
+                                    if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY) &&
+                                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.getLastModified())) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             sync_result = SyncThreadCopyFile.copyFileInternalToSmb(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                     mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
@@ -1056,7 +1061,8 @@ public class SyncThreadSyncFile {
                                     stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
-                                if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY)) {
+                                if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY) &&
+                                        SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.getLastModified())) {
                                     if (!tf_exists || SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_COPY, to_path)) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             sync_result = SyncThreadCopyFile.copyFileInternalToSmb(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
@@ -1208,7 +1214,8 @@ public class SyncThreadSyncFile {
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
-                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.lastModified())) {
                                         sync_result = SyncThreadCopyFile.copyFileExternalToInternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                 mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
@@ -1234,7 +1241,8 @@ public class SyncThreadSyncFile {
                                     stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
-                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                    SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.lastModified())) {
                                     if (!tf_exists || SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_COPY, to_path)) {
                                         sync_result = SyncThreadCopyFile.copyFileExternalToInternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                 mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
@@ -1398,7 +1406,8 @@ public class SyncThreadSyncFile {
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
-                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)  &&
+                                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.lastModified())) {
                                         sync_result = SyncThreadCopyFile.copyFileExternalToExternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                 mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
                                         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
@@ -1429,7 +1438,8 @@ public class SyncThreadSyncFile {
                                     stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
-                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                        SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.lastModified())) {
                                     if (!tf_exists || SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_COPY, to_path)) {
                                         sync_result = SyncThreadCopyFile.copyFileExternalToExternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                 mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
@@ -1604,7 +1614,8 @@ public class SyncThreadSyncFile {
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
-                                    if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY)) {
+                                    if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY) &&
+                                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.getLastModified())) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             sync_result = SyncThreadCopyFile.copyFileExternalToSmb(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                     mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
@@ -1637,7 +1648,8 @@ public class SyncThreadSyncFile {
                                     stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
-                                if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY)) {
+                                if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY) &&
+                                        SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.lastModified(), tf.getLastModified())) {
                                     if (!tf_exists || SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_COPY, to_path)) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             sync_result = SyncThreadCopyFile.copyFileExternalToSmb(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
@@ -1852,7 +1864,8 @@ public class SyncThreadSyncFile {
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
-                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.getLastModified(), tf.lastModified())) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             sync_result = SyncThreadCopyFile.copyFileSmbToInternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                     mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
@@ -1893,7 +1906,8 @@ public class SyncThreadSyncFile {
                                     stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
-                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                        SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.getLastModified(), tf.lastModified())) {
                                     if (!tf_exists || SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_COPY, to_path)) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             sync_result = SyncThreadCopyFile.copyFileSmbToInternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
@@ -2153,7 +2167,8 @@ public class SyncThreadSyncFile {
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
-                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.getLastModified(), tf.lastModified())) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             sync_result = SyncThreadCopyFile.copyFileSmbToExternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                     mf, to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
@@ -2197,7 +2212,8 @@ public class SyncThreadSyncFile {
                                     stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
-                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                        SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.getLastModified(), tf.lastModified())) {
                                     if (!tf_exists || SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_COPY, to_path)) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             sync_result = SyncThreadCopyFile.copyFileSmbToExternal(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
@@ -2436,7 +2452,8 @@ public class SyncThreadSyncFile {
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
-                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                    if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.getLastModified(), tf.getLastModified())) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             sync_result = SyncThreadCopyFile.copyFileSmbToSmb(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),
                                                     to_path.substring(0, to_path.lastIndexOf("/")), mf.getName());
@@ -2471,7 +2488,8 @@ public class SyncThreadSyncFile {
                                     stwa.util.addLogMsg("W", to_path, " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
-                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY) &&
+                                        SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, to_path, mf.getLastModified(), tf.getLastModified())) {
                                     if (!tf_exists || SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_COPY, to_path)) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             sync_result = SyncThreadCopyFile.copyFileSmbToSmb(stwa, sti, from_path.substring(0, from_path.lastIndexOf("/")),

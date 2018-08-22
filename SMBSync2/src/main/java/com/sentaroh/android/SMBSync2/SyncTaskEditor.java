@@ -2543,9 +2543,21 @@ public class SyncTaskEditor extends DialogFragment {
         ctv_task_skip_if_ssid_invalid.setChecked(n_sti.isSyncTaskSkipIfConnectAnotherWifiSsid());
 
         final CheckedTextView ctv_task_sync_when_cahrging = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
-        CommonUtilities.setCheckedTextView(ctv_task_sync_when_cahrging);
+//        CommonUtilities.setCheckedTextView(ctv_task_sync_when_cahrging);
         ctv_task_sync_when_cahrging.setChecked(n_sti.isSyncOptionSyncWhenCharging());
         ctv_task_sync_when_cahrging.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !((CheckedTextView) v).isChecked();
+                ((CheckedTextView) v).setChecked(isChecked);
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+        });
+
+        final CheckedTextView ctv_never_overwrite_target_file_newer_than_the_master_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file);
+//        CommonUtilities.setCheckedTextView(ctv_task_sync_when_cahrging);
+        ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(n_sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile());
+        ctv_never_overwrite_target_file_newer_than_the_master_file.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isChecked = !((CheckedTextView) v).isChecked();
@@ -2929,20 +2941,37 @@ public class SyncTaskEditor extends DialogFragment {
         if (ctvDiffUseFileSize.isChecked()) ctvDeterminChangedFileSizeGtTarget.setEnabled(true);
         else ctvDeterminChangedFileSizeGtTarget.setEnabled(false);
 
+        final Spinner spinnerSyncDiffTimeValue = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_diff_file_determin_time_value);
+        setSpinnerSyncTaskDiffTimeValue(spinnerSyncDiffTimeValue, n_sti.getSyncDifferentFileAllowableTime());
+
         final CheckedTextView ctDeterminChangedFileByTime = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_last_mod_time);
-        CommonUtilities.setCheckedTextView(ctDeterminChangedFileByTime);
+//        CommonUtilities.setCheckedTextView(ctDeterminChangedFileByTime);
         ctDeterminChangedFileByTime.setChecked(n_sti.isSyncDifferentFileByTime());
+        if (n_sti.isSyncDifferentFileByTime()) {
+            ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(true);
+            spinnerSyncDiffTimeValue.setEnabled(true);
+        } else {
+            ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(false);
+            ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(false);
+            spinnerSyncDiffTimeValue.setEnabled(false);
+        }
         ctDeterminChangedFileByTime.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isChecked = !((CheckedTextView) v).isChecked();
                 ((CheckedTextView) v).setChecked(isChecked);
+                if (isChecked) {
+                    ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(true);
+                    spinnerSyncDiffTimeValue.setEnabled(true);
+                } else {
+                    ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(false);
+                    ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(false);
+                    spinnerSyncDiffTimeValue.setEnabled(false);
+                }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
         });
 
-        final Spinner spinnerSyncDiffTimeValue = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_diff_file_determin_time_value);
-        setSpinnerSyncTaskDiffTimeValue(spinnerSyncDiffTimeValue, n_sti.getSyncDifferentFileAllowableTime());
 
         CommonDialog.setDlgBoxSizeLimit(mDialog, true);
 
@@ -3783,6 +3812,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctv_task_skip_if_ssid_invalid = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ap_list_task_skip_if_ssid_invalid);
 
         final CheckedTextView ctv_task_sync_when_cahrging = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
+        final CheckedTextView ctv_never_overwrite_target_file_newer_than_the_master_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file);
 
         final Button swap_master_target = (Button) dialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
         final Button master_folder_info = (Button) dialog.findViewById(R.id.edit_sync_task_master_folder_info_btn);
@@ -3854,6 +3884,8 @@ public class SyncTaskEditor extends DialogFragment {
         nstli.setSyncDifferentFileBySize(ctvDiffUseFileSize.isChecked());
         nstli.setSyncDifferentFileSizeGreaterThanTagetFile(ctvDeterminChangedFileSizeGtTarget.isChecked());
         nstli.setSyncDifferentFileByModTime(ctDeterminChangedFileByTime.isChecked());
+
+        nstli.setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(ctv_never_overwrite_target_file_newer_than_the_master_file.isChecked());
 
         String diff_val = spinnerSyncDiffTimeValue.getSelectedItem().toString();
         nstli.setSyncDifferentFileAllowableTime(Integer.valueOf(diff_val));

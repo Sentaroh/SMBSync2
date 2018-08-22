@@ -382,6 +382,22 @@
                     android:minHeight="36dp"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 
