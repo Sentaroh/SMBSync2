@@ -397,6 +397,7 @@ public class SyncThread extends Thread {
         mStwa.util.addDebugMsg(1, "I", "   Confirm=" + sti.isSyncConfirmOverrideOrDelete() ,
                 ", LastModSmbsync2=" + sti.isSyncDetectLastModifiedBySmbsync() ,
                 ", UseLastMod=" + sti.isSyncDifferentFileByTime() ,
+                ", NeverOverwriteTargetFileIfItIsNewerThanTheMasterFile=" + sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(),
                 ", UseFileSize=" + sti.isSyncDifferentFileBySize() ,
                 ", UseFileSizeGreaterThanTagetFile=" + sti.isSyncDifferentFileSizeGreaterThanTagetFile() ,
                 ", DoNotResetFileLastMod=" + sti.isSyncDoNotResetFileLastModified() ,
@@ -1933,18 +1934,37 @@ public class SyncThread extends Thread {
         boolean result=true;
         if (sti.isSyncDifferentFileByTime() && sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) {
             if (stwa.lastModifiedIsFunctional) {//Use lastModified
-                if (master_time>target_time) result=true;
-                else result=false;
+                if (master_time>target_time) {
+                    result=true;
+                } else {
+                    result=false;
+                    stwa.totalIgnoreCount++;
+                    String fn=fp.substring(fp.lastIndexOf("/"));
+                    showMsg(stwa, false, sti.getSyncTaskName(), "W", fp, fn, stwa.gp.appContext.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled));
+                }
             } else {
                 FileLastModifiedTimeEntry flme=getLocalFileLastModifiedFileItemExists(stwa, sti, stwa.currLastModifiedList, stwa.newLastModifiedList, fp);
-                if (flme==null) result=true;
-                else {
+                if (flme==null) {
+                    result=true;
+                } else {
                     if (target_time==flme.getRemoteFileLastModified()) {
-                        if (master_time>target_time) result=true;
-                        else result=false;
+                        if (master_time>target_time) {
+                            result=true;
+                        } else {
+                            result=false;
+                            stwa.totalIgnoreCount++;
+                            String fn=fp.substring(fp.lastIndexOf("/"));
+                            showMsg(stwa, false, sti.getSyncTaskName(), "W", fp, fn, stwa.gp.appContext.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled));
+                        }
                     } else {
-                        if (master_time>target_time) result=true;
-                        else result=false;
+                        if (master_time>target_time) {
+                            result=true;
+                        } else {
+                            result=false;
+                            stwa.totalIgnoreCount++;
+                            String fn=fp.substring(fp.lastIndexOf("/"));
+                            showMsg(stwa, false, sti.getSyncTaskName(), "W", fp, fn, stwa.gp.appContext.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled));
+                        }
                     }
                 }
             }

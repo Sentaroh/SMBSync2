@@ -328,6 +328,7 @@
     <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">無線LAN</string>
     <string name="msgs_profile_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
     <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file">ターゲットファイルがマスターファイルより新しい時はターゲットファイルを上書きしない</string>
+    <string name="msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled">\"ターゲットファイルがマスターファイルより新しい時はターゲットファイルを上書きしない\"オプションが有効なためファイルの上書きコピーを無視しました。</string>
     <string name="msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time">差分ファイルの判定にファイルの最終更新時間を使用する</string>
     <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">差分ファイルの判定にファイル サイズを使用する</string>
     <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">マスターのファイルサイズが大きい時だけ差分ファイルとして判定する</string>
