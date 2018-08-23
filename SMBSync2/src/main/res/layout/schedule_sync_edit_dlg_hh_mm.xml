@@ -4,77 +4,98 @@
     android:id="@+id/scheduler_main_dlg_ll_exec_hm"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:ignore="DisableBaselineAlignment,RtlSymmetry,RtlHardcoded" >
 
     <LinearLayout
-        android:id="@+id/scheduler_main_dlg_ll_exec_day"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginRight="5dp"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="wrap_content"
+        android:orientation="horizontal" >
+        <LinearLayout
+            android:id="@+id/scheduler_main_dlg_ll_exec_day"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/msgs_scheduler_main_dlg_hdr_day"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical" >
 
-        <Spinner
-            android:id="@+id/scheduler_main_dlg_exec_day"
-            style="?android:attr/spinnerStyle"
-            android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msgs_scheduler_main_dlg_hdr_day"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/scheduler_main_dlg_exec_day"
+                style="?android:attr/spinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scheduler_main_dlg_ll_exec_hour"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="40dp"
-            android:paddingLeft="5dp" />
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msgs_scheduler_main_dlg_hdr_hour"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/scheduler_main_dlg_exec_hours"
+                style="?android:attr/spinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scheduler_main_dlg_ll_exec_minute"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msgs_scheduler_main_dlg_hdr_minute"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/scheduler_main_dlg_exec_minutes"
+                style="?android:attr/spinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:paddingLeft="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/scheduler_main_dlg_ll_exec_hour"
-        android:layout_width="0dp"
+    <CheckedTextView
+        android:id="@+id/scheduler_main_dlg_ll_exec_last_day_of_the_month"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginRight="5dp"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/msgs_scheduler_main_dlg_hdr_hour"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <Spinner
-            android:id="@+id/scheduler_main_dlg_exec_hours"
-            style="?android:attr/spinnerStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="40dp"
-            android:paddingLeft="5dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/scheduler_main_dlg_ll_exec_minute"
-        android:layout_width="0dp"
+        android:layout_marginLeft="5dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center_vertical"
+        android:text="@string/msgs_scheduler_main_last_day_of_the_month"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+    <TextView
+        android:id="@+id/scheduler_main_dlg_exec_day_waring"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/msgs_scheduler_main_dlg_hdr_minute"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <Spinner
-            android:id="@+id/scheduler_main_dlg_exec_minutes"
-            style="?android:attr/spinnerStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="40dp"
-            android:paddingLeft="5dp"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    </LinearLayout>
+        android:text="@string/msgs_scheduler_main_last_day_of_the_month_warning"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

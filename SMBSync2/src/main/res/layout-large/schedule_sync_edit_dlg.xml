@@ -92,13 +92,14 @@
                         android:minHeight="40dp"
                         android:paddingLeft="5dp"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <include
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/schedule_sync_edit_dlg_hh_mm" />
+
                 </LinearLayout>
 
-                <include
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    layout="@layout/schedule_sync_edit_dlg_hh_mm" />
-                
             </LinearLayout>
             
             

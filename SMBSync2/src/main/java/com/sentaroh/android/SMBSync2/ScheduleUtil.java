@@ -275,8 +275,21 @@ public class ScheduleUtil {
                 result = cal.getTimeInMillis() + (60 * 1000 * 60 * 24) + (60 * 1000 * s_min);
             else result = cal.getTimeInMillis() + (60 * 1000 * s_min);
         } else if (sp.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH)) {
+            int s_day_last_day=0, s_day_temp=0;
+            cal.set(Calendar.YEAR, c_year);
+            cal.set(Calendar.MONTH, c_month);
+            s_day_last_day=cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+            if (s_day==99) {
+                s_day_temp=s_day_last_day;
+            } else {
+                if (s_day>s_day_last_day) {
+                    return 0;
+                } else {
+                    s_day_temp=s_day;
+                }
+            }
             cal.clear();
-            cal.set(c_year, c_month, s_day, s_hrs, s_min, 0);
+            cal.set(c_year, c_month, s_day_temp, s_hrs, s_min, 0);
             String curr=StringUtil.convDateTimeTo_YearMonthDayHourMinSec((System.currentTimeMillis()+59999));
             String cald=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(cal.getTimeInMillis());
             if ((System.currentTimeMillis()+59999)>=cal.getTimeInMillis()) {
@@ -284,7 +297,7 @@ public class ScheduleUtil {
             }
             result = cal.getTimeInMillis();
             Log.v("ScheduleNextTime","name="+sp.scheduleName+", c_year="+c_year+", c_month="+c_month+
-                    ", s_day="+s_day+", s_hrs="+s_hrs+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
+                    ", s_day="+s_day_temp+", s_hrs="+s_hrs+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
         } else if (sp.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
 //    		cal.clear();
 //    		cal.setTimeInMillis(sp.scheduleLastExecTime+s_min*(60*1000));

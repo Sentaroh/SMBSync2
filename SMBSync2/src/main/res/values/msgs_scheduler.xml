@@ -36,7 +36,11 @@
     <string name="msgs_scheduler_main_spinner_sched_day_prompt">Select schedule day</string>
 	<string name="msgs_scheduler_main_spinner_sched_hours_prompt">Select schedule hours</string>
 	<string name="msgs_scheduler_main_spinner_sched_minutes_prompt">Select schedule minutes</string>
-	
+
+    <string name="msgs_scheduler_info_last_day_of_the_month">Last day</string>
+    <string name="msgs_scheduler_main_last_day_of_the_month">Sync to the last day of the month</string>
+    <string name="msgs_scheduler_main_last_day_of_the_month_warning">If it is specified from 29th to 31st, it may not be executed. Please check \"Sync to the last day of the month\" in order to be sure to run on the last day of the month.</string>
+
 	<string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Sync task list</string>
     <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Sync all auto sync task</string>
     

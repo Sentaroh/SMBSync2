@@ -27,6 +27,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -169,6 +170,9 @@ public class ScheduleItemEditor {
 //		final LinearLayout ll_sched_hm=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hm);
 //		final LinearLayout ll_sched_hours=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
 //		final LinearLayout ll_sched_minutes=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_minute);
+        final CheckedTextView ctv_last_day = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_last_day_of_the_month);
+        ctv_last_day.setTextColor(mGp.themeColorList.text_color_primary);
+
         final CheckedTextView ctv_first_time = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_first_run);
         ctv_first_time.setTextColor(mGp.themeColorList.text_color_primary);
 
@@ -215,6 +219,28 @@ public class ScheduleItemEditor {
         }
 
         ctv_sched_enabled.setChecked(mSched.scheduleEnabled);
+
+        ctv_last_day.setChecked(mSched.scheduleDay.equals("99"));
+        if(ctv_last_day.isChecked()) {
+            sp_sched_day.setEnabled(false);
+        } else {
+            sp_sched_day.setEnabled(true);
+        }
+        setWarningMessageLastDay(dialog);
+        ctv_last_day.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((CheckedTextView) v).toggle();
+                boolean isChecked = ((CheckedTextView) v).isChecked();
+                if(isChecked) {
+                    sp_sched_day.setEnabled(false);
+                } else {
+                    sp_sched_day.setEnabled(true);
+                }
+                setWarningMessageLastDay(dialog);
+                setScheduleWasChanged(dialog, true);
+            }
+        });
 
         ctv_first_time.setChecked(mSched.scheduleIntervalFirstRunImmed);
         ctv_reset_interval.setOnClickListener(new OnClickListener() {
@@ -301,7 +327,7 @@ public class ScheduleItemEditor {
         sp_sched_minutes.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (sp_sched_type.getSelectedItemPosition() == 3) {
+                if (getScheduleTypeFromSpinner(sp_sched_type).equals(SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {//Interval
                     if (mSched.scheduleMinutes.equals(sp_sched_minutes.getSelectedItem().toString())) {
                         ctv_reset_interval.setChecked(false);
                     } else {
@@ -316,10 +342,12 @@ public class ScheduleItemEditor {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        setWarningMessageLastDay(dialog);
         sp_sched_day.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 setScheduleWasChanged(dialog, true);
+                setWarningMessageLastDay(dialog);
             }
 
             @Override
@@ -352,6 +380,7 @@ public class ScheduleItemEditor {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
+                setWarningMessageLastDay(dialog);
                 String sched_type = getScheduleTypeFromPosition(position);
                 setScheduleMinutesSpinner(dialog, sched_type, mSched.scheduleMinutes);
                 setViewVisibility(dialog);
@@ -359,7 +388,7 @@ public class ScheduleItemEditor {
 //				btn_ok.setEnabled(true);
                 setOkButtonEnabledDisabled(dialog);
 
-                if (sp_sched_type.getSelectedItemPosition() == 2 &&
+                if (getScheduleTypeFromSpinner(sp_sched_type).equals(SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK) &&
                         buildDayOfWeekString(dialog).equals("0000000")) {
                     cb_sched_sun.setChecked(true);
                 }
@@ -487,7 +516,7 @@ public class ScheduleItemEditor {
                 ctv_sync_all_prof.toggle();
                 boolean isChecked = ctv_sync_all_prof.isChecked();
 
-                if (sp_sched_type.getSelectedItemPosition() == 2) {
+                if (getScheduleTypeFromSpinner(sp_sched_type).equals(SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
                     if (cb_sched_sun.isChecked() || cb_sched_mon.isChecked() || cb_sched_tue.isChecked() ||
                             cb_sched_wed.isChecked() || cb_sched_thu.isChecked() || cb_sched_fri.isChecked() ||
                             cb_sched_sat.isChecked()) {
@@ -710,7 +739,32 @@ public class ScheduleItemEditor {
         }
     }
 
-    ;
+    private void setWarningMessageLastDay(Dialog dialog) {
+        final Spinner sp_sched_day = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_day);
+        final Spinner sp_sched_type = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_date_time_type);
+        final CheckedTextView ctv_last_day = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_last_day_of_the_month);
+
+        final TextView tv_sched_day_warning = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_exec_day_waring);
+        if (ctv_last_day.isChecked()) {
+            tv_sched_day_warning.setVisibility(TextView.GONE);
+        } else {
+            if (getScheduleTypeFromSpinner(sp_sched_type).equals(SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH)) {//Every month
+                tv_sched_day_warning.setTextColor(Color.YELLOW);
+                try {
+                    int day=Integer.parseInt(sp_sched_day.getSelectedItem().toString());
+                    if (day>28 && day<=31) {
+                        tv_sched_day_warning.setVisibility(TextView.VISIBLE);
+                    } else {
+                        tv_sched_day_warning.setVisibility(TextView.GONE);
+                    }
+                } catch(Exception e) {
+                    tv_sched_day_warning.setVisibility(TextView.GONE);
+                }
+            } else {
+                tv_sched_day_warning.setVisibility(TextView.GONE);
+            }
+        }
+    }
 
     private void buildSchedParms(Dialog dialog, ScheduleItem sp) {
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
@@ -731,6 +785,8 @@ public class ScheduleItemEditor {
 //		final LinearLayout ll_sched_hm=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hm);
 //		final LinearLayout ll_sched_hours=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
 //		final LinearLayout ll_sched_minutes=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_minute);
+        final CheckedTextView ctv_last_day = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_last_day_of_the_month);
+
         final CheckedTextView ctv_first_time = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_first_run);
 
         final CheckedTextView ctv_reset_interval = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_reset);
@@ -755,13 +811,13 @@ public class ScheduleItemEditor {
         String p_sched_type = sp.scheduleType;
         String p_sched_mm = sp.scheduleMinutes;
 
-        if (sp_sched_type.getSelectedItemPosition() == 0) sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS;
-        else if (sp_sched_type.getSelectedItemPosition() == 1) sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
-        else if (sp_sched_type.getSelectedItemPosition() == 2) sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH;
-        else if (sp_sched_type.getSelectedItemPosition() == 3) sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
-        else if (sp_sched_type.getSelectedItemPosition() == 4) sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_INTERVAL;
+        sp.scheduleType=getScheduleTypeFromSpinner(sp_sched_type);
 
-        sp.scheduleDay = sp_sched_day.getSelectedItem().toString();
+        if (ctv_last_day.isChecked()) {
+            sp.scheduleDay = "99";
+        } else {
+            sp.scheduleDay = sp_sched_day.getSelectedItem().toString();
+        }
 
         sp.scheduleHours = sp_sched_hours.getSelectedItem().toString();
 
@@ -949,42 +1005,47 @@ public class ScheduleItemEditor {
         final LinearLayout ll_sched_day = (LinearLayout) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_day);
         final LinearLayout ll_sched_hours = (LinearLayout) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
         final LinearLayout ll_sched_minutes = (LinearLayout) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_minute);
-
+        final CheckedTextView ctv_last_day = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_last_day_of_the_month);
         final CheckedTextView ctv_first_time = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_first_run);
         ctv_first_time.setVisibility(CheckedTextView.GONE);
         final CheckedTextView ctv_reset_interval = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_reset);
         ctv_reset_interval.setVisibility(CheckedTextView.GONE);
 
-        if (sp_sched_type.getSelectedItemPosition() <= 0) {//Every hours
+        if (getScheduleTypeFromSpinner(sp_sched_type).equals(SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS)) {//Every hours
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
             ll_sched_day.setVisibility(LinearLayout.GONE);
             ll_sched_hours.setVisibility(LinearLayout.GONE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
-        } else if (sp_sched_type.getSelectedItemPosition() == 1) {//Every day
+            ctv_last_day.setVisibility(CheckedTextView.GONE);
+        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(SCHEDULER_SCHEDULE_TYPE_EVERY_DAY)) {//Every day
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
             ll_sched_day.setVisibility(LinearLayout.GONE);
             ll_sched_hours.setVisibility(LinearLayout.VISIBLE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
-        } else if (sp_sched_type.getSelectedItemPosition() == 2) {//Every montj
+            ctv_last_day.setVisibility(CheckedTextView.GONE);
+        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH)) {//Every month
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
             ll_sched_day.setVisibility(LinearLayout.VISIBLE);
             ll_sched_hours.setVisibility(LinearLayout.VISIBLE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
-        } else if (sp_sched_type.getSelectedItemPosition() == 3) {//Day off the week
+            ctv_last_day.setVisibility(CheckedTextView.VISIBLE);
+        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {//Day off the week
             ll_sched_dw.setVisibility(LinearLayout.VISIBLE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
             ll_sched_day.setVisibility(LinearLayout.VISIBLE);
             ll_sched_hours.setVisibility(LinearLayout.VISIBLE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
-        } else if (sp_sched_type.getSelectedItemPosition() == 4) {//Interval
+            ctv_last_day.setVisibility(CheckedTextView.GONE);
+        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {//Interval
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
             ll_sched_day.setVisibility(LinearLayout.GONE);
             ll_sched_hours.setVisibility(LinearLayout.GONE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
+            ctv_last_day.setVisibility(CheckedTextView.GONE);
             ctv_first_time.setVisibility(CheckedTextView.VISIBLE);
             ctv_reset_interval.setVisibility(CheckedTextView.VISIBLE);
         }
@@ -1096,8 +1157,6 @@ public class ScheduleItemEditor {
             else adapter.add("0" + i);
             if (s_hh == i) sel = i;
         }
-        adapter.add("99");
-        if (s_hh==99) sel=32;
         sp_sched_hours.setSelection(sel-1);
         adapter.notifyDataSetChanged();
     }
