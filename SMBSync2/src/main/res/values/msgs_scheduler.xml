@@ -30,8 +30,10 @@
 	<string name="msgs_scheduler_main_spinner_sched_type_prompt">Select schedule type</string>
 	<string name="msgs_scheduler_main_spinner_sched_type_every_hour">Every hours</string>
 	<string name="msgs_scheduler_main_spinner_sched_type_every_day">Every day</string>
+    <string name="msgs_scheduler_main_spinner_sched_type_every_month">Every month</string>
 	<string name="msgs_scheduler_main_spinner_sched_type_day_of_week">Day of week</string>
 	<string name="msgs_scheduler_main_spinner_sched_type_interval">Interval</string>
+    <string name="msgs_scheduler_main_spinner_sched_day_prompt">Select schedule day</string>
 	<string name="msgs_scheduler_main_spinner_sched_hours_prompt">Select schedule hours</string>
 	<string name="msgs_scheduler_main_spinner_sched_minutes_prompt">Select schedule minutes</string>
 	

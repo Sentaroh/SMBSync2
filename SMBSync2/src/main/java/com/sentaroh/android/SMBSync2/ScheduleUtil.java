@@ -46,6 +46,7 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_INTERVAL;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_DEFAULT_VALUE;
@@ -179,6 +180,9 @@ public class ScheduleUtil {
                 if (sub_array[13].length() > 0)
                     si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace("\u0000", ""));
 
+                if (sub_array.length >= 15 && sub_array[14]!=null && sub_array[14].length() > 0)
+                    si.scheduleDay = sub_array[14].replace("\u0000", "");
+
                 if (si.scheduleLastExecTime == 0)
                     si.scheduleLastExecTime = System.currentTimeMillis();
 
@@ -196,6 +200,7 @@ public class ScheduleUtil {
     final static public ScheduleItem copyScheduleData(GlobalParameters gp, ScheduleItem sp) {
         ScheduleItem n_sp = new ScheduleItem();
         n_sp.scheduleDayOfTheWeek = sp.scheduleDayOfTheWeek;
+        n_sp.scheduleDay = sp.scheduleDay;
         n_sp.scheduleHours = sp.scheduleHours;
         n_sp.scheduleIntervalFirstRunImmed = sp.scheduleIntervalFirstRunImmed;
         n_sp.scheduleLastExecTime = sp.scheduleLastExecTime;
@@ -226,7 +231,9 @@ public class ScheduleUtil {
             data += si.syncGroupList + "\u0000" + "\u0002";
             data += (si.syncWifiOnBeforeStart ? "1" : "0") + "\u0000" + "\u0002";
             data += (si.syncWifiOffAfterEnd ? "1" : "0") + "\u0000" + "\u0002";
-            data += String.valueOf(si.syncDelayAfterWifiOn) + "\u0002" + "\u0001";
+            data += String.valueOf(si.syncDelayAfterWifiOn) + "\u0002";
+            data += si.scheduleDay + "\u0000" + "\u0002";
+            data += "\u0001";
 
         }
         data += "end";
@@ -238,10 +245,11 @@ public class ScheduleUtil {
         return getNextSchedule(sp, 0L);
     }
 
-    final static public long getNextSchedule(ScheduleItem sp, long offset) {
+    final static private long getNextSchedule(ScheduleItem sp, long offset) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(System.currentTimeMillis()+offset);
         long result = 0;
+        int s_day = Integer.parseInt(sp.scheduleDay);
         int s_hrs = Integer.parseInt(sp.scheduleHours);
         int s_min = Integer.parseInt(sp.scheduleMinutes);
         int c_year = cal.get(Calendar.YEAR);
@@ -266,6 +274,17 @@ public class ScheduleUtil {
             if ((c_hr * 100 + c_mm) >= (s_hrs * 100 + s_min))
                 result = cal.getTimeInMillis() + (60 * 1000 * 60 * 24) + (60 * 1000 * s_min);
             else result = cal.getTimeInMillis() + (60 * 1000 * s_min);
+        } else if (sp.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH)) {
+            cal.clear();
+            cal.set(c_year, c_month, s_day, s_hrs, s_min, 0);
+            String curr=StringUtil.convDateTimeTo_YearMonthDayHourMinSec((System.currentTimeMillis()+59999));
+            String cald=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(cal.getTimeInMillis());
+            if ((System.currentTimeMillis()+59999)>=cal.getTimeInMillis()) {
+                cal.add(Calendar.MONTH, 1);
+            }
+            result = cal.getTimeInMillis();
+            Log.v("ScheduleNextTime","name="+sp.scheduleName+", c_year="+c_year+", c_month="+c_month+
+                    ", s_day="+s_day+", s_hrs="+s_hrs+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
         } else if (sp.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
 //    		cal.clear();
 //    		cal.setTimeInMillis(sp.scheduleLastExecTime+s_min*(60*1000));

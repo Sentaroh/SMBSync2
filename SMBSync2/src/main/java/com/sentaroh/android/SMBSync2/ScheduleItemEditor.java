@@ -65,6 +65,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TASK_ENABLED;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_INTERVAL;
 
 public class ScheduleItemEditor {
@@ -153,6 +154,7 @@ public class ScheduleItemEditor {
         ctv_sched_enabled.setTextColor(mGp.themeColorList.text_color_primary);
         CommonUtilities.setCheckedTextView(ctv_sched_enabled);
         final Spinner sp_sched_type = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_date_time_type);
+        final Spinner sp_sched_day = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_day);
         final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_hours);
         final Spinner sp_sched_minutes = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_minutes);
         final CheckBox cb_sched_sun = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_sunday);
@@ -198,6 +200,7 @@ public class ScheduleItemEditor {
 //		CommonDialog.setDlgBoxSizeHeightMax(dialog);
 
         setScheduleTypeSpinner(dialog, mSched.scheduleType);
+        setScheduleDaySpinner(dialog, mSched.scheduleDay);
         setScheduleHoursSpinner(dialog, mSched.scheduleHours);
         setScheduleMinutesSpinner(dialog, mSched.scheduleType, mSched.scheduleMinutes);
         setDayOfTheWeekCb(dialog, mSched.scheduleDayOfTheWeek);
@@ -306,6 +309,16 @@ public class ScheduleItemEditor {
                     }
                     setScheduleInfo(dialog, mSched);
                 }
+                setScheduleWasChanged(dialog, true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        sp_sched_day.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 setScheduleWasChanged(dialog, true);
             }
 
@@ -564,6 +577,7 @@ public class ScheduleItemEditor {
             public void onClick(View v) {
                 dialog.dismiss();
                 buildSchedParms(dialog, mSched);
+                ScheduleUtil.getNextSchedule(mSched);
                 if (!prev_enabled && mSched.scheduleEnabled)
                     mSched.scheduleLastExecTime = System.currentTimeMillis();
                 if (mNotify != null) mNotify.notifyToListener(true, new Object[]{mSched});
@@ -702,6 +716,7 @@ public class ScheduleItemEditor {
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
         final CheckedTextView ctv_sched_enabled = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_enabled);
         final Spinner sp_sched_type = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_date_time_type);
+        final Spinner sp_sched_day = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_day);
         final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_hours);
         final Spinner sp_sched_minutes = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_minutes);
 //		final CheckBox cb_sched_sun=(CheckBox)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_sunday);
@@ -740,14 +755,13 @@ public class ScheduleItemEditor {
         String p_sched_type = sp.scheduleType;
         String p_sched_mm = sp.scheduleMinutes;
 
-        if (sp_sched_type.getSelectedItemPosition() == 0)
-            sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS;
-        else if (sp_sched_type.getSelectedItemPosition() == 1)
-            sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
-        else if (sp_sched_type.getSelectedItemPosition() == 2)
-            sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
-        else if (sp_sched_type.getSelectedItemPosition() == 3)
-            sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_INTERVAL;
+        if (sp_sched_type.getSelectedItemPosition() == 0) sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS;
+        else if (sp_sched_type.getSelectedItemPosition() == 1) sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
+        else if (sp_sched_type.getSelectedItemPosition() == 2) sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH;
+        else if (sp_sched_type.getSelectedItemPosition() == 3) sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
+        else if (sp_sched_type.getSelectedItemPosition() == 4) sp.scheduleType = SCHEDULER_SCHEDULE_TYPE_INTERVAL;
+
+        sp.scheduleDay = sp_sched_day.getSelectedItem().toString();
 
         sp.scheduleHours = sp_sched_hours.getSelectedItem().toString();
 
@@ -932,6 +946,7 @@ public class ScheduleItemEditor {
 //		final Spinner sp_sched_minutes=(Spinner)dialog.findViewById(R.id.scheduler_main_dlg_exec_minutes);
         final LinearLayout ll_sched_dw = (LinearLayout) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week);
         final LinearLayout ll_sched_hm = (LinearLayout) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hm);
+        final LinearLayout ll_sched_day = (LinearLayout) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_day);
         final LinearLayout ll_sched_hours = (LinearLayout) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
         final LinearLayout ll_sched_minutes = (LinearLayout) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_minute);
 
@@ -940,24 +955,34 @@ public class ScheduleItemEditor {
         final CheckedTextView ctv_reset_interval = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_reset);
         ctv_reset_interval.setVisibility(CheckedTextView.GONE);
 
-        if (sp_sched_type.getSelectedItemPosition() <= 0) {
+        if (sp_sched_type.getSelectedItemPosition() <= 0) {//Every hours
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
+            ll_sched_day.setVisibility(LinearLayout.GONE);
             ll_sched_hours.setVisibility(LinearLayout.GONE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
-        } else if (sp_sched_type.getSelectedItemPosition() == 1) {
+        } else if (sp_sched_type.getSelectedItemPosition() == 1) {//Every day
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
+            ll_sched_day.setVisibility(LinearLayout.GONE);
             ll_sched_hours.setVisibility(LinearLayout.VISIBLE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
-        } else if (sp_sched_type.getSelectedItemPosition() == 2) {
+        } else if (sp_sched_type.getSelectedItemPosition() == 2) {//Every montj
+            ll_sched_dw.setVisibility(LinearLayout.GONE);
+            ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
+            ll_sched_day.setVisibility(LinearLayout.VISIBLE);
+            ll_sched_hours.setVisibility(LinearLayout.VISIBLE);
+            ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
+        } else if (sp_sched_type.getSelectedItemPosition() == 3) {//Day off the week
             ll_sched_dw.setVisibility(LinearLayout.VISIBLE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
+            ll_sched_day.setVisibility(LinearLayout.VISIBLE);
             ll_sched_hours.setVisibility(LinearLayout.VISIBLE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
-        } else if (sp_sched_type.getSelectedItemPosition() == 3) {
+        } else if (sp_sched_type.getSelectedItemPosition() == 4) {//Interval
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
+            ll_sched_day.setVisibility(LinearLayout.GONE);
             ll_sched_hours.setVisibility(LinearLayout.GONE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
             ctv_first_time.setVisibility(CheckedTextView.VISIBLE);
@@ -1022,6 +1047,7 @@ public class ScheduleItemEditor {
         sp_sched_type.setAdapter(adapter);
         adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_hour));
         adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_day));
+        adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_month));
         adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_day_of_week));
         adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_interval));
 
@@ -1029,8 +1055,9 @@ public class ScheduleItemEditor {
             int sel = -1;
             if (type.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS)) sel = 0;
             else if (type.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_DAY)) sel = 1;
-            else if (type.equals(SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK)) sel = 2;
-            else if (type.equals(SCHEDULER_SCHEDULE_TYPE_INTERVAL)) sel = 3;
+            else if (type.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH)) sel = 2;
+            else if (type.equals(SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK)) sel = 3;
+            else if (type.equals(SCHEDULER_SCHEDULE_TYPE_INTERVAL)) sel = 4;
             sp_sched_type.setSelection(sel);
         }
         adapter.notifyDataSetChanged();
@@ -1049,12 +1076,31 @@ public class ScheduleItemEditor {
         String sched_type = "";
         if (position == 0) sched_type = SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS;
         else if (position == 1) sched_type = SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
-        else if (position == 2) sched_type = SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
-        else if (position == 3) sched_type = SCHEDULER_SCHEDULE_TYPE_INTERVAL;
+        else if (position == 2) sched_type = SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH;
+        else if (position == 3) sched_type = SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
+        else if (position == 4) sched_type = SCHEDULER_SCHEDULE_TYPE_INTERVAL;
         return sched_type;
     }
 
-    ;
+    private void setScheduleDaySpinner(Dialog dialog, String dd) {
+        final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_day);
+        CommonUtilities.setSpinnerBackground(mContext, sp_sched_hours, mGp.themeIsLight);
+        final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_sched_hours.setPrompt(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_day_prompt));
+        sp_sched_hours.setAdapter(adapter);
+
+        int sel = -1, s_hh = Integer.parseInt(dd);
+        for (int i = 1; i < 32; i++) {
+            if (i >= 10) adapter.add("" + i);
+            else adapter.add("0" + i);
+            if (s_hh == i) sel = i;
+        }
+        adapter.add("99");
+        if (s_hh==99) sel=32;
+        sp_sched_hours.setSelection(sel-1);
+        adapter.notifyDataSetChanged();
+    }
 
     private void setScheduleHoursSpinner(Dialog dialog, String hh) {
         final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_hours);
@@ -1073,8 +1119,6 @@ public class ScheduleItemEditor {
         sp_sched_hours.setSelection(sel);
         adapter.notifyDataSetChanged();
     }
-
-    ;
 
     private void setScheduleMinutesSpinner(Dialog dialog, String sched_type, String mm) {
         final Spinner sp_sched_minutes = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_minutes);

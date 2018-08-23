@@ -37,7 +37,7 @@ public class ScheduleConstants {
     public static final String SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS = "H";
     public static final String SCHEDULER_SCHEDULE_TYPE_EVERY_DAY = "D";
     public static final String SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK = "W";
-    public static final String SCHEDULER_SCHEDULE_TYPE_MONTHLY = "M";
+    public static final String SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH = "M";
     public static final String SCHEDULER_SCHEDULE_TYPE_INTERVAL = "I";
 
     public static final String SCHEDULER_SCHEDULE_LAST_EXEC_TIME_KEY = "scheduler_schedule_last_exec_time_key";

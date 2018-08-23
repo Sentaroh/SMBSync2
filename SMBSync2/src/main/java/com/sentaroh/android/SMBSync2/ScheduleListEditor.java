@@ -122,6 +122,7 @@ public class ScheduleListEditor {
                     ScheduleItem curr_item=getScheduleListItem(org_item.scheduleName, mScheduleList);
                     if (curr_item!=null) {
                         if (org_item.scheduleDayOfTheWeek.equals(curr_item.scheduleDayOfTheWeek) &&
+                                org_item.scheduleDay.equals(curr_item.scheduleDay) &&
                                 org_item.scheduleHours.equals(curr_item.scheduleHours) &&
                                 org_item.scheduleType.equals(curr_item.scheduleType) &&
                                 org_item.syncTaskList.equals(curr_item.syncTaskList) &&

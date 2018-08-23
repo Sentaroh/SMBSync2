@@ -43,6 +43,7 @@ class ScheduleItem implements Serializable, Cloneable {
     public int schedulePosition = 0;
 
     public String scheduleType = SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
+    public String scheduleDay = "1";
     public String scheduleHours = "00";
     public String scheduleMinutes = "00";
     public String scheduleDayOfTheWeek = "0000000";

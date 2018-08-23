@@ -7,10 +7,32 @@
     tools:ignore="DisableBaselineAlignment,RtlSymmetry,RtlHardcoded" >
 
     <LinearLayout
+        android:id="@+id/scheduler_main_dlg_ll_exec_day"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/msgs_scheduler_main_dlg_hdr_day"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/scheduler_main_dlg_exec_day"
+            style="?android:attr/spinnerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:paddingLeft="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/scheduler_main_dlg_ll_exec_hour"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:orientation="vertical" >
 

@@ -31,8 +31,10 @@
 	<string name="msgs_scheduler_main_spinner_sched_type_prompt">スケジュール方法の選択</string>
 	<string name="msgs_scheduler_main_spinner_sched_type_every_hour">毎時</string>
 	<string name="msgs_scheduler_main_spinner_sched_type_every_day">毎日</string>
+    <string name="msgs_scheduler_main_spinner_sched_type_every_month">毎月</string>
 	<string name="msgs_scheduler_main_spinner_sched_type_day_of_week">曜日</string>
 	<string name="msgs_scheduler_main_spinner_sched_type_interval">インターバル</string>
+    <string name="msgs_scheduler_main_spinner_sched_day_prompt">日付の選択</string>
 	<string name="msgs_scheduler_main_spinner_sched_hours_prompt">時間の選択</string>
 	<string name="msgs_scheduler_main_spinner_sched_minutes_prompt">分の選択</string>
 	
