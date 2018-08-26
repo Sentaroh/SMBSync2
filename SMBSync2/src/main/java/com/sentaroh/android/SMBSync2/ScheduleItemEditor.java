@@ -1103,7 +1103,8 @@ public class ScheduleItemEditor {
         CommonUtilities.setSpinnerBackground(mContext, sp_sched_type, mGp.themeIsLight);
 
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         sp_sched_type.setPrompt(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_prompt));
         sp_sched_type.setAdapter(adapter);
         adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_hour));
@@ -1147,7 +1148,8 @@ public class ScheduleItemEditor {
         final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_day);
         CommonUtilities.setSpinnerBackground(mContext, sp_sched_hours, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         sp_sched_hours.setPrompt(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_day_prompt));
         sp_sched_hours.setAdapter(adapter);
 
@@ -1165,7 +1167,8 @@ public class ScheduleItemEditor {
         final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_hours);
         CommonUtilities.setSpinnerBackground(mContext, sp_sched_hours, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         sp_sched_hours.setPrompt(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_hours_prompt));
         sp_sched_hours.setAdapter(adapter);
 
@@ -1183,7 +1186,8 @@ public class ScheduleItemEditor {
         final Spinner sp_sched_minutes = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_minutes);
         CommonUtilities.setSpinnerBackground(mContext, sp_sched_minutes, mGp.themeIsLight);
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         sp_sched_minutes.setPrompt(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_hours_prompt));
         sp_sched_minutes.setAdapter(adapter);
 
