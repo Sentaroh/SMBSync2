@@ -1035,7 +1035,7 @@ public class ScheduleItemEditor {
         } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {//Day off the week
             ll_sched_dw.setVisibility(LinearLayout.VISIBLE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
-            ll_sched_day.setVisibility(LinearLayout.VISIBLE);
+            ll_sched_day.setVisibility(LinearLayout.GONE);
             ll_sched_hours.setVisibility(LinearLayout.VISIBLE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
             ctv_last_day.setVisibility(CheckedTextView.GONE);
