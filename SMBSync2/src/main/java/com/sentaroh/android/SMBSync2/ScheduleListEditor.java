@@ -56,11 +56,6 @@ import java.util.Comparator;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_INTERVAL;
 
 /**
  * Created by sentaroh on 2018/03/07.
@@ -859,15 +854,15 @@ public class ScheduleListEditor {
                 }
 
                 String time_info = "";
-                if (o.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS)) {
+                if (o.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS)) {
                     time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_hour) + " " + o.scheduleMinutes + " " +
                             mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_minute);
-                } else if (o.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_DAY)) {
+                } else if (o.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY)) {
                     time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_day) + " " + o.scheduleHours + ":" + o.scheduleMinutes;
-                } else if (o.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH)) {
+                } else if (o.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH)) {
                     String ld=o.scheduleDay.equals("99")?mContext.getString(R.string.msgs_scheduler_info_last_day_of_the_month):o.scheduleDay;
                     time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_month) + " " + ld + " " + o.scheduleHours + ":" + o.scheduleMinutes;
-                } else if (o.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
+                } else if (o.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
                     String day_of_the_week = "";
                     if (o.scheduleDayOfTheWeek.substring(0, 1).equals("1")) {
                         if (day_of_the_week.length() == 0)
@@ -913,7 +908,7 @@ public class ScheduleListEditor {
                     }
                     time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_day_of_week) +
                             " " + day_of_the_week + " " + o.scheduleHours + ":" + o.scheduleMinutes;
-                } else if (o.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
+                } else if (o.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
                     time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_interval) + " " + o.scheduleMinutes + " " +
                             mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_minute);
                 }

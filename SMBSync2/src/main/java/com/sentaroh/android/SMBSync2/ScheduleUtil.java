@@ -43,11 +43,6 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_MINUTES_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V2;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V3;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_INTERVAL;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_DEFAULT_VALUE;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_KEY;
@@ -74,7 +69,7 @@ public class ScheduleUtil {
                 sp.scheduleName = "NO NAME";
                 sp.scheduleEnabled = prefs.getBoolean(SCHEDULER_SCHEDULE_ENABLED_KEY, false);
                 sp.scheduleIntervalFirstRunImmed = prefs.getBoolean(SCHEDULER_SCHEDULE_INTERVAL_FIRST_RUN_KEY, false);
-                sp.scheduleType = prefs.getString(SCHEDULER_SCHEDULE_TYPE_KEY, SCHEDULER_SCHEDULE_TYPE_EVERY_DAY);
+                sp.scheduleType = prefs.getString(SCHEDULER_SCHEDULE_TYPE_KEY, ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY);
                 sp.scheduleHours = prefs.getString(SCHEDULER_SCHEDULE_HOURS_KEY, "00");
                 sp.scheduleMinutes = prefs.getString(SCHEDULER_SCHEDULE_MINUTES_KEY, "00");
                 sp.scheduleDayOfTheWeek = prefs.getString(SCHEDULER_SCHEDULE_DAY_OF_THE_WEEK_KEY, "0000000");
@@ -258,7 +253,7 @@ public class ScheduleUtil {
         int c_dw = cal.get(Calendar.DAY_OF_WEEK) - 1;
         int c_hr = cal.get(Calendar.HOUR_OF_DAY);
         int c_mm = cal.get(Calendar.MINUTE);
-        if (sp.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS)) {
+        if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS)) {
             if (c_mm >= s_min) {
                 cal.set(c_year, c_month, c_day, c_hr, 0, 0);
                 result = cal.getTimeInMillis() + (60 * 1000 * 60) + (60 * 1000 * s_min);
@@ -268,13 +263,13 @@ public class ScheduleUtil {
             }
 //    		cal.set(c_year, c_month, c_day, c_hr, c_mm, 0);
 //    		result=cal.getTimeInMillis()+(60*1000);
-        } else if (sp.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_DAY)) {
+        } else if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY)) {
             cal.clear();
             cal.set(c_year, c_month, c_day, s_hrs, 0, 0);
             if ((c_hr * 100 + c_mm) >= (s_hrs * 100 + s_min))
                 result = cal.getTimeInMillis() + (60 * 1000 * 60 * 24) + (60 * 1000 * s_min);
             else result = cal.getTimeInMillis() + (60 * 1000 * s_min);
-        } else if (sp.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH)) {
+        } else if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH)) {
             int s_day_last_day=0, s_day_temp=0;
             cal.set(Calendar.YEAR, c_year);
             cal.set(Calendar.MONTH, c_month);
@@ -298,7 +293,7 @@ public class ScheduleUtil {
             result = cal.getTimeInMillis();
             Log.v("ScheduleNextTime","name="+sp.scheduleName+", c_year="+c_year+", c_month="+c_month+
                     ", s_day="+s_day_temp+", s_hrs="+s_hrs+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
-        } else if (sp.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
+        } else if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
 //    		cal.clear();
 //    		cal.setTimeInMillis(sp.scheduleLastExecTime+s_min*(60*1000));
 //    		c_year=cal.get(Calendar.YEAR);
@@ -342,7 +337,7 @@ public class ScheduleUtil {
 //    		Log.v("","last="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(sp.scheduleLastExecTime));
 //    		Log.v("","c_year="+c_year+", c_month="+c_month+", c_day="+c_day+", c_hr="+c_hr+", c_mm="+c_mm+", c_ss="+c_ss);
 //    		Log.v("","new="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
-        } else if (sp.scheduleType.equals(SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
+        } else if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
             boolean[] dwa = new boolean[]{false, false, false, false, false, false, false};
             for (int i = 0; i < sp.scheduleDayOfTheWeek.length(); i++) {
                 String dw_s = sp.scheduleDayOfTheWeek.substring(i, i + 1);

@@ -64,9 +64,6 @@ public class Constants {
 	public final static String SMBSYNC2_PROF_ENC="ENC";
 	public final static String SMBSYNC2_PROF_DEC="DEC";
 	
-	public final static String SMBSYNC2_TASK_ENABLED="E";
-	public final static String SMBSYNC2_TASK_DISABLED="D";
-	
 	public final static String CURRENT_SMBSYNC2_PROFILE_FILE_NAME=SMBSYNC2_PROFILE_FILE_NAME_V5;
 	public final static String CURRENT_SMBSYNC2_PROFILE_VERSION=SMBSYNC2_PROF_VER6;
 	

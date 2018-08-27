@@ -30,12 +30,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY;
 
 /**
  * Created by sentaroh on 2018/03/21.
  */
 class ScheduleItem implements Serializable, Cloneable {
+    public static final String SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS = "H";
+    public static final String SCHEDULER_SCHEDULE_TYPE_EVERY_DAY = "D";
+    public static final String SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK = "W";
+    public static final String SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH = "M";
+    public static final String SCHEDULER_SCHEDULE_TYPE_INTERVAL = "I";
+
     public boolean scheduleEnabled = false;
 
     public String scheduleName = "";
