@@ -1193,6 +1193,10 @@ public class ScheduleItemEditor {
 
         int sel = 0, s_mm = Integer.parseInt(mm);
         if (sched_type.equals(SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
+            for (int i = 1; i < 5; i++) {
+                adapter.add("0" + i);
+                if (s_mm == i) sel = adapter.getCount() - 1;
+            }
             for (int i = 5; i < 245; i += 5) {
                 if (i >= 10) adapter.add("" + i);
                 else adapter.add("0" + i);
