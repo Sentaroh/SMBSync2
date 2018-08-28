@@ -424,7 +424,9 @@ public class ActivityMain extends AppCompatActivity {
 //                intent.putExtra(Intent.EXTRA_CC, new String[]{"cc@example.com"});
 //                intent.putExtra(Intent.EXTRA_BCC, new String[]{"bcc@example.com"});
                 intent.putExtra(Intent.EXTRA_SUBJECT, "SMBSync2 System Info");
-                intent.putExtra(Intent.EXTRA_TEXT, tv_msg.getText().toString());
+                intent.putExtra(Intent.EXTRA_TEXT,
+                        "Please fill in the details of the problem."+
+                        "\n\n\n"+tv_msg.getText().toString());
 //                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
                 mContext.startActivity(intent);
             }
