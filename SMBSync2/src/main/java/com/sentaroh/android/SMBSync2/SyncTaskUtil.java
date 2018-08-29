@@ -1792,7 +1792,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                createRemoteDirectoryDlg(tv_home.getText(), ra, ne);
+                createRemoteDirectoryDlg(tv_home.getText().toString(), ra, ne);
             }
         });
 
@@ -1803,7 +1803,7 @@ public class SyncTaskUtil {
                 ntfy_refresh.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] o) {
-                        tv_home.setText(remurl+tv_home.getText().replace(remurl,""));
+                        tv_home.setText(remurl+tv_home.getText().toString().replace(remurl,""));
                         ArrayList<TreeFilelistItem> new_rfl = (ArrayList<TreeFilelistItem>) o[0];
 
                         if (new_rfl.size()==0) {
@@ -1821,14 +1821,14 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                createRemoteFileList(remurl.substring(0,remurl.length()-1), "/"+tv_home.getText().replace(remurl,""), ipc_enforced, smb_proto, ntfy_refresh, true);
+                createRemoteFileList(remurl.substring(0,remurl.length()-1), "/"+tv_home.getText().toString().replace(remurl,""), ipc_enforced, smb_proto, ntfy_refresh, true);
             }
         });
 
         btn_up.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String c_dir=tv_home.getText().replace(remurl,"");
+                final String c_dir=tv_home.getText().toString().replace(remurl,"");
                 String t_dir=c_dir.substring(0,c_dir.lastIndexOf("/"));
                 final String n_dir=t_dir.lastIndexOf("/")>0?t_dir.substring(0,t_dir.lastIndexOf("/"))+"/":"";
 
