@@ -217,27 +217,37 @@ public class SyncThreadSyncZip {
         }
         if (stwa.gp.syncThreadCtrl.isEnabled() && zf != null) {
             File mf = new File(from_path);
-            if (sti.isSyncOptionDeleteFirstWhenMirror()) {
-                sync_result =syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
+            sync_result = moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
+            if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                sync_result = syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                    sync_result =moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                        if (sti.isTargetZipUseExternalSdcard()) {
-                            copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file);
-                        }
-                    }
-                }
-            } else {
-                sync_result = moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
-                if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                    sync_result = syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                        if (sti.isTargetZipUseExternalSdcard()) {
-                            copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file);
-                        }
+                    if (sti.isTargetZipUseExternalSdcard()) {
+                        copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file);
                     }
                 }
             }
+
+//            if (sti.isSyncOptionDeleteFirstWhenMirror()) {
+//                sync_result =syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
+//                if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+//                    sync_result =moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
+//                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+//                        if (sti.isTargetZipUseExternalSdcard()) {
+//                            copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file);
+//                        }
+//                    }
+//                }
+//            } else {
+//                sync_result = moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
+//                if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+//                    sync_result = syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
+//                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+//                        if (sti.isTargetZipUseExternalSdcard()) {
+//                            copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file);
+//                        }
+//                    }
+//                }
+//            }
         }
         return sync_result;
     }
@@ -583,6 +593,7 @@ public class SyncThreadSyncZip {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+            sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
         } catch (Exception e) {
             e.printStackTrace();
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
@@ -590,6 +601,7 @@ public class SyncThreadSyncZip {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+            sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
         }
         return sync_result;
     }
@@ -597,6 +609,7 @@ public class SyncThreadSyncZip {
     static private int copyFileInternalToInternalZip(SyncThreadWorkArea stwa,
                                                      SyncTaskItem sti, String from_dir, File mf, String to_dirx, String dest_path, ZipFile zf, ZipParameters zp)
             throws IOException {
+        int sync_result=0;
         String to_dir = from_dir.replace(stwa.gp.internalRootDirectory + "/", "");
 //		Log.v("","copy from="+from_dir+", to="+to_dir);
         long read_begin_time = System.currentTimeMillis();
@@ -653,8 +666,10 @@ public class SyncThreadSyncZip {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+            sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
+            sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
@@ -665,7 +680,7 @@ public class SyncThreadSyncZip {
         stwa.totalTransferByte += file_read_bytes;
         stwa.totalTransferTime += file_read_time;
 
-        return SyncTaskItem.SYNC_STATUS_SUCCESS;
+        return sync_result;
     }
 
 }
