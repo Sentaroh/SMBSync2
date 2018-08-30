@@ -63,6 +63,7 @@
 	<string name="msgs_main_external_sdcard_select_required_select_msg_api23">外部SDCARDにアクセスするために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
 (ステップ２で左上に「ＳＤＣＡＲＤ」の画面が直接表示された時は「選択」をタップしてください。左上に「ＳＤＣＡＲＤ」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
 	<string name="msgs_main_external_sdcard_select_retry_select_msg">外部SDCARDのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
+    <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USBストレージが選択されました。SDCARDを選択しなおしますか？</string>
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_JA.png</string>
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_JA.png</string>
 	<string name="msgs_main_external_sdcard_select_required_cancel_msg">外部SDCARDが選択されるまで同期は実行できません。 タスク=%s</string>
@@ -73,6 +74,7 @@
     <string name="msgs_main_external_usb_select_required_select_msg_api23">USBメディアにアクセスするために、ステップ１.「USB」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
 (ステップ２で左上に「USB」の画面が直接表示された時は「選択」をタップしてください。左上に「USB」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
     <string name="msgs_main_external_usb_select_retry_select_msg">USBメディアのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
+    <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARDが選択されました。USBストレージを選択しなおしますか？</string>
     <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_JA.png</string>
     <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_JA.png</string>
     <string name="msgs_main_external_usb_select_required_cancel_msg">USBメディアが選択されるまで同期は実行できません。 タスク=%s</string>

@@ -1915,26 +1915,30 @@ public class ActivityMain extends AppCompatActivity {
 //                if (SafManager.getUuidFromUri(data.getData().toString()).equals("0000-0000")) {
 //                    reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_uuid_invalid_msg));
 //                } else
-                if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
-                    mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
-                    mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
-                    reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
-                } else {
-                    mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
-                    mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
-                    if (mGp.safMgr.isRootTreeUri(data.getData())) {
-                        boolean rc=mGp.safMgr.addSdcardUuid(data.getData());
-                        if (!rc) {
-                            String saf_msg=mGp.safMgr.getMessages();
-                            commonDlg.showCommonDialog(false, "W", "External SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
-                            mUtil.addLogMsg("E", "External SDCARD UUID registration failed, please reselect SDCARD\n", saf_msg);
-                        }
-                        mGp.syncTaskAdapter.notifyDataSetChanged();
-                        if (mSafSelectActivityNotify != null)
-                            mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
-                    } else {
+                if (!mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
+                    if (!mGp.safMgr.isRootTreeUri(data.getData())) {
+                        mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                        mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
                         reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
+                    } else {
+                        mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                        mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
+                        if (mGp.safMgr.isRootTreeUri(data.getData())) {
+                            boolean rc=mGp.safMgr.addSdcardUuid(data.getData());
+                            if (!rc) {
+                                String saf_msg=mGp.safMgr.getMessages();
+                                commonDlg.showCommonDialog(false, "W", "External SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
+                                mUtil.addLogMsg("E", "External SDCARD UUID registration failed, please reselect SDCARD\n", saf_msg);
+                            }
+                            mGp.syncTaskAdapter.notifyDataSetChanged();
+                            if (mSafSelectActivityNotify != null)
+                                mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
+                        } else {
+                            reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
+                        }
                     }
+                } else {
+                    reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_usb_selected_msg));
                 }
             } else {
                 if (mGp.safMgr.getSdcardRootSafFile() == null && !mIsStorageSelectorActivityNotFound) {
@@ -1953,33 +1957,37 @@ public class ActivityMain extends AppCompatActivity {
             mUtil.addDebugMsg(1, "I", "Return from Storage Picker. id=" + requestCode + ", result=" + resultCode);
             if (resultCode == Activity.RESULT_OK) {
                 mUtil.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
-                if (!mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
-                    mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
-                    mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
-                    reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg));
-                } else {
-                    mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
-                    mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
-                    if (mGp.safMgr.isRootTreeUri(data.getData())) {
-                        String uuid=mGp.safMgr.getUuidFromUri(data.getData().toString());
-                        File tf=new File("/storage/"+uuid);
-                        if (!tf.exists()) {
-                            String e_msg=String.format(mContext.getString(R.string.msgs_main_external_usb_select_path_not_available_msg), uuid);
-                            commonDlg.showCommonDialog(false, "W", e_msg, "", null);
-                            mUtil.addLogMsg("E", e_msg);
-                        } else {
-                            boolean rc=mGp.safMgr.addUsbUuid(data.getData());
-                            if (!rc) {
-                                String saf_msg=mGp.safMgr.getMessages();
-                                commonDlg.showCommonDialog(false, "W", "USB Media UUID registration failed, please reselect USB Media", saf_msg, null);
-                                mUtil.addLogMsg("E", "USB Media UUID registration failed, please reselect USB Media\n", saf_msg);
-                            }
-                            mGp.syncTaskAdapter.notifyDataSetChanged();
-                            if (mSafSelectActivityNotify != null) mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
-                        }
-                    } else {
+                if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
+                    if (!mGp.safMgr.isRootTreeUri(data.getData())) {
+                        mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                        mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
                         reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg));
+                    } else {
+                        mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                        mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
+                        if (mGp.safMgr.isRootTreeUri(data.getData())) {
+                            String uuid=mGp.safMgr.getUuidFromUri(data.getData().toString());
+                            File tf=new File("/storage/"+uuid);
+                            if (!tf.exists()) {
+                                String e_msg=String.format(mContext.getString(R.string.msgs_main_external_usb_select_path_not_available_msg), uuid);
+                                commonDlg.showCommonDialog(false, "W", e_msg, "", null);
+                                mUtil.addLogMsg("E", e_msg);
+                            } else {
+                                boolean rc=mGp.safMgr.addUsbUuid(data.getData());
+                                if (!rc) {
+                                    String saf_msg=mGp.safMgr.getMessages();
+                                    commonDlg.showCommonDialog(false, "W", "USB Media UUID registration failed, please reselect USB Media", saf_msg, null);
+                                    mUtil.addLogMsg("E", "USB Media UUID registration failed, please reselect USB Media\n", saf_msg);
+                                }
+                                mGp.syncTaskAdapter.notifyDataSetChanged();
+                                if (mSafSelectActivityNotify != null) mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
+                            }
+                        } else {
+                            reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg));
+                        }
                     }
+                } else {
+                    reselectSdcard(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_sdcard_selected_msg));
                 }
             } else {
                 if (mGp.safMgr.getSdcardRootSafFile() == null && !mIsStorageSelectorActivityNotFound) {

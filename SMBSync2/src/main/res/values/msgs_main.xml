@@ -141,6 +141,7 @@
 (Please tap the &#8220;Select&#8221; when the screen of &#8220;SDCARD&#8221; in step2 is displayed directly in the upper left corner. If the upper left is other than &#8220;SDCARD&#8221; are displayed, tap the upper left corner of the menu, from step 1 please try again.)</string>
 	
 	<string name="msgs_main_external_sdcard_select_retry_select_msg">The root directory of the external SDCARD was not selected. Do you wants to re select?</string>
+    <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USB Storage was selected. Do you wants to re select SDCARD?</string>
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_EN.png</string>
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_EN.png</string>
 	<string name="msgs_main_external_sdcard_select_required_cancel_msg">You can not perform sync until external SD card is selected. Task=%s</string>
@@ -154,6 +155,7 @@
 (Please tap the &#8220;Select&#8221; when the screen of &#8220;USB Media&#8221; in step2 is displayed directly in the upper left corner. If the upper left is other than &#8220;USB&#8221; are displayed, tap the upper left corner of the menu, from step 1 please try again.)</string>
 
     <string name="msgs_main_external_usb_select_retry_select_msg">The root directory of the USB Media was not selected. Do you wants to re select?</string>
+    <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARD was selected. Do you wants to re select USB storage?</string>
     <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_EN.png</string>
     <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_EN.png</string>
     <string name="msgs_main_external_usb_select_required_cancel_msg">You can not perform sync until USB Media is selected. Task=%s</string>
