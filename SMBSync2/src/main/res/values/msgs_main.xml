@@ -134,20 +134,20 @@
 	
 	<string name="msgs_extra_data_sync_profile_type_error">Canceled the synchronization, because Sync not String.</string>
 			
-	<string name="msgs_main_external_sdcard_select_required_title">Select external SDCARD</string>
-	<string name="msgs_main_external_sdcard_select_required_select_msg_api21">In order to access the external SDCARD, Step 1 please tap the &#8220;SDCARD&#8221;, Step2 then　Please tap the &#8220;Select&#8221; in the displayed screen.\n
+	<string name="msgs_main_external_sdcard_select_required_title">Select SDCARD</string>
+	<string name="msgs_main_external_sdcard_select_required_select_msg_api21">In order to access the SDCARD, Step 1 please tap the &#8220;SDCARD&#8221;, Step2 then　Please tap the &#8220;Select&#8221; in the displayed screen.\n
 (Please tap the &#8220;Select the SDCARD&#8221; when the screen of &#8220;Select the SDCARD&#8221; in step 2 is displayed directly)</string>
-	<string name="msgs_main_external_sdcard_select_required_select_msg_api23">In order to access the external SDCARD, Step 1 please tap the &#8220;SDCARD&#8221;, Step2 then　Please tap the &#8220;Select&#8221; in the displayed screen.\n
+	<string name="msgs_main_external_sdcard_select_required_select_msg_api23">In order to access the SDCARD, Step 1 please tap the &#8220;SDCARD&#8221;, Step2 then　Please tap the &#8220;Select&#8221; in the displayed screen.\n
 (Please tap the &#8220;Select&#8221; when the screen of &#8220;SDCARD&#8221; in step2 is displayed directly in the upper left corner. If the upper left is other than &#8220;SDCARD&#8221; are displayed, tap the upper left corner of the menu, from step 1 please try again.)</string>
 	
-	<string name="msgs_main_external_sdcard_select_retry_select_msg">The root directory of the external SDCARD was not selected. Do you wants to re select?</string>
+	<string name="msgs_main_external_sdcard_select_retry_select_msg">The root directory of the SDCARD was not selected. Do you wants to re select?</string>
     <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USB Storage was selected. Do you wants to re select SDCARD?</string>
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_EN.png</string>
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_EN.png</string>
 	<string name="msgs_main_external_sdcard_select_required_cancel_msg">You can not perform sync until external SD card is selected. Task=%s</string>
     <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD select activity can not be started.</string>
 
-	<string name="msgs_main_external_sdcard_mp_changed_title">External SDCARD</string>
+	<string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
 
     <!---->
     <string name="msgs_main_external_usb_select_required_title">Select USB Media</string>
@@ -237,7 +237,7 @@
 	
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">Select folder type</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_internal">Internal Storage</string>
-	<string name="msgs_main_sync_profile_dlg_sync_folder_type_sdcard">External SDCARD</string>
+	<string name="msgs_main_sync_profile_dlg_sync_folder_type_sdcard">SDCARD</string>
     <string name="msgs_main_sync_profile_dlg_sync_folder_type_usb">USB Media</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_smb">SMB Server</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_zip">ZIP Folder</string>	
@@ -260,7 +260,7 @@
 	<string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_smb">Both the master folder and the target folder SMB can not be used. Please change to a type that different either.</string>
 	<string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal">Both the master folder and the target folder has been specified internal storage, but the directory is duplicated. Please change either to a different directory.</string>
 	<string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir">You have access to the same directory in the master folder and the target folder, please specify whether the directory filter to change either of the directory.</string>
-	<string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_sdcard">Both the master folder and the target folder has been specified external SDCARD, but the directory is duplicated. Please change either to a different directory.</string>
+	<string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_sdcard">Both the master folder and the target folder has been specified SDCARD, but the directory is duplicated. Please change either to a different directory.</string>
 	<string name="msgs_main_sync_profile_dlg_target_directory_not_specified">Directory has not been specified in the target folder, there is a possibility that an unpredictable delete or overwrite is performed. Do you want to continue?</string>
 	
 	<string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Please specify the address or name of the SMB host.</string>	

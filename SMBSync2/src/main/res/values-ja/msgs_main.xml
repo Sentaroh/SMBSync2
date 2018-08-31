@@ -57,16 +57,16 @@
    	<string name="msgs_main_app_specific_dir_used_title">アプリケーション固有ディレクトリ使用についての警告</string>
    	<string name="msgs_main_app_specific_dir_used_suppress">この警告を次回以降表示しない （ユーザーインターフェース設定で再表示できます）</string>
    		
-	<string name="msgs_main_external_sdcard_select_required_title">外部SDCARDの選択</string>
-	<string name="msgs_main_external_sdcard_select_required_select_msg_api21">外部SDCARDにアクセスするために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「ＳＤＣＡＲＤを選択」をタップしてください。\n
+	<string name="msgs_main_external_sdcard_select_required_title">SDCARDの選択</string>
+	<string name="msgs_main_external_sdcard_select_required_select_msg_api21">SDCARDにアクセスするために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「ＳＤＣＡＲＤを選択」をタップしてください。\n
 (ステップ２の「ＳＤＣＡＲＤを選択」の画面が直接表示された時は「ＳＤＣＡＲＤを選択」をタップしてください)</string>
-	<string name="msgs_main_external_sdcard_select_required_select_msg_api23">外部SDCARDにアクセスするために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
+	<string name="msgs_main_external_sdcard_select_required_select_msg_api23">SDCARDにアクセスするために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
 (ステップ２で左上に「ＳＤＣＡＲＤ」の画面が直接表示された時は「選択」をタップしてください。左上に「ＳＤＣＡＲＤ」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
-	<string name="msgs_main_external_sdcard_select_retry_select_msg">外部SDCARDのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
+	<string name="msgs_main_external_sdcard_select_retry_select_msg">SDCARDのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
     <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USBストレージが選択されました。SDCARDを選択しなおしますか？</string>
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_JA.png</string>
 	<string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_JA.png</string>
-	<string name="msgs_main_external_sdcard_select_required_cancel_msg">外部SDCARDが選択されるまで同期は実行できません。 タスク=%s</string>
+	<string name="msgs_main_external_sdcard_select_required_cancel_msg">SDCARDが選択されるまで同期は実行できません。 タスク=%s</string>
     <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD選択アクティビティを起動できませんでした。</string>
 
     <!---->
@@ -215,7 +215,7 @@
 		
 	<string name="msgs_extra_data_sync_profile_type_error">SyncProfileはStringで指定されていません、同期を中止します。</string>
 	
-	<string name="msgs_main_external_sdcard_mp_changed_title">外部SDCARD</string>
+	<string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
 
 	<string name="msgs_main_sync_profile_dlg_wifi_option_prompt">無線LANによる同期開始条件</string>		
 	<string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">オフでも実行</string>
@@ -229,7 +229,7 @@
 	
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">フォルダーの選択</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_internal">内部ストレージ</string>
-	<string name="msgs_main_sync_profile_dlg_sync_folder_type_sdcard">外部SDCARD</string>
+	<string name="msgs_main_sync_profile_dlg_sync_folder_type_sdcard">SDCARD</string>
     <string name="msgs_main_sync_profile_dlg_sync_folder_type_usb">USBメディア</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_smb">SMB共有</string>
 	<string name="msgs_main_sync_profile_dlg_sync_folder_type_zip">ZIPフォルダー</string>
@@ -252,7 +252,7 @@
 	<string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_smb">マスターフォルダーとターゲットフォルダーが両方ともSMBは使用できません。どちらかを違うタイプに変更してください。</string>
 	<string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal">マスターフォルダーとターゲットフォルダーの両方が内部ストレージでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
 	<string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir">マスターフォルダーとターゲットフォルダーで同じディレクトリにアクセスします、どちらかのディレクトリを変更するかディレクトリフィルターを指定してください。</string>
-	<string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_sdcard">マスターフォルダーとターゲットフォルダーの両方が外部SDCARDでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
+	<string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_sdcard">マスターフォルダーとターゲットフォルダーの両方がSDCARDでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
 	<string name="msgs_main_sync_profile_dlg_target_directory_not_specified">ターゲットフォルダーにディレクトリが指定されていません、意図しない削除や上書きが行われる可能性があります。続行しますか？</string>
 
 	<string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">SMBホストのアドレスまたは名前を指定してください。</string>	

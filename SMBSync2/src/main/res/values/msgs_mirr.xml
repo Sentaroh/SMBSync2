@@ -55,7 +55,7 @@
     <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">Archive cancelled by user request</string>
 
 	<string name="msgs_mirror_external_sdcard_select_required">Cancel the sync because the selection of external SD card has not been made.</string>		
-	<string name="msgs_mirror_external_sdcard_not_mounted">Cancel sync because external SDCARD it is not mounted.</string>
+	<string name="msgs_mirror_external_sdcard_not_mounted">Cancel sync because SDCARD it is not mounted.</string>
 
 	<string name="msgs_mirror_usb_storage_not_mounted">Cancel sync because USB Media is not mounted.</string>
 

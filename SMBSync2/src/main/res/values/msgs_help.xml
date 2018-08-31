@@ -7,7 +7,7 @@
 	<string name="msgs_help_sync_folder_internal_title">Internal storage help</string>
 	
 	<string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_EN_folder_sdcard.htm</string>
-	<string name="msgs_help_sync_folder_sdcard_title">External SDCARD help</string>
+	<string name="msgs_help_sync_folder_sdcard_title">SDCARD help</string>
 
     <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_EN_folder_usb.htm</string>
     <string name="msgs_help_sync_folder_usb_title">USB Media help</string>

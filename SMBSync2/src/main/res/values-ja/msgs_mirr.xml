@@ -45,8 +45,8 @@
     <string name="msgs_mirror_confirm_please_check_confirm_msg_archive">ファイルアーカイブの確認が必要です。ここをタップし、確認してください。</string>
     <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">アーカイブがユーザーによりキャンセルされました。</string>
 
-	<string name="msgs_mirror_external_sdcard_select_required">外部SDCARDの選択がなされていないため同期を中止します。</string>		
-	<string name="msgs_mirror_external_sdcard_not_mounted">外部SDCARDがマウントされていないため同期を中止します。</string>
+	<string name="msgs_mirror_external_sdcard_select_required">SDCARDの選択がなされていないため同期を中止します。</string>		
+	<string name="msgs_mirror_external_sdcard_not_mounted">SDCARDがマウントされていないため同期を中止します。</string>
 	
 	<string name="msgs_mirror_usb_storage_not_mounted">USBストレージがマウントされていないため同期を中止します。</string>
 

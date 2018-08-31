@@ -1553,11 +1553,11 @@ public class SyncTaskEditor extends DialogFragment {
             if (sp_sync_folder_mp.getSelectedItem()==null) nsfev.folder_mountpoint = mGp.internalRootDirectory;
             else nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL;
-        } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard))) {//External sdcard
+        } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard))) {//sdcard
             nsfev.folder_directory = et_sync_folder_sdcard_dir_name.getText().toString().trim();
 //            nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD;
-        } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_usb))) {//USB Flash
+        } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_usb))) {//USB Storage
             nsfev.folder_directory = et_sync_folder_usb_dir_name.getText().toString().trim();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_USB;
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {//ZIP

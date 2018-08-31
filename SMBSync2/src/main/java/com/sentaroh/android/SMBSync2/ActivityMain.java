@@ -1927,8 +1927,8 @@ public class ActivityMain extends AppCompatActivity {
                             boolean rc=mGp.safMgr.addSdcardUuid(data.getData());
                             if (!rc) {
                                 String saf_msg=mGp.safMgr.getMessages();
-                                commonDlg.showCommonDialog(false, "W", "External SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
-                                mUtil.addLogMsg("E", "External SDCARD UUID registration failed, please reselect SDCARD\n", saf_msg);
+                                commonDlg.showCommonDialog(false, "W", "SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
+                                mUtil.addLogMsg("E", "SDCARD UUID registration failed, please reselect SDCARD\n", saf_msg);
                             }
                             mGp.syncTaskAdapter.notifyDataSetChanged();
                             if (mSafSelectActivityNotify != null)
