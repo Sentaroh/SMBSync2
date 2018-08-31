@@ -450,12 +450,14 @@ public class SyncThreadSyncZip {
                         zf.createZipFile(mf, zp);
                         stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " directory created, dir=" + to_dir);
                     }
+                    result=true;
                 } catch (ZipException e) {
                     SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                             CommonUtilities.getExecutedMethodName() + " directory=" + to_dir + ", Zip=" + zf.getFile().getPath());
                     SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
                     SyncThread.printStackTraceElement(stwa, e.getStackTrace());
                     stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+                    result=false;
                 }
             }
         } else {
@@ -639,28 +641,25 @@ public class SyncThreadSyncZip {
                 bzf.close();
             }
         } catch (ZipException e) {
-            e.printStackTrace();
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     CommonUtilities.getExecutedMethodName() + " master=" + from_path + ", target=" + zf.getFile().getPath());
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
-            sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         } catch (Exception e) {
-            e.printStackTrace();
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     CommonUtilities.getExecutedMethodName() + " master=" + from_path + ", target=" + zf.getFile().getPath());
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
-            sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
         return sync_result;
     }
 
     static private int copyFileInternalToInternalZip(SyncThreadWorkArea stwa,
-                                                     SyncTaskItem sti, String from_dir, File mf, String to_dirx, String dest_path, ZipFile zf, ZipParameters zp)
-            throws IOException {
+                       SyncTaskItem sti, String from_dir, File mf, String to_dirx, String dest_path, ZipFile zf, ZipParameters zp) throws IOException {
         int sync_result=0;
         String to_dir = from_dir.replace(stwa.gp.internalRootDirectory + "/", "");
 //		Log.v("","copy from="+from_dir+", to="+to_dir);
@@ -712,16 +711,19 @@ public class SyncThreadSyncZip {
 //					", file_lastMod="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(mf.lastModified()));
             ifs.close();
         } catch (ZipException e) {
-            e.printStackTrace();
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     CommonUtilities.getExecutedMethodName() + " master=" + from_dir + ", target=" + to_dir);
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
-            sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                    CommonUtilities.getExecutedMethodName() + " master=" + from_dir + ", target=" + to_dir);
+            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
