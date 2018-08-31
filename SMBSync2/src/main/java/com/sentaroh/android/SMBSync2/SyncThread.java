@@ -158,7 +158,7 @@ public class SyncThread extends Thread {
         public ArrayList<ZipFileListItem> zipFileList = new ArrayList<ZipFileListItem>();
         public String zipFileNameEncoding = "";
         public boolean zipFileCopyBackRequired = false;
-        public String zipWorkFileName = "";
+        public String zipWorkFileName = null;
 
         public SafFile lastWriteSafFile=null;
         public File lastWriteFile=null;
@@ -183,7 +183,7 @@ public class SyncThread extends Thread {
         mStwa.msgs_mirror_task_file_moved = gp.appContext.getString(R.string.msgs_mirror_task_file_moved);
         mStwa.msgs_mirror_task_file_archived = gp.appContext.getString(R.string.msgs_mirror_task_file_archived);
 
-        mStwa.zipWorkFileName = gp.appContext.getCacheDir().toString() + "/zip_work_file";
+//        mStwa.zipWorkFileName = gp.appContext.getCacheDir().toString() + "/zip_work_file";
 
         printSafDebugInfo();
 
