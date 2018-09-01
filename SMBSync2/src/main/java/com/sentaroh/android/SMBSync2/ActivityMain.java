@@ -43,6 +43,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
@@ -167,6 +168,9 @@ public class ActivityMain extends AppCompatActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mGp.safMgr.loadSafFile();
@@ -1708,14 +1712,14 @@ public class ActivityMain extends AppCompatActivity {
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             try {
-//                startActivity(intent);
-                if (Build.VERSION.SDK_INT>=26) {
-                    Uri uri= FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(LogUtil.getLogFilePath(mGp)));
-                    intent.setDataAndType(uri, "text/plain");
-//                    startActivity(Intent.createChooser(intent, LogUtil.getLogFilePath(mGp)));
-                } else {
-                    intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
-                }
+//                if (Build.VERSION.SDK_INT>=26) {
+//                    Uri uri= FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(LogUtil.getLogFilePath(mGp)));
+//                    intent.setDataAndType(uri, "text/plain");
+////                    startActivity(Intent.createChooser(intent, LogUtil.getLogFilePath(mGp)));
+//                } else {
+//                    intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
+//                }
+                intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 commonDlg.showCommonDialog(false, "E",
