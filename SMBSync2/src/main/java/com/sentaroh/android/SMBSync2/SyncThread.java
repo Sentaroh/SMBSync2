@@ -841,6 +841,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMirrorInternalToInternal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
                 sync_result = SyncThreadArchiveFile.syncArchiveInternalToInternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) {
+                sync_result = SyncThreadTwowaySync.syncTwowayInternalToInternal(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
@@ -1123,7 +1125,7 @@ public class SyncThread extends Thread {
         return sync_result;
     }
 
-    private String replaceKeywordValue(String replaceable_string, Long time_millis) {
+    static public String replaceKeywordValue(String replaceable_string, Long time_millis) {
         String c_date = StringUtil.convDateTimeTo_YearMonthDayHourMin(time_millis);
         String c_date_yyyy = c_date.substring(0, 4);
         String c_date_mm = c_date.substring(5, 7);

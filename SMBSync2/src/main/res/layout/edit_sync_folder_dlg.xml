@@ -100,6 +100,7 @@
             <include layout="@layout/edit_sync_folder_dlg_internal"/>
             <include layout="@layout/edit_sync_folder_dlg_sdcard"/>
             <include layout="@layout/edit_sync_folder_dlg_usb"/>
+            <include layout="@layout/edit_sync_folder_dlg_archive"/>
         	<include layout="@layout/edit_sync_folder_dlg_zip"/>
 
         </LinearLayout>

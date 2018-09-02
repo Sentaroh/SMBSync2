@@ -97,6 +97,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY;
     private boolean syncTaskTargetFolderSmbIpcSigningEnforced = true;
     private String syncTaskTargetFolderRemovableStorageID = "";
+
     private String syncTaskTargetZipFileName = "";
     public final static String ZIP_OPTION_COMP_LEVEL_FASTEST = "FASTEST";
     public final static String ZIP_OPTION_COMP_LEVEL_FAST = "FAST";

@@ -142,13 +142,6 @@
                    android:layout_width="fill_parent"
                    android:layout_height="wrap_content"
                    android:orientation="horizontal" >
-                   <Button
-                       android:id="@+id/edit_sync_task_archive_option"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_weight="1"
-                       android:text="@string/msgs_sync_task_archive_btn_title"
-                       android:textAppearance="?android:attr/textAppearanceMedium" />
 
                    <Button
                        android:id="@+id/edit_sync_task_change_master_and_target_btn"
