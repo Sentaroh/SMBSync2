@@ -119,6 +119,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
     //	Settings parameter
     public boolean settingExitClean = true;
+    public boolean settingSyncMessageUseStandardTextView =false;
     public int settingDebugLevel = 0;
     public boolean settingUseLightTheme = false;
     public int settingLogMaxFileCount = 5;
@@ -441,6 +442,7 @@ public class GlobalParameters extends CommonGlobalParms {
         settingGrantCoarseLocationRequired = prefs.getBoolean("settings_sync_grant_coarse_location_required", true);
 
         settingForceScreenOnWhileSync=prefs.getBoolean(appContext.getString(R.string.settings_force_screen_on_while_sync), false);
+        settingSyncMessageUseStandardTextView =prefs.getBoolean(appContext.getString(R.string.settings_sync_message_use_standard_text_view), false);
     }
 
     public String settingsSmbLmCompatibility = "3", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout = "30000";

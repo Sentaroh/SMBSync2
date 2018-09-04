@@ -92,10 +92,11 @@
 
     <string name="settings_other_title">Other</string>
     
-    <string name="settings_exit_clean_title">Exit cleanly</string>
-    <string name="settings_exit_clean_summary_dis">Do not kill application process</string>
-    <string name="settings_exit_clean_summary_ena">Kill application process after application cleanup</string>
-	<string name="settings_exit_clean">settings_exit_clean</string>
+    <string name="settings_exit_clean_title">アプリ終了時の処理</string>
+    <string name="settings_exit_clean_summary_ena">プロセスをKillする</string>
+
+    <string name="settings_sync_message_use_standard_text_view_title">同期メッセージのテキスト処理</string>
+    <string name="settings_sync_message_use_standard_text_view_summary_ena">Android標準の処理を行う</string>
 
 	<string name="settings_smb_title">SMB1設定</string>
 	

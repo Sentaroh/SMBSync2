@@ -113,11 +113,14 @@
     <string name="settings_other_title">Other</string>
     
     <string name="settings_exit_clean_title">Exit cleanly</string>
-    <string name="settings_exit_clean_summary_dis">Do not kill application process</string>
     <string name="settings_exit_clean_summary_ena">Kill application process after application cleanup</string>
 	<string name="settings_exit_clean">settings_exit_clean</string>
 
-	<string name="settings_smb_title">SMB1 settings</string>
+    <string name="settings_sync_message_use_standard_text_view_title">Text processing of sync messages</string>
+    <string name="settings_sync_message_use_standard_text_view_summary_ena">Perform Android standard processing</string>
+    <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
+
+    <string name="settings_smb_title">SMB1 settings</string>
 	
     <string name="settings_smb_use_extended_security_title">Use extended security</string>
     <string name="settings_smb_use_extended_security_summary_ena">Use extended security</string>

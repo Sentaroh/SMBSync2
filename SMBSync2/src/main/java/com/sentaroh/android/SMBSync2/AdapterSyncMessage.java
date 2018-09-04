@@ -45,6 +45,8 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
     private int id;
     private ArrayList<SyncMessageItem> items;
     private boolean msgDataChanged = false;
+
+    private GlobalParameters mGp=null;
 //	@SuppressWarnings("unused")
 //	private boolean themeIsLight=false;
 //	@SuppressWarnings("unused")
@@ -53,11 +55,12 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
     private ThemeColorList mThemeColorList;
 
     public AdapterSyncMessage(Context context, int textViewResourceId,
-                              ArrayList<SyncMessageItem> objects) {
+                              ArrayList<SyncMessageItem> objects, GlobalParameters gp) {
         super(context, textViewResourceId, objects);
         c = context;
         id = textViewResourceId;
         items = objects;
+        mGp=gp;
 //		msgTypeFace=Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL);
         vi = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -116,6 +119,7 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
             holder = new ViewHolder();
 //            holder.tv_row_cat= (TextView) v.findViewById(R.id.msg_list_view_item_cat);
             holder.tv_row_msg = (CustomTextView) v.findViewById(R.id.msg_list_view_item_msg);
+            holder.tv_row_msg.setWordWrapMode(mGp.settingSyncMessageUseStandardTextView);
             holder.tv_row_time = (TextView) v.findViewById(R.id.msg_list_view_item_time);
 
 //        	holder.tv_row_msg.setTypeface(msgTypeFace);

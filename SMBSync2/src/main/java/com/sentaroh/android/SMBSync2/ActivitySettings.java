@@ -309,19 +309,12 @@ public class ActivitySettings extends PreferenceActivity {
 
         if (key_string.equals(c.getString(R.string.settings_exit_clean))) {
             isChecked = true;
-            if (shared_pref.getBoolean(key_string, true)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_exit_clean_summary_ena));
-            } else {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_exit_clean_summary_dis));
-            }
+        } else if (key_string.equals(c.getString(R.string.settings_sync_message_use_standard_text_view))) {
+            isChecked = true;
         }
 
         return isChecked;
     }
-
-    ;
 
     private static boolean checkLogSettings(CommonUtilities ut,
                                             Preference pref_key, SharedPreferences shared_pref, String key_string, Context c) {
@@ -530,9 +523,10 @@ public class ActivitySettings extends PreferenceActivity {
 
             SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-            shared_pref.edit().putBoolean(getString(R.string.settings_exit_clean), true).commit();
+//            shared_pref.edit().putBoolean(getString(R.string.settings_exit_clean), true).commit();
 //            findPreference(getString(R.string.settings_exit_clean).toString()).setEnabled(false);
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_exit_clean));
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_message_use_standard_text_view));
         }
 
         ;

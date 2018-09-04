@@ -196,7 +196,7 @@ public class ActivityMain extends AppCompatActivity {
         commonDlg = new CommonDialog(this, getSupportFragmentManager());
         checkRequiredPermissions();
         mTaskUtil = new SyncTaskUtil(mUtil, this, commonDlg, ccMenu, mGp, getSupportFragmentManager());
-        mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mGp.msgList);
+        mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mGp.msgList, mGp);
 
         if (mGp.syncTaskList == null)
             mGp.syncTaskList = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil);
@@ -554,7 +554,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncTaskAdapter.setShowCheckBox(vsa.prof_adapter_show_cb);
         mGp.syncTaskAdapter.notifyDataSetChanged();
 
-        mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mfl);
+        mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mfl, mGp);
 
         mGp.syncHistoryAdapter = new AdapterSyncHistory(mActivity, R.layout.sync_history_list_item_view, vsa.sync_hist_list);
         mGp.syncHistoryAdapter.setShowCheckBox(vsa.sync_adapter_show_cb);
