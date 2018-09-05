@@ -1151,8 +1151,12 @@ public class SyncTaskEditor extends DialogFragment {
         final LinearLayout archive_option_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_option_view);
         archive_option_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
-        if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) archive_option_view.setVisibility(LinearLayout.VISIBLE);
-        else archive_option_view.setVisibility(LinearLayout.GONE);
+        if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+            if (sfev.folder_master) archive_option_view.setVisibility(LinearLayout.GONE);
+            else archive_option_view.setVisibility(LinearLayout.VISIBLE);
+        } else {
+            archive_option_view.setVisibility(LinearLayout.GONE);
+        }
 
         TextView dlg_file_type = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_file_type);
         String file_type_list="", file_type_sep="";

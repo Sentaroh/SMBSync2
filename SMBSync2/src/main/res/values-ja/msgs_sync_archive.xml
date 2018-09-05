@@ -4,7 +4,7 @@
     <string name="msgs_sync_folder_archive_file_type">アーカイブするファイル拡張子:</string>
     <string name="msgs_sync_folder_archive_retention_period">アーカイブする対象</string>
     <string name="msgs_sync_folder_archive_output_image">下記は保存されるディレクトリーとファイル名(日時は撮影時のものではありまん)</string>
-    <string name="msgs_sync_folder_archive_rename_rule">アーカイブする時に名前を変更する</string>
+    <string name="msgs_sync_folder_archive_rename_rule">アーカイブする際にファイル名の変更および格納するディレクトリーを作成する</string>
     <string name="msgs_sync_folder_archive_seq_number_title">ファイル名の順序番号</string>
     <string name="msgs_sync_folder_archive_create_directory">アーカイブする時にディレクトリーに保存する</string>
     <string name="msgs_sync_folder_archive_btn_title_date">年月日</string>

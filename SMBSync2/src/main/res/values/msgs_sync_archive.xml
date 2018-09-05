@@ -4,7 +4,7 @@
     <string name="msgs_sync_folder_archive_file_type">File extension to archive:</string>
     <string name="msgs_sync_folder_archive_retention_period">To archive the</string>
     <string name="msgs_sync_folder_archive_output_image">Following are the saved directories and file names(Date/Time is not a shoot time)</string>
-    <string name="msgs_sync_folder_archive_rename_rule">Change the file name when archiving</string>
+    <string name="msgs_sync_folder_archive_rename_rule">Change the file name and store it in the specified directory when archive</string>
     <string name="msgs_sync_folder_archive_seq_number_title">Sequence number</string>
     <string name="msgs_sync_folder_archive_create_directory">Store the file in the directory(directory is created when does not exists)</string>
     <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
