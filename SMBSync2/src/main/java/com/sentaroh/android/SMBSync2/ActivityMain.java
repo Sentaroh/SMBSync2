@@ -173,7 +173,6 @@ public class ActivityMain extends AppCompatActivity {
 
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
-        mGp.safMgr.loadSafFile();
         mActivity = this;
         if (mGp.themeColorList == null) {
             mGp.themeColorList = ThemeUtil.getThemeColorList(this);
@@ -216,6 +215,9 @@ public class ActivityMain extends AppCompatActivity {
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET);
         setSyncTaskContextButtonHide();
 
+        Intent intmsg = new Intent(mContext, SyncService.class);
+        startService(intmsg);
+
         Thread th1 = new Thread() {
             @Override
             public void run() {
@@ -246,6 +248,7 @@ public class ActivityMain extends AppCompatActivity {
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
+            mGp.safMgr.loadSafFile();
             NotifyEvent svc_ntfy = new NotifyEvent(mContext);
             svc_ntfy.setListener(new NotifyEventListener() {
                 @Override
