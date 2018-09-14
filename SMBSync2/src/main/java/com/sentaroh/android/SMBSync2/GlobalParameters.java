@@ -392,10 +392,10 @@ public class GlobalParameters extends CommonGlobalParms {
         slf4jLog.setAppendTime(false);
         if (settingDebugLevel==0) {
             LogStream.setLevel(1);
-            slf4jLog.setLogOption(false, false, false, false, false);
+            slf4jLog.setLogOption(false, true, false, false, false);
         } else if (settingDebugLevel==1) {
             LogStream.setLevel(1);
-            slf4jLog.setLogOption(false, false, true, false, false);
+            slf4jLog.setLogOption(false, true, true, false, false);
         } else if (settingDebugLevel==2) {
             LogStream.setLevel(3);
             slf4jLog.setLogOption(true, true, true, true, true);
