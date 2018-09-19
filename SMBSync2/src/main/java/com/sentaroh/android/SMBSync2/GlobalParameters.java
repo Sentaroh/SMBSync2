@@ -186,6 +186,8 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public TextView scheduleInfoView = null;
     public String scheduleInfoText = "";
+    public TextView scheduleErrorView = null;
+    public String scheduleErrorText = "";
 
     public boolean dialogWindowShowed = false;
     public String progressSpinSyncprofText = "", progressSpinMsgText = "";

@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.StringUtil;
 
@@ -439,18 +440,48 @@ public class ScheduleUtil {
         return result;
     }
 
+    static public SyncTaskItem getSyncTask(GlobalParameters gp, String job_name) {
+        for (SyncTaskItem sji : gp.syncTaskList) {
+            if (sji.getSyncTaskName().equals(job_name)) {
+                return sji;
+            }
+        }
+        return null;
+    }
+
     public static void setSchedulerInfo(GlobalParameters gp) {
 //        gp.scheduleInfoList =loadScheduleData(gp);
         ArrayList<ScheduleItem> sl = loadScheduleData(gp);
         String sched_list="", sep="", first="";
         long latest_sched_time = -1;
         ArrayList<String>sched_array=new ArrayList<String>();
+        boolean schedule_error=false;
+        String error_item_name="";
         for (ScheduleItem si : sl) {
             if (si.scheduleEnabled) {
                 long time = ScheduleUtil.getNextSchedule(si);
                 String dt=StringUtil.convDateTimeTo_YearMonthDayHourMin(time);
                 String item=dt+","+si.scheduleName;
+                if (!si.syncTaskList.equals("")) {
+                    if (si.syncTaskList.indexOf(",")>0) {
+                        String[] stl=si.syncTaskList.split(",");
+                        for(String stn:stl) {
+                            if (getSyncTask(gp,stn)==null) {
+                                schedule_error=true;
+                                error_item_name=si.scheduleName;
+                                break;
+                            }
+                        }
+                    } else {
+                        if (getSyncTask(gp,si.syncTaskList)==null) {
+                            schedule_error=true;
+                            error_item_name=si.scheduleName;
+                            break;
+                        }
+                    }
+                }
                 sched_array.add(item);
+                if (schedule_error) break;
             }
         }
         Collections.sort(sched_array);
@@ -464,8 +495,17 @@ public class ScheduleUtil {
                     sep=",";
                 }
             }
-            String sched_info = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_main_info),
-                    key[0], sched_list);
+            String sched_info ="";
+            if (schedule_error) {
+                gp.scheduleErrorText = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_main_error), error_item_name);
+                gp.scheduleErrorView.setText(gp.scheduleErrorText);
+                gp.scheduleErrorView.setTextColor(gp.themeColorList.text_color_warning);
+                gp.scheduleErrorView.setVisibility(TextView.VISIBLE);
+            } else {
+                gp.scheduleErrorText="";
+                gp.scheduleErrorView.setVisibility(TextView.GONE);
+            }
+            sched_info = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_main_info), key[0], sched_list);
             gp.scheduleInfoText = sched_info;
             gp.scheduleInfoView.setText(gp.scheduleInfoText);
         } else {
@@ -480,16 +520,16 @@ public class ScheduleUtil {
         String sched_time = "", result = "";
         if (nst != -1) {
             sched_time = StringUtil.convDateTimeTo_YearMonthDayHourMin(nst);
-            if (sp.scheduleEnabled)
+            if (sp.scheduleEnabled) {
                 result = c.getString(R.string.msgs_scheduler_info_schedule_enabled) + ", " + String.format(c.getString(R.string.msgs_scheduler_info_next_schedule_time), sched_time);
-            else result = c.getString(R.string.msgs_scheduler_info_schedule_disabled);
+            } else {
+                result = c.getString(R.string.msgs_scheduler_info_schedule_disabled);
+            }
         } else {
             result = c.getString(R.string.msgs_scheduler_info_schedule_disabled);
         }
         return result;
     }
-
-    ;
 
 }
 

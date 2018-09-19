@@ -837,6 +837,8 @@ public class ScheduleListEditor {
                 holder.tv_name = (TextView) v.findViewById(R.id.schedule_list_name);
                 holder.tv_info = (TextView) v.findViewById(R.id.schedule_list_info);
                 holder.tv_time_info = (TextView) v.findViewById(R.id.schedule_list_time_info);
+                holder.tv_error_info = (TextView) v.findViewById(R.id.schedule_list_error_info);
+                holder.tv_error_info.setTextColor(mGp.themeColorList.text_color_warning);
                 holder.cbChecked = (CheckBox) v.findViewById(R.id.schedule_list_checked);
                 text_color = holder.tv_name.getCurrentTextColor();
                 v.setTag(holder);
@@ -915,7 +917,33 @@ public class ScheduleListEditor {
                 String sync_prof = "";
                 if (o.syncTaskList.equals("")) {
                     sync_prof = mContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
+                    holder.tv_error_info.setVisibility(TextView.GONE);
                 } else {
+                    boolean schedule_error=false;
+                    String error_item_name="";
+                    if (o.syncTaskList.indexOf(",")>0) {
+                        String[] stl=o.syncTaskList.split(",");
+                        String sep="";
+                        for(String stn:stl) {
+                            if (ScheduleUtil.getSyncTask(mGp,stn)==null) {
+                                schedule_error=true;
+                                error_item_name=sep+stn;
+                                sep=",";
+                            }
+                        }
+                    } else {
+                        if (ScheduleUtil.getSyncTask(mGp, o.syncTaskList)==null) {
+                            schedule_error=true;
+                            error_item_name=o.syncTaskList;
+                        }
+                    }
+                    if (schedule_error) {
+                        holder.tv_error_info.setVisibility(TextView.VISIBLE);
+                        holder.tv_error_info.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found),
+                                error_item_name));
+                    } else {
+                        holder.tv_error_info.setVisibility(TextView.GONE);
+                    }
                     sync_prof = String.format(mContext.getString(R.string.msgs_scheduler_info_sync_selected_profile),
                             o.syncTaskList);
                 }
@@ -939,7 +967,7 @@ public class ScheduleListEditor {
         }
 
         class ViewHolder {
-            TextView tv_name, tv_info, tv_enabled, tv_time_info;
+            TextView tv_name, tv_info, tv_enabled, tv_time_info, tv_error_info;
             CheckBox cbChecked;
         }
 

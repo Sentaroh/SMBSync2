@@ -48,10 +48,13 @@
 	    
     <string name="msgs_scheduler_info_next_schedule_time">同期予定時刻 %s</string>
     <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">同期予定 : 時刻=%s, 名前=(%s)</string>
+    <string name="msgs_scheduler_info_next_schedule_main_error">エラー : %s</string>
     <string name="msgs_scheduler_info_schedule_disabled">スケジュール同期:無効</string>
     <string name="msgs_scheduler_info_schedule_enabled">スケジュール同期:有効</string>
     <string name="msgs_scheduler_info_sync_all_active_profile">自動同期タスクすべて</string>
     <string name="msgs_scheduler_info_sync_selected_profile">プロファイル %s を同期</string>
+
+    <string name="msgs_scheduler_info_sync_task_was_not_found">指定された同期タスクが見つかりませんでした。名前=(%s)</string>
     
     <string name="msgs_scheduler_main_dw_not_selected">少なくても一つの曜日を選択してください</string>
 

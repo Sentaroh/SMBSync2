@@ -17,5 +17,15 @@
         android:maxLines="2"
         android:text="Scheduler info"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-    
+    <TextView
+        android:id="@+id/main_schedule_view_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Scheduler error"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </LinearLayout>

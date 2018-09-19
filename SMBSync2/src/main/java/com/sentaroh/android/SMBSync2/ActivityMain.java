@@ -673,6 +673,9 @@ public class ActivityMain extends AppCompatActivity {
         mGp.progressSpinSyncprof.setText(vsa.prog_prof);
         mGp.progressSpinMsg.setText(vsa.prog_msg);
         mGp.scheduleInfoView.setText(mGp.scheduleInfoText);
+        mGp.scheduleErrorView.setText(mGp.scheduleErrorText);
+        if (mGp.scheduleErrorText.equals("")) mGp.scheduleErrorView.setVisibility(TextView.GONE);
+        else mGp.scheduleErrorView.setVisibility(TextView.VISIBLE);
 
         if (vsa.prog_bar_view_visibility != LinearLayout.GONE) {
             mGp.progressBarView.bringToFront();
@@ -750,6 +753,12 @@ public class ActivityMain extends AppCompatActivity {
 
         mGp.scheduleInfoView = (TextView) findViewById(R.id.main_schedule_view_info);
         mGp.scheduleInfoView.setTextColor(mGp.themeColorList.text_color_primary);
+        mGp.scheduleErrorView = (TextView) findViewById(R.id.main_schedule_view_error);
+        mGp.scheduleErrorView.setText(mGp.scheduleErrorText);
+        mGp.scheduleErrorView.setTextColor(mGp.themeColorList.text_color_warning);
+        if (mGp.scheduleErrorText.equals("")) mGp.scheduleErrorView.setVisibility(TextView.GONE);
+        else mGp.scheduleErrorView.setVisibility(TextView.VISIBLE);
+
 
         mGp.confirmView = (LinearLayout) findViewById(R.id.main_dialog_confirm_view);
         mGp.confirmView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
@@ -2874,6 +2883,7 @@ public class ActivityMain extends AppCompatActivity {
                 if (mGp.syncTaskAdapter.isShowCheckBox()) setSyncTaskContextButtonSelectMode();
                 else setSyncTaskContextButtonNormalMode();
 //				checkSafExternalSdcardTreeUri(null);
+                ScheduleUtil.setSchedulerInfo(mGp);
             }
 
             @Override

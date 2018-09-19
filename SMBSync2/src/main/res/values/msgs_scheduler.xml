@@ -48,10 +48,13 @@
     
     <string name="msgs_scheduler_info_next_schedule_time">Next sync time is %s</string>
     <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Next sync : Time=%s, Name=(%s)</string>
+    <string name="msgs_scheduler_info_next_schedule_main_error">Error : %s</string>
     <string name="msgs_scheduler_info_schedule_disabled">Schedule sync:disabled</string>
     <string name="msgs_scheduler_info_schedule_enabled">Schedule sync:enabled</string>
     <string name="msgs_scheduler_info_sync_all_active_profile">Sync all auto task</string>
     <string name="msgs_scheduler_info_sync_selected_profile">Sync task(s) %s</string>
+
+    <string name="msgs_scheduler_info_sync_task_was_not_found">Specified sync task name was not found, Name=(%s)</string>
     
     <string name="msgs_scheduler_main_dw_not_selected">Please select at least one day of the week.</string>
 

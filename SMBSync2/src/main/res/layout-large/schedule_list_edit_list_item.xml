@@ -59,6 +59,16 @@
                 android:text="TextView"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
+            <TextView
+                android:id="@+id/schedule_list_error_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="error"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
         </LinearLayout>
 
         <CheckBox
