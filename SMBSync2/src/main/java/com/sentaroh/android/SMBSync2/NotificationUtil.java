@@ -195,6 +195,7 @@ public class NotificationUtil {
                 .setContentText(gwa.notificationLastShowedMessage)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
 //                .setLargeIcon(gwa.notificationLargeIcon)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
         ;
         if (when != 0) gwa.notificationBuilder.setWhen(when);
         if (Build.VERSION.SDK_INT>=26) {
@@ -217,6 +218,7 @@ public class NotificationUtil {
                 .setContentText(gwa.notificationLastShowedMessage)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
 //                .setLargeIcon(gwa.notificationLargeIcon)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
         ;
         if (Build.VERSION.SDK_INT>=26) {
             gwa.notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
