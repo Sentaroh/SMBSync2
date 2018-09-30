@@ -2166,9 +2166,10 @@ public class ActivityMain extends AppCompatActivity {
                                 if (lf.exists()) {
                                     Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
                                     if (Build.VERSION.SDK_INT>=26) {
-                                        Uri uri=FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(item.sync_result_file_path));
-                                        intent.setDataAndType(uri, "text/plain");
-                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                                        Uri uri=FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(item.sync_result_file_path));
+//                                        intent.setDataAndType(uri, "text/plain");
+//                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        intent.setDataAndType(Uri.parse("file://"+item.sync_result_file_path),"text/plain");
                                     } else {
                                         intent.setDataAndType(Uri.parse("file://"+item.sync_result_file_path),"text/plain");
                                     }
