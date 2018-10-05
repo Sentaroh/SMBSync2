@@ -28,6 +28,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -330,8 +331,6 @@ public class ScheduleListEditor {
         mDialog.show();
     }
 
-    ;
-
     private void setContextButtonMode(Dialog dialog, ScheduleListAdapter adapter) {
         boolean selected = false;
         int sel_cnt = 0;
@@ -421,8 +420,6 @@ public class ScheduleListEditor {
         }
     }
 
-    ;
-
     private void setContextButtonListener(final Dialog dialog) {
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.schedule_list_edit_dlg_msg);
         mContextButtonAdd.setOnClickListener(new View.OnClickListener() {
@@ -499,6 +496,7 @@ public class ScheduleListEditor {
                         for (int i = mScheduleAdapter.getCount() - 1; i >= 0; i--) {
                             if (mScheduleAdapter.getItem(i).isChecked && !mScheduleAdapter.getItem(i).scheduleEnabled) {
                                 mScheduleAdapter.getItem(i).scheduleEnabled = true;
+                                mScheduleAdapter.getItem(i).isChanged = true;
                                 mScheduleAdapter.getItem(i).scheduleLastExecTime = System.currentTimeMillis();
                             }
                         }
@@ -535,6 +533,7 @@ public class ScheduleListEditor {
                         for (int i = mScheduleAdapter.getCount() - 1; i >= 0; i--) {
                             if (mScheduleAdapter.getItem(i).isChecked && mScheduleAdapter.getItem(i).scheduleEnabled) {
                                 mScheduleAdapter.getItem(i).scheduleEnabled = false;
+                                mScheduleAdapter.getItem(i).isChanged = true;
                             }
                         }
 //                        mScheduleAdapter.setSelectMode(false);
@@ -699,6 +698,7 @@ public class ScheduleListEditor {
                 String new_name = etInput.getText().toString();
 
                 si.scheduleName = new_name;
+                si.isChanged = true;
 
                 p_ntfy.notifyToListener(true, null);
             }
@@ -719,8 +719,6 @@ public class ScheduleListEditor {
         dialog.show();
 
     }
-
-    ;
 
     private void createContextView(Dialog dialog) {
         mContextButtonAddView = (LinearLayout) dialog.findViewById(R.id.context_button_add_view);
@@ -825,6 +823,8 @@ public class ScheduleListEditor {
 //            return mScheduleList.size();
 //        }
 
+        private Drawable ll_default_background_color=null;
+
         @Override
         public View getView(final int position, View convertView, final ViewGroup parent) {
             final ViewHolder holder;
@@ -834,6 +834,8 @@ public class ScheduleListEditor {
                 LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(layout_id, null);
                 holder = new ViewHolder();
+                holder.ll_view=(LinearLayout)v.findViewById(R.id.schedule_list_view);
+                ll_default_background_color=holder.ll_view.getBackground();
                 holder.tv_name = (TextView) v.findViewById(R.id.schedule_list_name);
                 holder.tv_info = (TextView) v.findViewById(R.id.schedule_list_info);
                 holder.tv_time_info = (TextView) v.findViewById(R.id.schedule_list_time_info);
@@ -855,6 +857,15 @@ public class ScheduleListEditor {
                     holder.cbChecked.setVisibility(CheckBox.INVISIBLE);
                 }
 
+                if (o.isChanged) {
+                    if (mGp.themeIsLight) {
+                        holder.ll_view.setBackgroundColor(Color.argb(255, 0, 192, 192));
+                    } else {
+                        holder.ll_view.setBackgroundColor(Color.argb(255, 0, 128, 128));
+                    }
+                } else {
+                    holder.ll_view.setBackground(ll_default_background_color);
+                }
                 String time_info = "";
                 if (o.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS)) {
                     time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_hour) + " " + o.scheduleMinutes + " " +
@@ -968,10 +979,10 @@ public class ScheduleListEditor {
 
         class ViewHolder {
             TextView tv_name, tv_info, tv_enabled, tv_time_info, tv_error_info;
+            LinearLayout ll_view;
             CheckBox cbChecked;
         }
 
-        ;
     }
 
 }

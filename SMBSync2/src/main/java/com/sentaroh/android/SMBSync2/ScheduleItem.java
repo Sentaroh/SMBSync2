@@ -66,6 +66,7 @@ class ScheduleItem implements Serializable, Cloneable {
     public int syncDelayAfterWifiOn = 5;
 
     public transient boolean isChecked = false;
+    public transient boolean isChanged = false;
 
     @Override
     public ScheduleItem clone() {
