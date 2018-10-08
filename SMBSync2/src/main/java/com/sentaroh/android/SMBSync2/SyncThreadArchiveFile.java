@@ -398,7 +398,8 @@ public class SyncThreadArchiveFile {
     static private int buildArchiveListInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                           String from_base, String from_path, File mf, String to_base, String to_path) {
         stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
-        int sync_result = 0;
+        int sync_result = SyncThread.isValidFileDirectoryName(stwa, sti, from_path);
+        if (sync_result!=0) return sync_result;
         stwa.jcifsNtStatusCode=0;
         File tf;
         try {
@@ -530,7 +531,8 @@ public class SyncThreadArchiveFile {
                                                      String from_base, String from_path, File mf, String to_base, String to_path) {
         stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, from=", from_path, ", to=", to_path);
         stwa.jcifsNtStatusCode=0;
-        int sync_result = 0;
+        int sync_result = SyncThread.isValidFileDirectoryName(stwa, sti, from_path);
+        if (sync_result!=0) return sync_result;
         JcifsFile tf;
         try {
             if (mf.exists()) {

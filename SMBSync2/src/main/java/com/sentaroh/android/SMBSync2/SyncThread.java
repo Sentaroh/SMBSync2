@@ -1161,6 +1161,40 @@ public class SyncThread extends Thread {
         return result;
     }
 
+    public static String removeInvalidCharForFileDirName(String in_str) {
+        String out = in_str.replaceAll(":", "")
+                .replaceAll("\\\\", "")
+                .replaceAll("\\*", "")
+                .replaceAll("\\?", "")
+                .replaceAll("\"", "")
+                .replaceAll("<", "")
+                .replaceAll(">", "")
+                .replaceAll("\\|", "");
+        return out;
+    }
+
+    public static String hasInvalidCharForFileDirName(String in_str) {
+        if (in_str.contains(":")) return ":";
+        if (in_str.contains("\\")) return "\\";
+        if (in_str.contains("\\*")) return "*";
+        if (in_str.contains("\\?")) return "?";
+        if (in_str.contains("\"")) return "\"";
+        if (in_str.contains("<")) return "<";
+        if (in_str.contains(">")) return ">";
+        if (in_str.contains("\\|")) return "|";
+        return "";
+    }
+
+    public static int isValidFileDirectoryName(SyncThreadWorkArea stwa, SyncTaskItem sti, String in_str) {
+        if (!hasInvalidCharForFileDirName(in_str).equals("")) {
+            showMsg(stwa, false, stwa.currentSTI.getSyncTaskName(), "E", "", "",
+                    String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_invalid_file_directory_name_character_detected),
+                            hasInvalidCharForFileDirName(in_str), in_str));
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
+        return SyncTaskItem.SYNC_STATUS_SUCCESS;
+    }
+
 //    private CIFSContext setSmbAuth(BaseContext bc, String domain, String user, String pass) {
 //        String tuser = null, tpass = null;
 //        if (user.length() != 0) tuser = user;
@@ -2141,7 +2175,7 @@ public class SyncThread extends Thread {
     }
 
     static public boolean isRetryRequiredError(int sc) {
-        if (sc==0xc000006d || sc==0xc0000043) return false;
+        if (sc==0 || sc==0xc000006d || sc==0xc0000043) return false;
         else return true;
     }
 
