@@ -307,6 +307,9 @@ public class SyncThreadArchiveFile {
                 sync_result= copyFile(stwa, sti, new FileInputStream(mf), os, from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
 
                 temp_file.setLastModified(mf.lastModified());
+
+//                SyncThread.deleteTempMediaStoreItem(stwa, temp_file);
+
                 SafFile from_saf = SyncThread.createSafFile(stwa, sti, temp_file.getPath());
                 if (from_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
 
@@ -922,6 +925,8 @@ public class SyncThreadArchiveFile {
                         os, from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
 
                 temp_file.setLastModified(mf.lastModified());
+
+//                SyncThread.deleteTempMediaStoreItem(stwa, temp_file);
 
                 SafFile from_saf = SyncThread.createSafFile(stwa, sti, temp_file.getPath());
                 if (from_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1606,6 +1611,8 @@ public class SyncThreadArchiveFile {
                 }
                 if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                     temp_file.setLastModified(mf.getLastModified());
+
+//                    SyncThread.deleteTempMediaStoreItem(stwa, temp_file);
 
                     SafFile from_saf = SyncThread.createSafFile(stwa, sti, temp_file.getPath());
                     if (from_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;

@@ -1935,6 +1935,7 @@ public class SyncThreadSyncFile {
                                                         to_path, tf.lastModified(), mf.getLastModified());
                                             }
 //                                            tf.setLastModified(mf.getLastModified());
+//                                            stwa.util.addDebugMsg(1,"I", "scanMediaFile isued, fp="+to_path);
                                             SyncThread.scanMediaFile(stwa, to_path);
                                             stwa.totalCopyCount++;
                                         }

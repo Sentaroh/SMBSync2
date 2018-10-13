@@ -38,6 +38,7 @@ import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 
@@ -1260,6 +1261,23 @@ public class SyncThread extends Thread {
         } catch(JcifsException e) {
             showMsg(stwa, false, sti.getSyncTaskName(), "E", dir, "","SMB create error, "+e.getMessage());
             throw(e);
+        }
+    }
+
+    static final public void deleteTempMediaStoreItem(SyncThreadWorkArea stwa, File temp_file) {
+        if (Build.VERSION.SDK_INT==26 || Build.VERSION.SDK_INT==27) {
+            String tfp=temp_file.getPath();
+            File temp_file_for_rename=new File(tfp+"x");
+            temp_file.renameTo(temp_file_for_rename);
+            int dc_image=0, dc_audio=0, dc_video=0, dc_files=0;
+            ContentResolver cr = stwa.gp.appContext.getContentResolver();
+            dc_image=cr.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, MediaStore.Images.Media.DATA + "=?", new String[]{tfp} );
+            dc_audio=cr.delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, MediaStore.Audio.Media.DATA + "=?", new String[]{tfp} );
+            dc_video=cr.delete(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, MediaStore.Video.Media.DATA + "=?", new String[]{tfp} );
+            dc_files=cr.delete(MediaStore.Files.getContentUri("external"), MediaStore.Video.Media.DATA + "=?", new String[]{tfp} );
+            temp_file_for_rename.renameTo(temp_file);
+            stwa.util.addDebugMsg(1,"I","deleTempMediaStoreItem Temp file name=",tfp,
+                    ", delete count image="+dc_image, ", audio="+dc_audio,", video="+dc_video,", files="+dc_files);
         }
     }
 
