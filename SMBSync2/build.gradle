@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.sentaroh.android.SMBSync2"
         minSdkVersion 21
 //        targetSdkVersion 21  //Android 5.0
-        targetSdkVersion 23  //Android 6.0
-//        targetSdkVersion 26  //Android 8.0
+//        targetSdkVersion 23  //Android 6.0
+        targetSdkVersion 26  //Android 8.0
 
 //
         versionCode 148
