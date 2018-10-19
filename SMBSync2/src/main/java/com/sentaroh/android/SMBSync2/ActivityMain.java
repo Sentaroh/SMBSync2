@@ -178,6 +178,7 @@ public class ActivityMain extends AppCompatActivity {
             mGp.themeColorList = ThemeUtil.getThemeColorList(this);
         }
         setTheme(mGp.applicationTheme);
+//        getWindow().setNavigationBarColor(mGp.themeColorList.window_background_color_content);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
 

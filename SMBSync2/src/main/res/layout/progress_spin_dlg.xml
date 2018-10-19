@@ -18,6 +18,7 @@
             
 	        <ProgressBar
 	            android:id="@+id/progress_spin_dlg_progressBar"
+                android:indeterminateDrawable="@drawable/custom_progress_spin"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"

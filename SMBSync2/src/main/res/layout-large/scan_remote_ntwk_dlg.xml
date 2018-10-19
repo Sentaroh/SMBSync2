@@ -162,7 +162,8 @@
 
                 <ProgressBar
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:indeterminateDrawable="@drawable/custom_progress_spin"/>
 
                 <TextView
                     android:id="@+id/scan_remote_ntwk_progress_msg"
