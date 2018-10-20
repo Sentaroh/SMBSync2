@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -134,7 +135,26 @@ public final class CommonUtilities {
             out.add("setSettingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired);
             out.add("ACCESS_COARSE_LOCATION Permission="+mGp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
         }
+//        ConnectivityManager cm =(ConnectivityManager)mGp.appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+//        String ssid=activeNetwork.getExtraInfo();
+//        out.add("SSID="+ssid);
+//        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+//        boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+        if (Build.VERSION.SDK_INT>=28) {
+//            if (mGp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
+//            }
+            out.add("LocationService enabled="+isLocationServiceEnabled(mGp));
+        }
         return out;
+    }
+
+    final public static boolean isLocationServiceEnabled(GlobalParameters mGp) {
+        if (Build.VERSION.SDK_INT>=28) {
+            LocationManager lm= (LocationManager)mGp.appContext.getSystemService(Context.LOCATION_SERVICE);
+            return lm.isLocationEnabled();
+        }
+        return false;
     }
 
     final public static boolean isNetworkConnected(Context context) {
@@ -286,19 +306,14 @@ public final class CommonUtilities {
         String result = "";
         boolean exit = false;
         try {
-            for (Enumeration<NetworkInterface> en =
-                 NetworkInterface.getNetworkInterfaces();
-                 en.hasMoreElements(); ) {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
                 NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr =
-                     intf.getInetAddresses();
-                     enumIpAddr.hasMoreElements(); ) {
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
 //	                if (!inetAddress.isLoopbackAddress() && !(inetAddress.toString().indexOf(":")>=0)) {
 //	                    return inetAddress.getHostAddress().toString();
 //	                }
-//	            	Log.v("","ip="+inetAddress.getHostAddress()+
-//	            			", name="+intf.getName());
+//	            	Log.v("SMBSync2","ip="+inetAddress.getHostAddress()+", name="+intf.getName());
                     if (inetAddress.isSiteLocalAddress() && (inetAddress instanceof Inet4Address)) {
                         result = inetAddress.getHostAddress();
 //	                    Log.v("","result="+result+", name="+intf.getName()+"-");
