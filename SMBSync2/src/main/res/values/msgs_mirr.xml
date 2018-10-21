@@ -70,6 +70,10 @@
 	<string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">Stop the sync because wireless LAN is not connected to the access point.</string>
 	<string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">Stop the sync because wireless LAN is not connected to the specified access point.</string>
     <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">Skip the sync task because wireless LAN is not connected to the specified access point.</string>
+    <string name="msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr">Sync stops because the network address is not a local address.</string>
+
+    <string name="msgs_mirror_sync_can_not_start_wifi_address_conn_other">Stop the sync because wireless LAN is not connected to the specified IP address.</string>
+    <string name="msgs_mirror_sync_skipped_wifi_address_conn_other">Skip the sync task because wireless LAN is not connected to the specified IP address.</string>
 
     <string name="msgs_mirror_task_sync_request_error_detected">Sync request was ended with some error.</string>
 	<string name="msgs_mirror_sync_request_started">sync request has been started. Requestor=%s</string>

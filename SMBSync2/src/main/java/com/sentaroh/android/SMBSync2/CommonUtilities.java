@@ -304,20 +304,23 @@ public final class CommonUtilities {
 
     public static String getLocalIpAddress() {
         String result = "";
+        result=getIfIpAddress("wlan0");
+        if (result.equals("")) result = "192.168.0.1";
+        return result;
+    }
+
+    public static String getIfIpAddress(String if_name) {
+        String result = "";
         boolean exit = false;
         try {
             for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
                 NetworkInterface intf = en.nextElement();
                 for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
-//	                if (!inetAddress.isLoopbackAddress() && !(inetAddress.toString().indexOf(":")>=0)) {
-//	                    return inetAddress.getHostAddress().toString();
-//	                }
 //	            	Log.v("SMBSync2","ip="+inetAddress.getHostAddress()+", name="+intf.getName());
                     if (inetAddress.isSiteLocalAddress() && (inetAddress instanceof Inet4Address)) {
                         result = inetAddress.getHostAddress();
-//	                    Log.v("","result="+result+", name="+intf.getName()+"-");
-                        if (intf.getName().equals("wlan0")) {
+                        if (intf.getName().equals(if_name)) {
                             exit = true;
                             break;
                         }
@@ -327,40 +330,8 @@ public final class CommonUtilities {
             }
         } catch (SocketException ex) {
             Log.e(APPLICATION_TAG, ex.toString());
-            result = "192.168.0.1";
+//            result = "192.168.0.1";
         }
-//		Log.v("","getLocalIpAddress result="+result);
-        if (result.equals("")) result = "192.168.0.1";
-        return result;
-    }
-
-    public static String getIfIpAddress() {
-        String result = "";
-        try {
-            for (Enumeration<NetworkInterface> en =
-                 NetworkInterface.getNetworkInterfaces();
-                 en.hasMoreElements(); ) {
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr =
-                     intf.getInetAddresses();
-                     enumIpAddr.hasMoreElements(); ) {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-//	            	Log.v("","ip="+inetAddress.getHostAddress());
-                    if (!inetAddress.isLoopbackAddress() &&
-                            (inetAddress.getHostAddress().startsWith("0") ||
-                                    inetAddress.getHostAddress().startsWith("1") ||
-                                    inetAddress.getHostAddress().startsWith("2"))) {
-                        result = inetAddress.getHostAddress();
-                        break;
-                    }
-                }
-            }
-        } catch (SocketException ex) {
-            Log.e(APPLICATION_TAG, ex.toString());
-            result = "192.168.0.1";
-        }
-//		Log.v("","getIfIpAddress result="+result);
-        if (result.equals("")) result = "192.168.0.1";
         return result;
     }
 

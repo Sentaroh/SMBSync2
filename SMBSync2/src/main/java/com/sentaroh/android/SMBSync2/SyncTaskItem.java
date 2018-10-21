@@ -154,8 +154,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_WIFI_STATUS_WIFI_OFF = "0";
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP = "1";
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP = "2";
+    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_LOCAL_ADDR = "3";
+    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR = "4";
     private String syncOptionWifiStatus = SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
-    private ArrayList<String> syncOptionWifiConnectionWhiteList = new ArrayList<String>();
     private boolean syncTaskSkipIfConnectAnotherWifiSsid = false;
 
     private boolean syncOptionSyncOnlyCharging = false;
@@ -451,8 +452,13 @@ class SyncTaskItem implements Serializable, Cloneable {
     public String getSyncWifiStatusOption() {return syncOptionWifiStatus;}
     public void setSyncWifiStatusOption(String p) {syncOptionWifiStatus = p;}
 
-    public ArrayList<String> getSyncWifiConnectionWhiteList() {return syncOptionWifiConnectionWhiteList;}
-    public void setSyncWifiConnectionWhiteList(ArrayList<String> p) {syncOptionWifiConnectionWhiteList = p;}
+    private ArrayList<String> syncOptionWifiConnectedAccessPointWhiteList = new ArrayList<String>();
+    public ArrayList<String> getSyncWifiConnectedAccessPointWhiteList() {return syncOptionWifiConnectedAccessPointWhiteList;}
+    public void setSyncWifiConnectedAccessPointWhiteList(ArrayList<String> p) {syncOptionWifiConnectedAccessPointWhiteList = p;}
+
+    private ArrayList<String> syncOptionWifiConnectedAddressWhiteList = new ArrayList<String>();
+    public ArrayList<String> getSyncWifiConnectedAddressWhiteList() {return syncOptionWifiConnectedAddressWhiteList;}
+    public void setSyncWifiConnectedAddressWhiteList(ArrayList<String> p) {syncOptionWifiConnectedAddressWhiteList = p;}
 
     public boolean isSyncTaskSkipIfConnectAnotherWifiSsid() {return syncTaskSkipIfConnectAnotherWifiSsid;}
     public void setSyncTaskSkipIfConnectAnotherWifiSsid(boolean skip) {syncTaskSkipIfConnectAnotherWifiSsid = skip;}
@@ -610,14 +616,22 @@ class SyncTaskItem implements Serializable, Cloneable {
                     for (String item : sti.getDirFilter()) df_cmp2 += item;
 
                     String wap_cmp1 = "";
-                    for (String item : syncOptionWifiConnectionWhiteList) wap_cmp1 += item;
+                    for (String item : syncOptionWifiConnectedAccessPointWhiteList) wap_cmp1 += item;
 
                     String wap_cmp2 = "";
-                    for (String item : sti.getSyncWifiConnectionWhiteList()) wap_cmp2 += item;
+                    for (String item : sti.getSyncWifiConnectedAccessPointWhiteList()) wap_cmp2 += item;
+
+                    String wad_cmp1 = "";
+                    for (String item : syncOptionWifiConnectedAddressWhiteList) wad_cmp1 += item;
+
+                    String wad_cmp2 = "";
+                    for (String item : sti.getSyncWifiConnectedAddressWhiteList()) wad_cmp2 += item;
 
                     if ((ff_cmp1.equals(ff_cmp2)) &&
                             (df_cmp1.equals(df_cmp2)) &&
-                            (wap_cmp1.equals(wap_cmp2))) {
+                            (wap_cmp1.equals(wap_cmp2)) &&
+                            (wad_cmp1.equals(wad_cmp2))
+                            ) {
                         result = true;
                     }
                 }

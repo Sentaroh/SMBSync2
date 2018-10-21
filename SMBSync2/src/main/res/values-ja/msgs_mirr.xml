@@ -66,8 +66,12 @@
 	<string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">無線LANがアクセスポイントに接続されていないため同期を終了します。</string>
 	<string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">無線LANが指定されたアクセスポイントに接続されていないため同期を終了します。</string>
     <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">無線LANが指定されたアクセスポイントに接続されていないためタスクをスキップします。</string>
+    <string name="msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr">ネットワークアドレスがローカルアドレスでないため同期を終了します。</string>
 
-	<string name="msgs_mirror_task_sync_request_error_detected">エラーで終了した同期タスクがあります。</string>
+    <string name="msgs_mirror_sync_can_not_start_wifi_address_conn_other">無線LANが指定されたIPアドレスに接続されていないため同期を終了します。</string>
+    <string name="msgs_mirror_sync_skipped_wifi_address_conn_other">無線LANが指定されたIPアドレスに接続されていないためタスクをスキップします。</string>
+
+    <string name="msgs_mirror_task_sync_request_error_detected">エラーで終了した同期タスクがあります。</string>
 	<string name="msgs_mirror_sync_request_started">同期要求を開始しました。リクエスター=%s</string>
 	<string name="msgs_mirror_sync_request_ended">同期要求が終了しました。リクエスター=%s</string>
 

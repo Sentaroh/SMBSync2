@@ -2668,10 +2668,14 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_off));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap));
+        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_local_address));
+        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address));
 
         if (cv.equals("0")) spinner.setSelection(0);
         else if (cv.equals("1")) spinner.setSelection(1);
         else if (cv.equals("2")) spinner.setSelection(2);
+        else if (cv.equals("3")) spinner.setSelection(3);
+        else if (cv.equals("4")) spinner.setSelection(4);
 
         adapter.notifyDataSetChanged();
     }
@@ -2812,12 +2816,23 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
-        final LinearLayout ll_wifi_ap_list = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ap_list_view);
+        final LinearLayout ll_wifi_wl_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_wl_view);
+        final LinearLayout ll_wifi_wl_ap_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ap_list_view);
+        final LinearLayout ll_wifi_wl_address_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_address_list_view);
         final Button edit_wifi_ap_list = (Button) mDialog.findViewById(R.id.edit_sync_task_option_btn_edit_ap_white_list);
-        setWifiApWhileListInfo(n_sti.getSyncWifiConnectionWhiteList(), edit_wifi_ap_list);
+        final Button edit_wifi_addr_list = (Button) mDialog.findViewById(R.id.edit_sync_task_option_btn_edit_address_white_list);
+        setWifiApWhileListInfo(n_sti.getSyncWifiConnectedAccessPointWhiteList(), edit_wifi_ap_list);
+        setWifiApWhileListInfo(n_sti.getSyncWifiConnectedAddressWhiteList(), edit_wifi_addr_list);
         final CheckedTextView ctv_task_skip_if_ssid_invalid = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ap_list_task_skip_if_ssid_invalid);
-        CommonUtilities.setCheckedTextView(ctv_task_skip_if_ssid_invalid);
         ctv_task_skip_if_ssid_invalid.setChecked(n_sti.isSyncTaskSkipIfConnectAnotherWifiSsid());
+        ctv_task_skip_if_ssid_invalid.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !((CheckedTextView) v).isChecked();
+                ((CheckedTextView) v).setChecked(isChecked);
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+        });
 
         final CheckedTextView ctv_task_sync_when_cahrging = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
 //        CommonUtilities.setCheckedTextView(ctv_task_sync_when_cahrging);
@@ -2844,17 +2859,28 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         setSpinnerSyncTaskWifiOption(spinnerSyncWifiStatus, n_sti.getSyncWifiStatusOption());
-        if (n_sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP))
-            ll_wifi_ap_list.setVisibility(Button.VISIBLE);
-        else ll_wifi_ap_list.setVisibility(Button.GONE);
+        if (n_sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
+            ll_wifi_wl_view.setVisibility(Button.VISIBLE);
+            ll_wifi_wl_ap_view.setVisibility(Button.VISIBLE);
+        } else {
+            ll_wifi_wl_view.setVisibility(Button.GONE);
+            ll_wifi_wl_ap_view.setVisibility(Button.GONE);
+        }
 
         spinnerSyncWifiStatus.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ll_wifi_wl_view.setVisibility(Button.GONE);
+                ll_wifi_wl_ap_view.setVisibility(Button.GONE);
+                ll_wifi_wl_address_view.setVisibility(Button.GONE);
                 if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap))) {
-                    ll_wifi_ap_list.setVisibility(Button.VISIBLE);
-                } else {
-                    ll_wifi_ap_list.setVisibility(Button.GONE);
+                    ll_wifi_wl_view.setVisibility(Button.VISIBLE);
+                    ll_wifi_wl_ap_view.setVisibility(Button.VISIBLE);
+                    ll_wifi_wl_address_view.setVisibility(Button.GONE);
+                } else if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address))) {
+                    ll_wifi_wl_view.setVisibility(Button.VISIBLE);
+                    ll_wifi_wl_ap_view.setVisibility(Button.GONE);
+                    ll_wifi_wl_address_view.setVisibility(Button.VISIBLE);
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -3562,7 +3588,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        setWifiApWhileListInfo(n_sti.getSyncWifiConnectionWhiteList(), edit_wifi_ap_list);
+                        setWifiApWhileListInfo(n_sti.getSyncWifiConnectedAccessPointWhiteList(), edit_wifi_ap_list);
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                     }
 
@@ -3572,7 +3598,29 @@ public class SyncTaskEditor extends DialogFragment {
                     }
 
                 });
-                mTaskUtil.editWifiApListDlg(n_sti.getSyncWifiConnectionWhiteList(), ntfy);
+                mTaskUtil.editWifiAccessPointListDlg(n_sti.getSyncWifiConnectedAccessPointWhiteList(), ntfy);
+            }
+        });
+
+        // wifi address listボタンの指定
+        edit_wifi_addr_list.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                //Listen setRemoteShare response
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context arg0, Object[] arg1) {
+                        setWifiApWhileListInfo(n_sti.getSyncWifiConnectedAddressWhiteList(), edit_wifi_addr_list);
+                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context arg0, Object[] arg1) {
+                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                    }
+
+                });
+                mTaskUtil.editWifiIPAddressListDlg(n_sti.getSyncWifiConnectedAddressWhiteList(), ntfy);
             }
         });
 
@@ -3999,6 +4047,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void checkSyncTaskOkButtonEnabled(Dialog dialog, String type, SyncTaskItem n_sti, TextView dlg_msg) {
+//        Thread.dumpStack();
         final LinearLayout ll_file_filter = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_detail_view);
 
 //        final CheckedTextView ctvSyncEmptyDir = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_empty_directory);
@@ -4071,11 +4120,17 @@ public class SyncTaskEditor extends DialogFragment {
             } else {
                 final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
                 if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap))) {
-                    if (n_sti.getSyncWifiConnectionWhiteList().size() == 0) {
+                    if (n_sti.getSyncWifiConnectedAccessPointWhiteList().size() == 0) {
                         btn_ok.setEnabled(false);
                         setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_not_specified));
                         error_detected = true;
                     }
+                } else if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address))) {
+                        if (n_sti.getSyncWifiConnectedAddressWhiteList().size() == 0) {
+                            btn_ok.setEnabled(false);
+                            setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_address_not_specified));
+                            error_detected = true;
+                        }
                 }
                 if (!error_detected) {
                     String filter_msg = "";

@@ -229,6 +229,8 @@
 	<string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Run even when off</string>
 	<string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Conn to any AP.</string>
 	<string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">Access point list</string>
+    <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_local_address">Conn local addr</string>
+    <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Address list</string>
 	
 	<string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Last time of tolerance(Sec)</string>		
 	<string name="msgs_main_sync_profile_dlg_diff_time_value_option_1">1</string>
@@ -378,15 +380,24 @@
     <string name="msgs_profile_sync_task_filter_edit_dlg_title">Edit filter</string>
     
     <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">Edit AP name</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_addr_edit_title">Edit IP Address</string>
 
     <string name="msgs_profile_sync_task_dlg_wifi_ap_hint">Access point name</string>
     <string name="msgs_profile_sync_task_dlg_wifi_ap_title">Edit Wi-Fi access point</string>
     <string name="msgs_profile_sync_task_dlg_wifi_ap_list">Wireless LAN access point list</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_address_list">Wireless LAN IP address list</string>
     <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">To add access points that are currently connected</string>
-    <string name="msgs_profile_sync_task_dlg_duplicate_ap_specified">Duplicate access point was specified. AP=%s</string>
-    <string name="msgs_profile_sync_task_dlg_ap_not_connected">Wireless LAN is not connected to the access point.</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified">Duplicate access point was specified. AP=%s</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_ap_not_connected">Wireless LAN is not connected to the access point.</string>
     <string name="msgs_profile_sync_task_dlg_wifi_ap_not_specified">Wireless LAN access point name does not specified.</string>
-    <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">If it is not connected to the specified access point, skip the task and start the next task.</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">Wireless LAN address does not specified.</string>
+    <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">If it is not connected to the specified access point or if it is not the specified IP address Skip the task and start the next task.</string>
+
+    <string name="msgs_profile_sync_task_dlg_wifi_addr_hint">IP Address</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_addr_title">Edit Wi-Fi IP Address</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_addr_list">Wireless LAN IP address list</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">To add IP address that are currently connected</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified">Duplicate access point was specified. AP=%s</string>
 
     <string name="msgs_main_shortcut_shortcut_added">Shortcut was added to home screen.</string>
 

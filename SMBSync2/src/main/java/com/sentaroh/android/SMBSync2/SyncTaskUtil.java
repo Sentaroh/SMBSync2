@@ -2186,7 +2186,7 @@ public class SyncTaskUtil {
 //		return pli;
 //	};
 
-    public void editWifiApListDlg(final ArrayList<String> ap_list, final NotifyEvent p_ntfy) {
+    public void editWifiAccessPointListDlg(final ArrayList<String> ap_list, final NotifyEvent p_ntfy) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
         final AdapterFilterList filterAdapter;
 
@@ -2288,7 +2288,7 @@ public class SyncTaskUtil {
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
                     if (isFilterExists(s.toString().trim(), filterAdapter)) {
-                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_duplicate_ap_specified);
+                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified);
                         dlg_msg.setText(String.format(mtxt, s.toString().trim()));
                         addBtn.setEnabled(false);
                         btn_ok.setEnabled(true);
@@ -2319,7 +2319,7 @@ public class SyncTaskUtil {
                 String ssid = CommonUtilities.getWifiSsidName(wm);
                 if (!ssid.equals("")) {
                     if (isFilterExists(ssid, filterAdapter)) {
-                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_duplicate_ap_specified);
+                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified);
                         dlg_msg.setText(String.format(mtxt, ssid));
                         addBtn.setEnabled(false);
                         btn_ok.setEnabled(true);
@@ -2339,7 +2339,7 @@ public class SyncTaskUtil {
                         btn_ok.setEnabled(true);
                     }
                 } else {
-                    String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_ap_not_connected);
+                    String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_not_connected);
                     dlg_msg.setText(mtxt);
                 }
             }
@@ -2401,7 +2401,216 @@ public class SyncTaskUtil {
 
     }
 
-    ;
+    public void editWifiIPAddressListDlg(final ArrayList<String> addr_list, final NotifyEvent p_ntfy) {
+        ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
+        final AdapterFilterList filterAdapter;
+
+        // カスタムダイアログの生成
+        final Dialog dialog = new Dialog(mActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.filter_list_dlg);
+
+        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_view);
+        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+
+        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
+        final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
+        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title.setText(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_title));
+
+        Button add_current_addr = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
+        add_current_addr.setText(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_add_current_addr));
+
+        filterAdapter = new AdapterFilterList(mActivity,
+                R.layout.filter_list_item_view, filterList, false);
+        ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
+
+        for (int i = 0; i < addr_list.size(); i++) {
+            String inc = addr_list.get(i).substring(0, 1);
+            String filter = addr_list.get(i).substring(1, addr_list.get(i).length());
+            boolean b_inc = false;
+            if (inc.equals(SMBSYNC2_PROF_FILTER_INCLUDE)) b_inc = true;
+            filterAdapter.add(new AdapterFilterList.FilterListItem(filter, b_inc));
+        }
+        lv.setAdapter(filterAdapter);
+        final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_select_edit_msg);
+
+        CommonDialog.setDlgBoxSizeLimit(dialog, true);
+
+        final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_select_edit_new_filter);
+        et_filter.setHint(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_hint));
+
+        final Button addBtn = (Button) dialog.findViewById(R.id.filter_select_edit_add_btn);
+        final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_select_edit_cancel_btn);
+        final Button btn_ok = (Button) dialog.findViewById(R.id.filter_select_edit_ok_btn);
+        btn_ok.setEnabled(false);
+
+        NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
+        ntfy_inc_exc.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context c, Object[] o) {
+                btn_ok.setEnabled(true);
+                dlg_msg.setText("");
+            }
+
+            @Override
+            public void negativeResponse(Context c, Object[] o) {
+            }
+        });
+        filterAdapter.setNotifyIncExcListener(ntfy_inc_exc);
+
+        NotifyEvent ntfy_delete = new NotifyEvent(mContext);
+        ntfy_delete.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context c, Object[] o) {
+                btn_ok.setEnabled(true);
+                dlg_msg.setText("");
+            }
+
+            @Override
+            public void negativeResponse(Context c, Object[] o) {
+            }
+        });
+        filterAdapter.setNotifyDeleteListener(ntfy_delete);
+
+        lv.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
+                AdapterFilterList.FilterListItem fli = filterAdapter.getItem(idx);
+                // リストアイテムを選択したときの処理
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context c, Object[] o) {
+                        btn_ok.setEnabled(true);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context c, Object[] o) {
+                    }
+
+                });
+                editFilter(idx, filterAdapter, fli, fli.getFilter(),
+                        mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_edit_title), ntfy);
+            }
+        });
+
+        // Addボタンの指定
+        addBtn.setEnabled(false);
+        et_filter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() != 0) {
+                    if (isFilterExists(s.toString().trim(), filterAdapter)) {
+                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified);
+                        dlg_msg.setText(String.format(mtxt, s.toString().trim()));
+                        addBtn.setEnabled(false);
+                        btn_ok.setEnabled(true);
+                    } else {
+                        dlg_msg.setText("");
+                        addBtn.setEnabled(true);
+                        btn_ok.setEnabled(false);
+                    }
+                } else {
+                    addBtn.setEnabled(false);
+                    btn_ok.setEnabled(true);
+                }
+//				et_filter.setText(s);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+        add_current_addr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WifiManager wm = (WifiManager) mGp.appContext.getSystemService(Context.WIFI_SERVICE);
+                String ip_addr = CommonUtilities.getLocalIpAddress();
+                if (!ip_addr.equals("")) {
+                    if (isFilterExists(ip_addr, filterAdapter)) {
+                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified);
+                        dlg_msg.setText(String.format(mtxt, ip_addr));
+                        addBtn.setEnabled(false);
+                        btn_ok.setEnabled(true);
+                    } else {
+                        dlg_msg.setText("");
+                        filterAdapter.add(new AdapterFilterList.FilterListItem(ip_addr, true));
+                        filterAdapter.setNotifyOnChange(true);
+                        filterAdapter.sort(new Comparator<AdapterFilterList.FilterListItem>() {
+                            @Override
+                            public int compare(AdapterFilterList.FilterListItem lhs,
+                                               AdapterFilterList.FilterListItem rhs) {
+                                return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
+                            }
+                        });
+                        btn_ok.setEnabled(true);
+                    }
+                } else {
+                    String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_not_connected);
+                    dlg_msg.setText(mtxt);
+                }
+            }
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg_msg.setText("");
+                String newfilter = et_filter.getText().toString().trim();
+                et_filter.setText("");
+                filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
+                filterAdapter.setNotifyOnChange(true);
+                filterAdapter.sort(new Comparator<AdapterFilterList.FilterListItem>() {
+                    @Override
+                    public int compare(AdapterFilterList.FilterListItem lhs,
+                                       AdapterFilterList.FilterListItem rhs) {
+                        return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
+                    }
+                });
+                btn_ok.setEnabled(true);
+            }
+        });
+
+        // CANCELボタンの指定
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+//				glblParms.profileListView.setSelectionFromTop(currentViewPosX,currentViewPosY);
+            }
+        });
+        // Cancelリスナーの指定
+        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface arg0) {
+                btn_cancel.performClick();
+            }
+        });
+        // OKボタンの指定
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+                addr_list.clear();
+                if (filterAdapter.getCount() > 0) {
+                    for (int i = 0; i < filterAdapter.getCount(); i++) {
+                        String inc = SMBSYNC2_PROF_FILTER_EXCLUDE;
+                        if (filterAdapter.getItem(i).isInclude())
+                            inc = SMBSYNC2_PROF_FILTER_INCLUDE;
+                        addr_list.add(inc + filterAdapter.getItem(i).getFilter());
+                    }
+                }
+                p_ntfy.notifyToListener(true, null);
+            }
+        });
+//		dialog.setOnKeyListener(new DialogOnKeyListener(context));
+//		dialog.setCancelable(false);
+        dialog.show();
+
+    }
 
     public void editFileFilterDlg(final ArrayList<String> file_filter, final NotifyEvent p_ntfy) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
@@ -4451,7 +4660,7 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectionWhiteList(wifi_wl);
+            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_wl);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -4558,7 +4767,7 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectionWhiteList(wifi_wl);
+            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_wl);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -4670,7 +4879,7 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectionWhiteList(wifi_wl);
+            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_wl);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -4789,7 +4998,7 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectionWhiteList(wifi_wl);
+            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_wl);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -4936,7 +5145,7 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectionWhiteList(wifi_wl);
+            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_wl);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -5022,7 +5231,7 @@ public class SyncTaskUtil {
 
     private static void addSyncTaskListVer6(String pl, ArrayList<SyncTaskItem> sync) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
-        String list1 = "", list2 = "", list3 = "", npl = "";
+        String list1 = "", list2 = "", list3 = "", list4="", npl = "";
         int ls = pl.indexOf("[");
         int le = pl.lastIndexOf("]\t");
         String list = pl.substring(ls, le + 2);
@@ -5032,6 +5241,7 @@ public class SyncTaskUtil {
         list1 = list_array[0].substring(1);
         list2 = list_array[1].substring(1);
         list3 = list_array[2].substring(1);
+        if (list_array.length>=4) list4 = list_array[3].substring(1);
 
         String[] tmp_pl = npl.split("\t");// {"type","name","active",options...};
         String[] parm = new String[100];
@@ -5047,7 +5257,8 @@ public class SyncTaskUtil {
         if (parm[0].equals(SMBSYNC2_PROF_TYPE_SYNC)) {//Sync
             ArrayList<String> ff = new ArrayList<String>();
             ArrayList<String> df = new ArrayList<String>();
-            ArrayList<String> wifi_wl = new ArrayList<String>();
+            ArrayList<String> wifi_ap_list = new ArrayList<String>();
+            ArrayList<String> wifi_addr_list = new ArrayList<String>();
             if (list1.length() != 0) {
                 String[] fp = list1.split("\t");
                 for (int i = 0; i < fp.length; i++) ff.add(convertToSpecChar(fp[i]));
@@ -5058,8 +5269,13 @@ public class SyncTaskUtil {
             } else df.clear();
             if (list3.length() != 0) {
                 String[] wl = list3.split("\t");
-                for (int i = 0; i < wl.length; i++) wifi_wl.add(convertToSpecChar(wl[i]));
-            } else wifi_wl.clear();
+                for (int i = 0; i < wl.length; i++) wifi_ap_list.add(convertToSpecChar(wl[i]));
+            } else wifi_ap_list.clear();
+
+            if (list4.length() != 0) {
+                String[] al = list4.split("\t");
+                for (int i = 0; i < al.length; i++) wifi_addr_list.add(convertToSpecChar(al[i]));
+            } else wifi_addr_list.clear();
 
             SyncTaskItem stli = new SyncTaskItem(parm[1], parm[2].equals("0") ? false : true, false);
             stli.setSyncTaskType(parm[3]);
@@ -5086,7 +5302,8 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectionWhiteList(wifi_wl);
+            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_ap_list);
+            stli.setSyncWifiConnectedAddressWhiteList(wifi_addr_list);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -5330,7 +5547,7 @@ public class SyncTaskUtil {
                     String pl_synctype = item.getSyncTaskType();
 
                     pl = "";
-                    String fl = "", dl = "", wifi_wl = "";
+                    String fl = "", dl = "", wifi_wl = "", wifi_addr_list="";
                     for (int j = 0; j < item.getFileFilter().size(); j++) {
                         if (fl.length() != 0) fl += "\t";
                         if (!item.getFileFilter().get(j).equals(""))
@@ -5347,13 +5564,21 @@ public class SyncTaskUtil {
                     dl = convertToCodeChar(dl);
                     dl = "[" + dl + "]";
 
-                    for (int j = 0; j < item.getSyncWifiConnectionWhiteList().size(); j++) {
+                    for (int j = 0; j < item.getSyncWifiConnectedAccessPointWhiteList().size(); j++) {
                         if (wifi_wl.length() != 0) wifi_wl += "\t";
-                        if (!item.getSyncWifiConnectionWhiteList().get(j).equals(""))
-                            wifi_wl += item.getSyncWifiConnectionWhiteList().get(j);
+                        if (!item.getSyncWifiConnectedAccessPointWhiteList().get(j).equals(""))
+                            wifi_wl += item.getSyncWifiConnectedAccessPointWhiteList().get(j);
                     }
                     wifi_wl = convertToCodeChar(wifi_wl);
                     wifi_wl = "[" + wifi_wl + "]";
+
+                    for (int j = 0; j < item.getSyncWifiConnectedAddressWhiteList().size(); j++) {
+                        if (wifi_addr_list.length() != 0) wifi_addr_list += "\t";
+                        if (!item.getSyncWifiConnectedAddressWhiteList().get(j).equals(""))
+                            wifi_addr_list += item.getSyncWifiConnectedAddressWhiteList().get(j);
+                    }
+                    wifi_addr_list = convertToCodeChar(wifi_addr_list);
+                    wifi_addr_list = "[" + wifi_addr_list + "]";
 
                     String sync_root_dir_file_tobe_processed = item.isSyncProcessRootDirFile() ? "1" : "0";
                     String sync_process_override_delete = item.isSyncOverrideCopyMoveFile() ? "1" : "0";
@@ -5415,6 +5640,8 @@ public class SyncTaskUtil {
                             fl + "\t" +
                             dl + "\t" +
                             wifi_wl + "\t" +
+                            wifi_addr_list + "\t" +
+
                             sync_root_dir_file_tobe_processed + "\t" +//22
                             sync_process_override_delete + "\t" +//23
 

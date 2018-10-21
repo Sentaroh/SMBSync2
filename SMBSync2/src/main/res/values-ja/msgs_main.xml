@@ -221,6 +221,8 @@
 	<string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">オフでも実行</string>
 	<string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">APに接続されている時</string>
 	<string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">アクセスポイントリスト</string>
+    <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_local_address">ローカルアドレス</string>
+    <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">アドレスリスト</string>
 	
 	<string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">最終更新時刻の差（秒）</string>		
 	<string name="msgs_main_sync_profile_dlg_diff_time_value_option_1">1</string>
@@ -366,16 +368,25 @@
     <string name="msgs_profile_sync_task_filter_edit_dlg_title">フィルター編集</string>
     
     <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">アクセスポイント名の編集</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_addr_edit_title">IPアドレスの編集</string>
     
     <string name="msgs_profile_sync_task_dlg_wifi_ap_hint">アクセスポイント名</string>
     <string name="msgs_profile_sync_task_dlg_wifi_ap_title">無線LANアクセスポイントの編集</string>
     <string name="msgs_profile_sync_task_dlg_wifi_ap_list">同期可能なアクセスポイントリスト</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_address_list">同期可能なIPアドレスリスト</string>
     <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">現在接続されているアクセスポイントを追加する</string>
-    <string name="msgs_profile_sync_task_dlg_duplicate_ap_specified">アクセスポイント名が重複しています。名前=%s</string>
-    <string name="msgs_profile_sync_task_dlg_ap_not_connected">無線LANがアクセスポイントに接続されていません</string>
-    <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">指定されたアクセスポイントに接続されていない場合タスクをスキップし、次のタスクを開始する。</string>
-    
+    <string name="msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified">アクセスポイント名が重複しています。名前=%s</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_ap_not_connected">無線LANがアクセスポイントに接続されていません</string>
+    <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">指定されたアクセスポイントまたはIPアドレスで無い場合タスクをスキップし、次のタスクを開始する。</string>
+
+    <string name="msgs_profile_sync_task_dlg_wifi_addr_hint">IPアドレス</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_addr_title">無線LAN IPアドレスリストの編集</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_addr_list">同期可能なIPアドレスリスト</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">現在接続されているIPアドレスを追加する</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified">IPアドレスが重複しています。名前=%s</string>
+
     <string name="msgs_profile_sync_task_dlg_wifi_ap_not_specified">無線LANアクセスポイント名が何も指定されていません。</string>
+    <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">無線LANのアドレスが何も指定されていません。</string>
     
     <string name="msgs_main_shortcut_shortcut_added">ホームスクリーンにショートカットを追加しました。</string>
 
