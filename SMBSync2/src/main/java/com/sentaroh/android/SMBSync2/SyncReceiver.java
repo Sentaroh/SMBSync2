@@ -99,7 +99,11 @@ public class SyncReceiver extends BroadcastReceiver {
                 Intent in = new Intent(mContext, SyncService.class);
                 in.setAction(action);
                 if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
-                mContext.startService(in);
+                try {
+                    mContext.startService(in);
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
             } else if (action.equals(SCHEDULER_INTENT_SET_TIMER)) {
                 if (mGp.settingDebugLevel > 0)
                     mLog.addDebugMsg(1, "I", "Receiver action=" + action);
