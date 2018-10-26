@@ -39,6 +39,14 @@
                     android:text="SyncName"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
+                <TextView
+                    android:id="@+id/schedule_list_changed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:text="Changed"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
             </LinearLayout>
 
             <TextView

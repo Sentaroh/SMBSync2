@@ -115,32 +115,37 @@ public class ScheduleListEditor {
             mAdapterChanged = true;
         } else {
             if (mScheduleList.size()!=0) {
-                for(ScheduleItem org_item:mOrgScheduleList) {
-                    ScheduleItem curr_item=getScheduleListItem(org_item.scheduleName, mScheduleList);
-                    if (curr_item!=null) {
-                        if (org_item.scheduleDayOfTheWeek.equals(curr_item.scheduleDayOfTheWeek) &&
-                                org_item.scheduleDay.equals(curr_item.scheduleDay) &&
-                                org_item.scheduleHours.equals(curr_item.scheduleHours) &&
-                                org_item.scheduleType.equals(curr_item.scheduleType) &&
-                                org_item.syncTaskList.equals(curr_item.syncTaskList) &&
-                                org_item.scheduleHours.equals(curr_item.scheduleHours) &&
-                                org_item.scheduleMinutes.equals(curr_item.scheduleMinutes) &&
-                                ((org_item.scheduleEnabled && curr_item.scheduleEnabled) || (!org_item.scheduleEnabled && !curr_item.scheduleEnabled)) &&
-                                ((org_item.syncWifiOffAfterEnd && curr_item.syncWifiOffAfterEnd) || (!org_item.syncWifiOffAfterEnd && !curr_item.syncWifiOffAfterEnd)) &&
-                                ((org_item.syncWifiOnBeforeStart && curr_item.syncWifiOnBeforeStart) || (!org_item.syncWifiOnBeforeStart && !curr_item.syncWifiOnBeforeStart)) &&
-                                ((org_item.scheduleIntervalFirstRunImmed && curr_item.scheduleIntervalFirstRunImmed) || (!org_item.scheduleIntervalFirstRunImmed && !curr_item.scheduleIntervalFirstRunImmed)) &&
-                                (org_item.syncDelayAfterWifiOn==curr_item.syncDelayAfterWifiOn) &&
-                                (org_item.scheduleLastExecTime==curr_item.scheduleLastExecTime)
-                                ){
-                            // No change found
+                if (mOrgScheduleList.size()!=0) {
+                    for(ScheduleItem org_item:mOrgScheduleList) {
+                        ScheduleItem curr_item=getScheduleListItem(org_item.scheduleName, mScheduleList);
+                        if (curr_item!=null) {
+                            if (org_item.scheduleDayOfTheWeek.equals(curr_item.scheduleDayOfTheWeek) &&
+                                    org_item.scheduleDay.equals(curr_item.scheduleDay) &&
+                                    org_item.scheduleHours.equals(curr_item.scheduleHours) &&
+                                    org_item.scheduleType.equals(curr_item.scheduleType) &&
+                                    org_item.syncTaskList.equals(curr_item.syncTaskList) &&
+                                    org_item.scheduleHours.equals(curr_item.scheduleHours) &&
+                                    org_item.scheduleMinutes.equals(curr_item.scheduleMinutes) &&
+                                    org_item.scheduleEnabled == curr_item.scheduleEnabled &&
+                                    org_item.syncWifiOffAfterEnd == curr_item.syncWifiOffAfterEnd &&
+                                    org_item.syncWifiOnBeforeStart == curr_item.syncWifiOnBeforeStart &&
+                                    org_item.scheduleIntervalFirstRunImmed == curr_item.scheduleIntervalFirstRunImmed &&
+                                    org_item.syncDelayAfterWifiOn==curr_item.syncDelayAfterWifiOn
+//                                    org_item.scheduleLastExecTime==curr_item.scheduleLastExecTime
+                                    ){
+                                curr_item.isChanged=false;
+                            } else {
+                                mAdapterChanged = true;
+                                curr_item.isChanged=true;
+                                break;
+                            }
                         } else {
                             mAdapterChanged = true;
                             break;
                         }
-                    } else {
-                        mAdapterChanged = true;
-                        break;
                     }
+                } else {
+                    mAdapterChanged = true;
                 }
 
             }
@@ -237,7 +242,7 @@ public class ScheduleListEditor {
                         }
                     });
                     ScheduleItemEditor sm = new ScheduleItemEditor(util, mActivity, mContext, commonDlg, ccMenu, mGp,
-                            true, mScheduleList, mScheduleAdapter.getItem(i), ntfy);
+                            true, mScheduleList, mScheduleList.get(i), ntfy);
                 }
             }
         });
@@ -837,6 +842,8 @@ public class ScheduleListEditor {
                 holder.ll_view=(LinearLayout)v.findViewById(R.id.schedule_list_view);
                 ll_default_background_color=holder.ll_view.getBackground();
                 holder.tv_name = (TextView) v.findViewById(R.id.schedule_list_name);
+                holder.tv_changed = (TextView) v.findViewById(R.id.schedule_list_changed);
+                holder.tv_changed.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_changed));
                 holder.tv_info = (TextView) v.findViewById(R.id.schedule_list_info);
                 holder.tv_time_info = (TextView) v.findViewById(R.id.schedule_list_time_info);
                 holder.tv_error_info = (TextView) v.findViewById(R.id.schedule_list_error_info);
@@ -858,12 +865,14 @@ public class ScheduleListEditor {
                 }
 
                 if (o.isChanged) {
-                    if (mGp.themeIsLight) {
-                        holder.ll_view.setBackgroundColor(Color.argb(255, 0, 192, 192));
-                    } else {
-                        holder.ll_view.setBackgroundColor(Color.argb(255, 0, 128, 128));
-                    }
+                    holder.tv_changed.setVisibility(TextView.VISIBLE);
+//                    if (mGp.themeIsLight) {
+//                        holder.ll_view.setBackgroundColor(Color.argb(255, 0, 192, 192));
+//                    } else {
+//                        holder.ll_view.setBackgroundColor(Color.argb(255, 0, 128, 128));
+//                    }
                 } else {
+                    holder.tv_changed.setVisibility(TextView.GONE);
                     holder.ll_view.setBackground(ll_default_background_color);
                 }
                 String time_info = "";
@@ -978,7 +987,7 @@ public class ScheduleListEditor {
         }
 
         class ViewHolder {
-            TextView tv_name, tv_info, tv_enabled, tv_time_info, tv_error_info;
+            TextView tv_name, tv_info, tv_enabled, tv_time_info, tv_error_info, tv_changed;
             LinearLayout ll_view;
             CheckBox cbChecked;
         }

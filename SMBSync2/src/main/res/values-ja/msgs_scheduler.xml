@@ -81,6 +81,8 @@
     <string name="msgs_schedule_confirm_msg_disable">下記のスケジュールを無効にします。.</string>
     <string name="msgs_schedule_confirm_msg_nosave">スケジュールが変更されています、保存せず終了しますか。</string>
 
+    <string name="msgs_schedule_confirm_msg_changed">変更済</string>
+
     <string name="msgs_schedule_rename_schedule">スケジュールの改名</string>
 
     <string name="msgs_schedule_list_edit_no_schedule">追加ボタンを押してスケジュールを作成してください。</string>
