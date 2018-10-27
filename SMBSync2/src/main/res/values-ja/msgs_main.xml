@@ -221,7 +221,7 @@
 	<string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">オフでも実行</string>
 	<string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">APに接続されている時</string>
 	<string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">アクセスポイントリスト</string>
-    <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_local_address">ローカルアドレス</string>
+    <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">プライベートアドレス</string>
     <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">アドレスリスト</string>
 	
 	<string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">最終更新時刻の差（秒）</string>		
@@ -395,8 +395,10 @@
 
     <string name="msgs_profile_sync_task_sync_option_sync_when_charging">充電中の時だけ開始する</string>
 
-    <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。(\", :, \\, *, &lt;, &gt;, \|)</string>
-    <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">ファイル名に使用できない文字が含まれていましたので削除しました。(\", :, \\, *, &lt;, &gt;, \|)</string>
+    <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, *, &lt;, &gt;, \|)</string>
+    <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">ファイル名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, *, &lt;, &gt;, \|)</string>
+
+    <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">ディレクトリ名またはファイル名に使用できない文字が含まれているディレクトリまたはファイルの処理をスキップする。 (\", :, \\, *, &lt;, &gt;, \|)</string>
 
     <string name="msgs_profile_sync_folder_dlg_confirm_msg_nosave">同期フォルダーの設定が変更されています、保存せず終了しますか。</string>
 

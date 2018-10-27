@@ -409,11 +409,12 @@
                     style="?android:attr/spinnerStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.6"
                     android:minHeight="36dp"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
+
             </LinearLayout>
+            <include layout="@layout/divider_line1" />
             <LinearLayout
                 android:id="@+id/edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_view"
                 android:layout_width="match_parent"
@@ -426,6 +427,22 @@
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ignore_unusable_character_used_directory_file_name_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ignore_unusable_character_used_directory_file_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
                 <include layout="@layout/divider_line1" />
             </LinearLayout>

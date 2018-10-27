@@ -1182,14 +1182,20 @@ public class SyncThread extends Thread {
         return "";
     }
 
-    public static int isValidFileDirectoryName(SyncThreadWorkArea stwa, SyncTaskItem sti, String in_str) {
+    public static boolean isValidFileDirectoryName(SyncThreadWorkArea stwa, SyncTaskItem sti, String in_str) {
         if (!hasInvalidCharForFileDirName(in_str).equals("")) {
-            showMsg(stwa, false, stwa.currentSTI.getSyncTaskName(), "E", "", "",
-                    String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_invalid_file_directory_name_character_detected),
-                            hasInvalidCharForFileDirName(in_str), in_str));
-            return SyncTaskItem.SYNC_STATUS_ERROR;
+            if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) {
+                showMsg(stwa, false, stwa.currentSTI.getSyncTaskName(), "W", "", "",
+                        String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_invalid_file_directory_name_character_skipped),
+                                hasInvalidCharForFileDirName(in_str), in_str));
+            } else {
+                showMsg(stwa, false, stwa.currentSTI.getSyncTaskName(), "E", "", "",
+                        String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_invalid_file_directory_name_character_error),
+                                hasInvalidCharForFileDirName(in_str), in_str));
+            }
+            return false;
         }
-        return SyncTaskItem.SYNC_STATUS_SUCCESS;
+        return true;
     }
 
 //    private CIFSContext setSmbAuth(BaseContext bc, String domain, String user, String pass) {
@@ -1540,7 +1546,7 @@ public class SyncThread extends Thread {
     private String isWifiConditionSatisfied(SyncTaskItem sti) {
         String result = "";
         String if_addr=CommonUtilities.getIfIpAddress("wlan0");
-        if (sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_LOCAL_ADDR)) {
+        if (sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR)) {
             result=mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr);
             if (if_addr.startsWith("10.")) result="";
             else if (if_addr.startsWith("192.168.")) result="";

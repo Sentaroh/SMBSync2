@@ -2668,7 +2668,7 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_off));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap));
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_local_address));
+        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address));
 
         if (cv.equals("0")) spinner.setSelection(0);
@@ -2847,9 +2847,19 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctv_never_overwrite_target_file_newer_than_the_master_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file);
-//        CommonUtilities.setCheckedTextView(ctv_task_sync_when_cahrging);
         ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(n_sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile());
         ctv_never_overwrite_target_file_newer_than_the_master_file.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !((CheckedTextView) v).isChecked();
+                ((CheckedTextView) v).setChecked(isChecked);
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+        });
+
+        final CheckedTextView ctv_edit_sync_task_option_ignore_unusable_character_used_directory_file_name = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_unusable_character_used_directory_file_name);
+        ctv_edit_sync_task_option_ignore_unusable_character_used_directory_file_name.setChecked(n_sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters());
+        ctv_edit_sync_task_option_ignore_unusable_character_used_directory_file_name.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isChecked = !((CheckedTextView) v).isChecked();
@@ -3869,6 +3879,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         final CheckedTextView ctv_task_sync_when_cahrging = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
         final CheckedTextView ctv_never_overwrite_target_file_newer_than_the_master_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file);
+        final CheckedTextView ctv_ignore_unusable_character_used_directory_file_name = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_unusable_character_used_directory_file_name);
 
         final Button swap_master_target = (Button) dialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
         final Button master_folder_info = (Button) dialog.findViewById(R.id.edit_sync_task_master_folder_info_btn);
@@ -3942,6 +3953,8 @@ public class SyncTaskEditor extends DialogFragment {
         nstli.setSyncDifferentFileByModTime(ctDeterminChangedFileByTime.isChecked());
 
         nstli.setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(ctv_never_overwrite_target_file_newer_than_the_master_file.isChecked());
+
+        nstli.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(ctv_ignore_unusable_character_used_directory_file_name.isChecked());
 
         String diff_val = spinnerSyncDiffTimeValue.getSelectedItem().toString();
         nstli.setSyncDifferentFileAllowableTime(Integer.valueOf(diff_val));

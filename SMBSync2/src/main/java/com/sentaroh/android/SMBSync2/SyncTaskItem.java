@@ -154,7 +154,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_WIFI_STATUS_WIFI_OFF = "0";
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP = "1";
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP = "2";
-    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_LOCAL_ADDR = "3";
+    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR = "3";
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR = "4";
     private String syncOptionWifiStatus = SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
     private boolean syncTaskSkipIfConnectAnotherWifiSsid = false;
@@ -477,6 +477,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(boolean enabled) {syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile=enabled;}
     public boolean isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile() {return syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile;}
 
+    private boolean syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters = false;
+    public void setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(boolean enabled) {syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters=enabled;}
+    public boolean isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters() {return syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters;}
+
     public void setLastSyncTime(String p) {syncLastSyncTime = p;}
     public void setLastSyncResult(int p) {syncLastSyncResult = p;}
 
@@ -597,6 +601,8 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionUseExtendedDirectoryFilter1==sti.isSyncUseExtendedDirectoryFilter1()) &&
 
                         (syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile==sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) &&
+
+                        (syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters==sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) &&
 
                         (syncOptionWifiStatus.equals(sti.getSyncWifiStatusOption())) &&
 

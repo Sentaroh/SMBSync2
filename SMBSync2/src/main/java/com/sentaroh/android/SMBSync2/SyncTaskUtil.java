@@ -5421,6 +5421,8 @@ public class SyncTaskUtil {
 
             if (!parm[79].equals("") && !parm[79].equals("end")) stli.setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile((parm[79].equals("1") ? true : false));
 
+            if (!parm[80].equals("") && !parm[80].equals("end")) stli.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters((parm[80].equals("1") ? true : false));
+
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -5727,6 +5729,8 @@ public class SyncTaskUtil {
                             (item.isTargetZipUseUsb() ? "1" : "0") + "\t" +                         //78
 
                             (item.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile() ? "1" : "0") + "\t" +     //79
+
+                            (item.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters() ? "1" : "0") + "\t" +     //80
 
                     "end"
                     ;

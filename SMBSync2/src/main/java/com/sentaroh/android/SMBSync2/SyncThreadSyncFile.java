@@ -756,8 +756,12 @@ public class SyncThreadSyncFile {
                                                   String from_base, String from_path, File mf, String to_base, String to_path) {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path + ", move=" + move_file);
-        int sync_result = SyncThread.isValidFileDirectoryName(stwa, sti, from_path);
-        if (sync_result!=0) return sync_result;
+        int sync_result = 0;
+        if (!SyncThread.isValidFileDirectoryName(stwa, sti, from_path)) {
+            if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+            else return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
+
         stwa.jcifsNtStatusCode=0;
         File tf;
         try {
@@ -953,8 +957,12 @@ public class SyncThreadSyncFile {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path + ", move=" + move_file);
         stwa.jcifsNtStatusCode=0;
-        int sync_result = SyncThread.isValidFileDirectoryName(stwa, sti, from_path);
-        if (sync_result!=0) return sync_result;
+        int sync_result = 0;
+        if (!SyncThread.isValidFileDirectoryName(stwa, sti, from_path)) {
+            if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+            else return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
+
         JcifsFile tf;
         try {
             if (mf.exists()) {
