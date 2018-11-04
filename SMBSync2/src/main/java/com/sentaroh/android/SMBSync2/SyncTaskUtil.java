@@ -196,10 +196,10 @@ public class SyncTaskUtil {
                         mGp.profilePassword = (String) o[0];
                         AdapterSyncTask tfl = null;
                         if (isSyncTaskListFileOldFormat(fpath)) {
-                            tfl = new AdapterSyncTask(mContext, R.layout.sync_task_item_view,
+                            tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view,
                                     ImportOldProfileList.importOldProfileList(mGp, fpath), mGp);
                         } else {
-                            tfl = new AdapterSyncTask(mContext, R.layout.sync_task_item_view,
+                            tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view,
                                     createSyncTaskListFromFile(mContext, mGp, mUtil, true, fpath, importedSettingParmList), mGp);
                         }
                         if (tfl.getCount() > 0) {
@@ -583,7 +583,7 @@ public class SyncTaskUtil {
             eipl.add(eipli);
         }
         final AdapterExportImportTask imp_list_adapt =
-                new AdapterExportImportTask(mContext, R.layout.export_import_profile_list_item, eipl);
+                new AdapterExportImportTask(mActivity, R.layout.export_import_profile_list_item, eipl);
 
         ListView lv = (ListView) dialog.findViewById(R.id.export_import_profile_listview);
         lv.setAdapter(imp_list_adapt);
