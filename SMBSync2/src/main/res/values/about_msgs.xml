@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE string>
-<resources>
-    <string name="msgs_about_dlg_func_btn">Function</string>
-    <string name="msgs_about_dlg_change_btn">Change log</string>
-    <string name="msgs_dlg_title_about">About SMBSync2</string>
-    <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_EN_Short.htm</string>
-    <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.htm</string>
-</resources>

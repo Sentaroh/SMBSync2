@@ -1,0 +1,837 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- About -->
+        <string name="msgs_about_dlg_func_btn">機能</string>
+        <string name="msgs_about_dlg_change_btn">更新履歴</string>
+        <string name="msgs_dlg_title_about">SMBSync2について</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_JA_Short.htm</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_JA.htm</string>
+    <!-- Export/Import -->
+        <string name="msgs_export_import_profile_title">取り込むタスク項目の選択</string>
+        <string name="msgs_export_import_profile_listing">一覧</string>
+        <string name="msgs_export_import_profile_setting_parms">設定パラメータ</string>
+        <string name="msgs_export_import_profile_schedule_parms">スケジュールパラメータ</string>
+        <string name="msgs_export_import_profile_select_all">全項目を選択</string>
+        <string name="msgs_export_import_profile_unselect_all">全項目を非選択</string>
+        <string name="msgs_export_import_profile_confirm_override">下記の項目はタスクリストに存在しています。取り込んだタスクで上書きしますか。</string>
+        <string name="msgs_export_import_profile_import_success">下記項目を取り込みました。</string>
+        <string name="msgs_export_import_profile_reset_current_profile">現在のタスクを全て削除して取り込む。</string>
+        <string name="msgs_export_import_profile_import_settings">設定パラメーターを取り込む</string>
+        <string name="msgs_export_import_profile_import_schedule">スケジュールパラメーターを取り込む</string>
+        <string name="msgs_export_import_profile_no_import_items">タスクリストに取り込む項目がありません。</string>
+        <string name="msgs_export_import_pswd_password_title">タスクリスト パスワード保護</string>
+        <string name="msgs_export_import_pswd_password_protect">タスクリスト をパスワードで保護する</string>
+        <string name="msgs_export_import_pswd_specify_password">パスワードと確認パスワードを入力してください。</string>
+        <string name="msgs_export_import_pswd_invalid_password">ファイルがパスワード保護されています、パスワードを指定してください。</string>
+        <string name="msgs_export_import_pswd_password_required">パスワードが間違っています、指定し直してください。</string>
+        <string name="msgs_export_import_pswd_btn_cancel">Cancel</string>
+        <string name="msgs_export_import_pswd_btn_ok">OK</string>
+        <string name="msgs_export_import_pswd_hint_password">パスワード</string>
+        <string name="msgs_export_import_pswd_hint_confirm">パスワードの確認</string>
+        <string name="msgs_export_import_pswd_unmatched_confirm_pswd">パスワードと確認パスワードが一致していません</string>
+    <!-- Help -->
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_JA_task.htm</string>
+        <string name="msgs_help_sync_task_title">同期タスクのヘルプ</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_JA_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_title">内部ストレージのヘルプ</string>
+        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_JA_folder_sdcard.htm</string>
+        <string name="msgs_help_sync_folder_sdcard_title">SDCARDのヘルプ</string>
+        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_JA_folder_usb.htm</string>
+        <string name="msgs_help_sync_folder_usb_title">USBメディアのヘルプ</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_JA_folder_smb.htm</string>
+        <string name="msgs_help_sync_folder_smb_title">SMBのヘルプ</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_JA_folder_zip.htm</string>
+        <string name="msgs_help_sync_folder_zip_title">ZIPのヘルプ</string>
+        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_JA_task_picture.htm</string>
+        <string name="msgs_help_sync_task_picture_title">写真アーカイブのヘルプ</string>
+    <!-- Log management -->
+        <string name="msgs_log_management_title">ログファイル管理</string>
+        <string name="msgs_log_management_label_delete">ログの削除</string>
+        <string name="msgs_log_management_label_share">ログの共有</string>
+        <string name="msgs_log_management_label_select_all">全てを選択</string>
+        <string name="msgs_log_management_label_unselect_all">全ての選択を解除</string>
+        <string name="msgs_log_management_no_log_file">ログファイルは空です</string>
+        <string name="msgs_log_management_delete_confirm_msg">下記のログファイルを削除しますか？</string>
+        <string name="msgs_log_management_dlg_close">閉じる</string>
+        <string name="msgs_log_management_dlg_send_zip_file_creating">zipファイルの作成中</string>
+        <string name="msgs_log_management_dlg_send_zip_file_cancelled">zipファイル作成がキャンセルされました</string>
+        <string name="msgs_log_management_log_file_switched">ログファイルを切り替えました。</string>
+    <!-- Main -->
+        <string name="msgs_active_sync_prof_not_found">自動同期タスクがありません。</string>
+        <string name="msgs_add_sync_profile">同期タスクの追加</string>
+        <string name="msgs_audit_hostname_not_spec">名前またはアドレスを入力してください。</string>
+        <string name="msgs_audit_hostport_not_spec">ポート番号を入力してください。</string>
+        <string name="msgs_audit_msgs_local_dir">ディレクトリに%s文字が含まれています、無効な文字を消しました。</string>
+        <string name="msgs_audit_share_not_spec">共有名を入力してください。</string>
+        <string name="msgs_clear_log_message">ログメッセージのクリア</string>
+        <string name="msgs_cont_button_diabled_by_sync">要求された操作は同期中のため無視しました</string>
+        <string name="msgs_copy_sync_profile">同期タスクのコピー</string>
+        <string name="msgs_create_profile_error">タスクリスト作成に失敗しました。ファイル=%s</string>
+        <string name="msgs_create_profile_not_found">指定されたファイルが見つからないためタスクリスト作成できません。ファイル=%s</string>
+        <string name="msgs_current_dir">現ディレクトリ:</string>
+        <string name="msgs_delete_following_profile">下記タスクを削除します。</string>
+        <string name="msgs_dir_empty">ディレクトリが見つかりませんでした</string>
+        <string name="msgs_duplicate_task_name">タスク名が重複しています</string>
+        <string name="msgs_edit_sync_profile">同期タスクの編集</string>
+        <string name="msgs_export_prof_fail">タスク書き出しが失敗しました。</string>
+        <string name="msgs_export_prof_success">タスク書き出しが成功しました。</string>
+        <string name="msgs_export_prof_title">タスクの書き出し</string>
+        <string name="msgs_extra_data_sync_profile_type_error">SyncProfileはStringで指定されていません、同期を中止します。</string>
+        <string name="msgs_filelist_cancel">ファイルリスト作成は中断しました。</string>
+        <string name="msgs_filelist_error">リモートリスト作成中にエラーが発生しました。</string>
+        <string name="msgs_filter_edit_dlg_title">フィルター編集</string>
+        <string name="msgs_filter_list_dlg_add">追加</string>
+        <string name="msgs_filter_list_dlg_add_dir_filter">ディレクトリー フィルター追加</string>
+        <string name="msgs_filter_list_dlg_close">閉じる</string>
+        <string name="msgs_filter_list_dlg_dir_filter">ディレクトリー フィルター</string>
+        <string name="msgs_filter_list_dlg_file_filter">ファイル フィルター</string>
+        <string name="msgs_filter_list_dlg_filter_added">フィルター %s 追加しました。</string>
+        <string name="msgs_filter_list_dlg_filter_hint">フィルター</string>
+        <string name="msgs_filter_list_dlg_not_specified">無指定</string>
+        <string name="msgs_filter_list_duplicate_filter_specified">%s は既に登録されています。</string>
+        <string name="msgs_filter_list_filter_deleted">削除済み</string>
+        <string name="msgs_filter_list_same_directory_access">マスターとターゲットが同じディレクトリをアクセスするため指定できません。フィルター=%s</string>
+        <string name="msgs_filter_list_same_directory_access_not_excluded">マスターとターゲットが同じディレクトリをアクセスするため、ディレクトリを除外してください。ディレクトリ=%s</string>
+        <string name="msgs_hist_cont_label_copy">クリップボードにコピー</string>
+        <string name="msgs_hist_cont_label_delete">履歴を削除する</string>
+        <string name="msgs_hist_cont_label_move_bottom">最下部に移動</string>
+        <string name="msgs_hist_cont_label_move_top">最上部に移動</string>
+        <string name="msgs_hist_cont_label_select_all">全て選択</string>
+        <string name="msgs_hist_cont_label_share">共有</string>
+        <string name="msgs_hist_cont_label_unselect_all">全ての選択を解除</string>
+        <string name="msgs_import_prof_fail">タスクの取り込が失敗しました。</string>
+        <string name="msgs_import_prof_fail_no_valid_item">指定されたファイルには有効なタスク項目が存在しません。 ファイル(%s)</string>
+        <string name="msgs_info_storage_copy_clipboard">コピー</string>
+        <string name="msgs_info_storage_copy_completed">クリップボードにコピーしました</string>
+        <string name="msgs_info_storage_send_btn_title">開発者に送る</string>
+        <string name="msgs_info_storage_title">ストレージ情報</string>
+        <string name="msgs_log_activate_pinned">自動スクロールは無効です</string>
+        <string name="msgs_log_confirm_clear_all_msg">ログメッセージをクリアしますか？</string>
+        <string name="msgs_log_inactivate_pinned">自動スクロールが有効になりました</string>
+        <string name="msgs_log_msg_cleared">ログメッセージをクリアしました。</string>
+        <string name="msgs_main_app_specific_dir_used_msg">アプリケーション固有ディレクトリがファイルの保存先に使用されています。このディレクトリはアプリケーションがアンインストールされると削除され、保存しているデータも削除されます。ご注意ください。</string>
+        <string name="msgs_main_app_specific_dir_used_suppress">この警告を次回以降表示しない （ユーザーインターフェース設定で再表示できます）</string>
+        <string name="msgs_main_app_specific_dir_used_title">アプリケーション固有ディレクトリ使用についての警告</string>
+        <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
+        <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD選択アクティビティを起動できませんでした。</string>
+        <string name="msgs_main_external_sdcard_select_required_cancel_msg">SDCARDが選択されるまで同期は実行できません。 タスク=%s</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">SDCARDにアクセスするために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「ＳＤＣＡＲＤを選択」をタップしてください。\n
+(ステップ２の「ＳＤＣＡＲＤを選択」の画面が直接表示された時は「ＳＤＣＡＲＤを選択」をタップしてください)</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">SDCARDにアクセスするために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
+(ステップ２で左上に「ＳＤＣＡＲＤ」の画面が直接表示された時は「選択」をタップしてください。左上に「ＳＤＣＡＲＤ」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_JA.png</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_JA.png</string>
+        <string name="msgs_main_external_sdcard_select_required_title">SDCARDの選択</string>
+        <string name="msgs_main_external_sdcard_select_retry_select_msg">SDCARDのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
+        <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USBストレージが選択されました。SDCARDを選択しなおしますか？</string>
+        <string name="msgs_main_external_usb_mp_changed_title">USBメディア</string>
+        <string name="msgs_main_external_usb_select_activity_not_found_msg">USBメディア選択アクティビティを起動できませんでした。</string>
+        <string name="msgs_main_external_usb_select_path_not_available_msg">UUID(%s)に対応するマウントポイントが見つかりません。この装置に於いてSMBSync2ではUSBメディアを使用できません。</string>
+        <string name="msgs_main_external_usb_select_required_cancel_msg">USBメディアが選択されるまで同期は実行できません。 タスク=%s</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_api23">USBメディアにアクセスするために、ステップ１.「USB」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
+(ステップ２で左上に「USB」の画面が直接表示された時は「選択」をタップしてください。左上に「USB」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_JA.png</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_JA.png</string>
+        <string name="msgs_main_external_usb_select_required_title">USBメディアの選択</string>
+        <string name="msgs_main_external_usb_select_retry_select_msg">USBメディアのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
+        <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARDが選択されました。USBストレージを選択しなおしますか？</string>
+        <string name="msgs_main_permission_coarse_location_denied_msg">権限が許可されるまではスリープ中の同期で「SSIDに接続」または「特定のSSIDに接続」を指定している場合はエラーで終了します。</string>
+        <string name="msgs_main_permission_coarse_location_request_msg">スリープ中にスケジュール同期または外部アプリケーションから起動された時にWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまではスリープ中の同期で「SSIDに接続」または「特定のSSIDに接続」を指定している場合はエラーで終了します。\n低精度ロケーション許可を要求しますか？</string>
+        <string name="msgs_main_permission_coarse_location_title">低精度ロケーション許可</string>
+        <string name="msgs_main_permission_external_storage_denied_msg">内部ストレージにアクセスする許可が与えられていないため同期ができません。アプリケーションを終了します。</string>
+        <string name="msgs_main_permission_external_storage_request_msg">内部ストレージに同期するデータや管理用データの読み書きを行うために、内部ストレージにアクセスする許可を与えてください。</string>
+        <string name="msgs_main_permission_external_storage_title">内部ストレージ許可</string>
+        <string name="msgs_main_shortcut_shortcut_added">ホームスクリーンにショートカットを追加しました。</string>
+        <string name="msgs_main_sync_all_active_profiles">自動同期タスクを同期します。</string>
+        <string name="msgs_main_sync_can_not_sync_no_valid_profile">同期タスクが存在していないため同期できません。同期タスクを作成してください。</string>
+        <string name="msgs_main_sync_cancel_confirm">同期を中止しますか？</string>
+        <string name="msgs_main_sync_history_copy_completed">選択された履歴をクリップボードにコピーしました</string>
+        <string name="msgs_main_sync_history_count_copied">コピー:</string>
+        <string name="msgs_main_sync_history_count_deleted">削除:</string>
+        <string name="msgs_main_sync_history_count_ignored">無視:</string>
+        <string name="msgs_main_sync_history_count_retry">リトライ:</string>
+        <string name="msgs_main_sync_history_del_conf_all_history">全ての履歴を削除しますか?</string>
+        <string name="msgs_main_sync_history_del_conf_selected_history">下記の履歴を削除しますか?</string>
+        <string name="msgs_main_sync_history_elapsed_time">処理時間(秒):</string>
+        <string name="msgs_main_sync_history_mode">モード:</string>
+        <string name="msgs_main_sync_history_mode_normal">通常</string>
+        <string name="msgs_main_sync_history_mode_test">テスト</string>
+        <string name="msgs_main_sync_history_result_log_not_found">履歴ログファイルが見つかりませんでした。</string>
+        <string name="msgs_main_sync_history_status_cancel">中止</string>
+        <string name="msgs_main_sync_history_status_error">エラー</string>
+        <string name="msgs_main_sync_history_status_running">同期中</string>
+        <string name="msgs_main_sync_history_status_success">正常終了</string>
+        <string name="msgs_main_sync_history_status_warning">警告</string>
+        <string name="msgs_main_sync_list_array_activ_activ">自動</string>
+        <string name="msgs_main_sync_list_array_activ_inact">手動</string>
+        <string name="msgs_main_sync_list_array_activ_test">テスト</string>
+        <string name="msgs_main_sync_list_array_last_sync_time">最終同期 :</string>
+        <string name="msgs_main_sync_list_array_mtype_archive">アーカイブ</string>
+        <string name="msgs_main_sync_list_array_mtype_copy">コピー</string>
+        <string name="msgs_main_sync_list_array_mtype_mirr">ミラー</string>
+        <string name="msgs_main_sync_list_array_mtype_move">移動</string>
+        <string name="msgs_main_sync_list_array_mtype_sync">同期</string>
+        <string name="msgs_main_sync_list_array_no_last_sync_time">同期は実行されていません</string>
+        <string name="msgs_main_sync_prof_name_list">同期を開始したタスク：</string>
+        <string name="msgs_main_sync_profile">同期実行 (%s)</string>
+        <string name="msgs_main_sync_profile_dlg_archive">アーカイブ</string>
+        <string name="msgs_main_sync_profile_dlg_copy">コピー</string>
+        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_1">1</string>
+        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
+        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
+        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">最終更新時刻の差（秒）</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal">マスターフォルダーとターゲットフォルダーの両方が内部ストレージでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir">マスターフォルダーとターゲットフォルダーで同じディレクトリにアクセスします、どちらかのディレクトリを変更するかディレクトリフィルターを指定してください。</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_sdcard">マスターフォルダーとターゲットフォルダーの両方がSDCARDでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_smb">マスターフォルダーとターゲットフォルダーが両方ともSMBは使用できません。どちらかを違うタイプに変更してください。</string>
+        <string name="msgs_main_sync_profile_dlg_mirror">ミラー</string>
+        <string name="msgs_main_sync_profile_dlg_move">移動</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">SMBホストのアドレスまたは名前を指定してください。</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_port_number">SMBホストのポートを指定してください。</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_share_name">SMBホストの共有名を指定してください。</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_userid_pswd">SMBホストのユーザーIDまたはパスワードを指定してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync">同期</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master">SDCARDが選択されていません、マスターフォルダーを編集してSDCARDを選択してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target">SDCARDが選択されていません、ターゲットフォルダーを編集してSDCARDを選択してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">SDCARDが選択されていません、「SDCARDの選択」を押してSDCARDを選択してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted">SDCADがマウントされていません</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_internal">内部ストレージ</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">フォルダーの選択</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_sdcard">SDCARD</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_smb">SMB共有</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_usb">USBメディア</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_zip">ZIPフォルダー</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_master">USBメディアが選択されていません、マスターフォルダーを編集してSDCARDを選択してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">USBメディアが選択されていません、ターゲットフォルダーを編集してSDCARDを選択してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">USBメディアが選択されていません、「SDCARDの選択」を押してSDCARDを選択してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">USBメディアがマウントされていません</string>
+        <string name="msgs_main_sync_profile_dlg_syncopt_prompt">同期方式の選択</string>
+        <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">ターゲットフォルダーにディレクトリが指定されていません、意図しない削除や上書きが行われる可能性があります。続行しますか？</string>
+        <string name="msgs_main_sync_profile_dlg_title_master">マスターフォルダーの編集</string>
+        <string name="msgs_main_sync_profile_dlg_title_target">ターゲットフォルダーの編集</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">無線LANによる同期開始条件</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">APに接続されている時</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">プライベートアドレス</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">アドレスリスト</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">アクセスポイントリスト</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">オフでも実行</string>
+        <string name="msgs_main_sync_select_prof_no_active_profile">同期タスクが選択されていません。</string>
+        <string name="msgs_main_sync_selected_profiles">選択された同期タスクを同期します。</string>
+        <string name="msgs_main_sync_selected_task_not_found">選択されたタスクは存在しません。タスク=</string>
+        <string name="msgs_main_sync_specified_sync_task_not_scheduled">指定された同期タスクは無視されたため実行されません。</string>
+        <string name="msgs_main_sync_test_mode_warnning">選択された同期タスクにテストモードの同期タスクが含まれています。テストモードの同期タスクではファイルのコピーや削除が行われません。同期を開始しますか？</string>
+        <string name="msgs_move_to_bottom">最後に移動</string>
+        <string name="msgs_move_to_top">最上部に移動</string>
+        <string name="msgs_msg_cont_label_clear">メッセージの消去</string>
+        <string name="msgs_msg_cont_label_move_bottom">最下部に移動</string>
+        <string name="msgs_msg_cont_label_move_top">最上部に移動</string>
+        <string name="msgs_msg_cont_label_pinned_active">自動スクロールを有効にする</string>
+        <string name="msgs_msg_cont_label_pinned_inactive">自動スクロールを無効にする</string>
+        <string name="msgs_no_profile_entry">タスクリストが空です。</string>
+        <string name="msgs_notification_smbsync_active">SMBSync2が起動しています。</string>
+        <string name="msgs_notification_sync_active">同期処理中です。</string>
+        <string name="msgs_override">上書きしますか?</string>
+        <string name="msgs_prof_cont_label_activate">タスクを自動にする</string>
+        <string name="msgs_prof_cont_label_add_sync">同期タスクを追加する</string>
+        <string name="msgs_prof_cont_label_copy">タスクをコピーする</string>
+        <string name="msgs_prof_cont_label_delete">タスクを削除する</string>
+        <string name="msgs_prof_cont_label_down">下に移動</string>
+        <string name="msgs_prof_cont_label_inactivate">タスクを手動にする</string>
+        <string name="msgs_prof_cont_label_rename">タスクの改名</string>
+        <string name="msgs_prof_cont_label_select_all">全て選択する</string>
+        <string name="msgs_prof_cont_label_sync">同期を開始する</string>
+        <string name="msgs_prof_cont_label_unselect_all">全ての選択を解除する</string>
+        <string name="msgs_prof_cont_label_up">上に移動</string>
+        <string name="msgs_prof_cont_to_activate_profile">下記プロフィルを自動にします</string>
+        <string name="msgs_prof_cont_to_inactivate_profile">下記プロフィルを手動にします</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">ターゲットとマスターのいずれかがSMBのため無線LANの条件を「APに接続されている」に変更しますか？</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">ターゲットとマスターが両方ともSMB以外のため無線LANの条件を「オフ」に変更しますか？</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_directory">ディレクトリ</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_dirlist">ディレクトリ一覧</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_folder_type">フォルダータイプ</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_local_mount_point">マウントポイント</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon">ログオン</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon_cancel">ログオンが中止されました</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon_error">ログオンエラーが発生しました</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon_success">ログオンが正常に完了しました</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_password">パスワード</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_port">ポート</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_server">サーバ名/アドレス</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share">共有名</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">共有一覧</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">ポート番号を指定する</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">ユーザー名</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">リモートSMBサーバーの検索</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">SDCARDの選択</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_usb">USBメディアの選択</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_show_password">パスワードの表示</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMBプロトコル</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1_only">SMB1のみ使用</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb2_only">SMB2(2.01)のみ使用</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">システムで判別</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">ユーザーID/パスワードを使用する</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast">Fast</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest">Fastest</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_maximum">Maximum</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_normal">Normal</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_title">圧縮レベル</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_ultra">Ultra</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_diff_zip_password">パスワードと確認パスワードが違います</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128">AES128ビット</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256">AES256ビット</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_none">無し</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_title">暗号化</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto">ZIP2.0互換</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_filelist">ファイル一覧</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_filename">ファイル名</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_select_file_title">ZIPファイル選択</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_specify_zip_file_name">ZIPファイル名を指定してください</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_specify_zip_password">パスワードを指定してください</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_time_stamp">ZIPファイルにタイムスタンプを付ける</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_use_sdcard">SDCARDにZIPファイルを保存する</string>
+        <string name="msgs_profile_sync_folder_dlg_confirm_msg_nosave">同期フォルダーの設定が変更されています、保存せず終了しますか。</string>
+        <string name="msgs_profile_sync_task_dlg_active">自動同期タスク</string>
+        <string name="msgs_profile_sync_task_dlg_change_master_and_target">マスターとターゲットを入れ替える</string>
+        <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">ディレクトリフィルタ―は指定されてません</string>
+        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">ファイルフィルタ―は指定されてません</string>
+        <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">ファイル名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">ディレクトリに下記のキーワードを追加する（キーワードは実行時に変換されます）</string>
+        <string name="msgs_profile_sync_task_dlg_keyword_insert_file">ファイル名に下記のキーワードを追加する（キーワードは実行時に変換されます）</string>
+        <string name="msgs_profile_sync_task_dlg_master">マスター フォルダー</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type">同期方式</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_archive">アーカイブ</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_copy">コピー</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_mirror">ミラー</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_move">移動</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_prompt">同期方式の選択</string>
+        <string name="msgs_profile_sync_task_dlg_target">ターゲット フォルダー</string>
+        <string name="msgs_profile_sync_task_dlg_task_name">同期タスク名</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">現在接続されているIPアドレスを追加する</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_edit_title">IPアドレスの編集</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_hint">IPアドレス</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_list">同期可能なIPアドレスリスト</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_title">無線LAN IPアドレスリストの編集</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list">同期可能なIPアドレスリスト</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">無線LANのアドレスが何も指定されていません。</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">現在接続されているアクセスポイントを追加する</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">アクセスポイント名の編集</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_hint">アクセスポイント名</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_list">同期可能なアクセスポイントリスト</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_not_connected">無線LANがアクセスポイントに接続されていません</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_not_specified">無線LANアクセスポイント名が何も指定されていません。</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_title">無線LANアクセスポイントの編集</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified">IPアドレスが重複しています。名前=%s</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified">アクセスポイント名が重複しています。名前=%s</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_title">フィルター編集</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_add">追加</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_delete">削除</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">ディレクトリ一覧</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_exclude">除外</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">ファイル フィルター</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">フィルター</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_include">選択</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">無指定</string>
+        <string name="msgs_profile_sync_task_filter_title">フィルター :</string>
+        <string name="msgs_profile_sync_task_sync_direction_two_way">Use Bi-directional synchronization</string>
+        <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">下記を同期実行時にファイルフィルターとして追加します。</string>
+        <string name="msgs_profile_sync_task_sync_file_type_audio">オーディオファイルを同期する</string>
+        <string name="msgs_profile_sync_task_sync_file_type_detail_not_specified">最低でもファイルフィルタ、オーディオ、イメージまたはビデオの何れかを指定する必要があります</string>
+        <string name="msgs_profile_sync_task_sync_file_type_image">イメージファイルを同期する</string>
+        <string name="msgs_profile_sync_task_sync_file_type_specific">ファイルを選択する</string>
+        <string name="msgs_profile_sync_task_sync_file_type_video">ビデオファイルを同期する</string>
+        <string name="msgs_profile_sync_task_sync_option">オプション:</string>
+        <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">差分ファイルの判定で許容される最終更新時刻の差(秒)</string>
+        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">指定されたアクセスポイントまたはIPアドレスで無い場合タスクをスキップし、次のタスクを開始する。</string>
+        <string name="msgs_profile_sync_task_sync_option_confirm_required">ファイルの上書または削除の前に確認する</string>
+        <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">ミラーの時は削除を最初に行う</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">マスターのファイルサイズが大きい時だけ差分ファイルとして判定する</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">差分ファイルの判定にファイル サイズを使用する</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time">差分ファイルの判定にファイルの最終更新時間を使用する</string>
+        <string name="msgs_profile_sync_task_sync_option_empty_directory">空のディレクトリを処理する</string>
+        <string name="msgs_profile_sync_task_sync_option_hidden_directory">隠しディレクトリを処理する</string>
+        <string name="msgs_profile_sync_task_sync_option_hidden_file">隠しファイルを処理する</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled">\"ターゲットファイルがマスターファイルより新しい時はターゲットファイルを上書きしない\"オプションが有効なためファイルの上書きコピーを無視しました。</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">ディレクトリ名またはファイル名に使用できない文字が含まれているディレクトリまたはファイルの処理をスキップする。 (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">強制的にSMBSync2で最終更新日時を取得</string>
+        <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">マスターで指定されたディレクトリの直下に存在するファイルを処理する</string>
+        <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file">ターゲットファイルがマスターファイルより新しい時はターゲットファイルを上書きしない</string>
+        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">ターゲットファイルの最終更新時刻をマスターと同じにしない</string>
+        <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">ファイルを上書きする</string>
+        <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">ネットワークエラーが発生した場合にリトライする</string>
+        <string name="msgs_profile_sync_task_sync_option_show_special_option">詳細オプションを表示する</string>
+        <string name="msgs_profile_sync_task_sync_option_sub_dir">サブディレクトリーを処理する</string>
+        <string name="msgs_profile_sync_task_sync_option_sync_when_charging">充電中の時だけ開始する</string>
+        <string name="msgs_profile_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
+        <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">拡張されたディレクトリ選択/除外フィルタを使用する</string>
+        <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">無線LAN</string>
+        <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">ディレクトリーフィルタが指定されていません</string>
+        <string name="msgs_profile_sync_task_sync_sub_directory_specific">サブディレクトリーを選択する</string>
+        <string name="msgs_profile_sync_task_sync_use_small_ioarea">SMBフォルダー書き込み時のIOバッファーを16KBに制限する</string>
+        <string name="msgs_progress_spin_dlg_sync_cancel">キャンセル</string>
+        <string name="msgs_remote_profile_dlg_logon_cancel">ログオンが中止されました</string>
+        <string name="msgs_remote_profile_dlg_logon_error">ログオンエラーが発生しました</string>
+        <string name="msgs_remote_profile_dlg_logon_success">ログオンが正常に完了しました</string>
+        <string name="msgs_rename_profile">タスク名前変更</string>
+        <string name="msgs_save_to_profile_error">タスクの保存に失敗しました。ファイル=%s</string>
+        <string name="msgs_select_export_file">タスク書き出し先の選択</string>
+        <string name="msgs_select_import_file">取り込むタスクの選択</string>
+        <string name="msgs_select_local_dir">ローカルディレクトリの選択</string>
+        <string name="msgs_select_remote_dir">リモートディレクトリの選択</string>
+        <string name="msgs_select_remote_share">共有の選択</string>
+        <string name="msgs_share_list_not_obtained">共有名の一覧が取得できませんでした。アクセス権のあるユーザーを指定して再度取得するか、共有名を直接入力してください。</string>
+        <string name="msgs_smbsync_main_no_external_storage">外部メディアが使用できないため、いくつかの機能が使用できません。</string>
+        <string name="msgs_smbsync_main_restart_by_destroyed">アプリケーションはアクティビティの破棄により終了しました。 設定->開発者向オプションで「アクティビティを保持しない」を有効にしているのであれば無効にしてください。</string>
+        <string name="msgs_smbsync_main_restart_by_killed">アプリケーションがバックグラウンドに遷移後、強制終了しました。</string>
+        <string name="msgs_smbsync_main_settings_jcifs_changed_restart">SMB1パラメーターが変更されましたがアプリケーションを再起動するまで有効になりません。アプリケーションを終了しますか?</string>
+        <string name="msgs_smbsync_main_start">アプリケーションが起動しました。</string>
+        <string name="msgs_smnsync_main_kill_application">SMBSync2を強制終了しますか？</string>
+        <string name="msgs_specify_task_name">タスク名を指定してください</string>
+        <string name="msgs_tab_name_history">履歴</string>
+        <string name="msgs_tab_name_msg">メッセージ</string>
+        <string name="msgs_tab_name_prof">タスク</string>
+        <string name="msgs_terminate_application">SMBSync2を終了しますか？</string>
+    <!-- Maintenance -->
+        <string name="msgs_progress_spin_dlg_housekeep_running">管理ファイルの保守実行中</string>
+        <string name="msgs_progress_spin_dlg_housekeep_cancel">保守の中止</string>
+        <string name="msgs_progress_spin_dlg_housekeep_cancel_confirm">管理ファイルの保守を中止しますか</string>
+        <string name="msgs_maintenance_last_mod_list_confirm_start_msg">管理ファイルの保守を実行しますか？実行中はスケジュール同期や外部アプリケーションからの同期ができなくなります。</string>
+        <string name="msgs_maintenance_last_mod_list_can_not_start_msg">同期タスクが実行中のため、管理ファイルの保守を実行できませんでした。</string>
+        <string name="msgs_maintenance_last_mod_list_cancel_msg">管理ファイルの保守が中止されました。</string>
+        <string name="msgs_maintenance_last_mod_list_del_count">ファイル更新時刻リストから%s項目削除しました。</string>
+        <string name="msgs_maintenance_last_mod_list_end_msg">管理ファイルの保守が終了しました。</string>
+        <string name="msgs_maintenance_last_mod_list_start_msg">管理ファイルの保守を開始しました。</string>
+        <string name="msgs_maintenance_result_log_list_del_count">履歴ログディレクトリから%sファイル削除しました。</string>
+        <string name="msgs_maintenance_result_log_list_del_file">%sを削除しました</string>
+        <string name="msgs_maintenance_result_log_list_del_title">履歴に登録されていないディレクトリ/ファイルが見つかりました、削除しますか？</string>
+    <!-- Menu -->
+        <string name="msgs_menu_sync">同期実行</string>
+        <string name="msgs_menu_browse_logfile">ログ表示</string>
+        <string name="msgs_menu_export">タスク書き出し…</string>
+        <string name="msgs_menu_import">タスク取り込み…</string>
+        <string name="msgs_menu_log_management">ログファイル管理…</string>
+        <string name="msgs_menu_about">SMBSync2について</string>
+        <string name="msgs_menu_settings">設定…</string>
+        <string name="msgs_menu_housekeep">強制終了…</string>
+        <string name="msgs_menu_kill">管理ファイルの保守…</string>
+        <string name="msgs_menu_add_shortcut">ショートカットの追加</string>
+        <string name="msgs_menu_list_storage_info">システム情報</string>
+        <string name="msgs_menu_show_battery_optimization_screen">バッテリー最適化の表示</string>
+    <!-- Mirror -->
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">アーカイブがユーザーによりキャンセルされました。</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">ファイルの撮影日時がExif情報から取得できませんでした。ファイルの最終更新時刻(%s)を撮影日時として処理を継続してよろしいでしょうか？ ファイル=%s\n(確認が不要な場合は同期タスクのアーカイブオプションで「確認」のチェックを外してください)</string>
+        <string name="msgs_mirror_confirm_copy_cancel">コピーがユーザーによりキャンセルされました。</string>
+        <string name="msgs_mirror_confirm_copy_confirm">ファイルを上書きしますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
+        <string name="msgs_mirror_confirm_delete_cancel">削除がユーザーによりキャンセルされました。</string>
+        <string name="msgs_mirror_confirm_delete_dir_confirm">ディレクトリを削除しますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
+        <string name="msgs_mirror_confirm_delete_file_confirm">ファイルを削除しますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
+        <string name="msgs_mirror_confirm_move_cancel">移動がユーザーによりキャンセルされました。</string>
+        <string name="msgs_mirror_confirm_move_confirm">ファイルを移動しますか？（ファイルのコピー完了後にコピー元のファイルが削除されます）\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
+        <string name="msgs_mirror_confirm_no_btn">取消</string>
+        <string name="msgs_mirror_confirm_noall_btn">以後全て取消</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_archive">ファイルアーカイブの確認が必要です。ここをタップし、確認してください。</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_copy">ファイルの上書きコピーの確認が必要です。ここをタップし、確認してください。</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_delete_dir">ディレクトリ削除の確認が必要です。ここをタップし、確認してください。</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_delete_file">ファイル削除の確認が必要です。ここをタップし、確認してください。</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_move">ファイル移動の確認が必要です。ここをタップし、確認してください。</string>
+        <string name="msgs_mirror_confirm_task_cancel_btn">同期キャンセル</string>
+        <string name="msgs_mirror_confirm_yes_btn">了解</string>
+        <string name="msgs_mirror_confirm_yesall_btn">以後全て了解</string>
+        <string name="msgs_mirror_external_sdcard_not_mounted">SDCARDがマウントされていないため同期を中止します。</string>
+        <string name="msgs_mirror_external_sdcard_select_required">SDCARDの選択がなされていないため同期を中止します。</string>
+        <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">SDCARD上のファイル情報がメディアストアに反映されていないようです、メディアスキャンを実行してファイルの情報をメディアストアに反映してください。</string>
+        <string name="msgs_mirror_file_set_last_modified_failed">setLastModified()が失敗しました。同期タスクの「ターゲットファイルの最終更新時刻をマスターと同じにしない」を有効にしてください。</string>
+        <string name="msgs_mirror_file_zip_copy_back_from_work">ZIPファイルをワークファイルからコピーしています。%s%% 終了。</string>
+        <string name="msgs_mirror_file_zip_copy_to_work">ZIPファイルをワークファイルにコピーしています。%s%% 終了。</string>
+        <string name="msgs_mirror_ignore_override_copy_file">同期オプションで上書きが無効になっているためファイルのコピーは無視されました。</string>
+        <string name="msgs_mirror_ignore_override_move_file">同期オプションで上書きが無効になっているためファイルの移動は無視されました。</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">マスターのファイル名またはディレクトリ名にターゲットでは使用できない文字が含まれています。マスターのファイル名またはディレクトリ名を変更してください。文字=%s, パス=%s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">マスターのファイル名またはディレクトリ名にターゲットでは使用できない文字が含まれているためディレクトリーまたはファイルの処理をスキップします。文字=%s, パス=%s</string>
+        <string name="msgs_mirror_remote_addr_not_connected">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s</string>
+        <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s, ポート=%s</string>
+        <string name="msgs_mirror_remote_name_not_found">SMBホスト名が発見できませんでした。 ホスト名=</string>
+        <string name="msgs_mirror_same_directory_ignored">マスターとターゲットで同じディレクトリを同期できないため、ディレクトリを無視しました。ディレクトリ=%s</string>
+        <string name="msgs_mirror_smb_addr_not_connected">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s</string>
+        <string name="msgs_mirror_smb_addr_not_connected_with_port" formatted="false">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s, ポート=%s</string>
+        <string name="msgs_mirror_smb_invalid_port_specified">無効なポート番号が指定されています。 ポート番号=%s</string>
+        <string name="msgs_mirror_smb_name_not_found">SMBフォルダーで指定されているSMBホスト名が発見できませんでした。 ホスト名=</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_address_conn_other">無線LANが指定されたIPアドレスに接続されていないため同期を終了します。</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">無線LANが指定されたアクセスポイントに接続されていないため同期を終了します。</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">無線LANがアクセスポイントに接続されていないため同期を終了します。</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr">ネットワークアドレスがローカルアドレスでないため同期を終了します。</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_is_off">無線LANがオフのため同期を終了します。</string>
+        <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">充電中でないため、同期はキャンセルされました。</string>
+        <string name="msgs_mirror_sync_request_ended">同期要求が終了しました。リクエスター=%s</string>
+        <string name="msgs_mirror_sync_request_started">同期要求を開始しました。リクエスター=%s</string>
+        <string name="msgs_mirror_sync_skipped_wifi_address_conn_other">無線LANが指定されたIPアドレスに接続されていないためタスクをスキップします。</string>
+        <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">無線LANが指定されたアクセスポイントに接続されていないためタスクをスキップします。</string>
+        <string name="msgs_mirror_sync_start_was_delayed">無線LANをオン後の遅延時間が指定されているために、同期の開始を%s秒遅らせます。</string>
+        <string name="msgs_mirror_task_avg_rate">平均転送率 %s</string>
+        <string name="msgs_mirror_task_dir_create">ディレクトリーを作成しました。</string>
+        <string name="msgs_mirror_task_dir_create_failed">ディレクトリー作成に失敗しました。</string>
+        <string name="msgs_mirror_task_dir_deleted">ディレクトリーを削除しました。</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">%sを%sにアーカイブしました。</string>
+        <string name="msgs_mirror_task_file_copied">ファイルをコピーしました。</string>
+        <string name="msgs_mirror_task_file_copying">ファイル コピー中、 %s%%終了。</string>
+        <string name="msgs_mirror_task_file_deleted">ファイルを削除しました。</string>
+        <string name="msgs_mirror_task_file_moved">ファイルを移動しました。</string>
+        <string name="msgs_mirror_task_file_replaced">ファイルを上書きコピーしました。</string>
+        <string name="msgs_mirror_task_master_not_found">マスターのファイルまたはディレクトリーが見つかりません。</string>
+        <string name="msgs_mirror_task_no_of_copy" formatted="false">コピー=%s, 削除=%s, 無視=%s, 経過時間=%s(秒)</string>
+        <string name="msgs_mirror_task_result_cancel">同期タスクがキャンセルされました。</string>
+        <string name="msgs_mirror_task_result_error_ended">同期タスクはエラーで終了しました。</string>
+        <string name="msgs_mirror_task_result_error_skipped">エラー処理オプションの設定によりエラーを無視しました。</string>
+        <string name="msgs_mirror_task_result_ok">同期タスクが正常終了しました。</string>
+        <string name="msgs_mirror_task_result_stats" formatted="false">コピー=%s, 削除=%s, 無視=%s, 警告=%s, リトライ=%s, エラー=%s</string>
+        <string name="msgs_mirror_task_started">同期タスクを開始しました。</string>
+        <string name="msgs_mirror_task_success_end">正常終了しました。</string>
+        <string name="msgs_mirror_task_sync_request_error_detected">エラーで終了した同期タスクがあります。</string>
+        <string name="msgs_mirror_task_was_cancelled">キャンセルされました。</string>
+        <string name="msgs_mirror_usb_storage_not_mounted">USBストレージがマウントされていないため同期を中止します。</string>
+    <!-- Scan network -->
+        <string name="msgs_scan_progress_spin_dlg_addr_cancel">検索中止</string>
+        <string name="msgs_scan_ip_address_select_title">SMBサーバーの検索</string>
+        <string name="msgs_scan_ip_address_scan_btn">検索開始</string>
+        <string name="msgs_scan_ip_address_press_scan_btn">IPアドレスを指定して、検索ボタンを押してください。</string>
+        <string name="msgs_scan_ip_address_not_detected">リモートSMBホストが検知できませんでした。</string>
+        <string name="msgs_scan_ip_address_select_detected_host">検索結果のIPアドレスかホスト名をタップして選択してください。</string>
+        <string name="msgs_scan_ip_address_scan_result_title">検索結果</string>
+        <string name="msgs_ip_address_scan_progress">リモートSMBホスト 検索が%s%% 終了</string>
+        <string name="msgs_ip_address_range_dlg_begin">開始</string>
+        <string name="msgs_ip_address_range_dlg_end">終了</string>
+        <string name="msgs_ip_address_range_dlg_begin_notspecified">開始アドレスが指定されていません。</string>
+        <string name="msgs_ip_address_range_dlg_addr_range_error">アドレスは0から255の範囲で指定してください。</string>
+        <string name="msgs_ip_address_range_dlg_begin_range_error">開始アドレスは1から254の範囲で指定してください。</string>
+        <string name="msgs_ip_address_range_dlg_end_notspecified">終了アドレスが指定されていません。</string>
+        <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">終了アドレスは1から254の範囲で指定してください。</string>
+        <string name="msgs_ip_address_range_dlg_end_range_error">開始アドレスが終了アドレスより大きい。</string>
+        <string name="msgs_ip_address_range_dlg_not_private">グローバルアドレスのため検索できません。</string>
+        <string name="msgs_progress_dlg_canceling">キャンセルしています</string>
+        <string name="msgs_progress_spin_dlg_filelist_getting">ファイルリスト取得中</string>
+        <string name="msgs_progress_spin_dlg_filelist_cancel">ファイルリスト取得を中止</string>
+        <string name="msgs_progress_spin_dlg_test_logon">リモートにログオン中</string>
+        <string name="msgs_progress_spin_dlg_test_logon_cancel">ログオンを中止</string>
+    <!-- Scheduler -->
+        <string name="msgs_menu_scheduler">スケジュール</string>
+        <string name="msgs_scheduler_main_dlg_hdr_title">スケジュールの編集</string>
+        <string name="msgs_scheduler_main_dlg_hdr_enable">スケジュールを有効にする</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">同期リストの編集</string>
+        <string name="msgs_scheduler_main_dlg_hdr_sun">日</string>
+        <string name="msgs_scheduler_main_dlg_hdr_mon">月</string>
+        <string name="msgs_scheduler_main_dlg_hdr_tue">火</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wed">水</string>
+        <string name="msgs_scheduler_main_dlg_hdr_thu">木</string>
+        <string name="msgs_scheduler_main_dlg_hdr_fri">金</string>
+        <string name="msgs_scheduler_main_dlg_hdr_sat">土</string>
+        <string name="msgs_scheduler_main_dlg_hdr_month">月</string>
+        <string name="msgs_scheduler_main_dlg_hdr_day">日</string>
+        <string name="msgs_scheduler_main_dlg_hdr_hour">時</string>
+        <string name="msgs_scheduler_main_dlg_hdr_minute">分</string>
+        <string name="msgs_scheduler_main_dlg_hdr_schedule_type">スケジュール方法</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on">同期開始時にWi-FiがオフのときはWi-Fiをオンにする</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_time">Wi-Fiオンから同期するまでの待ち時間</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_1">5秒</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_2">10秒</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30秒</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_off">同期終了後にWi-Fiをオフにする</string>
+        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">最初の同期を次の分に行います</string>
+        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">インターバルスケジュールタイムをリセットする</string>
+        <string name="msgs_scheduler_main_dlg_hdr_schedule_time">同期日時 : %s</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_prompt">スケジュール方法の選択</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_every_hour">毎時</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_every_day">毎日</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_every_month">毎月</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_day_of_week">曜日</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_interval">インターバル</string>
+        <string name="msgs_scheduler_main_spinner_sched_day_prompt">日付の選択</string>
+        <string name="msgs_scheduler_main_spinner_sched_hours_prompt">時間の選択</string>
+        <string name="msgs_scheduler_main_spinner_sched_minutes_prompt">分の選択</string>
+        <string name="msgs_scheduler_info_last_day_of_the_month">月末日</string>
+        <string name="msgs_scheduler_main_last_day_of_the_month">毎月最後の日に同期する</string>
+        <string name="msgs_scheduler_main_last_day_of_the_month_warning">29日から31日を指定すると実行する月によりスケジュールされない場合があります。必ず月末日に輔中るするには「毎月最後の日にスケジュールする」にチェックしてください。</string>
+        <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">同期タスクリスト</string>
+        <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">自動同期タスクだけを同期する</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">同期リストの編集ボタンを押して、同期するプロファイルを指定してください。</string>
+        <string name="msgs_scheduler_info_next_schedule_time">同期予定時刻 %s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">同期予定 : 時刻=%s, 名前=(%s)</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">エラー : %s</string>
+        <string name="msgs_scheduler_info_schedule_disabled">スケジュール同期:無効</string>
+        <string name="msgs_scheduler_info_schedule_enabled">スケジュール同期:有効</string>
+        <string name="msgs_scheduler_info_sync_all_active_profile">自動同期タスクすべて</string>
+        <string name="msgs_scheduler_info_sync_selected_profile">プロファイル %s を同期</string>
+        <string name="msgs_scheduler_info_sync_task_was_not_found">指定された同期タスクが見つかりませんでした。名前=(%s)</string>
+        <string name="msgs_scheduler_main_dw_not_selected">少なくても一つの曜日を選択してください</string>
+        <string name="msgs_schedule_list_edit_dlg_title">スケジュールリストの編集</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">スケジュール名が重複しています。</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">スケジュール名が指定されていません。</string>
+        <string name="msgs_schedule_cont_label_add">スケジュールの追加</string>
+        <string name="msgs_schedule_cont_label_activate">スケジュールの有効化</string>
+        <string name="msgs_schedule_cont_label_inactivate">スケジュールの無効化</string>
+        <string name="msgs_schedule_cont_label_delete">スケジュールの削除</string>
+        <string name="msgs_schedule_cont_label_copy">スケジュールのコピー</string>
+        <string name="msgs_schedule_cont_label_rename">スケジュールの改名</string>
+        <string name="msgs_schedule_cont_label_select_all">全て選択</string>
+        <string name="msgs_schedule_cont_label_unselect_all">全ての選択解除</string>
+        <string name="msgs_schedule_confirm_title_delete">スケジュール削除の確認</string>
+        <string name="msgs_schedule_confirm_title_enable">スケジュール有効化の確認</string>
+        <string name="msgs_schedule_confirm_title_disable">スケジュール無効化の確認</string>
+        <string name="msgs_schedule_confirm_title_nosave">終了確認</string>
+        <string name="msgs_schedule_confirm_msg_delete">下記のスケジュールを削除します。</string>
+        <string name="msgs_schedule_confirm_msg_enable">下記のスケジュールを有効にします。</string>
+        <string name="msgs_schedule_confirm_msg_disable">下記のスケジュールを無効にします。.</string>
+        <string name="msgs_schedule_confirm_msg_nosave">スケジュールが変更されています、保存せず終了しますか。</string>
+        <string name="msgs_schedule_confirm_msg_changed">変更済</string>
+        <string name="msgs_schedule_rename_schedule">スケジュールの改名</string>
+        <string name="msgs_schedule_list_edit_no_schedule">追加ボタンを押してスケジュールを作成してください。</string>
+        <string name="msgs_schedule_list_edit_multi_sched_warn">複数スケジュールが同時刻に起動される場合は同期リストをまとめ、重複した同期タスクを無視します。またWI-FIオプションも各スケジュールで指定したオプションを組み合わせします。</string>
+    <!-- Send logcat -->
+        <string name="msgs_send_logcat_menu_start_logcat">LogCatの開始</string>
+        <string name="msgs_send_logcat_menu_stop_logcat">LogCatの停止</string>
+        <string name="msgs_send_logcat_menu_send_logcat">LogCatの送信</string>
+        <string name="msgs_send_logcat_btn_send">送信</string>
+        <string name="msgs_send_logcat_btn_preview_logcat">LogCatの表示</string>
+        <string name="msgs_send_logcat_btn_preview_applog">AppLogの表示</string>
+        <string name="msgs_send_logcat_title">LogCatとAppLogの送信</string>
+        <string name="msgs_send_logcat_message">LogCatとAppLogを開発者にE-Mailで送信します\n
+１．LogCat表示ボタンとAppLog表示ボタンを押し内容を確認してください（テキストファイルを表示するためのアプリケーション選択の画面が表示されたら、アプリケーションを選択してください）\n
+２．送信する内容を確認したら、送信ボタンを押しE-Mail選択ダイアログでE-Mailを選択\n
+３．必要ならばE-Mail本文にメッセージを入力し送信してください。（ログはzipに圧縮し、添付ファイルになっています）</string>
+    <!-- svc -->
+        <string name="msgs_svc_can_not_start_sync_task_disabled">同期タスクが無効になっているため、同期タスクを開始できませんでした。</string>
+        <string name="msgs_svc_received_start_request_from_scheduler">SMBSync2スケジューラーから同期要求を受け付けました。</string>
+        <string name="msgs_svc_received_start_request_from_scheduler_task_not_found">SMBSync2スケジューラーから同期要求を受け付けましたが指定されたタスクは存在しないため無視しました。タスク=</string>
+        <string name="msgs_svc_received_start_request_from_scheduler_no_task_list">SMBSync2スケジューラーから同期要求された全タスクが存在しないため中止しました。</string>
+        <string name="msgs_svc_received_start_request_from_external">外部アプリから同期要求を受け付けました。</string>
+        <string name="msgs_svc_received_start_request_from_external_task_not_found">外部アプリから同期要求を受け付けましたが指定されたタスクは存在しないため無視しました。タスク=</string>
+        <string name="msgs_svc_received_start_request_from_external_no_task_list">外部アプリから同期要求されたタスクは全て存在しないため要求を無視しました。</string>
+        <string name="msgs_svc_received_start_request_from_external_no_task_specified">同期要求を受け付けましたが同期タスクが指定されていないため、要求を無視しました。</string>
+        <string name="msgs_svc_received_start_request_from_external_auto_task">同期要求を受け付けましたが同期タスクが指定されていないため自動タスクを開始しました。</string>
+        <string name="msgs_svc_received_start_request_from_shortcut">ショートカットから同期要求を受け付けました。</string>
+        <string name="msgs_svc_received_start_request_ignored_duplicate_request">同期開始要求が受付済みのため無視しました。 ID=%s</string>
+    <!-- sync archive -->
+        <string name="msgs_sync_folder_archive_option">アーカイブオプション</string>
+        <string name="msgs_sync_folder_archive_file_type">アーカイブするファイル拡張子:</string>
+        <string name="msgs_sync_folder_archive_retention_period">アーカイブする対象</string>
+        <string name="msgs_sync_folder_archive_output_image">下記は保存されるディレクトリーとファイル名(日時は撮影時のものではありまん)</string>
+        <string name="msgs_sync_folder_archive_rename_rule">アーカイブする際にファイル名の変更および格納するディレクトリーを作成する</string>
+        <string name="msgs_sync_folder_archive_seq_number_title">ファイル名の順序番号</string>
+        <string name="msgs_sync_folder_archive_create_directory">アーカイブする時にディレクトリーに保存する</string>
+        <string name="msgs_sync_folder_archive_btn_title_date">年月日</string>
+        <string name="msgs_sync_folder_archive_btn_title_time">時刻</string>
+        <string name="msgs_sync_folder_archive_btn_title_original_name">元の名前</string>
+        <string name="msgs_sync_folder_archive_confirm_exif_date">撮影日時がExifから取得できない時に確認メッセージを表示する</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">同期方式がアーカイブの時はZIPを使用できないため内部ストレージに変更しました。</string>
+        <string name="msgs_sync_folder_archive_btn_title_year">西暦</string>
+        <string name="msgs_sync_folder_archive_btn_title_month">月</string>
+        <string name="msgs_sync_folder_archive_btn_title_day">日</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_prompt_title">順序番号の選択</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_0">使用しない</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">3桁の番号を追加(001-999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_4">4桁の番号を追加(0001-9999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_5">5桁の番号を追加(00001-99999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_6">6桁の番号を追加(000001-999999)</string>
+        <string name="msgs_sync_folder_archive_period_prompt_title">写真のアーカイブ対象日時の選択</string>
+        <string name="msgs_sync_folder_archive_period_0_days">撮影日に関係なく</string>
+        <string name="msgs_sync_folder_archive_period_7_days">撮影日が7日以上古い</string>
+        <string name="msgs_sync_folder_archive_period_30_days">撮影日が30日以上古い</string>
+        <string name="msgs_sync_folder_archive_period_60_days">撮影日が60日以上古い</string>
+        <string name="msgs_sync_folder_archive_period_90_days">撮影日が90日以上古い</string>
+        <string name="msgs_sync_folder_archive_period_180_days">撮影日が180日以上古い</string>
+        <string name="msgs_sync_folder_archive_period_1_years">撮影日が1年以上古い</string>
+    <!-- string -->
+        <string name="app_name">SMBSync2</string>
+        <string name="smbsync_main_title">SMBSync2</string>
+        <string name="app_name_auto_sync">StartSync</string>
+    <!-- Setting log -->
+        <string name="settings_log_file_max_count">settings_log_file_max_count</string>
+        <string name="settings_log_file_max_count_dialog_title">世代数の選択</string>
+        <string-array name="settings_log_file_max_count_list_entries">
+            <item>1</item>
+            <item>5</item>
+            <item>10</item>
+            <item>20</item>
+            <item>30</item>
+            <item>50</item>
+        </string-array >
+        <string-array name="settings_log_file_max_count_list_values">
+            <item>1</item>
+            <item>5</item>
+            <item>10</item>
+            <item>20</item>
+            <item>30</item>
+            <item>50</item>
+        </string-array >
+        <string name="settings_log_file_max_count_summary">%s世代</string>
+        <string name="settings_log_file_max_count_title">ログファイル世代数</string>
+        <string name="settings_log_level">settings_log_level</string>
+        <string name="settings_log_level_dialog_title">デバッグ情報レベルの設定</string>
+        <string-array name="settings_log_level_list_entries">
+            <item>デバッグ情報なし</item>
+            <item>最低限のデバッグ情報</item>
+            <item>詳細デバッグ情報</item>
+            <item>詳細とファイル比較のデバッグ情報</item>
+        </string-array >
+        <string-array name="settings_log_level_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_log_level_summary">現設定=0</string>
+        <string name="settings_log_level_title">デバッグ情報</string>
+        <string name="settings_log_option">settings_log_option</string>
+        <string name="settings_log_option_summary_ena">ログファイルを作成する</string>
+        <string name="settings_log_option_title">ログファイル</string>
+        <string name="settings_log_preference_screen_title">ログ</string>
+        <string name="settings_log_title">ログ</string>
+        <string name="settings_mgt_dir">settings_mgt_dir</string>
+        <string name="settings_mgt_dir_summary">無指定=</string>
+        <string name="settings_mgt_dir_title">管理ファイルの保存ディレクトリ</string>
+        <string name="settings_put_logcat_option">settings_put_logcat_option</string>
+        <string name="settings_put_logcat_option_summary_ena">ログメッセージをLogcatに出力する</string>
+        <string name="settings_put_logcat_option_title">Android Logcat</string>
+    <!-- Setting main -->
+        <string name="settings_default_current_setting">現設定=</string>
+        <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
+        <string name="settings_device_orientation_portrait_summary_ena">端末の向きをポートレイトに固定する</string>
+        <string name="settings_device_orientation_portrait_title">端末の向き</string>
+        <string name="settings_dim_screen_on_while_sync">settings_dim_screen_on_while_sync</string>
+        <string name="settings_dim_screen_on_while_sync_summary_ena">画面点灯時に同期を開始した場合は同期終了まで画面を点灯させる</string>
+        <string name="settings_dim_screen_on_while_sync_title">同期中の画面点灯</string>
+        <string name="settings_error_option">settings_error_option</string>
+        <string name="settings_error_option_summary_ena">エラーを無視して、次の同期タスクを開始する</string>
+        <string name="settings_error_option_title">エラー時の処理</string>
+        <string name="settings_exit_clean">settings_exit_clean</string>
+        <string name="settings_exit_clean_summary_ena">プロセスをKillする</string>
+        <string name="settings_exit_clean_title">アプリ終了時の処理</string>
+        <string name="settings_exported_profile_encryption">settings_exported_profile_encryption</string>
+        <string name="settings_force_screen_on_while_sync">settings_force_screen_on_while_sync</string>
+        <string name="settings_force_screen_on_while_sync_summary_ena">有効にすると同期開始時に画面を点灯します</string>
+        <string name="settings_force_screen_on_while_sync_title">同期の遅延防止</string>
+        <string name="settings_main_title">設定</string>
+        <string name="settings_media_scanner_option_title">MediaScanner</string>
+        <string name="settings_misc_title">その他</string>
+        <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
+        <string name="settings_no_compress_file_type_title">圧縮しないファイルタイプ</string>
+        <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
+        <string name="settings_notification_message_when_sync_ended_dialog_title">通知メッセージの選択</string>
+        <string-array name="settings_notification_message_when_sync_ended_list_entries">
+            <item>通知メッセージを表示しない</item>
+            <item>常に通知メッセージを表示する</item>
+            <item>正常終了したときに通知メッセージを表示する</item>
+            <item>エラーで終了したときに通知メッセージを表示する</item>
+        </string-array >
+        <string-array name="settings_notification_message_when_sync_ended_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_notification_message_when_sync_ended_summary_always">常に通知メッセージを表示する</string>
+        <string name="settings_notification_message_when_sync_ended_summary_error">エラーで終了したときに通知メッセージを表示する</string>
+        <string name="settings_notification_message_when_sync_ended_summary_no">通知メッセージを表示しない</string>
+        <string name="settings_notification_message_when_sync_ended_summary_success">正常終了したときに通知メッセージを表示する</string>
+        <string name="settings_notification_message_when_sync_ended_title">通知メッセージ</string>
+        <string name="settings_other_title">Other</string>
+        <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
+        <string name="settings_playback_ringtone_volume_disabled">デフォルト通知音が設定されていません。</string>
+        <string name="settings_playback_ringtone_volume_summary">マスターボリュームの%s%%</string>
+        <string name="settings_playback_ringtone_volume_title">通知音の音量</string>
+        <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
+        <string name="settings_playback_ringtone_when_sync_ended_dialog_title">通知音の条件</string>
+        <string-array name="settings_playback_ringtone_when_sync_ended_list_entries">
+            <item>通知音を鳴らさない</item>
+            <item>同期終了時に常に通知音を鳴らす</item>
+            <item>同期が正常終了した時に通知音を鳴らす</item>
+            <item>エラーで同期が終了した時に通知音を鳴らす</item>
+        </string-array >
+        <string-array name="settings_playback_ringtone_when_sync_ended_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_playback_ringtone_when_sync_ended_summary_always">同期終了時に常に通知音を鳴らす</string>
+        <string name="settings_playback_ringtone_when_sync_ended_summary_error">エラーで同期が終了した時に通知音を鳴らす</string>
+        <string name="settings_playback_ringtone_when_sync_ended_summary_no">通知音を鳴らさない</string>
+        <string name="settings_playback_ringtone_when_sync_ended_summary_success">同期が正常終了した時に通知音を鳴らす</string>
+        <string name="settings_playback_ringtone_when_sync_ended_title">通知音</string>
+        <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
+        <string name="settings_smb_client_response_timeout_dialog_title">Select Client response timeout value</string>
+        <string-array name="settings_smb_client_response_timeout_list_entries">
+            <item>30000 ms</item>
+            <item>45000 ms</item>
+            <item>60000 ms</item>
+            <item>120000 ms</item>
+        </string-array >
+        <string-array name="settings_smb_client_response_timeout_list_values">
+            <item>30000</item>
+            <item>45000</item>
+            <item>60000</item>
+            <item>120000</item>
+        </string-array >
+        <string name="settings_smb_client_response_timeout_summary">Response timeout</string>
+        <string name="settings_smb_client_response_timeout_title">Client response timeout</string>
+        <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
+        <string name="settings_smb_disable_plain_text_passwords_summary_ena">Use plain text passwords</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Disable plain text passwords</string>
+        <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
+        <string name="settings_smb_lm_compatibility_dialog_title">Select lmCompatibility value</string>
+        <string-array name="settings_smb_lm_compatibility_list_entries">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+        </string-array >
+        <string-array name="settings_smb_lm_compatibility_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+        </string-array >
+        <string name="settings_smb_lm_compatibility_summary">lmCompatibility</string>
+        <string name="settings_smb_lm_compatibility_title">lmCompatibility</string>
+        <string name="settings_smb_title">SMB1設定</string>
+        <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
+        <string name="settings_smb_use_extended_security_summary_ena">Use extended security</string>
+        <string name="settings_smb_use_extended_security_title">Use extended security</string>
+        <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
+        <string name="settings_suppress_warning_app_specific_dir_summary_ena">アプリケーション固有ディレクトリの使用についての警告を表示しない</string>
+        <string name="settings_suppress_warning_app_specific_dir_title">アプリケーション固有ディレクトリの使用</string>
+        <string name="settings_sync_history_log">settings_sync_history_log</string>
+        <string name="settings_sync_history_log_summary_ena">詳細ログを保存する</string>
+        <string name="settings_sync_history_log_title">同期履歴</string>
+        <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
+        <string name="settings_sync_message_use_standard_text_view_summary_ena">Android標準の処理を行う</string>
+        <string name="settings_sync_message_use_standard_text_view_title">同期メッセージのテキスト処理</string>
+        <string name="settings_sync_title">同期</string>
+        <string name="settings_ui_title">ユーザーインターフェース</string>
+        <string name="settings_use_light_theme">settings_use_light_theme</string>
+        <string name="settings_use_light_theme_summary_ena">ライトテーマを使用する</string>
+        <string name="settings_use_light_theme_title">画面テーマ</string>
+        <string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
+        <string name="settings_vibrate_when_sync_ended_dialog_title">端末の振動の条件</string>
+        <string-array name="settings_vibrate_when_sync_ended_list_entries">
+            <item>端末を常に振動させない</item>
+            <item>同期終了時に常に端末を振動させる</item>
+            <item>同期が正常終了した時に端末を振動させる</item>
+            <item>エラーで同期が終了した時に端末を振動させる</item>
+        </string-array >
+        <string-array name="settings_vibrate_when_sync_ended_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_vibrate_when_sync_ended_summary_always">同期終了時に常に端末を振動させる</string>
+        <string name="settings_vibrate_when_sync_ended_summary_error">エラーで同期が終了した時に端末を振動させる</string>
+        <string name="settings_vibrate_when_sync_ended_summary_no">常に端末を振動させない</string>
+        <string name="settings_vibrate_when_sync_ended_summary_success">同期が正常終了した時に端末を振動させる</string>
+        <string name="settings_vibrate_when_sync_ended_title">端末の振動</string>
+        <string name="settings_wifi_lock">settings_wifi_lock</string>
+        <string name="settings_wifi_lock_summary_ena">同期中はWi-Fiロックする</string>
+        <string name="settings_wifi_lock_title">Wi-Fiロック</string>
+</resources>

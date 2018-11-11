@@ -1,0 +1,837 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- About -->
+        <string name="msgs_about_dlg_func_btn">Function</string>
+        <string name="msgs_about_dlg_change_btn">Change log</string>
+        <string name="msgs_dlg_title_about">About SMBSync2</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_EN_Short.htm</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.htm</string>
+    <!-- Export/Import -->
+        <string name="msgs_export_import_profile_title">Select task item for import</string>
+        <string name="msgs_export_import_profile_listing">List file</string>
+        <string name="msgs_export_import_profile_setting_parms">Setting parameters</string>
+        <string name="msgs_export_import_profile_schedule_parms">Schedule parameters</string>
+        <string name="msgs_export_import_profile_select_all">Select all item</string>
+        <string name="msgs_export_import_profile_unselect_all">Unselect all item</string>
+        <string name="msgs_export_import_profile_confirm_override">The following items have been registered in the task list. Are you sure you want to overwrite the task that has been read.</string>
+        <string name="msgs_export_import_profile_import_success">Following task item(s) are imported.</string>
+        <string name="msgs_export_import_profile_reset_current_profile">All of the current task was removed and to import profile.</string>
+        <string name="msgs_export_import_profile_import_settings">Settings parameter</string>
+        <string name="msgs_export_import_profile_import_schedule">Schedule parameter</string>
+        <string name="msgs_export_import_profile_no_import_items">No imported task list items.</string>
+        <string name="msgs_export_import_pswd_password_title">Task list password protection</string>
+        <string name="msgs_export_import_pswd_password_protect">To protect the file with a password.</string>
+        <string name="msgs_export_import_pswd_specify_password">Please specify the password.</string>
+        <string name="msgs_export_import_pswd_invalid_password">Password is incorrect, please specify the correct password.</string>
+        <string name="msgs_export_import_pswd_password_required">File is password protected, Please specify the password.</string>
+        <string name="msgs_export_import_pswd_btn_cancel">Cancel</string>
+        <string name="msgs_export_import_pswd_btn_ok">OK</string>
+        <string name="msgs_export_import_pswd_hint_password">Password</string>
+        <string name="msgs_export_import_pswd_hint_confirm">Confirm password</string>
+        <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Does not match the password and the confirm password.</string>
+    <!-- Help -->
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_EN_task.htm</string>
+        <string name="msgs_help_sync_task_title">Sync task help</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_EN_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_title">Internal storage help</string>
+        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_EN_folder_sdcard.htm</string>
+        <string name="msgs_help_sync_folder_sdcard_title">SDCARD help</string>
+        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_EN_folder_usb.htm</string>
+        <string name="msgs_help_sync_folder_usb_title">USB Media help</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_EN_folder_smb.htm</string>
+        <string name="msgs_help_sync_folder_smb_title">SMB server help</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_EN_folder_zip.htm</string>
+        <string name="msgs_help_sync_folder_zip_title">ZIP folder help</string>
+        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_EN_task_picture.htm</string>
+        <string name="msgs_help_sync_task_picture_title">Sync task picture help</string>
+    <!-- Log management -->
+        <string name="msgs_log_management_title">Log management</string>
+        <string name="msgs_log_management_label_delete">Delete log item</string>
+        <string name="msgs_log_management_label_share">Share log item</string>
+        <string name="msgs_log_management_label_select_all">Select all log item</string>
+        <string name="msgs_log_management_label_unselect_all">Unselect all log item</string>
+        <string name="msgs_log_management_no_log_file">No log files</string>
+        <string name="msgs_log_management_delete_confirm_msg">Delete the following log files.</string>
+        <string name="msgs_log_management_dlg_close">Close</string>
+        <string name="msgs_log_management_dlg_send_zip_file_creating">Creating the zip file</string>
+        <string name="msgs_log_management_dlg_send_zip_file_cancelled">Zip file creation has been canceled</string>
+        <string name="msgs_log_management_log_file_switched">Log file was switched.</string>
+    <!-- Main -->
+        <string name="msgs_active_sync_prof_not_found">Auto sync task can not be found.</string>
+        <string name="msgs_add_sync_profile">Add Sync task</string>
+        <string name="msgs_audit_hostname_not_spec">Specify remote server name or address.</string>
+        <string name="msgs_audit_hostport_not_spec">Specify remote server port number.</string>
+        <string name="msgs_audit_msgs_local_dir">Local directory has contains %s character, invalid character was removed.</string>
+        <string name="msgs_audit_share_not_spec">Specify share name.</string>
+        <string name="msgs_clear_log_message">Clear log messages</string>
+        <string name="msgs_cont_button_diabled_by_sync">The requested operation　was ignored for during synchronization</string>
+        <string name="msgs_copy_sync_profile">Copy Sync task</string>
+        <string name="msgs_create_profile_error">create task list was failed. file=%s</string>
+        <string name="msgs_create_profile_not_found">"create profile was failed. Because specified file was not found. file=%s</string>
+        <string name="msgs_current_dir">Current dir:</string>
+        <string name="msgs_delete_following_profile">Delete the following task(s)</string>
+        <string name="msgs_dir_empty">Directory could not be found</string>
+        <string name="msgs_duplicate_task_name">Task name is duplicated</string>
+        <string name="msgs_edit_sync_profile">Edit sync task</string>
+        <string name="msgs_export_prof_fail">Export task list was failed</string>
+        <string name="msgs_export_prof_success">Export task list was successful</string>
+        <string name="msgs_export_prof_title">Export task list</string>
+        <string name="msgs_extra_data_sync_profile_type_error">Canceled the synchronization, because Sync not String.</string>
+        <string name="msgs_filelist_cancel">Creating remote file list was cancelled.</string>
+        <string name="msgs_filelist_error">An error occurred while creating the remote file list.</string>
+        <string name="msgs_filter_edit_dlg_title">Edit filter</string>
+        <string name="msgs_filter_list_dlg_add">Add</string>
+        <string name="msgs_filter_list_dlg_add_dir_filter">Add directory filter</string>
+        <string name="msgs_filter_list_dlg_close">Close</string>
+        <string name="msgs_filter_list_dlg_dir_filter">Directory filter</string>
+        <string name="msgs_filter_list_dlg_file_filter">File filter</string>
+        <string name="msgs_filter_list_dlg_filter_added">Filter %s was added.</string>
+        <string name="msgs_filter_list_dlg_filter_hint">Filter</string>
+        <string name="msgs_filter_list_dlg_not_specified">Not specified</string>
+        <string name="msgs_filter_list_duplicate_filter_specified">%s is already registered</string>
+        <string name="msgs_filter_list_filter_deleted">This entry was deleted.</string>
+        <string name="msgs_filter_list_same_directory_access">This filter can not be specified because the master and the target is to access the same directory. Filter=%s</string>
+        <string name="msgs_filter_list_same_directory_access_not_excluded">Please exclude the directory so as to access to the master and the target is different directory. Directory=%s</string>
+        <string name="msgs_hist_cont_label_copy">Copy to clipboard</string>
+        <string name="msgs_hist_cont_label_delete">Delete history item</string>
+        <string name="msgs_hist_cont_label_move_bottom">Move to bottom</string>
+        <string name="msgs_hist_cont_label_move_top">Move to top</string>
+        <string name="msgs_hist_cont_label_select_all">Select all history item</string>
+        <string name="msgs_hist_cont_label_share">Share</string>
+        <string name="msgs_hist_cont_label_unselect_all">Unselect all history item</string>
+        <string name="msgs_import_prof_fail">Import task list was failed</string>
+        <string name="msgs_import_prof_fail_no_valid_item">File %s has include no valid task items.</string>
+        <string name="msgs_info_storage_copy_clipboard">Copy</string>
+        <string name="msgs_info_storage_copy_completed">Copied to clipboard</string>
+        <string name="msgs_info_storage_send_btn_title">Send to developer</string>
+        <string name="msgs_info_storage_title">Storage Information</string>
+        <string name="msgs_log_activate_pinned">Auto Scroll is no longer valid</string>
+        <string name="msgs_log_confirm_clear_all_msg">Do you want to clear the log message?</string>
+        <string name="msgs_log_inactivate_pinned">Auto Scroll is now enabled</string>
+        <string name="msgs_log_msg_cleared">Log message was cleared.</string>
+        <string name="msgs_main_app_specific_dir_used_msg">Application specific directory has been set As the storage location of the file. This directory is deleted when the application is uninstalled, the data you have saved will be deleted. Please be careful in your use.</string>
+        <string name="msgs_main_app_specific_dir_used_suppress">Do not show from the next time to this warning (You can re show the user interface settings)</string>
+        <string name="msgs_main_app_specific_dir_used_title">Warning about the application specific directory use</string>
+        <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
+        <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD select activity can not be started.</string>
+        <string name="msgs_main_external_sdcard_select_required_cancel_msg">You can not perform sync until external SD card is selected. Task=%s</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">In order to access the SDCARD, Step 1 please tap the “SDCARD”, Step2 then　Please tap the “Select” in the displayed screen.\n
+(Please tap the “Select the SDCARD” when the screen of “Select the SDCARD” in step 2 is displayed directly)</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">In order to access the SDCARD, Step 1 please tap the “SDCARD”, Step2 then　Please tap the “Select” in the displayed screen.\n
+(Please tap the “Select” when the screen of “SDCARD” in step2 is displayed directly in the upper left corner. If the upper left is other than “SDCARD” are displayed, tap the upper left corner of the menu, from step 1 please try again.)</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_EN.png</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_EN.png</string>
+        <string name="msgs_main_external_sdcard_select_required_title">Select SDCARD</string>
+        <string name="msgs_main_external_sdcard_select_retry_select_msg">The root directory of the SDCARD was not selected. Do you wants to re select?</string>
+        <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USB Storage was selected. Do you wants to re select SDCARD?</string>
+        <string name="msgs_main_external_usb_mp_changed_title">USB Media</string>
+        <string name="msgs_main_external_usb_select_activity_not_found_msg">USB Media select activity can not be started.</string>
+        <string name="msgs_main_external_usb_select_path_not_available_msg">A mount point corresponding to UUID(%s) could not be found. With this device, SMBSync2 can not use USB media.</string>
+        <string name="msgs_main_external_usb_select_required_cancel_msg">You can not perform sync until USB Media is selected. Task=%s</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_api23">In order to access the USB Media, Step 1 please tap the “USB”, Step2 then Please tap the “Select” in the displayed screen.\n
+(Please tap the “Select” when the screen of “USB Media” in step2 is displayed directly in the upper left corner. If the upper left is other than “USB” are displayed, tap the upper left corner of the menu, from step 1 please try again.)</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_EN.png</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_EN.png</string>
+        <string name="msgs_main_external_usb_select_required_title">Select USB Media</string>
+        <string name="msgs_main_external_usb_select_retry_select_msg">The root directory of the USB Media was not selected. Do you wants to re select?</string>
+        <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARD was selected. Do you wants to re select USB storage?</string>
+        <string name="msgs_main_permission_coarse_location_denied_msg">Until permission is granted, if "Connect to SSID" or "Connect to specific SSID" is specified in the sleeping synchronization, it ends with an error.\n Would you like to disable this message in the future? (In order to display again, enable ”Coarse Location" request by setting.)</string>
+        <string name="msgs_main_permission_coarse_location_request_msg">This is the privilege required to read the WiFi SSID when scheduled synchronized or launched from an external application during sleep. Do you request permission?</string>
+        <string name="msgs_main_permission_coarse_location_title">Coarse location Permission</string>
+        <string name="msgs_main_permission_external_storage_denied_msg">It will not be possible to sync for permission to access the An internal storage is not given. Quits the application</string>
+        <string name="msgs_main_permission_external_storage_request_msg">For reading and writing data and management data to be sync to the internal storage, please give permission to access the internal storage.</string>
+        <string name="msgs_main_permission_external_storage_title">Internal Storage Permission</string>
+        <string name="msgs_main_shortcut_shortcut_added">Shortcut was added to home screen.</string>
+        <string name="msgs_main_sync_all_active_profiles">To sync the all auto sync task</string>
+        <string name="msgs_main_sync_can_not_sync_no_valid_profile">It can not be synchronized for a sync task does not exist. Please create a sync task.</string>
+        <string name="msgs_main_sync_cancel_confirm">Do you want to cancel sync?</string>
+        <string name="msgs_main_sync_history_copy_completed">Copied to clipboard history that has been selected</string>
+        <string name="msgs_main_sync_history_count_copied">Copied:</string>
+        <string name="msgs_main_sync_history_count_deleted">Deleted:</string>
+        <string name="msgs_main_sync_history_count_ignored">Ignored:</string>
+        <string name="msgs_main_sync_history_count_retry">Retry:</string>
+        <string name="msgs_main_sync_history_del_conf_all_history">Do you want to delete all history?</string>
+        <string name="msgs_main_sync_history_del_conf_selected_history">Do you want to delete following history?</string>
+        <string name="msgs_main_sync_history_elapsed_time">Elapsed time(Sec):</string>
+        <string name="msgs_main_sync_history_mode">Mode:</string>
+        <string name="msgs_main_sync_history_mode_normal">Normal</string>
+        <string name="msgs_main_sync_history_mode_test">Test</string>
+        <string name="msgs_main_sync_history_result_log_not_found">History log file could not be found.</string>
+        <string name="msgs_main_sync_history_status_cancel">Cancel</string>
+        <string name="msgs_main_sync_history_status_error">Error</string>
+        <string name="msgs_main_sync_history_status_running">Running</string>
+        <string name="msgs_main_sync_history_status_success">Success</string>
+        <string name="msgs_main_sync_history_status_warning">Warning</string>
+        <string name="msgs_main_sync_list_array_activ_activ">AUTO</string>
+        <string name="msgs_main_sync_list_array_activ_inact">MANUAL</string>
+        <string name="msgs_main_sync_list_array_activ_test">TEST</string>
+        <string name="msgs_main_sync_list_array_last_sync_time">Last sync :</string>
+        <string name="msgs_main_sync_list_array_mtype_archive">ARCHIVE</string>
+        <string name="msgs_main_sync_list_array_mtype_copy">COPY</string>
+        <string name="msgs_main_sync_list_array_mtype_mirr">MIRR</string>
+        <string name="msgs_main_sync_list_array_mtype_move">MOVE</string>
+        <string name="msgs_main_sync_list_array_mtype_sync">SYNC</string>
+        <string name="msgs_main_sync_list_array_no_last_sync_time">Sync has not been performed.</string>
+        <string name="msgs_main_sync_prof_name_list">The name of the task that started the sync:</string>
+        <string name="msgs_main_sync_profile">Sync task (%s)</string>
+        <string name="msgs_main_sync_profile_dlg_archive">Archive</string>
+        <string name="msgs_main_sync_profile_dlg_copy">Copy</string>
+        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_1">1</string>
+        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
+        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
+        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Last time of tolerance(Sec)</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal">Both the master folder and the target folder has been specified internal storage, but the directory is duplicated. Please change either to a different directory.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir">You have access to the same directory in the master folder and the target folder, please specify whether the directory filter to change either of the directory.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_sdcard">Both the master folder and the target folder has been specified SDCARD, but the directory is duplicated. Please change either to a different directory.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_smb">Both the master folder and the target folder SMB can not be used. Please change to a type that different either.</string>
+        <string name="msgs_main_sync_profile_dlg_mirror">Mirror</string>
+        <string name="msgs_main_sync_profile_dlg_move">Move</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Please specify the address or name of the SMB host.</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_port_number">Please specify the port number of the SMB host.</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_share_name">Please specify the share name of the SMB host.</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_userid_pswd">Please specify the user name and/or password of the SMB host.</string>
+        <string name="msgs_main_sync_profile_dlg_sync">Sync</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master">SDCARD is not selected, please select the SDCARD in master folder editing.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target">SDCARD is not selected, please select the SDCARD in target folder editing.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">SDCARD is not selected, please select the SDCARD by pressing the “Select SDCARD”.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted">SDCARD is not mounted.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_internal">Internal Storage</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">Select folder type</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_sdcard">SDCARD</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_smb">SMB Server</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_usb">USB Media</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_zip">ZIP Folder</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_master">USB Media is not selected, please select the SDCARD in master folder editing.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">USB Media is not selected, please select the SDCARD in target folder editing.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">USB Media is not selected, please select the SDCARD by pressing the “Select SDCARD”.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">USB Media is not mounted.</string>
+        <string name="msgs_main_sync_profile_dlg_syncopt_prompt">Select sync option</string>
+        <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">Directory has not been specified in the target folder, there is a possibility that an unpredictable delete or overwrite is performed. Do you want to continue?</string>
+        <string name="msgs_main_sync_profile_dlg_title_master">Edit master folder</string>
+        <string name="msgs_main_sync_profile_dlg_title_target">Edit target folder</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">Sync start condition by Wireless LAN</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Conn to any AP</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Conn private addr</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Address list</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">Access point list</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Run even when off</string>
+        <string name="msgs_main_sync_select_prof_no_active_profile">Sync task was not selected.</string>
+        <string name="msgs_main_sync_selected_profiles">To sync the selected sync task</string>
+        <string name="msgs_main_sync_selected_task_not_found">Selected task does not exist. Task=</string>
+        <string name="msgs_main_sync_specified_sync_task_not_scheduled">The specified sync task will not be executed because it was ignored.</string>
+        <string name="msgs_main_sync_test_mode_warnning">The selected sync task contains a test mode sync task. Not performed of the copy or delete files in the sync task of test mode. Do you want to start the sync?</string>
+        <string name="msgs_move_to_bottom">Move to bottom</string>
+        <string name="msgs_move_to_top">Move to top</string>
+        <string name="msgs_msg_cont_label_clear">To clear message</string>
+        <string name="msgs_msg_cont_label_move_bottom">Move to bottom</string>
+        <string name="msgs_msg_cont_label_move_top">Move to top</string>
+        <string name="msgs_msg_cont_label_pinned_active">To disable auto scroll</string>
+        <string name="msgs_msg_cont_label_pinned_inactive">To enable auto scroll</string>
+        <string name="msgs_no_profile_entry">No task</string>
+        <string name="msgs_notification_smbsync_active">SMBSync was started.</string>
+        <string name="msgs_notification_sync_active">Synchronization is active.</string>
+        <string name="msgs_override">override?</string>
+        <string name="msgs_prof_cont_label_activate">To auto</string>
+        <string name="msgs_prof_cont_label_add_sync">Add sync task</string>
+        <string name="msgs_prof_cont_label_copy">To copy task</string>
+        <string name="msgs_prof_cont_label_delete">To delete task</string>
+        <string name="msgs_prof_cont_label_down">Move to down</string>
+        <string name="msgs_prof_cont_label_inactivate">To manual</string>
+        <string name="msgs_prof_cont_label_rename">To rename task</string>
+        <string name="msgs_prof_cont_label_select_all">Select all task</string>
+        <string name="msgs_prof_cont_label_sync">Start sync</string>
+        <string name="msgs_prof_cont_label_unselect_all">Unselect all task</string>
+        <string name="msgs_prof_cont_label_up">Move to up</string>
+        <string name="msgs_prof_cont_to_activate_profile">The following items set to auto tasks.</string>
+        <string name="msgs_prof_cont_to_inactivate_profile">The following items set to manual tasks.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">Do you want to change the wireless LAN condition to "Connected to AP", because either target or master is SMB folder?</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">Do you want to change the wireless LAN condition to "Off", because target and master is not SMB folder?</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_directory">Directory</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_dirlist">List Directory</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_folder_type">Folder type</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_local_mount_point">Mount point</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon">Logon</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon_cancel">Cancel logon process</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon_error">Error detected during logon</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon_success">Logon successful</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_password">Password</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_port">Port number</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_server">Server/address</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share">Share name</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">List Share</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">Use port number</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">User name</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">Search SMB server</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">Select SDCARD</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_usb">Select USB Media</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_show_password">Show password</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMB protocol</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1_only">Uses SMB1 only</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb2_only">Uses SMB2(2.01) only</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Determined by system</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">Use UserID and password</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast">Fast</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest">Fastest</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_maximum">Maximum</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_normal">Normal</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_title">Compression level</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_ultra">Ultra</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_diff_zip_password">Password and confirm password is different.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128">AES 128 Bit</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256">AES 256 Bit</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_none">None</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_title">Encryption method</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto">ZipCrypto</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_filelist">List Files</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_filename">Zip file</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_select_file_title">Select ZIP file</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_specify_zip_file_name">Specify ZIP file name</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_specify_zip_password">Specify ZIP file password</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_time_stamp">Put a time stamp to the ZIP file</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_use_sdcard">To save the ZIP file to the SDCARD.</string>
+        <string name="msgs_profile_sync_folder_dlg_confirm_msg_nosave">The sync folder settings has changed, do you exit without saving?</string>
+        <string name="msgs_profile_sync_task_dlg_active">Auto sync</string>
+        <string name="msgs_profile_sync_task_dlg_change_master_and_target">Swap the master and target</string>
+        <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Directory filter has not been specified</string>
+        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">The directory name contained characters that can not be used and it was deleted. (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">File filter has not been specified</string>
+        <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">The file name contained characters that can not be used and it was deleted. (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Directory to add the following keyword (keyword will be converted at the time of execution)</string>
+        <string name="msgs_profile_sync_task_dlg_keyword_insert_file">File to add the following keyword (keyword will be converted at the time of execution)</string>
+        <string name="msgs_profile_sync_task_dlg_master">Master folder</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type">Sync type</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_archive">Archive</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_copy">Copy</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_mirror">Mirror</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_move">Move</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_prompt">Select sync type</string>
+        <string name="msgs_profile_sync_task_dlg_target">Target folder</string>
+        <string name="msgs_profile_sync_task_dlg_task_name">Sync task name</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">To add IP address that are currently connected</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_edit_title">Edit IP Address</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_hint">IP Address</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_list">Wireless LAN IP address list</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_title">Edit Wi-Fi IP Address</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list">Wireless LAN IP address list</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">Wireless LAN address does not specified.</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">To add access points that are currently connected</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">Edit AP name</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_hint">Access point name</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_list">Wireless LAN access point list</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_not_connected">Wireless LAN is not connected to the access point.</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_not_specified">Wireless LAN access point name does not specified.</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_title">Edit Wi-Fi access point</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified">Duplicate IP address was specified. AP=%s</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified">Duplicate access point was specified. AP=%s</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_title">Edit filter</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_add">Add</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_delete">Delete</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Directory list</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Exclude</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">File filter</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filter</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_include">Include</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Not specified</string>
+        <string name="msgs_profile_sync_task_filter_title">Filter :</string>
+        <string name="msgs_profile_sync_task_sync_direction_two_way">Use Bi-directional synchronization</string>
+        <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Add as a file filter when sync below</string>
+        <string name="msgs_profile_sync_task_sync_file_type_audio">Sync audio files</string>
+        <string name="msgs_profile_sync_task_sync_file_type_detail_not_specified">You must specify one of the file filter and audio and image or video at least.</string>
+        <string name="msgs_profile_sync_task_sync_file_type_image">Sync image files</string>
+        <string name="msgs_profile_sync_task_sync_file_type_specific">Select files for sync</string>
+        <string name="msgs_profile_sync_task_sync_file_type_video">Sync video files</string>
+        <string name="msgs_profile_sync_task_sync_option">Option:</string>
+        <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Difference in the last update time allowed in the judgment of the difference file(Seconds)</string>
+        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">If it is not connected to the specified access point or if it is not the specified IP address Skip the task and start the next task.</string>
+        <string name="msgs_profile_sync_task_sync_option_confirm_required">To confirm before the overwritten or deleted files</string>
+        <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">When it is a mirror, delete first</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Only when the file size of the master is large is determined as the difference file</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">To use the file size to the determination of the difference file</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time">To use the last update time of the file to determine the difference file</string>
+        <string name="msgs_profile_sync_task_sync_option_empty_directory">Process empty directory</string>
+        <string name="msgs_profile_sync_task_sync_option_hidden_directory">Process hidden directory</string>
+        <string name="msgs_profile_sync_task_sync_option_hidden_file">Process hidden file</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled">File copy was ignored because \"Never overwrite target file if it is newer than the master file\" option was enabled.</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Skipping processing of directories or files that contain characters that can not be used as directory names or file names. (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Forced to get the last update date and time in SMBSync2</string>
+        <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">Sync files that exist directly under the directory specified by the master.</string>
+        <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file">Never overwrite target file if it is newer than the master file</string>
+        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">To not set the last update time of the target file the same as the master</string>
+        <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">To overwrite the file</string>
+        <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Retry when network error occurred</string>
+        <string name="msgs_profile_sync_task_sync_option_show_special_option">Show advanced options</string>
+        <string name="msgs_profile_sync_task_sync_option_sub_dir">Process sub directory</string>
+        <string name="msgs_profile_sync_task_sync_option_sync_when_charging">Started only when charging</string>
+        <string name="msgs_profile_sync_task_sync_option_test_mode">Test mode (copy or delete files is not done)</string>
+        <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Using the enhanced directory select/exclude filter</string>
+        <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Wireless LAN</string>
+        <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
+        <string name="msgs_profile_sync_task_sync_sub_directory_specific">Select sub directories</string>
+        <string name="msgs_profile_sync_task_sync_use_small_ioarea">Limit the IO buffer at the time of SMB folder writing to 16KB</string>
+        <string name="msgs_progress_spin_dlg_sync_cancel">Cancel</string>
+        <string name="msgs_remote_profile_dlg_logon_cancel">Logon cancelled</string>
+        <string name="msgs_remote_profile_dlg_logon_error">Logon ended with error</string>
+        <string name="msgs_remote_profile_dlg_logon_success">Logon successfully completed</string>
+        <string name="msgs_rename_profile">Rename task</string>
+        <string name="msgs_save_to_profile_error">Save task list was failed. file=%s</string>
+        <string name="msgs_select_export_file">Select export file</string>
+        <string name="msgs_select_import_file">Select import file</string>
+        <string name="msgs_select_local_dir">Select local directory</string>
+        <string name="msgs_select_remote_dir">Select remote directory</string>
+        <string name="msgs_select_remote_share">Select remote share</string>
+        <string name="msgs_share_list_not_obtained">Could not get share name. Please specify the user with access authority and get it again or enter the share name directly.</string>
+        <string name="msgs_smbsync_main_no_external_storage">External storage was not mounted. Some functions are not available.</string>
+        <string name="msgs_smbsync_main_restart_by_destroyed">Application was restarted because destroyed of the activity is requested.　Please disable it if you’re to enable the “Don’t keep activities” in the Settings->developer options.</string>
+        <string name="msgs_smbsync_main_restart_by_killed">Application was restarted, because application is killed after the move to the background in last time.</string>
+        <string name="msgs_smbsync_main_settings_jcifs_changed_restart">The SMB1 parameter has been changed, but it will not take effect until the application is restarted. Do you want to exit the application?</string>
+        <string name="msgs_smbsync_main_start">Application has started.</string>
+        <string name="msgs_smnsync_main_kill_application">Kill application?</string>
+        <string name="msgs_specify_task_name">Please specify a name for the task</string>
+        <string name="msgs_tab_name_history">History</string>
+        <string name="msgs_tab_name_msg">Messages</string>
+        <string name="msgs_tab_name_prof">Task</string>
+        <string name="msgs_terminate_application">Terminate application?</string>
+    <!-- Maintenance -->
+        <string name="msgs_progress_spin_dlg_housekeep_running">Perform maintenance of management file.</string>
+        <string name="msgs_progress_spin_dlg_housekeep_cancel">Cancel maintenance</string>
+        <string name="msgs_progress_spin_dlg_housekeep_cancel_confirm">Are you sure you want to cancel the maintenance of management file?</string>
+        <string name="msgs_maintenance_last_mod_list_confirm_start_msg">Do you want to run the Maintain of the management file? Running will not be able to be sync from the scheduled synch and external applications.</string>
+        <string name="msgs_maintenance_last_mod_list_can_not_start_msg">Because sync task is running, it was unable to perform the maintenance of the management files.</string>
+        <string name="msgs_maintenance_last_mod_list_cancel_msg">Maintenance of the management file has been canceled.</string>
+        <string name="msgs_maintenance_last_mod_list_del_count">Has been %s items deleted from the last modified time list.</string>
+        <string name="msgs_maintenance_last_mod_list_end_msg">Maintenance of the management file has ended.</string>
+        <string name="msgs_maintenance_last_mod_list_start_msg">Maintenance of the management file has been started.</string>
+        <string name="msgs_maintenance_result_log_list_del_count">Has been %s files deleted from the history log directory.</string>
+        <string name="msgs_maintenance_result_log_list_del_file">%s was deleted.</string>
+        <string name="msgs_maintenance_result_log_list_del_title">Directories/Files that have not been registered in the history has been found, Do you want to remove?</string>
+    <!-- Menu -->
+        <string name="msgs_menu_sync">Sync</string>
+        <string name="msgs_menu_browse_logfile">Show log</string>
+        <string name="msgs_menu_export">Export task list…</string>
+        <string name="msgs_menu_import">Import task list…</string>
+        <string name="msgs_menu_log_management">Manage log files…</string>
+        <string name="msgs_menu_about">About SMBSync2</string>
+        <string name="msgs_menu_settings">Settings…</string>
+        <string name="msgs_menu_housekeep">Maintenance of Admin files…</string>
+        <string name="msgs_menu_kill">Kill the application…</string>
+        <string name="msgs_menu_add_shortcut">Add shortcut</string>
+        <string name="msgs_menu_list_storage_info">System info</string>
+        <string name="msgs_menu_show_battery_optimization_screen">Show battery optimization screen</string>
+    <!-- Mirror -->
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">Archive cancelled by user request</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">The shooting date and time of the file could not be acquired from the Exif information. Are you sure to continue processing the file\'s last update time(%s) as the shooting date? File=%s\n(If checking is unnecessary, uncheck "Confirm" in the archiving option of the sync task)</string>
+        <string name="msgs_mirror_confirm_copy_cancel">Copy cancelled by user request.</string>
+        <string name="msgs_mirror_confirm_copy_confirm">Do you want to overwrite the file?\n%s\n(Please uncheck the “Confirm” in the synchronization profile if confirmation is not required)</string>
+        <string name="msgs_mirror_confirm_delete_cancel">Delete cancelled by user request.</string>
+        <string name="msgs_mirror_confirm_delete_dir_confirm">Do you want to delete the directory?\N%s\n(Please uncheck the “confirmation” if confirmation is not required for synchronization task)</string>
+        <string name="msgs_mirror_confirm_delete_file_confirm">Do you want to delete the file?\N%s\n(Please uncheck the “confirmation” if confirmation is not required for synchronization task)</string>
+        <string name="msgs_mirror_confirm_move_cancel">Move cancelled by user request.</string>
+        <string name="msgs_mirror_confirm_move_confirm">Do you want to move the file?(Copy the original file will be deleted after the copy is complete)\n%s\n(Please uncheck the “Confirm” in the synchronization profile if confirmation is not required)</string>
+        <string name="msgs_mirror_confirm_no_btn">No</string>
+        <string name="msgs_mirror_confirm_noall_btn">No All subsequent</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_archive">Confirmation of file archived is required. Tap here, please check.</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_copy">Confirmation of override a copy of the file is required. Tap here, please check.</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_delete_dir">Confirmation of directory deletion is required. Tap here, please check.</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_delete_file">Confirm File Deletion required. Tap here, please check.</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_move">Confirmation of file moved is required. Tap here, please check.</string>
+        <string name="msgs_mirror_confirm_task_cancel_btn">Cancel synchronize</string>
+        <string name="msgs_mirror_confirm_yes_btn">Yes</string>
+        <string name="msgs_mirror_confirm_yesall_btn">Yes All subsequent</string>
+        <string name="msgs_mirror_external_sdcard_not_mounted">Cancel sync because SDCARD it is not mounted.</string>
+        <string name="msgs_mirror_external_sdcard_select_required">Cancel the sync because the selection of external SD card has not been made.</string>
+        <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">It seems that the file information on SDCARD is not reflected in the media store, execute media scan and reflect the information of the file in the media store.</string>
+        <string name="msgs_mirror_file_set_last_modified_failed">setLastModified() was failed. Please enable "To not set the last update time of the target file the same as the master" of the sync task.</string>
+        <string name="msgs_mirror_file_zip_copy_back_from_work">Copying the ZIP file to the target file. %s%% done.</string>
+        <string name="msgs_mirror_file_zip_copy_to_work">Copying the ZIP file to the work file. %s%% done.</string>
+        <string name="msgs_mirror_ignore_override_copy_file">Copying of the file was ignored. Because the overwritten with the synchronization option it is disabled.</string>
+        <string name="msgs_mirror_ignore_override_move_file">Moving of the file was ignored. Because the overwritten with the synchronization option it is disabled.</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">The file name or directory name of the master contains characters that can not be used in the target. Change the master file name or directory name. Character=%s, Path=%s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">Skip directory or file processing because the file name or directory name of the master contains characters that can not be used on the target. Character=%s, Path=%s</string>
+        <string name="msgs_mirror_remote_addr_not_connected">Can not be connecting to specified remote SMB host. IP Address=%s</string>
+        <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Can not be connecting to specified remote SMB host. IP Address=%s, Port=%s</string>
+        <string name="msgs_mirror_remote_name_not_found">Specified remote SMB host name was not found. Hostname=</string>
+        <string name="msgs_mirror_same_directory_ignored">I ignored the directory because the same directory can not be synchronized. Directory=%s</string>
+        <string name="msgs_mirror_smb_addr_not_connected">Unable to connect to the SMB host that is specified in the SMB folder. IP address=%s</string>
+        <string name="msgs_mirror_smb_addr_not_connected_with_port" formatted="false">Unable to connect to the SMB host that is specified in the SMB folder. IP address=%s, port=%s</string>
+        <string name="msgs_mirror_smb_invalid_port_specified">Invalid port number specified. Port number=%s</string>
+        <string name="msgs_mirror_smb_name_not_found">SMB host name that is specified in the SMB folder could not be found. Host name=</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_address_conn_other">Stop the sync because wireless LAN is not connected to the specified IP address.</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">Stop the sync because wireless LAN is not connected to the specified access point.</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">Stop the sync because wireless LAN is not connected to the access point.</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr">Sync stops because the network address is not a local address.</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_is_off">Stop the sync because wireless LAN is Off.</string>
+        <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">Sync has been canceled because it is not charging.</string>
+        <string name="msgs_mirror_sync_request_ended">sync request has ended. Requestor=%s</string>
+        <string name="msgs_mirror_sync_request_started">sync request has been started. Requestor=%s</string>
+        <string name="msgs_mirror_sync_skipped_wifi_address_conn_other">Skip the sync task because wireless LAN is not connected to the specified IP address.</string>
+        <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">Skip the sync task because wireless LAN is not connected to the specified access point.</string>
+        <string name="msgs_mirror_sync_start_was_delayed">In order to the wireless LAN is a delay time after ON has been specified, it delays the start of the synchronization %s seconds.</string>
+        <string name="msgs_mirror_task_avg_rate">Average transfer rate %s</string>
+        <string name="msgs_mirror_task_dir_create">directory was created.</string>
+        <string name="msgs_mirror_task_dir_create_failed">directory create failed.</string>
+        <string name="msgs_mirror_task_dir_deleted">directory was deleted.</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">%s was archived to %s</string>
+        <string name="msgs_mirror_task_file_copied">File was copied.</string>
+        <string name="msgs_mirror_task_file_copying">Copying file. %s %% complete.</string>
+        <string name="msgs_mirror_task_file_deleted">File was deleted</string>
+        <string name="msgs_mirror_task_file_moved">File was moved.</string>
+        <string name="msgs_mirror_task_file_replaced">File was overridden.</string>
+        <string name="msgs_mirror_task_master_not_found">Master file or directory was not found.</string>
+        <string name="msgs_mirror_task_no_of_copy" formatted="false">No of copies=%s, No of deletes=%s, No of ignores=%s, Elapsed time=%s(Sec)</string>
+        <string name="msgs_mirror_task_result_cancel">Sync task was cancelled.</string>
+        <string name="msgs_mirror_task_result_error_ended">Sync task was ended with error.</string>
+        <string name="msgs_mirror_task_result_error_skipped">It was ignored an error by the setting of the error handling options.</string>
+        <string name="msgs_mirror_task_result_ok">Sync task was successfully ended.</string>
+        <string name="msgs_mirror_task_result_stats" formatted="false">No of copies=%s, No of deletes=%s, No of ignores=%s, No of warnings=%s, No of retries=%s, No of errors=%s</string>
+        <string name="msgs_mirror_task_started">Sync task has been started.</string>
+        <string name="msgs_mirror_task_success_end">was Successfully ended.</string>
+        <string name="msgs_mirror_task_sync_request_error_detected">Sync request was ended with some error.</string>
+        <string name="msgs_mirror_task_was_cancelled">was cancelled.</string>
+        <string name="msgs_mirror_usb_storage_not_mounted">Cancel sync because USB Media is not mounted.</string>
+    <!-- Scan network -->
+        <string name="msgs_scan_progress_spin_dlg_addr_cancel">Cancel search</string>
+        <string name="msgs_scan_ip_address_select_title">Search SMB server</string>
+        <string name="msgs_scan_ip_address_scan_btn">Search</string>
+        <string name="msgs_scan_ip_address_press_scan_btn">Specify IP adrress and press Search button.</string>
+        <string name="msgs_scan_ip_address_not_detected">Remote SMB host not detected.</string>
+        <string name="msgs_scan_ip_address_select_detected_host">Please tap the search result hostname or IP address for remote server choice.</string>
+        <string name="msgs_scan_ip_address_scan_result_title">Search result</string>
+        <string name="msgs_ip_address_scan_progress">Remote SMB host search is %s%% Completed</string>
+        <string name="msgs_ip_address_range_dlg_begin">Begin</string>
+        <string name="msgs_ip_address_range_dlg_end">End</string>
+        <string name="msgs_ip_address_range_dlg_begin_notspecified">Begin address was not specified.</string>
+        <string name="msgs_ip_address_range_dlg_addr_range_error">Address range is must be 0 to 255.</string>
+        <string name="msgs_ip_address_range_dlg_begin_range_error">Begin address range is must be 1 to 254.</string>
+        <string name="msgs_ip_address_range_dlg_end_notspecified">End address was not specified.</string>
+        <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">Begin address is greater than end address.</string>
+        <string name="msgs_ip_address_range_dlg_end_range_error">End address range is must be 1 to 254.</string>
+        <string name="msgs_ip_address_range_dlg_not_private">Global address was can not be search.</string>
+        <string name="msgs_progress_dlg_canceling">Canceling</string>
+        <string name="msgs_progress_spin_dlg_filelist_getting">Obtaining file list</string>
+        <string name="msgs_progress_spin_dlg_filelist_cancel">Cancel</string>
+        <string name="msgs_progress_spin_dlg_test_logon">Logon to remote</string>
+        <string name="msgs_progress_spin_dlg_test_logon_cancel">Cancel logon</string>
+    <!-- Scheduler -->
+        <string name="msgs_menu_scheduler">Schedule</string>
+        <string name="msgs_scheduler_main_dlg_hdr_title">Edit Schedule</string>
+        <string name="msgs_scheduler_main_dlg_hdr_enable">To enable schedule</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Edit sync list</string>
+        <string name="msgs_scheduler_main_dlg_hdr_sun">Sun</string>
+        <string name="msgs_scheduler_main_dlg_hdr_mon">Mon</string>
+        <string name="msgs_scheduler_main_dlg_hdr_tue">Tue</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wed">Wed</string>
+        <string name="msgs_scheduler_main_dlg_hdr_thu">Thu</string>
+        <string name="msgs_scheduler_main_dlg_hdr_fri">Fri</string>
+        <string name="msgs_scheduler_main_dlg_hdr_sat">Sat</string>
+        <string name="msgs_scheduler_main_dlg_hdr_month">Month</string>
+        <string name="msgs_scheduler_main_dlg_hdr_day">Day</string>
+        <string name="msgs_scheduler_main_dlg_hdr_hour">Hour</string>
+        <string name="msgs_scheduler_main_dlg_hdr_minute">Minute</string>
+        <string name="msgs_scheduler_main_dlg_hdr_schedule_type">Schedule Type</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on">To turn on the Wi-Fi If Wi-Fi is turned off before sync has start</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_time">Wait time to perform sync after Wi-Fi turn on</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_1">5 Sec</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_2">10 Sec</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30 Sec</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_off">To turn off the Wi-Fi when sync ended.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">It will make the first sync with the next minute.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">Reset interval schedule time.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_schedule_time">Schedule time : %s</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_prompt">Select schedule type</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_every_hour">Every hours</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_every_day">Every day</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_every_month">Every month</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_day_of_week">Day of week</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_interval">Interval</string>
+        <string name="msgs_scheduler_main_spinner_sched_day_prompt">Select schedule day</string>
+        <string name="msgs_scheduler_main_spinner_sched_hours_prompt">Select schedule hours</string>
+        <string name="msgs_scheduler_main_spinner_sched_minutes_prompt">Select schedule minutes</string>
+        <string name="msgs_scheduler_info_last_day_of_the_month">Last day</string>
+        <string name="msgs_scheduler_main_last_day_of_the_month">Sync to the last day of the month</string>
+        <string name="msgs_scheduler_main_last_day_of_the_month_warning">If it is specified from 29th to 31st, it may not be executed. Please check \"Sync to the last day of the month\" in order to be sure to run on the last day of the month.</string>
+        <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Sync task list</string>
+        <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Sync all auto sync task</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Please specify the profile to be sync by pressing the ‘Edit sync list’ button in the .</string>
+        <string name="msgs_scheduler_info_next_schedule_time">Next sync time is %s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Next sync : Time=%s, Name=(%s)</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">Error : %s</string>
+        <string name="msgs_scheduler_info_schedule_disabled">Schedule sync:disabled</string>
+        <string name="msgs_scheduler_info_schedule_enabled">Schedule sync:enabled</string>
+        <string name="msgs_scheduler_info_sync_all_active_profile">Sync all auto task</string>
+        <string name="msgs_scheduler_info_sync_selected_profile">Sync task(s) %s</string>
+        <string name="msgs_scheduler_info_sync_task_was_not_found">Specified sync task name was not found, Name=(%s)</string>
+        <string name="msgs_scheduler_main_dw_not_selected">Please select at least one day of the week.</string>
+        <string name="msgs_schedule_list_edit_dlg_title">Edit schedule list</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Sync name was already existsted, pleas respecify.</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Sync name does not specified.</string>
+        <string name="msgs_schedule_cont_label_add">Add schedule</string>
+        <string name="msgs_schedule_cont_label_activate">Enable</string>
+        <string name="msgs_schedule_cont_label_inactivate">Disable</string>
+        <string name="msgs_schedule_cont_label_delete">Delete schedule</string>
+        <string name="msgs_schedule_cont_label_copy">Copy</string>
+        <string name="msgs_schedule_cont_label_rename">Rename</string>
+        <string name="msgs_schedule_cont_label_select_all">Select all</string>
+        <string name="msgs_schedule_cont_label_unselect_all">Unselect all</string>
+        <string name="msgs_schedule_confirm_title_delete">Confirm schedule delete</string>
+        <string name="msgs_schedule_confirm_title_enable">Confirm schedule enabled</string>
+        <string name="msgs_schedule_confirm_title_disable">Confirm schedule disabled</string>
+        <string name="msgs_schedule_confirm_title_nosave">Confirm Quit</string>
+        <string name="msgs_schedule_confirm_msg_delete">Do you wants to delete following item(s).</string>
+        <string name="msgs_schedule_confirm_msg_enable">Do you wants to enabled following item(s).</string>
+        <string name="msgs_schedule_confirm_msg_disable">Do you wants to doabled following item(s).</string>
+        <string name="msgs_schedule_confirm_msg_nosave">The schedule has changed, do you exit without saving?</string>
+        <string name="msgs_schedule_confirm_msg_changed">Changed</string>
+        <string name="msgs_schedule_rename_schedule">Rename schedule</string>
+        <string name="msgs_schedule_list_edit_no_schedule">Press add button to create new schedule.</string>
+        <string name="msgs_schedule_list_edit_multi_sched_warn">If more than one schedule is started at the same time, we will summarize the synchronization list and ignore the duplicate synchronization task. Also combine the options specified in each schedule with the WI - FI option.</string>
+    <!-- Send logcat -->
+        <string name="msgs_send_logcat_menu_start_logcat">Start LogCat</string>
+        <string name="msgs_send_logcat_menu_stop_logcat">Stop LogCat</string>
+        <string name="msgs_send_logcat_menu_send_logcat">Send LogCat</string>
+        <string name="msgs_send_logcat_btn_send">Send</string>
+        <string name="msgs_send_logcat_btn_preview_logcat">Preview LogCat</string>
+        <string name="msgs_send_logcat_btn_preview_applog">Preview AppLog</string>
+        <string name="msgs_send_logcat_title">Send a Logcat and AppLog</string>
+        <string name="msgs_send_logcat_message">Send LogCat and AppLog to developers by e-mail\n
+1. Please check the contents by pressing the LogCat display button and AppLog display button (Please select the application when the application selection screen for displaying the text file is displayed)\n
+2. After confirming the contents to be sent, press the send button and select E-Mail in the E-Mail selection dialog\n
+3. Please enter a message in the body of E - Mail if necessary and send an E - Mail. (The log is compressed to zip and it is attached file)</string>
+    <!-- svc -->
+        <string name="msgs_svc_can_not_start_sync_task_disabled">Because sync task is disabled, it was unable to start the sync task.</string>
+        <string name="msgs_svc_received_start_request_from_scheduler">Sync request received from the SMBSync2 scheduler.</string>
+        <string name="msgs_svc_received_start_request_from_scheduler_task_not_found">Sync request received from the SMBSync2 scheduler, but has been specified task was ignored because it does not exist. Task=</string>
+        <string name="msgs_svc_received_start_request_from_scheduler_no_task_list">Aborted because it can synchronize the task does not exist.</string>
+        <string name="msgs_svc_received_start_request_from_external">Sync request received from the external application.</string>
+        <string name="msgs_svc_received_start_request_from_external_task_not_found">Sync request received from the external application, but has been specified task was ignored because it does not exist. Task=</string>
+        <string name="msgs_svc_received_start_request_from_external_no_task_list">Aborted because it can sync the task does not exist.</string>
+        <string name="msgs_svc_received_start_request_from_external_no_task_specified">Aborted because it can sync the task does not specified.</string>
+        <string name="msgs_svc_received_start_request_from_external_auto_task">Start a automatic sync task because does not specified sync task.</string>
+        <string name="msgs_svc_received_start_request_from_shortcut">Sync request received from the shortcut.</string>
+        <string name="msgs_svc_received_start_request_ignored_duplicate_request">Sync request was ignored because it already processed. ID=%s</string>
+    <!-- sync archive -->
+        <string name="msgs_sync_folder_archive_option">Archive Option</string>
+        <string name="msgs_sync_folder_archive_file_type">File extension to archive:</string>
+        <string name="msgs_sync_folder_archive_retention_period">To archive the</string>
+        <string name="msgs_sync_folder_archive_output_image">Following are the saved directories and file names(Date/Time is not a shoot time)</string>
+        <string name="msgs_sync_folder_archive_rename_rule">Change the file name and store it in the specified directory when archive</string>
+        <string name="msgs_sync_folder_archive_seq_number_title">Sequence number</string>
+        <string name="msgs_sync_folder_archive_create_directory">Store the file in the directory(directory is created when does not exists)</string>
+        <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
+        <string name="msgs_sync_folder_archive_btn_title_time">Time</string>
+        <string name="msgs_sync_folder_archive_btn_title_original_name">Original Name</string>
+        <string name="msgs_sync_folder_archive_confirm_exif_date">When the shooting date and time can not be acquired from Exif, a confirmation message is displayed.</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">When sync type is Archive, ZIP can not be used, so it changed to internal storage.</string>
+        <string name="msgs_sync_folder_archive_btn_title_year">Year</string>
+        <string name="msgs_sync_folder_archive_btn_title_month">Month</string>
+        <string name="msgs_sync_folder_archive_btn_title_day">Day</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_prompt_title">Select suffix seq number range</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_0">Do not used</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">Append 3 digits sequence number(001-999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_4">Append 4 digits sequence number(0001-9999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_5">Append 5 digits sequence number(00001-99999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_6">Append 6 digits sequence number(000001-999999)</string>
+        <string name="msgs_sync_folder_archive_period_prompt_title">Select photos to archive</string>
+        <string name="msgs_sync_folder_archive_period_0_days">Immediate all</string>
+        <string name="msgs_sync_folder_archive_period_7_days">Older than 7 days</string>
+        <string name="msgs_sync_folder_archive_period_30_days">Older than 30 days</string>
+        <string name="msgs_sync_folder_archive_period_60_days">Older than 60 days</string>
+        <string name="msgs_sync_folder_archive_period_90_days">Older than 90 days</string>
+        <string name="msgs_sync_folder_archive_period_180_days">Older than 180 days</string>
+        <string name="msgs_sync_folder_archive_period_1_years">Older than 1 years</string>
+    <!-- string -->
+        <string name="app_name">SMBSync2</string>
+        <string name="smbsync_main_title">SMBSync2</string>
+        <string name="app_name_auto_sync">StartSync</string>
+    <!-- Setting log -->
+        <string name="settings_log_file_max_count">settings_log_file_max_count</string>
+        <string name="settings_log_file_max_count_dialog_title">Select file count</string>
+        <string-array name="settings_log_file_max_count_list_entries">
+            <item>1</item>
+            <item>5</item>
+            <item>10</item>
+            <item>20</item>
+            <item>30</item>
+            <item>50</item>
+        </string-array >
+        <string-array name="settings_log_file_max_count_list_values">
+            <item>1</item>
+            <item>5</item>
+            <item>10</item>
+            <item>20</item>
+            <item>30</item>
+            <item>50</item>
+        </string-array >
+        <string name="settings_log_file_max_count_summary">Max log file count=%s</string>
+        <string name="settings_log_file_max_count_title">Max log file count</string>
+        <string name="settings_log_level">settings_log_level</string>
+        <string name="settings_log_level_dialog_title">Select debug message level</string>
+        <string-array name="settings_log_level_list_entries">
+            <item>No Debug message</item>
+            <item>Debug message</item>
+            <item>Detail debug message</item>
+            <item>File compare message</item>
+        </string-array >
+        <string-array name="settings_log_level_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_log_level_summary">Current debug message level=0</string>
+        <string name="settings_log_level_title">Debug message level</string>
+        <string name="settings_log_option">settings_log_option</string>
+        <string name="settings_log_option_summary_ena">Create a log file</string>
+        <string name="settings_log_option_title">Log file</string>
+        <string name="settings_log_preference_screen_title">Log</string>
+        <string name="settings_log_title">Log</string>
+        <string name="settings_mgt_dir">settings_mgt_dir</string>
+        <string name="settings_mgt_dir_summary">Not specified=</string>
+        <string name="settings_mgt_dir_title">Management files directory</string>
+        <string name="settings_put_logcat_option">settings_put_logcat_option</string>
+        <string name="settings_put_logcat_option_summary_ena">Put message to Logcat</string>
+        <string name="settings_put_logcat_option_title">Android Logcat</string>
+    <!-- Setting main -->
+        <string name="settings_default_current_setting">current settings=</string>
+        <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
+        <string name="settings_device_orientation_portrait_summary_ena">Fix the orientation of the device to portrait</string>
+        <string name="settings_device_orientation_portrait_title">The orientation of the device</string>
+        <string name="settings_dim_screen_on_while_sync">settings_dim_screen_on_while_sync</string>
+        <string name="settings_dim_screen_on_while_sync_summary_ena">If you start the synch at the time of the screen lights up to turn on the screen until the synch　end.</string>
+        <string name="settings_dim_screen_on_while_sync_title">Screen light up during sync</string>
+        <string name="settings_error_option">settings_error_option</string>
+        <string name="settings_error_option_summary_ena">Ignore error, processing continued</string>
+        <string name="settings_error_option_title">Error process option</string>
+        <string name="settings_exit_clean">settings_exit_clean</string>
+        <string name="settings_exit_clean_summary_ena">Kill application process after application cleanup</string>
+        <string name="settings_exit_clean_title">Exit cleanly</string>
+        <string name="settings_exported_profile_encryption">settings_exported_profile_encryption</string>
+        <string name="settings_force_screen_on_while_sync">settings_force_screen_on_while_sync</string>
+        <string name="settings_force_screen_on_while_sync_summary_ena">When enabled, the screen lights up at the start of sync</string>
+        <string name="settings_force_screen_on_while_sync_title">Prevent sync delay</string>
+        <string name="settings_main_title">Settings</string>
+        <string name="settings_media_scanner_option_title">MediaScanner</string>
+        <string name="settings_misc_title">Miscellaneous</string>
+        <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
+        <string name="settings_no_compress_file_type_title">File type for no compress</string>
+        <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
+        <string name="settings_notification_message_when_sync_ended_dialog_title">Select notification message type</string>
+        <string-array name="settings_notification_message_when_sync_ended_list_entries">
+            <item>Do not show notification message</item>
+            <item>Always show notification message when sync was ended</item>
+            <item>Show notification message when sync was ended successfully</item>
+            <item>Show notification message when sync was ended with error</item>
+        </string-array >
+        <string-array name="settings_notification_message_when_sync_ended_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_notification_message_when_sync_ended_summary_always">Always show notification message when sync was ended</string>
+        <string name="settings_notification_message_when_sync_ended_summary_error">Show notification message when sync was ended with error</string>
+        <string name="settings_notification_message_when_sync_ended_summary_no">Do not show notification message</string>
+        <string name="settings_notification_message_when_sync_ended_summary_success">Show notification message when sync was ended successfully</string>
+        <string name="settings_notification_message_when_sync_ended_title">Notification message</string>
+        <string name="settings_other_title">Other</string>
+        <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
+        <string name="settings_playback_ringtone_volume_disabled">The default notification sound has not been set.</string>
+        <string name="settings_playback_ringtone_volume_summary">%s%% of the system volume</string>
+        <string name="settings_playback_ringtone_volume_title">Notification sound volume</string>
+        <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
+        <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Select playback sound condition</string>
+        <string-array name="settings_playback_ringtone_when_sync_ended_list_entries">
+            <item>Do not play the default notification sound</item>
+            <item>Play a default notification sound when sync is ended</item>
+            <item>Play a default notification sound when sync is ended successfully</item>
+            <item>Play a default notification sound when sync is ended with error</item>
+        </string-array >
+        <string-array name="settings_playback_ringtone_when_sync_ended_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_playback_ringtone_when_sync_ended_summary_always">Play a default notification sound when sync is ended</string>
+        <string name="settings_playback_ringtone_when_sync_ended_summary_error">Play a default notification sound when sync is ended with error</string>
+        <string name="settings_playback_ringtone_when_sync_ended_summary_no">Do not play the default notification sound</string>
+        <string name="settings_playback_ringtone_when_sync_ended_summary_success">Play a default notification sound when sync is ended successfully</string>
+        <string name="settings_playback_ringtone_when_sync_ended_title">Notification sound</string>
+        <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
+        <string name="settings_smb_client_response_timeout_dialog_title">Select Client response timeout value</string>
+        <string-array name="settings_smb_client_response_timeout_list_entries">
+            <item>30000 ms</item>
+            <item>45000 ms</item>
+            <item>60000 ms</item>
+            <item>120000 ms</item>
+        </string-array >
+        <string-array name="settings_smb_client_response_timeout_list_values">
+            <item>30000</item>
+            <item>45000</item>
+            <item>60000</item>
+            <item>120000</item>
+        </string-array >
+        <string name="settings_smb_client_response_timeout_summary">Response timeout</string>
+        <string name="settings_smb_client_response_timeout_title">Client response timeout</string>
+        <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
+        <string name="settings_smb_disable_plain_text_passwords_summary_ena">Use plain text passwords</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Disable plain text passwords</string>
+        <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
+        <string name="settings_smb_lm_compatibility_dialog_title">Select lmCompatibility value</string>
+        <string-array name="settings_smb_lm_compatibility_list_entries">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+        </string-array >
+        <string-array name="settings_smb_lm_compatibility_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+        </string-array >
+        <string name="settings_smb_lm_compatibility_summary">lmCompatibility</string>
+        <string name="settings_smb_lm_compatibility_title">lmCompatibility</string>
+        <string name="settings_smb_title">SMB1 settings</string>
+        <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
+        <string name="settings_smb_use_extended_security_summary_ena">Use extended security</string>
+        <string name="settings_smb_use_extended_security_title">Use extended security</string>
+        <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
+        <string name="settings_suppress_warning_app_specific_dir_summary_ena">Do not show the warning of application specific directory use</string>
+        <string name="settings_suppress_warning_app_specific_dir_title">Application specific directory use</string>
+        <string name="settings_sync_history_log">settings_sync_history_log</string>
+        <string name="settings_sync_history_log_summary_ena">Keep sync history detail log</string>
+        <string name="settings_sync_history_log_title">Sync history</string>
+        <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
+        <string name="settings_sync_message_use_standard_text_view_summary_ena">Perform Android standard processing</string>
+        <string name="settings_sync_message_use_standard_text_view_title">Text processing of sync messages</string>
+        <string name="settings_sync_title">Synchronization</string>
+        <string name="settings_ui_title">User interface</string>
+        <string name="settings_use_light_theme">settings_use_light_theme</string>
+        <string name="settings_use_light_theme_summary_ena">Use light theme</string>
+        <string name="settings_use_light_theme_title">Screen theme</string>
+        <string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
+        <string name="settings_vibrate_when_sync_ended_dialog_title">Select notification vibration condition</string>
+        <string-array name="settings_vibrate_when_sync_ended_list_entries">
+            <item>Do not vibrate</item>
+            <item>Always vibrate when sync was ended</item>
+            <item>Vibrate when sync was ended successfully</item>
+            <item>Vibrate when sync was ended with error</item>
+        </string-array >
+        <string-array name="settings_vibrate_when_sync_ended_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_vibrate_when_sync_ended_summary_always">Always vibrate when sync was ended</string>
+        <string name="settings_vibrate_when_sync_ended_summary_error">Vibrate when sync was ended with error</string>
+        <string name="settings_vibrate_when_sync_ended_summary_no">Do not vibrate</string>
+        <string name="settings_vibrate_when_sync_ended_summary_success">Vibrate when sync was ended successfully</string>
+        <string name="settings_vibrate_when_sync_ended_title">Notification Vibration</string>
+        <string name="settings_wifi_lock">settings_wifi_lock</string>
+        <string name="settings_wifi_lock_summary_ena">Acquire Wi-Fi lock during synchronization</string>
+        <string name="settings_wifi_lock_title">Wi-Fi lock</string>
+</resources>
