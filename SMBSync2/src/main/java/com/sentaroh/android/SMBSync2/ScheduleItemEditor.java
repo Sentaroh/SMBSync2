@@ -209,7 +209,18 @@ public class ScheduleItemEditor {
 
         setViewVisibility(dialog);
 
-        et_name.setText(mSched.scheduleName);
+        if (mSched.scheduleName.equals("")) {
+            String new_name="";
+            for(int i=1;i<1000;i++) {
+                new_name="NONAME"+i;
+                if (!ScheduleUtil.isScheduleExists(mScheduleList,new_name)) {
+                    et_name.setText(new_name);
+                    break;
+                }
+            }
+        } else {
+            et_name.setText(mSched.scheduleName);
+        }
         if (mEditMode) {
             et_name.setVisibility(EditText.GONE);
             String title=dlg_title.getText().toString()+"("+mSched.scheduleName+")";
