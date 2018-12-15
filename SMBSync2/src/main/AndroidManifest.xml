@@ -89,10 +89,18 @@
         <activity
 	        android:name="com.sentaroh.android.SMBSync2.ActivitySettings"
             android:label="@string/app_name"
-            android:screenOrientation="unspecified" 
+            android:screenOrientation="unspecified"
             android:icon="@drawable/smbsync">
         </activity>
         <!-- android:noHistory="true"  -->
+
+        <activity
+            android:name="com.sentaroh.android.SMBSync2.ActivityPassword"
+            android:label="@string/app_name"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
+            android:screenOrientation="unspecified"
+            android:icon="@drawable/smbsync">
+        </activity>
 
         <activity
             android:label="@string/app_name"

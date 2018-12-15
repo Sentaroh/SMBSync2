@@ -369,23 +369,25 @@ public class SyncThread extends Thread {
 
     private void listSyncOption(SyncTaskItem sti) {
         mStwa.util.addDebugMsg(1, "I", "Sync Task : Type=" + sti.getSyncTaskType());
+        String mst_uid=sti.getMasterSmbUserName().equals("")?"":"????????";
         mStwa.util.addDebugMsg(1, "I", "   Master Type=" + sti.getMasterFolderType() +
                 ", Addr=" + sti.getMasterSmbAddr() +
                 ", Hostname=" + sti.getMasterSmbHostName() +
                 ", Port=" + sti.getMasterSmbPort() +
                 ", SmbShare=" + sti.getMasterRemoteSmbShareName() +
-                ", UserID=" + sti.getMasterSmbUserName() +
+                ", UserID=" + mst_uid +
                 ", Directory=" + sti.getMasterDirectoryName() +
                 ", SMB Protocol=" + sti.getMasterSmbProtocol() +
                 ", SMB IPC signing enforced=" + sti.isMasterSmbIpcSigningEnforced() +
                 ", RemovableID=" + sti.getMasterRemovableStorageID() +
                 "");
+        String tgt_uid=sti.getTargetSmbUserName().equals("")?"":"????????";
         mStwa.util.addDebugMsg(1, "I", "   Target Type=" + sti.getTargetFolderType() +
                 ", Addr=" + sti.getTargetSmbAddr() +
                 ", Hostname=" + sti.getTargetSmbHostName() +
                 ", Port=" + sti.getTargetSmbPort() +
                 ", SmbShare=" + sti.getTargetSmbShareName() +
-                ", UserID=" + sti.getTargetSmbUserName() +
+                ", UserID=" + tgt_uid +
                 ", Directory=" + sti.getTargetDirectoryName() +
                 ", SMB Protocol=" + sti.getTargetSmbProtocol() +
                 ", SMB IPC signing enforced=" + sti.isTargetSmbIpcSigningEnforced() +

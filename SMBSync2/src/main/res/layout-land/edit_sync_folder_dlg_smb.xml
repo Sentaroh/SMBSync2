@@ -160,6 +160,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_edit_sync_folder_dlg_show_password"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:visibility="gone"
                     tools:ignore="RtlHardcoded" />
 
             </LinearLayout>

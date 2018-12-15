@@ -200,6 +200,7 @@ public class ActivityMain extends AppCompatActivity {
 
         if (mGp.syncTaskList == null)
             mGp.syncTaskList = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil);
+//        mGp.syncTaskList=new ArrayList<SyncTaskItem>();
 
         mGp.syncTaskAdapter = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, mGp.syncTaskList, mGp);
 
@@ -242,6 +243,7 @@ public class ActivityMain extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+
         if (restartType == RESTART_WITH_OUT_INITIALYZE) {
             mGp.safMgr.loadSafFile();
             setActivityForeground(true);
@@ -249,7 +251,25 @@ public class ActivityMain extends AppCompatActivity {
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
-            mGp.safMgr.loadSafFile();
+//            mGp.safMgr.loadSafFile();
+            NotifyEvent start_ntfy = new NotifyEvent(mContext);
+            start_ntfy.setListener(new NotifyEventListener() {
+                @Override
+                public void positiveResponse(Context context, Object[] objects) {
+                    mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
+                }
+
+                @Override
+                public void negativeResponse(Context context, Object[] objects) {
+                    finish();
+                }
+            });
+            if (mGp.settingSecurityApplicationPasswordUseAppStartup) {
+                mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
+                ActivityPassword.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, start_ntfy);
+            } else {
+                start_ntfy.notifyToListener(true,null);
+            }
             NotifyEvent svc_ntfy = new NotifyEvent(mContext);
             svc_ntfy.setListener(new NotifyEventListener() {
                 @Override
@@ -296,6 +316,7 @@ public class ActivityMain extends AppCompatActivity {
             });
             openService(svc_ntfy);
         }
+
     }
 
     @Override
@@ -371,6 +392,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         }
     }
+
 
     private void showSystemInfo() {
         final Dialog dialog = new Dialog(mActivity);
@@ -1016,8 +1038,18 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonNormalMode();
                 return true;
             case R.id.menu_top_export:
-                mTaskUtil.exportSyncTaskListDlg();
-                setContextButtonNormalMode();
+                NotifyEvent ntfy=new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        mTaskUtil.exportSyncTaskListDlg();
+                        setContextButtonNormalMode();
+                    }
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {}
+                });
+                if (mGp.settingSecurityApplicationPasswordUseExport) ActivityPassword.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy);
+                else ntfy.notifyToListener(true,null);
                 return true;
             case R.id.menu_top_import:
                 importSyncTaskAndParms();
@@ -3355,25 +3387,34 @@ public class ActivityMain extends AppCompatActivity {
         mContextMessageViewClear.setVisibility(LinearLayout.VISIBLE);
     }
 
-    private void editSyncTask(String prof_name,
-                              boolean prof_act, int prof_num) {
-        SyncTaskItem item = mGp.syncTaskAdapter.getItem(prof_num);
-        NotifyEvent ntfy = new NotifyEvent(mContext);
-        ntfy.setListener(new NotifyEventListener() {
+    private void editSyncTask(String prof_name, boolean prof_act, int prof_num) {
+        NotifyEvent ntfy_check = new NotifyEvent(mContext);
+        ntfy_check.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-//				checkSafExternalSdcardTreeUri(null);
+                SyncTaskItem item = mGp.syncTaskAdapter.getItem(prof_num);
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context c, Object[] o) {
+                    }
+
+                    @Override
+                    public void negativeResponse(Context c, Object[] o) {
+                    }
+                });
+                SyncTaskEditor pmp = SyncTaskEditor.newInstance();
+                pmp.showDialog(getSupportFragmentManager(), pmp, "EDIT", item,
+                        mTaskUtil, mUtil, commonDlg, mGp, ntfy);
             }
 
             @Override
             public void negativeResponse(Context c, Object[] o) {
-//				checkSafExternalSdcardTreeUri(null);
             }
         });
-        SyncTaskEditor pmp = SyncTaskEditor.newInstance();
-        pmp.showDialog(getSupportFragmentManager(), pmp, "EDIT", item,
-                mTaskUtil, mUtil, commonDlg, mGp, ntfy);
-    }
+        if (mGp.settingSecurityApplicationPasswordUseEditTask) ActivityPassword.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy_check);
+        else ntfy_check.notifyToListener(true,null);
+     }
 
     private void syncSpecificSyncTask(SyncTaskItem sti) {
         final ArrayList<SyncTaskItem> t_list = new ArrayList<SyncTaskItem>();
@@ -3869,7 +3910,9 @@ public class ActivityMain extends AppCompatActivity {
                     finish();
                 }
                 @Override
-                public void negativeResponse(Context context, Object[] objects) {}
+                public void negativeResponse(Context context, Object[] objects) {
+                    mGp.settingExitClean=true;
+                }
             });
             commonDlg.showCommonDialog(true, "W",
                     mContext.getString(R.string.msgs_smbsync_main_settings_jcifs_changed_restart), "", ntfy);

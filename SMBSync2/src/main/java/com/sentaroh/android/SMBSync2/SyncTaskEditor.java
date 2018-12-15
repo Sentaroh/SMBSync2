@@ -628,6 +628,10 @@ public class SyncTaskEditor extends DialogFragment {
             et_sync_folder_user.setEnabled(false);
             et_sync_folder_pswd.setEnabled(false);
         }
+        if (mGp.settingSecurityReinitSmbAccountPasswordValue && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
+            et_sync_folder_user.setText("");
+            et_sync_folder_pswd.setText("");
+        }
         sfev.folder_remote_use_pswd=ctv_sync_folder_use_pswd.isChecked();
         ctv_sync_folder_use_pswd.setOnClickListener(new OnClickListener() {
             @Override

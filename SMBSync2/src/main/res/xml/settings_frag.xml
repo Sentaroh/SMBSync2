@@ -8,6 +8,8 @@
 	    android:fragment="com.sentaroh.android.SMBSync2.ActivitySettings$SettingsLog"/>
 	<header android:title="@string/settings_smb_title"
 	    android:fragment="com.sentaroh.android.SMBSync2.ActivitySettings$SettingsSmb"/>
+    <header android:title="@string/settings_security_title"
+        android:fragment="com.sentaroh.android.SMBSync2.ActivitySettings$SettingsSecurity"/>
 	<header android:title="@string/settings_misc_title"
 	    android:fragment="com.sentaroh.android.SMBSync2.ActivitySettings$SettingsMisc"/>
 </preference-headers>

@@ -59,6 +59,13 @@
     <!-- Main -->
         <string name="msgs_active_sync_prof_not_found">自動同期タスクがありません。</string>
         <string name="msgs_add_sync_profile">同期タスクの追加</string>
+        <string name="msgs_security_application_password_create_title">アプリケーションパスワードの作成</string>
+        <string name="msgs_security_application_password_create_min_length_is_4_digit">パスワードは４文字以上必要です</string>
+        <string name="msgs_security_application_password_create_forget_recovery">パスワードを忘れた場合はアプリケーションをアンインストールの後に再インストールしてください。</string>
+        <string name="msgs_security_application_password_create_forget_warning">パスワードを忘れた場合はアプリケーションの再インストールが必要になりますので忘れないようにしてください。</string>
+        <string name="msgs_security_application_password_auth_title">アプリケーションパスワード認証</string>
+        <string name="msgs_security_application_password_auth_specify_password">パスワードを入力してください</string>
+        <string name="msgs_security_application_password_auth_wrong_password_specified">パスワードが違っています</string>
         <string name="msgs_audit_hostname_not_spec">名前またはアドレスを入力してください。</string>
         <string name="msgs_audit_hostport_not_spec">ポート番号を入力してください。</string>
         <string name="msgs_audit_msgs_local_dir">ディレクトリに%s文字が含まれています、無効な文字を消しました。</string>
@@ -126,7 +133,7 @@
         <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USBストレージが選択されました。SDCARDを選択しなおしますか？</string>
         <string name="msgs_main_external_usb_mp_changed_title">USBメディア</string>
         <string name="msgs_main_external_usb_select_activity_not_found_msg">USBメディア選択アクティビティを起動できませんでした。</string>
-        <string name="msgs_main_external_usb_select_path_not_available_msg">UUID(%s)に対応するマウントポイントが見つかりません。この装置に於いてSMBSync2ではUSBメディアを使用できません。</string>
+        <string name="msgs_main_external_usb_select_path_not_available_msg">マウントポイント(/storage/%s)が見つかりません。この装置に於いてSMBSync2ではUSBメディアを使用できません。</string>
         <string name="msgs_main_external_usb_select_required_cancel_msg">USBメディアが選択されるまで同期は実行できません。 タスク=%s</string>
         <string name="msgs_main_external_usb_select_required_select_msg_api23">USBメディアにアクセスするために、ステップ１.「USB」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
 (ステップ２で左上に「USB」の画面が直接表示された時は「選択」をタップしてください。左上に「USB」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
@@ -189,7 +196,7 @@
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">SMBホストのアドレスまたは名前を指定してください。</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_port_number">SMBホストのポートを指定してください。</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_share_name">SMBホストの共有名を指定してください。</string>
-        <string name="msgs_main_sync_profile_dlg_specify_host_userid_pswd">SMBホストのユーザーIDまたはパスワードを指定してください。</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_userid_pswd">SMBホストのアカウント名またはパスワードを指定してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync">同期</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master">SDCARDが選択されていません、マスターフォルダーを編集してSDCARDを選択してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target">SDCARDが選択されていません、ターゲットフォルダーを編集してSDCARDを選択してください。</string>
@@ -260,7 +267,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share">共有名</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">共有一覧</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">ポート番号を指定する</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">ユーザー名</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">アカウント名</string>
         <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">リモートSMBサーバーの検索</string>
         <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">SDCARDの選択</string>
         <string name="msgs_profile_edit_sync_folder_dlg_select_usb">USBメディアの選択</string>
@@ -270,7 +277,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1_only">SMB1のみ使用</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb2_only">SMB2(2.01)のみ使用</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">システムで判別</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">ユーザーID/パスワードを使用する</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">アカウント名/パスワードを使用する</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast">Fast</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest">Fastest</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_maximum">Maximum</string>
@@ -334,7 +341,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_include">選択</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">無指定</string>
         <string name="msgs_profile_sync_task_filter_title">フィルター :</string>
-        <string name="msgs_profile_sync_task_sync_direction_two_way">Use Bi-directional synchronization</string>
+        <string name="msgs_profile_sync_task_sync_direction_two_way">Use Bi-directional sync</string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">下記を同期実行時にファイルフィルターとして追加します。</string>
         <string name="msgs_profile_sync_task_sync_file_type_audio">オーディオファイルを同期する</string>
         <string name="msgs_profile_sync_task_sync_file_type_detail_not_specified">最低でもファイルフィルタ、オーディオ、イメージまたはビデオの何れかを指定する必要があります</string>
@@ -380,7 +387,7 @@
         <string name="msgs_select_local_dir">ローカルディレクトリの選択</string>
         <string name="msgs_select_remote_dir">リモートディレクトリの選択</string>
         <string name="msgs_select_remote_share">共有の選択</string>
-        <string name="msgs_share_list_not_obtained">共有名の一覧が取得できませんでした。アクセス権のあるユーザーを指定して再度取得するか、共有名を直接入力してください。</string>
+        <string name="msgs_share_list_not_obtained">共有名の一覧が取得できませんでした。アクセス権のあるアカウントを指定して再度取得するか、共有名を直接入力してください。</string>
         <string name="msgs_smbsync_main_no_external_storage">外部メディアが使用できないため、いくつかの機能が使用できません。</string>
         <string name="msgs_smbsync_main_restart_by_destroyed">アプリケーションはアクティビティの破棄により終了しました。 設定->開発者向オプションで「アクティビティを保持しない」を有効にしているのであれば無効にしてください。</string>
         <string name="msgs_smbsync_main_restart_by_killed">アプリケーションがバックグラウンドに遷移後、強制終了しました。</string>
@@ -408,13 +415,13 @@
     <!-- Menu -->
         <string name="msgs_menu_sync">同期実行</string>
         <string name="msgs_menu_browse_logfile">ログ表示</string>
-        <string name="msgs_menu_export">タスク書き出し…</string>
-        <string name="msgs_menu_import">タスク取り込み…</string>
-        <string name="msgs_menu_log_management">ログファイル管理…</string>
+        <string name="msgs_menu_export">タスク書き出し</string>
+        <string name="msgs_menu_import">タスク取り込み</string>
+        <string name="msgs_menu_log_management">ログファイル管理</string>
         <string name="msgs_menu_about">SMBSync2について</string>
-        <string name="msgs_menu_settings">設定…</string>
-        <string name="msgs_menu_housekeep">強制終了…</string>
-        <string name="msgs_menu_kill">管理ファイルの保守…</string>
+        <string name="msgs_menu_settings">設定</string>
+        <string name="msgs_menu_housekeep">強制終了</string>
+        <string name="msgs_menu_kill">管理ファイルの保守</string>
         <string name="msgs_menu_add_shortcut">ショートカットの追加</string>
         <string name="msgs_menu_list_storage_info">システム情報</string>
         <string name="msgs_menu_show_battery_optimization_screen">バッテリー最適化の表示</string>
@@ -667,10 +674,10 @@
         <string name="settings_log_level">settings_log_level</string>
         <string name="settings_log_level_dialog_title">デバッグ情報レベルの設定</string>
         <string-array name="settings_log_level_list_entries">
-            <item>デバッグ情報なし</item>
-            <item>最低限のデバッグ情報</item>
-            <item>詳細デバッグ情報</item>
-            <item>詳細とファイル比較のデバッグ情報</item>
+            <item>0 - デバッグ情報なし</item>
+            <item>1 - 最低限のデバッグ情報</item>
+            <item>2 - 詳細デバッグ情報</item>
+            <item>3 - 詳細とファイル比較のデバッグ情報</item>
         </string-array >
         <string-array name="settings_log_level_list_values">
             <item>0</item>
@@ -678,10 +685,10 @@
             <item>2</item>
             <item>3</item>
         </string-array >
-        <string name="settings_log_level_summary">現設定=0</string>
+        <string name="settings_log_level_summary">現設定=%s</string>
         <string name="settings_log_level_title">デバッグ情報</string>
         <string name="settings_log_option">settings_log_option</string>
-        <string name="settings_log_option_summary_ena">ログファイルを作成する</string>
+        <string name="settings_log_option_summary_ena">ログをファイルに記録する</string>
         <string name="settings_log_option_title">ログファイル</string>
         <string name="settings_log_preference_screen_title">ログ</string>
         <string name="settings_log_title">ログ</string>
@@ -692,6 +699,30 @@
         <string name="settings_put_logcat_option_summary_ena">ログメッセージをLogcatに出力する</string>
         <string name="settings_put_logcat_option_title">Android Logcat</string>
     <!-- Setting main -->
+        <string name="settings_security_title">セキュリティ</string>
+        <string name="settings_security_application_password_title">アプリケーションパスワード</string>
+        <string name="settings_security_application_password">settings_application_password</string>
+        <string name="settings_security_application_password_setting_title">ここをタップしてセキュリティ設定してください</string>
+        <string name="settings_security_application_password_created">アプリケーションパスワードは作成済み</string>
+        <string name="settings_security_application_password_not_created">アプリケーションパスワードが未作成です</string>
+        <string name="settings_security_application_password_label_create">作成</string>
+        <string name="settings_security_application_password_label_remove">削除</string>
+        <string name="settings_security_application_password_label_change">変更</string>
+        <string name="settings_security_application_password_desc_create">アプリケーションパスワードの作成</string>
+        <string name="settings_security_application_password_desc_change">アプリケーションパスワードの変更</string>
+        <string name="settings_security_application_password_desc_remove">アプリケーションパスワードの削除</string>
+        <string name="settings_security_application_password_confirm_remove">アプリケーションパスワードを削除してよろしいですか？</string>
+        <string name="settings_security_application_password_protect_title">保護する項目</string>
+        <string name="settings_security_application_password_use_app_startup_title">アプリ起動ではアプリケーションパスワード認証が必要</string>
+        <string name="settings_security_application_password_use_app_startup">settings_security_application_password_use_app_startup</string>
+        <string name="settings_security_application_password_use_edit_task_title">同期タスクの編集にはアプリケーションパスワード認証が必要</string>
+        <string name="settings_security_application_password_use_edit_task">settings_security_application_password_use_edit_task</string>
+        <string name="settings_security_application_password_use_export_task_title">「タスク書き出し」はアプリケーションパスワード認証が必要</string>
+        <string name="settings_security_application_password_use_export_task">settings_security_application_password_use_export_task</string>
+        <string name="settings_security_init_smb_account_password_title">SMBフォルダーの編集では、保存されたアカウント名とパスワードを非表示にする</string>
+        <string name="settings_security_init_smb_account_password">settings_security_init_smb_account_password</string>
+        <string name="settings_security_use_auth_timeout_title">パスワード認証の有効時間を３０分にする</string>
+        <string name="settings_security_use_auth_timeout">settings_security_use_auth_timeout</string>
         <string name="settings_default_current_setting">現設定=</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">端末の向きをポートレイトに固定する</string>
@@ -758,12 +789,12 @@
         <string name="settings_playback_ringtone_when_sync_ended_summary_success">同期が正常終了した時に通知音を鳴らす</string>
         <string name="settings_playback_ringtone_when_sync_ended_title">通知音</string>
         <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
-        <string name="settings_smb_client_response_timeout_dialog_title">Select Client response timeout value</string>
+        <string name="settings_smb_client_response_timeout_dialog_title">Choose response timeout value(in milliseconds)</string>
         <string-array name="settings_smb_client_response_timeout_list_entries">
-            <item>30000 ms</item>
-            <item>45000 ms</item>
-            <item>60000 ms</item>
-            <item>120000 ms</item>
+            <item>30000</item>
+            <item>45000</item>
+            <item>60000</item>
+            <item>120000</item>
         </string-array >
         <string-array name="settings_smb_client_response_timeout_list_values">
             <item>30000</item>
@@ -772,12 +803,12 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Response timeout</string>
-        <string name="settings_smb_client_response_timeout_title">Client response timeout</string>
+        <string name="settings_smb_client_response_timeout_title">Client Response Timeout</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
-        <string name="settings_smb_disable_plain_text_passwords_summary_ena">Use plain text passwords</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Disable plain text passwords</string>
+        <string name="settings_smb_disable_plain_text_passwords_summary_ena">Disable Plain Text Passwords</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Disable Plain Text Passwords</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
-        <string name="settings_smb_lm_compatibility_dialog_title">Select lmCompatibility value</string>
+        <string name="settings_smb_lm_compatibility_dialog_title">LmCompatibility Level</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
             <item>0</item>
             <item>1</item>
@@ -792,12 +823,12 @@
             <item>3</item>
             <item>4</item>
         </string-array >
-        <string name="settings_smb_lm_compatibility_summary">lmCompatibility</string>
-        <string name="settings_smb_lm_compatibility_title">lmCompatibility</string>
-        <string name="settings_smb_title">SMB1設定</string>
+        <string name="settings_smb_lm_compatibility_summary">LmCompatibility Level</string>
+        <string name="settings_smb_lm_compatibility_title">LmCompatibility Level</string>
+        <string name="settings_smb_title">SMB設定</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
-        <string name="settings_smb_use_extended_security_summary_ena">Use extended security</string>
-        <string name="settings_smb_use_extended_security_title">Use extended security</string>
+        <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
+        <string name="settings_smb_use_extended_security_title">Use Extended Security</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">アプリケーション固有ディレクトリの使用についての警告を表示しない</string>
         <string name="settings_suppress_warning_app_specific_dir_title">アプリケーション固有ディレクトリの使用</string>
@@ -832,6 +863,6 @@
         <string name="settings_vibrate_when_sync_ended_summary_success">同期が正常終了した時に端末を振動させる</string>
         <string name="settings_vibrate_when_sync_ended_title">端末の振動</string>
         <string name="settings_wifi_lock">settings_wifi_lock</string>
-        <string name="settings_wifi_lock_summary_ena">同期中はWi-Fiロックする</string>
+        <string name="settings_wifi_lock_summary_ena">同期中はWi-Fiをスリープさせない</string>
         <string name="settings_wifi_lock_title">Wi-Fiロック</string>
 </resources>

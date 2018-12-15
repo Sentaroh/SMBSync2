@@ -141,6 +141,16 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean settingSuppressShortcutWarning = true;
     public boolean settingFixDeviceOrientationToPortrait = false;
 
+    public String settingSecurityApplicationPasswordHashValue = "";
+//    public boolean settingSecurityApplicationPassword = false;
+    public boolean settingSecurityApplicationPasswordUseAppStartup = false;
+    public boolean settingSecurityApplicationPasswordUseEditTask = false;
+    public boolean settingSecurityApplicationPasswordUseExport = false;
+    public boolean settingSecurityReinitSmbAccountPasswordValue = false;
+
+    public boolean appPasswordAuthValidated=false;
+    public long appPasswordAuthLastTime=0L;
+
     public boolean settingScreenOnWhileSync = true;
     public boolean settingForceScreenOnWhileSync = false;
 
@@ -371,6 +381,22 @@ public class GlobalParameters extends CommonGlobalParms {
 
         if (!prefs.contains("settings_sync_grant_coarse_location_required"))
             prefs.edit().putBoolean("settings_sync_grant_coarse_location_required", true).commit();
+
+        if (!prefs.contains(appContext.getString(R.string.settings_security_application_password)))
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password), false);
+
+        if (!prefs.contains(appContext.getString(R.string.settings_security_application_password_use_app_startup)))
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_app_startup), false);
+
+        if (!prefs.contains(appContext.getString(R.string.settings_security_application_password_use_edit_task)))
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_edit_task), false);
+
+        if (!prefs.contains(appContext.getString(R.string.settings_security_application_password_use_export_task)))
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_export_task), false);
+
+        if (!prefs.contains(appContext.getString(R.string.settings_security_init_smb_account_password)))
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_init_smb_account_password), false);
+
     }
 
     public void setSettingOptionLogEnabled(boolean enabled) {
@@ -444,7 +470,15 @@ public class GlobalParameters extends CommonGlobalParms {
         settingGrantCoarseLocationRequired = prefs.getBoolean("settings_sync_grant_coarse_location_required", true);
 
         settingForceScreenOnWhileSync=prefs.getBoolean(appContext.getString(R.string.settings_force_screen_on_while_sync), false);
+
         settingSyncMessageUseStandardTextView =prefs.getBoolean(appContext.getString(R.string.settings_sync_message_use_standard_text_view), false);
+
+        settingSecurityApplicationPasswordHashValue =ActivityPassword.getApplicationPasswordHashValue(prefs);
+        settingSecurityApplicationPasswordUseAppStartup = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_app_startup), false);
+        settingSecurityApplicationPasswordUseEditTask = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_edit_task), false);
+        settingSecurityApplicationPasswordUseExport = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_export_task), false);
+        settingSecurityReinitSmbAccountPasswordValue = prefs.getBoolean(appContext.getString(R.string.settings_security_init_smb_account_password), false);
+
     }
 
     public String settingsSmbLmCompatibility = "3", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout = "30000";

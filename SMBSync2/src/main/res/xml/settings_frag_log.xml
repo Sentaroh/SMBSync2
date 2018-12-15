@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="@string/settings_log_title">
    	    <CheckBoxPreference
 			android:key="settings_log_option"
 			android:title="@string/settings_log_option_title"
@@ -25,5 +26,5 @@
 			android:dialogTitle="@string/settings_log_file_max_count_dialog_title"
 			android:entries="@array/settings_log_file_max_count_list_entries"
 			android:entryValues="@array/settings_log_file_max_count_list_values"/>
-   	    	    	    
+    </PreferenceCategory>
 </PreferenceScreen>
