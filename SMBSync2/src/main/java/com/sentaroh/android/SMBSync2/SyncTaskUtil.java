@@ -1226,7 +1226,14 @@ public class SyncTaskUtil {
         Thread th = new Thread() {
             @Override
             public void run() {
-                mUtil.addDebugMsg(1, "I", "Test logon started, host=" + host + ", addr=" + addr + ", port=" + port + ", user=" + ra.smb_user_name);
+                String un="";
+                if (mGp.settingSecurityReinitSmbAccountPasswordValue && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
+                    if (ra.smb_user_name!=null) un=(ra.smb_user_name.equals(""))?"":"????????";
+                    else un=null;
+                } else {
+                    un=ra.smb_user_name;
+                }
+                mUtil.addDebugMsg(1, "I", "Test logon started, host=" + host + ", addr=" + addr + ", port=" + port + ", user=" + un);
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
@@ -1340,6 +1347,15 @@ public class SyncTaskUtil {
         if (port.equals("")) url = "smb://" + host + "/"+share+"/";
         else url = "smb://" + host + ":" + port + "/"+share+"/";
 
+        String un="";
+        if (mGp.settingSecurityReinitSmbAccountPasswordValue  && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
+            if (ra.smb_user_name!=null) un=(ra.smb_user_name.equals(""))?"":"????????";
+            else un=null;
+        } else {
+            un=ra.smb_user_name;
+        }
+
+
         JcifsAuth auth=null;
         if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
             auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
@@ -1350,14 +1366,14 @@ public class SyncTaskUtil {
             JcifsFile sf = new JcifsFile(url, auth);
             String[] fl=sf.list();
 //            sf.connect();
-            mUtil.addDebugMsg(1, "I", "Test logon completed, host="+host+", port="+port+", Smb Proto="+ra.smb_smb_protocol+", user="+ra.smb_user_name);
+            mUtil.addDebugMsg(1, "I", "Test logon completed, host="+host+", port="+port+", Smb Proto="+ra.smb_smb_protocol+", user="+un);
         } catch (JcifsException e) {
             String cm="";
             try {
                 cm=e.getCause().getCause().getMessage();
             } catch(Exception ex) {
             }
-            String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, url, ra.smb_user_name);
+            String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, url, un);
             err_msg = cm+"\n"+e_msg[0];
             mUtil.addDebugMsg(1, "I", "Test logon failed." + "\n" + err_msg);
         } catch (MalformedURLException e) {
@@ -2124,7 +2140,14 @@ public class SyncTaskUtil {
               } catch (JcifsException e) {
                   e.printStackTrace();
                   String cause="";
-                  String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, new_dir, ra.smb_user_name);
+                  String un="";
+                  if (mGp.settingSecurityReinitSmbAccountPasswordValue  && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
+                      if (ra.smb_user_name!=null) un=(ra.smb_user_name.equals(""))?"":"????????";
+                      else un=null;
+                  } else {
+                      un=ra.smb_user_name;
+                  }
+                  String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, new_dir, un);
                   if (e.getCause()!=null) {
                       String tc=e.getCause().toString();
                       cause=tc.substring(tc.indexOf(":")+1);
@@ -2163,7 +2186,13 @@ public class SyncTaskUtil {
                 } catch (JcifsException e) {
                     e.printStackTrace();
                     String cause="";
-                    String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, new_dir, ra.smb_user_name);
+                    String un="";
+                    if (mGp.settingSecurityReinitSmbAccountPasswordValue) {
+                        un=(ra.smb_user_name.equals(""))?"":"????????";
+                    } else {
+                        un=ra.smb_user_name;
+                    }
+                    String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, new_dir, un);
                     if (e.getCause()!=null) {
                         String tc=e.getCause().toString();
                         cause=tc.substring(tc.indexOf(":")+1);

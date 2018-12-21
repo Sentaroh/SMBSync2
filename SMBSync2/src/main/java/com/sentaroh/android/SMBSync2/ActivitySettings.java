@@ -40,10 +40,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.widget.Toast;
 
-import com.sentaroh.android.Utilities.Dialog.CommonDialog;
+import com.sentaroh.android.Utilities.Dialog.MessageDialogAppFragment;
 import com.sentaroh.android.Utilities.LocalMountPoint;
 
 import java.util.List;
@@ -71,7 +69,7 @@ public class ActivitySettings extends PreferenceActivity {
     private static GlobalParameters mGp = null;
 
     private CommonUtilities mUtil = null;
-    private CommonDialog mCommonDlg = null;
+//    private CommonDialog mCommonDlg = null;
 
 //	private GlobalParameters mGp=null;
 
@@ -114,8 +112,6 @@ public class ActivitySettings extends PreferenceActivity {
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 //		setTitle(R.string.settings_main_title);
     }
-
-    ;
 
     @Override
     public void onBuildHeaders(List<Header> target) {
@@ -172,7 +168,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     private static void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, FragmentManager fm) {
         if (!checkSyncSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext))
-            if (!checkUiSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext))
+            if (!checkUiSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext, fm))
                 if (!checkLogSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext))
                     if (!checkSmbSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext))
                         if (!checkMiscSettings(ut, mPrefFrag.findPreference(key_string), shared_pref, key_string, mContext, fm))
@@ -202,59 +198,47 @@ public class ActivitySettings extends PreferenceActivity {
         return isChecked;
     }
 
-    private static boolean checkUiSettings(CommonUtilities ut, Preference pref_key,
-                                           SharedPreferences shared_pref, String key_string, Context c) {
+    private static boolean checkUiSettings(
+            CommonUtilities ut, Preference pref_key, SharedPreferences shared_pref, String key_string, Context c, FragmentManager fm) {
         boolean isChecked = false;
 
         if (key_string.equals(c.getString(R.string.settings_playback_ringtone_when_sync_ended))) {
             isChecked = true;
             Preference rv = mPrefFrag.findPreference(c.getString(R.string.settings_playback_ringtone_volume));
             if (shared_pref.getString(key_string, "0").equals(SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_always));
+                pref_key.setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_always));
                 rv.setEnabled(true);
             } else if (shared_pref.getString(key_string, "0").equals(SMBSYNC2_RINGTONE_NOTIFICATION_ERROR)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_error));
+                pref_key.setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_error));
                 rv.setEnabled(true);
             } else if (shared_pref.getString(key_string, "0").equals(SMBSYNC2_RINGTONE_NOTIFICATION_SUCCESS)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_success));
+                pref_key.setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_success));
                 rv.setEnabled(true);
             } else if (shared_pref.getString(key_string, "0").equals(SMBSYNC2_RINGTONE_NOTIFICATION_NO)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_no));
+                pref_key.setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_no));
                 rv.setEnabled(false);
             }
         } else if (key_string.equals(c.getString(R.string.settings_vibrate_when_sync_ended))) {
             isChecked = true;
             if (shared_pref.getString(key_string, "0").equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_always));
+                pref_key.setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_always));
             } else if (shared_pref.getString(key_string, "0").equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_error));
+                pref_key.setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_error));
             } else if (shared_pref.getString(key_string, "0").equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_SUCCESS)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_success));
+                pref_key.setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_success));
             } else if (shared_pref.getString(key_string, "0").equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_NO)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_no));
+                pref_key.setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_no));
             }
         } else if (key_string.equals(c.getString(R.string.settings_notification_message_when_sync_ended))) {
             isChecked = true;
             if (shared_pref.getString(key_string, "1").equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_always));
+                pref_key.setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_always));
             } else if (shared_pref.getString(key_string, "1").equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_error));
+                pref_key.setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_error));
             } else if (shared_pref.getString(key_string, "1").equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_success));
+                pref_key.setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_success));
             } else if (shared_pref.getString(key_string, "1").equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_NO)) {
-                pref_key
-                        .setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_no));
+                pref_key.setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_no));
             }
         } else if (key_string.equals(c.getString(R.string.settings_suppress_warning_app_specific_dir))) {
             isChecked = true;
@@ -263,7 +247,7 @@ public class ActivitySettings extends PreferenceActivity {
             int vol = shared_pref.getInt(key_string, 100);
             pref_key.setSummary(
                     String.format(c.getString(R.string.settings_playback_ringtone_volume_summary), vol));
-            if (mInitVolume != vol) playBackDefaultNotification(vol);
+            if (mInitVolume != vol) playBackDefaultNotification(c, fm, vol);
         } else if (key_string.equals(c.getString(R.string.settings_use_light_theme))) {
             isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
@@ -278,7 +262,7 @@ public class ActivitySettings extends PreferenceActivity {
         return isChecked;
     }
 
-    private static void playBackDefaultNotification(int vol) {
+    private static void playBackDefaultNotification(Context c, FragmentManager fm, int vol) {
         float volume = (float) vol / 100.0f;
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         if (uri != null) {
@@ -301,10 +285,9 @@ public class ActivitySettings extends PreferenceActivity {
                     th.start();
                 }
             } else {
-                Toast toast = Toast.makeText(mContext,
-                        mContext.getString(R.string.settings_playback_ringtone_volume_disabled), Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP, 0, 200);
-                toast.show();
+                MessageDialogAppFragment cd=MessageDialogAppFragment.newInstance(
+                        false, "E",mContext.getString(R.string.settings_playback_ringtone_volume_disabled),"");
+                cd.showDialog(fm, cd, null);
             }
         }
     }
@@ -325,7 +308,7 @@ public class ActivitySettings extends PreferenceActivity {
                                              Preference pref_key, SharedPreferences shared_pref, String key_string, Context c, final FragmentManager fm) {
         boolean isChecked = false;
 
-        String hv=ActivityPassword.getApplicationPasswordHashValue(shared_pref);
+        String hv=ApplicationPasswordUtil.getApplicationPasswordHashValue(shared_pref);
 
         if (key_string.equals(c.getString(R.string.settings_security_application_password))) {
             isChecked = true;
@@ -724,7 +707,7 @@ public class ActivitySettings extends PreferenceActivity {
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Intent in=new Intent(mContext, ActivityPassword.class);
+                    Intent in=new Intent(mContext, ActivityPasswordSettings.class);
                     startActivityForResult(in, 0);
                     return false;
                 }

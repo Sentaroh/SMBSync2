@@ -473,7 +473,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingSyncMessageUseStandardTextView =prefs.getBoolean(appContext.getString(R.string.settings_sync_message_use_standard_text_view), false);
 
-        settingSecurityApplicationPasswordHashValue =ActivityPassword.getApplicationPasswordHashValue(prefs);
+        settingSecurityApplicationPasswordHashValue =ApplicationPasswordUtil.getApplicationPasswordHashValue(prefs);
         settingSecurityApplicationPasswordUseAppStartup = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_app_startup), false);
         settingSecurityApplicationPasswordUseEditTask = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_edit_task), false);
         settingSecurityApplicationPasswordUseExport = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_export_task), false);

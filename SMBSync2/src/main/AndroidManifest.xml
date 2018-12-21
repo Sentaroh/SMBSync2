@@ -95,7 +95,7 @@
         <!-- android:noHistory="true"  -->
 
         <activity
-            android:name="com.sentaroh.android.SMBSync2.ActivityPassword"
+            android:name="com.sentaroh.android.SMBSync2.ActivityPasswordSettings"
             android:label="@string/app_name"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
             android:screenOrientation="unspecified"

@@ -251,71 +251,76 @@ public class ActivityMain extends AppCompatActivity {
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
-//            mGp.safMgr.loadSafFile();
-            NotifyEvent start_ntfy = new NotifyEvent(mContext);
-            start_ntfy.setListener(new NotifyEventListener() {
-                @Override
-                public void positiveResponse(Context context, Object[] objects) {
-                    mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
-                }
-
-                @Override
-                public void negativeResponse(Context context, Object[] objects) {
-                    finish();
-                }
-            });
-            if (mGp.settingSecurityApplicationPasswordUseAppStartup) {
-                mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
-                ActivityPassword.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, start_ntfy);
-            } else {
-                start_ntfy.notifyToListener(true,null);
-            }
-            NotifyEvent svc_ntfy = new NotifyEvent(mContext);
-            svc_ntfy.setListener(new NotifyEventListener() {
-                @Override
-                public void positiveResponse(Context c, Object[] o) {
-                    setCallbackListener();
-                    setActivityForeground(true);
-                    if (restartType == NORMAL_START) {
-                        setUiEnabled();
-                        checkStorageStatus();
-                        if (mGp.msgList.size()>1) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-                    } else if (restartType == RESTART_BY_KILLED) {
-                        setUiEnabled();
-                        restoreTaskData();
-                        mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_killed));
-                        mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-                    } else if (restartType == RESTART_BY_DESTROYED) {
-                        setUiEnabled();
-                        restoreTaskData();
-                        mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_destroyed));
-                        mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-                    }
-                    setMessageContextButtonListener();
-                    setMessageContextButtonNormalMode();
-
-                    setSyncTaskContextButtonListener();
-                    setSyncTaskListItemClickListener();
-                    setSyncTaskListLongClickListener();
-                    setSyncTaskContextButtonNormalMode();
-
-                    setHistoryContextButtonListener();
-                    setHistoryViewItemClickListener();
-                    setHistoryViewLongClickListener();
-                    setHistoryContextButtonNormalMode();
-
-                    deleteTaskData();
-                    ScheduleUtil.setSchedulerInfo(mGp);
-                    restartType = RESTART_WITH_OUT_INITIALYZE;
-                    reshowDialogWindow();
-                    if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
-                }
-
-                @Override
-                public void negativeResponse(Context c, Object[] o) {}
-            });
-            openService(svc_ntfy);
+            initForRestart();
         }
+
+    }
+
+    private void initForRestart() {
+//            mGp.safMgr.loadSafFile();
+        NotifyEvent start_ntfy = new NotifyEvent(mContext);
+        start_ntfy.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {
+                finish();
+            }
+        });
+        if (mGp.settingSecurityApplicationPasswordUseAppStartup) {
+            mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
+            ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, start_ntfy);
+        } else {
+            start_ntfy.notifyToListener(true,null);
+        }
+        NotifyEvent svc_ntfy = new NotifyEvent(mContext);
+        svc_ntfy.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context c, Object[] o) {
+                setCallbackListener();
+                setActivityForeground(true);
+                if (restartType == NORMAL_START) {
+                    setUiEnabled();
+                    checkStorageStatus();
+                    if (mGp.msgList.size()>1) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+                } else if (restartType == RESTART_BY_KILLED) {
+                    setUiEnabled();
+                    restoreTaskData();
+                    mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_killed));
+                    mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+                } else if (restartType == RESTART_BY_DESTROYED) {
+                    setUiEnabled();
+                    restoreTaskData();
+                    mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_destroyed));
+                    mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+                }
+                setMessageContextButtonListener();
+                setMessageContextButtonNormalMode();
+
+                setSyncTaskContextButtonListener();
+                setSyncTaskListItemClickListener();
+                setSyncTaskListLongClickListener();
+                setSyncTaskContextButtonNormalMode();
+
+                setHistoryContextButtonListener();
+                setHistoryViewItemClickListener();
+                setHistoryViewLongClickListener();
+                setHistoryContextButtonNormalMode();
+
+                deleteTaskData();
+                ScheduleUtil.setSchedulerInfo(mGp);
+                restartType = RESTART_WITH_OUT_INITIALYZE;
+                reshowDialogWindow();
+                if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
+            }
+
+            @Override
+            public void negativeResponse(Context c, Object[] o) {}
+        });
+        openService(svc_ntfy);
 
     }
 
@@ -1048,7 +1053,7 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                if (mGp.settingSecurityApplicationPasswordUseExport) ActivityPassword.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy);
+                if (mGp.settingSecurityApplicationPasswordUseExport) ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy);
                 else ntfy.notifyToListener(true,null);
                 return true;
             case R.id.menu_top_import:
@@ -3412,7 +3417,7 @@ public class ActivityMain extends AppCompatActivity {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        if (mGp.settingSecurityApplicationPasswordUseEditTask) ActivityPassword.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy_check);
+        if (mGp.settingSecurityApplicationPasswordUseEditTask) ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy_check);
         else ntfy_check.notifyToListener(true,null);
      }
 

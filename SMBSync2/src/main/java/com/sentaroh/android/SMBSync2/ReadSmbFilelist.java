@@ -55,6 +55,7 @@ public class ReadSmbFilelist implements Runnable {
     private Context mContext = null;
 
     private RemoteAuthInfo mRemoteAuthInfo=null;
+    private String mRemoteUserNameForLog="";
 
     private boolean mSmb1 =true;
 
@@ -88,9 +89,16 @@ public class ReadSmbFilelist implements Runnable {
         } else {
             mHostName = t_host2;
         }
+        if (gp.settingSecurityReinitSmbAccountPasswordValue && !gp.settingSecurityApplicationPasswordHashValue.equals("")) {
+            if (rauth.smb_user_name!=null) mRemoteUserNameForLog=(rauth.smb_user_name.equals(""))?"":"????????";
+            else mRemoteUserNameForLog=null;
+        } else {
+            mRemoteUserNameForLog=rauth.smb_user_name;
+        }
+
         mUtil.addDebugMsg(1, "I", "ReadSmbFilelist init. name=" + mHostName +
                 ", addr=" + mHostAddr + ", port=" + mHostPort + ", remoteUrl=" + remoteUrl + ", Dir=" +
-                remoteDir+", user="+rauth.smb_user_name+", smb_proto="+rauth.smb_smb_protocol);
+                remoteDir+", user="+mRemoteUserNameForLog+", smb_proto="+rauth.smb_smb_protocol);
 
         mSmb1 = rauth.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)? true:false;
     }
@@ -249,7 +257,7 @@ public class ReadSmbFilelist implements Runnable {
         } catch (JcifsException e) {
             e.printStackTrace();
             String cause="";
-            String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, remoteUrl + remoteDir, mRemoteAuthInfo.smb_user_name);
+            String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, remoteUrl + remoteDir, mRemoteUserNameForLog);
 //            e_msg[0] = e.getMessage()+"\n"+e_msg[0];
             if (e.getCause()!=null) {
                 String tc=e.getCause().toString();
@@ -300,7 +308,7 @@ public class ReadSmbFilelist implements Runnable {
             }
             mUtil.addDebugMsg(1, "E", e.toString());
             getFLCtrl.setThreadResultError();
-            String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, remoteUrl, auth.getUserName());
+            String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, remoteUrl, mRemoteUserNameForLog);
             if (!cause.equals("")) getFLCtrl.setThreadMessage(cause.substring(cause.indexOf(":")+1)+"\n"+e_msg[0]);
             else getFLCtrl.setThreadMessage(e_msg[0]);
 

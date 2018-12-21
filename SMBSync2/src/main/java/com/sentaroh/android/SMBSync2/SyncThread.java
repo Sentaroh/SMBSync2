@@ -369,7 +369,9 @@ public class SyncThread extends Thread {
 
     private void listSyncOption(SyncTaskItem sti) {
         mStwa.util.addDebugMsg(1, "I", "Sync Task : Type=" + sti.getSyncTaskType());
-        String mst_uid=sti.getMasterSmbUserName().equals("")?"":"????????";
+        String mst_uid="";
+        if (mGp.settingSecurityReinitSmbAccountPasswordValue) mst_uid=sti.getMasterSmbUserName().equals("")?"":"????????";
+        else mst_uid=sti.getMasterSmbUserName();
         mStwa.util.addDebugMsg(1, "I", "   Master Type=" + sti.getMasterFolderType() +
                 ", Addr=" + sti.getMasterSmbAddr() +
                 ", Hostname=" + sti.getMasterSmbHostName() +
@@ -381,7 +383,9 @@ public class SyncThread extends Thread {
                 ", SMB IPC signing enforced=" + sti.isMasterSmbIpcSigningEnforced() +
                 ", RemovableID=" + sti.getMasterRemovableStorageID() +
                 "");
-        String tgt_uid=sti.getTargetSmbUserName().equals("")?"":"????????";
+        String tgt_uid="";
+        if (mGp.settingSecurityReinitSmbAccountPasswordValue) tgt_uid=sti.getTargetSmbUserName().equals("")?"":"????????";
+        else tgt_uid=sti.getTargetSmbUserName();
         mStwa.util.addDebugMsg(1, "I", "   Target Type=" + sti.getTargetFolderType() +
                 ", Addr=" + sti.getTargetSmbAddr() +
                 ", Hostname=" + sti.getTargetSmbHostName() +

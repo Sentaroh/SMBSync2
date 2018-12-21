@@ -104,7 +104,7 @@ public class SyncThreadArchiveFile {
     static private int archiveFileInternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children,
                                                      String from_path, String to_path) throws IOException {
         int file_seq_no=0, sync_result=0;
-        ArrayList<ArchiveFileListItem>fl=buildLocalFileList(stwa, sti, children, to_path);
+        ArrayList<ArchiveFileListItem>fl=buildLocalFileList(stwa, sti, children);
         for(ArchiveFileListItem item:fl) {
             if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                 sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
@@ -179,9 +179,9 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
-                        }
+//                        if (sti.isSyncEmptyDirectory()) {
+//                            SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
+//                        }
                         File[] children = mf.listFiles();
                         if (children != null) {
                             archiveFileInternalToInternal(stwa, sti, children, from_path, to_path);
@@ -335,7 +335,7 @@ public class SyncThreadArchiveFile {
     static private int archiveFileInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children,
                                                      String from_path, String to_path) throws IOException {
         int file_seq_no=0, sync_result=0;
-        ArrayList<ArchiveFileListItem>fl=buildLocalFileList(stwa, sti, children, to_path);
+        ArrayList<ArchiveFileListItem>fl=buildLocalFileList(stwa, sti, children);
         for(ArchiveFileListItem item:fl) {
             if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                 sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
@@ -415,9 +415,9 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
-                        }
+//                        if (sti.isSyncEmptyDirectory()) {
+//                            SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
+//                        }
                         File[] children = mf.listFiles();
                         archiveFileInternalToExternal(stwa, sti, children, from_path, to_path);
                         if (children != null) {
@@ -472,7 +472,7 @@ public class SyncThreadArchiveFile {
     static private int archiveFileInternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children,
                                                 String from_path, String to_path) throws IOException, JcifsException {
         int file_seq_no=0, sync_result=0;
-        ArrayList<ArchiveFileListItem>fl=buildLocalFileList(stwa, sti, children, to_path);
+        ArrayList<ArchiveFileListItem>fl=buildLocalFileList(stwa, sti, children);
         for(ArchiveFileListItem item:fl) {
             if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                 sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
@@ -482,7 +482,7 @@ public class SyncThreadArchiveFile {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", item.full_path, item.file_name,
                             " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
-                    continue;
+                    continue;//Archive cancelled
                 }
             }
             file_seq_no++;
@@ -551,9 +551,9 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
-                        }
+//                        if (sti.isSyncEmptyDirectory()) {
+//                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
+//                        }
                         File[] children = mf.listFiles();
                         if (children != null) {
                             archiveFileInternalToSmb(stwa, sti, children, from_path, to_path);
@@ -740,7 +740,7 @@ public class SyncThreadArchiveFile {
     static private int archiveFileExternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children,
                                                      String from_path, String to_path) throws IOException {
         int file_seq_no=0, sync_result=0;
-        ArrayList<ArchiveFileListItem>fl= buildSafFileList(stwa, sti, children, to_path);
+        ArrayList<ArchiveFileListItem>fl= buildSafFileList(stwa, sti, children);
         for(ArchiveFileListItem item:fl) {
             if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                 sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
@@ -963,7 +963,7 @@ public class SyncThreadArchiveFile {
     static private int archiveFileExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children,
                                                      String from_path, String to_path) throws IOException {
         int file_seq_no=0, sync_result=0;
-        ArrayList<ArchiveFileListItem>fl= buildSafFileList(stwa, sti, children, to_path);
+        ArrayList<ArchiveFileListItem>fl= buildSafFileList(stwa, sti, children);
         for(ArchiveFileListItem item:fl) {
             if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                 sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
@@ -1038,9 +1038,9 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
-                        }
+//                        if (sti.isSyncEmptyDirectory()) {
+//                            SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
+//                        }
                         File[] children = mf.listFiles();
                         archiveFileExternalToExternal(stwa, sti, children, from_path, to_path);
                         if (children != null) {
@@ -1152,7 +1152,7 @@ public class SyncThreadArchiveFile {
     static private int archiveFileExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children,
                                                 String from_path, String to_path) throws IOException, JcifsException {
         int file_seq_no=0, sync_result=0;
-        ArrayList<ArchiveFileListItem>fl= buildSafFileList(stwa, sti, children, to_path);
+        ArrayList<ArchiveFileListItem>fl= buildSafFileList(stwa, sti, children);
         for(ArchiveFileListItem item:fl) {
             if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                 sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
@@ -1227,9 +1227,9 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
-                        }
+//                        if (sti.isSyncEmptyDirectory()) {
+//                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
+//                        }
                         File[] children = mf.listFiles();
                         if (children != null) {
                             archiveFileExternalToSmb(stwa, sti, children, from_path, to_path);
@@ -1366,7 +1366,7 @@ public class SyncThreadArchiveFile {
     static private int archiveFileSmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile[] children,
                                                 String from_path, String to_path) throws IOException, JcifsException {
         int file_seq_no=0, sync_result=0;
-        ArrayList<ArchiveFileListItem>fl=buildSmbFileList(stwa, sti, children, to_path);
+        ArrayList<ArchiveFileListItem>fl=buildSmbFileList(stwa, sti, children);
         for(ArchiveFileListItem item:fl) {
             if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                 sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
@@ -1441,9 +1441,9 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
-                        }
+//                        if (sti.isSyncEmptyDirectory()) {
+//                            SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
+//                        }
                         JcifsFile[] children = mf.listFiles();
                         if (children != null) {
                             archiveFileSmbToInternal(stwa, sti, children, from_path, to_path);
@@ -1654,7 +1654,7 @@ public class SyncThreadArchiveFile {
     static private int archiveFileSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile[] children,
                                                 String from_path, String to_path) throws IOException, JcifsException {
         int file_seq_no=0, sync_result=0;
-        ArrayList<ArchiveFileListItem>fl=buildSmbFileList(stwa, sti, children, to_path);
+        ArrayList<ArchiveFileListItem>fl=buildSmbFileList(stwa, sti, children);
         for(ArchiveFileListItem item:fl) {
             if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                 sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
@@ -1729,9 +1729,9 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
-                        }
+//                        if (sti.isSyncEmptyDirectory()) {
+//                            SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
+//                        }
                         JcifsFile[] children = mf.listFiles();
                         if (children != null) {
                             archiveFileSmbToExternal(stwa, sti, children, from_path, to_path);
@@ -1860,7 +1860,7 @@ public class SyncThreadArchiveFile {
     static private int archiveFileSmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile[] children,
                                            String from_path, String to_path) throws IOException, JcifsException {
         int file_seq_no=0, sync_result=0;
-        ArrayList<ArchiveFileListItem>fl=buildSmbFileList(stwa, sti, children, to_path);
+        ArrayList<ArchiveFileListItem>fl=buildSmbFileList(stwa, sti, children);
         for(ArchiveFileListItem item:fl) {
             if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                 sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
@@ -1935,9 +1935,9 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncEmptyDirectory()) {
-                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
-                        }
+//                        if (sti.isSyncEmptyDirectory()) {
+//                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
+//                        }
                         JcifsFile[] children = mf.listFiles();
                         if (children != null) {
                             archiveFileSmbToSmb(stwa, sti, children, from_path, to_path);
@@ -2077,7 +2077,7 @@ public class SyncThreadArchiveFile {
         boolean date_from_exif=true;
     }
 
-    static private ArrayList<ArchiveFileListItem> buildLocalFileList(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children, String to_path) {
+    static private ArrayList<ArchiveFileListItem> buildLocalFileList(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children) {
         ArrayList<ArchiveFileListItem>fl=new ArrayList<ArchiveFileListItem>();
         for(File element:children) {
             if (element.isFile() && isFileTypeArchiveTarget(element.getName())) {
@@ -2108,7 +2108,7 @@ public class SyncThreadArchiveFile {
         return fl;
     }
 
-    static private ArrayList<ArchiveFileListItem> buildSafFileList(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children, String to_path) {
+    static private ArrayList<ArchiveFileListItem> buildSafFileList(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] children) {
         ArrayList<ArchiveFileListItem>fl=new ArrayList<ArchiveFileListItem>();
         for(File element:children) {
             if (element.isFile() && isFileTypeArchiveTarget(element.getName())) {
@@ -2150,7 +2150,7 @@ public class SyncThreadArchiveFile {
         return result;
     }
 
-    static private ArrayList<ArchiveFileListItem> buildSmbFileList(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile[] children, String to_path) throws JcifsException {
+    static private ArrayList<ArchiveFileListItem> buildSmbFileList(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile[] children) throws JcifsException {
         ArrayList<ArchiveFileListItem>fl=new ArrayList<ArchiveFileListItem>();
         for(JcifsFile element:children) {
             if (element.isFile() && isFileTypeArchiveTarget(element.getName())) {
@@ -2201,9 +2201,11 @@ public class SyncThreadArchiveFile {
             exp_time=n_cal.getTimeInMillis()-cal.getTimeInMillis();
         }
         String n_exp=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(cal.getTimeInMillis()+exp_time);
-        boolean result=(System.currentTimeMillis()>cal.getTimeInMillis());
+//        boolean result=(System.currentTimeMillis()>cal.getTimeInMillis());
+        boolean result=(System.currentTimeMillis()>(cal.getTimeInMillis()+exp_time));
         stwa.util.addDebugMsg(1,"I","isFileArchiveRequired path=",afli.full_path,", shoot date=",afli.shoot_date,
-                ", shoot time=", afli.shoot_time,", exif="+afli.date_from_exif,", archive required="+result, ", retention period="+sti.getArchiveRetentionPeriod());
+                ", shoot time=", afli.shoot_time,", exif="+afli.date_from_exif,", archive required="+result, ", " +
+                "retention period="+sti.getArchiveRetentionPeriod(), ", expiration date=", n_exp, ", expiration period="+exp_time);
         return result;
     }
 

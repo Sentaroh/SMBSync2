@@ -2131,6 +2131,11 @@ public class SyncTaskEditor extends DialogFragment {
                         if (sync_folder_user.equals("") && sync_folder_pswd.equals("")) {
                             result = false;
                             setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_userid_pswd));
+                        } else {
+                            if (!sync_folder_user.equals("") && sync_folder_pswd.equals("")) {
+                                result = false;
+                                setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_pswd));
+                            }
                         }
                     }
                     if (result && folder_share_name.equals("")) {
