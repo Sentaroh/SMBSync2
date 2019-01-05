@@ -67,6 +67,7 @@ import com.sentaroh.android.Utilities.EncryptUtil;
 import com.sentaroh.android.Utilities.EncryptUtil.CipherParms;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
+import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistAdapter;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistItem;
@@ -230,7 +231,8 @@ public class SyncTaskUtil {
             }
         });
         mCommonDlg.fileSelectorFileOnlySelectWithCreate(true,
-                mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_import_file), ntfy);
+                mGp.internalRootDirectory, "", "", mContext.getString(R.string.msgs_select_import_file), ntfy);
+//                mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_import_file), ntfy);
     }
 
     private boolean isSyncTaskListFileOldFormat(String fpath) {
@@ -913,8 +915,10 @@ public class SyncTaskUtil {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
+        String dt= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis());
+        String fn="profile_"+dt.substring(0,10).replaceAll("/","")+"_"+dt.substring(11).replaceAll(":","")+".txt";
         mCommonDlg.fileSelectorFileOnlySelectWithCreate(true,
-                mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_export_file), ntfy);
+                mGp.internalRootDirectory, "/" + APPLICATION_TAG, fn, mContext.getString(R.string.msgs_select_export_file), ntfy);
     }
 
     public void exportSyncTaskListToFile(final String profile_dir, final String profile_filename, final boolean encrypt_required) {
