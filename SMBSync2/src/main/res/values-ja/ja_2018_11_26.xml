@@ -475,6 +475,7 @@
         <string name="msgs_mirror_sync_skipped_wifi_address_conn_other">無線LANが指定されたIPアドレスに接続されていないためタスクをスキップします。</string>
         <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">無線LANが指定されたアクセスポイントに接続されていないためタスクをスキップします。</string>
         <string name="msgs_mirror_sync_start_was_delayed">無線LANをオン後の遅延時間が指定されているために、同期の開始を%s秒遅らせます。</string>
+        <string name="msgs_mirror_sync_wifi_can_not_enabled">無線LANをオンにできませんでした。</string>
         <string name="msgs_mirror_task_avg_rate">平均転送率 %s</string>
         <string name="msgs_mirror_task_dir_create">ディレクトリーを作成しました。</string>
         <string name="msgs_mirror_task_dir_create_failed">ディレクトリー作成に失敗しました。</string>

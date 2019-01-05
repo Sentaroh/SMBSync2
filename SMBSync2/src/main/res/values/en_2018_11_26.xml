@@ -478,6 +478,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_mirror_sync_skipped_wifi_address_conn_other">Sync task skipped because wireless LAN address does not match specified IP address</string>
         <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">Sync task skipped because wireless LAN not connected to specified WiFi access point</string>
         <string name="msgs_mirror_sync_start_was_delayed">In order to the wireless LAN is a delay time after ON has been specified, it delays the start of the sync %s seconds.</string>
+        <string name="msgs_mirror_sync_wifi_can_not_enabled">Could not turn on WiFi.</string>
         <string name="msgs_mirror_task_avg_rate">Average transfer rate %s</string>
         <string name="msgs_mirror_task_dir_create">directory created.</string>
         <string name="msgs_mirror_task_dir_create_failed">failed to create directory.</string>

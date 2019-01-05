@@ -239,6 +239,7 @@ public class SyncThread extends Thread {
                         ", WiFi on=" + sri.wifi_on_before_sync_start +
                         ", WiFi delay=" + sri.start_delay_time_after_wifi_on + ", WiFi off=" + sri.wifi_off_after_sync_ended);
 
+                boolean wifi_on_error=false;
                 if (sri.wifi_on_before_sync_start) {
                     if (!isWifiOn()) {
                         setWifiOn();
@@ -247,6 +248,10 @@ public class SyncThread extends Thread {
                                     String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_start_was_delayed),
                                             sri.start_delay_time_after_wifi_on));
                             SystemClock.sleep(1000 * sri.start_delay_time_after_wifi_on);
+                            if (!isWifiOn()) {
+                                mStwa.util.addLogMsg("E",mGp.appContext.getString(R.string.msgs_mirror_sync_wifi_can_not_enabled));
+                                wifi_on_error=true;
+                            }
                         }
                     }
                 }
