@@ -879,7 +879,10 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        String dir = ((String)arg1[1]).equals("/")?"":(((String)arg1[1]).startsWith("/")?((String)arg1[1]).substring(1):(String)arg1[1]);
+                        String dir_tmp=(String)arg1[1]+"/"+(String)arg1[2];
+                        String dir = "";
+                        if (dir_tmp.equals("/")) dir="";
+                        else if (dir_tmp.startsWith("/")) dir=dir_tmp.substring(1);
                         if (dir.endsWith("/"))
                             et_sync_folder_dir_name.setText(dir.substring(0, dir.length() - 1));
                         else et_sync_folder_dir_name.setText(dir);
@@ -890,7 +893,9 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, "");
                     }
                 });
-                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "/"+et_sync_folder_dir_name.getText().toString(),
+//                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "/"+et_sync_folder_dir_name.getText().toString(),
+//                        mContext.getString(R.string.msgs_select_local_dir), ntfy);
+                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "/",
                         mContext.getString(R.string.msgs_select_local_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
@@ -965,7 +970,13 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
                         if (((String)arg1[1]).length()>0) {
-                            String dir = ((String)arg1[1]).equals("/")?"":((String)arg1[1]).substring(1);
+                            String dir_tmp=(String)arg1[1]+"/"+(String)arg1[2];
+                            String dir = "";
+                            if (dir_tmp.equals("/")) dir="";
+                            else if (dir_tmp.startsWith("/")) dir=dir_tmp.substring(1);
+                            if (dir_tmp.equals("/")) dir="";
+                            else if (dir_tmp.startsWith("/")) dir=dir_tmp.substring(1);
+
                             if (dir.endsWith("/"))
                                 et_sync_folder_dir_name.setText(dir.substring(0, dir.length() - 1));
                             else et_sync_folder_dir_name.setText(dir);
@@ -1089,7 +1100,10 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
                         if (((String)arg1[1]).length()>0) {
-                            String dir = ((String)arg1[1]).equals("/")?"":((String)arg1[1]).substring(1);
+                            String dir_tmp=(String)arg1[1]+"/"+(String)arg1[2];
+                            String dir = "";
+                            if (dir_tmp.equals("/")) dir="";
+                            else if (dir_tmp.startsWith("/")) dir=dir_tmp.substring(1);
                             if (dir.endsWith("/"))
                                 et_sync_folder_dir_name.setText(dir.substring(0, dir.length() - 1));
                             else et_sync_folder_dir_name.setText(dir);
@@ -1563,7 +1577,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        String zip_path = (String) o[1];
+                        String zip_path = (String) o[1]+(String) o[2];
                         String zip_dir="", zip_file="";
                         if (zip_path.lastIndexOf("/")>1) {
                             //Directory付

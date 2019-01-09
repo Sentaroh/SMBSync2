@@ -421,8 +421,8 @@
         <string name="msgs_menu_log_management">ログファイル管理</string>
         <string name="msgs_menu_about">SMBSync2について</string>
         <string name="msgs_menu_settings">設定</string>
-        <string name="msgs_menu_housekeep">強制終了</string>
-        <string name="msgs_menu_kill">管理ファイルの保守</string>
+        <string name="msgs_menu_housekeep">管理ファイルの保守</string>
+        <string name="msgs_menu_kill">強制終了</string>
         <string name="msgs_menu_add_shortcut">ショートカットの追加</string>
         <string name="msgs_menu_list_storage_info">システム情報</string>
         <string name="msgs_menu_show_battery_optimization_screen">バッテリー最適化の表示</string>

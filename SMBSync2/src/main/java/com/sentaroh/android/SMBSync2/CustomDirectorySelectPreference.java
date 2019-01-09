@@ -47,5 +47,6 @@ public class CustomDirectorySelectPreference extends DirectorySelectPreference {
     private void init() {
         this.setShowRootDirectory(false);
         this.setShowMountpointSelector(true);
+        this.setShowMountpointWritable(true);
     }
 }

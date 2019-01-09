@@ -92,8 +92,10 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.BUILD_FOR_AMAZON;
@@ -191,7 +193,7 @@ public class SyncTaskUtil {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                final String fpath = (String) o[0]+(String)o[1];
+                final String fpath = (String) o[0]+o[1]+"/"+(String)o[2];
 
                 NotifyEvent ntfy_pswd = new NotifyEvent(mContext);
                 ntfy_pswd.setListener(new NotifyEventListener() {
@@ -890,7 +892,7 @@ public class SyncTaskUtil {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                final String fpath = (String) o[0]+(String)o[1];
+                final String fpath = (String) o[0]+o[1]+"/"+(String)o[2];
                 NotifyEvent ntfy_pswd = new NotifyEvent(mContext);
                 ntfy_pswd.setListener(new NotifyEventListener() {
                     @Override
@@ -900,7 +902,6 @@ public class SyncTaskUtil {
                         if (!mGp.profilePassword.equals("")) encrypt_required = true;
                         String fd = fpath.substring(0, fpath.lastIndexOf("/"));
                         String fn = fpath.replace(fd + "/", "");
-//		    			Log.v("","fp="+fpath+", fd="+fd+", fn="+fn);
                         exportSyncTaskListToFile(fd, fn, encrypt_required);
                     }
 
@@ -916,9 +917,9 @@ public class SyncTaskUtil {
             }
         });
         String dt= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis());
-        String fn="profile_"+dt.substring(0,10).replaceAll("/","")+"_"+dt.substring(11).replaceAll(":","")+".txt";
+        String fn=APPLICATION_TAG+"_profile_"+dt.substring(0,10).replaceAll("/","-")+"_"+dt.substring(11).replaceAll(":","-")+".txt";
         mCommonDlg.fileSelectorFileOnlySelectWithCreate(true,
-                mGp.internalRootDirectory, "/" + APPLICATION_TAG, fn, mContext.getString(R.string.msgs_select_export_file), ntfy);
+                mGp.internalRootDirectory, "", fn, mContext.getString(R.string.msgs_select_export_file), ntfy);
     }
 
     public void exportSyncTaskListToFile(final String profile_dir, final String profile_filename, final boolean encrypt_required) {
@@ -1563,6 +1564,7 @@ public class SyncTaskUtil {
         smbPass = pass;
     }
 
+    private String mSmbBaseUrl="";
     public void selectRemoteDirectoryDlg(Dialog p_dialog, final boolean show_create) {
 //		final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
 
@@ -1601,7 +1603,7 @@ public class SyncTaskUtil {
         String h_port = "";
         if (ctv_use_port_number.isChecked() && editport.getText().length() > 0)
             h_port = ":" + editport.getText().toString();
-        final String remurl = "smb://" + t_url + h_port + "/" + remote_share + "/";
+        mSmbBaseUrl="smb://" + t_url + h_port + "/" + remote_share + "/";
 
         final ArrayList<TreeFilelistItem> rows = new ArrayList<TreeFilelistItem>();
         NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -1626,7 +1628,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                remoteDirectorySelector(rows, remurl, p_dir, ipc_enforced, smb_proto, show_create, ntfy_sel);
+                remoteDirectorySelector(rows, mSmbBaseUrl, p_dir, ipc_enforced, smb_proto, show_create, ntfy_sel);
             }
 
             @Override
@@ -1636,7 +1638,7 @@ public class SyncTaskUtil {
             }
         });
 //        createRemoteFileList(remurl, p_dir, ipc_enforced, smb_proto, ntfy, true);
-        createRemoteFileList(remurl, "", ipc_enforced, smb_proto, ntfy, true);
+        createRemoteFileList(mSmbBaseUrl, "", ipc_enforced, smb_proto, ntfy, true);
     }
 
     private void remoteDirectorySelector(ArrayList<TreeFilelistItem> rows, String remurl, String p_dir,
@@ -1663,9 +1665,9 @@ public class SyncTaskUtil {
         final Spinner mp = (Spinner) dialog.findViewById(R.id.common_file_selector_storage_spinner);
         mp.setVisibility(LinearLayout.GONE);
         final LinearLayout dir_name_view = (LinearLayout) dialog.findViewById(R.id.common_file_selector_dir_name_view);
-        dir_name_view.setVisibility(LinearLayout.VISIBLE);
+        dir_name_view.setVisibility(LinearLayout.GONE);
         final EditText et_dir_name = (EditText) dialog.findViewById(R.id.common_file_selector_dir_name);
-        et_dir_name.setText(p_dir);
+//        et_dir_name.setText(p_dir);
 //        et_file_name.setVisibility(EditText.GONE);
 
         final CustomTextView tv_home = (CustomTextView) dialog.findViewById(R.id.common_file_selector_filepath);
@@ -1709,19 +1711,20 @@ public class SyncTaskUtil {
             lv.setVisibility(ListView.VISIBLE);
         }
         tfa.setDataList(rows);
+        tfa.setSelectable(false);
         lv.setAdapter(tfa);
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
 
-        if (p_dir.length() != 0)
-            for (int i = 0; i < tfa.getDataItemCount(); i++) {
-                if (tfa.getDataItem(i).getName().equals(p_dir)) {
-                    lv.setSelection(i);
-                    tfa.getDataItem(i).setChecked(true);
-                    tfa.notifyDataSetChanged();
-                    break;
-                }
-            }
+//        if (p_dir.length() != 0)
+//            for (int i = 0; i < tfa.getDataItemCount(); i++) {
+//                if (tfa.getDataItem(i).getName().equals(p_dir)) {
+//                    lv.setSelection(i);
+//                    tfa.getDataItem(i).setChecked(true);
+//                    tfa.notifyDataSetChanged();
+//                    break;
+//                }
+//            }
 
         setTopUpButtonEnabled(dialog, false);
         lv.setOnItemClickListener(new OnItemClickListener() {
@@ -1731,7 +1734,7 @@ public class SyncTaskUtil {
                 if (tfi.isDir()) {
                     final String n_dir=tfi.getPath()+tfi.getName()+"/";
 //                    String t_dir=c_dir.substring(0,c_dir.lastIndexOf("/"));
-                    if (tfi.getSubDirItemCount()>0) {
+                    if (tfi.getSubDirItemCount()>=0) {
                         NotifyEvent ntfy = new NotifyEvent(mContext);
                         ntfy.setListener(new NotifyEventListener() {
                             @Override
@@ -1925,8 +1928,10 @@ public class SyncTaskUtil {
 //                        break;
 //                    }
 //                }
-                String sel=et_dir_name.getText().toString();
-                p_ntfy.notifyToListener(true, new Object[]{sel});
+//                String sel=et_dir_name.getText().toString();
+                String sel=tv_home.getText().toString().replace(mSmbBaseUrl,"");
+                if (sel.endsWith("/")) p_ntfy.notifyToListener(true, new Object[]{sel.substring(0,sel.length()-1)});
+                else p_ntfy.notifyToListener(true, new Object[]{sel});
             }
         });
         //CANCELボタンの指定

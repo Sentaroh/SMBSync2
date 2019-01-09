@@ -2357,12 +2357,13 @@ public class ActivityMain extends AppCompatActivity {
 //				    intent.setType("text/plain");
                     intent.setType("application/zip");
 
-                    if (Build.VERSION.SDK_INT>=26) {
-                        Uri uri=FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", lf);
-                        intent.putExtra(Intent.EXTRA_STREAM, uri);
-                    } else {
-                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
-                    }
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
+//                    if (Build.VERSION.SDK_INT>=26) {
+//                        Uri uri=FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", lf);
+//                        intent.putExtra(Intent.EXTRA_STREAM, uri);
+//                    } else {
+//                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
+//                    }
                     mContext.startActivity(intent);
 
                 } else {

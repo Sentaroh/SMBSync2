@@ -30,18 +30,18 @@
           android:title="@string/msgs_menu_log_management"
           />
     <item android:id="@+id/menu_top_housekeep"
-          android:title="@string/msgs_menu_housekeep" 
+          android:title="@string/msgs_menu_housekeep"
           />
-    
+
     <item android:id="@+id/menu_top_settings"
-          android:title="@string/msgs_menu_settings" 
+          android:title="@string/msgs_menu_settings"
           android:icon="@android:drawable/ic_menu_preferences"
           />
 
     <item android:id="@+id/menu_top_show_battery_optimization"
       	  android:title="@string/msgs_menu_show_battery_optimization_screen"
     	  />
-    
+
     <item android:id="@+id/menu_top_kill"
           android:title="@string/msgs_menu_kill" 
           android:icon="@android:drawable/ic_menu_close_clear_cancel"

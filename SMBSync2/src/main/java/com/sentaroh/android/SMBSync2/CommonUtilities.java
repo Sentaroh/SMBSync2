@@ -335,6 +335,32 @@ public final class CommonUtilities {
         return result;
     }
 
+    public static String getIfHwAddress(String if_name) {
+        String result = "";
+        boolean exit = false;
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+//	            	Log.v("SMBSync2","ip="+inetAddress.getHostAddress()+", name="+intf.getName());
+                    if (inetAddress.isSiteLocalAddress() && (inetAddress instanceof Inet4Address)) {
+                        if (intf.getName().equals(if_name)) {
+                            for(int i=0;i<intf.getHardwareAddress().length;i++) result += String.format("%2h",intf.getHardwareAddress()[i]).replaceAll(" ","0");
+                            exit = true;
+                            break;
+                        }
+                    }
+                }
+                if (exit) break;
+            }
+        } catch (SocketException ex) {
+            Log.e(APPLICATION_TAG, ex.toString());
+//            result = "192.168.0.1";
+        }
+        return result;
+    }
+
     private void sendMagicPacket(final String target_mac, final String if_network) {
 //                sendMagicPacket("08:bd:43:f6:48:2a", if_ip);
         Thread th=new Thread(){
