@@ -210,15 +210,17 @@ public class SyncService extends Service {
                 action.equals(Intent.ACTION_MEDIA_EJECT)) {
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             final String sdcard = mGp.safMgr.getSdcardRootPath();
+            final String usb_flash = mGp.safMgr.getUsbRootPath();
             Thread th = new Thread() {
                 @Override
                 public void run() {
                     int count = 10;
                     while (count > 0) {
                         mGp.refreshMediaDir();
-                        if (//!usb.equals(mGp.safMgr.getUsbFileSystemDirectory()) ||
+                        if (!usb_flash.equals(mGp.safMgr.getUsbRootPath()) ||
                                 !sdcard.equals(mGp.safMgr.getSdcardRootPath())) {
-                            mUtil.addDebugMsg(1, "I", "New media directory, sdcard=" + mGp.safMgr.getSdcardRootPath() );
+                            mUtil.addDebugMsg(1, "I", "Media directory, SDCARD=" + mGp.safMgr.getSdcardRootPath() );
+                            mUtil.addDebugMsg(1, "I", "Media directory, USB=" + mGp.safMgr.getUsbRootPath() );
                             if (mGp.callbackStub != null) {
                                 try {
                                     mGp.callbackStub.cbMediaStatusChanged();
@@ -260,6 +262,7 @@ public class SyncService extends Service {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         unregisterReceiver(mWifiReceiver);
         unregisterReceiver(mSleepReceiver);
+//        unregisterReceiver(mUsbReceiver);
         stopForeground(true);
         if (mGp.notificationLastShowedMessage != null && !mGp.notificationLastShowedMessage.equals("")) {
             showSyncEndNotificationMessage();

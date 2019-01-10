@@ -895,8 +895,8 @@ public class SyncTaskEditor extends DialogFragment {
                 });
 //                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "/"+et_sync_folder_dir_name.getText().toString(),
 //                        mContext.getString(R.string.msgs_select_local_dir), ntfy);
-                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "/",
-                        mContext.getString(R.string.msgs_select_local_dir), ntfy);
+                if (sfev.folder_master) mCommonDlg.fileSelectorDirOnlyHideMP(false, url, "/", mContext.getString(R.string.msgs_select_local_dir), ntfy);
+                else mCommonDlg.fileSelectorDirOnlyWithCreateHideMP(false, url, "/", mContext.getString(R.string.msgs_select_local_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
         });
@@ -990,8 +990,7 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, "");
                     }
                 });
-                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "",
-                        mContext.getString(R.string.msgs_select_local_dir), ntfy);
+                mCommonDlg.fileSelectorDirOnlyHideMP(false, url, "", mContext.getString(R.string.msgs_select_local_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
         });
@@ -1117,8 +1116,7 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, "");
                     }
                 });
-                mCommonDlg.fileSelectorDirOnlySelectWithCreateHideMP(false, url, "",
-                        mContext.getString(R.string.msgs_select_local_dir), ntfy);
+                mCommonDlg.fileSelectorDirOnlyWithCreateHideMP(false, url, "", mContext.getString(R.string.msgs_select_local_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
         });
@@ -1604,10 +1602,8 @@ public class SyncTaskEditor extends DialogFragment {
                     }
                 });
                 String title = mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_select_file_title);
-                if (!ctv_zip_file_save_sdcard.isChecked())
-                    mCommonDlg.fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.internalRootDirectory, "", "", title, ntfy);
-                else
-                    mCommonDlg.fileSelectorFileOnlySelectWithCreateHideMP(true, mGp.safMgr.getSdcardRootPath(), "", "", title, ntfy);
+                if (!ctv_zip_file_save_sdcard.isChecked()) mCommonDlg.fileSelectorFileOnlyWithCreateHideMP(true, mGp.internalRootDirectory, "", "", title, ntfy);
+                else mCommonDlg.fileSelectorFileOnlyWithCreateHideMP(true, mGp.safMgr.getSdcardRootPath(), "", "", title, ntfy);
             }
         });
         et_zip_file.addTextChangedListener(new TextWatcher() {

@@ -628,7 +628,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_sync_folder_archive_output_image">Saved files and directories (indicated date/time is not the date/time of image capture)</string>
         <string name="msgs_sync_folder_archive_rename_rule">Change the file name and store it in the specified directory when archive</string>
         <string name="msgs_sync_folder_archive_seq_number_title">Sequence number</string>
-        <string name="msgs_sync_folder_archive_create_directory">Create destination directory for destination files if directory does not already exist.</string>
+        <string name="msgs_sync_folder_archive_create_directory">Create a directory based on the date taken when archiving and store the file.</string>
         <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Time</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">Original Name</string>

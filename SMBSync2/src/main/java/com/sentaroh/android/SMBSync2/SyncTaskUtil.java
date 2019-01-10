@@ -202,8 +202,7 @@ public class SyncTaskUtil {
                         mGp.profilePassword = (String) o[0];
                         AdapterSyncTask tfl = null;
                         if (isSyncTaskListFileOldFormat(fpath)) {
-                            tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view,
-                                    ImportOldProfileList.importOldProfileList(mGp, fpath), mGp);
+                            tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, ImportOldProfileList.importOldProfileList(mGp, fpath), mGp);
                         } else {
                             tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view,
                                     createSyncTaskListFromFile(mContext, mGp, mUtil, true, fpath, importedSettingParmList), mGp);
@@ -211,8 +210,7 @@ public class SyncTaskUtil {
                         if (tfl.getCount() > 0) {
                             selectImportProfileItem(tfl, p_ntfy);
                         } else {
-                            mCommonDlg.showCommonDialog(false, "W",
-                                    mContext.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
+                            mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
                             p_ntfy.notifyToListener(false, null);
                         }
                     }
@@ -232,7 +230,7 @@ public class SyncTaskUtil {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        mCommonDlg.fileSelectorFileOnlySelectWithCreate(true,
+        mCommonDlg.fileSelectorFileOnly(true,
                 mGp.internalRootDirectory, "", "", mContext.getString(R.string.msgs_select_import_file), ntfy);
 //                mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_import_file), ntfy);
     }
@@ -918,7 +916,7 @@ public class SyncTaskUtil {
         });
         String dt= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis());
         String fn=APPLICATION_TAG+"_profile_"+dt.substring(0,10).replaceAll("/","-")+"_"+dt.substring(11).replaceAll(":","-")+".txt";
-        mCommonDlg.fileSelectorFileOnlySelectWithCreate(true,
+        mCommonDlg.fileSelectorFileOnlyWithCreate(true,
                 mGp.internalRootDirectory, "", fn, mContext.getString(R.string.msgs_select_export_file), ntfy);
     }
 
