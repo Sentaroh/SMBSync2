@@ -85,7 +85,7 @@
         <string name="msgs_export_prof_title">タスクの書き出し</string>
         <string name="msgs_extra_data_sync_profile_type_error">SyncProfileはStringで指定されていません、同期を中止します。</string>
         <string name="msgs_filelist_cancel">ファイルリスト作成は中断しました。</string>
-        <string name="msgs_filelist_error">リモートリスト作成中にエラーが発生しました。</string>
+        <string name="msgs_filelist_error">SMBフォルダーリスト作成中にエラーが発生しました。</string>
         <string name="msgs_filter_edit_dlg_title">フィルター編集</string>
         <string name="msgs_filter_list_dlg_add">追加</string>
         <string name="msgs_filter_list_dlg_add_dir_filter">ディレクトリー フィルター追加</string>
@@ -269,7 +269,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">共有一覧</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">ポート番号を指定する</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">アカウント名</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">リモートSMBサーバーの検索</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">SMBサーバーの検索</string>
         <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">SDCARDの選択</string>
         <string name="msgs_profile_edit_sync_folder_dlg_select_usb">USBメディアの選択</string>
         <string name="msgs_profile_edit_sync_folder_dlg_show_password">パスワードの表示</string>
@@ -383,11 +383,13 @@
         <string name="msgs_remote_profile_dlg_logon_success">ログオンが正常に完了しました</string>
         <string name="msgs_rename_profile">タスク名前変更</string>
         <string name="msgs_save_to_profile_error">タスクの保存に失敗しました。ファイル=%s</string>
-        <string name="msgs_select_export_file">タスク書き出し先の選択</string>
-        <string name="msgs_select_import_file">取り込むタスクの選択</string>
-        <string name="msgs_select_local_dir">ローカルディレクトリの選択</string>
-        <string name="msgs_select_remote_dir">リモートディレクトリの選択</string>
-        <string name="msgs_select_remote_share">共有の選択</string>
+        <string name="msgs_select_export_file">「タスク書き出し」先ファイルの選択</string>
+        <string name="msgs_select_import_file">「タスク取り込み」元ファイルの選択</string>
+        <string name="msgs_select_local_dir">内部ストレージディレクトリの選択</string>
+        <string name="msgs_select_sdcard_dir">SDCARDディレクトリの選択</string>
+        <string name="msgs_select_usb_dir">USBメディア ディレクトリの選択</string>
+        <string name="msgs_select_remote_dir">SMBディレクトリの選択</string>
+        <string name="msgs_select_remote_share">SMB共有の選択</string>
         <string name="msgs_share_list_not_obtained">共有名の一覧が取得できませんでした。アクセス権のあるアカウントを指定して再度取得するか、共有名を直接入力してください。</string>
         <string name="msgs_smbsync_main_no_external_storage">外部メディアが使用できないため、いくつかの機能が使用できません。</string>
         <string name="msgs_smbsync_main_restart_by_destroyed">アプリケーションはアクティビティの破棄により終了しました。 設定->開発者向オプションで「アクティビティを保持しない」を有効にしているのであれば無効にしてください。</string>
@@ -503,10 +505,10 @@
         <string name="msgs_scan_ip_address_select_title">SMBサーバーの検索</string>
         <string name="msgs_scan_ip_address_scan_btn">検索開始</string>
         <string name="msgs_scan_ip_address_press_scan_btn">IPアドレスを指定して、検索ボタンを押してください。</string>
-        <string name="msgs_scan_ip_address_not_detected">リモートSMBホストが検知できませんでした。</string>
+        <string name="msgs_scan_ip_address_not_detected">SMBサーバーが検知できませんでした。</string>
         <string name="msgs_scan_ip_address_select_detected_host">検索結果のIPアドレスかホスト名をタップして選択してください。</string>
         <string name="msgs_scan_ip_address_scan_result_title">検索結果</string>
-        <string name="msgs_ip_address_scan_progress">リモートSMBホスト 検索が%s%% 終了</string>
+        <string name="msgs_ip_address_scan_progress">SMBサーバー 検索が%s%% 終了</string>
         <string name="msgs_ip_address_range_dlg_begin">開始</string>
         <string name="msgs_ip_address_range_dlg_end">終了</string>
         <string name="msgs_ip_address_range_dlg_begin_notspecified">開始アドレスが指定されていません。</string>
@@ -519,7 +521,7 @@
         <string name="msgs_progress_dlg_canceling">キャンセルしています</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">ファイルリスト取得中</string>
         <string name="msgs_progress_spin_dlg_filelist_cancel">ファイルリスト取得を中止</string>
-        <string name="msgs_progress_spin_dlg_test_logon">リモートにログオン中</string>
+        <string name="msgs_progress_spin_dlg_test_logon">SMBにログオン中</string>
         <string name="msgs_progress_spin_dlg_test_logon_cancel">ログオンを中止</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">スケジュール</string>

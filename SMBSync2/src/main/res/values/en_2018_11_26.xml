@@ -85,7 +85,7 @@
         <string name="msgs_export_prof_title">Export Task List</string>
         <string name="msgs_extra_data_sync_profile_type_error">Canceled the sync, because Sync not String.</string>
         <string name="msgs_filelist_cancel">Create remote file list cancelled.</string>
-        <string name="msgs_filelist_error">An error occurred while creating the remote file list.</string>
+        <string name="msgs_filelist_error">An error occurred while creating the SMB file list.</string>
         <string name="msgs_filter_edit_dlg_title">Edit Filter</string>
         <string name="msgs_filter_list_dlg_add">Add</string>
         <string name="msgs_filter_list_dlg_add_dir_filter">Add directory filter</string>
@@ -389,7 +389,9 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_select_export_file">Select export file</string>
         <string name="msgs_select_import_file">Select import file</string>
         <string name="msgs_select_local_dir">Select local directory</string>
-        <string name="msgs_select_remote_dir">Select remote directory</string>
+        <string name="msgs_select_sdcard_dir">Select SDCARD directory</string>
+        <string name="msgs_select_usb_dir">Select USB Media directory</string>
+        <string name="msgs_select_remote_dir">Select SMB directory</string>
         <string name="msgs_select_remote_share">Select SMB share</string>
         <string name="msgs_share_list_not_obtained">Unable to find SMB shares.  Ensure correct account name and password are specified and try again, or specify share name manually.</string>
         <string name="msgs_smbsync_main_no_external_storage">External storage was not mounted. Some functions are not available.</string>
@@ -522,7 +524,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_progress_dlg_canceling">Cancelling…</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Obtaining file list…</string>
         <string name="msgs_progress_spin_dlg_filelist_cancel">Cancel</string>
-        <string name="msgs_progress_spin_dlg_test_logon">Logon to SMB host</string>
+        <string name="msgs_progress_spin_dlg_test_logon">Logon to SMB server</string>
         <string name="msgs_progress_spin_dlg_test_logon_cancel">Cancel logon</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Schedule</string>

@@ -67,6 +67,7 @@ import com.sentaroh.android.Utilities.EncryptUtil;
 import com.sentaroh.android.Utilities.EncryptUtil.CipherParms;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
+import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistAdapter;
@@ -81,10 +82,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.net.Inet4Address;
@@ -5749,22 +5753,37 @@ public class SyncTaskUtil {
         try {
             CipherParms cp_sdcard = null;
             CipherParms cp_int = null;
+            String tmp_path="";
             if (sdcard) {
+                OutputStream pos=null;
+                if (fd.startsWith(mGp.safMgr.getSdcardRootPath())) {
+                    tmp_path=fp;
+                    SafFile of=mGp.safMgr.createSdcardFile(tmp_path);
+                    pos=mGp.appContext.getContentResolver().openOutputStream(of.getUri());
+                } else if (fd.startsWith(mGp.safMgr.getUsbRootPath())) {
+                    tmp_path=fp;
+                    SafFile of=mGp.safMgr.createUsbFile(tmp_path);
+                    pos=mGp.appContext.getContentResolver().openOutputStream(of.getUri());
+                } else {
+                    tmp_path=fp;
+                    pos=new FileOutputStream(tmp_path);
+                }
                 if (encrypt_required) {
                     cp_sdcard = EncryptUtil.initEncryptEnv(mGp.profileKeyPrefix + mGp.profilePassword);
                 }
-                File lf = new File(fd);
-                if (!lf.exists()) lf.mkdir();
-                bw = new BufferedWriter(new FileWriter(fp), 8192);
+//                File lf = new File(fd);
+//                if (!lf.exists()) lf.mkdir();
+                bw = new BufferedWriter(new OutputStreamWriter(pos), 8192);
                 pw = new PrintWriter(bw);
-                ofp = fp;
+                ofp = tmp_path;
                 if (encrypt_required) {
                     byte[] enc_array = EncryptUtil.encrypt(SMBSYNC2_PROF_ENC, cp_sdcard);
-                    String enc_str =
-                            Base64Compat.encodeToString(enc_array, Base64Compat.NO_WRAP);
+                    String enc_str = Base64Compat.encodeToString(enc_array, Base64Compat.NO_WRAP);
 //					MiscUtil.hexString("", enc_array, 0, enc_array.length);
                     pw.println(CURRENT_SMBSYNC2_PROFILE_VERSION + SMBSYNC2_PROF_ENC + enc_str);
-                } else pw.println(CURRENT_SMBSYNC2_PROFILE_VERSION + SMBSYNC2_PROF_DEC);
+                } else {
+                    pw.println(CURRENT_SMBSYNC2_PROFILE_VERSION + SMBSYNC2_PROF_DEC);
+                }
             } else {
                 String priv_key=KeyStoreUtil.getGeneratedPassword(c, SMBSYNC2_KEY_STORE_ALIAS);
                 cp_int = EncryptUtil.initDecryptEnv(priv_key);
@@ -6004,12 +6023,14 @@ public class SyncTaskUtil {
                         } else {
                             pw.println(CURRENT_SMBSYNC2_PROFILE_VERSION + pl);
                         }
-                        saveSettingsParmsToFile(c, pw, encrypt_required, cp_sdcard);
                     } else {
                         String enc =Base64Compat.encodeToString(EncryptUtil.encrypt(pl, cp_int), Base64Compat.NO_WRAP);
                         pw.println(CURRENT_SMBSYNC2_PROFILE_VERSION + enc);
                     }
 
+                }
+                if (sdcard) {
+                    saveSettingsParmsToFile(c, pw, encrypt_required, cp_sdcard);
                 }
             }
             pw.close();

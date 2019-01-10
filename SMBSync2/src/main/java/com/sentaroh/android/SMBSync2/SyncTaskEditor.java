@@ -990,7 +990,7 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, "");
                     }
                 });
-                mCommonDlg.fileSelectorDirOnlyHideMP(false, url, "", mContext.getString(R.string.msgs_select_local_dir), ntfy);
+                mCommonDlg.fileSelectorDirOnlyWithCreateHideMP(false, url, "", mContext.getString(R.string.msgs_select_sdcard_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
         });
@@ -1116,7 +1116,7 @@ public class SyncTaskEditor extends DialogFragment {
                         setDialogMsg(dlg_msg, "");
                     }
                 });
-                mCommonDlg.fileSelectorDirOnlyWithCreateHideMP(false, url, "", mContext.getString(R.string.msgs_select_local_dir), ntfy);
+                mCommonDlg.fileSelectorDirOnlyWithCreateHideMP(false, url, "", mContext.getString(R.string.msgs_select_usb_dir), ntfy);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
             }
         });
