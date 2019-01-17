@@ -217,8 +217,8 @@ public class ActivityMain extends AppCompatActivity {
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET);
         setSyncTaskContextButtonHide();
 
-        Intent intmsg = new Intent(mContext, SyncService.class);
-        startService(intmsg);
+//        Intent intmsg = new Intent(mContext, SyncService.class);
+//        startService(intmsg);
 
         Thread th1 = new Thread() {
             @Override
@@ -1972,15 +1972,17 @@ public class ActivityMain extends AppCompatActivity {
                 if (!mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
                     if (!mGp.safMgr.isRootTreeUri(data.getData())) {
                         mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
-                        mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
+                        String em=mGp.safMgr.getLastErrorMessage();
+                        if (em.length()>0) mUtil.addDebugMsg(1, "I", "SafMessage="+em);
                         reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
                     } else {
                         mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
-                        mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
+                        String em=mGp.safMgr.getLastErrorMessage();
+                        if (em.length()>0) mUtil.addDebugMsg(1, "I", "SafMessage="+em);
                         if (mGp.safMgr.isRootTreeUri(data.getData())) {
                             boolean rc=mGp.safMgr.addSdcardUuid(data.getData());
                             if (!rc) {
-                                String saf_msg=mGp.safMgr.getMessages();
+                                String saf_msg=mGp.safMgr.getLastErrorMessage();
                                 commonDlg.showCommonDialog(false, "W", "SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
                                 mUtil.addLogMsg("E", "SDCARD UUID registration failed, please reselect SDCARD\n", saf_msg);
                             }
@@ -2014,11 +2016,13 @@ public class ActivityMain extends AppCompatActivity {
                 if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
                     if (!mGp.safMgr.isRootTreeUri(data.getData())) {
                         mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
-                        mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
+                        String em=mGp.safMgr.getLastErrorMessage();
+                        if (em.length()>0) mUtil.addDebugMsg(1, "I", "SafMessage="+em);
                         reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg));
                     } else {
                         mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
-                        mUtil.addDebugMsg(1, "I", "SafMessage="+mGp.safMgr.getMessages());
+                        String em=mGp.safMgr.getLastErrorMessage();
+                        if (em.length()>0) mUtil.addDebugMsg(1, "I", "SafMessage="+em);
                         if (mGp.safMgr.isRootTreeUri(data.getData())) {
                             String uuid=mGp.safMgr.getUuidFromUri(data.getData().toString());
                             File tf=new File("/storage/"+uuid);
@@ -2029,7 +2033,7 @@ public class ActivityMain extends AppCompatActivity {
                             } else {
                                 boolean rc=mGp.safMgr.addUsbUuid(data.getData());
                                 if (!rc) {
-                                    String saf_msg=mGp.safMgr.getMessages();
+                                    String saf_msg=mGp.safMgr.getLastErrorMessage();
                                     commonDlg.showCommonDialog(false, "W", "USB Media UUID registration failed, please reselect USB Media", saf_msg, null);
                                     mUtil.addLogMsg("E", "USB Media UUID registration failed, please reselect USB Media\n", saf_msg);
                                 }
