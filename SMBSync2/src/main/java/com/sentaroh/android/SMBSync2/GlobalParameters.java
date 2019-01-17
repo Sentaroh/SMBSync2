@@ -62,6 +62,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.LoggerWriter;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -288,9 +293,29 @@ public class GlobalParameters extends CommonGlobalParms {
         internalRootDirectory = Environment.getExternalStorageDirectory().toString();//getInternalStorageRootDirectory();
         applicationRootDirectory = appContext.getFilesDir().toString();
 
+        LogUtil jcifs_ng_lu = new LogUtil(appContext, "SLF4J", this);
+        LogUtil jcifs_old_lu = new LogUtil(appContext, "JCIFS-V1", this);
+
+        PrintStream ps= null;
+        OutputStream os=new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+            }
+            @Override
+            public void write(byte[] buff) throws IOException {
+                String msg=new String(buff,"UTF-8");
+                if (!msg.equals("\n")) jcifs_old_lu.addDebugMsg(2,"I",msg);
+            }
+            @Override
+            public void write(byte[] buff, int buff_offset, int buff_length) throws IOException {
+                String msg=new String(buff,buff_offset,buff_length, "UTF-8");
+                if (!msg.equals("\n")) jcifs_old_lu.addDebugMsg(2,"I",msg);
+            }
+        };
+        ps=new PrintStream(os);
+        LogStream.setInstance(ps);
         logStream=LogStream.getInstance();//Initial create JCIFS logStream object
 
-        LogUtil jcifs_ng_lu = new LogUtil(appContext, "JCIFS-NG", this);
         JcifsNgLogWriter jcifs_ng_lw=new JcifsNgLogWriter(jcifs_ng_lu);
         slf4jLog.setWriter(jcifs_ng_lw);
 

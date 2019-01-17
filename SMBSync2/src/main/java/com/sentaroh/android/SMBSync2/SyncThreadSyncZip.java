@@ -238,7 +238,7 @@ public class SyncThreadSyncZip {
             if (dest.exists()) dest.delete();
             boolean mv=out.moveTo(dest);
             if (!mv) {
-                String emsg="SafFile moveTo() error\n"+stwa.gp.safMgr.getMessages();
+                String emsg="SafFile moveTo() error\n"+out.getLastErrorMessage();
                 SyncThread.showMsg(stwa, true, stwa.currentSTI.getSyncTaskName(), "I", "", "",
                         CommonUtilities.getExecutedMethodName() + " to=" + to_dir + file_path);
                 SyncThread.showMsg(stwa, true, stwa.currentSTI.getSyncTaskName(), "I", "", "", emsg);

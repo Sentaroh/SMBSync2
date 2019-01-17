@@ -55,7 +55,7 @@ public class SyncThreadCopyFile {
         stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
+        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/"+System.currentTimeMillis();
 
         File out_file = new File(to_file_temp);
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
@@ -167,7 +167,7 @@ public class SyncThreadCopyFile {
         SafFile to_sf=SyncThread.createSafFile(stwa, sti, to_file_dest);
         if (to_sf.exists()) to_sf.delete();
         if (!temp_sf.moveTo(to_sf)) {
-            stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+temp_sf.getMessages());
+            stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+temp_sf.getLastErrorMessage());
             if (temp_file.exists()) temp_file.delete();
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
@@ -360,7 +360,7 @@ public class SyncThreadCopyFile {
         File tlf = new File(to_dir + "/" + file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
+        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/"+System.currentTimeMillis();
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
@@ -434,7 +434,7 @@ public class SyncThreadCopyFile {
         SafFile to_sf=SyncThread.createSafFile(stwa, sti, to_file_dest);
         if (to_sf.exists()) to_sf.delete();
         if (!from_sf.moveTo(to_sf)) {
-            stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+from_sf.getMessages());
+            stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+from_sf.getLastErrorMessage());
             if (temp_file.exists()) temp_file.delete();
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
@@ -566,7 +566,7 @@ public class SyncThreadCopyFile {
         stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
+        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/"+System.currentTimeMillis();
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
@@ -633,7 +633,7 @@ public class SyncThreadCopyFile {
         SafFile to_sf=SyncThread.createSafFile(stwa, sti, to_file_dest);
         if (to_sf.exists()) to_sf.delete();
         if (!from_sf.moveTo(to_sf)) {
-            stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+from_sf.getMessages());
+            stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+from_sf.getLastErrorMessage());
             if (temp_file.exists()) temp_file.delete();
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }

@@ -770,7 +770,7 @@ public class SyncThread extends Thread {
                     mGp.syncThreadCtrl.setThreadResultError();
                     String end_msg = ex.toString() + st_msg;
                     if (mStwa.gp.safMgr != null) {
-                        String saf_msg=mStwa.gp.safMgr.getMessages();
+                        String saf_msg=mStwa.gp.safMgr.getLastErrorMessage();
                         if (saf_msg.length()>0) end_msg += "\n\nSafManager Messages\n" + saf_msg;
 
                         end_msg += "\n" + "getSdcardRootPath=" + mGp.safMgr.getSdcardRootPath();
@@ -2289,9 +2289,9 @@ public class SyncThread extends Thread {
                 String saf_name = "";
                 SafFile sf = stwa.gp.safMgr.getSdcardRootSafFile();
                 if (sf != null) saf_name = sf.getName();
-                stwa.util.addLogMsg("E", "SAF file not found error. path=" + fp + ", SafFile=" + saf_name +
+                stwa.util.addLogMsg("E", "SDCARD file create error. path=" + fp + ", SafFile=" + saf_name +
                         ", sdcard=" + stwa.gp.safMgr.getSdcardRootPath());
-                stwa.util.addLogMsg("E", "SafManager msg="+stwa.gp.safMgr.getMessages() );
+                stwa.util.addLogMsg("E", "SafManager msg="+stwa.gp.safMgr.getLastErrorMessage() );
                 return null;
             }
         } else {
@@ -2300,9 +2300,9 @@ public class SyncThread extends Thread {
                 String saf_name = "";
                 SafFile sf = stwa.gp.safMgr.getUsbRootSafFile();
                 if (sf != null) saf_name = sf.getName();
-                stwa.util.addLogMsg("E", "SAF file not found error. path=" + fp + ", SafFile=" + saf_name +
+                stwa.util.addLogMsg("E", "USB file create error. path=" + fp + ", SafFile=" + saf_name +
                         ", usb=" + stwa.gp.safMgr.getUsbRootPath());
-                stwa.util.addLogMsg("E", "SafManager msg="+stwa.gp.safMgr.getMessages() );
+                stwa.util.addLogMsg("E", "SafManager msg="+stwa.gp.safMgr.getLastErrorMessage() );
                 return null;
             }
         }

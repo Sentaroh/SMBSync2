@@ -12,7 +12,7 @@ android {
         targetSdkVersion 26  //Android 8.0
 
 //
-        versionCode 158
+        versionCode 159
         versionName "1.84"
 
         compileOptions {
@@ -78,9 +78,9 @@ dependencies {
     implementation files('libs/JcifsFile-1.0.2.jar')
 //    implementation files('libs/slf4j-api-1.7.7.jar')
     implementation files('libs/bcprov-jdk15on-158.jar')
-    implementation files('libs/WrapperForSlf4j-1.0.2.jar')
+//    implementation files('libs/WrapperForSlf4j-1.0.2.jar')
 
-    implementation files('libs/Utilities-1.0.13.aar')
+    implementation files('libs/Utilities-1.0.14.aar')
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:preference-v7:26.1.0'
