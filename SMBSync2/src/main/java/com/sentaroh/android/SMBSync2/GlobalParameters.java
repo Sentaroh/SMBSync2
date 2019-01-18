@@ -293,8 +293,8 @@ public class GlobalParameters extends CommonGlobalParms {
         internalRootDirectory = Environment.getExternalStorageDirectory().toString();//getInternalStorageRootDirectory();
         applicationRootDirectory = appContext.getFilesDir().toString();
 
-        LogUtil jcifs_ng_lu = new LogUtil(appContext, "SLF4J", this);
-        LogUtil jcifs_old_lu = new LogUtil(appContext, "JCIFS-V1", this);
+        final LogUtil jcifs_ng_lu = new LogUtil(appContext, "SLF4J", this);
+        final LogUtil jcifs_old_lu = new LogUtil(appContext, "JCIFS-V1", this);
 
         PrintStream ps= null;
         OutputStream os=new OutputStream() {
@@ -304,12 +304,12 @@ public class GlobalParameters extends CommonGlobalParms {
             @Override
             public void write(byte[] buff) throws IOException {
                 String msg=new String(buff,"UTF-8");
-                if (!msg.equals("\n")) jcifs_old_lu.addDebugMsg(2,"I",msg);
+                if (!msg.equals("\n")) jcifs_old_lu.addDebugMsg(0,"I",msg);
             }
             @Override
             public void write(byte[] buff, int buff_offset, int buff_length) throws IOException {
                 String msg=new String(buff,buff_offset,buff_length, "UTF-8");
-                if (!msg.equals("\n")) jcifs_old_lu.addDebugMsg(2,"I",msg);
+                if (!msg.equals("\n")) jcifs_old_lu.addDebugMsg(0,"I",msg);
             }
         };
         ps=new PrintStream(os);
@@ -447,13 +447,13 @@ public class GlobalParameters extends CommonGlobalParms {
             LogStream.setLevel(1);
             slf4jLog.setLogOption(false, true, false, false, false);
         } else if (settingDebugLevel==1) {
-            LogStream.setLevel(1);
+            LogStream.setLevel(2);
             slf4jLog.setLogOption(false, true, true, false, false);
         } else if (settingDebugLevel==2) {
-            LogStream.setLevel(3);
+            LogStream.setLevel(5);
             slf4jLog.setLogOption(true, true, true, true, true);
         } else if (settingDebugLevel==3) {
-            LogStream.setLevel(4);
+            LogStream.setLevel(5);
             slf4jLog.setLogOption(true, true, true, true, true);
         }
         settingExitClean=prefs.getBoolean(appContext.getString(R.string.settings_exit_clean), true);
