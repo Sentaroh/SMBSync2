@@ -67,6 +67,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -300,16 +301,28 @@ public class GlobalParameters extends CommonGlobalParms {
         OutputStream os=new OutputStream() {
             @Override
             public void write(int b) throws IOException {
+                byte[] buff = ByteBuffer.allocate(4).putInt(b).array();
+//                String msg=new String(buff,"UTF-8");
+//                if (!msg.equals("\n")) jcifs_old_lu.addDebugMsg(0,"I",msg);
+//                Log.v("SMBSync2",StringUtil.getHexString(buff,0,4));
             }
             @Override
             public void write(byte[] buff) throws IOException {
-                String msg=new String(buff,"UTF-8");
-                if (!msg.equals("\n")) jcifs_old_lu.addDebugMsg(0,"I",msg);
+                if (buff.length==1 && buff[0]!=0x0a) {
+                } else {
+                    String msg=new String(buff,"UTF-8");
+                    if (!msg.equals("\n") && msg.replaceAll(" ","").length()>0) jcifs_old_lu.addDebugMsg(0,"I",msg);
+//                    Log.v("SMBSync2",StringUtil.getHexString(buff,0,buff.length));
+                }
             }
             @Override
             public void write(byte[] buff, int buff_offset, int buff_length) throws IOException {
-                String msg=new String(buff,buff_offset,buff_length, "UTF-8");
-                if (!msg.equals("\n")) jcifs_old_lu.addDebugMsg(0,"I",msg);
+                if (buff_length==1 && buff[buff_offset]!=0x0a) {
+                } else {
+                    String msg=new String(buff,buff_offset,buff_length, "UTF-8");
+                    if (!msg.equals("\n") && msg.replaceAll(" ","").length()>0) jcifs_old_lu.addDebugMsg(0,"I",msg);
+//                    Log.v("SMBSync2",StringUtil.getHexString(buff,buff_offset,buff_length));
+                }
             }
         };
         ps=new PrintStream(os);
