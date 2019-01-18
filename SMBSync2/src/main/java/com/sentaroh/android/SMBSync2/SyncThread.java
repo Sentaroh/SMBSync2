@@ -984,6 +984,25 @@ public class SyncThread extends Thread {
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
                 sync_result = SyncThreadArchiveFile.syncArchiveExternalToExternal(mStwa, sti, from, to);
             }
+        } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
+                sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
+            //External to External
+            from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
+            to_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getTargetDirectoryName());
+
+            to = replaceKeywordValue(to_temp, time_millis);
+
+            mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-USB From=" + from + ", To=" + to);
+
+            if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
+                sync_result = SyncThreadSyncFile.syncCopyExternalToExternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) {
+                sync_result = SyncThreadSyncFile.syncMoveExternalToExternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
+                sync_result = SyncThreadSyncFile.syncMirrorExternalToExternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveExternalToExternal(mStwa, sti, from, to);
+            }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
             //External to External
@@ -993,6 +1012,25 @@ public class SyncThread extends Thread {
             to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync USB-To-USB From=" + from + ", To=" + to);
+
+            if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
+                sync_result = SyncThreadSyncFile.syncCopyExternalToExternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) {
+                sync_result = SyncThreadSyncFile.syncMoveExternalToExternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
+                sync_result = SyncThreadSyncFile.syncMirrorExternalToExternal(mStwa, sti, from, to);
+            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                sync_result = SyncThreadArchiveFile.syncArchiveExternalToExternal(mStwa, sti, from, to);
+            }
+        } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB) &&
+                sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
+            //External to External
+            from = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
+            to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
+
+            to = replaceKeywordValue(to_temp, time_millis);
+
+            mStwa.util.addDebugMsg(1, "I", "Sync USB-To-SDCARD From=" + from + ", To=" + to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyExternalToExternal(mStwa, sti, from, to);
