@@ -2754,6 +2754,7 @@ public class SyncTaskEditor extends DialogFragment {
 
     public void editSyncTask(final String type, final SyncTaskItem pfli) {
         final SyncTaskItem n_sti = pfli.clone();
+        mUtil.addDebugMsg(1,"I","EditSyncTask entered, type="+type+", task="+pfli.getSyncTaskName());
 
         mGp.safMgr.loadSafFile();
 
@@ -3675,6 +3676,7 @@ public class SyncTaskEditor extends DialogFragment {
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
+                            mUtil.addDebugMsg(1,"I","EditSyncTask edit cancelled, type="+type+", task="+pfli.getSyncTaskName());
                             mFragment.dismiss();
                             if (mNotifyComplete != null)
                                 mNotifyComplete.notifyToListener(false, null);
@@ -3743,6 +3745,7 @@ public class SyncTaskEditor extends DialogFragment {
                         if (mNotifyComplete != null) mNotifyComplete.notifyToListener(true, null);
                         SyncTaskUtil.saveSyncTaskListToFile(mGp, mContext, mUtil, false, "", "", mGp.syncTaskList, false);
                         mFragment.dismissAllowingStateLoss();
+                        mUtil.addDebugMsg(1,"I","EditSyncTask edit saved, type="+type+", task="+new_stli.getSyncTaskName());
                     }
                     @Override
                     public void negativeResponse(Context c, Object[] o) {}

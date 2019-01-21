@@ -542,6 +542,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
         System.setProperty("jcifs.smb.client.attrExpirationPeriod", "0");
         System.setProperty("jcifs.netbios.retryTimeout", "3000");
+//        System.setProperty("jcifs.smb.client.listSize", "1000");
         System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
         System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);
         System.setProperty("jcifs.smb.client.responseTimeout", settingsSmbClientResponseTimeout);

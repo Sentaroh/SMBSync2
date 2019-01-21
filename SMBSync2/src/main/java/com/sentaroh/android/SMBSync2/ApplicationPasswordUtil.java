@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
@@ -109,7 +110,10 @@ public class ApplicationPasswordUtil {
                 String input_hv="";
                 try {
                     input_hv=EncryptUtil.makeSHA1Hash(et_pswd1.getText().toString());
-                    String enc_password=KeyStoreUtil.getGeneratedPassword(gp.appContext, SMBSYNC2_KEY_STORE_ALIAS);
+                    String enc_password=null;
+                    if ( Build.VERSION.SDK_INT>=28) enc_password=KeyStoreUtil.getGeneratedPasswordNewVersion(gp.appContext, SMBSYNC2_KEY_STORE_ALIAS);
+                    else enc_password=KeyStoreUtil.getGeneratedPasswordOldVersion(gp.appContext, SMBSYNC2_KEY_STORE_ALIAS);
+
                     EncryptUtil.CipherParms cp_int = EncryptUtil.initDecryptEnv(enc_password);
                     byte[] encrypted_hv=Base64Compat.decode(gp.settingSecurityApplicationPasswordHashValue, Base64Compat.NO_WRAP);
                     decrypted_hv =EncryptUtil.decrypt(encrypted_hv, cp_int);
@@ -214,7 +218,10 @@ public class ApplicationPasswordUtil {
                 String encrypted_hv="";
                 try {
                     String user_pw_hv=EncryptUtil.makeSHA1Hash(et_pswd1.getText().toString());
-                    String enc_password=KeyStoreUtil.getGeneratedPassword(gp.appContext, SMBSYNC2_KEY_STORE_ALIAS);
+                    String enc_password=null;
+                    if ( Build.VERSION.SDK_INT>=28) enc_password=KeyStoreUtil.getGeneratedPasswordNewVersion(gp.appContext, SMBSYNC2_KEY_STORE_ALIAS);
+                    else enc_password=KeyStoreUtil.getGeneratedPasswordOldVersion(gp.appContext, SMBSYNC2_KEY_STORE_ALIAS);
+
                     EncryptUtil.CipherParms cp_int = EncryptUtil.initDecryptEnv(enc_password);
                     encrypted_hv=Base64Compat.encodeToString(EncryptUtil.encrypt(user_pw_hv, cp_int), Base64Compat.NO_WRAP);
                     ntfy_create.notifyToListener(true, new Object[]{encrypted_hv});

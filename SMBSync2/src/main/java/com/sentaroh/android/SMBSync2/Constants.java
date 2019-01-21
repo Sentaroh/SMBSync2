@@ -57,6 +57,7 @@ public class Constants {
     public final static String SMBSYNC2_PROFILE_FILE_NAME_V5="profile_v5.txt";
     public final static String SMBSYNC2_PROFILE_FILE_NAME_V6="profile_v6.txt";
     public final static String SMBSYNC2_PROFILE_FILE_NAME_V7="profile_v7.txt";
+    public final static String SMBSYNC2_PROFILE_FILE_NAME_V8="profile_v8.txt";
 
 	public final static String SMBSYNC2_PROF_VER1="PROF 1";
 	public final static String SMBSYNC2_PROF_VER2="PROF 2";
@@ -65,11 +66,12 @@ public class Constants {
     public final static String SMBSYNC2_PROF_VER5="PROF 5";
     public final static String SMBSYNC2_PROF_VER6="PROF 6";
     public final static String SMBSYNC2_PROF_VER7="PROF 7";
+    public final static String SMBSYNC2_PROF_VER8="PROF 8";
 	public final static String SMBSYNC2_PROF_ENC="ENC";
 	public final static String SMBSYNC2_PROF_DEC="DEC";
 	
-	public final static String CURRENT_SMBSYNC2_PROFILE_FILE_NAME=SMBSYNC2_PROFILE_FILE_NAME_V7;
-	public final static String CURRENT_SMBSYNC2_PROFILE_VERSION=SMBSYNC2_PROF_VER7;
+	public final static String CURRENT_SMBSYNC2_PROFILE_FILE_NAME=SMBSYNC2_PROFILE_FILE_NAME_V8;
+	public final static String CURRENT_SMBSYNC2_PROFILE_VERSION=SMBSYNC2_PROF_VER8;
 	
 	public final static String SMBSYNC2_SERIALIZABLE_FILE_NAME="serial.txt";
 	public final static String SMBSYNC2_LOCAL_FILE_LAST_MODIFIED_NAME_V1="local_file_last_modified_V1";

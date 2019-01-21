@@ -2,8 +2,11 @@ package com.sentaroh.android.SMBSync2;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.security.KeyPairGeneratorSpec;
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyProperties;
 import android.util.Base64;
 
 import com.drew.lang.Charsets;
@@ -15,16 +18,20 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.MGF1ParameterSpec;
 import java.util.Calendar;
 import java.util.Random;
 
 import javax.crypto.Cipher;
+import javax.crypto.spec.OAEPParameterSpec;
+import javax.crypto.spec.PSource;
 import javax.security.auth.x500.X500Principal;
 
 public class KeyStoreUtil {
     final static String PROVIDER = "AndroidKeyStore";
     final static String ALGORITHM = "RSA";
-    final static String CIPHER_TRANSFORMATION = "RSA/ECB/PKCS1Padding";
+    final static String CIPHER_TRANSFORMATION_BELOW_API27 = "RSA/ECB/PKCS1Padding";
+    final static String CIPHER_TRANSFORMATION_ABOVE_API28 = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding";
 
     final static public String makeSHA1Hash(byte[] input) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA1");
@@ -45,7 +52,10 @@ public class KeyStoreUtil {
 
 
     static final private String SAVED_KEY_ID="settings_key_store_util_save_key";
-    public static String getGeneratedPassword(Context context, String alias) throws Exception {
+    static final private String KEY_PARE_CREATE_VERSION_KEY="settings_key_store_util_key_pare_version";
+    static final private String KEY_PARE_CREATE_VERSION_API28="28";
+
+    public static String getGeneratedPasswordOldVersion(Context context, String alias) throws Exception {
 //        Thread.dumpStack();
         KeyStore keyStore = null;
         byte[] bytes = null;
@@ -58,25 +68,16 @@ public class KeyStoreUtil {
         if (!keyStore.containsAlias(alias) || saved_key.equals("")) {
             if (!keyStore.containsAlias(alias)) {
                 KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM, PROVIDER);
-                keyPairGenerator.initialize(createKeyPairGeneratorSpec(context, alias));
+                keyPairGenerator.initialize(createKeyPairGeneratorSpecBelowApi27(context, alias));
                 keyPairGenerator.generateKeyPair();
             }
 
             PublicKey publicKey = keyStore.getCertificate(alias).getPublicKey();
-            PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, null);
+//            PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, null);
 
             generated_password=generateRandomPassword(32, true, true, true, true);
-//            if (privateKey.toString().length()>128) generated_password=privateKey.toString().substring(1,128)+String.valueOf(System.currentTimeMillis());
-//            else generated_password=privateKey.toString()+String.valueOf(System.currentTimeMillis());
 
-//            String alg=privateKey.getAlgorithm();
-//            String fmt=privateKey.getFormat();
-//            byte[] enc=privateKey.getEncoded();
-//
-//            String pubKeyString = Base64.encodeToString(publicKey.getEncoded(), Base64.NO_WRAP);
-//            String privKeyString = Base64.encodeToString(privateKey.getEncoded(), Base64.NO_WRAP);
-
-            Cipher cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
+            Cipher cipher = Cipher.getInstance(CIPHER_TRANSFORMATION_BELOW_API27);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             bytes = cipher.doFinal(generated_password.getBytes(Charsets.UTF_8));
 
@@ -84,11 +85,75 @@ public class KeyStoreUtil {
 
             prefs.edit().putString(SAVED_KEY_ID, saved_key).commit();
         } else {
-            PublicKey publicKey = keyStore.getCertificate(alias).getPublicKey();
+//            PublicKey publicKey = keyStore.getCertificate(alias).getPublicKey();
             PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, null);
 
-            Cipher cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
+            Cipher cipher = Cipher.getInstance(CIPHER_TRANSFORMATION_BELOW_API27);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            bytes = Base64.decode(saved_key, Base64.NO_WRAP);
+
+            byte[] b = cipher.doFinal(bytes);
+            generated_password=new String(b);
+        }
+
+        return generated_password;
+    }
+
+    public static String getGeneratedPasswordNewVersion(Context context, String alias) throws Exception {
+//        Thread.dumpStack();
+        KeyStore keyStore = null;
+        byte[] bytes = null;
+        String saved_key="";
+        String generated_password="";
+        keyStore = KeyStore.getInstance(PROVIDER);
+        keyStore.load(null);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        saved_key=prefs.getString(SAVED_KEY_ID, "");
+        OAEPParameterSpec spec = new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA1, PSource.PSpecified.DEFAULT);
+        if (!keyStore.containsAlias(alias) || saved_key.equals("")) {
+            if (!keyStore.containsAlias(alias)) {
+                KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM, PROVIDER);
+                if (Build.VERSION.SDK_INT>=28) {
+                    prefs.edit().putString(KEY_PARE_CREATE_VERSION_KEY,KEY_PARE_CREATE_VERSION_API28).commit();
+                    keyPairGenerator.initialize(createKeyGenParameterSpecAboveApi28(context, alias));
+                } else {
+                    keyPairGenerator.initialize(createKeyPairGeneratorSpecBelowApi27(context, alias));
+                }
+                keyPairGenerator.generateKeyPair();
+            }
+
+            String key_pare_version=prefs.getString(KEY_PARE_CREATE_VERSION_KEY,"0");
+            PublicKey publicKey = keyStore.getCertificate(alias).getPublicKey();
+
+            generated_password=generateRandomPassword(32, true, true, true, true);
+
+            Cipher cipher = null;
+            if (Build.VERSION.SDK_INT>=28 && key_pare_version.equals(KEY_PARE_CREATE_VERSION_API28)) {
+                cipher = Cipher.getInstance(CIPHER_TRANSFORMATION_ABOVE_API28);
+                cipher.init(Cipher.ENCRYPT_MODE, publicKey, spec);
+            } else {
+                cipher = Cipher.getInstance(CIPHER_TRANSFORMATION_BELOW_API27);
+                cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            }
+
+            bytes = cipher.doFinal(generated_password.getBytes(Charsets.UTF_8));
+
+            saved_key=Base64.encodeToString(bytes, Base64.NO_WRAP);
+
+            prefs.edit().putString(SAVED_KEY_ID, saved_key).commit();
+        } else {
+            String key_pare_version=prefs.getString(KEY_PARE_CREATE_VERSION_KEY,"0");
+            PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, null);
+
+            Cipher cipher = null;
+            if (Build.VERSION.SDK_INT>=28 && key_pare_version.equals(KEY_PARE_CREATE_VERSION_API28)) {
+                cipher = Cipher.getInstance(CIPHER_TRANSFORMATION_ABOVE_API28);
+                cipher.init(Cipher.DECRYPT_MODE, privateKey, spec);
+            } else {
+                cipher = Cipher.getInstance(CIPHER_TRANSFORMATION_BELOW_API27);
+                cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            }
+
             bytes = Base64.decode(saved_key, Base64.NO_WRAP);
 
             byte[] b = cipher.doFinal(bytes);
@@ -138,7 +203,7 @@ public class KeyStoreUtil {
 
         return  sb.toString();
     }
-    public static KeyPairGeneratorSpec createKeyPairGeneratorSpec(Context context, String alias){
+    private static KeyPairGeneratorSpec createKeyPairGeneratorSpecBelowApi27(Context context, String alias){
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         end.add(Calendar.YEAR, 100);
@@ -149,6 +214,17 @@ public class KeyStoreUtil {
                 .setSerialNumber(BigInteger.valueOf(1000000))
                 .setStartDate(start.getTime())
                 .setEndDate(end.getTime())
+                .build();
+    }
+
+    private static KeyGenParameterSpec createKeyGenParameterSpecAboveApi28(Context context, String alias){
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        end.add(Calendar.YEAR, 100);
+
+        return new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_DECRYPT|KeyProperties.PURPOSE_ENCRYPT)
+                .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
                 .build();
     }
 
