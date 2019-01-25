@@ -240,6 +240,22 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
+        int sync_result=0;
+        if (sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite()) {
+            sync_result=copyFileExternalToSmbDirectWrite(stwa, sti, from_dir, mf, to_dir, file_name);
+        } else {
+            sync_result=copyFileExternalToSmbUseTempName(stwa, sti, from_dir, mf, to_dir, file_name);
+        }
+
+        return sync_result;
+    }
+
+    static public int copyFileExternalToSmbUseTempName(SyncThreadWorkArea stwa, SyncTaskItem sti,
+                                            String from_dir, File mf, String to_dir, String file_name) throws IOException, JcifsException {
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+
+        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
+
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
         JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
 
@@ -285,6 +301,58 @@ public class SyncThreadCopyFile {
                 ", m_saf_size="+m_saf_length);
         if (out_dest.exists()) out_dest.delete();
         out_file.renameTo(out_dest);
+
+        return SyncTaskItem.SYNC_STATUS_SUCCESS;
+    }
+
+    static public int copyFileExternalToSmbDirectWrite(SyncThreadWorkArea stwa, SyncTaskItem sti,
+                                                       String from_dir, File mf, String to_dir, String file_name) throws IOException, JcifsException {
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+
+        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
+
+        String to_file_dest = to_dir + "/" + file_name;
+        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
+
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
+
+        InputStream is =null;
+        long m_saf_length=-1;
+        if (mf.getPath().startsWith(stwa.gp.safMgr.getSdcardRootPath()+"/"+"Android/data/") ||
+                mf.getPath().startsWith(stwa.gp.safMgr.getUsbRootPath()+"/"+"Android/data/")) {
+            is=new FileInputStream(mf);
+        } else {
+            SafFile m_saf = SyncThread.createSafFile(stwa, sti, mf.getPath());
+            if (m_saf == null) {
+                is=new FileInputStream(mf);
+            } else {
+                m_saf_length=m_saf.length();
+                if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+                else {
+                    is=new FileInputStream(mf);
+                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+                }
+            }
+        }
+
+        OutputStream os = out_dest.getOutputStream();
+
+        int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
+        if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
+            out_dest.delete();
+            return SyncTaskItem.SYNC_STATUS_CANCEL;
+        }
+
+        try {
+            if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.lastModified());
+        } catch(JcifsException e) {
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+            stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
+        }
+        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp=",to_file_dest,
+                ", target="+out_dest.getLastModified(),", master="+mf.lastModified(),", target_size="+out_dest.length(),", master_size="+mf.length(),
+                ", m_saf_size="+m_saf_length);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
@@ -447,7 +515,24 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
+        int sync_result=0;
+        if (sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite()) {
+            sync_result=copyFileInternalToSmbDirectWrite(stwa, sti, from_dir, mf, to_dir, file_name);
+        } else {
+            sync_result=copyFileInternalToSmbUseTempName(stwa, sti, from_dir, mf, to_dir, file_name);
+        }
+
+        return sync_result;
+    }
+
+    static public int copyFileInternalToSmbUseTempName(SyncThreadWorkArea stwa,
+                                            SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException, JcifsException {
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+
+        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
+
         String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
+
         JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
 
         JcifsFile out_file = new JcifsFile(to_file_temp, stwa.targetAuth);
@@ -471,13 +556,66 @@ public class SyncThreadCopyFile {
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_dest+
                 ", target="+out_file.getLastModified()+", master="+mf.lastModified()+", target_size="+out_file.length()+", master_size="+mf.length());
+
         if (out_dest.exists()) out_dest.delete();
+        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " Rename issued. From="+out_file.getPath()+", To="+out_dest.getPath());
+
         out_file.renameTo(out_dest);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
+    static public int copyFileInternalToSmbDirectWrite(SyncThreadWorkArea stwa,
+                                                       SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException, JcifsException {
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+
+        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
+
+        String to_file_dest = to_dir + "/" + file_name;
+
+        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
+
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
+
+        FileInputStream is = new FileInputStream(mf);
+        OutputStream os = out_dest.getOutputStream();
+
+        int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
+        if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
+            out_dest.delete();
+            return SyncTaskItem.SYNC_STATUS_CANCEL;
+        }
+
+        try {
+            if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.lastModified());
+        } catch(JcifsException e) {
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+            stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
+        }
+        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_dest+
+                ", target="+out_dest.getLastModified()+", master="+mf.lastModified()+", target_size="+out_dest.length()+", master_size="+mf.length());
+
+        return SyncTaskItem.SYNC_STATUS_SUCCESS;
+    }
+
     static public int copyFileSmbToSmb(SyncThreadWorkArea stwa,
+                                       SyncTaskItem sti, String from_dir, String to_dir, String file_name) throws IOException, JcifsException {
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+
+        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
+
+        int sync_result=0;
+        if (sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite()) {
+            sync_result=copyFileSmbToSmbDirectWrite(stwa, sti, from_dir, to_dir, file_name);
+        } else {
+            sync_result=copyFileSmbToSmbUseTempName(stwa, sti, from_dir, to_dir, file_name);
+        }
+
+        return sync_result;
+    }
+
+    static public int copyFileSmbToSmbUseTempName(SyncThreadWorkArea stwa,
                                    SyncTaskItem sti, String from_dir, String to_dir, String file_name) throws IOException, JcifsException {
         stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
@@ -508,6 +646,38 @@ public class SyncThreadCopyFile {
                 ", target="+out_file.getLastModified()+", master="+mf.getLastModified()+", target_size="+out_file.length()+", master_size="+mf.length());
         if (out_dest.exists()) out_dest.delete();
         out_file.renameTo(out_dest);
+
+        return SyncTaskItem.SYNC_STATUS_SUCCESS;
+    }
+
+    static public int copyFileSmbToSmbDirectWrite(SyncThreadWorkArea stwa,
+                                                  SyncTaskItem sti, String from_dir, String to_dir, String file_name) throws IOException, JcifsException {
+        stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
+
+        if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
+        String to_file_dest = to_dir + "/" + file_name;
+        JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
+
+        SyncThread.createDirectoryToSmb(stwa, sti, to_dir, stwa.targetAuth);
+
+        String in_file_path = from_dir + "/" + file_name;
+        JcifsFile mf = new JcifsFile(in_file_path, stwa.masterAuth);
+
+        int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), mf.getInputStream(), out_dest.getOutputStream());
+        if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
+            out_dest.delete();
+            return SyncTaskItem.SYNC_STATUS_CANCEL;
+        }
+
+        try {
+            if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.getLastModified());
+        } catch(JcifsException e) {
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+            stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
+        }
+        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_dest+
+                ", target="+out_dest.getLastModified()+", master="+mf.getLastModified()+", target_size="+out_dest.length()+", master_size="+mf.length());
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }

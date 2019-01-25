@@ -8,6 +8,7 @@ import android.security.KeyPairGeneratorSpec;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
+import android.util.Log;
 
 import com.drew.lang.Charsets;
 
@@ -32,6 +33,7 @@ public class KeyStoreUtil {
     final static String ALGORITHM = "RSA";
     final static String CIPHER_TRANSFORMATION_BELOW_API27 = "RSA/ECB/PKCS1Padding";
     final static String CIPHER_TRANSFORMATION_ABOVE_API28 = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding";
+    final static boolean LOG_MESSAGE_ENABLED=false;
 
     final static public String makeSHA1Hash(byte[] input) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA1");
@@ -57,6 +59,7 @@ public class KeyStoreUtil {
 
     public static String getGeneratedPasswordOldVersion(Context context, String alias) throws Exception {
 //        Thread.dumpStack();
+        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","getGeneratedPasswordOldVersion entered");
         KeyStore keyStore = null;
         byte[] bytes = null;
         String saved_key="";
@@ -95,11 +98,12 @@ public class KeyStoreUtil {
             byte[] b = cipher.doFinal(bytes);
             generated_password=new String(b);
         }
-
+        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","getGeneratedPasswordOldVersion ended");
         return generated_password;
     }
 
     public static String getGeneratedPasswordNewVersion(Context context, String alias) throws Exception {
+        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","getGeneratedPasswordNewVersion entered");
 //        Thread.dumpStack();
         KeyStore keyStore = null;
         byte[] bytes = null;
@@ -159,7 +163,7 @@ public class KeyStoreUtil {
             byte[] b = cipher.doFinal(bytes);
             generated_password=new String(b);
         }
-
+        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","getGeneratedPasswordNewVersion ended");
         return generated_password;
     }
 
@@ -204,28 +208,36 @@ public class KeyStoreUtil {
         return  sb.toString();
     }
     private static KeyPairGeneratorSpec createKeyPairGeneratorSpecBelowApi27(Context context, String alias){
+//        Thread.dumpStack();
+        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","createKeyPairGeneratorSpecBelowApi27 entered");
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         end.add(Calendar.YEAR, 100);
 
-        return new KeyPairGeneratorSpec.Builder(context)
+        KeyPairGeneratorSpec kgs=new KeyPairGeneratorSpec.Builder(context)
                 .setAlias(alias)
                 .setSubject(new X500Principal(String.format("CN=%s", alias)))
                 .setSerialNumber(BigInteger.valueOf(1000000))
                 .setStartDate(start.getTime())
                 .setEndDate(end.getTime())
                 .build();
+        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","createKeyPairGeneratorSpecBelowApi27 ended");
+        return kgs;
     }
 
     private static KeyGenParameterSpec createKeyGenParameterSpecAboveApi28(Context context, String alias){
+        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","createKeyGenParameterSpecAboveApi28 entered");
+//        Thread.dumpStack();
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         end.add(Calendar.YEAR, 100);
 
-        return new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_DECRYPT|KeyProperties.PURPOSE_ENCRYPT)
+        KeyGenParameterSpec kgs=new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_DECRYPT|KeyProperties.PURPOSE_ENCRYPT)
                 .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
                 .build();
+        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","createKeyGenParameterSpecAboveApi28 ended");
+        return kgs;
     }
 
 }

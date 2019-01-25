@@ -627,10 +627,10 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file)
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            }
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -816,10 +816,10 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file)
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            }
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path) ) {
@@ -1030,10 +1030,10 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file)
-                                stwa.util.addLogMsg("W", " ", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else
-                                stwa.util.addLogMsg("W", " ", to_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY)) {
+                                if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            }
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -1217,10 +1217,10 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file)
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            }
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -1409,10 +1409,10 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file)
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            }
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -1617,10 +1617,10 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file)
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY)) {
+                                if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            }
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -1867,10 +1867,10 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file)
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            }
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -2171,10 +2171,10 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file)
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else
-                                stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            }
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {
@@ -2458,8 +2458,10 @@ public class SyncThreadSyncFile {
                         boolean tf_exists = tf.exists();
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
-                            if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
-                            else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            if (SyncThread.isFileChanged(stwa, sti, to_path, tf, mf, stwa.ALL_COPY)) {
+                                if (move_file) stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                else stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                            }
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, to_path)) {

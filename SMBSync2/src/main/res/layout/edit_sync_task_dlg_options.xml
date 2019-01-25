@@ -447,6 +447,22 @@
                 <include layout="@layout/divider_line1" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_do_mot_use_rename_when_smb_file_write_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_do_mot_use_rename_when_smb_file_write"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 

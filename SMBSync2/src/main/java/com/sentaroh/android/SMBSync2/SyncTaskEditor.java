@@ -2888,6 +2888,17 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
+        final CheckedTextView ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_do_mot_use_rename_when_smb_file_write);
+        ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write.setChecked(n_sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite());
+        ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !((CheckedTextView) v).isChecked();
+                ((CheckedTextView) v).setChecked(isChecked);
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+        });
+
         setSpinnerSyncTaskWifiOption(spinnerSyncWifiStatus, n_sti.getSyncWifiStatusOption());
         if (n_sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
             ll_wifi_wl_view.setVisibility(Button.VISIBLE);
@@ -3902,6 +3913,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctv_task_sync_when_cahrging = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
         final CheckedTextView ctv_never_overwrite_target_file_newer_than_the_master_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file);
         final CheckedTextView ctv_ignore_unusable_character_used_directory_file_name = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_unusable_character_used_directory_file_name);
+        final CheckedTextView ctv_do_not_use_rename_when_smb_file_write = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_do_mot_use_rename_when_smb_file_write);
 
         final Button swap_master_target = (Button) dialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
         final Button master_folder_info = (Button) dialog.findViewById(R.id.edit_sync_task_master_folder_info_btn);
@@ -3977,6 +3989,8 @@ public class SyncTaskEditor extends DialogFragment {
         nstli.setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(ctv_never_overwrite_target_file_newer_than_the_master_file.isChecked());
 
         nstli.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(ctv_ignore_unusable_character_used_directory_file_name.isChecked());
+
+        nstli.setSyncOptionDoNotUseRenameWhenSmbFileWrite(ctv_do_not_use_rename_when_smb_file_write.isChecked());
 
         String diff_val = spinnerSyncDiffTimeValue.getSelectedItem().toString();
         nstli.setSyncDifferentFileAllowableTime(Integer.valueOf(diff_val));

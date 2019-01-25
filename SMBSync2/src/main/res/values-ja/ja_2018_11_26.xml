@@ -374,6 +374,7 @@
         <string name="msgs_profile_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">拡張されたディレクトリ選択/除外フィルタを使用する</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">無線LAN</string>
+        <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">SMBフォルダーへのファイル書き込みで一時ファイルを使用せず直接書き込む</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">ディレクトリーフィルタが指定されていません</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">サブディレクトリーを選択する</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">SMBフォルダー書き込み時のIOバッファーを16KBに制限する</string>

@@ -145,7 +145,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private boolean syncOptionDeterminChangedFileByTime = true;
     private int syncOptionDeterminChangedFileByTimeValue = 3;//Seconds
 
-//    private boolean syncOptionUseFileCopyByTempName = true;
+    private boolean syncOptionDoNotUseRenameWhenSmbFileWrite = false;
 
     private boolean syncOptionUseExtendedDirectoryFilter1 = false;
 
@@ -445,7 +445,6 @@ class SyncTaskItem implements Serializable, Cloneable {
 
 //    public boolean isSyncUseFileCopyByTempNamex() {return syncOptionUseFileCopyByTempName;}
 //    public void setSyncUseFileCopyByTempNamex(boolean p) {syncOptionUseFileCopyByTempName = p;}
-
     public boolean isSyncUseExtendedDirectoryFilter1() {return syncOptionUseExtendedDirectoryFilter1;}
     public void setSyncUseExtendedDirectoryFilter1(boolean p) {syncOptionUseExtendedDirectoryFilter1 = p;}
 
@@ -480,6 +479,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     private boolean syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters = false;
     public void setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(boolean enabled) {syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters=enabled;}
     public boolean isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters() {return syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters;}
+
+    public boolean isSyncOptionDoNotUseRenameWhenSmbFileWrite() {return syncOptionDoNotUseRenameWhenSmbFileWrite;}
+    public void setSyncOptionDoNotUseRenameWhenSmbFileWrite(boolean p) {syncOptionDoNotUseRenameWhenSmbFileWrite = p;}
 
     public void setLastSyncTime(String p) {syncLastSyncTime = p;}
     public void setLastSyncResult(int p) {syncLastSyncResult = p;}
@@ -603,6 +605,8 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile==sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) &&
 
                         (syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters==sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) &&
+
+                        (syncOptionDoNotUseRenameWhenSmbFileWrite==sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite()) &&
 
                         (syncOptionWifiStatus.equals(sti.getSyncWifiStatusOption())) &&
 

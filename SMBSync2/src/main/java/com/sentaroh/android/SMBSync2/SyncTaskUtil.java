@@ -40,6 +40,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -4503,7 +4504,6 @@ public class SyncTaskUtil {
                         priv_key=KeyStoreUtil.getGeneratedPasswordNewVersion(context, SMBSYNC2_KEY_STORE_ALIAS);
                     }
                     cp_int=EncryptUtil.initDecryptEnv(priv_key);
-
                     br = new BufferedReader(new FileReader(gp.applicationRootDirectory + "/" + pf), 8192);
                     String pl;
                     while ((pl = br.readLine()) != null) {
@@ -4516,12 +4516,12 @@ public class SyncTaskUtil {
                             String dec_str = EncryptUtil.decrypt(dec_array, cp_int);
                             addSyncTaskList(sdcard, prof_pre + dec_str, sync, ispl, util);
                         } else if (pl.startsWith(SMBSYNC2_PROF_VER8)) {
-                                String prof_pre="";
-                                if (pl.startsWith(SMBSYNC2_PROF_VER8)) prof_pre=SMBSYNC2_PROF_VER8;
-                                String enc_str=pl.substring(6);
-                                byte[] dec_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
-                                String dec_str = EncryptUtil.decrypt(dec_array, cp_int);
-                                addSyncTaskList(sdcard,prof_pre+dec_str , sync, ispl, util);
+                            String prof_pre="";
+                            if (pl.startsWith(SMBSYNC2_PROF_VER8)) prof_pre=SMBSYNC2_PROF_VER8;
+                            String enc_str=pl.substring(6);
+                            byte[] dec_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
+                            String dec_str = EncryptUtil.decrypt(dec_array, cp_int);
+                            addSyncTaskList(sdcard,prof_pre+dec_str , sync, ispl, util);
                         } else {
                             addSyncTaskList(sdcard, pl, sync, ispl, util);
                         }
@@ -4680,7 +4680,7 @@ public class SyncTaskUtil {
             }
         } else if (pl.startsWith(SMBSYNC2_PROF_VER8)) {
             if (pl.length() > 10) {
-                addSyncTaskListVer7(sdcard, pl.replace(SMBSYNC2_PROF_VER8, ""), sync, util);
+                addSyncTaskListVer8(sdcard, pl.replace(SMBSYNC2_PROF_VER8, ""), sync, util);
                 if (ispl != null) addImportSettingsParm(pl.replace(SMBSYNC2_PROF_VER8, ""), ispl);
             }
         }
@@ -5918,6 +5918,8 @@ public class SyncTaskUtil {
 
             if (!parm[80].equals("") && !parm[80].equals("end")) stli.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters((parm[80].equals("1") ? true : false));
 
+            if (!parm[81].equals("") && !parm[81].equals("end")) stli.setSyncOptionDoNotUseRenameWhenSmbFileWrite((parm[81].equals("1") ? true : false));
+
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -6174,29 +6176,29 @@ public class SyncTaskUtil {
                             "-" + "\t" +                            //36
                             sync_sync_wifi_status_option + "\t" +   //37
 
-                            sync_result_last_time + "\t" +//38
-                            sync_result_last_status + "\t" +//39
+                            sync_result_last_time + "\t" +                                      //38
+                            sync_result_last_status + "\t" +                                    //39
 
-                            sync_pos + "\t" +                                                  //40
+                            sync_pos + "\t" +                                                   //40
 
-                            "-" + "\t" +                                                       //41
-                            "-" + "\t" +                                                       //42
+                            "-" + "\t" +                                                        //41
+                            "-" + "\t" +                                                        //42
 
                             item.getMasterRemovableStorageID() + "\t" +//43
                             item.getTargetRemovableStorageID() + "\t" +//44
 
-                            sync_file_type_audio + "\t" +//45
-                            sync_file_type_image + "\t" +//46
-                            sync_file_type_video + "\t" +//47
+                            sync_file_type_audio + "\t" +                                       //45
+                            sync_file_type_image + "\t" +                                       //46
+                            sync_file_type_video + "\t" +                                       //47
 
-                            item.getTargetZipOutputFileName() + "\t" +                            //48
+                            item.getTargetZipOutputFileName() + "\t" +                          //48
                             item.getTargetZipCompressionLevel() + "\t" +                        //49
-                            item.getTargetZipCompressionMethod() + "\t" +                        //50
-                            item.getTargetZipEncryptMethod() + "\t" +                            //51
+                            item.getTargetZipCompressionMethod() + "\t" +                       //50
+                            item.getTargetZipEncryptMethod() + "\t" +                           //51
                             item.getTargetZipPassword() + "\t" +                                //52
-                            (item.isSyncTaskSkipIfConnectAnotherWifiSsid() ? "1" : "0") + "\t" +    //53
+                            (item.isSyncTaskSkipIfConnectAnotherWifiSsid() ? "1" : "0") + "\t" +//53
 
-                            (item.isSyncOptionSyncWhenCharging() ? "1" : "0") + "\t" +                //54
+                            (item.isSyncOptionSyncWhenCharging() ? "1" : "0") + "\t" +          //54
 
                             (item.isTargetZipUseExternalSdcard() ? "1" : "0") + "\t" +          //55
 
@@ -6241,6 +6243,8 @@ public class SyncTaskUtil {
                             (item.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile() ? "1" : "0") + "\t" +     //79
 
                             (item.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters() ? "1" : "0") + "\t" +     //80
+
+                            (item.isSyncOptionDoNotUseRenameWhenSmbFileWrite() ? "1" : "0") + "\t" +     //81
 
                     "end"
                     ;

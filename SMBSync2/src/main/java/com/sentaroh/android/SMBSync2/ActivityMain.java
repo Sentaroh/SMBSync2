@@ -198,10 +198,7 @@ public class ActivityMain extends AppCompatActivity {
         mTaskUtil = new SyncTaskUtil(mUtil, this, commonDlg, ccMenu, mGp, getSupportFragmentManager());
         mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mGp.msgList, mGp);
 
-        if (mGp.syncTaskList == null)
-            mGp.syncTaskList = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil);
-//        mGp.syncTaskList=new ArrayList<SyncTaskItem>();
-
+        if (mGp.syncTaskList == null) mGp.syncTaskList = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil);
         mGp.syncTaskAdapter = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, mGp.syncTaskList, mGp);
 
         if (mGp.syncHistoryList == null) mGp.syncHistoryList = mUtil.loadHistoryList();
@@ -216,9 +213,6 @@ public class ActivityMain extends AppCompatActivity {
 
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET);
         setSyncTaskContextButtonHide();
-
-//        Intent intmsg = new Intent(mContext, SyncService.class);
-//        startService(intmsg);
 
         Thread th1 = new Thread() {
             @Override

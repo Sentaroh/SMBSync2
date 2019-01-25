@@ -428,6 +428,10 @@ public class SyncThread extends Thread {
                 ", SkipIfConnectAnotherWifiSsid=" + sti.isSyncTaskSkipIfConnectAnotherWifiSsid() ,
                 ", SyncOnlyCharging=" + sti.isSyncOptionSyncWhenCharging() ,
                 ", DeleteFirst=" + sti.isSyncOptionDeleteFirstWhenMirror() ,
+
+                ", NeverOverwriteTargetFileIfItIsNewerThanTheMasterFile="+sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(),
+                ", IgnoreUnusableCharacterUsedDirectoryFileName="+sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(),
+                ", DoNotUseRenameWhenSmbFileWrite=" + sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite() ,
                 "");
         mStwa.util.addDebugMsg(1, "I", "   SMB1 Option, LM Compatiibility=" + mGp.settingsSmbLmCompatibility +
                 ", Use extended security=" + mGp.settingsSmbUseExtendedSecurity +
