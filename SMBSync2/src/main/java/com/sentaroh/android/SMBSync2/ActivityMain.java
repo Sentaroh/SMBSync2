@@ -245,31 +245,32 @@ public class ActivityMain extends AppCompatActivity {
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
+            NotifyEvent start_ntfy = new NotifyEvent(mContext);
+            start_ntfy.setListener(new NotifyEventListener() {
+                @Override
+                public void positiveResponse(Context context, Object[] objects) {
+                    mUiHandler.post(new Runnable(){
+                        @Override
+                        public void run() {
+                            mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
+                        }
+                    });
+                }
+                @Override
+                public void negativeResponse(Context context, Object[] objects) {
+                    finish();
+                }
+            });
+            ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
+                    mUtil, false, start_ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION);
+            mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
+
             initForRestart();
         }
 
     }
 
     private void initForRestart() {
-//            mGp.safMgr.loadSafFile();
-        NotifyEvent start_ntfy = new NotifyEvent(mContext);
-        start_ntfy.setListener(new NotifyEventListener() {
-            @Override
-            public void positiveResponse(Context context, Object[] objects) {
-                mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
-            }
-
-            @Override
-            public void negativeResponse(Context context, Object[] objects) {
-                finish();
-            }
-        });
-        if (mGp.settingSecurityApplicationPasswordUseAppStartup) {
-            mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
-            ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, start_ntfy);
-        } else {
-            start_ntfy.notifyToListener(true,null);
-        }
         NotifyEvent svc_ntfy = new NotifyEvent(mContext);
         svc_ntfy.setListener(new NotifyEventListener() {
             @Override
@@ -315,7 +316,6 @@ public class ActivityMain extends AppCompatActivity {
             public void negativeResponse(Context c, Object[] o) {}
         });
         openService(svc_ntfy);
-
     }
 
     @Override
@@ -1047,8 +1047,8 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                if (mGp.settingSecurityApplicationPasswordUseExport) ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy);
-                else ntfy.notifyToListener(true,null);
+                ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
+                        mUtil, false, ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_EXPORT_TASK_LIST);
                 return true;
             case R.id.menu_top_import:
                 importSyncTaskAndParms();
@@ -3416,8 +3416,8 @@ public class ActivityMain extends AppCompatActivity {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        if (mGp.settingSecurityApplicationPasswordUseEditTask) ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy_check);
-        else ntfy_check.notifyToListener(true,null);
+        ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
+                mUtil, false, ntfy_check, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_EDIT_SYNC_TASK);
      }
 
     private void syncSpecificSyncTask(SyncTaskItem sti) {

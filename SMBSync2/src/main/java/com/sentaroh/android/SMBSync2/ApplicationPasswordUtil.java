@@ -40,13 +40,46 @@ public class ApplicationPasswordUtil {
         gp.settingSecurityApplicationPasswordHashValue=hv;
     }
 
+    public final static int APPLICATION_PASSWORD_RESOURCE_EXPORT_TASK_LIST=1;
+    public final static int APPLICATION_PASSWORD_RESOURCE_START_APPLICATION=2;
+    public final static int APPLICATION_PASSWORD_RESOURCE_EDIT_SYNC_TASK=3;
+    public final static int APPLICATION_PASSWORD_RESOURCE_INVOKE_SECURITY_SETTINGS =4;
+
+    static private boolean isAuthRequired(final GlobalParameters gp, int resource_id) {
+        boolean result=false;
+        if (!gp.settingSecurityApplicationPasswordHashValue.equals("")) {
+            switch (resource_id) {
+                case APPLICATION_PASSWORD_RESOURCE_EXPORT_TASK_LIST:
+                    if (gp.settingSecurityApplicationPasswordUseExport) result=true;
+                    break;
+                case APPLICATION_PASSWORD_RESOURCE_START_APPLICATION:
+                    if (gp.settingSecurityApplicationPasswordUseAppStartup) result=true;
+                    break;
+                case APPLICATION_PASSWORD_RESOURCE_EDIT_SYNC_TASK:
+                    if (gp.settingSecurityApplicationPasswordUseEditTask) result=true;
+                    break;
+                case APPLICATION_PASSWORD_RESOURCE_INVOKE_SECURITY_SETTINGS:
+                    result=true;
+                    break;
+                default :
+                    break;
+            }
+        }
+        return result;
+    }
+
     static public void applicationPasswordAuthentication(final GlobalParameters gp, final Activity mActivity, final FragmentManager fm,
-                                                         final CommonUtilities mUtil, boolean force_auth, final NotifyEvent notify_check) {
-        boolean auth_ok=false;
-        if (gp.settingSecurityApplicationPasswordHashValue.equals("")) {
-            if (notify_check!=null) notify_check.notifyToListener(true,null);
+                                                         final CommonUtilities mUtil, boolean force_auth, final NotifyEvent notify_check, int resource_id) {
+        if (!isAuthRequired(gp, resource_id)) {
+            notify_check.notifyToListener(true,null);
             return;
         }
+
+//        boolean auth_ok=false;
+//        if (gp.settingSecurityApplicationPasswordHashValue.equals("")) {
+//            if (notify_check!=null) notify_check.notifyToListener(true,null);
+//            return;
+//        }
         if (!force_auth) {
             if (gp.appPasswordAuthValidated) {
                 if ((gp.appPasswordAuthLastTime + SMBSYNC2_APPLICATION_PASSWORD_VALIDITY_PERIOD)>System.currentTimeMillis()) {

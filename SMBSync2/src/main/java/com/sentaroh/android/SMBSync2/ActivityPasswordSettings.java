@@ -103,7 +103,8 @@ public class ActivityPasswordSettings extends AppCompatActivity {
                 finish();
             }
         });
-        ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(), mUtil, true, ntfy_auth);
+        ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity,
+                getSupportFragmentManager(), mUtil, true, ntfy_auth, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_INVOKE_SECURITY_SETTINGS);
 
     }
 

@@ -228,9 +228,9 @@ public class KeyStoreUtil {
     private static KeyGenParameterSpec createKeyGenParameterSpecAboveApi28(Context context, String alias){
         if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","createKeyGenParameterSpecAboveApi28 entered");
 //        Thread.dumpStack();
-        Calendar start = Calendar.getInstance();
-        Calendar end = Calendar.getInstance();
-        end.add(Calendar.YEAR, 100);
+//        Calendar start = Calendar.getInstance();
+//        Calendar end = Calendar.getInstance();
+//        end.add(Calendar.YEAR, 100);
 
         KeyGenParameterSpec kgs=new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_DECRYPT|KeyProperties.PURPOSE_ENCRYPT)
                 .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)

@@ -892,8 +892,8 @@ public class SyncTaskUtil {
 
     public void exportSyncTaskListDlg() {
 
-        NotifyEvent ntfy = new NotifyEvent(mContext);
-        ntfy.setListener(new NotifyEventListener() {
+        NotifyEvent ntfy_file_select = new NotifyEvent(mContext);
+        ntfy_file_select.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 final String fpath = (String) o[0]+o[1]+"/"+(String)o[2];
@@ -923,7 +923,52 @@ public class SyncTaskUtil {
         String dt= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis());
         String fn=APPLICATION_TAG+"_profile_"+dt.substring(0,10).replaceAll("/","-")+"_"+dt.substring(11).replaceAll(":","-")+".txt";
         mCommonDlg.fileSelectorFileOnlyWithCreate(true,
-                mGp.internalRootDirectory, "", fn, mContext.getString(R.string.msgs_select_export_file), ntfy);
+                mGp.internalRootDirectory, "", fn, mContext.getString(R.string.msgs_select_export_file), ntfy_file_select);
+
+//        NotifyEvent ntfy_apswd = new NotifyEvent(mContext);
+//        ntfy_apswd.setListener(new NotifyEventListener() {
+//            @Override
+//            public void positiveResponse(Context c, Object[] o) {
+//                NotifyEvent ntfy_file_select = new NotifyEvent(mContext);
+//                ntfy_file_select.setListener(new NotifyEventListener() {
+//                    @Override
+//                    public void positiveResponse(Context c, Object[] o) {
+//                        final String fpath = (String) o[0]+o[1]+"/"+(String)o[2];
+//                        NotifyEvent ntfy_pswd = new NotifyEvent(mContext);
+//                        ntfy_pswd.setListener(new NotifyEventListener() {
+//                            @Override
+//                            public void positiveResponse(Context c, Object[] o) {
+//                                mGp.profilePassword = (String) o[0];
+//                                boolean encrypt_required = false;
+//                                if (!mGp.profilePassword.equals("")) encrypt_required = true;
+//                                String fd = fpath.substring(0, fpath.lastIndexOf("/"));
+//                                String fn = fpath.replace(fd + "/", "");
+//                                exportSyncTaskListToFile(fd, fn, encrypt_required);
+//                            }
+//
+//                            @Override
+//                            public void negativeResponse(Context c, Object[] o) {
+//                            }
+//                        });
+//                        promptPasswordForExport(fpath, ntfy_pswd);
+//                    }
+//
+//                    @Override
+//                    public void negativeResponse(Context c, Object[] o) {
+//                    }
+//                });
+//                String dt= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis());
+//                String fn=APPLICATION_TAG+"_profile_"+dt.substring(0,10).replaceAll("/","-")+"_"+dt.substring(11).replaceAll(":","-")+".txt";
+//                mCommonDlg.fileSelectorFileOnlyWithCreate(true,
+//                        mGp.internalRootDirectory, "", fn, mContext.getString(R.string.msgs_select_export_file), ntfy_file_select);
+//            }
+//
+//            @Override
+//            public void negativeResponse(Context c, Object[] o) {
+//            }
+//        });
+//        ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, mFragMgr, mUtil, false, ntfy_apswd,
+//                ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_EXPORT_TASK_LIST);
     }
 
     public void exportSyncTaskListToFile(final String profile_dir, final String profile_filename, final boolean encrypt_required) {
