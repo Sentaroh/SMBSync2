@@ -20,12 +20,12 @@
         <string name="msgs_export_import_profile_import_schedule">スケジュールパラメーターを取り込む</string>
         <string name="msgs_export_import_profile_no_import_items">タスクリストに取り込む項目がありません。</string>
         <string name="msgs_export_import_pswd_password_title">タスクリスト パスワード保護</string>
-        <string name="msgs_export_import_pswd_password_protect">タスクリスト をパスワードで保護する</string>
+        <string name="msgs_export_import_pswd_password_protect">タスクリストをパスワードで保護する</string>
         <string name="msgs_export_import_pswd_specify_password">パスワードと確認パスワードを入力してください。</string>
         <string name="msgs_export_import_pswd_invalid_password">ファイルがパスワード保護されています、パスワードを指定してください。</string>
         <string name="msgs_export_import_pswd_password_required">パスワードが間違っています、指定し直してください。</string>
-        <string name="msgs_export_import_pswd_btn_cancel">Cancel</string>
-        <string name="msgs_export_import_pswd_btn_ok">OK</string>
+        <string name="msgs_export_import_pswd_btn_cancel">キャンセル</string>
+        <string name="msgs_export_import_pswd_btn_ok">了解</string>
         <string name="msgs_export_import_pswd_hint_password">パスワード</string>
         <string name="msgs_export_import_pswd_hint_confirm">パスワードの確認</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">パスワードと確認パスワードが一致していません</string>
@@ -80,9 +80,9 @@
         <string name="msgs_dir_empty">ディレクトリが見つかりませんでした</string>
         <string name="msgs_duplicate_task_name">タスク名が重複しています</string>
         <string name="msgs_edit_sync_profile">同期タスクの編集</string>
-        <string name="msgs_export_prof_fail">タスク書き出しが失敗しました。</string>
-        <string name="msgs_export_prof_success">タスク書き出しが成功しました。</string>
-        <string name="msgs_export_prof_title">タスクの書き出し</string>
+        <string name="msgs_export_prof_fail">タスクリスト保存が失敗しました。</string>
+        <string name="msgs_export_prof_success">タスクリストが保存されました。</string>
+        <string name="msgs_export_prof_title">タスクリストの保存</string>
         <string name="msgs_extra_data_sync_profile_type_error">SyncProfileはStringで指定されていません、同期を中止します。</string>
         <string name="msgs_filelist_cancel">ファイルリスト作成は中断しました。</string>
         <string name="msgs_filelist_error">SMBフォルダーリスト作成中にエラーが発生しました。</string>
@@ -383,9 +383,9 @@
         <string name="msgs_remote_profile_dlg_logon_error">ログオンエラーが発生しました</string>
         <string name="msgs_remote_profile_dlg_logon_success">ログオンが正常に完了しました</string>
         <string name="msgs_rename_profile">タスク名前変更</string>
-        <string name="msgs_save_to_profile_error">タスクの保存に失敗しました。ファイル=%s</string>
-        <string name="msgs_select_export_file">「タスク書き出し」先ファイルの選択</string>
-        <string name="msgs_select_import_file">「タスク取り込み」元ファイルの選択</string>
+        <string name="msgs_save_to_profile_error">タスクリストの保存に失敗しました。ファイル=%s</string>
+        <string name="msgs_select_export_file">タスクリスト保存先の選択</string>
+        <string name="msgs_select_import_file">タスクリスト取込元の選択</string>
         <string name="msgs_select_local_dir">内部ストレージディレクトリの選択</string>
         <string name="msgs_select_sdcard_dir">SDCARDディレクトリの選択</string>
         <string name="msgs_select_usb_dir">USBメディア ディレクトリの選択</string>
@@ -419,8 +419,8 @@
     <!-- Menu -->
         <string name="msgs_menu_sync">同期実行</string>
         <string name="msgs_menu_browse_logfile">ログ表示</string>
-        <string name="msgs_menu_export">タスク書き出し</string>
-        <string name="msgs_menu_import">タスク取り込み</string>
+        <string name="msgs_menu_export">タスクリスト保存</string>
+        <string name="msgs_menu_import">タスクリスト取込み</string>
         <string name="msgs_menu_log_management">ログファイル管理</string>
         <string name="msgs_menu_about">SMBSync2について</string>
         <string name="msgs_menu_settings">設定</string>
@@ -722,7 +722,7 @@
         <string name="settings_security_application_password_use_app_startup">settings_security_application_password_use_app_startup</string>
         <string name="settings_security_application_password_use_edit_task_title">同期タスクを編集する時にパスワード認証を行う</string>
         <string name="settings_security_application_password_use_edit_task">settings_security_application_password_use_edit_task</string>
-        <string name="settings_security_application_password_use_export_task_title">「タスク書き出し」する時にパスワード認証を行う</string>
+        <string name="settings_security_application_password_use_export_task_title">「タスクリスト保存」する時にパスワード認証を行う</string>
         <string name="settings_security_application_password_use_export_task">settings_security_application_password_use_export_task</string>
         <string name="settings_security_init_smb_account_password_title">SMBフォルダーの編集で保存されたアカウント名とパスワードを非表示にする</string>
         <string name="settings_security_init_smb_account_password">settings_security_init_smb_account_password</string>
