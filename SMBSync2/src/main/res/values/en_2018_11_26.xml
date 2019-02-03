@@ -135,6 +135,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USB storage was selected.  Do you want to select SDCARD instead?</string>
         <string name="msgs_main_external_usb_mp_changed_title">USB Media</string>
         <string name="msgs_main_external_usb_select_activity_not_found_msg">USB Media select activity can not be started.</string>
+        <string name="msgs_main_external_usb_drive_not_found_msg">USB media cannot be selected because the USB drive is not found</string>
         <string name="msgs_main_external_usb_select_path_not_available_msg">A mount point /storage/%s could not be found.  SMBSync2 unable to use this USB media.</string>
         <string name="msgs_main_external_usb_select_required_cancel_msg">%s unable to perform sync until USB media is selected.</string>
         <string name="msgs_main_external_usb_select_required_select_msg_api23">To access the USB media:  Tap \“USB\” (1), then tap  \“Select\” (2).\n

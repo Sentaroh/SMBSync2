@@ -37,6 +37,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
+import android.os.storage.StorageManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -55,6 +56,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
@@ -261,6 +264,40 @@ public final class CommonUtilities {
 //		} else {
 //		}
         ContextCompat.getExternalFilesDirs(c, null);
+    }
+
+    public static ArrayList<String> getUsbUuidListFromStorageManager(Context context) {
+        ArrayList<String> uuids = new ArrayList<String>();
+        try {
+            StorageManager sm = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
+            Method getVolumeList = sm.getClass().getDeclaredMethod("getVolumeList");
+            Object[] volumeList = (Object[]) getVolumeList.invoke(sm);
+            for (Object volume : volumeList) {
+//                Method getPath = volume.getClass().getDeclaredMethod("getPath");
+//	            Method isRemovable = volume.getClass().getDeclaredMethod("isRemovable");
+                Method isPrimary = volume.getClass().getDeclaredMethod("isPrimary");
+                Method getUuid = volume.getClass().getDeclaredMethod("getUuid");
+                Method toString = volume.getClass().getDeclaredMethod("toString");
+                String desc=(String)toString.invoke(volume);
+                Method getLabel = volume.getClass().getDeclaredMethod("getUserLabel");
+                boolean primary=(boolean)isPrimary.invoke(volume);
+                String uuid=(String) getUuid.invoke(volume);
+                String label=(String) getLabel.invoke(volume);
+//                String path = (String) getPath.invoke(volume);
+                if (uuid!=null && (!primary && label.toLowerCase().contains("usb"))) {
+                    uuids.add(uuid);
+                }
+            }
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return uuids;
     }
 
     public boolean isWifiActive() {

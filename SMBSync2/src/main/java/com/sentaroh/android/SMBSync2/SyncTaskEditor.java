@@ -1124,14 +1124,15 @@ public class SyncTaskEditor extends DialogFragment {
         btn_select_usb.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context c, Object[] o) {
-                        if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
-                            dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn));
-                            dlg_msg.setVisibility(TextView.VISIBLE);
-                            btn_select_usb.setEnabled(true);
+                if (CommonUtilities.getUsbUuidListFromStorageManager(mContext).size()>0) {
+                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                    ntfy.setListener(new NotifyEventListener() {
+                        @Override
+                        public void positiveResponse(Context c, Object[] o) {
+                            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
+                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn));
+                                dlg_msg.setVisibility(TextView.VISIBLE);
+                                btn_select_usb.setEnabled(true);
 //                            if (mGp.safMgr.hasExternalSdcardPath()) {
 //                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
 //                                dlg_msg.setVisibility(TextView.VISIBLE);
@@ -1141,22 +1142,25 @@ public class SyncTaskEditor extends DialogFragment {
 //                                dlg_msg.setVisibility(TextView.VISIBLE);
 //                                btn_sdcard_select_sdcard.setEnabled(false);
 //                            }
-                            btn_sync_folder_list_dir.setEnabled(false);
-                        } else {
-                            btn_sync_folder_list_dir.setEnabled(true);
-                            dlg_msg.setVisibility(TextView.GONE);
-                            dlg_msg.setText("");
-                            btn_select_usb.setEnabled(true);
-                            checkSyncFolderValidation(dialog, sfev);
-                            setSyncFolderOkButtonEnabled(btn_sync_folder_ok, true);
+                                btn_sync_folder_list_dir.setEnabled(false);
+                            } else {
+                                btn_sync_folder_list_dir.setEnabled(true);
+                                dlg_msg.setVisibility(TextView.GONE);
+                                dlg_msg.setText("");
+                                btn_select_usb.setEnabled(true);
+                                checkSyncFolderValidation(dialog, sfev);
+                                setSyncFolderOkButtonEnabled(btn_sync_folder_ok, true);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void negativeResponse(Context c, Object[] o) {
-                    }
-                });
-                ((ActivityMain) getActivity()).invokeUsbSelector(ntfy);
+                        @Override
+                        public void negativeResponse(Context c, Object[] o) {
+                        }
+                    });
+                    ((ActivityMain) getActivity()).invokeUsbSelector(ntfy);
+                } else {
+                    mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_external_usb_drive_not_found_msg), "", null);
+                }
             }
         });
 

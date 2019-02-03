@@ -133,6 +133,7 @@
         <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USBストレージが選択されました。SDCARDを選択しなおしますか？</string>
         <string name="msgs_main_external_usb_mp_changed_title">USBメディア</string>
         <string name="msgs_main_external_usb_select_activity_not_found_msg">USBメディア選択アクティビティを起動できませんでした。</string>
+        <string name="msgs_main_external_usb_drive_not_found_msg">USBドライブが見つからないためUSBメディアの選択はできません</string>
         <string name="msgs_main_external_usb_select_path_not_available_msg">マウントポイント(/storage/%s)が見つかりません。この装置に於いてSMBSync2ではUSBメディアを使用できません。</string>
         <string name="msgs_main_external_usb_select_required_cancel_msg">USBメディアが選択されるまで同期は実行できません。 タスク=%s</string>
         <string name="msgs_main_external_usb_select_required_select_msg_api23">USBメディアにアクセスするために、ステップ１.「USB」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
