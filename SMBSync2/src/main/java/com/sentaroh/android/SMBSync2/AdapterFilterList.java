@@ -37,6 +37,7 @@ import android.widget.TextView;
 import com.sentaroh.android.Utilities.NotifyEvent;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @SuppressWarnings("ALL")
 public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterListItem> {
@@ -104,6 +105,16 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
     public void replace(FilterListItem fli, int i) {
         items.set(i, fli);
         notifyDataSetChanged();
+    }
+
+    public void sort() {
+        this.sort(new Comparator<FilterListItem>() {
+            @Override
+            public int compare(AdapterFilterList.FilterListItem lhs,
+                               AdapterFilterList.FilterListItem rhs) {
+                return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
+            }
+        });
     }
 
     @Override

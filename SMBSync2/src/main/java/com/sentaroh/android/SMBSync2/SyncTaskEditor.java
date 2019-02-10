@@ -550,8 +550,14 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private static String removeInvalidCharForFileDirName(String in_str) {
-        String out = in_str.replaceAll(":", "").replaceAll("\\\\", "").replaceAll("\\*", "").replaceAll("\\?", "").replaceAll("\"", "").replaceAll("<", "")
-                .replaceAll(">", "").replaceAll("\\|", "");
+        String out = in_str.replaceAll(":", "")
+                .replaceAll("\\\\", "")
+                .replaceAll("\\*", "")
+                .replaceAll("\\?", "")
+                .replaceAll("\"", "")
+                .replaceAll("<", "")
+                .replaceAll(">", "")
+                .replaceAll("\\|", "");
         return out;
     }
 

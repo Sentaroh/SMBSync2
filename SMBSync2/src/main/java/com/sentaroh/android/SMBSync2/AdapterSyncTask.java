@@ -147,6 +147,14 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         notifyDataSetChanged();
     }
 
+    public void setArrayList(ArrayList<SyncTaskItem> p, boolean notify_data_set_changed) {
+        items.clear();
+        if (p != null) {
+            for (int i = 0; i < p.size(); i++) items.add(p.get(i));
+        }
+        if (notify_data_set_changed) notifyDataSetChanged();
+    }
+
     public void sort() {
         SyncTaskUtil.sortSyncTaskList(items);
     }

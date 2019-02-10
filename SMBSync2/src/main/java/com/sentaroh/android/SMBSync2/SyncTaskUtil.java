@@ -2420,15 +2420,7 @@ public class SyncTaskUtil {
                         dlg_msg.setText("");
                         filterAdapter.add(new AdapterFilterList.FilterListItem(ssid, true));
                         filterAdapter.setNotifyOnChange(true);
-                        filterAdapter.sort(new Comparator<AdapterFilterList.FilterListItem>() {
-                            @Override
-                            public int compare(AdapterFilterList.FilterListItem lhs,
-                                               AdapterFilterList.FilterListItem rhs) {
-                                return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
-                            }
-
-                            ;
-                        });
+                        filterAdapter.sort();
                         btn_ok.setEnabled(true);
                     }
                 } else {
@@ -2445,15 +2437,7 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
-                filterAdapter.sort(new Comparator<AdapterFilterList.FilterListItem>() {
-                    @Override
-                    public int compare(AdapterFilterList.FilterListItem lhs,
-                                       AdapterFilterList.FilterListItem rhs) {
-                        return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
-                    }
-
-                    ;
-                });
+                filterAdapter.sort();
                 btn_ok.setEnabled(true);
             }
         });
@@ -2635,13 +2619,7 @@ public class SyncTaskUtil {
                         dlg_msg.setText("");
                         filterAdapter.add(new AdapterFilterList.FilterListItem(ip_addr, true));
                         filterAdapter.setNotifyOnChange(true);
-                        filterAdapter.sort(new Comparator<AdapterFilterList.FilterListItem>() {
-                            @Override
-                            public int compare(AdapterFilterList.FilterListItem lhs,
-                                               AdapterFilterList.FilterListItem rhs) {
-                                return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
-                            }
-                        });
+                        filterAdapter.sort();
                         btn_ok.setEnabled(true);
                     }
                 } else {
@@ -2658,13 +2636,7 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
-                filterAdapter.sort(new Comparator<AdapterFilterList.FilterListItem>() {
-                    @Override
-                    public int compare(AdapterFilterList.FilterListItem lhs,
-                                       AdapterFilterList.FilterListItem rhs) {
-                        return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
-                    }
-                });
+                filterAdapter.sort();
                 btn_ok.setEnabled(true);
             }
         });
@@ -2825,13 +2797,7 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
-                filterAdapter.sort(new Comparator<AdapterFilterList.FilterListItem>() {
-                    @Override
-                    public int compare(AdapterFilterList.FilterListItem lhs,
-                                       AdapterFilterList.FilterListItem rhs) {
-                        return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
-                    }
-                });
+                filterAdapter.sort();
                 btn_ok.setEnabled(true);
             }
         });
@@ -3007,13 +2973,7 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
-                filterAdapter.sort(new Comparator<AdapterFilterList.FilterListItem>() {
-                    @Override
-                    public int compare(AdapterFilterList.FilterListItem lhs,
-                                       AdapterFilterList.FilterListItem rhs) {
-                        return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
-                    }
-                });
+                filterAdapter.sort();
                 String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
                 if (!e_msg.equals("")) {
                     dlg_msg.setText(e_msg);
@@ -3144,6 +3104,8 @@ public class SyncTaskUtil {
                 }
                 dialog.dismiss();
                 fli.setFilter(newfilter);
+
+                fa.sort();
 
                 fa.setNotifyOnChange(true);
                 if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
@@ -3626,15 +3588,7 @@ public class SyncTaskUtil {
         }
         if (!check_only) {
             fla.setNotifyOnChange(true);
-            fla.sort(new Comparator<AdapterFilterList.FilterListItem>() {
-                @Override
-                public int compare(AdapterFilterList.FilterListItem lhs,
-                                   AdapterFilterList.FilterListItem rhs) {
-                    return lhs.getFilter().compareToIgnoreCase(rhs.getFilter());
-                }
-
-                ;
-            });
+            fla.sort();
             dlg_msg.setText(String.format(mContext.getString(R.string.msgs_filter_list_dlg_filter_added),
                     add_msg));
         }
@@ -4464,11 +4418,11 @@ public class SyncTaskUtil {
         }
     }
 
-    public static ArrayList<SyncTaskItem> createSyncTaskList(Context context, GlobalParameters gp, CommonUtilities util) {
+    synchronized public static ArrayList<SyncTaskItem> createSyncTaskList(Context context, GlobalParameters gp, CommonUtilities util) {
         return createSyncTaskListFromFile(context, gp, util, false, "", null);
     }
 
-    public static ArrayList<SyncTaskItem> createSyncTaskListFromFile(Context context, GlobalParameters gp, CommonUtilities util,
+    synchronized public static ArrayList<SyncTaskItem> createSyncTaskListFromFile(Context context, GlobalParameters gp, CommonUtilities util,
                                                                      boolean sdcard, String fp, ArrayList<PreferenceParmListIItem> ispl) {
         ArrayList<SyncTaskItem> sync = new ArrayList<SyncTaskItem>();
         if (ispl != null) ispl.clear();
@@ -4538,7 +4492,13 @@ public class SyncTaskUtil {
                 else if (lf2.exists()) pf = SMBSYNC2_PROFILE_FILE_NAME_V2;
                 else pf = SMBSYNC2_PROFILE_FILE_NAME_V1;
 
-                File lf = new File(gp.applicationRootDirectory + "/" + pf);
+                File lf=new File(gp.applicationRootDirectory + "/" + pf);
+
+                File pd=new File(gp.applicationRootDirectory);
+                File[] pd_list=pd.listFiles();
+                if (pd_list!=null && pd_list.length>0) {
+                    for(File item:pd_list) util.addDebugMsg(1,"I","createSyncTaskListFromFile list files="+item.getName());
+                }
 
                 if (lf.exists()) {
                     String priv_key=null;
@@ -4550,6 +4510,7 @@ public class SyncTaskUtil {
                     }
                     cp_int=EncryptUtil.initDecryptEnv(priv_key);
                     br = new BufferedReader(new FileReader(gp.applicationRootDirectory + "/" + pf), 8192);
+                    util.addDebugMsg(1,"I","createSyncTaskListFromFile profile="+lf.getPath());
                     String pl;
                     while ((pl = br.readLine()) != null) {
 //						Log.v("","read pl="+pl);
