@@ -11,6 +11,10 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.drew.lang.Charsets;
+import com.sentaroh.android.Utilities.SafFile;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.security.KeyPairGenerator;
@@ -33,7 +37,9 @@ public class KeyStoreUtil {
     final static String ALGORITHM = "RSA";
     final static String CIPHER_TRANSFORMATION_BELOW_API27 = "RSA/ECB/PKCS1Padding";
     final static String CIPHER_TRANSFORMATION_ABOVE_API28 = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding";
-    final static boolean LOG_MESSAGE_ENABLED=false;
+//    final static boolean LOG_MESSAGE_ENABLED=false;
+
+    private static Logger slf4jLog = LoggerFactory.getLogger(KeyStoreUtil.class);
 
     final static public String makeSHA1Hash(byte[] input) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA1");
@@ -59,7 +65,7 @@ public class KeyStoreUtil {
 
     public static String getGeneratedPasswordOldVersion(Context context, String alias) throws Exception {
 //        Thread.dumpStack();
-        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","getGeneratedPasswordOldVersion entered");
+        slf4jLog.info("getGeneratedPasswordOldVersion entered");
         KeyStore keyStore = null;
         byte[] bytes = null;
         String saved_key="";
@@ -98,12 +104,12 @@ public class KeyStoreUtil {
             byte[] b = cipher.doFinal(bytes);
             generated_password=new String(b);
         }
-        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","getGeneratedPasswordOldVersion ended");
+        slf4jLog.info("getGeneratedPasswordOldVersion ended");
         return generated_password;
     }
 
     public static String getGeneratedPasswordNewVersion(Context context, String alias) throws Exception {
-        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","getGeneratedPasswordNewVersion entered");
+        slf4jLog.info("getGeneratedPasswordNewVersion entered");
 //        Thread.dumpStack();
         KeyStore keyStore = null;
         byte[] bytes = null;
@@ -163,7 +169,7 @@ public class KeyStoreUtil {
             byte[] b = cipher.doFinal(bytes);
             generated_password=new String(b);
         }
-        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","getGeneratedPasswordNewVersion ended");
+        slf4jLog.info("getGeneratedPasswordNewVersion ended");
         return generated_password;
     }
 
@@ -209,7 +215,7 @@ public class KeyStoreUtil {
     }
     private static KeyPairGeneratorSpec createKeyPairGeneratorSpecBelowApi27(Context context, String alias){
 //        Thread.dumpStack();
-        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","createKeyPairGeneratorSpecBelowApi27 entered");
+        slf4jLog.info("createKeyPairGeneratorSpecBelowApi27 entered");
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         end.add(Calendar.YEAR, 100);
@@ -221,12 +227,12 @@ public class KeyStoreUtil {
                 .setStartDate(start.getTime())
                 .setEndDate(end.getTime())
                 .build();
-        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","createKeyPairGeneratorSpecBelowApi27 ended");
+        slf4jLog.info("createKeyPairGeneratorSpecBelowApi27 ended");
         return kgs;
     }
 
     private static KeyGenParameterSpec createKeyGenParameterSpecAboveApi28(Context context, String alias){
-        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","createKeyGenParameterSpecAboveApi28 entered");
+        slf4jLog.info("createKeyGenParameterSpecAboveApi28 entered");
 //        Thread.dumpStack();
 //        Calendar start = Calendar.getInstance();
 //        Calendar end = Calendar.getInstance();
@@ -236,7 +242,7 @@ public class KeyStoreUtil {
                 .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
                 .build();
-        if (LOG_MESSAGE_ENABLED) Log.v("KeyStoreUtil","createKeyGenParameterSpecAboveApi28 ended");
+        slf4jLog.info("createKeyGenParameterSpecAboveApi28 ended");
         return kgs;
     }
 

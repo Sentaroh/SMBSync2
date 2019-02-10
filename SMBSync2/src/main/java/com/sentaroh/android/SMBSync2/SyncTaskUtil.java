@@ -5985,7 +5985,7 @@ public class SyncTaskUtil {
         return saveSyncTaskListToFile(mGp, c, util, false, "", "", pfl, false);
     }
 
-    public static boolean saveSyncTaskListToFile(GlobalParameters mGp, Context c, CommonUtilities util,
+    synchronized public static boolean saveSyncTaskListToFile(GlobalParameters mGp, Context c, CommonUtilities util,
                                                  boolean sdcard, String fd, String fp,
                                                  ArrayList<SyncTaskItem> pfl, boolean encrypt_required) {
         boolean result = true;
