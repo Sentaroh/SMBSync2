@@ -76,7 +76,7 @@ public class SyncThreadArchiveFile {
 
                 File temp_file=new File(stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp");
                 sync_result= copyFile(stwa, sti, new FileInputStream(mf),
-                        new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                        new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
                 if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                     temp_file.setLastModified(mf.lastModified());
                     temp_file.renameTo(tf);
@@ -179,7 +179,7 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-//                        if (sti.isSyncEmptyDirectory()) {
+//                        if (sti.isSyncOptionSyncEmptyDirectory()) {
 //                            SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
 //                        }
                         File[] children = mf.listFiles();
@@ -190,7 +190,7 @@ public class SyncThreadArchiveFile {
                                     if (!element.getName().equals(".android_secure")) {
                                         if (!from_path.equals(to_path)) {
                                             if (element.isDirectory()) {
-                                                if (sti.isSyncSubDirectory()) {
+                                                if (sti.isSyncOptionSyncSubDirectory()) {
                                                     sync_result = buildArchiveListInternalToInternal(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                             element, to_base, to_path + "/" + element.getName());
                                                 } else {
@@ -258,7 +258,7 @@ public class SyncThreadArchiveFile {
                     return SyncTaskItem.SYNC_STATUS_ERROR;
                 }
                 sync_result= copyFile(stwa, sti, new FileInputStream(mf),
-                        stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                        stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
@@ -304,7 +304,7 @@ public class SyncThreadArchiveFile {
                 SafFile to_saf=SyncThread.createSafFile(stwa, sti, tf.getPath());
                 if (to_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
 
-                sync_result= copyFile(stwa, sti, new FileInputStream(mf), os, from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                sync_result= copyFile(stwa, sti, new FileInputStream(mf), os, from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
 
                 temp_file.setLastModified(mf.lastModified());
 
@@ -415,7 +415,7 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-//                        if (sti.isSyncEmptyDirectory()) {
+//                        if (sti.isSyncOptionSyncEmptyDirectory()) {
 //                            SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
 //                        }
                         File[] children = mf.listFiles();
@@ -425,7 +425,7 @@ public class SyncThreadArchiveFile {
                                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     if (!element.getName().equals(".android_secure")) {
                                         if (element.isDirectory()) {
-                                            if (sti.isSyncSubDirectory()) {
+                                            if (sti.isSyncOptionSyncSubDirectory()) {
                                                 sync_result = buildArchiveListInternalToExternal(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName());
                                             } else {
@@ -551,7 +551,7 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-//                        if (sti.isSyncEmptyDirectory()) {
+//                        if (sti.isSyncOptionSyncEmptyDirectory()) {
 //                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
 //                        }
                         File[] children = mf.listFiles();
@@ -561,7 +561,7 @@ public class SyncThreadArchiveFile {
                                 if (element.isDirectory()) {
                                     if (!element.getName().equals(".android_secure")) {
                                         while (stwa.syncTaskRetryCount > 0) {
-                                            if (sti.isSyncSubDirectory()) {
+                                            if (sti.isSyncOptionSyncSubDirectory()) {
                                                 sync_result = buildArchiveListInternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName());
                                             }
@@ -662,7 +662,7 @@ public class SyncThreadArchiveFile {
                 }
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, new FileInputStream(mf), tf.getOutputStream(), from_path, to_path,
-                            tf.getName(), sti.isSyncUseSmallIoBuffer());
+                            tf.getName(), sti.isSyncOptionUseSmallIoBuffer());
                     if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
@@ -714,7 +714,7 @@ public class SyncThreadArchiveFile {
                         stwa.gp.safMgr.getUsbRootPath()+   "/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
                 File temp_file=new File(temp_path);
                 sync_result= copyFile(stwa, sti,  stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
-                        new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                        new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
                 if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                     temp_file.setLastModified(mf.lastModified());
                     temp_file.renameTo(tf);
@@ -815,7 +815,7 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncEmptyDirectory()) {
+                        if (sti.isSyncOptionSyncEmptyDirectory()) {
                             SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
                         }
                         File[] children = mf.listFiles();
@@ -825,7 +825,7 @@ public class SyncThreadArchiveFile {
                                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     if (!element.getName().equals(".android_secure")) {
                                         if (element.isDirectory()) {
-                                            if (sti.isSyncSubDirectory()) {
+                                            if (sti.isSyncOptionSyncSubDirectory()) {
                                                 sync_result = buildArchiveListExternalToInternal(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName());
                                             } else {
@@ -889,7 +889,7 @@ public class SyncThreadArchiveFile {
                     return SyncTaskItem.SYNC_STATUS_ERROR;
                 }
                 sync_result= copyFile(stwa, sti, stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
-                        stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                        stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
@@ -929,7 +929,7 @@ public class SyncThreadArchiveFile {
                 }
 
                 sync_result= copyFile(stwa, sti, stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
-                        os, from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                        os, from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
 
                 temp_file.setLastModified(mf.lastModified());
 
@@ -1038,7 +1038,7 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-//                        if (sti.isSyncEmptyDirectory()) {
+//                        if (sti.isSyncOptionSyncEmptyDirectory()) {
 //                            SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
 //                        }
                         File[] children = mf.listFiles();
@@ -1049,7 +1049,7 @@ public class SyncThreadArchiveFile {
                                     if (!element.getName().equals(".android_secure")) {
                                         if (!from_path.equals(to_path)) {
                                             if (element.isDirectory()) {
-                                                if (sti.isSyncSubDirectory()) {
+                                                if (sti.isSyncOptionSyncSubDirectory()) {
                                                     sync_result = buildArchiveListExternalToExternal(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                             element, to_base, to_path + "/" + element.getName());
                                                 } else {
@@ -1112,7 +1112,7 @@ public class SyncThreadArchiveFile {
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
                             tf.getOutputStream(), from_path, to_path,
-                            tf.getName(), sti.isSyncUseSmallIoBuffer());
+                            tf.getName(), sti.isSyncOptionUseSmallIoBuffer());
                     if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
@@ -1227,7 +1227,7 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-//                        if (sti.isSyncEmptyDirectory()) {
+//                        if (sti.isSyncOptionSyncEmptyDirectory()) {
 //                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
 //                        }
                         File[] children = mf.listFiles();
@@ -1238,7 +1238,7 @@ public class SyncThreadArchiveFile {
                                     if (!element.getName().equals(".android_secure")) {
                                         while (stwa.syncTaskRetryCount > 0) {
                                             if (element.isDirectory()) {
-                                                if (sti.isSyncSubDirectory()) {
+                                                if (sti.isSyncOptionSyncSubDirectory()) {
                                                     sync_result = buildArchiveListExternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
                                                             element, to_base, to_path + "/" + element.getName());
                                                 } else {
@@ -1324,7 +1324,7 @@ public class SyncThreadArchiveFile {
                 if (!lf_dir.exists()) lf_dir.mkdirs();
                 File temp_file=new File(stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp");
                 while (stwa.syncTaskRetryCount > 0) {
-                    sync_result= copyFile(stwa, sti, mf.getInputStream(), new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                    sync_result= copyFile(stwa, sti, mf.getInputStream(), new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
                     if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                         temp_file.setLastModified(mf.getLastModified());
                         temp_file.renameTo(tf);
@@ -1441,7 +1441,7 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-//                        if (sti.isSyncEmptyDirectory()) {
+//                        if (sti.isSyncOptionSyncEmptyDirectory()) {
 //                            SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
 //                        }
                         JcifsFile[] children = mf.listFiles();
@@ -1451,7 +1451,7 @@ public class SyncThreadArchiveFile {
                                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     while (stwa.syncTaskRetryCount > 0) {
                                         if (element.isDirectory()) {
-                                            if (sti.isSyncSubDirectory()) {
+                                            if (sti.isSyncOptionSyncSubDirectory()) {
                                                 sync_result = buildArchiveListSmbToInternal(stwa, sti, from_base, from_path + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName().replace("/", ""));
                                             } else {
@@ -1548,7 +1548,7 @@ public class SyncThreadArchiveFile {
                 }
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, mf.getInputStream(), stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()),
-                            from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                            from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
                     if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
@@ -1604,7 +1604,7 @@ public class SyncThreadArchiveFile {
                 }
 
                 while (stwa.syncTaskRetryCount > 0) {
-                    sync_result= copyFile(stwa, sti, mf.getInputStream(), os, from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                    sync_result= copyFile(stwa, sti, mf.getInputStream(), os, from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
                     if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
@@ -1729,7 +1729,7 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-//                        if (sti.isSyncEmptyDirectory()) {
+//                        if (sti.isSyncOptionSyncEmptyDirectory()) {
 //                            SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
 //                        }
                         JcifsFile[] children = mf.listFiles();
@@ -1739,7 +1739,7 @@ public class SyncThreadArchiveFile {
                                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     while (stwa.syncTaskRetryCount > 0) {
                                         if (element.isDirectory()) {
-                                            if (sti.isSyncSubDirectory()) {
+                                            if (sti.isSyncOptionSyncSubDirectory()) {
                                                 sync_result = buildArchiveListSmbToExternal(stwa, sti, from_base, from_path + element.getName(),
                                                         element, to_base, to_path + "/" + element.getName().replace("/", ""));
                                             } else {
@@ -1823,7 +1823,7 @@ public class SyncThreadArchiveFile {
                 JcifsFile jf_dir=new JcifsFile(dir,stwa.targetAuth);
                 if (!jf_dir.exists()) jf_dir.mkdirs();
                 while (stwa.syncTaskRetryCount > 0) {
-                    sync_result= copyFile(stwa, sti, mf.getInputStream(), tf.getOutputStream(), from_path, to_path, file_name, sti.isSyncUseSmallIoBuffer());
+                    sync_result= copyFile(stwa, sti, mf.getInputStream(), tf.getOutputStream(), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
                     if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
                         if (stwa.syncTaskRetryCount > 0)
@@ -1935,7 +1935,7 @@ public class SyncThreadArchiveFile {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-//                        if (sti.isSyncEmptyDirectory()) {
+//                        if (sti.isSyncOptionSyncEmptyDirectory()) {
 //                            SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
 //                        }
                         JcifsFile[] children = mf.listFiles();
@@ -1945,7 +1945,7 @@ public class SyncThreadArchiveFile {
                                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     while (stwa.syncTaskRetryCount > 0) {
                                         if (element.isDirectory()) {
-                                            if (sti.isSyncSubDirectory()) {
+                                            if (sti.isSyncOptionSyncSubDirectory()) {
                                                 sync_result = buildArchiveListSmbToSmb(stwa, sti, from_base, from_path + element.getName(),
                                                         element, to_base, to_path + element.getName());
                                             } else {
@@ -2283,7 +2283,7 @@ public class SyncThreadArchiveFile {
                                                      InputStream fis_retry, long last_mod, String file_name) {
         String[] date_time=null;
         if (file_name.endsWith(".mp4") || file_name.endsWith(".mov") ) {
-            date_time=getMp4ExifDateTime(stwa, sti, fis);
+            date_time=getMp4ExifDateTime(stwa, fis);
         } else {
             try {
                 date_time=getExifDateTime(stwa, fis);//, buff);
@@ -2323,11 +2323,11 @@ public class SyncThreadArchiveFile {
     static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile lf) throws JcifsException {
         String[] result=null;
         InputStream fis=lf.getInputStream();
-        result=getMp4ExifDateTime(stwa, sti, fis);
+        result=getMp4ExifDateTime(stwa, fis);
         return result;
     }
 
-    static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, InputStream fis)  {
+    static final public String[] getMp4ExifDateTime(SyncThreadWorkArea stwa, InputStream fis)  {
         String[] result=null;
         try {
             Metadata metaData;
@@ -2398,7 +2398,7 @@ public class SyncThreadArchiveFile {
         String[] result=null;
         try {
             InputStream fis=new FileInputStream(lf);
-            result=getMp4ExifDateTime(stwa, sti, fis);
+            result=getMp4ExifDateTime(stwa, fis);
         } catch (IOException e) {
             e.printStackTrace();
             putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
@@ -2411,7 +2411,7 @@ public class SyncThreadArchiveFile {
         InputStream fis=null;
         try {
             fis=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
-            result=getMp4ExifDateTime(stwa, sti, fis);
+            result=getMp4ExifDateTime(stwa, fis);
         } catch (IOException e) {
             e.printStackTrace();
             putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
@@ -2426,7 +2426,7 @@ public class SyncThreadArchiveFile {
         else return null;
     }
 
-    static private String[] getExifDateTime(SyncThreadWorkArea stwa, InputStream fis) {
+    static public String[] getExifDateTime(SyncThreadWorkArea stwa, InputStream fis) {
         BufferedInputStream bis=new BufferedInputStream(fis, 1024*32);
         String[] result=null;
         try {
@@ -2460,6 +2460,10 @@ public class SyncThreadArchiveFile {
                             }
                         } else {
                             int offset=((int)buff[2]&0xff)*256+((int)buff[3]&0xff)-2;
+                            if (offset<1) {
+                                stwa.util.addDebugMsg(1,"W","Read Exif date and time failed, because invalid offset.");
+                                return null;
+                            }
                             buff=readExifData(bis, offset);
                         }
                     } else {

@@ -822,7 +822,7 @@ public class SyncThreadCopyFile {
 
         int buffer_size=LARGE_BUFFERED_STREAM_BUFFER_SIZE, io_area_size=IO_AREA_SIZE;
         boolean show_prog = (file_size > SHOW_PROGRESS_THRESHOLD_VALUE);
-        if (sti.isSyncUseSmallIoBuffer() && sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+        if (sti.isSyncOptionUseSmallIoBuffer() && sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             buffer_size=1024*16-1;
             io_area_size=1024*16-1;
             show_prog=(file_size > 1024*64);

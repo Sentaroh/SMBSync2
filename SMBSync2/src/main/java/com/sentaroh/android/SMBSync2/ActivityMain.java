@@ -214,15 +214,15 @@ public class ActivityMain extends AppCompatActivity {
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET);
         setSyncTaskContextButtonHide();
 
-        Thread th1 = new Thread() {
-            @Override
-            public void run() {
-                mUtil.addDebugMsg(1, "I", "Initialyze application specific directory started");
-                mUtil.initAppSpecificExternalDirectory(mContext);
-                mUtil.addDebugMsg(1, "I", "Initialyze application specific directory ended");
-            }
-        };
-        th1.start();
+//        Thread th1 = new Thread() {
+//            @Override
+//            public void run() {
+//                mUtil.addDebugMsg(1, "I", "Initialyze application specific directory started");
+//                mUtil.initAppSpecificExternalDirectory(mContext);
+//                mUtil.addDebugMsg(1, "I", "Initialyze application specific directory ended");
+//            }
+//        };
+//        th1.start();
     }
 
     private void createSyncTaskList() {
@@ -2988,7 +2988,7 @@ public class ActivityMain extends AppCompatActivity {
                     pfli.setSyncTaskAuto(true);
                     pfli.setMasterLocalMountPoint(mGp.internalRootDirectory);
                     pfli.setTargetLocalMountPoint(mGp.internalRootDirectory);
-                    pfli.setSyncUseExtendedDirectoryFilter1(true);
+                    pfli.setSyncOptionUseExtendedDirectoryFilter1(true);
                     SyncTaskEditor pmsp = SyncTaskEditor.newInstance();
                     pmsp.showDialog(getSupportFragmentManager(), pmsp, "ADD", pfli,
                             mTaskUtil, mUtil, commonDlg, mGp, ntfy);

@@ -77,17 +77,17 @@ public class ImportOldProfileList {
                 sti.setSyncTaskType(pli.getSyncType());
 
                 sti.setSyncConfirmOverrideOrDelete(pli.isConfirmRequired());
-                sti.setSyncEmptyDirectory(pli.isSyncEmptyDirectory());
-                sti.setSyncHiddenDirectory(pli.isSyncHiddenDirectory());
-                sti.setSyncHiddenFile(pli.isSyncHiddenFile());
+                sti.setSyncOptionSyncEmptyDirectory(pli.isSyncEmptyDirectory());
+                sti.setSyncOptionSyncHiddenDirectory(pli.isSyncHiddenDirectory());
+                sti.setSyncOptionSyncHiddenFile(pli.isSyncHiddenFile());
                 sti.setSyncProcessRootDirFile(pli.isMasterDirFileProcess());
-                sti.setSyncSubDirectory(pli.isSyncSubDirectory());
+                sti.setSyncOptionSyncSubDirectory(pli.isSyncSubDirectory());
                 sti.setDirFilter(pli.getDirFilter());
                 sti.setFileFilter(pli.getFileFilter());
 
                 sti.setSyncDetectLastModidiedBySmbsync(pli.isForceLastModifiedUseSmbsync());
                 sti.setSyncDoNotResetFileLastModified(pli.isNotUseLastModifiedForRemote());
-                sti.setSyncUseSmallIoBuffer(pli.isSyncUseRemoteSmallIoArea());
+                sti.setSyncOptionUseSmallIoBuffer(pli.isSyncUseRemoteSmallIoArea());
 
                 ProfileListItem m_pli = getProfile(pli.getMasterName(), pfl);
                 ProfileListItem t_pli = getProfile(pli.getTargetName(), pfl);

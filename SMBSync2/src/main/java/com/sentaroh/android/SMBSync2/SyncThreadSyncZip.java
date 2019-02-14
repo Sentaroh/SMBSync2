@@ -389,10 +389,10 @@ public class SyncThreadSyncZip {
         long length_diff = Math.abs((mf_length - lf_length));
 
         if (mf_exists != lf_exists) exists_diff = true;
-        if (exists_diff || (sti.isSyncDifferentFileBySize() && length_diff > 0) || ac) {
+        if (exists_diff || (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) || ac) {
             diff = true;
         } else {//Check lastModified()
-            if (sti.isSyncDifferentFileByTime()) {
+            if (sti.isSyncOptionDifferentFileByTime()) {
                 if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
                     diff = true;
                 } else diff = false;
@@ -481,7 +481,7 @@ public class SyncThreadSyncZip {
                 if (mf.isDirectory()) { // Directory copy
                     if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
                             SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncEmptyDirectory()) {
+                        if (sti.isSyncOptionSyncEmptyDirectory()) {
                             createDirectoryToZip(stwa, sti, from_path, zf, zp);
                         }
                         File[] children = mf.listFiles();
@@ -495,7 +495,7 @@ public class SyncThreadSyncZip {
                                             sync_result = moveCopyInternalToInternalZip(stwa, sti, move_file, from_base, from_path + "/" + element.getName(),
                                                     element, zf, zp);
                                         } else {
-                                            if (sti.isSyncSubDirectory()) {
+                                            if (sti.isSyncOptionSyncSubDirectory()) {
                                                 sync_result = moveCopyInternalToInternalZip(stwa, sti, move_file, from_base, from_path + "/" + element.getName(),
                                                         element, zf, zp);
                                             } else {

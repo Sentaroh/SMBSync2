@@ -77,9 +77,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskMasterFolderRemotePassword = "";
     private String syncTaskMasterFolderRemoteDomain = "";
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SYSTEM = "0";
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY = "1";
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY = "2";
-    private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY;
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1 = "1";
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = "2";
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = "3";
+    private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1;
     private boolean syncTaskMasterFolderSmbIpcSigningEnforced = true;
     private String syncTaskMasterFolderRemovableStorageID = "";
 //	private boolean syncTaskMasterFolderUseInternalUsbFolder=false;
@@ -94,7 +95,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskTargetFolderRemoteUserName = "";
     private String syncTaskTargetFolderRemotePassword = "";
     private String syncTaskTargetFolderRemoteDomain = "";
-    private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY;
+    private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1;
     private boolean syncTaskTargetFolderSmbIpcSigningEnforced = true;
     private String syncTaskTargetFolderRemovableStorageID = "";
 
@@ -135,6 +136,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private String syncOptionRetryCount = "3";
     private boolean syncOptionSyncEmptyDir = true;
+    private boolean syncTaskTargetUseTakenDateTimeForDirectoryNameKeyword = false;
     private boolean syncOptionSyncHiddenFile = true;
     private boolean syncOptionSyncHiddenDir = true;
     private boolean syncOptionSyncSubDir = true;
@@ -401,6 +403,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setTargetRemovableStorageID(String p) {syncTaskTargetFolderRemovableStorageID = p;}
     public void setTargetFolderType(String p) {syncTaskTargetFolderType = p;}
 
+    public boolean isTargetUseTakenDateTimeToDirectoryNameKeyword() {return syncTaskTargetUseTakenDateTimeForDirectoryNameKeyword;}
+    public void setTargetUseTakenDateTimeToDirectoryNameKeyword(boolean p) {syncTaskTargetUseTakenDateTimeForDirectoryNameKeyword = p;}
+
     public boolean isSyncFileTypeAudio() {return syncFileTypeAudio;}
     public void setSyncFileTypeAudio(boolean p) {syncFileTypeAudio = p;}
 
@@ -413,54 +418,54 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setFileFilter(ArrayList<String> p) {syncFileFilter = p;}
     public void setDirFilter(ArrayList<String> p) {syncDirFilter = p;}
 
-    public String getSyncRetryCount() {return syncOptionRetryCount;}
-    public void setSyncRetryCount(String p) {syncOptionRetryCount = p;}
+    public String getSyncOptionRetryCount() {return syncOptionRetryCount;}
+    public void setSyncOptionRetryCount(String p) {syncOptionRetryCount = p;}
 
-    public boolean isSyncEmptyDirectory() {return syncOptionSyncEmptyDir;}
-    public void setSyncEmptyDirectory(boolean p) {syncOptionSyncEmptyDir = p;}
+    public boolean isSyncOptionSyncEmptyDirectory() {return syncOptionSyncEmptyDir;}
+    public void setSyncOptionSyncEmptyDirectory(boolean p) {syncOptionSyncEmptyDir = p;}
 
-    public boolean isSyncHiddenFile() {return syncOptionSyncHiddenFile;}
-    public void setSyncHiddenFile(boolean p) {syncOptionSyncHiddenFile = p;}
+    public boolean isSyncOptionSyncHiddenFile() {return syncOptionSyncHiddenFile;}
+    public void setSyncOptionSyncHiddenFile(boolean p) {syncOptionSyncHiddenFile = p;}
 
-    public boolean isSyncHiddenDirectory() {return syncOptionSyncHiddenDir;}
-    public void setSyncHiddenDirectory(boolean p) {syncOptionSyncHiddenDir = p;}
+    public boolean isSyncOptionSyncHiddenDirectory() {return syncOptionSyncHiddenDir;}
+    public void setSyncOptionSyncHiddenDirectory(boolean p) {syncOptionSyncHiddenDir = p;}
 
-    public boolean isSyncSubDirectory() {return syncOptionSyncSubDir;}
-    public void setSyncSubDirectory(boolean p) {syncOptionSyncSubDir = p;}
+    public boolean isSyncOptionSyncSubDirectory() {return syncOptionSyncSubDir;}
+    public void setSyncOptionSyncSubDirectory(boolean p) {syncOptionSyncSubDir = p;}
 
-    public boolean isSyncUseSmallIoBuffer() {return syncOptionUseSmallIoBuffer;}
-    public void setSyncUseSmallIoBuffer(boolean p) {syncOptionUseSmallIoBuffer = p;}
+    public boolean isSyncOptionUseSmallIoBuffer() {return syncOptionUseSmallIoBuffer;}
+    public void setSyncOptionUseSmallIoBuffer(boolean p) {syncOptionUseSmallIoBuffer = p;}
 
     public boolean isSyncTestMode() {return syncOptionSyncTestMode;}
     public void setSyncTestMode(boolean p) {syncOptionSyncTestMode = p;}
 
-    public boolean isSyncDifferentFileBySize() {return syncOptionDeterminChangedFileBySize;}
-    public void setSyncDifferentFileBySize(boolean p) {syncOptionDeterminChangedFileBySize = p;}
+    public boolean isSyncOptionDifferentFileBySize() {return syncOptionDeterminChangedFileBySize;}
+    public void setSyncOptionDifferentFileBySize(boolean p) {syncOptionDeterminChangedFileBySize = p;}
 
-    public boolean isSyncDifferentFileByTime() {return syncOptionDeterminChangedFileByTime;}
-    public void setSyncDifferentFileByModTime(boolean p) {syncOptionDeterminChangedFileByTime = p;}
+    public boolean isSyncOptionDifferentFileByTime() {return syncOptionDeterminChangedFileByTime;}
+    public void setSyncOptionDifferentFileByTime(boolean p) {syncOptionDeterminChangedFileByTime = p;}
 
-    public int getSyncDifferentFileAllowableTime() {return syncOptionDeterminChangedFileByTimeValue;}
-    public void setSyncDifferentFileAllowableTime(int p) {syncOptionDeterminChangedFileByTimeValue = p;}
+    public int getSyncOptionDifferentFileAllowableTime() {return syncOptionDeterminChangedFileByTimeValue;}
+    public void setSyncOptionDifferentFileAllowableTime(int p) {syncOptionDeterminChangedFileByTimeValue = p;}
 
 //    public boolean isSyncUseFileCopyByTempNamex() {return syncOptionUseFileCopyByTempName;}
 //    public void setSyncUseFileCopyByTempNamex(boolean p) {syncOptionUseFileCopyByTempName = p;}
-    public boolean isSyncUseExtendedDirectoryFilter1() {return syncOptionUseExtendedDirectoryFilter1;}
-    public void setSyncUseExtendedDirectoryFilter1(boolean p) {syncOptionUseExtendedDirectoryFilter1 = p;}
+    public boolean isSyncOptionUseExtendedDirectoryFilter1() {return syncOptionUseExtendedDirectoryFilter1;}
+    public void setSyncOptionUseExtendedDirectoryFilter1(boolean p) {syncOptionUseExtendedDirectoryFilter1 = p;}
 
-    public String getSyncWifiStatusOption() {return syncOptionWifiStatus;}
-    public void setSyncWifiStatusOption(String p) {syncOptionWifiStatus = p;}
+    public String getSyncOptionWifiStatusOption() {return syncOptionWifiStatus;}
+    public void setSyncOptionWifiStatusOption(String p) {syncOptionWifiStatus = p;}
 
     private ArrayList<String> syncOptionWifiConnectedAccessPointWhiteList = new ArrayList<String>();
-    public ArrayList<String> getSyncWifiConnectedAccessPointWhiteList() {return syncOptionWifiConnectedAccessPointWhiteList;}
-    public void setSyncWifiConnectedAccessPointWhiteList(ArrayList<String> p) {syncOptionWifiConnectedAccessPointWhiteList = p;}
+    public ArrayList<String> getSyncOptionWifiConnectedAccessPointWhiteList() {return syncOptionWifiConnectedAccessPointWhiteList;}
+    public void setSyncOptionWifiConnectedAccessPointWhiteList(ArrayList<String> p) {syncOptionWifiConnectedAccessPointWhiteList = p;}
 
     private ArrayList<String> syncOptionWifiConnectedAddressWhiteList = new ArrayList<String>();
-    public ArrayList<String> getSyncWifiConnectedAddressWhiteList() {return syncOptionWifiConnectedAddressWhiteList;}
-    public void setSyncWifiConnectedAddressWhiteList(ArrayList<String> p) {syncOptionWifiConnectedAddressWhiteList = p;}
+    public ArrayList<String> getSyncOptionWifiConnectedAddressWhiteList() {return syncOptionWifiConnectedAddressWhiteList;}
+    public void setSyncOptionWifiConnectedAddressWhiteList(ArrayList<String> p) {syncOptionWifiConnectedAddressWhiteList = p;}
 
-    public boolean isSyncTaskSkipIfConnectAnotherWifiSsid() {return syncTaskSkipIfConnectAnotherWifiSsid;}
-    public void setSyncTaskSkipIfConnectAnotherWifiSsid(boolean skip) {syncTaskSkipIfConnectAnotherWifiSsid = skip;}
+    public boolean isSyncOptionTaskSkipIfConnectAnotherWifiSsid() {return syncTaskSkipIfConnectAnotherWifiSsid;}
+    public void setSyncOptionTaskSkipIfConnectAnotherWifiSsid(boolean skip) {syncTaskSkipIfConnectAnotherWifiSsid = skip;}
 
     public void setSyncOptionSyncWhenCharging(boolean charging) {syncOptionSyncOnlyCharging = charging;}
     public boolean isSyncOptionSyncWhenCharging() {return syncOptionSyncOnlyCharging;}
@@ -587,20 +592,21 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionForceLastModifiedUseSmbsync==sti.isSyncDetectLastModifiedBySmbsync()) &&
                         (syncOptionNotUsedLastModifiedForRemote==sti.isSyncDoNotResetFileLastModified()) &&
                         (syncOptionDeterminChangedFileSizeGreaterThanTargetFile==sti.isSyncDifferentFileSizeGreaterThanTagetFile()) &&
-                        (syncOptionRetryCount.equals(sti.getSyncRetryCount())) &&
-                        (syncOptionSyncEmptyDir==sti.isSyncEmptyDirectory()) &&
-                        (syncOptionSyncHiddenFile==sti.isSyncHiddenFile()) &&
-                        (syncOptionSyncHiddenDir==sti.isSyncHiddenDirectory()) &&
-                        (syncOptionSyncSubDir==sti.isSyncSubDirectory()) &&
-                        (syncOptionUseSmallIoBuffer==sti.isSyncUseSmallIoBuffer()) &&
-                        (syncOptionDeterminChangedFileBySize==sti.isSyncDifferentFileBySize()) &&
-                        (syncOptionDeterminChangedFileByTime==sti.isSyncDifferentFileByTime()) &&
-                        (syncOptionDeterminChangedFileByTimeValue == sti.getSyncDifferentFileAllowableTime()) &&
+                        (syncOptionRetryCount.equals(sti.getSyncOptionRetryCount())) &&
+                        (syncOptionSyncEmptyDir==sti.isSyncOptionSyncEmptyDirectory()) &&
+                        (syncTaskTargetUseTakenDateTimeForDirectoryNameKeyword == sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) &&
+                        (syncOptionSyncHiddenFile==sti.isSyncOptionSyncHiddenFile()) &&
+                        (syncOptionSyncHiddenDir==sti.isSyncOptionSyncHiddenDirectory()) &&
+                        (syncOptionSyncSubDir==sti.isSyncOptionSyncSubDirectory()) &&
+                        (syncOptionUseSmallIoBuffer==sti.isSyncOptionUseSmallIoBuffer()) &&
+                        (syncOptionDeterminChangedFileBySize==sti.isSyncOptionDifferentFileBySize()) &&
+                        (syncOptionDeterminChangedFileByTime==sti.isSyncOptionDifferentFileByTime()) &&
+                        (syncOptionDeterminChangedFileByTimeValue == sti.getSyncOptionDifferentFileAllowableTime()) &&
 //                        (syncOptionUseFileCopyByTempName==sti.isSyncUseFileCopyByTempName()) &&
                         (syncOptionDeleteFirstWhenMirror==sti.isSyncOptionDeleteFirstWhenMirror()) &&
                         (syncOptionConfirmNotExistsExifDate==sti.isSyncOptionConfirmNotExistsExifDate()) &&
 
-                        (syncOptionUseExtendedDirectoryFilter1==sti.isSyncUseExtendedDirectoryFilter1()) &&
+                        (syncOptionUseExtendedDirectoryFilter1==sti.isSyncOptionUseExtendedDirectoryFilter1()) &&
 
                         (syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile==sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) &&
 
@@ -608,9 +614,9 @@ class SyncTaskItem implements Serializable, Cloneable {
 
                         (syncOptionDoNotUseRenameWhenSmbFileWrite==sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite()) &&
 
-                        (syncOptionWifiStatus.equals(sti.getSyncWifiStatusOption())) &&
+                        (syncOptionWifiStatus.equals(sti.getSyncOptionWifiStatusOption())) &&
 
-                        (syncTaskSkipIfConnectAnotherWifiSsid==sti.isSyncTaskSkipIfConnectAnotherWifiSsid()) &&
+                        (syncTaskSkipIfConnectAnotherWifiSsid==sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid()) &&
                         (syncOptionSyncOnlyCharging==sti.isSyncOptionSyncWhenCharging())) {
 
                     String ff_cmp1 = "";
@@ -629,13 +635,13 @@ class SyncTaskItem implements Serializable, Cloneable {
                     for (String item : syncOptionWifiConnectedAccessPointWhiteList) wap_cmp1 += item;
 
                     String wap_cmp2 = "";
-                    for (String item : sti.getSyncWifiConnectedAccessPointWhiteList()) wap_cmp2 += item;
+                    for (String item : sti.getSyncOptionWifiConnectedAccessPointWhiteList()) wap_cmp2 += item;
 
                     String wad_cmp1 = "";
                     for (String item : syncOptionWifiConnectedAddressWhiteList) wad_cmp1 += item;
 
                     String wad_cmp2 = "";
-                    for (String item : sti.getSyncWifiConnectedAddressWhiteList()) wad_cmp2 += item;
+                    for (String item : sti.getSyncOptionWifiConnectedAddressWhiteList()) wad_cmp2 += item;
 
                     if ((ff_cmp1.equals(ff_cmp2)) &&
                             (df_cmp1.equals(df_cmp2)) &&

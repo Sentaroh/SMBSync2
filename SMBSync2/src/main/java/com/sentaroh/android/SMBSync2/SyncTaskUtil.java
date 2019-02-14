@@ -40,7 +40,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -1349,7 +1348,7 @@ public class SyncTaskUtil {
                         ntfy.notifyToListener(true, new Object[]{unreachble_msg});
                     }
                 } else {
-                    boolean smb1=ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)? true:false;
+                    int smb1=Integer.parseInt(ra.smb_smb_protocol);
                     String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb1, host);
                     if (ipAddress == null) {
                         try {
@@ -1413,10 +1412,11 @@ public class SyncTaskUtil {
 
 
         JcifsAuth auth=null;
-        if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+        int smb_level=Integer.parseInt(ra.smb_smb_protocol);
+        if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
             auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
         } else {
-            auth=new JcifsAuth(ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password, ra.smb_ipc_signing_enforced);
+            auth=new JcifsAuth(smb_level, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password, ra.smb_ipc_signing_enforced);
         }
         try {
             JcifsFile sf = new JcifsFile(url, auth);
@@ -1551,7 +1551,8 @@ public class SyncTaskUtil {
         });
         String port_num = "";
         if (ctv_use_port_number.isChecked()) port_num = editport.getText().toString();
-        scanSmbServerDlg(ntfy, port_num, false);
+        final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
+        scanSmbServerDlg(ntfy, port_num, false, sp_sync_folder_smb_proto.getSelectedItemPosition()+1);
     }
 
     public void invokeSelectSmbShareDlg(Dialog dialog) {
@@ -1573,7 +1574,7 @@ public class SyncTaskUtil {
             remote_pass = editpass.getText().toString();
         }
 
-        final String smb_proto=sp_sync_folder_smb_proto.getSelectedItemPosition()==0 ? SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY:SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY;
+        final String smb_proto=""+(sp_sync_folder_smb_proto.getSelectedItemPosition()+1);
         final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
         setSmbUserPass(remote_user, remote_pass);
 //		Log.v("","u="+remote_user+", pass="+remote_pass);
@@ -1636,8 +1637,7 @@ public class SyncTaskUtil {
             remote_pass = editpass.getText().toString();
         }
 
-        final String smb_proto=sp_sync_folder_smb_proto.getSelectedItemPosition()==0 ?
-                SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY:SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB2_ONLY;
+        final String smb_proto=""+(sp_sync_folder_smb_proto.getSelectedItemPosition()+1);
         final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
         remote_share = editshare.getText().toString();
 
@@ -2185,10 +2185,11 @@ public class SyncTaskUtil {
           @Override
           public void run() {
               JcifsAuth auth=null;
-              if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+              int smb_level=Integer.parseInt(ra.smb_smb_protocol);
+              if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
                   auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
               } else {
-                  auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB2, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+                  auth=new JcifsAuth(smb_level, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
               }
               try {
                   JcifsFile jf=new JcifsFile(new_dir, auth);
@@ -2230,10 +2231,11 @@ public class SyncTaskUtil {
             @Override
             public void run() {
                 JcifsAuth auth=null;
-                if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+                int smb_level=Integer.parseInt(ra.smb_smb_protocol);
+                if (ra.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
                     auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
                 } else {
-                    auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB2, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
+                    auth=new JcifsAuth(smb_level, ra.smb_domain_name, ra.smb_user_name, ra.smb_user_password);
                 }
                 try {
                     JcifsFile jf=new JcifsFile(new_dir, auth);
@@ -3685,7 +3687,7 @@ public class SyncTaskUtil {
     }
 
     public void scanSmbServerDlg(final NotifyEvent p_ntfy,
-                                 String port_number, boolean scan_start) {
+                                 String port_number, boolean scan_start, final int smb_protocol) {
         //カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -3802,7 +3804,7 @@ public class SyncTaskUtil {
                     int begin_addr = Integer.parseInt(ba4);
                     int end_addr = Integer.parseInt(ea4);
                     scanRemoteNetwork(dialog, lv, adap, ipAddressList,
-                            subnet, begin_addr, end_addr, ntfy);
+                            subnet, begin_addr, end_addr, ntfy, smb_protocol);
                 } else {
                     //error
                 }
@@ -3838,7 +3840,7 @@ public class SyncTaskUtil {
             final AdapterNetworkScanResult adap,
             final ArrayList<AdapterNetworkScanResult.NetworkScanListItem> ipAddressList,
             final String subnet, final int begin_addr, final int end_addr,
-            final NotifyEvent p_ntfy) {
+            final NotifyEvent p_ntfy, final int smb_protcol) {
         final Handler handler = new Handler();
         final ThreadCtrl tc = new ThreadCtrl();
         final LinearLayout ll_addr = (LinearLayout) dialog.findViewById(R.id.scan_remote_ntwk_scan_address);
@@ -3895,7 +3897,7 @@ public class SyncTaskUtil {
                     for (int j = i; j < (i + scan_thread); j++) {
                         if (j <= end_addr) {
                             startRemoteNetworkScanThread(handler, tc, dialog, p_ntfy,
-                                    lv_ipaddr, adap, tvmsg, subnet + "." + j, ipAddressList, scan_port, true);
+                                    lv_ipaddr, adap, tvmsg, subnet + "." + j, ipAddressList, scan_port, smb_protcol);
                         } else {
                             scan_end = true;
                         }
@@ -3973,7 +3975,7 @@ public class SyncTaskUtil {
                                               final TextView tvmsg,
                                               final String addr,
                                               final ArrayList<AdapterNetworkScanResult.NetworkScanListItem> ipAddressList,
-                                              final String scan_port, final boolean smb1) {
+                                              final String scan_port, final int smb_level) {
         final String scan_prog = mContext.getString(R.string.msgs_ip_address_scan_progress);
         Thread th = new Thread(new Runnable() {
             @Override
@@ -3982,7 +3984,7 @@ public class SyncTaskUtil {
                     mScanRequestedAddrList.add(addr);
                 }
                 if (isIpAddrSmbHost(addr, scan_port)) {
-                    final String srv_name = getSmbHostName(smb1, addr);
+                    final String srv_name = getSmbHostName(smb_level, addr);
                     handler.post(new Runnable() {// UI thread
                         @Override
                         public void run() {
@@ -4052,8 +4054,8 @@ public class SyncTaskUtil {
         return smbhost;
     }
 
-    private String getSmbHostName(boolean smb1, String address) {
-        String srv_name = JcifsUtil.getSmbHostNameByAddress(smb1, address);
+    private String getSmbHostName(int smb_level, String address) {
+        String srv_name = JcifsUtil.getSmbHostNameByAddress(smb_level, address);
         mUtil.addDebugMsg(1, "I", "getSmbHostName Address=" + address + ", name=" + srv_name);
         return srv_name;
     }
@@ -4593,7 +4595,7 @@ public class SyncTaskUtil {
         stli.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL);
         stli.setTargetDirectoryName("Pictures");
 
-        stli.setSyncUseExtendedDirectoryFilter1(true);
+        stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(0);
         pfl.add(stli);
 
@@ -4610,7 +4612,7 @@ public class SyncTaskUtil {
         stli.setSyncTestMode(false);
         stli.setTargetDirectoryName("Android/DCIM");
 
-        stli.setSyncUseExtendedDirectoryFilter1(true);
+        stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(1);
         pfl.add(stli);
 
@@ -4622,9 +4624,9 @@ public class SyncTaskUtil {
         stli.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD);
         stli.setTargetDirectoryName("Pictures");
         stli.setSyncTestMode(false);
-        stli.setSyncWifiStatusOption("0");
+        stli.setSyncOptionWifiStatusOption("0");
 
-        stli.setSyncUseExtendedDirectoryFilter1(true);
+        stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(2);
         pfl.add(stli);
     }
@@ -4759,7 +4761,7 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_wl);
+            stli.setSyncOptionWifiConnectedAccessPointWhiteList(wifi_wl);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -4770,20 +4772,20 @@ public class SyncTaskUtil {
 
             stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
-            stli.setSyncRetryCount(parm[27]);
+            stli.setSyncOptionRetryCount(parm[27]);
 
-            stli.setSyncEmptyDirectory(parm[28].equals("1") ? true : false);
-            stli.setSyncHiddenFile(parm[29].equals("1") ? true : false);
-            stli.setSyncHiddenDirectory(parm[30].equals("1") ? true : false);
+            stli.setSyncOptionSyncEmptyDirectory(parm[28].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenFile(parm[29].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenDirectory(parm[30].equals("1") ? true : false);
 
-            stli.setSyncSubDirectory(parm[31].equals("1") ? true : false);
-            stli.setSyncUseSmallIoBuffer(parm[32].equals("1") ? true : false);
+            stli.setSyncOptionSyncSubDirectory(parm[31].equals("1") ? true : false);
+            stli.setSyncOptionUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
-            stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
+            stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));
+            stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
 //            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
-            stli.setSyncWifiStatusOption(parm[37]);
+            stli.setSyncOptionWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
             stli.setLastSyncResult(Integer.parseInt(parm[39]));
@@ -4866,7 +4868,7 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_wl);
+            stli.setSyncOptionWifiConnectedAccessPointWhiteList(wifi_wl);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -4877,20 +4879,20 @@ public class SyncTaskUtil {
 
             stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
-            stli.setSyncRetryCount(parm[27]);
+            stli.setSyncOptionRetryCount(parm[27]);
 
-            stli.setSyncEmptyDirectory(parm[28].equals("1") ? true : false);
-            stli.setSyncHiddenFile(parm[29].equals("1") ? true : false);
-            stli.setSyncHiddenDirectory(parm[30].equals("1") ? true : false);
+            stli.setSyncOptionSyncEmptyDirectory(parm[28].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenFile(parm[29].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenDirectory(parm[30].equals("1") ? true : false);
 
-            stli.setSyncSubDirectory(parm[31].equals("1") ? true : false);
-            stli.setSyncUseSmallIoBuffer(parm[32].equals("1") ? true : false);
+            stli.setSyncOptionSyncSubDirectory(parm[31].equals("1") ? true : false);
+            stli.setSyncOptionUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
-            stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
+            stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));
+            stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
 //            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
-            stli.setSyncWifiStatusOption(parm[37]);
+            stli.setSyncOptionWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
             stli.setLastSyncResult(Integer.parseInt(parm[39]));
@@ -4978,7 +4980,7 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_wl);
+            stli.setSyncOptionWifiConnectedAccessPointWhiteList(wifi_wl);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -4989,20 +4991,20 @@ public class SyncTaskUtil {
 
             stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
-            stli.setSyncRetryCount(parm[27]);
+            stli.setSyncOptionRetryCount(parm[27]);
 
-            stli.setSyncEmptyDirectory(parm[28].equals("1") ? true : false);
-            stli.setSyncHiddenFile(parm[29].equals("1") ? true : false);
-            stli.setSyncHiddenDirectory(parm[30].equals("1") ? true : false);
+            stli.setSyncOptionSyncEmptyDirectory(parm[28].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenFile(parm[29].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenDirectory(parm[30].equals("1") ? true : false);
 
-            stli.setSyncSubDirectory(parm[31].equals("1") ? true : false);
-            stli.setSyncUseSmallIoBuffer(parm[32].equals("1") ? true : false);
+            stli.setSyncOptionSyncSubDirectory(parm[31].equals("1") ? true : false);
+            stli.setSyncOptionUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
-            stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
+            stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));
+            stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
 //            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
-            stli.setSyncWifiStatusOption(parm[37]);
+            stli.setSyncOptionWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
             stli.setLastSyncResult(Integer.parseInt(parm[39]));
@@ -5097,7 +5099,7 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_wl);
+            stli.setSyncOptionWifiConnectedAccessPointWhiteList(wifi_wl);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -5108,20 +5110,20 @@ public class SyncTaskUtil {
 
             stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
-            stli.setSyncRetryCount(parm[27]);
+            stli.setSyncOptionRetryCount(parm[27]);
 
-            stli.setSyncEmptyDirectory(parm[28].equals("1") ? true : false);
-            stli.setSyncHiddenFile(parm[29].equals("1") ? true : false);
-            stli.setSyncHiddenDirectory(parm[30].equals("1") ? true : false);
+            stli.setSyncOptionSyncEmptyDirectory(parm[28].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenFile(parm[29].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenDirectory(parm[30].equals("1") ? true : false);
 
-            stli.setSyncSubDirectory(parm[31].equals("1") ? true : false);
-            stli.setSyncUseSmallIoBuffer(parm[32].equals("1") ? true : false);
+            stli.setSyncOptionSyncSubDirectory(parm[31].equals("1") ? true : false);
+            stli.setSyncOptionUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
-            stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
+            stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));
+            stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
 //            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
-            stli.setSyncWifiStatusOption(parm[37]);
+            stli.setSyncOptionWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
             stli.setLastSyncResult(Integer.parseInt(parm[39]));
@@ -5155,7 +5157,7 @@ public class SyncTaskUtil {
             if (!parm[52].equals("") && !parm[52].equals("end"))
                 stli.setTargetZipPassword(parm[52]);
             if (!parm[53].equals("") && !parm[53].equals("end"))
-                stli.setSyncTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
+                stli.setSyncOptionTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
 
 //			if (!parm[54].equals("") && !parm[54].equals("end")) stli.setTargetZipUseInternalUsbFolder(parm[54].equals("1")?true:false);
             if (!parm[55].equals("") && !parm[55].equals("end"))
@@ -5170,7 +5172,7 @@ public class SyncTaskUtil {
                 stli.setTargetZipFileNameEncoding(parm[58]);
 
             if (!parm[59].equals("") && !parm[59].equals("end"))
-                stli.setSyncDifferentFileBySize((parm[59].equals("1") ? true : false));
+                stli.setSyncOptionDifferentFileBySize((parm[59].equals("1") ? true : false));
 
             sync.add(stli);
         }
@@ -5244,7 +5246,7 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_wl);
+            stli.setSyncOptionWifiConnectedAccessPointWhiteList(wifi_wl);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -5255,20 +5257,20 @@ public class SyncTaskUtil {
 
             stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
-            stli.setSyncRetryCount(parm[27]);
+            stli.setSyncOptionRetryCount(parm[27]);
 
-            stli.setSyncEmptyDirectory(parm[28].equals("1") ? true : false);
-            stli.setSyncHiddenFile(parm[29].equals("1") ? true : false);
-            stli.setSyncHiddenDirectory(parm[30].equals("1") ? true : false);
+            stli.setSyncOptionSyncEmptyDirectory(parm[28].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenFile(parm[29].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenDirectory(parm[30].equals("1") ? true : false);
 
-            stli.setSyncSubDirectory(parm[31].equals("1") ? true : false);
-            stli.setSyncUseSmallIoBuffer(parm[32].equals("1") ? true : false);
+            stli.setSyncOptionSyncSubDirectory(parm[31].equals("1") ? true : false);
+            stli.setSyncOptionUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));
-            stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
+            stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));
+            stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
 //            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
-            stli.setSyncWifiStatusOption(parm[37]);
+            stli.setSyncOptionWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
             stli.setLastSyncResult(Integer.parseInt(parm[39]));
@@ -5302,7 +5304,7 @@ public class SyncTaskUtil {
             if (!parm[52].equals("") && !parm[52].equals("end"))
                 stli.setTargetZipPassword(parm[52]);
             if (!parm[53].equals("") && !parm[53].equals("end"))
-                stli.setSyncTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
+                stli.setSyncOptionTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
 
 //            if (!parm[54].equals("") && !parm[54].equals("end")) stli.setTargetZipUseInternalUsbFolder(parm[54].equals("1")?true:false);
             if (!parm[55].equals("") && !parm[55].equals("end"))
@@ -5317,10 +5319,10 @@ public class SyncTaskUtil {
                 stli.setTargetZipFileNameEncoding(parm[58]);
 
             if (!parm[59].equals("") && !parm[59].equals("end"))
-                stli.setSyncDifferentFileBySize((parm[59].equals("1") ? true : false));
+                stli.setSyncOptionDifferentFileBySize((parm[59].equals("1") ? true : false));
 
             if (!parm[60].equals("") && !parm[60].equals("end"))
-                stli.setSyncUseExtendedDirectoryFilter1((parm[60].equals("1") ? true : false));
+                stli.setSyncOptionUseExtendedDirectoryFilter1((parm[60].equals("1") ? true : false));
 
             sync.add(stli);
         }
@@ -5399,8 +5401,8 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_ap_list);
-            stli.setSyncWifiConnectedAddressWhiteList(wifi_addr_list);
+            stli.setSyncOptionWifiConnectedAccessPointWhiteList(wifi_ap_list);
+            stli.setSyncOptionWifiConnectedAddressWhiteList(wifi_addr_list);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -5411,20 +5413,20 @@ public class SyncTaskUtil {
 
             stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
-            stli.setSyncRetryCount(parm[27]);
+            stli.setSyncOptionRetryCount(parm[27]);
 
-            stli.setSyncEmptyDirectory(parm[28].equals("1") ? true : false);
-            stli.setSyncHiddenFile(parm[29].equals("1") ? true : false);
-            stli.setSyncHiddenDirectory(parm[30].equals("1") ? true : false);
+            stli.setSyncOptionSyncEmptyDirectory(parm[28].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenFile(parm[29].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenDirectory(parm[30].equals("1") ? true : false);
 
-            stli.setSyncSubDirectory(parm[31].equals("1") ? true : false);
-            stli.setSyncUseSmallIoBuffer(parm[32].equals("1") ? true : false);
+            stli.setSyncOptionSyncSubDirectory(parm[31].equals("1") ? true : false);
+            stli.setSyncOptionUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            try {stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));} catch(Exception e) {}
-            stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
+            try {stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));} catch(Exception e) {}
+            stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
 //            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
-            stli.setSyncWifiStatusOption(parm[37]);
+            stli.setSyncOptionWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
             try {stli.setLastSyncResult(Integer.parseInt(parm[39]));} catch(Exception e) {}
@@ -5457,7 +5459,7 @@ public class SyncTaskUtil {
             if (!parm[52].equals("") && !parm[52].equals("end"))
                 stli.setTargetZipPassword(parm[52]);
             if (!parm[53].equals("") && !parm[53].equals("end"))
-                stli.setSyncTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
+                stli.setSyncOptionTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
 
             if (!parm[54].equals("") && !parm[54].equals("end"))
                 stli.setSyncOptionSyncWhenCharging(parm[54].equals("1") ? true : false);
@@ -5474,10 +5476,10 @@ public class SyncTaskUtil {
                 stli.setTargetZipFileNameEncoding(parm[58]);
 
             if (!parm[59].equals("") && !parm[59].equals("end"))
-                stli.setSyncDifferentFileBySize((parm[59].equals("1") ? true : false));
+                stli.setSyncOptionDifferentFileBySize((parm[59].equals("1") ? true : false));
 
             if (!parm[60].equals("") && !parm[60].equals("end"))
-                stli.setSyncUseExtendedDirectoryFilter1((parm[60].equals("1") ? true : false));
+                stli.setSyncOptionUseExtendedDirectoryFilter1((parm[60].equals("1") ? true : false));
 
             if (!parm[61].equals("") && !parm[61].equals("end"))
                 stli.setMasterLocalMountPoint(parm[61]);
@@ -5521,9 +5523,9 @@ public class SyncTaskUtil {
             if (!parm[80].equals("") && !parm[80].equals("end")) stli.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters((parm[80].equals("1") ? true : false));
 
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
-                stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
+                stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
-                stli.setTargetSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
+                stli.setTargetSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             sync.add(stli);
         }
     }
@@ -5601,8 +5603,8 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_ap_list);
-            stli.setSyncWifiConnectedAddressWhiteList(wifi_addr_list);
+            stli.setSyncOptionWifiConnectedAccessPointWhiteList(wifi_ap_list);
+            stli.setSyncOptionWifiConnectedAddressWhiteList(wifi_addr_list);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -5613,20 +5615,20 @@ public class SyncTaskUtil {
 
             stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
-            stli.setSyncRetryCount(parm[27]);
+            stli.setSyncOptionRetryCount(parm[27]);
 
-            stli.setSyncEmptyDirectory(parm[28].equals("1") ? true : false);
-            stli.setSyncHiddenFile(parm[29].equals("1") ? true : false);
-            stli.setSyncHiddenDirectory(parm[30].equals("1") ? true : false);
+            stli.setSyncOptionSyncEmptyDirectory(parm[28].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenFile(parm[29].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenDirectory(parm[30].equals("1") ? true : false);
 
-            stli.setSyncSubDirectory(parm[31].equals("1") ? true : false);
-            stli.setSyncUseSmallIoBuffer(parm[32].equals("1") ? true : false);
+            stli.setSyncOptionSyncSubDirectory(parm[31].equals("1") ? true : false);
+            stli.setSyncOptionUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            try {stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));} catch(Exception e) {}
-            stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
+            try {stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));} catch(Exception e) {}
+            stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
 //            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
-            stli.setSyncWifiStatusOption(parm[37]);
+            stli.setSyncOptionWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
             try {stli.setLastSyncResult(Integer.parseInt(parm[39]));} catch(Exception e) {}
@@ -5659,7 +5661,7 @@ public class SyncTaskUtil {
             if (!parm[52].equals("") && !parm[52].equals("end"))
                 stli.setTargetZipPassword(parm[52]);
             if (!parm[53].equals("") && !parm[53].equals("end"))
-                stli.setSyncTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
+                stli.setSyncOptionTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
 
             if (!parm[54].equals("") && !parm[54].equals("end"))
                 stli.setSyncOptionSyncWhenCharging(parm[54].equals("1") ? true : false);
@@ -5676,10 +5678,10 @@ public class SyncTaskUtil {
                 stli.setTargetZipFileNameEncoding(parm[58]);
 
             if (!parm[59].equals("") && !parm[59].equals("end"))
-                stli.setSyncDifferentFileBySize((parm[59].equals("1") ? true : false));
+                stli.setSyncOptionDifferentFileBySize((parm[59].equals("1") ? true : false));
 
             if (!parm[60].equals("") && !parm[60].equals("end"))
-                stli.setSyncUseExtendedDirectoryFilter1((parm[60].equals("1") ? true : false));
+                stli.setSyncOptionUseExtendedDirectoryFilter1((parm[60].equals("1") ? true : false));
 
             if (!parm[61].equals("") && !parm[61].equals("end"))
                 stli.setMasterLocalMountPoint(parm[61]);
@@ -5723,9 +5725,9 @@ public class SyncTaskUtil {
             if (!parm[80].equals("") && !parm[80].equals("end")) stli.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters((parm[80].equals("1") ? true : false));
 
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
-                stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
+                stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
-                stli.setTargetSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
+                stli.setTargetSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             sync.add(stli);
         }
     }
@@ -5803,8 +5805,8 @@ public class SyncTaskUtil {
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
-            stli.setSyncWifiConnectedAccessPointWhiteList(wifi_ap_list);
-            stli.setSyncWifiConnectedAddressWhiteList(wifi_addr_list);
+            stli.setSyncOptionWifiConnectedAccessPointWhiteList(wifi_ap_list);
+            stli.setSyncOptionWifiConnectedAddressWhiteList(wifi_addr_list);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 
@@ -5815,20 +5817,20 @@ public class SyncTaskUtil {
 
             stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
-            stli.setSyncRetryCount(parm[27]);
+            stli.setSyncOptionRetryCount(parm[27]);
 
-            stli.setSyncEmptyDirectory(parm[28].equals("1") ? true : false);
-            stli.setSyncHiddenFile(parm[29].equals("1") ? true : false);
-            stli.setSyncHiddenDirectory(parm[30].equals("1") ? true : false);
+            stli.setSyncOptionSyncEmptyDirectory(parm[28].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenFile(parm[29].equals("1") ? true : false);
+            stli.setSyncOptionSyncHiddenDirectory(parm[30].equals("1") ? true : false);
 
-            stli.setSyncSubDirectory(parm[31].equals("1") ? true : false);
-            stli.setSyncUseSmallIoBuffer(parm[32].equals("1") ? true : false);
+            stli.setSyncOptionSyncSubDirectory(parm[31].equals("1") ? true : false);
+            stli.setSyncOptionUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            try {stli.setSyncDifferentFileAllowableTime(Integer.parseInt(parm[34]));} catch(Exception e) {}
-            stli.setSyncDifferentFileByModTime(parm[35].equals("1") ? true : false);
+            try {stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));} catch(Exception e) {}
+            stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
 //            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
-            stli.setSyncWifiStatusOption(parm[37]);
+            stli.setSyncOptionWifiStatusOption(parm[37]);
 
             stli.setLastSyncTime(parm[38]);
             try {stli.setLastSyncResult(Integer.parseInt(parm[39]));} catch(Exception e) {}
@@ -5861,7 +5863,7 @@ public class SyncTaskUtil {
             if (!parm[52].equals("") && !parm[52].equals("end"))
                 stli.setTargetZipPassword(parm[52]);
             if (!parm[53].equals("") && !parm[53].equals("end"))
-                stli.setSyncTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
+                stli.setSyncOptionTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
 
             if (!parm[54].equals("") && !parm[54].equals("end"))
                 stli.setSyncOptionSyncWhenCharging(parm[54].equals("1") ? true : false);
@@ -5878,10 +5880,10 @@ public class SyncTaskUtil {
                 stli.setTargetZipFileNameEncoding(parm[58]);
 
             if (!parm[59].equals("") && !parm[59].equals("end"))
-                stli.setSyncDifferentFileBySize((parm[59].equals("1") ? true : false));
+                stli.setSyncOptionDifferentFileBySize((parm[59].equals("1") ? true : false));
 
             if (!parm[60].equals("") && !parm[60].equals("end"))
-                stli.setSyncUseExtendedDirectoryFilter1((parm[60].equals("1") ? true : false));
+                stli.setSyncOptionUseExtendedDirectoryFilter1((parm[60].equals("1") ? true : false));
 
             if (!parm[61].equals("") && !parm[61].equals("end"))
                 stli.setMasterLocalMountPoint(parm[61]);
@@ -5926,10 +5928,12 @@ public class SyncTaskUtil {
 
             if (!parm[81].equals("") && !parm[81].equals("end")) stli.setSyncOptionDoNotUseRenameWhenSmbFileWrite((parm[81].equals("1") ? true : false));
 
+            if (!parm[82].equals("") && !parm[82].equals("end")) stli.setTargetUseTakenDateTimeToDirectoryNameKeyword((parm[82].equals("1") ? true : false));
+
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
-                stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
+                stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
-                stli.setTargetSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY);
+                stli.setTargetSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             sync.add(stli);
         }
     }
@@ -6084,18 +6088,18 @@ public class SyncTaskUtil {
                     dl = convertToCodeChar(dl);
                     dl = "[" + dl + "]";
 
-                    for (int j = 0; j < item.getSyncWifiConnectedAccessPointWhiteList().size(); j++) {
+                    for (int j = 0; j < item.getSyncOptionWifiConnectedAccessPointWhiteList().size(); j++) {
                         if (wifi_wl.length() != 0) wifi_wl += "\t";
-                        if (!item.getSyncWifiConnectedAccessPointWhiteList().get(j).equals(""))
-                            wifi_wl += item.getSyncWifiConnectedAccessPointWhiteList().get(j);
+                        if (!item.getSyncOptionWifiConnectedAccessPointWhiteList().get(j).equals(""))
+                            wifi_wl += item.getSyncOptionWifiConnectedAccessPointWhiteList().get(j);
                     }
                     wifi_wl = convertToCodeChar(wifi_wl);
                     wifi_wl = "[" + wifi_wl + "]";
 
-                    for (int j = 0; j < item.getSyncWifiConnectedAddressWhiteList().size(); j++) {
+                    for (int j = 0; j < item.getSyncOptionWifiConnectedAddressWhiteList().size(); j++) {
                         if (wifi_addr_list.length() != 0) wifi_addr_list += "\t";
-                        if (!item.getSyncWifiConnectedAddressWhiteList().get(j).equals(""))
-                            wifi_addr_list += item.getSyncWifiConnectedAddressWhiteList().get(j);
+                        if (!item.getSyncOptionWifiConnectedAddressWhiteList().get(j).equals(""))
+                            wifi_addr_list += item.getSyncOptionWifiConnectedAddressWhiteList().get(j);
                     }
                     wifi_addr_list = convertToCodeChar(wifi_addr_list);
                     wifi_addr_list = "[" + wifi_addr_list + "]";
@@ -6106,20 +6110,20 @@ public class SyncTaskUtil {
                     String sync_confirm_override_delete = item.isSyncConfirmOverrideOrDelete() ? "1" : "0";
                     String sync_force_last_mod_use_smbsync = item.isSyncDetectLastModifiedBySmbsync() ? "1" : "0";
                     String sync_not_used_last_mod_for_remote = item.isSyncDoNotResetFileLastModified() ? "1" : "0";
-                    String sync_retry_count = item.getSyncRetryCount();
-                    String sync_sync_empty_dir = item.isSyncEmptyDirectory() ? "1" : "0";
-                    String sync_sync_hidden_file = item.isSyncHiddenFile() ? "1" : "0";
-                    String sync_sync_hidden_dir = item.isSyncHiddenDirectory() ? "1" : "0";
-                    String sync_sync_sub_dir = item.isSyncSubDirectory() ? "1" : "0";
-                    String sync_use_small_io_buf = item.isSyncUseSmallIoBuffer() ? "1" : "0";
+                    String sync_retry_count = item.getSyncOptionRetryCount();
+                    String sync_sync_empty_dir = item.isSyncOptionSyncEmptyDirectory() ? "1" : "0";
+                    String sync_sync_hidden_file = item.isSyncOptionSyncHiddenFile() ? "1" : "0";
+                    String sync_sync_hidden_dir = item.isSyncOptionSyncHiddenDirectory() ? "1" : "0";
+                    String sync_sync_sub_dir = item.isSyncOptionSyncSubDirectory() ? "1" : "0";
+                    String sync_use_small_io_buf = item.isSyncOptionUseSmallIoBuffer() ? "1" : "0";
 
                     String sync_sync_test_mode = item.isSyncTestMode() ? "1" : "0";
-                    String sync_file_copy_by_diff_file = String.valueOf(item.getSyncDifferentFileAllowableTime());
-                    String sync_sync_diff_file_by_file_size = item.isSyncDifferentFileBySize() ? "1" : "0";
-                    String sync_sync_diff_file_by_last_mod = item.isSyncDifferentFileByTime() ? "1" : "0";
+                    String sync_file_copy_by_diff_file = String.valueOf(item.getSyncOptionDifferentFileAllowableTime());
+                    String sync_sync_diff_file_by_file_size = item.isSyncOptionDifferentFileBySize() ? "1" : "0";
+                    String sync_sync_diff_file_by_last_mod = item.isSyncOptionDifferentFileByTime() ? "1" : "0";
 
 //                    String sync_sync_use_file_copy_by_temp_name = "0";//item.isSyncUseFileCopyByTempNamex() ? "1" : "0";
-                    String sync_sync_wifi_status_option = item.getSyncWifiStatusOption();
+                    String sync_sync_wifi_status_option = item.getSyncOptionWifiStatusOption();
 
                     String sync_result_last_time = item.getLastSyncTime();
                     String sync_result_last_status = String.valueOf(item.getLastSyncResult());
@@ -6130,7 +6134,7 @@ public class SyncTaskUtil {
                     String sync_file_type_image = item.isSyncFileTypeImage() ? "1" : "0";
                     String sync_file_type_video = item.isSyncFileTypeVideo() ? "1" : "0";
 
-                    String sync_use_ext_dir_filter1 = item.isSyncUseExtendedDirectoryFilter1() ? "1" : "0"; //60
+                    String sync_use_ext_dir_filter1 = item.isSyncOptionUseExtendedDirectoryFilter1() ? "1" : "0"; //60
 
                     pl = SMBSYNC2_PROF_TYPE_SYNC + "\t" +
                             pl_name + "\t" + //1
@@ -6202,7 +6206,7 @@ public class SyncTaskUtil {
                             item.getTargetZipCompressionMethod() + "\t" +                       //50
                             item.getTargetZipEncryptMethod() + "\t" +                           //51
                             item.getTargetZipPassword() + "\t" +                                //52
-                            (item.isSyncTaskSkipIfConnectAnotherWifiSsid() ? "1" : "0") + "\t" +//53
+                            (item.isSyncOptionTaskSkipIfConnectAnotherWifiSsid() ? "1" : "0") + "\t" +//53
 
                             (item.isSyncOptionSyncWhenCharging() ? "1" : "0") + "\t" +          //54
 
@@ -6251,6 +6255,8 @@ public class SyncTaskUtil {
                             (item.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters() ? "1" : "0") + "\t" +     //80
 
                             (item.isSyncOptionDoNotUseRenameWhenSmbFileWrite() ? "1" : "0") + "\t" +     //81
+
+                            (item.isTargetUseTakenDateTimeToDirectoryNameKeyword() ? "1" : "0") + "\t" +     //82
 
                     "end"
                     ;

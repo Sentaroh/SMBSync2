@@ -60,7 +60,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -159,6 +158,8 @@ public class SyncThread extends Thread {
                 msgs_mirror_task_file_archived = null;
 
         public SyncTaskItem currentSTI = null;
+
+        public boolean replaceKeywordRequiredAtWhileSync=false;
 
         public ArrayList<ZipFileListItem> zipFileList = new ArrayList<ZipFileListItem>();
         public String zipFileNameEncoding = "";
@@ -274,20 +275,22 @@ public class SyncThread extends Thread {
                     mst_dom=mStwa.currentSTI.getMasterSmbDomain().equals("")?null:mStwa.currentSTI.getMasterSmbDomain();
                     mst_user=mStwa.currentSTI.getMasterSmbUserName().equals("")?null:mStwa.currentSTI.getMasterSmbUserName();
                     mst_pass=mStwa.currentSTI.getMasterSmbPassword().equals("")?null:mStwa.currentSTI.getMasterSmbPassword();
-                    if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+                    int mst_smb_level = Integer.parseInt(mStwa.currentSTI.getMasterSmbProtocol());
+                    if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
                         mStwa.masterAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
                     } else {
-                        mStwa.masterAuth=new JcifsAuth(mst_dom, mst_user, mst_pass, mStwa.currentSTI.isMasterSmbIpcSigningEnforced());
+                        mStwa.masterAuth=new JcifsAuth(mst_smb_level, mst_dom, mst_user, mst_pass, mStwa.currentSTI.isMasterSmbIpcSigningEnforced());
                     }
 
                     String tgt_dom=null, tgt_user=null, tgt_pass=null;
                     tgt_dom=mStwa.currentSTI.getTargetSmbDomain().equals("")?null:mStwa.currentSTI.getTargetSmbDomain();
                     tgt_user=mStwa.currentSTI.getTargetSmbUserName().equals("")?null:mStwa.currentSTI.getTargetSmbUserName();
                     tgt_pass=mStwa.currentSTI.getTargetSmbPassword().equals("")?null:mStwa.currentSTI.getTargetSmbPassword();
-                    if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_ONLY)) {
+                    int tgt_smb_level = Integer.parseInt(mStwa.currentSTI.getTargetSmbProtocol());
+                    if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
                         mStwa.targetAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, tgt_dom, tgt_user, tgt_pass);
                     } else {
-                        mStwa.targetAuth=new JcifsAuth(tgt_dom, tgt_user, tgt_pass, mStwa.currentSTI.isTargetSmbIpcSigningEnforced());
+                        mStwa.targetAuth=new JcifsAuth(tgt_smb_level, tgt_dom, tgt_user, tgt_pass, mStwa.currentSTI.isTargetSmbIpcSigningEnforced());
                     }
 
                     initSyncParms(mStwa.currentSTI);
@@ -405,6 +408,7 @@ public class SyncThread extends Thread {
                 ", SMB Protocol=" + sti.getTargetSmbProtocol() +
                 ", SMB IPC signing enforced=" + sti.isTargetSmbIpcSigningEnforced() +
                 ", RemovableID=" + sti.getTargetRemovableStorageID() +
+                ", UseTakenDateTime=" + sti.isTargetUseTakenDateTimeToDirectoryNameKeyword(),
                 "");
         mStwa.util.addDebugMsg(1, "I", "   File filter Audio=" + sti.isSyncFileTypeAudio() +
                 ", Image=" + sti.isSyncFileTypeImage() +
@@ -412,24 +416,24 @@ public class SyncThread extends Thread {
                 "");
         mStwa.util.addDebugMsg(1, "I", "   Confirm=" + sti.isSyncConfirmOverrideOrDelete() ,
                 ", LastModSmbsync2=" + sti.isSyncDetectLastModifiedBySmbsync() ,
-                ", UseLastMod=" + sti.isSyncDifferentFileByTime() ,
+                ", UseLastMod=" + sti.isSyncOptionDifferentFileByTime() ,
                 ", NeverOverwriteTargetFileIfItIsNewerThanTheMasterFile=" + sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(),
-                ", UseFileSize=" + sti.isSyncDifferentFileBySize() ,
+                ", UseFileSize=" + sti.isSyncOptionDifferentFileBySize() ,
                 ", UseFileSizeGreaterThanTagetFile=" + sti.isSyncDifferentFileSizeGreaterThanTagetFile() ,
                 ", DoNotResetFileLastMod=" + sti.isSyncDoNotResetFileLastModified() ,
-                ", SyncEmptyDir=" + sti.isSyncEmptyDirectory() ,
-                ", SyncHiddenDir=" + sti.isSyncHiddenDirectory() ,
+                ", SyncEmptyDir=" + sti.isSyncOptionSyncEmptyDirectory() ,
+                ", SyncHiddenDir=" + sti.isSyncOptionSyncHiddenDirectory() ,
                 ", SyncProcessOverride=" + sti.isSyncOverrideCopyMoveFile() ,
                 ", ProcessRootDirFile=" + sti.isSyncProcessRootDirFile() ,
-                ", SyncSubDir=" + sti.isSyncSubDirectory() ,
+                ", SyncSubDir=" + sti.isSyncOptionSyncSubDirectory() ,
                 ", AutoSync=" + sti.isSyncTaskAuto() ,
                 ", TestMode=" + sti.isSyncTestMode() ,
 //                ", UseTempName=" + sti.isSyncUseFileCopyByTempName() ,
-                ", UseSmallBuffer=" + sti.isSyncUseSmallIoBuffer() ,
-                ", AllowableTime=" + sti.getSyncDifferentFileAllowableTime() ,
-                ", RetryCount=" + sti.getSyncRetryCount() ,
-                ", UseExtendedDirectoryFilter1=" + sti.isSyncUseExtendedDirectoryFilter1() ,
-                ", SkipIfConnectAnotherWifiSsid=" + sti.isSyncTaskSkipIfConnectAnotherWifiSsid() ,
+                ", UseSmallBuffer=" + sti.isSyncOptionUseSmallIoBuffer() ,
+                ", AllowableTime=" + sti.getSyncOptionDifferentFileAllowableTime() ,
+                ", RetryCount=" + sti.getSyncOptionRetryCount() ,
+                ", UseExtendedDirectoryFilter1=" + sti.isSyncOptionUseExtendedDirectoryFilter1() ,
+                ", SkipIfConnectAnotherWifiSsid=" + sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid() ,
                 ", SyncOnlyCharging=" + sti.isSyncOptionSyncWhenCharging() ,
                 ", DeleteFirst=" + sti.isSyncOptionDeleteFirstWhenMirror() ,
 
@@ -445,8 +449,8 @@ public class SyncThread extends Thread {
     }
 
     private void initSyncParms(SyncTaskItem sti) {
-        mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncRetryCount()) + 1;
-        mStwa.syncDifferentFileAllowableTime = sti.getSyncDifferentFileAllowableTime() * 1000;
+        mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncOptionRetryCount()) + 1;
+        mStwa.syncDifferentFileAllowableTime = sti.getSyncOptionDifferentFileAllowableTime() * 1000;
 
         mStwa.totalTransferByte = mStwa.totalTransferTime = 0;
         mStwa.totalCopyCount = mStwa.totalDeleteCount = mStwa.totalIgnoreCount = mStwa.totalRetryCount = 0;
@@ -617,7 +621,7 @@ public class SyncThread extends Thread {
             String addr = sti.getMasterSmbAddr();
 //            if (sti.getMasterSmbHostName().equals("") && !sti.getMasterSmbHostName().equals("")) {
             if (!sti.getMasterSmbHostName().equals("")) {
-                addr = resolveHostName(mStwa.masterAuth.isSmb1(), sti.getMasterSmbHostName());
+                addr = resolveHostName(mStwa.masterAuth.getSmbLevel(), sti.getMasterSmbHostName());
                 if (addr == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getMasterSmbHostName();
@@ -657,7 +661,7 @@ public class SyncThread extends Thread {
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr = sti.getTargetSmbAddr();
             if (!sti.getTargetSmbHostName().equals("")) {
-                addr = resolveHostName(mStwa.targetAuth.isSmb1(), sti.getTargetSmbHostName());
+                addr = resolveHostName(mStwa.targetAuth.getSmbLevel(), sti.getTargetSmbHostName());
                 if (addr == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getTargetSmbHostName();
@@ -737,8 +741,8 @@ public class SyncThread extends Thread {
         return reachable;
     }
 
-    private String resolveHostName(boolean smb1, String hn) {
-        String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb1, hn);
+    private String resolveHostName(int smb_level, String hn) {
+        String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb_level, hn);
         if (ipAddress == null) {//add dns name resolve
             try {
                 InetAddress[] addr_list = Inet4Address.getAllByName(hn);
@@ -837,6 +841,17 @@ public class SyncThread extends Thread {
         });
     }
 
+    private static boolean isreplaceKeywordRequiredAtWhileSync(String fp) {
+        boolean result=false;
+
+        if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_YEAR)>=0) result=true;
+        if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_MONTH)>=0) result=true;
+        if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_DAY)>=0) result=true;
+        if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR)>=0) result=true;
+
+        return result;
+    }
+
     private int performSync(SyncTaskItem sti) {
         int sync_result = 0;
         long time_millis = System.currentTimeMillis();
@@ -846,7 +861,9 @@ public class SyncThread extends Thread {
             from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-Internal From=" + from + ", To=" + to);
 
@@ -866,16 +883,21 @@ public class SyncThread extends Thread {
             from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
             to_temp = sti.getTargetLocalMountPoint() + sti.getTargetZipOutputFileName();
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-ZIP From=" + from + ", To=" + to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
-                sync_result = SyncThreadSyncZip.syncCopyInternalToInternalZip(mStwa, sti, from, replaceKeywordValue(sti.getTargetZipOutputFileName(), time_millis));
+                String to_fn=replaceKeywordValue(sti.getTargetZipOutputFileName(), time_millis);
+                sync_result = SyncThreadSyncZip.syncCopyInternalToInternalZip(mStwa, sti, from, to_fn);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) {
-                sync_result = SyncThreadSyncZip.syncMoveInternalToInternalZip(mStwa, sti, from, replaceKeywordValue(sti.getTargetZipOutputFileName(), time_millis));
+                String to_fn=replaceKeywordValue(sti.getTargetZipOutputFileName(), time_millis);
+                sync_result = SyncThreadSyncZip.syncMoveInternalToInternalZip(mStwa, sti, from, to_fn);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
-                sync_result = SyncThreadSyncZip.syncMirrorInternalToInternalZip(mStwa, sti, from, replaceKeywordValue(sti.getTargetZipOutputFileName(), time_millis));
+                String to_fn=replaceKeywordValue(sti.getTargetZipOutputFileName(), time_millis);
+                sync_result = SyncThreadSyncZip.syncMirrorInternalToInternalZip(mStwa, sti, from, to_fn);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
                 showMsg(mStwa, false, sti.getSyncTaskName(), "W", "", "","The request was ignored because Zip can not be used as a target for the archive.");
             }
@@ -884,7 +906,9 @@ public class SyncThread extends Thread {
             from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
             to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-SDCARD From=" + from + ", To=" + to);
 
@@ -902,7 +926,9 @@ public class SyncThread extends Thread {
             from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
             to_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-USB From=" + from + ", To=" + to);
 
@@ -922,9 +948,11 @@ public class SyncThread extends Thread {
             to_temp = buildSmbHostUrl(sti.getTargetSmbAddr(), sti.getTargetSmbHostName(),
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-SMB From=" + from + ", To=" + to);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyInternalToSmb(mStwa, sti, from, to);
@@ -941,9 +969,11 @@ public class SyncThread extends Thread {
             from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-Internal From=" + from + ", To=" + to);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyExternalToInternal(mStwa, sti, from, to);
@@ -960,7 +990,9 @@ public class SyncThread extends Thread {
             from = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync USB-To-Internal From=" + from + ", To=" + to);
 
@@ -979,9 +1011,11 @@ public class SyncThread extends Thread {
             from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
             to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-SDCARD From=" + from + ", To=" + to);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyExternalToExternal(mStwa, sti, from, to);
@@ -998,9 +1032,11 @@ public class SyncThread extends Thread {
             from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
             to_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-USB From=" + from + ", To=" + to);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyExternalToExternal(mStwa, sti, from, to);
@@ -1017,7 +1053,9 @@ public class SyncThread extends Thread {
             from = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
             to_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync USB-To-USB From=" + from + ", To=" + to);
 
@@ -1036,7 +1074,9 @@ public class SyncThread extends Thread {
             from = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
             to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync USB-To-SDCARD From=" + from + ", To=" + to);
 
@@ -1057,7 +1097,9 @@ public class SyncThread extends Thread {
             to_temp = buildSmbHostUrl(sti.getTargetSmbAddr(), sti.getTargetSmbHostName(),
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-SMB From=" + from + ", To=" + to);
 
@@ -1078,7 +1120,9 @@ public class SyncThread extends Thread {
             to_temp = buildSmbHostUrl(sti.getTargetSmbAddr(), sti.getTargetSmbHostName(),
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync USB-To-SMB From=" + from + ", To=" + to);
 
@@ -1099,7 +1143,9 @@ public class SyncThread extends Thread {
 
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-Internal From=" + from + ", To=" + to);
 
@@ -1120,7 +1166,9 @@ public class SyncThread extends Thread {
             from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
                     sti.getMasterSmbPort(), sti.getMasterRemoteSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-SDCARD From=" + from + ", To=" + to);
 
@@ -1141,7 +1189,9 @@ public class SyncThread extends Thread {
             from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
                     sti.getMasterSmbPort(), sti.getMasterRemoteSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-USB From=" + from + ", To=" + to);
 
@@ -1163,7 +1213,9 @@ public class SyncThread extends Thread {
             from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
                     sti.getMasterSmbPort(), sti.getMasterRemoteSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
-            to = replaceKeywordValue(to_temp, time_millis);
+            if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
+            else to = replaceKeywordValue(to_temp, time_millis);
+            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-SMB From=" + from + ", To=" + to);
 
@@ -1288,13 +1340,17 @@ public class SyncThread extends Thread {
         if (!sti.isSyncTestMode()) {
             File lf = new File(dir);
             boolean i_exists = lf.exists();
-            SafFile new_saf = null;
-            if (dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) stwa.gp.safMgr.createSdcardItem(dir, true);
-            else stwa.gp.safMgr.createUsbItem(dir, true);
-            result = (new_saf != null) ? true : false;
-            if (result && !i_exists && stwa.gp.settingDebugLevel >= 1)
-                stwa.util.addDebugMsg(1, "I", "createDirectoryToExternalStorage directory created, dir=" + dir);
-            stwa.util.addDebugMsg(2, "I", "createDirectoryToExternalStorage result=" + result + ", exists=" + i_exists + ", new_saf=" + new_saf);
+            if (!i_exists) {
+                SafFile new_saf = null;
+                if (dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) stwa.gp.safMgr.createSdcardItem(dir, true);
+                else stwa.gp.safMgr.createUsbItem(dir, true);
+                result = (new_saf != null) ? true : false;
+                if (result && !i_exists && stwa.gp.settingDebugLevel >= 1)
+                    stwa.util.addDebugMsg(1, "I", "createDirectoryToExternalStorage directory created, dir=" + dir);
+                stwa.util.addDebugMsg(2, "I", "createDirectoryToExternalStorage result=" + result + ", exists=" + i_exists + ", new_saf=" + new_saf);
+            } else {
+                stwa.util.addDebugMsg(2, "I", "createDirectoryToExternalStorage directory exists, Directory=" + dir);
+            }
         } else {
             if (stwa.gp.settingDebugLevel >= 1)
                 stwa.util.addDebugMsg(1, "I", "createDirectoryToExternalStorage directory created, dir=" + dir);
@@ -1604,7 +1660,7 @@ public class SyncThread extends Thread {
     private String isWifiConditionSatisfied(SyncTaskItem sti) {
         String result = "";
         String if_addr=CommonUtilities.getIfIpAddress("wlan0");
-        if (sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR)) {
+        if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR)) {
             result=mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr);
             if (if_addr.startsWith("10.")) result="";
             else if (if_addr.startsWith("192.168.")) result="";
@@ -1624,8 +1680,8 @@ public class SyncThread extends Thread {
             else if (if_addr.startsWith("172.29.")) result="";
             else if (if_addr.startsWith("172.30.")) result="";
             else if (if_addr.startsWith("172.31.")) result="";
-        } else if (sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR)) {
-            ArrayList<String> wl = sti.getSyncWifiConnectedAddressWhiteList();
+        } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR)) {
+            ArrayList<String> wl = sti.getSyncOptionWifiConnectedAddressWhiteList();
             ArrayList<Pattern> inc = new ArrayList<Pattern>();
             int flags = Pattern.CASE_INSENSITIVE;
             for (String al : wl) {
@@ -1649,7 +1705,7 @@ public class SyncThread extends Thread {
                         }
                     }
                     if (!found) {
-                        if (sti.isSyncTaskSkipIfConnectAnotherWifiSsid()) {
+                        if (sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid()) {
                             result = mGp.appContext.getString(R.string.msgs_mirror_sync_skipped_wifi_address_conn_other);
                         } else {
                             result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_address_conn_other);
@@ -1660,17 +1716,17 @@ public class SyncThread extends Thread {
                 result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
             }
         } else {
-            if (sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
+            if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
                 //NOP
             } else {
                 if (!isWifiOn()) {
                     result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_is_off);
                 } else {
-                    if (sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP)) {
+                    if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP)) {
                         if (getWifiConnectedAP().equals(""))
                             result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
-                    } else if (sti.getSyncWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
-                        ArrayList<String> wl = sti.getSyncWifiConnectedAccessPointWhiteList();
+                    } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
+                        ArrayList<String> wl = sti.getSyncOptionWifiConnectedAccessPointWhiteList();
                         ArrayList<Pattern> inc = new ArrayList<Pattern>();
                         int flags = Pattern.CASE_INSENSITIVE;
                         for (String apl : wl) {
@@ -1698,7 +1754,7 @@ public class SyncThread extends Thread {
                                     }
                                 }
                                 if (!found) {
-                                    if (sti.isSyncTaskSkipIfConnectAnotherWifiSsid()) {
+                                    if (sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid()) {
                                         result = mGp.appContext.getString(R.string.msgs_mirror_sync_skipped_wifi_ap_conn_other);
                                     } else {
                                         result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_conn_other);
@@ -1712,7 +1768,7 @@ public class SyncThread extends Thread {
                 }
             }
         }
-        mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied exited, " + "option=" + sti.getSyncWifiStatusOption() + ", result=" + result);
+        mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied exited, " + "option=" + sti.getSyncOptionWifiStatusOption() + ", result=" + result);
         return result;
     }
 
@@ -2112,7 +2168,7 @@ public class SyncThread extends Thread {
     static final public boolean checkMasterFileNewerThanTargetFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp,
                                                                    long master_time, long target_time) {
         boolean result=true;
-        if (sti.isSyncDifferentFileByTime() && sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) {
+        if (sti.isSyncOptionDifferentFileByTime() && sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) {
             if (stwa.lastModifiedIsFunctional) {//Use lastModified
                 if (master_time>target_time) {
                     result=true;
@@ -2194,7 +2250,7 @@ public class SyncThread extends Thread {
         long length_diff = Math.abs((tf_length - lf_length));
 
         if (tf_exists != lf_exists) exists_diff = true;
-        if (exists_diff || (sti.isSyncDifferentFileBySize() && length_diff > 0) || ac) {
+        if (exists_diff || (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) || ac) {
             if (sti.isSyncDifferentFileSizeGreaterThanTagetFile()) {
                 if (tf_length>lf_length) {
                     diff = true;
@@ -2216,7 +2272,7 @@ public class SyncThread extends Thread {
                 }
             }
         } else {//Check lastModified()
-            if (sti.isSyncDifferentFileByTime()) {
+            if (sti.isSyncOptionDifferentFileByTime()) {
                 if (stwa.lastModifiedIsFunctional) {//Use lastModified
                     if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
 //                        diff = true;
@@ -2289,10 +2345,10 @@ public class SyncThread extends Thread {
         long length_diff = Math.abs((hf_length - lf_length));
 
         if (hf_exists != lf_exists) exists_diff = true;
-        if (exists_diff || (sti.isSyncDifferentFileBySize() && length_diff > 0) || ac) {
+        if (exists_diff || (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) || ac) {
             diff = true;
         } else {//Check lastModified()
-            if (!sti.isSyncDoNotResetFileLastModified() && sti.isSyncDifferentFileByTime()) {
+            if (!sti.isSyncDoNotResetFileLastModified() && sti.isSyncOptionDifferentFileByTime()) {
                 if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
                     diff = true;
                 } else diff = false;
@@ -2357,7 +2413,7 @@ public class SyncThread extends Thread {
 
     static public boolean isHiddenDirectory(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
         boolean result = false;
-        if (sti.isSyncHiddenDirectory()) result = false;
+        if (sti.isSyncOptionSyncHiddenDirectory()) result = false;
         else {
             if (lf.getName().substring(0, 1).equals(".")) result = true;
         }
@@ -2368,7 +2424,7 @@ public class SyncThread extends Thread {
 
     static public boolean isHiddenDirectory(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile hf) throws JcifsException {
         boolean result = false;
-        if (sti.isSyncHiddenDirectory()) result = false;
+        if (sti.isSyncOptionSyncHiddenDirectory()) result = false;
         else {
             if (hf.isHidden()) result = true;
         }
@@ -2381,7 +2437,7 @@ public class SyncThread extends Thread {
 
     static public boolean isHiddenFile(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
         boolean result = false;
-        if (sti.isSyncHiddenFile()) result = false;
+        if (sti.isSyncOptionSyncHiddenFile()) result = false;
         else {
             if (lf.getName().substring(0, 1).equals(".")) result = true;
         }
@@ -2393,7 +2449,7 @@ public class SyncThread extends Thread {
 
     static public boolean isHiddenFile(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile hf) throws JcifsException {
         boolean result = false;
-        if (sti.isSyncHiddenFile()) result = false;
+        if (sti.isSyncOptionSyncHiddenFile()) result = false;
         else {
             if (hf.isHidden()) result = true;
         }
@@ -2520,7 +2576,7 @@ public class SyncThread extends Thread {
                 for (int i = 0; i < stwa.dirExcludeFilterPatternList.size(); i++) {
                     mt = stwa.dirExcludeFilterPatternList.get(i).matcher(n_dir);
                     if (mt.find()) {
-                        if (stwa.currentSTI.isSyncUseExtendedDirectoryFilter1()) {
+                        if (stwa.currentSTI.isSyncOptionUseExtendedDirectoryFilter1()) {
                             Pattern[] exc = new Pattern[0];
                             if (stwa.dirExcludeFilterArrayList.size() > i) {
                                 exc = stwa.dirExcludeFilterArrayList.get(i);
@@ -2590,7 +2646,7 @@ public class SyncThread extends Thread {
                     Pattern filter_pattern = stwa.dirExcludeFilterPatternList.get(i);
                     Matcher mt = filter_pattern.matcher(filter_dir);
                     if (mt.find()) {
-                        if (stwa.currentSTI.isSyncUseExtendedDirectoryFilter1()) {
+                        if (stwa.currentSTI.isSyncOptionUseExtendedDirectoryFilter1()) {
                             if (matched_inc_array != null) {
                                 if (matched_inc_array.length > stwa.dirExcludeFilterArrayList.get(i).length) {
                                 } else {
@@ -2681,7 +2737,7 @@ public class SyncThread extends Thread {
                     for (int i = 0; i < stwa.dirExcludeFilterPatternList.size(); i++) {
                         mt = stwa.dirExcludeFilterPatternList.get(i).matcher(n_dir);
                         if (mt.find()) {
-                            if (stwa.currentSTI.isSyncUseExtendedDirectoryFilter1()) {
+                            if (stwa.currentSTI.isSyncOptionUseExtendedDirectoryFilter1()) {
                                 Pattern[] exc = new Pattern[0];
                                 if (stwa.dirExcludeFilterArrayList.size() > i) {
                                     exc = stwa.dirExcludeFilterArrayList.get(i);
@@ -2785,7 +2841,7 @@ public class SyncThread extends Thread {
                         Pattern filter_pattern = stwa.dirExcludeFilterPatternList.get(i);
                         Matcher mt = filter_pattern.matcher(filter_dir);
                         if (mt.find()) {
-                            if (stwa.currentSTI.isSyncUseExtendedDirectoryFilter1()) {
+                            if (stwa.currentSTI.isSyncOptionUseExtendedDirectoryFilter1()) {
                                 if (matched_inc_array != null) {
                                     if (matched_inc_array.length > stwa.dirExcludeFilterArrayList.get(i).length) {
                                     } else {
@@ -2893,13 +2949,17 @@ public class SyncThread extends Thread {
             for (int j = 0; j < ff.size(); j++) {
                 prefix = ff.get(j).substring(0, 1);
                 filter = ff.get(j).substring(1, ff.get(j).length());
+                String rem_filter=filter;
+                while(rem_filter.indexOf(";;")>=0) rem_filter=rem_filter.replaceAll(";;",";");
                 if (prefix.equals("I")) {
 //                    ffinc = ffinc + cni + MiscUtil.convertRegExp("^"+filter+"$");
-                    ffinc = ffinc + cni + "^"+ MiscUtil.convertRegExp(filter)+"$";
+                    if (rem_filter.endsWith(";")) ffinc = ffinc + cni + "^"+ MiscUtil.convertRegExp(rem_filter);
+                    else ffinc = ffinc + cni + "^"+ MiscUtil.convertRegExp(rem_filter)+"$";
                     cni = "|";
                 } else {
 //                    ffexc = ffexc + cne + MiscUtil.convertRegExp("^"+filter+"$");
-                    ffexc = ffexc + cne + "^"+ MiscUtil.convertRegExp(filter)+"$";
+                    if (rem_filter.endsWith(";")) ffexc = ffexc + cne + "^"+ MiscUtil.convertRegExp(rem_filter);
+                    else ffexc = ffexc + cne + "^"+ MiscUtil.convertRegExp(rem_filter)+"$";
                     cne = "|";
                 }
             }
@@ -2916,13 +2976,15 @@ public class SyncThread extends Thread {
                 filter = discreet_df.get(j).substring(1, discreet_df.get(j).length());
                 createDirFilterArrayList(prefix, filter);
                 String pre_str = "", suf_str = "/";
-                if (!filter.startsWith("*")) pre_str = "^";
+                String rem_filter=filter;
+                while(rem_filter.indexOf(";;")>=0) rem_filter=rem_filter.replaceAll(";;",";");
+                if (!rem_filter.startsWith("*")) pre_str = "^";
                 if (prefix.equals("I")) {
-                    dfinc = pre_str + MiscUtil.convertRegExp(filter);
+                    dfinc = pre_str + MiscUtil.convertRegExp(rem_filter);
                     mStwa.dirIncludeFilterPatternList.add(Pattern.compile("(" + dfinc + ")", flags));
                     all_inc += dfinc + ";";
                 } else {
-                    dfexc = pre_str + MiscUtil.convertRegExp(filter);
+                    dfexc = pre_str + MiscUtil.convertRegExp(rem_filter);
                     mStwa.dirExcludeFilterPatternList.add(Pattern.compile("(" + dfexc + ")", flags));
                     all_exc += dfexc + ";";
                 }
@@ -2944,12 +3006,15 @@ public class SyncThread extends Thread {
                 String dir_name="";
                 if (filter.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
                     dir_name=filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX, "");
+                    String rem_dir_name=dir_name;
+                    while(rem_dir_name.indexOf(";;")>=0) rem_dir_name=rem_dir_name.replaceAll(";;",";");
+
                     if (prefix.equals("I")) {
-                        whole_dfinc = pre_str + MiscUtil.convertRegExp(dir_name)+suf_str;
+                        whole_dfinc = pre_str + MiscUtil.convertRegExp(rem_dir_name)+suf_str;
                         mStwa.wholeDirIncludeFilterPatternList.add(Pattern.compile("(" + whole_dfinc + ")", flags));
                         all_inc += whole_dfinc + ";";
                     } else {
-                        whole_dfexc = pre_str + MiscUtil.convertRegExp(dir_name)+suf_str;
+                        whole_dfexc = pre_str + MiscUtil.convertRegExp(rem_dir_name)+suf_str;
                         mStwa.wholeDirExcludeFilterPatternList.add(Pattern.compile("(" + whole_dfexc + ")", flags));
                         all_exc += whole_dfexc + ";";
                     }
