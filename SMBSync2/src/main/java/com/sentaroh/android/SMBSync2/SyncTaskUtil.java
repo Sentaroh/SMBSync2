@@ -353,12 +353,14 @@ public class SyncTaskUtil {
         });
 
         //OK button
+        final Handler hndl=new Handler();
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String passwd = et_password.getText().toString();
                 BufferedReader br;
                 String pl;
                 boolean pswd_invalid = true;
+                btn_ok.setEnabled(false);
                 try {
                     br = new BufferedReader(new FileReader(fpath), 8192);
                     pl = br.readLine();
@@ -394,6 +396,13 @@ public class SyncTaskUtil {
                 if (!pswd_invalid) {
                     dialog.dismiss();
                     ntfy_pswd.notifyToListener(true, new Object[]{passwd});
+                } else {
+                    hndl.postDelayed(new Runnable(){
+                        @Override
+                        public void run() {
+                            btn_ok.setEnabled(true);
+                        }
+                    },1000);
                 }
             }
         });
@@ -745,12 +754,12 @@ public class SyncTaskUtil {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                String imp_list = "";
+                String imp_list_temp = "";
                 for (int i = 0; i < tfl.getCount(); i++) {
                     SyncTaskItem ipfli = tfl.getItem(i);
                     AdapterExportImportTask.ExportImportListItem eipli = imp_list_adapt.getItem(i);
                     if (eipli.isChecked) {
-                        imp_list += ipfli.getSyncTaskName() + "\n";
+                        imp_list_temp += ipfli.getSyncTaskName() + "\n";
 //						Log.v("","name1="+ipfli.getName()+
 //								", result="+getProfile(ipfli.getName(), mGp.syncTaskListAdapter));
                         SyncTaskItem mpfli = getSyncTaskByName(mGp.syncTaskAdapter, ipfli.getSyncTaskName());
@@ -767,23 +776,42 @@ public class SyncTaskUtil {
                 restoreImportedSystemOption();
                 if (import_settings) {
                     restoreImportedSettingParms();
-                    imp_list += mContext.getString(R.string.msgs_export_import_profile_setting_parms) + "\n";
+                    imp_list_temp += mContext.getString(R.string.msgs_export_import_profile_setting_parms) + "\n";
                 }
                 if (import_schedule) {
                     restoreImportedScheduleParms();
-                    imp_list += mContext.getString(R.string.msgs_export_import_profile_schedule_parms) + "\n";
+                    imp_list_temp += mContext.getString(R.string.msgs_export_import_profile_schedule_parms) + "\n";
                 }
-                if (imp_list.length() > 0) imp_list += " ";
+                if (imp_list_temp.length() > 0) imp_list_temp += " ";
+                final String imp_list=imp_list_temp;
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskListView.setSelection(0);
-                saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
-                mCommonDlg.showCommonDialog(false, "I",
-                        mContext.getString(R.string.msgs_export_import_profile_import_success),
-                        imp_list, null);
-                if (import_settings || import_schedule) {
-                    boolean[] parm = new boolean[]{import_settings, import_schedule};
-                    p_ntfy.notifyToListener(true, new Object[]{parm});
-                }
+                final Dialog pd=CommonDialog.showProgressSpinIndicator(mActivity);
+                pd.show();
+                final Handler hndl=new Handler();
+                Thread th=new Thread(){
+                    @Override
+                    public void run(){
+                        final boolean save_success=saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
+                        SystemClock.sleep(5000);
+                        hndl.post(new Runnable(){
+                            @Override
+                            public void run() {
+                                if (save_success) {
+                                    mCommonDlg.showCommonDialog(false, "I", mContext.getString(R.string.msgs_export_import_profile_import_success), imp_list, null);
+                                } else {
+                                    mCommonDlg.showCommonDialog(false, "E", mContext.getString(R.string.msgs_export_import_profile_import_failed), "", null);
+                                }
+                                if (import_settings || import_schedule) {
+                                    boolean[] parm = new boolean[]{import_settings, import_schedule};
+                                    p_ntfy.notifyToListener(true, new Object[]{parm});
+                                }
+                                pd.dismiss();
+                            }
+                        });
+                    }
+                };
+                th.start();
             }
 
             @Override

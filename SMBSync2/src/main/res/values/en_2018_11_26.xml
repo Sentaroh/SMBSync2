@@ -15,6 +15,7 @@
         <string name="msgs_export_import_profile_unselect_all">Deselect all</string>
         <string name="msgs_export_import_profile_confirm_override">The import file contains tasks with names that match existing task names.  Overwrite the following tasks with imported tasks?</string>
         <string name="msgs_export_import_profile_import_success">Successfully imported the following task(s)</string>
+        <string name="msgs_export_import_profile_import_failed">Failed to import, check the Message tab for errors.</string>
         <string name="msgs_export_import_profile_reset_current_profile">Delete all existing tasks before import</string>
         <string name="msgs_export_import_profile_import_settings">Include task settings</string>
         <string name="msgs_export_import_profile_import_schedule">Include task schedule</string>
@@ -22,8 +23,8 @@
         <string name="msgs_export_import_pswd_password_title">Task List Password Protection</string>
         <string name="msgs_export_import_pswd_password_protect">Protect export file with a password</string>
         <string name="msgs_export_import_pswd_specify_password">Please specify the password.</string>
-        <string name="msgs_export_import_pswd_invalid_password">Enter password for task list file.</string>
-        <string name="msgs_export_import_pswd_password_required">Password incorrect.  Try again.</string>
+        <string name="msgs_export_import_pswd_password_required">Enter password for task list file.</string>
+        <string name="msgs_export_import_pswd_invalid_password">Password incorrect.  Try again.</string>
         <string name="msgs_export_import_pswd_btn_cancel">Cancel</string>
         <string name="msgs_export_import_pswd_btn_ok">OK</string>
         <string name="msgs_export_import_pswd_hint_password">Password</string>

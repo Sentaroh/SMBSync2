@@ -15,6 +15,7 @@
         <string name="msgs_export_import_profile_unselect_all">全項目を非選択</string>
         <string name="msgs_export_import_profile_confirm_override">下記の項目はタスクリストに存在しています。取り込んだタスクで上書きしますか。</string>
         <string name="msgs_export_import_profile_import_success">下記項目を取り込みました。</string>
+        <string name="msgs_export_import_profile_import_failed">取り込みに失敗しました、メッセージタブでエラーを確認してください。</string>
         <string name="msgs_export_import_profile_reset_current_profile">現在のタスクを全て削除して取り込む。</string>
         <string name="msgs_export_import_profile_import_settings">設定パラメーターを取り込む</string>
         <string name="msgs_export_import_profile_import_schedule">スケジュールパラメーターを取り込む</string>
@@ -22,8 +23,8 @@
         <string name="msgs_export_import_pswd_password_title">タスクリスト パスワード保護</string>
         <string name="msgs_export_import_pswd_password_protect">タスクリストをパスワードで保護する</string>
         <string name="msgs_export_import_pswd_specify_password">パスワードと確認パスワードを入力してください。</string>
-        <string name="msgs_export_import_pswd_invalid_password">ファイルがパスワード保護されています、パスワードを指定してください。</string>
-        <string name="msgs_export_import_pswd_password_required">パスワードが間違っています、指定し直してください。</string>
+        <string name="msgs_export_import_pswd_password_required">ファイルがパスワード保護されています、パスワードを指定してください。</string>
+        <string name="msgs_export_import_pswd_invalid_password">パスワードが間違っています、指定し直してください。</string>
         <string name="msgs_export_import_pswd_btn_cancel">キャンセル</string>
         <string name="msgs_export_import_pswd_btn_ok">了解</string>
         <string name="msgs_export_import_pswd_hint_password">パスワード</string>
