@@ -793,7 +793,6 @@ public class SyncTaskUtil {
                     @Override
                     public void run(){
                         final boolean save_success=saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
-                        SystemClock.sleep(5000);
                         hndl.post(new Runnable(){
                             @Override
                             public void run() {
