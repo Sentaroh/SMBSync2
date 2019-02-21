@@ -453,6 +453,8 @@
         <string name="msgs_mirror_confirm_task_cancel_btn">同期キャンセル</string>
         <string name="msgs_mirror_confirm_yes_btn">了解</string>
         <string name="msgs_mirror_confirm_yesall_btn">以後全て了解</string>
+        <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">ファイルのEXIF/MetaDataから撮影日時が取得できないためファイルの最終更新時刻を使用しました。ファイル=</string>
+        <string name="msgs_mirror_taken_date_convert_error">撮影日時の変換でエラーが発生したためファイルの最終更新時刻を使用しました。ファイル=</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">ターゲットにファイルと同名のディレクトリーが存在するため同期を中止しました。ファイル=</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">SDCARDがマウントされていないため同期を中止します。</string>
         <string name="msgs_mirror_external_sdcard_select_required">SDCARDの選択がなされていないため同期を中止します。</string>

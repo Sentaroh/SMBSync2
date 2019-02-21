@@ -2338,6 +2338,7 @@ public class SyncThreadArchiveFile {
                 if (directory!=null) {
                     String date = directory.getString(Mp4Directory.TAG_CREATION_TIME);
                     result=parseDateValue(date);
+                    if (result!=null && result[0].startsWith("1904")) result=null;
                 }
             }
         } catch (ImageProcessingException e) {

@@ -739,11 +739,12 @@ public class SyncThreadSyncFile {
                         taken_millis=date.getTime();
                     } catch (ParseException e) {
                         taken_millis=file_last_modified;
-                        stwa.util.addLogMsg("W","convertToExifDateTime date convert error occured, file last modified time used. File="+from_path);
-                        stwa.util.addLogMsg("W","convertToExifDateTime error="+e.getMessage());
+                        stwa.util.addLogMsg("W",stwa.gp.appContext.getString(R.string.msgs_mirror_taken_date_convert_error)+from_path);
+                        stwa.util.addLogMsg("W",e.getMessage());
                     }
                 } else {
 //                    stwa.util.addDebugMsg(1,"W","convertToExifDateTime EXIF date not available.");
+                    stwa.util.addLogMsg("W",stwa.gp.appContext.getString(R.string.msgs_mirror_taken_date_can_not_obtain_from_the_file)+from_path);
                     taken_millis=file_last_modified;
                 }
             } else {

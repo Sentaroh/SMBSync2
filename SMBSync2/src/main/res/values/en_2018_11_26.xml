@@ -456,6 +456,8 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_mirror_confirm_task_cancel_btn">Cancel synchronize</string>
         <string name="msgs_mirror_confirm_yes_btn">Yes</string>
         <string name="msgs_mirror_confirm_yesall_btn">Yes for all subsequent</string>
+        <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">The last modified time of the file was used because the shooting date and time cannot be obtained from the EXIF/metadata of the file. File=</string>
+        <string name="msgs_mirror_taken_date_convert_error">The last modified time of the file was used because an error occurred in the conversion of the shooting date. File=</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Sync aborted because a directory with the same name as the file exists in the target. File=</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Sync cancelled because SDCARD is not mounted.</string>
         <string name="msgs_mirror_external_sdcard_select_required">Sync cancelled because SDCARD not selected.</string>
