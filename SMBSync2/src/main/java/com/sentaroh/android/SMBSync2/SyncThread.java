@@ -788,7 +788,8 @@ public class SyncThread extends Thread {
                         end_msg += "\n" + "getSdcardRootPath=" + mGp.safMgr.getSdcardRootPath();
                         end_msg += "\n" + "getUsbRootPath=" + mGp.safMgr.getUsbRootPath();
 
-                        File[] fl = ContextCompat.getExternalFilesDirs(mGp.appContext, null);
+//                        File[] fl = ContextCompat.getExternalFilesDirs(mGp.appContext, null);
+                        File[] fl = mGp.appContext.getExternalFilesDirs(null);
                         if (fl != null) {
                             for (File f : fl) {
                                 if (f != null) end_msg += "\n" + "ExternalFilesDirs=" + f.getPath();
@@ -2951,15 +2952,14 @@ public class SyncThread extends Thread {
                 filter = ff.get(j).substring(1, ff.get(j).length());
                 String rem_filter=filter;
                 while(rem_filter.indexOf(";;")>=0) rem_filter=rem_filter.replaceAll(";;",";");
+                if (rem_filter.endsWith(";")) rem_filter=rem_filter.substring(0,rem_filter.length()-1);
                 if (prefix.equals("I")) {
 //                    ffinc = ffinc + cni + MiscUtil.convertRegExp("^"+filter+"$");
-                    if (rem_filter.endsWith(";")) ffinc = ffinc + cni + "^"+ MiscUtil.convertRegExp(rem_filter);
-                    else ffinc = ffinc + cni + "^"+ MiscUtil.convertRegExp(rem_filter)+"$";
+                    ffinc = ffinc + cni + "^"+ MiscUtil.convertRegExp(rem_filter)+"$";
                     cni = "|";
                 } else {
 //                    ffexc = ffexc + cne + MiscUtil.convertRegExp("^"+filter+"$");
-                    if (rem_filter.endsWith(";")) ffexc = ffexc + cne + "^"+ MiscUtil.convertRegExp(rem_filter);
-                    else ffexc = ffexc + cne + "^"+ MiscUtil.convertRegExp(rem_filter)+"$";
+                    ffexc = ffexc + cne + "^"+ MiscUtil.convertRegExp(rem_filter)+"$";
                     cne = "|";
                 }
             }
@@ -2978,6 +2978,7 @@ public class SyncThread extends Thread {
                 String pre_str = "", suf_str = "/";
                 String rem_filter=filter;
                 while(rem_filter.indexOf(";;")>=0) rem_filter=rem_filter.replaceAll(";;",";");
+                if (rem_filter.endsWith(";")) rem_filter=rem_filter.substring(0,rem_filter.length()-1);
                 if (!rem_filter.startsWith("*")) pre_str = "^";
                 if (prefix.equals("I")) {
                     dfinc = pre_str + MiscUtil.convertRegExp(rem_filter);
@@ -3008,7 +3009,7 @@ public class SyncThread extends Thread {
                     dir_name=filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX, "");
                     String rem_dir_name=dir_name;
                     while(rem_dir_name.indexOf(";;")>=0) rem_dir_name=rem_dir_name.replaceAll(";;",";");
-
+                    if (rem_dir_name.endsWith(";")) rem_dir_name=rem_dir_name.substring(0,rem_dir_name.length()-1);
                     if (prefix.equals("I")) {
                         whole_dfinc = pre_str + MiscUtil.convertRegExp(rem_dir_name)+suf_str;
                         mStwa.wholeDirIncludeFilterPatternList.add(Pattern.compile("(" + whole_dfinc + ")", flags));
@@ -3043,9 +3044,13 @@ public class SyncThread extends Thread {
 
         Pattern[] pattern_array = new Pattern[filter_array.length];
 
-        for (int k = 0; k < filter_array.length; k++)
+        for (int k = 0; k < filter_array.length; k++) {
+            String filter_string=filter_array[k];
+            while(filter_string.indexOf(";;")>=0) filter_string=filter_string.replaceAll(";;",";");
+            if (filter_string.endsWith(";")) filter_string=filter_string.substring(0,filter_string.length()-1);
             pattern_array[k] =
-                    Pattern.compile("^" + MiscUtil.convertRegExp(filter_array[k]) + "$", flags);
+                    Pattern.compile("^" + MiscUtil.convertRegExp(filter_string) + "$", flags);
+        }
 
         if (prefix.equals("I")) {
             mStwa.dirIncludeFilterArrayList.add(pattern_array);

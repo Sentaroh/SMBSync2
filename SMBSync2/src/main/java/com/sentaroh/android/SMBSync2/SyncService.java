@@ -137,8 +137,16 @@ public class SyncService extends Service {
         int_filter.addAction(Intent.ACTION_USER_PRESENT);
         registerReceiver(mSleepReceiver, int_filter);
 
-        ArrayList<String>sil= CommonUtilities.listSystemInfo(mGp);
-        for(String item:sil) mUtil.addDebugMsg(1, "I", item);
+        if (mGp.settingDebugLevel>0) {
+            Thread th=new Thread(){
+                @Override
+                public void run() {
+                    ArrayList<String>sil= CommonUtilities.listSystemInfo(mGp);
+                    for(String item:sil) mUtil.addDebugMsg(1, "I", item);
+                }
+            };
+            th.start();
+        }
     }
 
     private String getApplVersionName() {
