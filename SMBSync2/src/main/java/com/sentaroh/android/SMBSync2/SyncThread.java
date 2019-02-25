@@ -193,7 +193,7 @@ public class SyncThread extends Thread {
 
         printSafDebugInfo();
 
-        listStorageInfo();
+//        listStorageInfo();
     }
 
     private void printSafDebugInfo() {
@@ -206,10 +206,10 @@ public class SyncThread extends Thread {
     }
 
     private void listStorageInfo() {
-        ArrayList<String>sil= CommonUtilities.listSystemInfo(mGp);
-
-        for(String item:sil) mStwa.util.addDebugMsg(1, "I", item);
-
+        if (mGp.settingDebugLevel>0) {
+            ArrayList<String>sil= CommonUtilities.listSystemInfo(mGp);
+            for(String item:sil) mStwa.util.addDebugMsg(1, "I", item);
+        }
     }
 
     @Override
@@ -217,6 +217,8 @@ public class SyncThread extends Thread {
         if (!mGp.syncThreadActive) {
             defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
             Thread.currentThread().setUncaughtExceptionHandler(unCaughtExceptionHandler);
+
+            listStorageInfo();
 
             mGp.syncThreadActive = true;
 //			showMsg(stwa,false, "","I","","",mGp.appContext.getString(R.string.msgs_mirror_task_started));
@@ -394,6 +396,7 @@ public class SyncThread extends Thread {
                 ", SMB Protocol=" + sti.getMasterSmbProtocol() +
                 ", SMB IPC signing enforced=" + sti.isMasterSmbIpcSigningEnforced() +
                 ", RemovableID=" + sti.getMasterRemovableStorageID() +
+                ", MountPoint=" + sti.getMasterLocalMountPoint() +
                 "");
         String tgt_uid="";
         if (mGp.settingSecurityReinitSmbAccountPasswordValue) tgt_uid=sti.getTargetSmbUserName().equals("")?"":"????????";
@@ -408,6 +411,7 @@ public class SyncThread extends Thread {
                 ", SMB Protocol=" + sti.getTargetSmbProtocol() +
                 ", SMB IPC signing enforced=" + sti.isTargetSmbIpcSigningEnforced() +
                 ", RemovableID=" + sti.getTargetRemovableStorageID() +
+                ", MountPoint=" + sti.getTargetLocalMountPoint() +
                 ", UseTakenDateTime=" + sti.isTargetUseTakenDateTimeToDirectoryNameKeyword(),
                 "");
         mStwa.util.addDebugMsg(1, "I", "   File filter Audio=" + sti.isSyncFileTypeAudio() +
