@@ -188,6 +188,8 @@ public class ActivitySettings extends PreferenceActivity {
             isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_sync_history_log))) {
             isChecked = true;
+        } else if (key_string.equals(c.getString(R.string.settings_suppress_warning_location_service_disabled))) {
+            isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_no_compress_file_type))) {
             isChecked = true;
             if (shared_pref.getString(key_string, "").equals("")) {

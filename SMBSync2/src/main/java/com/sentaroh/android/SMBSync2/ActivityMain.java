@@ -287,6 +287,7 @@ public class ActivityMain extends AppCompatActivity {
                     if (restartType == NORMAL_START) {
                         setUiEnabled();
                         checkStorageStatus();
+                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
                         if (mGp.msgList.size()>1) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
                     } else if (restartType == RESTART_BY_KILLED) {
                         setUiEnabled();
@@ -1767,6 +1768,7 @@ public class ActivityMain extends AppCompatActivity {
                 ", settingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired +
 
                 ", settingSupressAppSpecifiDirWarning=" + mGp.settingSupressAppSpecifiDirWarning +
+                ", settingSupressLocationServiceWarning=" + mGp.settingSupressLocationServiceWarning +
                 ", settingFixDeviceOrientationToPortrait=" + mGp.settingFixDeviceOrientationToPortrait +
                 ", settingExportedProfileEncryptRequired=" + mGp.settingExportedProfileEncryptRequired +
 

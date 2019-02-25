@@ -117,9 +117,12 @@
         <string name="msgs_log_confirm_clear_all_msg">Delete log entry?</string>
         <string name="msgs_log_inactivate_pinned">Auto Scroll enabled</string>
         <string name="msgs_log_msg_cleared">Log message cleared</string>
-        <string name="msgs_main_app_specific_dir_used_msg">Warning:  The app specific directory has ben selected as the storage location.  This directory, and any data you have saved there, is deleted when app is uninstalled.</string>
+        <string name="msgs_main_app_specific_dir_used_msg">The app specific directory has ben selected as the storage location.  This directory, and any data you have saved there, is deleted when app is uninstalled.</string>
         <string name="msgs_main_app_specific_dir_used_suppress">Disable this warning (can be enabled in user interface settings)</string>
         <string name="msgs_main_app_specific_dir_used_title">Warning about using the application specific directory</string>
+        <string name="msgs_main_location_service_warning_msg">If you start syncing when the device is sleeping because the location service is disabled, the following tasks will end with an error. To enable location service in system settings or change to \"Private address\" or \"IP Address List\" in Sync options.</string>
+        <string name="msgs_main_location_service_warning_suppress">Disable this warning (can be enabled in sync settings)</string>
+        <string name="msgs_main_location_service_warning_title">Warning about Location service</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD select activity can not be started.</string>
         <string name="msgs_main_external_sdcard_select_required_cancel_msg">Unable to perform sync until SDCARD is selected.</string>
@@ -847,6 +850,9 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">Disable warning when app specific directory is included in sync task</string>
         <string name="settings_suppress_warning_app_specific_dir_title">Do Not Warn When Syncing App Specific Directory</string>
+        <string name="settings_suppress_warning_location_service_disabled">settings_suppress_warning_location_service_disabled</string>
+        <string name="settings_suppress_warning_location_service_enabled_summary_ena">Disable warning for location service enabling.</string>
+        <string name="settings_suppress_warning_location_service_enabled_title">Do not warn when location service disabled.</string>
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">Keep detailed sync history log</string>
         <string name="settings_sync_history_log_title">Sync history</string>

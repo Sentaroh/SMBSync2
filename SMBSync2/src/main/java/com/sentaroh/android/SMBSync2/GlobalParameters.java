@@ -62,8 +62,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.LoggerWriter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -95,6 +93,8 @@ public class GlobalParameters extends CommonGlobalParms {
     public String profilePassword = "";
     public final String profileKeyPrefix = "*SMBSync2*";
     public final String profileKeyPrefixOld = "*SMBSync*";
+
+    private final static String GRANT_COARSE_LOCATION_REQUIRED_KEY="settings_sync_grant_coarse_location_required";
 
     public ArrayBlockingQueue<SyncRequestItem> syncRequestQueue = new ArrayBlockingQueue<SyncRequestItem>(1000);
 
@@ -144,6 +144,7 @@ public class GlobalParameters extends CommonGlobalParms {
             "aac;apk;avi;gif;ico;gz;jar;jpe;jpeg;jpg;m3u;m4a;m4u;mov;movie;mp2;mp3;mpe;mpeg;mpg;mpga;png;qt;ra;ram;svg;tgz;wmv;zip;";
 
     public boolean settingSupressAppSpecifiDirWarning = false;
+    public boolean settingSupressLocationServiceWarning =false;
     public boolean settingSuppressShortcutWarning = true;
     public boolean settingFixDeviceOrientationToPortrait = false;
 
@@ -417,24 +418,26 @@ public class GlobalParameters extends CommonGlobalParms {
         if (!prefs.contains(appContext.getString(R.string.settings_sync_history_log)))
             prefs.edit().putBoolean(appContext.getString(R.string.settings_sync_history_log), true).commit();
 
-        if (!prefs.contains("settings_sync_grant_coarse_location_required"))
-            prefs.edit().putBoolean("settings_sync_grant_coarse_location_required", true).commit();
+        if (!prefs.contains(GRANT_COARSE_LOCATION_REQUIRED_KEY))
+            prefs.edit().putBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, true).commit();
 
         if (!prefs.contains(appContext.getString(R.string.settings_security_application_password)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password), false);
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password), false).commit();
 
         if (!prefs.contains(appContext.getString(R.string.settings_security_application_password_use_app_startup)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_app_startup), false);
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_app_startup), false).commit();
 
         if (!prefs.contains(appContext.getString(R.string.settings_security_application_password_use_edit_task)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_edit_task), false);
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_edit_task), false).commit();
 
         if (!prefs.contains(appContext.getString(R.string.settings_security_application_password_use_export_task)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_export_task), false);
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_export_task), false).commit();
 
         if (!prefs.contains(appContext.getString(R.string.settings_security_init_smb_account_password)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_init_smb_account_password), false);
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_init_smb_account_password), false).commit();
 
+        if (!prefs.contains(appContext.getString(R.string.settings_wifi_lock)))
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_wifi_lock), true).commit();
     }
 
     public void setSettingOptionLogEnabled(boolean enabled) {
@@ -447,7 +450,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public void setSettingGrantCoarseLocationRequired(boolean enabled) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
-        prefs.edit().putBoolean("settings_sync_grant_coarse_location_required", enabled).commit();
+        prefs.edit().putBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, enabled).commit();
         settingGrantCoarseLocationRequired=enabled;
     }
 
@@ -476,7 +479,7 @@ public class GlobalParameters extends CommonGlobalParms {
         settingLogOption = prefs.getBoolean(appContext.getString(R.string.settings_log_option), false);
         settingPutLogcatOption = prefs.getBoolean(appContext.getString(R.string.settings_put_logcat_option), false);
         settingErrorOption = prefs.getBoolean(appContext.getString(R.string.settings_error_option), false);
-        settingWifiLockRequired = prefs.getBoolean(appContext.getString(R.string.settings_wifi_lock), false);
+        settingWifiLockRequired = prefs.getBoolean(appContext.getString(R.string.settings_wifi_lock), true);
 
         if (prefs.getString(appContext.getString(R.string.settings_no_compress_file_type), "").equals("")) {
             Editor ed = prefs.edit();
@@ -490,6 +493,7 @@ public class GlobalParameters extends CommonGlobalParms {
         settingVibrateWhenSyncEnded = prefs.getString(appContext.getString(R.string.settings_vibrate_when_sync_ended), "0");
         settingExportedProfileEncryptRequired = prefs.getBoolean(appContext.getString(R.string.settings_exported_profile_encryption), true);
         settingSupressAppSpecifiDirWarning = prefs.getBoolean(appContext.getString(R.string.settings_suppress_warning_app_specific_dir), false);
+        settingSupressLocationServiceWarning = prefs.getBoolean(appContext.getString(R.string.settings_suppress_warning_location_service_disabled), false);
 
         themeIsLight = settingUseLightTheme = prefs.getBoolean(appContext.getString(R.string.settings_use_light_theme), false);
         if (settingUseLightTheme) {
@@ -505,7 +509,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingWriteSyncResultLog = prefs.getBoolean(appContext.getString(R.string.settings_sync_history_log), true);
 
-        settingGrantCoarseLocationRequired = prefs.getBoolean("settings_sync_grant_coarse_location_required", true);
+        settingGrantCoarseLocationRequired = prefs.getBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, true);
 
         settingForceScreenOnWhileSync=prefs.getBoolean(appContext.getString(R.string.settings_force_screen_on_while_sync), false);
 

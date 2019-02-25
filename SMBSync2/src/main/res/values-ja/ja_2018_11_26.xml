@@ -118,8 +118,11 @@
         <string name="msgs_log_inactivate_pinned">自動スクロールが有効になりました</string>
         <string name="msgs_log_msg_cleared">ログメッセージをクリアしました。</string>
         <string name="msgs_main_app_specific_dir_used_msg">アプリケーション固有ディレクトリがファイルの保存先に使用されています。このディレクトリはアプリケーションがアンインストールされると削除され、保存しているデータも削除されます。ご注意ください。</string>
-        <string name="msgs_main_app_specific_dir_used_suppress">この警告を次回以降表示しない （ユーザーインターフェース設定で再表示できます）</string>
+        <string name="msgs_main_app_specific_dir_used_suppress">この警告を次回以降表示しない （アプリ設定のユーザーインターフェース設定で再表示できます）</string>
         <string name="msgs_main_app_specific_dir_used_title">アプリケーション固有ディレクトリ使用についての警告</string>
+        <string name="msgs_main_location_service_warning_msg">下記のタスクは位置情報サービスが無効のため、スマホ/タブレットがスリープ状態の時に同期を開始するとエラーで終了します。 システム設定でロケーションサービスを有効にするか同期オプションで「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
+        <string name="msgs_main_location_service_warning_suppress">この警告を次回以降表示しない （アプリ設定の同期設定で再表示できます）</string>
+        <string name="msgs_main_location_service_warning_title">ロケーションサービスについての警告</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD選択アクティビティを起動できませんでした。</string>
         <string name="msgs_main_external_sdcard_select_required_cancel_msg">SDCARDが選択されるまで同期は実行できません。 タスク=%s</string>
@@ -844,6 +847,9 @@
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">アプリケーション固有ディレクトリの使用についての警告を表示しない</string>
         <string name="settings_suppress_warning_app_specific_dir_title">アプリケーション固有ディレクトリの使用</string>
+        <string name="settings_suppress_warning_location_service_disabled">settings_suppress_warning_location_service_disabled</string>
+        <string name="settings_suppress_warning_location_service_enabled_summary_ena">ロケーションサービス有効化についての警告を表示しない</string>
+        <string name="settings_suppress_warning_location_service_enabled_title">ロケーションサービス有効化の警告</string>
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">詳細ログを保存する</string>
         <string name="settings_sync_history_log_title">同期履歴</string>
