@@ -40,7 +40,6 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
 
 import com.sentaroh.android.Utilities.MiscUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
@@ -173,6 +172,7 @@ public class SyncThread extends Thread {
     private SyncThreadWorkArea mStwa = new SyncThreadWorkArea();
 
     public SyncThread(GlobalParameters gp, NotifyEvent ne) {
+//        Thread.dumpStack();
         mGp = gp;
         mNotifyToService = ne;
         mStwa.util = new CommonUtilities(mGp.appContext, "SyncThread", mGp);
@@ -214,13 +214,14 @@ public class SyncThread extends Thread {
 
     @Override
     public void run() {
+//        mStwa.util.setLogId(""+Thread.currentThread().getId());
         if (!mGp.syncThreadActive) {
+            mGp.syncThreadActive = true;
             defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
             Thread.currentThread().setUncaughtExceptionHandler(unCaughtExceptionHandler);
 
             listStorageInfo();
 
-            mGp.syncThreadActive = true;
 //			showMsg(stwa,false, "","I","","",mGp.appContext.getString(R.string.msgs_mirror_task_started));
             NotificationUtil.setNotificationIcon(mGp, mStwa.util, R.drawable.ic_48_smbsync_run_anim, R.drawable.ic_48_smbsync_run);
 
@@ -246,22 +247,7 @@ public class SyncThread extends Thread {
                         ", WiFi on=" + sri.wifi_on_before_sync_start +
                         ", WiFi delay=" + sri.start_delay_time_after_wifi_on + ", WiFi off=" + sri.wifi_off_after_sync_ended);
 
-                boolean wifi_on_error=false;
-                if (sri.wifi_on_before_sync_start) {
-                    if (!isWifiOn()) {
-                        setWifiOn();
-                        if (sri.start_delay_time_after_wifi_on > 0) {
-                            mStwa.util.addLogMsg("I",
-                                    String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_start_was_delayed),
-                                            sri.start_delay_time_after_wifi_on));
-                            SystemClock.sleep(1000 * sri.start_delay_time_after_wifi_on);
-                            if (!isWifiOn()) {
-                                mStwa.util.addLogMsg("E",mGp.appContext.getString(R.string.msgs_mirror_sync_wifi_can_not_enabled));
-                                wifi_on_error=true;
-                            }
-                        }
-                    }
-                }
+                performWiFiOnIfRequired(sri);
 
                 mStwa.currentSTI = sri.sync_task_list.poll();
 
@@ -270,35 +256,12 @@ public class SyncThread extends Thread {
                     start_time = System.currentTimeMillis();
                     listSyncOption(mStwa.currentSTI);
                     setSyncTaskRunning(true);
-                    showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "I", "", "",
-                            mGp.appContext.getString(R.string.msgs_mirror_task_started));
-
-                    String mst_dom=null, mst_user=null, mst_pass=null;
-                    mst_dom=mStwa.currentSTI.getMasterSmbDomain().equals("")?null:mStwa.currentSTI.getMasterSmbDomain();
-                    mst_user=mStwa.currentSTI.getMasterSmbUserName().equals("")?null:mStwa.currentSTI.getMasterSmbUserName();
-                    mst_pass=mStwa.currentSTI.getMasterSmbPassword().equals("")?null:mStwa.currentSTI.getMasterSmbPassword();
-                    int mst_smb_level = Integer.parseInt(mStwa.currentSTI.getMasterSmbProtocol());
-                    if (mStwa.currentSTI.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-                        mStwa.masterAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
-                    } else {
-                        mStwa.masterAuth=new JcifsAuth(mst_smb_level, mst_dom, mst_user, mst_pass, mStwa.currentSTI.isMasterSmbIpcSigningEnforced());
-                    }
-
-                    String tgt_dom=null, tgt_user=null, tgt_pass=null;
-                    tgt_dom=mStwa.currentSTI.getTargetSmbDomain().equals("")?null:mStwa.currentSTI.getTargetSmbDomain();
-                    tgt_user=mStwa.currentSTI.getTargetSmbUserName().equals("")?null:mStwa.currentSTI.getTargetSmbUserName();
-                    tgt_pass=mStwa.currentSTI.getTargetSmbPassword().equals("")?null:mStwa.currentSTI.getTargetSmbPassword();
-                    int tgt_smb_level = Integer.parseInt(mStwa.currentSTI.getTargetSmbProtocol());
-                    if (mStwa.currentSTI.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-                        mStwa.targetAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, tgt_dom, tgt_user, tgt_pass);
-                    } else {
-                        mStwa.targetAuth=new JcifsAuth(tgt_smb_level, tgt_dom, tgt_user, tgt_pass, mStwa.currentSTI.isTargetSmbIpcSigningEnforced());
-                    }
+                    showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "I", "", "", mGp.appContext.getString(R.string.msgs_mirror_task_started));
 
                     initSyncParms(mStwa.currentSTI);
 
                     String wifi_msg = isWifiConditionSatisfied(mStwa.currentSTI);
-                    if (wifi_msg.equals("")) {
+                    if (wifi_msg.equals("")) {//Continue
                         if ((mStwa.currentSTI.isSyncOptionSyncWhenCharging() && CommonUtilities.isCharging(mGp.appContext)) ||
                                 !mStwa.currentSTI.isSyncOptionSyncWhenCharging()) {
                             compileFilter(mStwa.currentSTI, mStwa.currentSTI.getFileFilter(), mStwa.currentSTI.getDirFilter());
@@ -312,7 +275,7 @@ public class SyncThread extends Thread {
                             showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", be);
                             mGp.syncThreadCtrl.setThreadMessage(be);
                         }
-                    } else {
+                    } else {//Error
                         if (wifi_msg.equals(mGp.appContext.getString(R.string.msgs_mirror_sync_skipped_wifi_ap_conn_other))) {
 //                                sync_result=SyncTaskItem.SYNC_STATUS_SUCCESS;
                             sync_result = SyncTaskItem.SYNC_STATUS_WARNING;
@@ -366,6 +329,21 @@ public class SyncThread extends Thread {
             mNotifyToService.notifyToListener(true, new Object[]{sync_result});
         }
         System.gc();
+    }
+
+    private void performWiFiOnIfRequired(SyncRequestItem sri) {
+        if (sri.wifi_on_before_sync_start) {
+            if (!isWifiOn()) {
+                setWifiOn();
+                if (sri.start_delay_time_after_wifi_on > 0) {
+                    mStwa.util.addLogMsg("I", String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_start_was_delayed), sri.start_delay_time_after_wifi_on));
+                    SystemClock.sleep(1000 * sri.start_delay_time_after_wifi_on);
+                    if (!isWifiOn()) {
+                        mStwa.util.addLogMsg("E",mGp.appContext.getString(R.string.msgs_mirror_sync_wifi_can_not_enabled));
+                    }
+                }
+            }
+        }
     }
 
     private void setSyncTaskRunning(boolean running) {
@@ -453,6 +431,28 @@ public class SyncThread extends Thread {
     }
 
     private void initSyncParms(SyncTaskItem sti) {
+        String mst_dom=null, mst_user=null, mst_pass=null;
+        mst_dom=sti.getMasterSmbDomain().equals("")?null:sti.getMasterSmbDomain();
+        mst_user=sti.getMasterSmbUserName().equals("")?null:sti.getMasterSmbUserName();
+        mst_pass=sti.getMasterSmbPassword().equals("")?null:sti.getMasterSmbPassword();
+        int mst_smb_level = Integer.parseInt(sti.getMasterSmbProtocol());
+        if (sti.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
+            mStwa.masterAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
+        } else {
+            mStwa.masterAuth=new JcifsAuth(mst_smb_level, mst_dom, mst_user, mst_pass, sti.isMasterSmbIpcSigningEnforced());
+        }
+
+        String tgt_dom=null, tgt_user=null, tgt_pass=null;
+        tgt_dom=sti.getTargetSmbDomain().equals("")?null:sti.getTargetSmbDomain();
+        tgt_user=sti.getTargetSmbUserName().equals("")?null:sti.getTargetSmbUserName();
+        tgt_pass=sti.getTargetSmbPassword().equals("")?null:sti.getTargetSmbPassword();
+        int tgt_smb_level = Integer.parseInt(sti.getTargetSmbProtocol());
+        if (sti.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
+            mStwa.targetAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, tgt_dom, tgt_user, tgt_pass);
+        } else {
+            mStwa.targetAuth=new JcifsAuth(tgt_smb_level, tgt_dom, tgt_user, tgt_pass, sti.isTargetSmbIpcSigningEnforced());
+        }
+
         mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncOptionRetryCount()) + 1;
         mStwa.syncDifferentFileAllowableTime = sti.getSyncOptionDifferentFileAllowableTime() * 1000;
 

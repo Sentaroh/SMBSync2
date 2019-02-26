@@ -391,10 +391,10 @@ public class SyncService extends Service {
                         String[] nspl = new String[pl.size()];
                         for (int i = 0; i < pl.size(); i++) nspl[i] = pl.get(i);
                         queueSpecificSyncTask(nspl, SMBSYNC2_SYNC_REQUEST_EXTERNAL);
-                        if (!mGp.syncThreadActive) {
-                            sendStartNotificationIntent();
-                            startSyncThread();
-                        }
+//                        if (!mGp.syncThreadActive) {
+//                            sendStartNotificationIntent();
+//                            startSyncThread();
+//                        }
                     } else {
                         mUtil.addLogMsg("W",
                                 mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_list));
@@ -465,11 +465,12 @@ public class SyncService extends Service {
 
         @Override
         public void aidlStartSpecificSyncTask(String[] job_name) throws RemoteException {
+//            Thread.dumpStack();
             queueSpecificSyncTask(job_name, SMBSYNC2_SYNC_REQUEST_ACTIVITY);
-            if (!mGp.syncThreadActive) {
-                sendStartNotificationIntent();
-                startSyncThread();
-            }
+//            if (!mGp.syncThreadActive) {
+//                sendStartNotificationIntent();
+//                startSyncThread();
+//            }
         }
 
         @Override
@@ -631,6 +632,7 @@ public class SyncService extends Service {
 
     private void startSyncThread() {
 //		final Handler hndl=new Handler();
+//        Thread.dumpStack();
         if (!mGp.syncThreadEnabled) {
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_svc_can_not_start_sync_task_disabled));
             return;

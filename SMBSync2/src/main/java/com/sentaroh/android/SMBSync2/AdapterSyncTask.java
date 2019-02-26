@@ -406,7 +406,14 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             holder.ib_row_sync.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    holder.ib_row_sync.setEnabled(false);
                     if (mNotifySyncButtonEvent!=null) mNotifySyncButtonEvent.notifyToListener(true,new Object[]{o});
+                    holder.ib_row_sync.postDelayed(new Runnable(){
+                        @Override
+                        public void run() {
+                            holder.ib_row_sync.setEnabled(true);
+                        }
+                    },1000);
                 }
             });
 
