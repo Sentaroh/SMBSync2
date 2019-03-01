@@ -122,6 +122,8 @@ public class SyncThreadSyncZip {
     private static boolean copyZipFileToWorkDirectory(SyncThreadWorkArea stwa, String from_dir, String file_path) {
         stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, from=" + from_dir + file_path);
         File in = new File(from_dir + file_path);
+        if (!in.exists()) return true;//No iput file
+
         File out = new File(stwa.zipWorkFileName);
 //		Log.v("","copy to work from="+in.getPath()+", out="+out.getPath());
 //        if (!in.exists()) {
