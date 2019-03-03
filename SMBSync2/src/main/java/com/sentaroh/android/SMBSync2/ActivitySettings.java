@@ -420,6 +420,10 @@ public class ActivitySettings extends PreferenceActivity {
 
             SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
+            if (!LocalMountPoint.isExternalStorageAvailable()) {
+                if (findPreference(getString(R.string.settings_mgt_dir))!=null) findPreference(getString(R.string.settings_mgt_dir)).setEnabled(false);
+            }
+
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_error_option), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_wifi_lock), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_history_log), getFragmentManager());
@@ -469,11 +473,6 @@ public class ActivitySettings extends PreferenceActivity {
             addPreferencesFromResource(R.xml.settings_frag_log);
 
             SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
-
-            if (!LocalMountPoint.isExternalStorageAvailable()) {
-                findPreference(getString(R.string.settings_mgt_dir).toString())
-                        .setEnabled(false);
-            }
 
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_log_option), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_put_logcat_option), getFragmentManager());
