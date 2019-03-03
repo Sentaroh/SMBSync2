@@ -113,6 +113,9 @@
         <string name="msgs_info_storage_copy_completed">クリップボードにコピーしました</string>
         <string name="msgs_info_storage_send_btn_title">開発者に送る</string>
         <string name="msgs_info_storage_title">ストレージ情報</string>
+        <string name="msgs_your_problem_title">質問・問題</string>
+        <string name="msgs_your_problem_msg">質問・問題を記述してください。</string>
+        <string name="msgs_your_problem_hint">例：SDCARDが認識されません</string>
         <string name="msgs_log_activate_pinned">自動スクロールは無効です</string>
         <string name="msgs_log_confirm_clear_all_msg">ログメッセージをクリアしますか？</string>
         <string name="msgs_log_inactivate_pinned">自動スクロールが有効になりました</string>

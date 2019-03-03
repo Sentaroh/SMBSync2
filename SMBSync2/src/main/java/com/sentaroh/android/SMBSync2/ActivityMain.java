@@ -60,6 +60,7 @@ import android.view.Window;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -474,22 +475,31 @@ public class ActivityMain extends AppCompatActivity {
         btn_send.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent();
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("message/rfc822");
+                NotifyEvent ntfy=new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        String desc=(String)objects[0];
+                        Intent intent=new Intent();
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setAction(Intent.ACTION_SEND);
+                        intent.setType("message/rfc822");
 //                intent.setType("text/plain");
 //                intent.setType("application/zip");
 
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"gm.developer.fhoshino@gmail.com"});
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"gm.developer.fhoshino@gmail.com"});
 //                intent.putExtra(Intent.EXTRA_CC, new String[]{"cc@example.com"});
 //                intent.putExtra(Intent.EXTRA_BCC, new String[]{"bcc@example.com"});
-                intent.putExtra(Intent.EXTRA_SUBJECT, "SMBSync2 System Info");
-                intent.putExtra(Intent.EXTRA_TEXT,
-                        "Please fill in the details of the problem."+
-                        "\n\n\n"+tv_msg.getText().toString());
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "SMBSync2 System Info");
+                        intent.putExtra(Intent.EXTRA_TEXT, desc+ "\n\n\n"+tv_msg.getText().toString());
 //                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
-                mContext.startActivity(intent);
+                        mContext.startActivity(intent);
+                    }
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                    }
+                });
+                getProblemDescription(ntfy);
             }
         });
 
@@ -497,6 +507,51 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
                 btn_close.performClick();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void getProblemDescription(final NotifyEvent p_ntfy) {
+        final Dialog dialog = new Dialog(mActivity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.single_item_input_dlg);
+
+        final TextView tv_title=(TextView)dialog.findViewById(R.id.single_item_input_title);
+        tv_title.setText(mContext.getString(R.string.msgs_your_problem_title));
+        final TextView tv_msg=(TextView)dialog.findViewById(R.id.single_item_input_msg);
+        tv_msg.setVisibility(TextView.GONE);
+        final TextView tv_desc=(TextView)dialog.findViewById(R.id.single_item_input_name);
+        tv_desc.setText(mContext.getString(R.string.msgs_your_problem_msg));
+        final EditText et_msg=(EditText)dialog.findViewById(R.id.single_item_input_dir);
+        et_msg.setHint(mContext.getString(R.string.msgs_your_problem_hint));
+        final Button btn_ok=(Button)dialog.findViewById(R.id.single_item_input_ok_btn);
+        final Button btn_cancel=(Button)dialog.findViewById(R.id.single_item_input_cancel_btn);
+
+//        btn_cancel.setText(mContext.getString(R.string.msgs_common_dialog_close));
+
+        CommonDialog.setDlgBoxSizeLimit(dialog,true);
+
+        btn_ok.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                p_ntfy.notifyToListener(true, new Object[]{et_msg.getText().toString()});
+                dialog.dismiss();
+            }
+        });
+
+        btn_cancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                btn_cancel.performClick();
             }
         });
 
