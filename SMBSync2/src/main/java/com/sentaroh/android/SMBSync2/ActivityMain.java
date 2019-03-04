@@ -49,6 +49,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -526,6 +527,7 @@ public class ActivityMain extends AppCompatActivity {
         tv_desc.setText(mContext.getString(R.string.msgs_your_problem_msg));
         final EditText et_msg=(EditText)dialog.findViewById(R.id.single_item_input_dir);
         et_msg.setHint(mContext.getString(R.string.msgs_your_problem_hint));
+        et_msg.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         final Button btn_ok=(Button)dialog.findViewById(R.id.single_item_input_ok_btn);
         final Button btn_cancel=(Button)dialog.findViewById(R.id.single_item_input_cancel_btn);
 
@@ -536,8 +538,23 @@ public class ActivityMain extends AppCompatActivity {
         btn_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                p_ntfy.notifyToListener(true, new Object[]{et_msg.getText().toString()});
-                dialog.dismiss();
+                NotifyEvent ntfy_desc=new NotifyEvent(mContext);
+                ntfy_desc.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        p_ntfy.notifyToListener(true, new Object[]{et_msg.getText().toString()});
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                    }
+                });
+                if (et_msg.getText().length()==0) {
+                    commonDlg.showCommonDialog(true, "W", mContext.getString(R.string.msgs_your_problem_no_desc),"",ntfy_desc);
+                } else {
+                    ntfy_desc.notifyToListener(true, null);
+                }
             }
         });
 

@@ -116,6 +116,7 @@
         <string name="msgs_your_problem_title">Your problem/question</string>
         <string name="msgs_your_problem_msg">Please fill in the details of your problem or question.</string>
         <string name="msgs_your_problem_hint">Example: The sdcard is not recognized.</string>
+        <string name="msgs_your_problem_no_desc">Problem/question is not described, Do you want to send it anyway?</string>
         <string name="msgs_log_activate_pinned">Auto Scroll disabled</string>
         <string name="msgs_log_confirm_clear_all_msg">Delete log entry?</string>
         <string name="msgs_log_inactivate_pinned">Auto Scroll enabled</string>
