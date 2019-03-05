@@ -582,16 +582,19 @@ public class ScheduleListEditor {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                String del_list = "";
                 ScheduleItem si = null;
                 for (int i = mScheduleAdapter.getCount() - 1; i >= 0; i--) {
                     if (mScheduleAdapter.getItem(i).isChecked) {
-                        del_list += mScheduleAdapter.getItem(i).scheduleName + "\n";
                         si = mScheduleAdapter.getItem(i);
                         break;
                     }
                 }
-                renameSchedule(si, ntfy);
+                if (si==null) {
+                    util.addLogMsg("E","renameSchedule error, schedule item can not be found.");
+                    commonDlg.showCommonDialog(false, "E", "renameSchedule error, schedule item can not be found.", "", null);
+                } else {
+                    renameSchedule(si, ntfy);
+                }
             }
         });
         ContextButtonUtil.setButtonLabelListener(mContext, mContextButtonRename, mContext.getString(R.string.msgs_schedule_cont_label_rename));
