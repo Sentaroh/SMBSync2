@@ -3187,164 +3187,178 @@ public class SyncTaskUtil {
             localBaseDir_t = mGp.safMgr.getSdcardRootPath();
         final String localBaseDir = localBaseDir_t;
 
-        ArrayList<TreeFilelistItem> tfl = createLocalFilelist(true, localBaseDir, "/" + m_dir);
-
-        if (tfl.size()==0) {
-            String msg=mContext.getString(R.string.msgs_dir_empty);
-            mCommonDlg.showCommonDialog(false,"W",msg,"",null);
-            return;
-        }
-
-        //カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.item_select_list_dlg);
-
-        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
-
-        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_title_view);
-        final TextView title = (TextView) dialog.findViewById(R.id.item_select_list_dlg_title);
-        final TextView subtitle = (TextView) dialog.findViewById(R.id.item_select_list_dlg_subtitle);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-        subtitle.setTextColor(mGp.themeColorList.text_color_dialog_title);
-
-        title.setText(mContext.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
-
-        String c_dir = (m_dir.equals("")) ? localBaseDir + "/" : localBaseDir + "/" + m_dir + "/";
-        subtitle.setText(mContext.getString(R.string.msgs_current_dir) + " " + c_dir);
-        final TextView dlg_msg = (TextView) dialog.findViewById(R.id.item_select_list_dlg_msg);
-        final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
-
-        final LinearLayout ll_context = (LinearLayout) dialog.findViewById(R.id.context_view_file_select);
-        ll_context.setVisibility(LinearLayout.VISIBLE);
-        final ImageButton ib_select_all = (ImageButton) ll_context.findViewById(R.id.context_button_select_all);
-        final ImageButton ib_unselect_all = (ImageButton) ll_context.findViewById(R.id.context_button_unselect_all);
-
-        dlg_msg.setVisibility(TextView.VISIBLE);
-
-        CommonDialog.setDlgBoxSizeLimit(dialog, true);
-
-        final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
-        final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mActivity, false, false);
-        lv.setAdapter(tfa);
-        tfa.setDataList(tfl);
-        lv.setScrollingCacheEnabled(false);
-        lv.setScrollbarFadingEnabled(false);
-
-        NotifyEvent ntfy_expand_close = new NotifyEvent(mContext);
-        ntfy_expand_close.setListener(new NotifyEventListener() {
-            @Override
-            public void positiveResponse(Context c, Object[] o) {
-                int idx = (Integer) o[0];
-                final int pos = tfa.getItem(idx);
-                final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                expandHideLocalDirTree(true, localBaseDir, pos, tfi, tfa);
-            }
-
-            @Override
-            public void negativeResponse(Context c, Object[] o) {
-            }
-        });
-        tfa.setExpandCloseListener(ntfy_expand_close);
-        lv.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
-                final int pos = tfa.getItem(idx);
-                final TreeFilelistItem tfi = tfa.getDataItem(pos);
-//				tfa.setDataItemIsSelected(pos);
-                expandHideLocalDirTree(true, localBaseDir, pos, tfi, tfa);
-            }
-        });
-        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> items, View view, int idx, long id) {
-                final int pos = tfa.getItem(idx);
-                final TreeFilelistItem tfi = tfa.getDataItem(pos);
-                tfi.setChecked(true);
-                tfa.notifyDataSetChanged();
-                return true;
-            }
-        });
-
-        ib_select_all.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < tfa.getDataItemCount(); i++) {
-                    TreeFilelistItem tfli = tfa.getDataItem(i);
-                    if (!tfli.isHideListItem()) tfa.setDataItemIsSelected(i);
-                }
-                tfa.notifyDataSetChanged();
-                btn_ok.setEnabled(true);
-            }
-        });
-
-        ib_unselect_all.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < tfa.getDataItemCount(); i++) {
-                    tfa.setDataItemIsUnselected(i);
-                }
-                tfa.notifyDataSetChanged();
-                btn_ok.setEnabled(false);
-            }
-        });
-
-        //OKボタンの指定
-        btn_ok.setEnabled(false);
-        NotifyEvent ntfy = new NotifyEvent(mContext);
-        //Listen setRemoteShare response
+        NotifyEvent ntfy=new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
             @Override
-            public void positiveResponse(Context arg0, Object[] arg1) {
-                btn_ok.setEnabled(true);
-            }
-
-            @Override
-            public void negativeResponse(Context arg0, Object[] arg1) {
-                boolean checked = false;
-                for (int i = 0; i < tfa.getDataItemCount(); i++) {
-                    if (tfa.getDataItem(i).isChecked()) {
-                        checked = true;
-                        break;
-                    }
+            public void positiveResponse(Context context, Object[] objects) {
+                ArrayList<TreeFilelistItem>tfl=(ArrayList<TreeFilelistItem>)objects[0];
+                if (tfl.size()==0) {
+                    String msg=mContext.getString(R.string.msgs_dir_empty);
+                    mCommonDlg.showCommonDialog(false,"W",msg,"",null);
+                    return;
                 }
-                if (checked) btn_ok.setEnabled(true);
-                else btn_ok.setEnabled(false);
-            }
-        });
-        tfa.setCbCheckListener(ntfy);
 
-        btn_ok.setText(mContext.getString(R.string.msgs_filter_list_dlg_add));
-        btn_ok.setVisibility(Button.VISIBLE);
-        btn_ok.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (!addDirFilter(true, tfa, fla, "/" + m_dir + "/", dlg_msg, sti, false)) return;
-                addDirFilter(false, tfa, fla, "/" + m_dir + "/", dlg_msg, sti, false);
-                dialog.dismiss();
-                p_ntfy.notifyToListener(true, null);
-            }
-        });
+                //カスタムダイアログの生成
+                final Dialog dialog = new Dialog(mActivity);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.setContentView(R.layout.item_select_list_dlg);
 
-        //CANCELボタンの指定
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.item_select_list_dlg_cancel_btn);
-        btn_cancel.setText(mContext.getString(R.string.msgs_filter_list_dlg_close));
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                dialog.dismiss();
-                p_ntfy.notifyToListener(true, null);
-            }
-        });
+                LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_view);
+                ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
-        // Cancelリスナーの指定
-        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+                final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_title_view);
+                final TextView title = (TextView) dialog.findViewById(R.id.item_select_list_dlg_title);
+                final TextView subtitle = (TextView) dialog.findViewById(R.id.item_select_list_dlg_subtitle);
+                title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+                title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+                subtitle.setTextColor(mGp.themeColorList.text_color_dialog_title);
+
+                title.setText(mContext.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
+
+                String c_dir = (m_dir.equals("")) ? localBaseDir + "/" : localBaseDir + "/" + m_dir + "/";
+                subtitle.setText(mContext.getString(R.string.msgs_current_dir) + " " + c_dir);
+                final TextView dlg_msg = (TextView) dialog.findViewById(R.id.item_select_list_dlg_msg);
+                final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
+
+                final LinearLayout ll_context = (LinearLayout) dialog.findViewById(R.id.context_view_file_select);
+                ll_context.setVisibility(LinearLayout.VISIBLE);
+                final ImageButton ib_select_all = (ImageButton) ll_context.findViewById(R.id.context_button_select_all);
+                final ImageButton ib_unselect_all = (ImageButton) ll_context.findViewById(R.id.context_button_unselect_all);
+
+                dlg_msg.setVisibility(TextView.VISIBLE);
+
+                CommonDialog.setDlgBoxSizeLimit(dialog, true);
+
+                final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
+                final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mActivity, false, false);
+                lv.setAdapter(tfa);
+                tfa.setDataList(tfl);
+                lv.setScrollingCacheEnabled(false);
+                lv.setScrollbarFadingEnabled(false);
+
+                NotifyEvent ntfy_expand_close = new NotifyEvent(mContext);
+                ntfy_expand_close.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context c, Object[] o) {
+                        int idx = (Integer) o[0];
+                        final int pos = tfa.getItem(idx);
+                        final TreeFilelistItem tfi = tfa.getDataItem(pos);
+                        expandHideLocalDirTree(true, localBaseDir, pos, tfi, tfa);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context c, Object[] o) {
+                    }
+                });
+                tfa.setExpandCloseListener(ntfy_expand_close);
+                lv.setOnItemClickListener(new OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
+                        final int pos = tfa.getItem(idx);
+                        final TreeFilelistItem tfi = tfa.getDataItem(pos);
+//				tfa.setDataItemIsSelected(pos);
+                        expandHideLocalDirTree(true, localBaseDir, pos, tfi, tfa);
+                    }
+                });
+                lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+                    public boolean onItemLongClick(AdapterView<?> items, View view, int idx, long id) {
+                        final int pos = tfa.getItem(idx);
+                        final TreeFilelistItem tfi = tfa.getDataItem(pos);
+                        tfi.setChecked(true);
+                        tfa.notifyDataSetChanged();
+                        return true;
+                    }
+                });
+
+                ib_select_all.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        for (int i = 0; i < tfa.getDataItemCount(); i++) {
+                            TreeFilelistItem tfli = tfa.getDataItem(i);
+                            if (!tfli.isHideListItem()) tfa.setDataItemIsSelected(i);
+                        }
+                        tfa.notifyDataSetChanged();
+                        btn_ok.setEnabled(true);
+                    }
+                });
+
+                ib_unselect_all.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        for (int i = 0; i < tfa.getDataItemCount(); i++) {
+                            tfa.setDataItemIsUnselected(i);
+                        }
+                        tfa.notifyDataSetChanged();
+                        btn_ok.setEnabled(false);
+                    }
+                });
+
+                //OKボタンの指定
+                btn_ok.setEnabled(false);
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                //Listen setRemoteShare response
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context arg0, Object[] arg1) {
+                        btn_ok.setEnabled(true);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context arg0, Object[] arg1) {
+                        boolean checked = false;
+                        for (int i = 0; i < tfa.getDataItemCount(); i++) {
+                            if (tfa.getDataItem(i).isChecked()) {
+                                checked = true;
+                                break;
+                            }
+                        }
+                        if (checked) btn_ok.setEnabled(true);
+                        else btn_ok.setEnabled(false);
+                    }
+                });
+                tfa.setCbCheckListener(ntfy);
+
+                btn_ok.setText(mContext.getString(R.string.msgs_filter_list_dlg_add));
+                btn_ok.setVisibility(Button.VISIBLE);
+                btn_ok.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        if (!addDirFilter(true, tfa, fla, "/" + m_dir + "/", dlg_msg, sti, false)) return;
+                        addDirFilter(false, tfa, fla, "/" + m_dir + "/", dlg_msg, sti, false);
+                        dialog.dismiss();
+                        p_ntfy.notifyToListener(true, null);
+                    }
+                });
+
+                //CANCELボタンの指定
+                final Button btn_cancel = (Button) dialog.findViewById(R.id.item_select_list_dlg_cancel_btn);
+                btn_cancel.setText(mContext.getString(R.string.msgs_filter_list_dlg_close));
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        p_ntfy.notifyToListener(true, null);
+                    }
+                });
+
+                // Cancelリスナーの指定
+                dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface arg0) {
+                        btn_cancel.performClick();
+                    }
+                });
+
+                dialog.show();
+
+            }
+
             @Override
-            public void onCancel(DialogInterface arg0) {
-                btn_cancel.performClick();
+            public void negativeResponse(Context context, Object[] objects) {
+                mCommonDlg.showCommonDialog(false, "E", "Local file list creation aborted", "", null);
             }
         });
 
-        dialog.show();
+        createLocalFilelist(true, localBaseDir, "/" + m_dir, ntfy);
+
 
     }
 
@@ -4180,55 +4194,86 @@ public class SyncTaskUtil {
         return result;
     }
 
-    private ArrayList<TreeFilelistItem> createLocalFilelist(boolean dironly,
-                                                            String url, String dir) {
-
-        ArrayList<TreeFilelistItem> tfl = new ArrayList<TreeFilelistItem>();
-        ;
-        String tdir, fp;
-
-        if (dir.equals("")) fp = tdir = "/";
-        else {
-            tdir = dir;
-            fp = dir + "/";
-        }
-        File lf = new File(url + tdir);
-        final File[] ff = lf.listFiles();
-        TreeFilelistItem tfi = null;
-        if (ff != null) {
-            for (int i = 0; i < ff.length; i++) {
-//				Log.v("","name="+ff[i].getName()+", d="+ff[i].isDirectory()+", r="+ff[i].canRead());
-                if (ff[i].canRead()) {
-                    int dirct = 0;
-                    if (ff[i].isDirectory()) {
-                        File tlf = new File(url + tdir + "/" + ff[i].getName());
-                        File[] lfl = tlf.listFiles();
-                        if (lfl != null) {
-                            for (int j = 0; j < lfl.length; j++) {
-                                if (dironly) {
-                                    if (lfl[j].isDirectory()) dirct++;
-                                } else dirct++;
-                            }
-                        }
-                    }
-                    tfi = new TreeFilelistItem(ff[i].getName(),
-                            "" + ", ", ff[i].isDirectory(), 0, 0, false,
-                            ff[i].canRead(), ff[i].canWrite(),
-                            ff[i].isHidden(), fp, 0);
-                    tfi.setSubDirItemCount(dirct);
-
-                    if (dironly) {
-                        if (ff[i].isDirectory()) tfl.add(tfi);
-                    } else tfl.add(tfi);
-                }
+    private void createLocalFilelist(boolean dironly, final String url, final String dir, final NotifyEvent p_ntfy) {
+        mUtil.addDebugMsg(1, "I", "createLocalFilelist entered.");
+        final long b_time=System.currentTimeMillis();
+        final Dialog pd=showProgressSpinIndicator(mActivity);
+        final ThreadCtrl tc = new ThreadCtrl();
+        tc.setEnabled();
+        tc.setThreadResultSuccess();
+        pd.setOnCancelListener(new Dialog.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface arg0) {
+                tc.setDisabled();//disableAsyncTask();
+                mUtil.addDebugMsg(1, "W", "localFileList creation was cancelled.");
             }
-            Collections.sort(tfl);
-        }
-        return tfl;
+        });
+        pd.show();
+
+        final Handler hndl = new Handler();
+        Thread th=new Thread(){
+          @Override
+          public void run() {
+              ArrayList<TreeFilelistItem> tfl = new ArrayList<TreeFilelistItem>();
+              String tdir, fp;
+
+              if (dir.equals("")) fp = tdir = "/";
+              else {
+                  tdir = dir;
+                  fp = dir + "/";
+              }
+              File lf = new File(url + tdir);
+              final File[] ff = lf.listFiles();
+              TreeFilelistItem tfi = null;
+              if (ff != null) {
+                  for (int i = 0; i < ff.length; i++) {
+                      if (!tc.isEnabled()) break;
+//				Log.v("","name="+ff[i].getName()+", d="+ff[i].isDirectory()+", r="+ff[i].canRead());
+                      if (ff[i].canRead()) {
+                          int dirct = 0;
+                          if (ff[i].isDirectory()) {
+                              File tlf = new File(url + tdir + "/" + ff[i].getName());
+                              File[] lfl = tlf.listFiles();
+                              if (lfl != null) {
+                                  for (int j = 0; j < lfl.length; j++) {
+                                      if (!tc.isEnabled()) break;
+                                      if (dironly) {
+                                          if (lfl[j].isDirectory()) dirct++;
+                                      } else dirct++;
+                                  }
+                              }
+                          }
+                          tfi = new TreeFilelistItem(ff[i].getName(),
+                                  "" + ", ", ff[i].isDirectory(), 0, 0, false,
+                                  ff[i].canRead(), ff[i].canWrite(),
+                                  ff[i].isHidden(), fp, 0);
+                          tfi.setSubDirItemCount(dirct);
+
+                          if (dironly) {
+                              if (ff[i].isDirectory()) tfl.add(tfi);
+                          } else tfl.add(tfi);
+                      }
+                  }
+                  if (tc.isEnabled()) Collections.sort(tfl);
+              }
+              hndl.post(new Runnable(){
+                  @Override
+                  public void run() {
+                      mUtil.addDebugMsg(1, "I", "createLocalFilelist ended, tc="+tc.isEnabled()+", elapsed time="+(System.currentTimeMillis()-b_time));
+                      p_ntfy.notifyToListener(tc.isEnabled(), new Object[]{tfl});
+                      pd.dismiss();
+                  }
+              });
+          }
+        };
+        th.start();
     }
 
     private void createRemoteFileList(String remurl, String remdir, boolean ipc_enforced, String smb_proto,
                                       final NotifyEvent p_event, boolean readSubDirCnt) {
+        mUtil.addDebugMsg(1, "I", "createRemoteFilelist entered.");
+        final long b_time=System.currentTimeMillis();
+
         final ArrayList<TreeFilelistItem> remoteFileList = new ArrayList<TreeFilelistItem>();
         final ThreadCtrl tc = new ThreadCtrl();
         tc.setEnabled();
@@ -4242,7 +4287,7 @@ public class SyncTaskUtil {
                 tc.setDisabled();//disableAsyncTask();
 //                btn_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
 //                btn_cancel.setEnabled(false);
-                mUtil.addDebugMsg(1, "W", "Sharelist is cancelled.");
+                mUtil.addDebugMsg(1, "W", "createRemoteFileList cancelled.");
             }
         });
 
@@ -4256,10 +4301,9 @@ public class SyncTaskUtil {
                     public void run() {
                         dialog.dismiss();
                         String err;
-                        mUtil.addDebugMsg(1, "I", "FileListThread result=" + tc.getThreadResult() + "," +
-                                "msg=" + tc.getThreadMessage() + ", enable=" +
-                                tc.isEnabled());
                         Collections.sort(remoteFileList);
+                        mUtil.addDebugMsg(1, "I", "createRemoteFileList result=" + tc.getThreadResult() +
+                                ", msg=" + tc.getThreadMessage() + ", tc=" + tc.isEnabled()+", elapsed time="+(System.currentTimeMillis()-b_time));
                         if (tc.isThreadResultSuccess()) {
                             p_event.notifyToListener(true, new Object[]{remoteFileList});
                         } else {
@@ -4439,9 +4483,20 @@ public class SyncTaskUtil {
             else {
                 if (tfi.isSubDirLoaded()) tfa.reshowChildItem(tfi, pos);
                 else {
-                    ArrayList<TreeFilelistItem> ntfl =
-                            createLocalFilelist(dironly, lclurl, tfi.getPath() + tfi.getName());
-                    tfa.addChildItem(tfi, ntfl, pos);
+                    NotifyEvent ne = new NotifyEvent(mContext);
+                    ne.setListener(new NotifyEventListener() {
+                        @SuppressWarnings("unchecked")
+                        @Override
+                        public void positiveResponse(Context c, Object[] o) {
+                            tfa.addChildItem(tfi, (ArrayList<TreeFilelistItem>) o[0], pos);
+                        }
+
+                        @Override
+                        public void negativeResponse(Context c, Object[] o) {
+                            mCommonDlg.showCommonDialog(false, "E", "Local file list creation aborted", "", null);
+                        }
+                    });
+                    createLocalFilelist(dironly, lclurl, tfi.getPath() + tfi.getName(), ne);
                 }
             }
         }

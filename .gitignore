@@ -52,5 +52,5 @@ google-services.json
 release/
 SMBSync2/release/
 SMBSync2/build/
-/SMBSync2/src/main/java/com/sentaroh/android/SMBSync2/SyncThreadTwowaySync.java
 SMBSync2/src/main/java/com/sentaroh/android/SMBSync2/SyncThreadTwowaySync.java
+SMBSync2/src/main/java/com/sentaroh/android/SMBSync2/SyncThreadTwowaySyncFile.java
