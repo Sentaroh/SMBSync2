@@ -357,21 +357,6 @@ public class SyncThreadCopyFile {
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
 
-    static private void putExceptionMessage(SyncThreadWorkArea stwa, StackTraceElement[] st, String e_msg) {
-        String st_msg=formatStackTrace(st);
-        stwa.util.addDebugMsg(1,"E",stwa.currentSTI.getSyncTaskName()," Error="+e_msg+st_msg);
-    }
-
-    static private String formatStackTrace(StackTraceElement[] st) {
-        String st_msg = "";
-        for (int i = 0; i < st.length; i++) {
-            st_msg += "\n at " + st[i].getClassName() + "." +
-                    st[i].getMethodName() + "(" + st[i].getFileName() +
-                    ":" + st[i].getLineNumber() + ")";
-        }
-        return st_msg;
-    }
-
     static public int copyFileInternalToInternal(SyncThreadWorkArea stwa,
                                                  SyncTaskItem sti, String from_dir, File mf, String to_dir, String file_name) throws IOException {
         stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);

@@ -158,7 +158,7 @@ public class ReadSmbFilelist implements Runnable {
         }
 
         mUtil.addDebugMsg(1, "I", "ReadSmbFilelist ended.");
-        getFLCtrl.setDisabled();
+//        getFLCtrl.setDisabled();
         notifyEvent.notifyToListener(true, null);
     }
 
