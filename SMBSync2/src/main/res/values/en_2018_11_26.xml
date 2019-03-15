@@ -176,6 +176,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_main_sync_history_mode_normal">Normal</string>
         <string name="msgs_main_sync_history_mode_test">Test</string>
         <string name="msgs_main_sync_history_result_log_not_found">History log file could not be found.</string>
+        <string name="msgs_main_sync_history_result_activity_not_found_for_log_display">You will not be able to see the details because you cannot find the application to display the text file.</string>
         <string name="msgs_main_sync_history_status_cancel">Canceled</string>
         <string name="msgs_main_sync_history_status_error">Error</string>
         <string name="msgs_main_sync_history_status_running">Running</string>

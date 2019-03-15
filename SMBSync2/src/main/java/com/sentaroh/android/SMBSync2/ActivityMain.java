@@ -2314,7 +2314,12 @@ public class ActivityMain extends AppCompatActivity {
                                     } else {
                                         intent.setDataAndType(Uri.parse("file://"+item.sync_result_file_path),"text/plain");
                                     }
-                                    mActivity.startActivity(intent);
+                                    try {
+                                        mActivity.startActivity(intent);
+                                    } catch(ActivityNotFoundException e) {
+                                        commonDlg.showCommonDialog(false, "E",
+                                                mContext.getString(R.string.msgs_main_sync_history_result_activity_not_found_for_log_display), "", null);
+                                    }
                                 }
                             }
                             mUiHandler.postDelayed(new Runnable() {

@@ -173,6 +173,7 @@
         <string name="msgs_main_sync_history_mode_normal">通常</string>
         <string name="msgs_main_sync_history_mode_test">テスト</string>
         <string name="msgs_main_sync_history_result_log_not_found">履歴ログファイルが見つかりませんでした。</string>
+        <string name="msgs_main_sync_history_result_activity_not_found_for_log_display">テキストファイルを表示するアプリケーションがみつからないため詳細を表示できません。</string>
         <string name="msgs_main_sync_history_status_cancel">中止</string>
         <string name="msgs_main_sync_history_status_error">エラー</string>
         <string name="msgs_main_sync_history_status_running">同期中</string>
