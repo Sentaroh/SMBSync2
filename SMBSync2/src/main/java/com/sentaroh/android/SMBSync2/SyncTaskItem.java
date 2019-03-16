@@ -52,11 +52,12 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_TASK_TYPE_ARCHIVE = "A";
     private String syncTaskType = SYNC_TASK_TYPE_MIRROR;
 
-    public final static String SYNC_TASK_TWO_WAY_OPTION_MASTER_KEEP_TARGET = "KT";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_MASTER_OVERRIDE_TARGET = "OT";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_TARGET_KEEP_MASTER = "KM";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_TARGET_OVERRIDE_MASTER = "OM";
-    private String syncTwoWayConflictOption = SYNC_TASK_TWO_WAY_OPTION_MASTER_KEEP_TARGET;
+    public final static String SYNC_TASK_TWO_WAY_OPTION_ASK_USER = "0";
+    public final static String SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER = "1";
+    public final static String SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER = "2";
+    public final static String SYNC_TASK_TWO_WAY_CONFLICT_FILE_SUFFIX=".smbsync2_confilict";
+    private String syncTwoWayConflictOption =SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER;
+    private boolean syncTwoWayConflictKeepConflictFile = true;
 
     private boolean syncTaskTwoWay = false;
 
@@ -201,8 +202,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncTaskTwoWay() {return syncTaskTwoWay;}
 
     public void setSyncTwoWayConflictOption(String p) {syncTwoWayConflictOption = p;}
-
     public String getSyncTwoWayConflictOption() {return syncTwoWayConflictOption;}
+
+    public void setSyncTwoWayConflictKeepConflictFile(boolean keep_file) {syncTwoWayConflictKeepConflictFile=keep_file;}
+    public boolean isSyncTwoWayConflictKeepConflictFile() {return syncTwoWayConflictKeepConflictFile;}
 
     public String getMasterSmbUserName() {return syncTaskMasterFolderRemoteUserName;}
 
