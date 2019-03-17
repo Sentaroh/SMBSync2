@@ -101,6 +101,7 @@ import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_SDCA
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_CONFLICT_FILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE;
@@ -889,6 +890,8 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmView = (LinearLayout) findViewById(R.id.main_dialog_confirm_view);
         mGp.confirmView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
         mGp.confirmView.setVisibility(LinearLayout.GONE);
+        mGp.confirmOverrideView=(LinearLayout) findViewById(R.id.main_dialog_confirm_override_view);
+        mGp.confirmConflictView=(LinearLayout) findViewById(R.id.main_dialog_confirm_conflict_view);
         mGp.confirmMsg = (TextView) findViewById(R.id.main_dialog_confirm_msg);
         mGp.confirmMsg.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.confirmCancel = (Button) findViewById(R.id.main_dialog_confirm_sync_cancel);
@@ -907,6 +910,21 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmNoAll = (Button) findViewById(R.id.copy_delete_confirm_noall);
         setButtonColor(mGp.confirmNoAll);
         mGp.confirmNoAll.setTextColor(mGp.themeColorList.text_color_primary);
+
+        mGp.confirmDialogConflictFilePathA=(TextView) findViewById(R.id.main_dialog_confirm_conflict_pair_a_path);
+        mGp.confirmDialogConflictFileLengthA=(TextView) findViewById(R.id.main_dialog_confirm_conflict_pair_a_length);
+        mGp.confirmDialogConflictFileLastModA=(TextView) findViewById(R.id.main_dialog_confirm_conflict_pair_a_last_mod);
+        mGp.confirmDialogConflictFilePathB=(TextView) findViewById(R.id.main_dialog_confirm_conflict_pair_b_path);
+        mGp.confirmDialogConflictFileLengthB=(TextView) findViewById(R.id.main_dialog_confirm_conflict_pair_b_length);
+        mGp.confirmDialogConflictFileLastModB=(TextView) findViewById(R.id.main_dialog_confirm_conflict_pair_b_last_mod);
+        mGp.confirmDialogConflictButtonSelectA=(Button) findViewById(R.id.main_dialog_confirm_conflict_select_pair_a_btn);
+        setButtonColor(mGp.confirmDialogConflictButtonSelectA);
+        mGp.confirmDialogConflictButtonSelectB=(Button) findViewById(R.id.main_dialog_confirm_conflict_select_pair_b_btn);
+        setButtonColor(mGp.confirmDialogConflictButtonSelectB);
+        mGp.confirmDialogConflictButtonSyncIgnoreFile=(Button) findViewById(R.id.main_dialog_confirm_conflict_ignore_file_btn);
+        setButtonColor(mGp.confirmDialogConflictButtonSyncIgnoreFile);
+        mGp.confirmDialogConflictButtonCancelSyncTask=(Button) findViewById(R.id.main_dialog_confirm_conflict_cancel_sync_task_btn);
+        setButtonColor(mGp.confirmDialogConflictButtonCancelSyncTask);
 
         mGp.progressBarView = (LinearLayout) findViewById(R.id.main_dialog_progress_bar_view);
         mGp.progressBarView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
@@ -3753,11 +3771,13 @@ public class ActivityMain extends AppCompatActivity {
         }
 
         @Override
-        public void cbShowConfirmDialog(final String fp, final String method) throws RemoteException {
+        public void cbShowConfirmDialog(final String method, final String msg,
+                                        final String pair_a_path, final long pair_a_length, final long pair_a_last_mod,
+                                        final String pair_b_path, final long pair_b_length, final long pair_b_last_mod) throws RemoteException {
             mUiHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    showConfirmDialog(fp, method);
+                    showConfirmDialog(method, msg, pair_a_path, pair_a_length, pair_a_last_mod, pair_b_path, pair_b_length, pair_b_last_mod);
                 }
             });
         }
@@ -3875,7 +3895,9 @@ public class ActivityMain extends AppCompatActivity {
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
             if (mGp.confirmDialogShowed)
-                showConfirmDialog(mGp.confirmDialogFilePath, mGp.confirmDialogMethod);
+                showConfirmDialog(mGp.confirmDialogMethod, mGp.confirmDialogMessage,
+                        mGp.confirmDialogFilePathPairA, mGp.confirmDialogFileLengthPairA, mGp.confirmDialogFileLastModPairA,
+                        mGp.confirmDialogFilePathPairB, mGp.confirmDialogFileLengthPairB, mGp.confirmDialogFileLastModPairB);
         }
     }
 
@@ -3883,53 +3905,26 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmView.setVisibility(LinearLayout.GONE);
     }
 
-    private void showConfirmDialog(String fp, String method) {
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-        mGp.confirmDialogShowed = true;
-        mGp.confirmDialogFilePath = fp;
-        mGp.confirmDialogMethod = method;
-        final NotifyEvent ntfy = new NotifyEvent(mContext);
-        ntfy.setListener(new NotifyEventListener() {
-            @Override
-            public void positiveResponse(Context c, Object[] o) {
-                mGp.confirmDialogShowed = false;
-                try {
-                    mSvcClient.aidlConfirmReply((Integer) o[0]);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                mGp.confirmYesListener = null;
-                mGp.confirmYesAllListener = null;
-                mGp.confirmNoListener = null;
-                mGp.confirmNoAllListener = null;
-                mGp.confirmCancelListener = null;
-                mGp.confirmCancel.setOnClickListener(null);
-                mGp.confirmYes.setOnClickListener(null);
-                mGp.confirmYesAll.setOnClickListener(null);
-                mGp.confirmNo.setOnClickListener(null);
-                mGp.confirmNoAll.setOnClickListener(null);
-            }
+    private void showConfirmDialog(final String method, final String msg,
+                                   final String pair_a_path, final long pair_a_length, final long pair_a_last_mod,
+                                   final String pair_b_path, final long pair_b_length, final long pair_b_last_mod) {
+        if (method.equals(SMBSYNC2_CONFIRM_REQUEST_CONFLICT_FILE)) {
+            TwoWaySyncFile.showConfirmDialogConflict(mGp, mUtil, mSvcClient,
+                    method, msg, pair_a_path, pair_a_length, pair_a_last_mod, pair_b_path, pair_b_length, pair_b_last_mod);
+        } else {
+            showConfirmDialogOverride(method, msg, pair_a_path);
+        }
 
-            @Override
-            public void negativeResponse(Context c, Object[] o) {
-                mGp.confirmDialogShowed = false;
-                try {
-                    mSvcClient.aidlConfirmReply((Integer) o[0]);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                mGp.confirmYesListener = null;
-                mGp.confirmYesAllListener = null;
-                mGp.confirmNoListener = null;
-                mGp.confirmNoAllListener = null;
-                mGp.confirmCancelListener = null;
-                mGp.confirmCancel.setOnClickListener(null);
-                mGp.confirmYes.setOnClickListener(null);
-                mGp.confirmYesAll.setOnClickListener(null);
-                mGp.confirmNo.setOnClickListener(null);
-                mGp.confirmNoAll.setOnClickListener(null);
-            }
-        });
+    }
+
+    private void showConfirmDialogOverride(String method, String msg, String fp) {
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+        mGp.confirmOverrideView.setVisibility(LinearLayout.VISIBLE);
+        mGp.confirmConflictView.setVisibility(LinearLayout.GONE);
+        mGp.confirmDialogShowed = true;
+        mGp.confirmDialogFilePathPairA = fp;
+        mGp.confirmDialogMethod = method;
+        mGp.confirmDialogMessage = msg;
 
         mGp.confirmView.setVisibility(LinearLayout.VISIBLE);
         mGp.confirmView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
@@ -3954,7 +3949,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmYesListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
-                ntfy.notifyToListener(true, new Object[]{SMBSYNC2_CONFIRM_RESP_YES});
+                sendConfirmResponse(mGp, mSvcClient, SMBSYNC2_CONFIRM_RESP_YES);
             }
         };
         mGp.confirmYes.setOnClickListener(mGp.confirmYesListener);
@@ -3962,7 +3957,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmYesAllListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
-                ntfy.notifyToListener(true, new Object[]{SMBSYNC2_CONFIRM_RESP_YESALL});
+                sendConfirmResponse(mGp, mSvcClient, SMBSYNC2_CONFIRM_RESP_YESALL);
             }
         };
         mGp.confirmYesAll.setOnClickListener(mGp.confirmYesAllListener);
@@ -3970,7 +3965,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmNoListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
-                ntfy.notifyToListener(false, new Object[]{SMBSYNC2_CONFIRM_RESP_NO});
+                sendConfirmResponse(mGp, mSvcClient, SMBSYNC2_CONFIRM_RESP_NO);
             }
         };
         mGp.confirmNo.setOnClickListener(mGp.confirmNoListener);
@@ -3978,7 +3973,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmNoAllListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
-                ntfy.notifyToListener(false, new Object[]{SMBSYNC2_CONFIRM_RESP_NOALL});
+                sendConfirmResponse(mGp, mSvcClient, SMBSYNC2_CONFIRM_RESP_NOALL);
             }
         };
         mGp.confirmNoAll.setOnClickListener(mGp.confirmNoAllListener);
@@ -3986,10 +3981,35 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmCancelListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
-                ntfy.notifyToListener(false, new Object[]{SMBSYNC2_CONFIRM_RESP_CANCEL});
+                sendConfirmResponse(mGp, mSvcClient, SMBSYNC2_CONFIRM_RESP_CANCEL);
             }
         };
         mGp.confirmCancel.setOnClickListener(mGp.confirmCancelListener);
+    }
+
+    static public void sendConfirmResponse(GlobalParameters gp, ISvcClient sc, int response) {
+        gp.confirmDialogShowed = false;
+        try {
+            sc.aidlConfirmReply(response);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        gp.confirmYesListener = null;
+        gp.confirmYesAllListener = null;
+        gp.confirmNoListener = null;
+        gp.confirmNoAllListener = null;
+        gp.confirmCancelListener = null;
+        gp.confirmCancel.setOnClickListener(null);
+        gp.confirmYes.setOnClickListener(null);
+        gp.confirmYesAll.setOnClickListener(null);
+        gp.confirmNo.setOnClickListener(null);
+        gp.confirmNoAll.setOnClickListener(null);
+
+        gp.confirmDialogConflictButtonSelectAListener = null;
+        gp.confirmDialogConflictButtonSelectBListener = null;
+        gp.confirmDialogConflictButtonSyncIgnoreFileListener = null;
+        gp.confirmDialogConflictButtonCancelSyncTaskListener = null;
+
     }
 
     final private boolean checkJcifsOptionChanged() {

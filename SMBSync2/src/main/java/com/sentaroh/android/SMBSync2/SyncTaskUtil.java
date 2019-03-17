@@ -1377,6 +1377,7 @@ public class SyncTaskUtil {
                 } else {
                     int smb1=Integer.parseInt(ra.smb_smb_protocol);
                     String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb1, host);
+                    mUtil.addDebugMsg(1, "I", "Name resolution IP Address="+ipAddress+", Host="+host);
                     if (ipAddress == null) {
                         try {
                             InetAddress[] addr_list = Inet4Address.getAllByName(host);
@@ -1384,6 +1385,7 @@ public class SyncTaskUtil {
 //								Log.v("","addr="+item.getHostAddress()+", l="+item.getAddress().length);
                                 if (item.getAddress().length == 4) {
                                     ipAddress = item.getHostAddress();
+                                    mUtil.addDebugMsg(1, "I", "Host IP Address="+ipAddress);
                                 }
                             }
                         } catch (UnknownHostException e) {
@@ -5247,10 +5249,10 @@ public class SyncTaskUtil {
             if (!parm[55].equals("") && !parm[55].equals("end"))
                 stli.setTargetZipUseExternalSdcard(parm[55].equals("1") ? true : false);
 
-            if (!parm[56].equals("") && !parm[56].equals("end"))
-                stli.setSyncTaskTwoWay(parm[56].equals("1") ? true : false);
-            if (!parm[57].equals("") && !parm[57].equals("end"))
-                stli.setSyncTwoWayConflictOption(parm[57]);
+//            if (!parm[56].equals("") && !parm[56].equals("end"))
+//                stli.setSyncTaskTwoWay(parm[56].equals("1") ? true : false);
+//            if (!parm[57].equals("") && !parm[57].equals("end"))
+//                stli.setSyncTwoWayConflictFileRule(parm[57]);
 
             if (!parm[58].equals("") && !parm[58].equals("end"))
                 stli.setTargetZipFileNameEncoding(parm[58]);
@@ -5394,10 +5396,10 @@ public class SyncTaskUtil {
             if (!parm[55].equals("") && !parm[55].equals("end"))
                 stli.setTargetZipUseExternalSdcard(parm[55].equals("1") ? true : false);
 
-            if (!parm[56].equals("") && !parm[56].equals("end"))
-                stli.setSyncTaskTwoWay(parm[56].equals("1") ? true : false);
-            if (!parm[57].equals("") && !parm[57].equals("end"))
-                stli.setSyncTwoWayConflictOption(parm[57]);
+//            if (!parm[56].equals("") && !parm[56].equals("end"))
+//                stli.setSyncTaskTwoWay(parm[56].equals("1") ? true : false);
+//            if (!parm[57].equals("") && !parm[57].equals("end"))
+//                stli.setSyncTwoWayConflictFileRule(parm[57]);
 
             if (!parm[58].equals("") && !parm[58].equals("end"))
                 stli.setTargetZipFileNameEncoding(parm[58]);
@@ -5551,10 +5553,10 @@ public class SyncTaskUtil {
             if (!parm[55].equals("") && !parm[55].equals("end"))
                 stli.setTargetZipUseExternalSdcard(parm[55].equals("1") ? true : false);
 
-            if (!parm[56].equals("") && !parm[56].equals("end"))
-                stli.setSyncTaskTwoWay(parm[56].equals("1") ? true : false);
-            if (!parm[57].equals("") && !parm[57].equals("end"))
-                stli.setSyncTwoWayConflictOption(parm[57]);
+//            if (!parm[56].equals("") && !parm[56].equals("end"))
+//                stli.setSyncTaskTwoWay(parm[56].equals("1") ? true : false);
+//            if (!parm[57].equals("") && !parm[57].equals("end"))
+//                stli.setSyncTwoWayConflictFileRule(parm[57]);
 
             if (!parm[58].equals("") && !parm[58].equals("end"))
                 stli.setTargetZipFileNameEncoding(parm[58]);
@@ -5753,10 +5755,10 @@ public class SyncTaskUtil {
             if (!parm[55].equals("") && !parm[55].equals("end"))
                 stli.setTargetZipUseExternalSdcard(parm[55].equals("1") ? true : false);
 
-            if (!parm[56].equals("") && !parm[56].equals("end"))
-                stli.setSyncTaskTwoWay(parm[56].equals("1") ? true : false);
-            if (!parm[57].equals("") && !parm[57].equals("end"))
-                stli.setSyncTwoWayConflictOption(parm[57]);
+//            if (!parm[56].equals("") && !parm[56].equals("end"))
+//                stli.setSyncTaskTwoWay(parm[56].equals("1") ? true : false);
+//            if (!parm[57].equals("") && !parm[57].equals("end"))
+//                stli.setSyncTwoWayConflictFileRule(parm[57]);
 
             if (!parm[58].equals("") && !parm[58].equals("end"))
                 stli.setTargetZipFileNameEncoding(parm[58]);
@@ -5955,10 +5957,10 @@ public class SyncTaskUtil {
             if (!parm[55].equals("") && !parm[55].equals("end"))
                 stli.setTargetZipUseExternalSdcard(parm[55].equals("1") ? true : false);
 
-            if (!parm[56].equals("") && !parm[56].equals("end"))
-                stli.setSyncTaskTwoWay(parm[56].equals("1") ? true : false);
-            if (!parm[57].equals("") && !parm[57].equals("end"))
-                stli.setSyncTwoWayConflictOption(parm[57]);
+//            if (!parm[56].equals("") && !parm[56].equals("end"))
+//                stli.setSyncTaskTwoWay(parm[56].equals("1") ? true : false);
+//            if (!parm[57].equals("") && !parm[57].equals("end"))
+//                stli.setSyncTwoWayConflictFileRule(parm[57]);
 
             if (!parm[58].equals("") && !parm[58].equals("end"))
                 stli.setTargetZipFileNameEncoding(parm[58]);
@@ -6013,6 +6015,9 @@ public class SyncTaskUtil {
             if (!parm[81].equals("") && !parm[81].equals("end")) stli.setSyncOptionDoNotUseRenameWhenSmbFileWrite((parm[81].equals("1") ? true : false));
 
             if (!parm[82].equals("") && !parm[82].equals("end")) stli.setTargetUseTakenDateTimeToDirectoryNameKeyword((parm[82].equals("1") ? true : false));
+
+            if (!parm[83].equals("") && !parm[83].equals("end")) stli.setSyncTwoWayConflictFileRule(parm[83]);
+            if (!parm[84].equals("") && !parm[84].equals("end")) stli.setSyncTwoWayKeepConflictFile((parm[84].equals("1") ? true : false));
 
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
@@ -6296,8 +6301,8 @@ public class SyncTaskUtil {
 
                             (item.isTargetZipUseExternalSdcard() ? "1" : "0") + "\t" +          //55
 
-                            (item.isSyncTaskTwoWay() ? "1" : "0") + "\t" +                      //56
-                            item.getSyncTwoWayConflictOption() + "\t" +                         //57
+                            "-" + "\t" +                                                        //56 Dummy
+                            "-" + "\t" +                                                         //57 Dummy
 
                             item.getTargetZipFileNameEncoding() + "\t" +                        //58
 
@@ -6341,6 +6346,9 @@ public class SyncTaskUtil {
                             (item.isSyncOptionDoNotUseRenameWhenSmbFileWrite() ? "1" : "0") + "\t" +     //81
 
                             (item.isTargetUseTakenDateTimeToDirectoryNameKeyword() ? "1" : "0") + "\t" +     //82
+
+                            item.getSyncTwoWayConflictFileRule() + "\t" +                         //83
+                            (item.isSyncTwoWayKeepConflictFile() ? "1" : "0") + "\t" +          //84
 
                     "end"
                     ;

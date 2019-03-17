@@ -124,7 +124,7 @@
         <string name="msgs_main_app_specific_dir_used_msg">The app specific directory has ben selected as the storage location.  This directory, and any data you have saved there, is deleted when app is uninstalled.</string>
         <string name="msgs_main_app_specific_dir_used_suppress">Disable this warning (can be enabled in user interface settings)</string>
         <string name="msgs_main_app_specific_dir_used_title">Warning about using the application specific directory</string>
-        <string name="msgs_main_location_service_warning_msg">If you start syncing when the device is sleeping because the location service is disabled, the following tasks will end with an error. To enable location service in system settings or change to \"Private address\" or \"IP Address List\" in Sync options.</string>
+        <string name="msgs_main_location_service_warning_msg">The following tasks from Android 9.0 cannot start syncing because the location service is disabled. To enable location service in system settings or change to \"Private address\" or \"IP Address List\" in Sync options.</string>
         <string name="msgs_main_location_service_warning_suppress">Disable this warning (can be enabled in sync settings)</string>
         <string name="msgs_main_location_service_warning_title">Warning about Location service</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
@@ -394,6 +394,12 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">Select subdirectories</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">Limit SMB I/O write buffer to 16 KB</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Cancel</string>
+        <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">Keep a two-way sync conflict file</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle">Two-way sync rules</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_ask_user">Ask user</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file">Skip file sync</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer">Copy new date files</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_older">Copy old date files</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">Logon cancelled</string>
         <string name="msgs_remote_profile_dlg_logon_error">Logon Failed</string>
         <string name="msgs_remote_profile_dlg_logon_success">Logon Successful</string>
@@ -406,7 +412,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_select_usb_dir">Select USB Media directory</string>
         <string name="msgs_select_remote_dir">Select SMB directory</string>
         <string name="msgs_select_remote_share">Select SMB share</string>
-        <string name="msgs_share_list_not_obtained">Unable to find SMB shares.  Ensure correct account name and password are specified and try again, or specify share name manually.</string>
+        <string name="msgs_share_list_not_obtained">Could not get a list of share names.  Ensure correct account name and password are specified and try again, or specify share name manually.</string>
         <string name="msgs_smbsync_main_no_external_storage">External storage was not mounted. Some functions are not available.</string>
         <string name="msgs_smbsync_main_restart_by_destroyed">Application was restarted after being killed.  To disable restart, enable \"Don\'t keep activities\" in Settings > Developer Options.</string>
         <string name="msgs_smbsync_main_restart_by_killed">Application was restarted because it was killed when it moved to the background.</string>

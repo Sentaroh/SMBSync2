@@ -210,10 +210,16 @@ public class GlobalParameters extends CommonGlobalParms {
     public String progressSpinSyncprofText = "", progressSpinMsgText = "";
 
     public boolean confirmDialogShowed = false;
-    public String confirmDialogFilePath = "";
+    public String confirmDialogFilePathPairA = "";
+    public long confirmDialogFileLengthPairA = 0L, confirmDialogFileLastModPairA = 0L;
+    public String confirmDialogFilePathPairB = "";
+    public long confirmDialogFileLengthPairB = 0L, confirmDialogFileLastModPairB = 0L;
     public String confirmDialogMethod = "";
+    public String confirmDialogMessage = "";
 
     public LinearLayout confirmView = null;
+    public LinearLayout confirmOverrideView = null;
+    public LinearLayout confirmConflictView = null;
     public TextView confirmMsg = null;
     public Button confirmCancel = null;
     public OnClickListener confirmCancelListener = null;
@@ -225,6 +231,23 @@ public class GlobalParameters extends CommonGlobalParms {
     public OnClickListener confirmYesAllListener = null;
     public Button confirmNoAll = null;
     public OnClickListener confirmNoAllListener = null;
+
+    public TextView confirmDialogConflictFilePathA=null;
+    public TextView confirmDialogConflictFileLengthA=null;
+    public TextView confirmDialogConflictFileLastModA=null;
+    public TextView confirmDialogConflictFilePathB=null;
+    public TextView confirmDialogConflictFileLengthB=null;
+    public TextView confirmDialogConflictFileLastModB=null;
+
+    public Button confirmDialogConflictButtonSelectA=null;
+    public OnClickListener confirmDialogConflictButtonSelectAListener = null;
+    public Button confirmDialogConflictButtonSelectB=null;
+    public OnClickListener confirmDialogConflictButtonSelectBListener = null;
+    public Button confirmDialogConflictButtonSyncIgnoreFile=null;
+    public OnClickListener confirmDialogConflictButtonSyncIgnoreFileListener = null;
+    public Button confirmDialogConflictButtonCancelSyncTask=null;
+    public OnClickListener confirmDialogConflictButtonCancelSyncTaskListener = null;
+
 
     public LinearLayout progressBarView = null;
     public TextView progressBarMsg = null;

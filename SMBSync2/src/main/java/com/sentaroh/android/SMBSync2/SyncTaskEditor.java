@@ -84,6 +84,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import it.sephiroth.android.library.easing.Linear;
+
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
@@ -2303,6 +2305,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btnClose = (Button) dialog.findViewById(R.id.show_warning_message_dlg_close);
         final CheckedTextView ctvSuppr = (CheckedTextView) dialog.findViewById(R.id.show_warning_message_dlg_ctv_suppress);
         CommonUtilities.setCheckedTextView(ctvSuppr);
+        ctvSuppr.setText(R.string.msgs_main_location_service_warning_suppress);
 
         CommonDialog.setDlgBoxSizeCompact(dialog);
         ctvSuppr.setChecked(false);
@@ -2520,14 +2523,17 @@ public class SyncTaskEditor extends DialogFragment {
         ArrayList<String> mpl = LocalMountPoint.getLocalMountpointList2(mContext);
         if (mpl == null || mpl.size() == 0) {
             adapter.add(mGp.internalRootDirectory);
+            mUtil.addDebugMsg(1,"I","setSpinnerSyncFolderMountPoint add MP by InternalStorage only.");
         } else {
             for (String item : mpl) {
+                mUtil.addDebugMsg(1,"I","setSpinnerSyncFolderMountPoint MP list="+item+", write="+LocalMountPoint.isMountPointCanWrite(item));
                 if ((write_only && LocalMountPoint.isMountPointCanWrite(item)) ||
                         !write_only) {
                     if (item.equals(cv)) {
                         sel_no = adapter.getCount();
                     }
                     adapter.add(item);
+                    mUtil.addDebugMsg(1,"I","setSpinnerSyncFolderMountPoint MP added="+item);
                 }
             }
         }
@@ -2719,7 +2725,6 @@ public class SyncTaskEditor extends DialogFragment {
         CommonUtilities.setSpinnerBackground(mContext, spinnerSyncOption, mGp.themeIsLight);
         final CustomSpinnerAdapter adapterSyncOption =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
-        if (mGp.debuggable)
         adapterSyncOption.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinnerSyncOption.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_syncopt_prompt));
         spinnerSyncOption.setAdapter(adapterSyncOption);
@@ -2738,6 +2743,26 @@ public class SyncTaskEditor extends DialogFragment {
 
         spinnerSyncOption.setSelection(sel);
         adapterSyncOption.notifyDataSetChanged();
+    }
+
+    private void setSpinnerTwoWaySyncConflictRule(Spinner spinner, String cv) {
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        final CustomSpinnerAdapter adapter =
+                new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_prompt));
+        spinner.setAdapter(adapter);
+        adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_ask_user));
+        adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer));
+        adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_older));
+        adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file));
+
+        if (cv.equals("0")) spinner.setSelection(0);
+        else if (cv.equals("1")) spinner.setSelection(1);
+        else if (cv.equals("2")) spinner.setSelection(2);
+        else if (cv.equals("3")) spinner.setSelection(3);
+
+        adapter.notifyDataSetChanged();
     }
 
     private void setSpinnerSyncTaskWifiOption(Spinner spinner, String cv) {
@@ -2863,6 +2888,25 @@ public class SyncTaskEditor extends DialogFragment {
         ctv_auto.setChecked(n_sti.isSyncTaskAuto());
         setCtvListenerForEditSyncTask(ctv_auto, type, n_sti, dlg_msg);
 
+        final CheckedTextView ctv_edit_sync_tak_option_keep_conflict_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file);
+        final LinearLayout ll_edit_sync_tak_option_keep_conflict_file=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file_view);
+        ctv_edit_sync_tak_option_keep_conflict_file.setChecked(n_sti.isSyncTwoWayKeepConflictFile());
+        setCtvListenerForEditSyncTask(ctv_edit_sync_tak_option_keep_conflict_file, type, n_sti, dlg_msg);
+
+        final Spinner spinnerTwoWaySyncConflictRule = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_value);
+        final LinearLayout ll_spinnerTwoWaySyncConflictRule=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_view);
+        setSpinnerTwoWaySyncConflictRule(spinnerTwoWaySyncConflictRule, n_sti.getSyncTwoWayConflictFileRule());
+        spinnerTwoWaySyncConflictRule.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
         setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
         spinnerSyncType.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -2886,7 +2930,6 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
-        final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
         final LinearLayout ll_wifi_wl_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_wl_view);
         final LinearLayout ll_wifi_wl_ap_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ap_list_view);
         final LinearLayout ll_wifi_wl_address_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_address_list_view);
@@ -2915,6 +2958,7 @@ public class SyncTaskEditor extends DialogFragment {
         ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write.setChecked(n_sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite());
         setCtvListenerForEditSyncTask(ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write, type, n_sti, dlg_msg);
 
+        final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
         setSpinnerSyncTaskWifiOption(spinnerSyncWifiStatus, n_sti.getSyncOptionWifiStatusOption());
         if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
             ll_wifi_wl_view.setVisibility(Button.VISIBLE);
@@ -3853,6 +3897,9 @@ public class SyncTaskEditor extends DialogFragment {
         final Button edit_wifi_ap_list = (Button) dialog.findViewById(R.id.edit_sync_task_option_btn_edit_ap_white_list);
         final CheckedTextView ctv_task_skip_if_ssid_invalid = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ap_list_task_skip_if_ssid_invalid);
 
+        final CheckedTextView ctv_edit_sync_tak_option_keep_conflict_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file);
+        final Spinner spinnerTwoWaySyncConflictRule = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_value);
+
         final CheckedTextView ctv_task_sync_when_cahrging = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
         final CheckedTextView ctv_never_overwrite_target_file_newer_than_the_master_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file);
         final CheckedTextView ctv_ignore_unusable_character_used_directory_file_name = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_unusable_character_used_directory_file_name);
@@ -3952,6 +3999,9 @@ public class SyncTaskEditor extends DialogFragment {
             nstli.getDirFilter().clear();
         }
 
+        nstli.setSyncTwoWayKeepConflictFile(ctv_edit_sync_tak_option_keep_conflict_file.isChecked());
+        setTwoWaySyncConflictRuleFromSpinnere(spinnerTwoWaySyncConflictRule, nstli);
+
         return nstli;
     }
 
@@ -3979,6 +4029,19 @@ public class SyncTaskEditor extends DialogFragment {
         CommonDialog.setDlgBoxSizeLimit(dialog, false);
 
         dialog.show();
+    }
+
+    private void setTwoWaySyncConflictRuleFromSpinnere(Spinner spinner, SyncTaskItem n_stli) {
+        String so = mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer);
+        if (spinner.getSelectedItemPosition()<spinner.getAdapter().getCount()) so=spinner.getSelectedItem().toString();
+        if (so.equals(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_ask_user)))
+            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_ASK_USER);
+        else if (so.equals(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer)))
+            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER);
+        else if (so.equals(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_older)))
+            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER);
+        else if (so.equals(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file)))
+            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE);
     }
 
     private void setSyncTaskTypeFromSpinnere(Spinner spinner, SyncTaskItem n_stli) {
@@ -4067,9 +4130,17 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvDeterminChangedFileSizeGtTarget = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_file_size_greater_than_target);
         final CheckedTextView ctvDiffUseFileSize = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_file_size);
 
+        final LinearLayout ll_edit_sync_tak_option_keep_conflict_file=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file_view);
+        final LinearLayout ll_spinnerTwoWaySyncConflictRule=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_view);
+
+        final Button swap_master_target = (Button) mDialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
+
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
         String t_name_msg = checkTaskNameValidity(type, n_sti.getSyncTaskName(), dlg_msg, btn_ok);
         boolean error_detected = false;
+        ll_edit_sync_tak_option_keep_conflict_file.setVisibility(LinearLayout.GONE);
+        ll_spinnerTwoWaySyncConflictRule.setVisibility(LinearLayout.GONE);
+        swap_master_target.setVisibility(Button.VISIBLE);
         if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
             ll_file_filter.setVisibility(LinearLayout.GONE);
 
@@ -4103,6 +4174,12 @@ public class SyncTaskEditor extends DialogFragment {
                 ll_ctDeterminChangedFileByTime.setVisibility(LinearLayout.VISIBLE);
                 ll_diff_time_allowed_time.setVisibility(LinearLayout.VISIBLE);
             }
+
+            if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) {
+                ll_edit_sync_tak_option_keep_conflict_file.setVisibility(LinearLayout.VISIBLE);
+                ll_spinnerTwoWaySyncConflictRule.setVisibility(LinearLayout.VISIBLE);
+                swap_master_target.setVisibility(Button.GONE);
+            }
         }
         if (t_name_msg.equals("")) {
             String e_msg = checkMasterTargetCombination(dialog, n_sti);
@@ -4131,13 +4208,11 @@ public class SyncTaskEditor extends DialogFragment {
                         String s_msg = checkStorageStatus(dialog, type, n_sti);
                         if (s_msg.equals("")) {
                             setDialogMsg(dlg_msg, s_msg);
-                            if (!isSyncTaskChanged(n_sti, mCurrentSyncTaskItem))
-                                btn_ok.setEnabled(true);
+                            if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) btn_ok.setEnabled(true);
                             else btn_ok.setEnabled(false);
                         } else {
                             setDialogMsg(dlg_msg, s_msg);
-                            if (!isSyncTaskChanged(n_sti, mCurrentSyncTaskItem))
-                                btn_ok.setEnabled(true);
+                            if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) btn_ok.setEnabled(true);
                             else btn_ok.setEnabled(false);
                         }
                     } else {
@@ -4158,7 +4233,7 @@ public class SyncTaskEditor extends DialogFragment {
         String n_type = new_stli.getSyncTaskType();
         String c_type = mCurrentSyncTaskItem.getSyncTaskType();
 
-        boolean result = new_stli.isSame(org_stli);
+        boolean result = !new_stli.isSame(org_stli);
         return result;
     }
 

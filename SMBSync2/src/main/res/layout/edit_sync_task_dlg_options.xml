@@ -69,6 +69,31 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/edit_sync_task_option_twoway_sync_conflict_file_rule_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:text="@string/msgs_profile_twoway_sync_conflict_copy_rurle"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/edit_sync_task_option_twoway_sync_conflict_file_rule_value"
+                style="?android:attr/spinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="36dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <include layout="@layout/divider_line1" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -415,6 +440,7 @@
 
             </LinearLayout>
             <include layout="@layout/divider_line1" />
+
             <LinearLayout
                 android:id="@+id/edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_view"
                 android:layout_width="match_parent"
@@ -459,6 +485,22 @@
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_twoway_sync_keep_conflic_file_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_twoway_sync_keep_conflic_file"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_twoway_sync_conflict_keep_conflict_file"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
                 <include layout="@layout/divider_line1" />
             </LinearLayout>

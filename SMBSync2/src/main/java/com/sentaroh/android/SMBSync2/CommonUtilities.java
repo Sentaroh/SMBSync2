@@ -132,11 +132,11 @@ public final class CommonUtilities {
         return wssid;
     }
 
-    static public ArrayList<String> listSystemInfo(GlobalParameters mGp) {
-        ArrayList<String> out=SystemInfo.listSystemInfo(mGp.appContext, mGp.safMgr);
+    static public ArrayList<String> listSystemInfo(GlobalParameters gp) {
+        ArrayList<String> out=SystemInfo.listSystemInfo(gp.appContext, gp.safMgr);
         if (Build.VERSION.SDK_INT>=27) {
-            out.add("setSettingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired);
-            out.add("ACCESS_COARSE_LOCATION Permission="+mGp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+            out.add("setSettingGrantCoarseLocationRequired="+gp.settingGrantCoarseLocationRequired);
+            out.add("ACCESS_COARSE_LOCATION Permission="+gp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
         }
 //        ConnectivityManager cm =(ConnectivityManager)mGp.appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 //        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -147,7 +147,7 @@ public final class CommonUtilities {
         if (Build.VERSION.SDK_INT>=28) {
 //            if (mGp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
 //            }
-            out.add("LocationService enabled="+isLocationServiceEnabled(mGp));
+            out.add("LocationService enabled="+isLocationServiceEnabled(gp)+", warning="+gp.settingSupressLocationServiceWarning);
         }
         return out;
     }

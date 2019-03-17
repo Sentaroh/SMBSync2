@@ -42,11 +42,17 @@ public class Constants {
 	public static final String SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR="DeleteDir";
 	public static final String SMBSYNC2_CONFIRM_REQUEST_MOVE="Move";
     public static final String SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE ="Archive";
+    public static final String SMBSYNC2_CONFIRM_REQUEST_CONFLICT_FILE ="Conflict";
 	public static final int SMBSYNC2_CONFIRM_RESP_YES = 1;
 	public static final int SMBSYNC2_CONFIRM_RESP_YESALL = 2;
 	public static final int SMBSYNC2_CONFIRM_RESP_NO = -1;
 	public static final int SMBSYNC2_CONFIRM_RESP_NOALL = -2;
 	public static final int SMBSYNC2_CONFIRM_RESP_CANCEL = -10;
+
+    public static final int SMBSYNC2_CONFIRM_CONFLICT_RESP_SELECT_A = 21;
+    public static final int SMBSYNC2_CONFIRM_CONFLICT_RESP_SELECT_B = 22;
+    public static final int SMBSYNC2_CONFIRM_CONFLICT_RESP_NO = -21;
+    public static final int SMBSYNC2_CONFIRM_CONFLICT_RESP_CANCEL = -30;
 
     public static final String SMBSYNC2_KEY_STORE_ALIAS = "SMBSync2";
 

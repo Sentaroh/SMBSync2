@@ -48,18 +48,17 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_TASK_TYPE_MIRROR = "M";
     public final static String SYNC_TASK_TYPE_COPY = "C";
     public final static String SYNC_TASK_TYPE_MOVE = "X";
-    public final static String SYNC_TASK_TYPE_SYNC = "S";//Twoway sync - Not implemented
+    public final static String SYNC_TASK_TYPE_SYNC = "S";
     public final static String SYNC_TASK_TYPE_ARCHIVE = "A";
     private String syncTaskType = SYNC_TASK_TYPE_MIRROR;
 
     public final static String SYNC_TASK_TWO_WAY_OPTION_ASK_USER = "0";
     public final static String SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER = "1";
     public final static String SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER = "2";
-    public final static String SYNC_TASK_TWO_WAY_CONFLICT_FILE_SUFFIX=".smbsync2_confilict";
+    public final static String SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE = "3";
+    public final static String SYNC_TASK_TWO_WAY_CONFLICT_FILE_SUFFIX=".smbsync2_conflict";
     private String syncTwoWayConflictOption =SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER;
-    private boolean syncTwoWayConflictKeepConflictFile = true;
-
-    private boolean syncTaskTwoWay = false;
+    private boolean syncTwoWayConflictKeepConflictFile = false;
 
     public final static String SYNC_FOLDER_TYPE_INTERNAL = "INT";
     public final static String SYNC_FOLDER_TYPE_SDCARD = "EXT";
@@ -197,15 +196,11 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public void setSyncTaskGroup(String grp_name) {syncTasｋGroup = grp_name;}
 
-    public void setSyncTaskTwoWay(boolean p) {syncTaskTwoWay = p;}
+    public void setSyncTwoWayConflictFileRule(String p) {syncTwoWayConflictOption = p;}
+    public String getSyncTwoWayConflictFileRule() {return syncTwoWayConflictOption;}
 
-    public boolean isSyncTaskTwoWay() {return syncTaskTwoWay;}
-
-    public void setSyncTwoWayConflictOption(String p) {syncTwoWayConflictOption = p;}
-    public String getSyncTwoWayConflictOption() {return syncTwoWayConflictOption;}
-
-    public void setSyncTwoWayConflictKeepConflictFile(boolean keep_file) {syncTwoWayConflictKeepConflictFile=keep_file;}
-    public boolean isSyncTwoWayConflictKeepConflictFile() {return syncTwoWayConflictKeepConflictFile;}
+    public void setSyncTwoWayKeepConflictFile(boolean keep_file) {syncTwoWayConflictKeepConflictFile=keep_file;}
+    public boolean isSyncTwoWayKeepConflictFile() {return syncTwoWayConflictKeepConflictFile;}
 
     public String getMasterSmbUserName() {return syncTaskMasterFolderRemoteUserName;}
 
@@ -232,7 +227,6 @@ class SyncTaskItem implements Serializable, Cloneable {
     public String getMasterRemovableStorageID() {return syncTaskMasterFolderRemovableStorageID;}
 
     public boolean isMasterSmbIpcSigningEnforced() {return syncTaskMasterFolderSmbIpcSigningEnforced;}
-
     public void setMasterSmbIpcSigningEnforced(boolean enforced) {syncTaskMasterFolderSmbIpcSigningEnforced=enforced;}
 
     public String getMasterFolderType() {return syncTaskMasterFolderType;}
@@ -540,8 +534,8 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskEnabled==sti.isSyncTaskAuto()) &&
                 (syncOptionSyncTestMode==sti.isSyncTestMode()) &&
                 (syncTaskType.equals(sti.getSyncTaskType())) &&
-                (syncTwoWayConflictOption.equals(sti.getSyncTwoWayConflictOption())) &&
-                (syncTaskTwoWay==sti.isSyncTaskTwoWay()))&&
+                (syncTwoWayConflictOption.equals(sti.getSyncTwoWayConflictFileRule())) &&
+                (syncTwoWayConflictKeepConflictFile==sti.isSyncTwoWayKeepConflictFile() ))&&
                 (syncTaskMasterFolderType.equals(sti.getMasterFolderType())) &&
                 (syncTaskMasterFolderDirName.equals(sti.getMasterDirectoryName())) &&
                 (syncTaskMasterLocalMountPoint.equals(sti.getMasterLocalMountPoint())) &&

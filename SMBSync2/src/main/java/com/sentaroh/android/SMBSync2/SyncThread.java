@@ -101,8 +101,8 @@ public class SyncThread extends Thread {
     class SyncThreadWorkArea {
         public GlobalParameters gp = null;
 
-        public ArrayList<SyncFileInfoItem> currSyncFileInfoList = new ArrayList<SyncFileInfoItem>();
-        public ArrayList<SyncFileInfoItem> newSyncFileInfoList = new ArrayList<SyncFileInfoItem>();
+        public ArrayList<TwoWaySyncFileInfoItem> currSyncFileInfoList = new ArrayList<TwoWaySyncFileInfoItem>();
+        public ArrayList<TwoWaySyncFileInfoItem> newSyncFileInfoList = new ArrayList<TwoWaySyncFileInfoItem>();
 
         public ArrayList<FileLastModifiedTimeEntry> currLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
         public ArrayList<FileLastModifiedTimeEntry> newLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
@@ -881,7 +881,7 @@ public class SyncThread extends Thread {
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
                 sync_result = SyncThreadArchiveFile.syncArchiveInternalToInternal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) {
-                sync_result = SyncThreadSyncTwoway.syncTwowayInternalToInternal(mStwa, sti, from, to);
+                sync_result = TwoWaySyncFile.syncTwowayInternalToInternal(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
@@ -1948,12 +1948,12 @@ public class SyncThread extends Thread {
                     }
                     NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, 0, msg);
                     stwa.gp.confirmDialogShowed = true;
-                    stwa.gp.confirmDialogFilePath = url;
+                    stwa.gp.confirmDialogFilePathPairA = url;
                     stwa.gp.confirmDialogMethod = type;
                     stwa.gp.syncThreadConfirm.initThreadCtrl();
                     stwa.gp.releaseWakeLock(stwa.util);
                     if (stwa.gp.callbackStub != null) {
-                        stwa.gp.callbackStub.cbShowConfirmDialog(url, type);
+                        stwa.gp.callbackStub.cbShowConfirmDialog(type, "", url, 0,0,null,0,0);
                     }
                     synchronized (stwa.gp.syncThreadConfirm) {
                         stwa.gp.syncThreadConfirmWait = true;
@@ -2013,12 +2013,12 @@ public class SyncThread extends Thread {
                 }
                 NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, 0, msg);
                 stwa.gp.confirmDialogShowed = true;
-                stwa.gp.confirmDialogFilePath = url;
+                stwa.gp.confirmDialogFilePathPairA = url;
                 stwa.gp.confirmDialogMethod = type;
                 stwa.gp.syncThreadConfirm.initThreadCtrl();
                 stwa.gp.releaseWakeLock(stwa.util);
                 if (stwa.gp.callbackStub != null) {
-                    stwa.gp.callbackStub.cbShowConfirmDialog(url, type);
+                    stwa.gp.callbackStub.cbShowConfirmDialog(type, "", url, 0,0,null,0,0);
                 }
                 synchronized (stwa.gp.syncThreadConfirm) {
                     stwa.gp.syncThreadConfirmWait = true;

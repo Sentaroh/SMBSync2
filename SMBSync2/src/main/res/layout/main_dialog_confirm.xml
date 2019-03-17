@@ -20,17 +20,154 @@
 
     <include layout="@layout/divider_line1" />
 
-    <include layout="@layout/main_dialog_confirm_ok_cancel" />
-    
-    <Button
-        android:id="@+id/main_dialog_confirm_sync_cancel"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/main_dialog_confirm_conflict_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="1dp"
-        android:text="@string/msgs_mirror_confirm_task_cancel_btn"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:visibility="visible"
+        android:orientation="vertical">
 
-    <include layout="@layout/divider_line1_turquoise" />
+        <LinearLayout
+            android:id="@+id/main_dialog_confirm_conflict_pair_a_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/main_dialog_confirm_conflict_pair_a_path"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Pair A Path"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <LinearLayout
+                android:id="@+id/main_dialog_confirm_conflict_pair_a_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/main_dialog_confirm_conflict_pair_a_last_mod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2019/01/01 00:00:00.000"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=", "
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                <TextView
+                    android:id="@+id/main_dialog_confirm_conflict_pair_a_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0000001"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <Button
+                    android:id="@+id/main_dialog_confirm_conflict_select_pair_a_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="選択" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/main_dialog_confirm_conflict_pair_b_path"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Pair B Path"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <LinearLayout
+                android:id="@+id/main_dialog_confirm_conflict_pair_b_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/main_dialog_confirm_conflict_pair_b_last_mod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2019/01/01 00:00:00.000"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=", "
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                <TextView
+                    android:id="@+id/main_dialog_confirm_conflict_pair_b_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0000001"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <Button
+                    android:id="@+id/main_dialog_confirm_conflict_select_pair_b_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="選択" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/main_dialog_confirm_conflict_ignore_file_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="取消"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <Button
+                android:id="@+id/main_dialog_confirm_conflict_cancel_sync_task_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="同期を中止"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_line1" />
+
+    <LinearLayout
+        android:id="@+id/main_dialog_confirm_override_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/main_dialog_confirm_ok_cancel" />
+
+        <Button
+            android:id="@+id/main_dialog_confirm_sync_cancel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="1dp"
+            android:text="@string/msgs_mirror_confirm_task_cancel_btn"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <include layout="@layout/divider_line1_turquoise" />
+    </LinearLayout>
+
 </LinearLayout>

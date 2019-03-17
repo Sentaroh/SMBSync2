@@ -124,7 +124,7 @@
         <string name="msgs_main_app_specific_dir_used_msg">アプリケーション固有ディレクトリがファイルの保存先に使用されています。このディレクトリはアプリケーションがアンインストールされると削除され、保存しているデータも削除されます。ご注意ください。</string>
         <string name="msgs_main_app_specific_dir_used_suppress">この警告を次回以降表示しない （アプリ設定のユーザーインターフェース設定で再表示できます）</string>
         <string name="msgs_main_app_specific_dir_used_title">アプリケーション固有ディレクトリ使用についての警告</string>
-        <string name="msgs_main_location_service_warning_msg">下記のタスクは位置情報サービスが無効のため、スマホ/タブレットがスリープ状態の時に同期を開始するとエラーで終了します。 システム設定でロケーションサービスを有効にするか同期オプションで「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
+        <string name="msgs_main_location_service_warning_msg">Android 9.0から下記のタスクは位置情報サービスが無効のため、同期を開始できません。 システム設定でロケーションサービスを有効にするか同期オプションで「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
         <string name="msgs_main_location_service_warning_suppress">この警告を次回以降表示しない （アプリ設定の同期設定で再表示できます）</string>
         <string name="msgs_main_location_service_warning_title">ロケーションサービスについての警告</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
@@ -391,6 +391,12 @@
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">サブディレクトリーを選択する</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">SMBフォルダー書き込み時のIOバッファーを16KBに制限する</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">キャンセル</string>
+        <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">双方向同期の競合ファイルを保存する</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle">双方向同期ルール</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_ask_user">ユーザーに問い合わせる</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file">ファイル同期をスキップする</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer">新しい日付のファイルをコピーする</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_older">古い日付のファイルをコピーする</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">ログオンが中止されました</string>
         <string name="msgs_remote_profile_dlg_logon_error">ログオンエラーが発生しました</string>
         <string name="msgs_remote_profile_dlg_logon_success">ログオンが正常に完了しました</string>
@@ -403,7 +409,7 @@
         <string name="msgs_select_usb_dir">USBメディア ディレクトリの選択</string>
         <string name="msgs_select_remote_dir">SMBディレクトリの選択</string>
         <string name="msgs_select_remote_share">SMB共有の選択</string>
-        <string name="msgs_share_list_not_obtained">共有名の一覧が取得できませんでした。アクセス権のあるアカウントを指定して再度取得するか、共有名を直接入力してください。</string>
+        <string name="msgs_share_list_not_obtained">共有名の一覧を取得できませんでした。正しいアカウント名とパスワードを指定して一覧を再取得するか、共有名を直接入力してください。</string>
         <string name="msgs_smbsync_main_no_external_storage">外部メディアが使用できないため、いくつかの機能が使用できません。</string>
         <string name="msgs_smbsync_main_restart_by_destroyed">アプリケーションはアクティビティの破棄により終了しました。 設定->開発者向オプションで「アクティビティを保持しない」を有効にしているのであれば無効にしてください。</string>
         <string name="msgs_smbsync_main_restart_by_killed">アプリケーションがバックグラウンドに遷移後、強制終了しました。</string>
