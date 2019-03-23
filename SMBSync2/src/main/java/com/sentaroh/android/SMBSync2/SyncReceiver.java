@@ -65,7 +65,7 @@ public class SyncReceiver extends BroadcastReceiver {
                 ((PowerManager) c.getSystemService(Context.POWER_SERVICE))
                         .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK
                                 | PowerManager.ON_AFTER_RELEASE, "Receiver");
-        wl.acquire(1000);
+        try {wl.acquire(1000); } catch(Exception e) {};
         mContext = c;
         if (mGp == null) {
             mGp = new GlobalParameters();
