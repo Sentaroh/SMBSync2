@@ -154,7 +154,7 @@
         <string name="msgs_main_permission_coarse_location_denied_msg">権限が許可されるまではスリープ中の同期で「SSIDに接続」または「特定のSSIDに接続」を指定している場合はエラーで終了します。</string>
         <string name="msgs_main_permission_coarse_location_request_msg">スリープ中にスケジュール同期または外部アプリケーションから起動された時にWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまではスリープ中の同期で「SSIDに接続」または「特定のSSIDに接続」を指定している場合はエラーで終了します。\n低精度ロケーション許可を要求しますか？</string>
         <string name="msgs_main_permission_coarse_location_title">低精度ロケーション許可</string>
-        <string name="msgs_main_permission_external_storage_denied_msg">内部ストレージにアクセスする許可が与えられていないため同期ができません。アプリケーションを終了します。</string>
+        <string name="msgs_main_permission_external_storage_denied_msg">内部ストレージにアクセスする許可が与えられていないためアプリケーションを起動できません。</string>
         <string name="msgs_main_permission_external_storage_request_msg">内部ストレージに同期するデータや管理用データの読み書きを行うために、内部ストレージにアクセスする許可を与えてください。</string>
         <string name="msgs_main_permission_external_storage_title">内部ストレージ許可</string>
         <string name="msgs_main_shortcut_shortcut_added">ホームスクリーンにショートカットを追加しました。</string>
@@ -286,8 +286,9 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMBプロトコル</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">SMB1</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">SMBv2(2.01)</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">SMBv2(2.11)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">SMB V2(2.01)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">SMB V2(2.11)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">SMB V2/3(2.12)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">システムで判別</string>
         <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">アカウント名/パスワードを使用する</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast">Fast</string>

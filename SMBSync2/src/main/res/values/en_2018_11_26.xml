@@ -157,8 +157,8 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_main_permission_coarse_location_denied_msg">Until permission is granted, if \"Connect to SSID\" or \"Connect to specific SSID\" is specified in the sleeping sync, it ends with an error.\n Would you like to disable this message in the future? (In order to display again, enable \"Coarse Location\" request by setting.)</string>
         <string name="msgs_main_permission_coarse_location_request_msg">This app requires permission to read the wireless access point name (SSID) when task is executed while the device is in sleep mode.  Grant permission?</string>
         <string name="msgs_main_permission_coarse_location_title">Coarse Location Permission</string>
-        <string name="msgs_main_permission_external_storage_denied_msg">Attempting to execute a sync task without granting access to internal storage will cause the app to terminate.</string>
-        <string name="msgs_main_permission_external_storage_request_msg">This app requires permission to access internal storage for read and write file operations.  Granting permission to access internal storage is recommended.</string>
+        <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be started because you have not been granted permission to access the internal storage.</string>
+        <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access internal storage to read and write data that is synchronized to internal storage and for administrative data.</string>
         <string name="msgs_main_permission_external_storage_title">Internal Storage Permission</string>
         <string name="msgs_main_shortcut_shortcut_added">Shortcut added to home screen.</string>
         <string name="msgs_main_sync_all_active_profiles">Execute all tasks configured to auto sync.</string>
@@ -288,9 +288,10 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_edit_sync_folder_dlg_show_password">Show password</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMB protocol</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">Use SMBv1</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">Use SMBv2 (2.01)</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Use SMBv2 (2.11)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">Use SMB V1</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">Use SMB V2(2.01)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Use SMB V2(2.11)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Use SMB V2/3(2.12)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Determined by system</string>
         <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">Use Account name and password</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast">Fast</string>

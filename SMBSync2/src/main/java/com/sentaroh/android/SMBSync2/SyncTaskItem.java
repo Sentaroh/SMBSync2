@@ -80,6 +80,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1 = "1";
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = "2";
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = "3";
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = "4";
     private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1;
     private boolean syncTaskMasterFolderSmbIpcSigningEnforced = true;
     private String syncTaskMasterFolderRemovableStorageID = "";

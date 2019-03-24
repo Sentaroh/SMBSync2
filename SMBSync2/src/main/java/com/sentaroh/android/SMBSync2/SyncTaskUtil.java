@@ -4679,7 +4679,7 @@ public class SyncTaskUtil {
         stli.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL);
         stli.setTargetDirectoryName("Pictures");
 
-        stli.setSyncOptionWifiStatusOption("0");
+        stli.setSyncOptionWifiStatusOption("1");
         stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(0);
         pfl.add(stli);
@@ -4697,7 +4697,7 @@ public class SyncTaskUtil {
         stli.setSyncTestMode(false);
         stli.setTargetDirectoryName("Android/DCIM");
 
-        stli.setSyncOptionWifiStatusOption("0");
+        stli.setSyncOptionWifiStatusOption("1");
         stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(1);
         pfl.add(stli);

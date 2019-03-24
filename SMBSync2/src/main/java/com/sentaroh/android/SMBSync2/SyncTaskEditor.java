@@ -2552,6 +2552,8 @@ public class SyncTaskEditor extends DialogFragment {
             return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB201;
         } else if (spinner.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211))) {
             return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB211;
+        } else if (spinner.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212))) {
+            return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB212;
         }
         return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1;
     }
@@ -2569,10 +2571,12 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1));
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201));
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211));
+        adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212));
 
         if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) spinner.setSelection(0);
         else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB201)) spinner.setSelection(1);
         else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB211)) spinner.setSelection(2);
+        else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB212)) spinner.setSelection(3);
         else spinner.setSelection(0);
     }
 

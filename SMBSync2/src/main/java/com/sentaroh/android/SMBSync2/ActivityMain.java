@@ -196,7 +196,7 @@ public class ActivityMain extends AppCompatActivity {
 
         ccMenu = new CustomContextMenu(this.getResources(), getSupportFragmentManager());
         commonDlg = new CommonDialog(this, getSupportFragmentManager());
-        checkRequiredPermissions();
+//        checkRequiredPermissions();
         mTaskUtil = new SyncTaskUtil(mUtil, this, commonDlg, ccMenu, mGp, getSupportFragmentManager());
         mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mGp.msgList, mGp);
 
@@ -290,7 +290,7 @@ public class ActivityMain extends AppCompatActivity {
                     if (restartType == NORMAL_START) {
                         setUiEnabled();
                         checkStorageStatus();
-                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+                        checkRequiredPermissions();
                         if (mGp.msgList.size()>1) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
                     } else if (restartType == RESTART_BY_KILLED) {
                         setUiEnabled();
@@ -1224,7 +1224,7 @@ public class ActivityMain extends AppCompatActivity {
                 return true;
             case R.id.menu_top_request_grant_coarse_location:
                 mGp.setSettingGrantCoarseLocationRequired(true);
-                checkLocationPermission();
+                checkLocationPermission(false);
                 return true;
             case R.id.menu_top_start_logcat:
                 LogCatUtil.startLogCat(mGp, mGp.getLogDirName(),"logcat.txt");
@@ -1951,6 +1951,7 @@ public class ActivityMain extends AppCompatActivity {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
+//                        checkLocationPermission();
                         requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                                 REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
                     }
@@ -1967,6 +1968,7 @@ public class ActivityMain extends AppCompatActivity {
 
                             @Override
                             public void negativeResponse(Context c, Object[] o) {
+//                                checkLocationPermission();
                             }
                         });
                         commonDlg.showCommonDialog(false, "W",
@@ -1977,16 +1979,20 @@ public class ActivityMain extends AppCompatActivity {
                 commonDlg.showCommonDialog(false, "W",
                         mContext.getString(R.string.msgs_main_permission_external_storage_title),
                         mContext.getString(R.string.msgs_main_permission_external_storage_request_msg), ntfy);
+            } else {
+                checkLocationPermission(false);
             }
+        } else {
+            checkLocationPermission(false);
         }
-        checkLocationPermission();
     }
 
-    private void checkLocationPermission() {
+    public void checkLocationPermission(boolean force_permission) {
         if (Build.VERSION.SDK_INT >= 27) {
             mUtil.addDebugMsg(1, "I", "Prermission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)+
                                     ", settingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired);
-            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED && mGp.settingGrantCoarseLocationRequired) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
+                    (mGp.settingGrantCoarseLocationRequired || force_permission)) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
@@ -2010,11 +2016,14 @@ public class ActivityMain extends AppCompatActivity {
 //                                mContext.getString(R.string.msgs_main_permission_coarse_location_title),
 //                                mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
                         mGp.setSettingGrantCoarseLocationRequired(false);
+                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
                     }
                 });
                 commonDlg.showCommonDialog(true, "W",
                         mContext.getString(R.string.msgs_main_permission_coarse_location_title),
                         mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
+            } else {
+                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
             }
         }
     }
@@ -2029,6 +2038,7 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void run() {
                         checkStorageStatus();
+                        checkLocationPermission(false);
                     }
                 }, 500);
             } else {
@@ -2041,8 +2051,7 @@ public class ActivityMain extends AppCompatActivity {
                     }
 
                     @Override
-                    public void negativeResponse(Context c, Object[] o) {
-                    }
+                    public void negativeResponse(Context c, Object[] o) {}
                 });
                 commonDlg.showCommonDialog(false, "W",
                         mContext.getString(R.string.msgs_main_permission_external_storage_title),
@@ -2051,12 +2060,14 @@ public class ActivityMain extends AppCompatActivity {
         }
         if (REQUEST_PERMISSIONS_ACCESS_COARSE_LOCATION == requestCode) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
             } else {
                 NotifyEvent ntfy_deny=new NotifyEvent(mContext);
                 ntfy_deny.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         mGp.setSettingGrantCoarseLocationRequired(false);
+                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
                     }
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
