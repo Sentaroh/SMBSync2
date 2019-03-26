@@ -1428,8 +1428,8 @@ public class SyncTaskUtil {
 
 //        if (port.equals("")) url = "smb://" + host + "/IPC$/";
 //        else url = "smb://" + host + ":" + port + "/IPC$/";
-        if (port.equals("")) url = "smb://" + host + "/"+share+"/";
-        else url = "smb://" + host + ":" + port + "/"+share+"/";
+        if (port.equals("")) url = "smb://" + host ;//+ "/"+share+"/";
+        else url = "smb://" + host + ":" + port;// + "/"+share+"/";
 
         String un="";
         if (mGp.settingSecurityReinitSmbAccountPasswordValue  && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {

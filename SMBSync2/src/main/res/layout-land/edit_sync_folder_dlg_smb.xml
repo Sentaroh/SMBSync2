@@ -165,6 +165,13 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/edit_sync_folder_dlg_logon_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/msgs_profile_edit_sync_folder_dlg_logon"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -186,22 +193,6 @@
                     android:hint="@string/msgs_profile_edit_sync_folder_dlg_remote_smb_share"
                     android:inputType="text"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/edit_sync_folder_dlg_logon_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/msgs_profile_edit_sync_folder_dlg_logon"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
 
             </LinearLayout>
 
