@@ -37,6 +37,8 @@ import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.MiscUtil;
 import com.sentaroh.android.Utilities.StringUtil;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -114,15 +116,21 @@ public class SyncReceiver extends BroadcastReceiver {
                     Intent send_intent = new Intent(mContext, SyncService.class);
                     send_intent.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
                     send_intent.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, received_intent.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY));
-                    mContext.startService(send_intent);
-                    String[] schedule_list=received_intent.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY).split(",");
-                    for (String sched_name:schedule_list) {
-                        if (ScheduleUtil.getScheduleInformation(mSchedList, sched_name) != null) {
-                            ScheduleUtil.getScheduleInformation(mSchedList, sched_name).scheduleLastExecTime = System.currentTimeMillis();
+                    try {
+                        mContext.startService(send_intent);
+                        String[] schedule_list=received_intent.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY).split(",");
+                        for (String sched_name:schedule_list) {
+                            if (ScheduleUtil.getScheduleInformation(mSchedList, sched_name) != null) {
+                                ScheduleUtil.getScheduleInformation(mSchedList, sched_name).scheduleLastExecTime = System.currentTimeMillis();
+                            }
                         }
+                        ScheduleUtil.saveScheduleData(mGp, mSchedList);
+                        setTimer();
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                        mLog.addLogMsg("E", "startService filed, action="+action+", error=" + e.getMessage());
+                        mLog.addLogMsg("E", MiscUtil.getStackTraceString(e));
                     }
-                    ScheduleUtil.saveScheduleData(mGp, mSchedList);
-                    setTimer();
                 }
             } else if (action.equals(SMBSYNC2_START_SYNC_INTENT)) {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
