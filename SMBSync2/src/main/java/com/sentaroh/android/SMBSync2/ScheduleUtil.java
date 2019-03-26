@@ -32,6 +32,9 @@ import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.StringUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -52,6 +55,7 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_WIF
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_WIFI_ON_BEFORE_SYNC_START_KEY;
 
 public class ScheduleUtil {
+    private static Logger slf4jLog = LoggerFactory.getLogger(ScheduleUtil.class);
 
     final static public ArrayList<ScheduleItem> loadScheduleData(GlobalParameters gp) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(gp.appContext);
@@ -292,7 +296,7 @@ public class ScheduleUtil {
                 cal.add(Calendar.MONTH, 1);
             }
             result = cal.getTimeInMillis();
-            Log.v("ScheduleNextTime","name="+sp.scheduleName+", c_year="+c_year+", c_month="+c_month+
+            slf4jLog.info("name="+sp.scheduleName+", c_year="+c_year+", c_month="+c_month+
                     ", s_day="+s_day_temp+", s_hrs="+s_hrs+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
         } else if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
 //    		cal.clear();
@@ -331,7 +335,7 @@ public class ScheduleUtil {
                     result = nt + s_min * (60 * 1000);
                 }
 
-                Log.v("ScheduleNextTime","name="+sp.scheduleName+", m_nt="+m_nt+", nt="+nt+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
+                slf4jLog.info("name="+sp.scheduleName+", m_nt="+m_nt+", nt="+nt+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
             }
 //    		Log.v("","last="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(sp.scheduleLastExecTime));
 //    		Log.v("","result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
