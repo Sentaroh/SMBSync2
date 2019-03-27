@@ -196,12 +196,9 @@ public class ActivityMain extends AppCompatActivity {
 
         ccMenu = new CustomContextMenu(this.getResources(), getSupportFragmentManager());
         commonDlg = new CommonDialog(this, getSupportFragmentManager());
-//        checkRequiredPermissions();
         mTaskUtil = new SyncTaskUtil(mUtil, this, commonDlg, ccMenu, mGp, getSupportFragmentManager());
         mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mGp.msgList, mGp);
 
-//        if (mGp.syncTaskList == null) mGp.syncTaskList = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil);
-//        mGp.syncTaskAdapter = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, mGp.syncTaskList, mGp);
         createSyncTaskList();
 
         if (mGp.syncHistoryList == null) mGp.syncHistoryList = mUtil.loadHistoryList();
@@ -216,16 +213,6 @@ public class ActivityMain extends AppCompatActivity {
 
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET);
         setSyncTaskContextButtonHide();
-
-//        Thread th1 = new Thread() {
-//            @Override
-//            public void run() {
-//                mUtil.addDebugMsg(1, "I", "Initialyze application specific directory started");
-//                mUtil.initAppSpecificExternalDirectory(mContext);
-//                mUtil.addDebugMsg(1, "I", "Initialyze application specific directory ended");
-//            }
-//        };
-//        th1.start();
     }
 
     private void createSyncTaskList() {
@@ -240,13 +227,10 @@ public class ActivityMain extends AppCompatActivity {
                     mUtil.addDebugMsg(1, "I", "Sync task list creation started.");
                     ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil);
                     for(SyncTaskItem sti:task_list) mGp.syncTaskList.add(sti);
-//                    mGp.syncTaskAdapter.setArrayList(mGp.syncTaskList);
-
                     mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
                     mUiHandler.post(new Runnable(){
                         @Override
                         public void run() {
-//                            mGp.syncTaskAdapter.setArrayList(mGp.syncTaskList);
                             mGp.syncTaskAdapter.notifyDataSetChanged();
                             pd.dismiss();
                         }
@@ -2773,31 +2757,30 @@ public class ActivityMain extends AppCompatActivity {
 
     private void setSyncTaskListItemClickListener() {
         mGp.syncTaskListView.setEnabled(true);
-        mGp.syncTaskListView
-                .setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view,
-                                            int position, long id) {
-                        if (isUiEnabled()) {
-                            mGp.syncTaskListView.setEnabled(false);
-                            SyncTaskItem item = mGp.syncTaskAdapter.getItem(position);
-                            if (!mGp.syncTaskAdapter.isShowCheckBox()) {
-                                editSyncTask(item.getSyncTaskName(), item.isSyncTaskAuto(), position);
-                                mUiHandler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mGp.syncTaskListView.setEnabled(true);
-                                    }
-                                }, 1000);
-                            } else {
-                                item.setChecked(!item.isChecked());
-                                setSyncTaskContextButtonSelectMode();
+        mGp.syncTaskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                if (isUiEnabled()) {
+                    mGp.syncTaskListView.setEnabled(false);
+                    SyncTaskItem item = mGp.syncTaskAdapter.getItem(position);
+                    if (!mGp.syncTaskAdapter.isShowCheckBox()) {
+                        editSyncTask(item.getSyncTaskName(), item.isSyncTaskAuto(), position);
+                        mUiHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
                                 mGp.syncTaskListView.setEnabled(true);
                             }
-                            mGp.syncTaskAdapter.notifyDataSetChanged();
-                        }
+                        }, 1000);
+                    } else {
+                        item.setChecked(!item.isChecked());
+                        setSyncTaskContextButtonSelectMode();
+                        mGp.syncTaskListView.setEnabled(true);
                     }
-                });
+                    mGp.syncTaskAdapter.notifyDataSetChanged();
+                }
+            }
+        });
 
         NotifyEvent ntfy_cb = new NotifyEvent(mContext);
         ntfy_cb.setListener(new NotifyEventListener() {
@@ -2837,57 +2820,56 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setSyncTaskListLongClickListener() {
-        mGp.syncTaskListView
-                .setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(final AdapterView<?> list_view, final View item_view,
-                                                   int pos, long arg3) {
-                        if (mGp.syncTaskAdapter.isEmptyAdapter()) return true;
-                        if (!isUiEnabled()) return true;
+        mGp.syncTaskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(final AdapterView<?> list_view, final View item_view,
+                                           int pos, long arg3) {
+                if (mGp.syncTaskAdapter.isEmptyAdapter()) return true;
+                if (!isUiEnabled()) return true;
 
-                        if (!mGp.syncTaskAdapter.getItem(pos).isChecked()) {
-                            if (SyncTaskUtil.isSyncTaskSelected(mGp.syncTaskAdapter)) {
+                if (!mGp.syncTaskAdapter.getItem(pos).isChecked()) {
+                    if (SyncTaskUtil.isSyncTaskSelected(mGp.syncTaskAdapter)) {
 
-                                int down_sel_pos = -1, up_sel_pos = -1;
-                                int tot_cnt = mGp.syncTaskAdapter.getCount();
-                                if (pos + 1 <= tot_cnt) {
-                                    for (int i = pos + 1; i < tot_cnt; i++) {
-                                        if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
-                                            up_sel_pos = i;
-                                            break;
-                                        }
-                                    }
+                        int down_sel_pos = -1, up_sel_pos = -1;
+                        int tot_cnt = mGp.syncTaskAdapter.getCount();
+                        if (pos + 1 <= tot_cnt) {
+                            for (int i = pos + 1; i < tot_cnt; i++) {
+                                if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
+                                    up_sel_pos = i;
+                                    break;
                                 }
-                                if (pos > 0) {
-                                    for (int i = pos; i >= 0; i--) {
-                                        if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
-                                            down_sel_pos = i;
-                                            break;
-                                        }
-                                    }
-                                }
-//						Log.v("","up="+up_sel_pos+", down="+down_sel_pos);
-                                if (up_sel_pos != -1 && down_sel_pos == -1) {
-                                    for (int i = pos; i < up_sel_pos; i++)
-                                        mGp.syncTaskAdapter.getItem(i).setChecked(true);
-                                } else if (up_sel_pos != -1 && down_sel_pos != -1) {
-                                    for (int i = down_sel_pos + 1; i < up_sel_pos; i++)
-                                        mGp.syncTaskAdapter.getItem(i).setChecked(true);
-                                } else if (up_sel_pos == -1 && down_sel_pos != -1) {
-                                    for (int i = down_sel_pos + 1; i <= pos; i++)
-                                        mGp.syncTaskAdapter.getItem(i).setChecked(true);
-                                }
-                                mGp.syncTaskAdapter.notifyDataSetChanged();
-                            } else {
-                                mGp.syncTaskAdapter.setShowCheckBox(true);
-                                mGp.syncTaskAdapter.getItem(pos).setChecked(true);
-                                mGp.syncTaskAdapter.notifyDataSetChanged();
                             }
-                            setSyncTaskContextButtonSelectMode();
                         }
-                        return true;
+                        if (pos > 0) {
+                            for (int i = pos; i >= 0; i--) {
+                                if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
+                                    down_sel_pos = i;
+                                    break;
+                                }
+                            }
+                        }
+    //						Log.v("","up="+up_sel_pos+", down="+down_sel_pos);
+                        if (up_sel_pos != -1 && down_sel_pos == -1) {
+                            for (int i = pos; i < up_sel_pos; i++)
+                                mGp.syncTaskAdapter.getItem(i).setChecked(true);
+                        } else if (up_sel_pos != -1 && down_sel_pos != -1) {
+                            for (int i = down_sel_pos + 1; i < up_sel_pos; i++)
+                                mGp.syncTaskAdapter.getItem(i).setChecked(true);
+                        } else if (up_sel_pos == -1 && down_sel_pos != -1) {
+                            for (int i = down_sel_pos + 1; i <= pos; i++)
+                                mGp.syncTaskAdapter.getItem(i).setChecked(true);
+                        }
+                        mGp.syncTaskAdapter.notifyDataSetChanged();
+                    } else {
+                        mGp.syncTaskAdapter.setShowCheckBox(true);
+                        mGp.syncTaskAdapter.getItem(pos).setChecked(true);
+                        mGp.syncTaskAdapter.notifyDataSetChanged();
                     }
-                });
+                    setSyncTaskContextButtonSelectMode();
+                }
+                return true;
+            }
+        });
     }
 
     private ImageButton mContextSyncTaskButtonActivete = null;
@@ -3449,10 +3431,8 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setMessageContextButtonListener() {
-        final Toast toast_active = Toast.makeText(mContext, mContext.getString(R.string.msgs_log_activate_pinned),
-                Toast.LENGTH_SHORT);
-        final Toast toast_inactive = Toast.makeText(mContext, mContext.getString(R.string.msgs_log_inactivate_pinned),
-                Toast.LENGTH_SHORT);
+        final Toast toast_active = Toast.makeText(mContext, mContext.getString(R.string.msgs_log_activate_pinned), Toast.LENGTH_SHORT);
+        final Toast toast_inactive = Toast.makeText(mContext, mContext.getString(R.string.msgs_log_inactivate_pinned), Toast.LENGTH_SHORT);
         mContextMessageButtonPinned.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3843,15 +3823,10 @@ public class ActivityMain extends AppCompatActivity {
             public void onServiceDisconnected(ComponentName name) {
                 mSvcConnection = null;
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-//    	    	mSvcClient=null;
-//    	    	synchronized(tcService) {
-//        	    	tcService.notify();
-//    	    	}
             }
         };
 
         Intent intmsg = new Intent(mContext, SyncService.class);
-        intmsg.setAction("Bind");
         bindService(intmsg, mSvcConnection, BIND_AUTO_CREATE);
     }
 

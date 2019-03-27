@@ -254,7 +254,7 @@ public class SyncService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered,action=" + intent.getAction());
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         setActivityForeground();
         return mSvcClientStub;
     }
