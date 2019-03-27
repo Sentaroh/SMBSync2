@@ -158,8 +158,8 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean appPasswordAuthValidated=false;
     public long appPasswordAuthLastTime=0L;
 
-    public boolean settingScreenOnWhileSync = true;
-    public boolean settingForceScreenOnWhileSync = false;
+    public boolean settingPreventSyncStartDelay = true;
+    public boolean settingScreenOnIfScreenOnAtStartOfSync = false;
 
     public boolean settingExportedProfileEncryptRequired = true;
 
@@ -526,7 +526,7 @@ public class GlobalParameters extends CommonGlobalParms {
         }
         settingFixDeviceOrientationToPortrait = prefs.getBoolean(appContext.getString(R.string.settings_device_orientation_portrait), false);
 
-        settingScreenOnWhileSync = prefs.getBoolean(appContext.getString(R.string.settings_dim_screen_on_while_sync), true);
+        settingPreventSyncStartDelay = prefs.getBoolean(appContext.getString(R.string.settings_dim_screen_on_while_sync), true);
 
         settingNotificationVolume = prefs.getInt(appContext.getString(R.string.settings_playback_ringtone_volume), 100);
 
@@ -534,7 +534,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingGrantCoarseLocationRequired = prefs.getBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, true);
 
-        settingForceScreenOnWhileSync=prefs.getBoolean(appContext.getString(R.string.settings_force_screen_on_while_sync), false);
+        settingScreenOnIfScreenOnAtStartOfSync =prefs.getBoolean(appContext.getString(R.string.settings_force_screen_on_while_sync), false);
 
         settingSyncMessageUseStandardTextView =prefs.getBoolean(appContext.getString(R.string.settings_sync_message_use_standard_text_view), false);
 
@@ -625,7 +625,7 @@ public class GlobalParameters extends CommonGlobalParms {
             }
         }
 
-        if (settingForceScreenOnWhileSync || (settingScreenOnWhileSync && isScreenOn(appContext, util))) {// && !activityIsBackground) {
+        if (settingScreenOnIfScreenOnAtStartOfSync || (settingPreventSyncStartDelay && isScreenOn(appContext, util))) {// && !activityIsBackground) {
             if (!mDimWakeLock.isHeld()) {
                 mDimWakeLock.acquire();
                 util.addDebugMsg(1, "I", "Dim wakelock acquired");

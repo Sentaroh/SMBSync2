@@ -38,7 +38,6 @@ import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.storage.StorageManager;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -133,7 +132,9 @@ public final class CommonUtilities {
     }
 
     static public ArrayList<String> listSystemInfo(GlobalParameters gp) {
+
         ArrayList<String> out=SystemInfo.listSystemInfo(gp.appContext, gp.safMgr);
+
         if (Build.VERSION.SDK_INT>=27) {
             out.add("setSettingGrantCoarseLocationRequired="+gp.settingGrantCoarseLocationRequired);
             out.add("ACCESS_COARSE_LOCATION Permission="+gp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
@@ -149,6 +150,43 @@ public final class CommonUtilities {
 //            }
             out.add("LocationService enabled="+isLocationServiceEnabled(gp)+", warning="+gp.settingSupressLocationServiceWarning);
         }
+
+
+        out.add("Settings options:");
+        out.add("  Error option="+gp.settingErrorOption);
+        out.add("  WiFi lock option="+gp.settingWifiLockRequired);
+        out.add("  Write sync result log="+gp.settingWriteSyncResultLog);
+        out.add("  No compress file type="+gp.settingNoCompressFileType);
+        out.add("  Prevent sync start delay="+gp.settingPreventSyncStartDelay);
+        out.add("  Suppress Location service warning="+gp.settingSupressLocationServiceWarning);
+        out.add("  Management file directory="+gp.settingMgtFileDir);
+
+        out.add("");
+        out.add("  Debug level="+gp.settingDebugLevel);
+        out.add("  Log option="+gp.settingLogOption);
+        out.add("  Logcat option="+gp.settingPutLogcatOption);
+        out.add("  Log max file count="+gp.settingLogMaxFileCount);
+
+        out.add("");
+        out.add("  Suppress AppSpecific directory warning="+gp.settingSupressAppSpecifiDirWarning);
+        out.add("  Notification message when sync ended="+gp.settingNotificationMessageWhenSyncEnded);
+        out.add("  Ringtone when sync ended="+gp.settingRingtoneWhenSyncEnded);
+        out.add("  Notification sound volume="+gp.settingNotificationVolume);
+        out.add("  Vibrate when sync ended="+gp.settingVibrateWhenSyncEnded);
+        out.add("  Fix device oprientation portrait="+gp.settingFixDeviceOrientationToPortrait);
+        out.add("  Use light theme="+gp.settingUseLightTheme);
+        out.add("  Screen on if screen on at start of the sync="+gp.settingScreenOnIfScreenOnAtStartOfSync);
+
+        out.add("");
+        out.add("  Security use app startup="+gp.settingSecurityApplicationPasswordUseAppStartup);
+        out.add("  Security use edit task="+gp.settingSecurityApplicationPasswordUseEditTask);
+        out.add("  Security use export="+gp.settingSecurityApplicationPasswordUseExport);
+        out.add("  Security re-init account and password="+gp.settingSecurityReinitSmbAccountPasswordValue);
+
+        out.add("");
+        out.add("  Sync message use standard text view="+gp.settingSyncMessageUseStandardTextView);
+        out.add("  Exit clean="+gp.settingExitClean);
+
         return out;
     }
 

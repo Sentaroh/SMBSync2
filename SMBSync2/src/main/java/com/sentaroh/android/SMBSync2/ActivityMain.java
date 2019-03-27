@@ -1837,8 +1837,8 @@ public class ActivityMain extends AppCompatActivity {
                 ", settingVibrateWhenSyncEnded=" + mGp.settingVibrateWhenSyncEnded +
                 ", settingRingtoneWhenSyncEnded=" + mGp.settingRingtoneWhenSyncEnded +
                 ", settingNotificationVolume="+mGp.settingNotificationVolume +
-                ", settingScreenOnWhileSync="+mGp.settingScreenOnWhileSync +
-                ", settingForceScreenOnWhileSync="+mGp.settingForceScreenOnWhileSync +
+                ", settingPreventSyncStartDelay="+mGp.settingPreventSyncStartDelay +
+                ", settingScreenOnIfScreenOnAtStartOfSync="+mGp.settingScreenOnIfScreenOnAtStartOfSync +
                 ", settingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired +
 
                 ", settingSupressAppSpecifiDirWarning=" + mGp.settingSupressAppSpecifiDirWarning +

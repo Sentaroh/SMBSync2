@@ -871,14 +871,14 @@ public class SyncService extends Service {
             String action = in.getAction();
             if (action.equals(Intent.ACTION_SCREEN_ON)) {
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
-//                Log.v("Sync","force="+mGp.settingForceScreenOnWhileSync+", thread="+mGp.syncThreadActive+", wait="+mGp.syncThreadConfirmWait);
-                if (mGp.settingForceScreenOnWhileSync && mGp.syncThreadActive && !mGp.syncThreadConfirmWait) {
+//                Log.v("Sync","force="+mGp.settingScreenOnIfScreenOnAtStartOfSync+", thread="+mGp.syncThreadActive+", wait="+mGp.syncThreadConfirmWait);
+                if (mGp.settingScreenOnIfScreenOnAtStartOfSync && mGp.syncThreadActive && !mGp.syncThreadConfirmWait) {
                     if (mGp.forceDimScreenWakelock.isHeld()) mGp.forceDimScreenWakelock.release();
                     mGp.forceDimScreenWakelock.acquire();
                     mUtil.addDebugMsg(1, "I", "Sleep receiver, ForceDim wake lock acquired");
                 }
             } else if (action.equals(Intent.ACTION_USER_PRESENT)) {
-                if (mGp.settingScreenOnWhileSync && mGp.syncThreadActive && !mGp.syncThreadConfirmWait) {
+                if (mGp.settingPreventSyncStartDelay && mGp.syncThreadActive && !mGp.syncThreadConfirmWait) {
                     if (!mGp.mDimWakeLock.isHeld()) {
                         mGp.mDimWakeLock.acquire();
                         mUtil.addDebugMsg(1, "I", "Sleep receiver, Dim wake lock acquired");
