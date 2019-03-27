@@ -2761,7 +2761,7 @@ public class SyncThreadSyncFile {
                         }
                     } else {
                         if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, target_dir)) {
-                            SyncThread.deleteSmbItem(stwa, true, sti, target_dir, target_dir, stwa.targetAuth);
+                            SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
                         } else {
                             SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
                                     " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));

@@ -1521,7 +1521,7 @@ public class SyncThread extends Thread {
                         stwa.totalDeleteCount++;
                         if (!sti.isSyncTestMode()) c_item.delete();
                         showMsg(stwa, false, sti.getSyncTaskName(), "I", fp + c_item.getName(), c_item.getName(),
-                                stwa.gp.appContext.getString(R.string.msgs_mirror_task_dir_deleted));
+                                stwa.gp.appContext.getString(R.string.msgs_mirror_task_file_deleted));
                     }
                     if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                         break;
