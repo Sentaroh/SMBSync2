@@ -214,6 +214,10 @@ public class ScheduleUtil {
     }
 
     final static public void saveScheduleData(GlobalParameters gp, ArrayList<ScheduleItem> sl) {
+        saveScheduleData(gp,sl,false);
+    }
+
+    final static public void saveScheduleData(GlobalParameters gp, ArrayList<ScheduleItem> sl, boolean use_apply) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(gp.appContext);
         String data = "";
         for (ScheduleItem si : sl) {
@@ -237,8 +241,8 @@ public class ScheduleUtil {
 
         }
         data += "end";
-        prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V3, data).commit();
-
+        if (use_apply) prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V3, data).apply();
+        else prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V3, data).commit();
     }
 
     final static public long getNextSchedule(ScheduleItem sp) {

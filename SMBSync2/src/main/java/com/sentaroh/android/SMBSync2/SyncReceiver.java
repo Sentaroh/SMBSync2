@@ -37,6 +37,9 @@ import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.MiscUtil;
 import com.sentaroh.android.Utilities.StringUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -51,6 +54,7 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_T
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_NAME_KEY;
 
 public class SyncReceiver extends BroadcastReceiver {
+    private static Logger slf4jLog = LoggerFactory.getLogger(SyncReceiver.class);
 
     private static Context mContext = null;
 
@@ -89,7 +93,7 @@ public class SyncReceiver extends BroadcastReceiver {
                     action.equals(Intent.ACTION_PACKAGE_REPLACED)) {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
                 for (ScheduleItem si : mSchedList) si.scheduleLastExecTime = System.currentTimeMillis();
-                ScheduleUtil.saveScheduleData(mGp, mSchedList);
+                ScheduleUtil.saveScheduleData(mGp, mSchedList, true);//Use apply by shared preference edit
                 setTimer();
             } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) ||
                     action.equals(Intent.ACTION_MEDIA_EJECT) ||
@@ -102,7 +106,9 @@ public class SyncReceiver extends BroadcastReceiver {
                 try {
                     mContext.startService(in);
                 } catch(Exception e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
+                    mLog.addDebugMsg(1,"E", "startService filed, action="+action+", error=" + e.getMessage());
+                    mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
                 }
             } else if (action.equals(SCHEDULER_INTENT_SET_TIMER)) {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
@@ -127,9 +133,9 @@ public class SyncReceiver extends BroadcastReceiver {
                         ScheduleUtil.saveScheduleData(mGp, mSchedList);
                         setTimer();
                     } catch(Exception e) {
-                        e.printStackTrace();
-                        mLog.addLogMsg("E", "startService filed, action="+action+", error=" + e.getMessage());
-                        mLog.addLogMsg("E", MiscUtil.getStackTraceString(e));
+//                        e.printStackTrace();
+                        mLog.addDebugMsg(1,"E", "startService filed, action="+action+", error=" + e.getMessage());
+                        mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
                     }
                 }
             } else if (action.equals(SMBSYNC2_START_SYNC_INTENT)) {
@@ -216,7 +222,7 @@ public class SyncReceiver extends BroadcastReceiver {
                             begin_sched_list.add(si);
                             mLog.addDebugMsg(1,"I", "setTimer NextSchedule added. Name="+si.scheduleName+", "+sa[0]);
                         } else {
-                            mLog.addLogMsg("E", "setTimer Schedule can not be found. Name="+sa[1]);
+                            mLog.addDebugMsg(1,"E", "setTimer Schedule can not be found. Name="+sa[1]);
                         }
                     } else if (sched_time.equals(sa[0])) {
                         ScheduleItem si=ScheduleUtil.getScheduleInformation(mSchedList, sa[1]);
@@ -224,7 +230,7 @@ public class SyncReceiver extends BroadcastReceiver {
                             begin_sched_list.add(si);
                             mLog.addDebugMsg(1,"I", "setTimer NextSchedule added. Name="+si.scheduleName+", "+sa[0]);
                         } else {
-                            mLog.addLogMsg("E", "setTimer Schedule can not be found. Name="+sa[1]);
+                            mLog.addDebugMsg(1,"E", "setTimer Schedule can not be found. Name="+sa[1]);
                         }
                     }
                 }
