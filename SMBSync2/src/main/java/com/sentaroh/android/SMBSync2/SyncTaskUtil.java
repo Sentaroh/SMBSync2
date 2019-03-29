@@ -2102,42 +2102,43 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length()>0) {
-                    btnOk.setEnabled(false);
-                    String n_dir=c_dir+s.toString();
-                    NotifyEvent ne=new NotifyEvent(mContext);
-                    ne.setListener(new NotifyEventListener() {
-                        @Override
-                        public void positiveResponse(Context context, Object[] objects) {
-                            final boolean success=(boolean)objects[0];
-                            hndl.post(new Runnable() {
-                                  @Override
-                                  public void run() {
-                                      if (success) {
-                                          btnOk.setEnabled(false);
-                                          dlg_msg.setText(mContext.getString(
-                                                  R.string.msgs_single_item_input_dlg_duplicate_dir));
-                                      } else {
-                                          btnOk.setEnabled(true);
-                                          dlg_msg.setText("");
-                                      }
-                                  }
-                              });
-                        }
-
-                        @Override
-                        public void negativeResponse(Context context, Object[] objects) {
-                            final String e_msg=(String)objects[0];
-                            hndl.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mCommonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
-                                    dialog.dismiss();
-                                    p_ntfy.notifyToListener(false, null);
-                                }
-                            });
-                        }
-                    });
-                    isRemoteItemExists(n_dir, ra, ne);
+                    btnOk.setEnabled(true);
+//                    btnOk.setEnabled(false);
+//                    String n_dir=c_dir+s.toString();
+//                    NotifyEvent ne=new NotifyEvent(mContext);
+//                    ne.setListener(new NotifyEventListener() {
+//                        @Override
+//                        public void positiveResponse(Context context, Object[] objects) {
+//                            final boolean success=(boolean)objects[0];
+//                            hndl.post(new Runnable() {
+//                                  @Override
+//                                  public void run() {
+//                                      if (success) {
+//                                          btnOk.setEnabled(false);
+//                                          dlg_msg.setText(mContext.getString(
+//                                                  R.string.msgs_single_item_input_dlg_duplicate_dir));
+//                                      } else {
+//                                          btnOk.setEnabled(true);
+//                                          dlg_msg.setText("");
+//                                      }
+//                                  }
+//                              });
+//                        }
+//
+//                        @Override
+//                        public void negativeResponse(Context context, Object[] objects) {
+//                            final String e_msg=(String)objects[0];
+//                            hndl.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    mCommonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
+//                                    dialog.dismiss();
+//                                    p_ntfy.notifyToListener(false, null);
+//                                }
+//                            });
+//                        }
+//                    });
+//                    isRemoteItemExists(n_dir, ra, ne);
                 } else {
                     btnOk.setEnabled(false);
                     dlg_msg.setText("");
@@ -2148,53 +2149,71 @@ public class SyncTaskUtil {
         //OK button
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//				NotifyEvent
                 final String creat_dir=etDir.getText().toString();
                 final String n_path=c_dir+creat_dir+"/";
-                NotifyEvent ntfy=new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener(){
+                NotifyEvent ne_exists=new NotifyEvent(mContext);
+                ne_exists.setListener(new NotifyEventListener() {
                     @Override
-                    public void positiveResponse(Context c, Object[] o) {
-
-                        NotifyEvent ne=new NotifyEvent(mContext);
-                        ne.setListener(new NotifyEventListener() {
+                    public void positiveResponse(Context context, Object[] objects) {
+                        boolean n_exists=(boolean)objects[0];
+                        if (n_exists) {
+                            hndl.post(new Runnable() {
+                                  @Override
+                                  public void run() {
+                                      dlg_msg.setText(mContext.getString(R.string.msgs_single_item_input_dlg_duplicate_dir));
+                                  }
+                            });
+                            return;
+                        }
+                        NotifyEvent ntfy_confirm=new NotifyEvent(mContext);
+                        ntfy_confirm.setListener(new NotifyEvent.NotifyEventListener(){
                             @Override
-                            public void positiveResponse(Context context, Object[] objects) {
-                                hndl.post(new Runnable() {
+                            public void positiveResponse(Context c, Object[] o) {
+                                NotifyEvent notify_create=new NotifyEvent(mContext);
+                                notify_create.setListener(new NotifyEventListener() {
                                     @Override
-                                    public void run() {
-                                        p_ntfy.notifyToListener(true, null);
-                                        dialog.dismiss();
-                                    }
-                                });
-                            }
-                            @Override
-                            public void negativeResponse(Context context, Object[] objects) {
-                                hndl.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        final String e_msg=(String)objects[0];
+                                    public void positiveResponse(Context context, Object[] objects) {
                                         hndl.post(new Runnable() {
                                             @Override
                                             public void run() {
-                                                mCommonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
+                                                p_ntfy.notifyToListener(true, null);
                                                 dialog.dismiss();
-                                                p_ntfy.notifyToListener(false, null);
                                             }
                                         });
+                                    }
+                                    @Override
+                                    public void negativeResponse(Context context, Object[] objects) {
+                                        hndl.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                final String e_msg=(String)objects[0];
+                                                hndl.post(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        mCommonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
+                                                        dialog.dismiss();
+                                                        p_ntfy.notifyToListener(false, null);
+                                                    }
+                                                });
 
+                                            }
+                                        });
                                     }
                                 });
+                                createRemoteDirectory(c_dir+etDir.getText().toString(), ra, notify_create);
+                            }
+                            @Override
+                            public void negativeResponse(Context c, Object[] o) {
                             }
                         });
-                        createRemoteDirectory(c_dir+etDir.getText().toString(), ra, ne);
+                        CommonDialog cd=new CommonDialog(mContext, mFragMgr);
+                        cd.showCommonDialog(true, "W", mContext.getString(R.string.msgs_file_select_edit_confirm_create_directory), n_path, ntfy_confirm);
                     }
                     @Override
-                    public void negativeResponse(Context c, Object[] o) {
+                    public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                CommonDialog cd=new CommonDialog(mContext, mFragMgr);
-                cd.showCommonDialog(true, "W", mContext.getString(R.string.msgs_file_select_edit_confirm_create_directory), n_path, ntfy);
+                isRemoteItemExists(n_path, ra, ne_exists);
             }
         });
         // CANCELボタンの指定
