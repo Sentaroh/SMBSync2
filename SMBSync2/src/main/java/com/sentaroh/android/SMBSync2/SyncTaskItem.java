@@ -23,6 +23,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import com.sentaroh.jcifs.JcifsAuth;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -69,18 +71,23 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private String syncTaskMasterFolderDirName = "";
     private String syncTaskMasterLocalMountPoint = "";
-    private String syncTaskMasterFolderRemoteSmbShareName = "";
-    private String syncTaskMasterFolderRemoteIpAddress = "";
-    private String syncTaskMasterFolderRemoteHostName = "";
-    private String syncTaskMasterFolderRemotePortNumber = "";
-    private String syncTaskMasterFolderRemoteUserName = "";
-    private String syncTaskMasterFolderRemotePassword = "";
-    private String syncTaskMasterFolderRemoteDomain = "";
+    private String syncTaskMasterFolderSmbShareName = "";
+    private String syncTaskMasterFolderSmbIpAddress = "";
+    private String syncTaskMasterFolderSmbHostName = "";
+    private String syncTaskMasterFolderSmbPortNumber = "";
+    private String syncTaskMasterFolderSmbUserName = "";
+    private String syncTaskMasterFolderSmbPassword = "";
+    private String syncTaskMasterFolderSmbDomain = "";
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SYSTEM = "0";
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1 = "1";
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = "2";
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = "3";
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = "4";
+//    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1 = "1";
+//    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = "2";
+//    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = "3";
+//    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = "4";
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB1);
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB201);
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB211);
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB212);
+
     private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1;
     private boolean syncTaskMasterFolderSmbIpcSigningEnforced = true;
     private String syncTaskMasterFolderRemovableStorageID = "";
@@ -89,13 +96,13 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskTargetFolderType = SYNC_FOLDER_TYPE_INTERNAL;
     private String syncTaskTargetFolderDirName = "";
     private String syncTaskTargetLocalMountPoint = "";
-    private String syncTaskTargetFolderRemoteSmbShareName = "";
-    private String syncTaskTargetFolderRemoteIpAddress = "";
-    private String syncTaskTargetFolderRemoteHostName = "";
-    private String syncTaskTargetFolderRemotePortNumber = "";
-    private String syncTaskTargetFolderRemoteUserName = "";
-    private String syncTaskTargetFolderRemotePassword = "";
-    private String syncTaskTargetFolderRemoteDomain = "";
+    private String syncTaskTargetFolderSmbShareName = "";
+    private String syncTaskTargetFolderSmbIpAddress = "";
+    private String syncTaskTargetFolderSmbHostName = "";
+    private String syncTaskTargetFolderSmbPortNumber = "";
+    private String syncTaskTargetFolderSmbUserName = "";
+    private String syncTaskTargetFolderSmbPassword = "";
+    private String syncTaskTargetFolderSmbDomain = "";
     private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1;
     private boolean syncTaskTargetFolderSmbIpcSigningEnforced = true;
     private String syncTaskTargetFolderRemovableStorageID = "";
@@ -203,23 +210,23 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setSyncTwoWayKeepConflictFile(boolean keep_file) {syncTwoWayConflictKeepConflictFile=keep_file;}
     public boolean isSyncTwoWayKeepConflictFile() {return syncTwoWayConflictKeepConflictFile;}
 
-    public String getMasterSmbUserName() {return syncTaskMasterFolderRemoteUserName;}
+    public String getMasterSmbUserName() {return syncTaskMasterFolderSmbUserName;}
 
-    public String getMasterSmbPassword() {return syncTaskMasterFolderRemotePassword;}
+    public String getMasterSmbPassword() {return syncTaskMasterFolderSmbPassword;}
 
-    public String getMasterRemoteSmbShareName() {return syncTaskMasterFolderRemoteSmbShareName;}
+    public String getMasterSmbShareName() {return syncTaskMasterFolderSmbShareName;}
 
     public String getMasterDirectoryName() {return syncTaskMasterFolderDirName;}
 
     public String getMasterLocalMountPoint() {return syncTaskMasterLocalMountPoint;}
 
-    public String getMasterSmbAddr() {return syncTaskMasterFolderRemoteIpAddress;}
+    public String getMasterSmbAddr() {return syncTaskMasterFolderSmbIpAddress;}
 
-    public String getMasterSmbPort() {return syncTaskMasterFolderRemotePortNumber;}
+    public String getMasterSmbPort() {return syncTaskMasterFolderSmbPortNumber;}
 
-    public String getMasterSmbHostName() {return syncTaskMasterFolderRemoteHostName;}
+    public String getMasterSmbHostName() {return syncTaskMasterFolderSmbHostName;}
 
-    public String getMasterSmbDomain() {return syncTaskMasterFolderRemoteDomain;}
+    public String getMasterSmbDomain() {return syncTaskMasterFolderSmbDomain;}
 
     public String getMasterSmbProtocol() {return syncTaskMasterFolderSmbProtocol;}
 
@@ -232,23 +239,23 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public String getMasterFolderType() {return syncTaskMasterFolderType;}
 
-    public String getTargetSmbUserName() {return syncTaskTargetFolderRemoteUserName;}
+    public String getTargetSmbUserName() {return syncTaskTargetFolderSmbUserName;}
 
-    public String getTargetSmbPassword() {return syncTaskTargetFolderRemotePassword;}
+    public String getTargetSmbPassword() {return syncTaskTargetFolderSmbPassword;}
 
-    public String getTargetSmbShareName() {return syncTaskTargetFolderRemoteSmbShareName;}
+    public String getTargetSmbShareName() {return syncTaskTargetFolderSmbShareName;}
 
     public String getTargetDirectoryName() {return syncTaskTargetFolderDirName;}
 
     public String getTargetLocalMountPoint() {return syncTaskTargetLocalMountPoint;}
 
-    public String getTargetSmbAddr() {return syncTaskTargetFolderRemoteIpAddress;}
+    public String getTargetSmbAddr() {return syncTaskTargetFolderSmbIpAddress;}
 
-    public String getTargetSmbPort() {return syncTaskTargetFolderRemotePortNumber;}
+    public String getTargetSmbPort() {return syncTaskTargetFolderSmbPortNumber;}
 
-    public String getTargetSmbHostName() {return syncTaskTargetFolderRemoteHostName;}
+    public String getTargetSmbHostName() {return syncTaskTargetFolderSmbHostName;}
 
-    public String getTargetSmbDomain() {return syncTaskTargetFolderRemoteDomain;}
+    public String getTargetSmbDomain() {return syncTaskTargetFolderSmbDomain;}
 
     public String getTargetSmbProtocol() {return syncTaskTargetFolderSmbProtocol;}
 
@@ -364,39 +371,39 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public void setSyncTaskName(String p) {syncTasｋName = p;}
 
-    public void setMasterSmbUserName(String p) {syncTaskMasterFolderRemoteUserName = p;}
+    public void setMasterSmbUserName(String p) {syncTaskMasterFolderSmbUserName = p;}
 
-    public void setMasterSmbPassword(String p) {syncTaskMasterFolderRemotePassword = p;}
+    public void setMasterSmbPassword(String p) {syncTaskMasterFolderSmbPassword = p;}
 
-    public void setMasterSmbShareName(String p) {syncTaskMasterFolderRemoteSmbShareName = p;}
+    public void setMasterSmbShareName(String p) {syncTaskMasterFolderSmbShareName = p;}
 
     public void setMasterDirectoryName(String p) {syncTaskMasterFolderDirName = p;}
 
     public void setMasterLocalMountPoint(String mp) {syncTaskMasterLocalMountPoint = mp;}
 
-    public void setMasterSmbAddr(String p) {syncTaskMasterFolderRemoteIpAddress = p;}
-    public void setMasterSmbPort(String p) {syncTaskMasterFolderRemotePortNumber = p;}
+    public void setMasterSmbAddr(String p) {syncTaskMasterFolderSmbIpAddress = p;}
+    public void setMasterSmbPort(String p) {syncTaskMasterFolderSmbPortNumber = p;}
 
-    public void setMasterSmbHostName(String p) {syncTaskMasterFolderRemoteHostName = p;}
-    public void setMasterSmbDomain(String p) {syncTaskMasterFolderRemoteDomain = p;}
+    public void setMasterSmbHostName(String p) {syncTaskMasterFolderSmbHostName = p;}
+    public void setMasterSmbDomain(String p) {syncTaskMasterFolderSmbDomain = p;}
 
     public void setMasterRemovableStorageID(String p) {syncTaskMasterFolderRemovableStorageID = p;}
     public void setMasterFolderType(String p) {syncTaskMasterFolderType = p;}
 
     public void setTargetZipOutputFileName(String p) {syncTaskTargetZipFileName = p;}
-    public void setTargetSmbUserName(String p) {syncTaskTargetFolderRemoteUserName = p;}
+    public void setTargetSmbUserName(String p) {syncTaskTargetFolderSmbUserName = p;}
 
-    public void setTargetSmbPassword(String p) {syncTaskTargetFolderRemotePassword = p;}
-    public void setTargetSmbShareName(String p) {syncTaskTargetFolderRemoteSmbShareName = p;}
+    public void setTargetSmbPassword(String p) {syncTaskTargetFolderSmbPassword = p;}
+    public void setTargetSmbShareName(String p) {syncTaskTargetFolderSmbShareName = p;}
 
     public void setTargetDirectoryName(String p) {syncTaskTargetFolderDirName = p;}
     public void setTargetLocalMountPoint(String mp) {syncTaskTargetLocalMountPoint = mp;}
 
-    public void setTargetRemoteAddr(String p) {syncTaskTargetFolderRemoteIpAddress = p;}
-    public void setTargetRemotePort(String p) {syncTaskTargetFolderRemotePortNumber = p;}
+    public void setTargetSmbAddr(String p) {syncTaskTargetFolderSmbIpAddress = p;}
+    public void setTargetSmbPort(String p) {syncTaskTargetFolderSmbPortNumber = p;}
 
-    public void setTargetRemoteHostname(String p) {syncTaskTargetFolderRemoteHostName = p;}
-    public void setTargetRemoteDomain(String p) {syncTaskTargetFolderRemoteDomain = p;}
+    public void setTargetSmbHostname(String p) {syncTaskTargetFolderSmbHostName = p;}
+    public void setTargetSmbDomain(String p) {syncTaskTargetFolderSmbDomain = p;}
 
     public void setTargetRemovableStorageID(String p) {syncTaskTargetFolderRemovableStorageID = p;}
     public void setTargetFolderType(String p) {syncTaskTargetFolderType = p;}
@@ -540,13 +547,13 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskMasterFolderType.equals(sti.getMasterFolderType())) &&
                 (syncTaskMasterFolderDirName.equals(sti.getMasterDirectoryName())) &&
                 (syncTaskMasterLocalMountPoint.equals(sti.getMasterLocalMountPoint())) &&
-                (syncTaskMasterFolderRemoteSmbShareName.equals(sti.getMasterRemoteSmbShareName())) &&
-                (syncTaskMasterFolderRemoteIpAddress.equals(sti.getMasterSmbAddr())) &&
-                (syncTaskMasterFolderRemoteHostName.equals(sti.getMasterSmbHostName())) &&
-                (syncTaskMasterFolderRemotePortNumber.equals(sti.getMasterSmbPort())) &&
-                (syncTaskMasterFolderRemoteUserName.equals(sti.getMasterSmbUserName())) &&
-                (syncTaskMasterFolderRemotePassword.equals(sti.getMasterSmbPassword())) &&
-                (syncTaskMasterFolderRemoteDomain.equals(sti.getMasterSmbDomain())) &&
+                (syncTaskMasterFolderSmbShareName.equals(sti.getMasterSmbShareName())) &&
+                (syncTaskMasterFolderSmbIpAddress.equals(sti.getMasterSmbAddr())) &&
+                (syncTaskMasterFolderSmbHostName.equals(sti.getMasterSmbHostName())) &&
+                (syncTaskMasterFolderSmbPortNumber.equals(sti.getMasterSmbPort())) &&
+                (syncTaskMasterFolderSmbUserName.equals(sti.getMasterSmbUserName())) &&
+                (syncTaskMasterFolderSmbPassword.equals(sti.getMasterSmbPassword())) &&
+                (syncTaskMasterFolderSmbDomain.equals(sti.getMasterSmbDomain())) &&
                 (syncTaskMasterFolderSmbProtocol.equals(sti.getMasterSmbProtocol())) &&
                 (syncTaskMasterFolderSmbIpcSigningEnforced==sti.isMasterSmbIpcSigningEnforced()) &&
                 (syncTaskMasterFolderRemovableStorageID.equals(sti.getMasterRemovableStorageID()))) {
@@ -554,13 +561,13 @@ class SyncTaskItem implements Serializable, Cloneable {
             if ((syncTaskTargetFolderType.equals(sti.getTargetFolderType())) &&
                     (syncTaskTargetFolderDirName.equals(sti.getTargetDirectoryName())) &&
                     (syncTaskTargetLocalMountPoint.equals(sti.getTargetLocalMountPoint())) &&
-                    (syncTaskTargetFolderRemoteSmbShareName.equals(sti.getTargetSmbShareName())) &&
-                    (syncTaskTargetFolderRemoteIpAddress.equals(sti.getTargetSmbAddr())) &&
-                    (syncTaskTargetFolderRemoteHostName.equals(sti.getTargetSmbHostName())) &&
-                    (syncTaskTargetFolderRemotePortNumber.equals(sti.getTargetSmbPort())) &&
-                    (syncTaskTargetFolderRemoteUserName.equals(sti.getTargetSmbUserName())) &&
-                    (syncTaskTargetFolderRemotePassword.equals(sti.getTargetSmbPassword())) &&
-                    (syncTaskTargetFolderRemoteDomain.equals(sti.getTargetSmbDomain())) &&
+                    (syncTaskTargetFolderSmbShareName.equals(sti.getTargetSmbShareName())) &&
+                    (syncTaskTargetFolderSmbIpAddress.equals(sti.getTargetSmbAddr())) &&
+                    (syncTaskTargetFolderSmbHostName.equals(sti.getTargetSmbHostName())) &&
+                    (syncTaskTargetFolderSmbPortNumber.equals(sti.getTargetSmbPort())) &&
+                    (syncTaskTargetFolderSmbUserName.equals(sti.getTargetSmbUserName())) &&
+                    (syncTaskTargetFolderSmbPassword.equals(sti.getTargetSmbPassword())) &&
+                    (syncTaskTargetFolderSmbDomain.equals(sti.getTargetSmbDomain())) &&
                     (syncTaskTargetFolderSmbProtocol.equals(sti.getTargetSmbProtocol())) &&
                     (syncTaskTargetFolderSmbIpcSigningEnforced==sti.isTargetSmbIpcSigningEnforced()) &&
                     (syncTaskTargetFolderRemovableStorageID.equals(sti.getTargetRemovableStorageID()))) {

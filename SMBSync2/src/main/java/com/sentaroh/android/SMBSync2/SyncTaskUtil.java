@@ -100,6 +100,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_ACCESS_DENIED;
+import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_INVALID_LOGON_TYPE;
+import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_UNKNOWN_ACCOUNT;
+import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_UNSUCCESSFULL;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.BUILD_FOR_AMAZON;
 import static com.sentaroh.android.SMBSync2.Constants.CURRENT_SMBSYNC2_PROFILE_FILE_NAME;
@@ -1581,7 +1585,8 @@ public class SyncTaskUtil {
         String port_num = "";
         if (ctv_use_port_number.isChecked()) port_num = editport.getText().toString();
         final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
-        scanSmbServerDlg(ntfy, port_num, false, sp_sync_folder_smb_proto.getSelectedItemPosition()+1);
+//        scanSmbServerDlg(ntfy, port_num, false, sp_sync_folder_smb_proto.getSelectedItemPosition()+1);
+        scanSmbServerDlg(ntfy, port_num, true, sp_sync_folder_smb_proto.getSelectedItemPosition()+1);
     }
 
     public void invokeSelectSmbShareDlg(Dialog dialog) {
@@ -3391,7 +3396,7 @@ public class SyncTaskUtil {
         else t_remurl = sti.getMasterSmbHostName();
         String h_port = "";
         if (!sti.getMasterSmbPort().equals("")) h_port = ":" + sti.getMasterSmbPort();
-        final String remurl = "smb://" + t_remurl + h_port + "/" + sti.getMasterRemoteSmbShareName();
+        final String remurl = "smb://" + t_remurl + h_port + "/" + sti.getMasterSmbShareName();
         final String remdir = "/" + sti.getMasterDirectoryName() + "/";
         final String smb_proto=sti.getMasterSmbProtocol();
         final boolean ipc_enforced=sti.isMasterSmbIpcSigningEnforced();
@@ -3912,7 +3917,7 @@ public class SyncTaskUtil {
         final Button btn_cancel = (Button) dialog.findViewById(R.id.scan_remote_ntwk_btn_cancel);
         final Button scan_cancel = (Button) dialog.findViewById(R.id.scan_remote_ntwk_progress_cancel);
 
-        final CheckedTextView ctv_use_port_number = (CheckedTextView) dialog.findViewById(R.id.scan_remote_ntwk_ctv_use_port);
+//        final CheckedTextView ctv_use_port_number = (CheckedTextView) dialog.findViewById(R.id.scan_remote_ntwk_ctv_use_port);
         final EditText et_port_number = (EditText) dialog.findViewById(R.id.scan_remote_ntwk_port_number);
 
         tvmsg.setText("");
@@ -3951,8 +3956,7 @@ public class SyncTaskUtil {
                 mScanAddrCount = end_addr - begin_addr + 1;
                 int scan_thread = 60;
                 String scan_port = "";
-                if (ctv_use_port_number.isChecked())
-                    scan_port = et_port_number.getText().toString();
+                if (et_port_number.getText().length()>0) scan_port = et_port_number.getText().toString();
                 for (int i = begin_addr; i <= end_addr; i += scan_thread) {
                     if (!tc.isEnabled()) break;
                     boolean scan_end = false;
@@ -4047,15 +4051,16 @@ public class SyncTaskUtil {
                 }
                 if (isIpAddrSmbHost(addr, scan_port)) {
                     final String srv_name = getSmbHostName(smb_level, addr);
+                    final AdapterNetworkScanResult.NetworkScanListItem smb_server_item = new AdapterNetworkScanResult.NetworkScanListItem();
+                    smb_server_item.server_address = addr;
+                    smb_server_item.server_name = srv_name;
+                    buildSmbServerList(smb_server_item, "", "", "", addr);
                     handler.post(new Runnable() {// UI thread
                         @Override
                         public void run() {
                             synchronized (mScanRequestedAddrList) {
                                 mScanRequestedAddrList.remove(addr);
-                                AdapterNetworkScanResult.NetworkScanListItem li = new AdapterNetworkScanResult.NetworkScanListItem();
-                                li.server_address = addr;
-                                li.server_name = srv_name;
-                                ipAddressList.add(li);
+                                ipAddressList.add(smb_server_item);
                                 Collections.sort(ipAddressList, new Comparator<AdapterNetworkScanResult.NetworkScanListItem>() {
                                     @Override
                                     public int compare(AdapterNetworkScanResult.NetworkScanListItem lhs,
@@ -4100,6 +4105,77 @@ public class SyncTaskUtil {
         });
         th.start();
     }
+
+    final private void buildSmbServerList(AdapterNetworkScanResult.NetworkScanListItem li, String domain, String user, String pass, String address) {
+        SmbServerStatusResult s_result1=createSmbServerVersionList(1, domain, user, pass, address, "SMB1", "SMB1");
+        li.server_smb_smb1_status=s_result1.server_status;
+        li.server_smb_smb1_share_list=s_result1.share_lists;
+        if (li.server_smb_smb1_status.equals("")) li.server_smb_supported="SMB1 ";
+        else if (!li.server_smb_smb1_status.equals(SMB_STATUS_UNSUCCESSFULL)) li.server_smb_supported="SMB1 ";
+
+        SmbServerStatusResult s_result2=createSmbServerVersionList(4, domain, user, pass, address, "SMB202", "SMB210");
+        li.server_smb_smb2_status=s_result2.server_status;
+        li.server_smb_smb2_share_list=s_result2.share_lists;
+        if (li.server_smb_smb2_status.equals("")) li.server_smb_supported+="SMB2 ";
+        else if (!li.server_smb_smb2_status.equals(SMB_STATUS_UNSUCCESSFULL)) li.server_smb_supported+="SMB2 ";
+
+        SmbServerStatusResult s_result3=createSmbServerVersionList(4, domain, user, pass, address, "SMB300", "SMB300");
+        li.server_smb_smb3_status=s_result3.server_status;
+        li.server_smb_smb3_share_list=s_result3.share_lists;
+        if (li.server_smb_smb3_status.equals("")) li.server_smb_supported+="SMB3";
+        else if (!li.server_smb_smb3_status.equals(SMB_STATUS_UNSUCCESSFULL)) li.server_smb_supported+="SMB3";
+
+    }
+
+    private class SmbServerStatusResult {
+        public String server_status="";
+        public String share_lists="";
+    }
+
+    final private SmbServerStatusResult createSmbServerVersionList(int smb_level, String domain, String user, String pass, String address,
+                                                                   String min_ver, String max_ver) {
+        JcifsAuth auth=null;
+        if (smb_level==JcifsAuth.JCIFS_FILE_SMB1) auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
+        else auth=new JcifsAuth(smb_level, domain, user, pass, true, min_ver, max_ver);
+        String[] share_list=null;
+        String server_status="";
+        try {
+            JcifsFile sf = new JcifsFile("smb://"+address, auth);
+            share_list=sf.list();
+            server_status="";
+            mUtil.addDebugMsg(1,"I","createSmbServerVersionList level="+smb_level+", address="+address+", min="+min_ver+", max="+max_ver+", result="+server_status);
+            for(String item:share_list) mUtil.addDebugMsg(1,"I","   Share="+item);
+            try {
+                sf.close();
+            } catch(Exception e) {
+                mUtil.addDebugMsg(1,"I","close() failed. Error=",e.getMessage());
+            }
+        } catch (JcifsException e) {
+            if (e.getNtStatus()==0xc0000001) server_status=SMB_STATUS_UNSUCCESSFULL;                 //
+            else if (e.getNtStatus()==0xc0000022) server_status=SMB_STATUS_ACCESS_DENIED;  //
+            else if (e.getNtStatus()==0xc000015b) server_status=SMB_STATUS_INVALID_LOGON_TYPE;  //
+            else if (e.getNtStatus()==0xc000006d) server_status=SMB_STATUS_UNKNOWN_ACCOUNT;  //
+            mUtil.addDebugMsg(1,"I","createSmbServerVersionList level="+smb_level+", address="+address+", min="+min_ver+", max="+max_ver+
+                    ", result="+server_status+String.format(", status=0x%8h",e.getNtStatus()));
+
+        } catch (MalformedURLException e) {
+//            log.info("Test logon failed." , e);
+        }
+        SmbServerStatusResult result=new SmbServerStatusResult();
+        result.server_status=server_status;
+        if (share_list!=null) {
+            String sep="";
+            for(String sli:share_list) {
+                if (!sli.endsWith("$") && !sli.endsWith("$/")) {
+                    if (sli.endsWith("/")) result.share_lists+=sep+sli.substring(0,sli.length()-1);
+                    else result.share_lists+=sep+sli;
+                    sep=",";
+                }
+            }
+        }
+        return result;
+    }
+
 
     private boolean isIpAddrSmbHost(String address, String scan_port) {
         boolean smbhost = false;
@@ -4709,7 +4785,7 @@ public class SyncTaskUtil {
         stli.setMasterDirectoryName("DCIM");
 
         stli.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_SMB);
-        stli.setTargetRemoteAddr("192.168.0.2");
+        stli.setTargetSmbAddr("192.168.0.2");
         stli.setTargetSmbUserName("TESTUSER");
         stli.setTargetSmbPassword("PSWD");
         stli.setTargetSmbShareName("SHARE");
@@ -4859,10 +4935,10 @@ public class SyncTaskUtil {
             stli.setTargetSmbPassword(parm[15]);
             stli.setTargetSmbShareName(parm[16]);
             stli.setTargetDirectoryName(parm[17]);
-            stli.setTargetRemoteAddr(parm[18]);
-            stli.setTargetRemotePort(parm[19]);
-            stli.setTargetRemoteHostname(parm[20]);
-            stli.setTargetRemoteDomain(parm[21]);
+            stli.setTargetSmbAddr(parm[18]);
+            stli.setTargetSmbPort(parm[19]);
+            stli.setTargetSmbHostname(parm[20]);
+            stli.setTargetSmbDomain(parm[21]);
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
@@ -4966,10 +5042,10 @@ public class SyncTaskUtil {
             stli.setTargetSmbPassword(parm[15]);
             stli.setTargetSmbShareName(parm[16]);
             stli.setTargetDirectoryName(parm[17]);
-            stli.setTargetRemoteAddr(parm[18]);
-            stli.setTargetRemotePort(parm[19]);
-            stli.setTargetRemoteHostname(parm[20]);
-            stli.setTargetRemoteDomain(parm[21]);
+            stli.setTargetSmbAddr(parm[18]);
+            stli.setTargetSmbPort(parm[19]);
+            stli.setTargetSmbHostname(parm[20]);
+            stli.setTargetSmbDomain(parm[21]);
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
@@ -5078,10 +5154,10 @@ public class SyncTaskUtil {
             stli.setTargetSmbPassword(parm[15]);
             stli.setTargetSmbShareName(parm[16]);
             stli.setTargetDirectoryName(parm[17]);
-            stli.setTargetRemoteAddr(parm[18]);
-            stli.setTargetRemotePort(parm[19]);
-            stli.setTargetRemoteHostname(parm[20]);
-            stli.setTargetRemoteDomain(parm[21]);
+            stli.setTargetSmbAddr(parm[18]);
+            stli.setTargetSmbPort(parm[19]);
+            stli.setTargetSmbHostname(parm[20]);
+            stli.setTargetSmbDomain(parm[21]);
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
@@ -5197,10 +5273,10 @@ public class SyncTaskUtil {
             stli.setTargetSmbPassword(parm[15]);
             stli.setTargetSmbShareName(parm[16]);
             stli.setTargetDirectoryName(parm[17]);
-            stli.setTargetRemoteAddr(parm[18]);
-            stli.setTargetRemotePort(parm[19]);
-            stli.setTargetRemoteHostname(parm[20]);
-            stli.setTargetRemoteDomain(parm[21]);
+            stli.setTargetSmbAddr(parm[18]);
+            stli.setTargetSmbPort(parm[19]);
+            stli.setTargetSmbHostname(parm[20]);
+            stli.setTargetSmbDomain(parm[21]);
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
@@ -5344,10 +5420,10 @@ public class SyncTaskUtil {
             stli.setTargetSmbPassword(parm[15]);
             stli.setTargetSmbShareName(parm[16]);
             stli.setTargetDirectoryName(parm[17]);
-            stli.setTargetRemoteAddr(parm[18]);
-            stli.setTargetRemotePort(parm[19]);
-            stli.setTargetRemoteHostname(parm[20]);
-            stli.setTargetRemoteDomain(parm[21]);
+            stli.setTargetSmbAddr(parm[18]);
+            stli.setTargetSmbPort(parm[19]);
+            stli.setTargetSmbHostname(parm[20]);
+            stli.setTargetSmbDomain(parm[21]);
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
@@ -5499,10 +5575,10 @@ public class SyncTaskUtil {
             stli.setTargetSmbPassword(parm[15]);
             stli.setTargetSmbShareName(parm[16]);
             stli.setTargetDirectoryName(parm[17]);
-            stli.setTargetRemoteAddr(parm[18]);
-            stli.setTargetRemotePort(parm[19]);
-            stli.setTargetRemoteHostname(parm[20]);
-            stli.setTargetRemoteDomain(parm[21]);
+            stli.setTargetSmbAddr(parm[18]);
+            stli.setTargetSmbPort(parm[19]);
+            stli.setTargetSmbHostname(parm[20]);
+            stli.setTargetSmbDomain(parm[21]);
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
@@ -5701,10 +5777,10 @@ public class SyncTaskUtil {
             stli.setTargetSmbPassword(parm[15]);
             stli.setTargetSmbShareName(parm[16]);
             stli.setTargetDirectoryName(parm[17]);
-            stli.setTargetRemoteAddr(parm[18]);
-            stli.setTargetRemotePort(parm[19]);
-            stli.setTargetRemoteHostname(parm[20]);
-            stli.setTargetRemoteDomain(parm[21]);
+            stli.setTargetSmbAddr(parm[18]);
+            stli.setTargetSmbPort(parm[19]);
+            stli.setTargetSmbHostname(parm[20]);
+            stli.setTargetSmbDomain(parm[21]);
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
@@ -5903,10 +5979,10 @@ public class SyncTaskUtil {
             stli.setTargetSmbPassword(parm[15]);
             stli.setTargetSmbShareName(parm[16]);
             stli.setTargetDirectoryName(parm[17]);
-            stli.setTargetRemoteAddr(parm[18]);
-            stli.setTargetRemotePort(parm[19]);
-            stli.setTargetRemoteHostname(parm[20]);
-            stli.setTargetRemoteDomain(parm[21]);
+            stli.setTargetSmbAddr(parm[18]);
+            stli.setTargetSmbPort(parm[19]);
+            stli.setTargetSmbHostname(parm[20]);
+            stli.setTargetSmbDomain(parm[21]);
 
             stli.setFileFilter(ff);
             stli.setDirFilter(df);
@@ -6159,7 +6235,7 @@ public class SyncTaskUtil {
                     String pl_master_folder_type = convertToCodeChar(item.getMasterFolderType());
                     String pl_master_remote_user_id = convertToCodeChar(item.getMasterSmbUserName());
                     String pl_master_remote_password = convertToCodeChar(item.getMasterSmbPassword());
-                    String pl_master_remoteSmbShare = convertToCodeChar(item.getMasterRemoteSmbShareName());
+                    String pl_master_remoteSmbShare = convertToCodeChar(item.getMasterSmbShareName());
                     String pl_master_directory_name = convertToCodeChar(item.getMasterDirectoryName());
                     String pl_master_remote_addr = item.getMasterSmbAddr();
                     String pl_master_remote_port = item.getMasterSmbPort();

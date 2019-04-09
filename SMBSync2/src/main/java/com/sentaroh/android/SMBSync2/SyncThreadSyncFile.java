@@ -39,17 +39,13 @@ import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.TimeZone;
 
-import static com.sentaroh.android.SMBSync2.Constants.ARCHIVE_FILE_TYPE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_MOVE;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_YEAR;
 
 public class SyncThreadSyncFile {
 
@@ -77,7 +73,7 @@ public class SyncThreadSyncFile {
                 if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
                         !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
                                 SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
-                    if (isSmbFileExitst(stwa, smb_fl, master_dir)) {
+                    if (isSmbFileExists(stwa, smb_fl, master_dir)) {
                         File[] children = tf.listFiles();
                         if (children != null) {
                             for (File element : children) {
@@ -133,7 +129,7 @@ public class SyncThreadSyncFile {
                         !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
                                 SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     if (!SyncThread.isHiddenFile(stwa, sti, tf)) {
-                        if (!isSmbFileExitst(stwa, smb_fl, master_dir)) {
+                        if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
                             if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
                                     SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
@@ -179,7 +175,7 @@ public class SyncThreadSyncFile {
                 if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
                         !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
                                 SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
-                    if (isSmbFileExitst(stwa, smb_fl, master_dir)) {
+                    if (isSmbFileExists(stwa, smb_fl, master_dir)) {
                         File[] children = tf.listFiles();
                         if (children != null) {
                             for (File element : children) {
@@ -236,7 +232,7 @@ public class SyncThreadSyncFile {
                         !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
                                 SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     if (!SyncThread.isHiddenFile(stwa, sti, tf)) {
-                        if (!isSmbFileExitst(stwa, smb_fl, master_dir)) {
+                        if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
                             if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
                                     SyncThread.deleteInternalStorageItem(stwa, true, sti, target_dir);
@@ -259,7 +255,7 @@ public class SyncThreadSyncFile {
         return sync_result;
     }
 
-    private static boolean isSmbFileExitst(SyncThreadWorkArea stwa, ArrayList<String> smb_fl, String fp) throws IOException, JcifsException {
+    private static boolean isSmbFileExists(SyncThreadWorkArea stwa, ArrayList<String> smb_fl, String fp) throws IOException, JcifsException {
         boolean mf_exists = (Collections.binarySearch(stwa.smbFileList, fp) >= 0);
         if (!mf_exists) {
             stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " file list not found, fp=" + fp);
@@ -2717,7 +2713,7 @@ public class SyncThreadSyncFile {
                 if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
                         !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
                                 SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
-                    if (isSmbFileExitst(stwa, smb_fl, master_dir)) {
+                    if (isSmbFileExists(stwa, smb_fl, master_dir)) {
                         JcifsFile[] children = tf.listFiles();
                         if (children != null) {
                             for (JcifsFile element : children) {
@@ -2776,7 +2772,7 @@ public class SyncThreadSyncFile {
                         !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
                                 SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     if (!SyncThread.isHiddenFile(stwa, sti, tf)) {
-                        if (!isSmbFileExitst(stwa, smb_fl, master_dir)) {
+                        if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
                             if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
                                     SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);

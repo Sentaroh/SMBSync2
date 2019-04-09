@@ -357,8 +357,6 @@ public class SyncThread extends Thread {
         refreshSyncTaskListAdapter();
     }
 
-    ;
-
     private void listSyncOption(SyncTaskItem sti) {
         mStwa.util.addDebugMsg(1, "I", "Sync Task : Type=" + sti.getSyncTaskType());
         String mst_uid="";
@@ -368,7 +366,7 @@ public class SyncThread extends Thread {
                 ", Addr=" + sti.getMasterSmbAddr() +
                 ", Hostname=" + sti.getMasterSmbHostName() +
                 ", Port=" + sti.getMasterSmbPort() +
-                ", SmbShare=" + sti.getMasterRemoteSmbShareName() +
+                ", SmbShare=" + sti.getMasterSmbShareName() +
                 ", UserID=" + mst_uid +
                 ", Directory=" + sti.getMasterDirectoryName() +
                 ", SMB Protocol=" + sti.getMasterSmbProtocol() +
@@ -728,19 +726,18 @@ public class SyncThread extends Thread {
             reachable = true;
             socket.close();
         } catch (IOException e) {
-//            e.printStackTrace();
+//            ArrayList<String> el=new ArrayList<String>();
+//            el.add(e.getMessage());
+//            if (e.getCause()!=null) el.add(e.getCause().getMessage());
+//            for(String em:el) {
+//                if (em.startsWith("isConnected failed: ECONNREFUSED (Connection refused)")) return true;
+//            }
             mStwa.util.addDebugMsg(1, "I", e.getMessage());
-            StackTraceElement[] ste = e.getStackTrace();
-            for (int i = 0; i < ste.length; i++) {
-                mStwa.util.addDebugMsg(1, "I", ste[i].toString());
-            }
+            for (StackTraceElement ste:e.getStackTrace()) mStwa.util.addDebugMsg(1, "I", ste.toString());
         } catch (Exception e) {
 //            e.printStackTrace();
             mStwa.util.addDebugMsg(1, "I", e.getMessage());
-            StackTraceElement[] ste = e.getStackTrace();
-            for (int i = 0; i < ste.length; i++) {
-                mStwa.util.addDebugMsg(1, "I", ste[i].toString());
-            }
+            for (StackTraceElement ste:e.getStackTrace()) mStwa.util.addDebugMsg(1, "I", ste.toString());
         }
         return reachable;
     }
@@ -1144,7 +1141,7 @@ public class SyncThread extends Thread {
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             //External to Internal
             from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
-                    sti.getMasterSmbPort(), sti.getMasterRemoteSmbShareName(), sti.getMasterDirectoryName()) + "/";
+                    sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
 
@@ -1169,7 +1166,7 @@ public class SyncThread extends Thread {
             to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
             from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
-                    sti.getMasterSmbPort(), sti.getMasterRemoteSmbShareName(), sti.getMasterDirectoryName()) + "/";
+                    sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
@@ -1192,7 +1189,7 @@ public class SyncThread extends Thread {
             to_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getTargetDirectoryName());
 
             from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
-                    sti.getMasterSmbPort(), sti.getMasterRemoteSmbShareName(), sti.getMasterDirectoryName()) + "/";
+                    sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
@@ -1216,7 +1213,7 @@ public class SyncThread extends Thread {
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName()) + "/";
 
             from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
-                    sti.getMasterSmbPort(), sti.getMasterRemoteSmbShareName(), sti.getMasterDirectoryName()) + "/";
+                    sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);

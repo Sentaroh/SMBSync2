@@ -128,27 +128,27 @@
         <string name="msgs_main_location_service_warning_suppress">この警告を次回以降表示しない （アプリ設定の同期設定で再表示できます）</string>
         <string name="msgs_main_location_service_warning_title">ロケーションサービスについての警告</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
-        <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD選択アクティビティを起動できませんでした。</string>
-        <string name="msgs_main_external_sdcard_select_required_cancel_msg">SDCARDが選択されるまで同期は実行できません。 タスク=%s</string>
-        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">SDCARDにアクセスするために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「ＳＤＣＡＲＤを選択」をタップしてください。\n
+        <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARDへの書込み許可を行うアクティビティを起動できませんでした。</string>
+        <string name="msgs_main_external_sdcard_select_required_cancel_msg">SDCARDへの書込が許可されるまで同期は実行できません。 タスク=%s</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">SDCARDへの書込を許可するために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「ＳＤＣＡＲＤを選択」をタップしてください。\n
 (ステップ２の「ＳＤＣＡＲＤを選択」の画面が直接表示された時は「ＳＤＣＡＲＤを選択」をタップしてください)</string>
-        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">SDCARDにアクセスするために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">SDCARDへの書込を許可するために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
 (ステップ２で左上に「ＳＤＣＡＲＤ」の画面が直接表示された時は「選択」をタップしてください。左上に「ＳＤＣＡＲＤ」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_JA.png</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_JA.png</string>
-        <string name="msgs_main_external_sdcard_select_required_title">SDCARDの選択</string>
+        <string name="msgs_main_external_sdcard_select_required_title">SDCARDへの書込許可</string>
         <string name="msgs_main_external_sdcard_select_retry_select_msg">SDCARDのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
         <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USBストレージが選択されました。SDCARDを選択しなおしますか？</string>
         <string name="msgs_main_external_usb_mp_changed_title">USBメディア</string>
-        <string name="msgs_main_external_usb_select_activity_not_found_msg">USBメディア選択アクティビティを起動できませんでした。</string>
-        <string name="msgs_main_external_usb_drive_not_found_msg">USBドライブが見つからないためUSBメディアの選択はできません</string>
+        <string name="msgs_main_external_usb_select_activity_not_found_msg">USBメディアへの書込み許可を行うアクティビティを起動できませんでした。</string>
+        <string name="msgs_main_external_usb_drive_not_found_msg">USBメディアがマウントされていません。画面を閉じてからUSBメディアをマウントして、操作を行ってください。</string>
         <string name="msgs_main_external_usb_select_path_not_available_msg">マウントポイント(/storage/%s)が見つかりません。この装置に於いてSMBSync2ではUSBメディアを使用できません。</string>
-        <string name="msgs_main_external_usb_select_required_cancel_msg">USBメディアが選択されるまで同期は実行できません。 タスク=%s</string>
-        <string name="msgs_main_external_usb_select_required_select_msg_api23">USBメディアにアクセスするために、ステップ１.「USB」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
+        <string name="msgs_main_external_usb_select_required_cancel_msg">USBメディアへの書込許可がされるまで同期は実行できません。 タスク=%s</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_api23">USBメディアの書込を許可するために、ステップ１.「USB」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
 (ステップ２で左上に「USB」の画面が直接表示された時は「選択」をタップしてください。左上に「USB」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_JA.png</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_JA.png</string>
-        <string name="msgs_main_external_usb_select_required_title">USBメディアの選択</string>
+        <string name="msgs_main_external_usb_select_required_title">USBメディアへの書込許可</string>
         <string name="msgs_main_external_usb_select_retry_select_msg">USBメディアのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARDが選択されました。USBストレージを選択しなおしますか？</string>
         <string name="msgs_main_permission_coarse_location_denied_msg">権限が許可されるまではスリープ中の同期で「SSIDに接続」または「特定のSSIDに接続」を指定している場合はエラーで終了します。</string>
@@ -209,9 +209,9 @@
         <string name="msgs_main_sync_profile_dlg_specify_host_userid_pswd">SMBホストのアカウント名とパスワード又はパスワードのみ入力してください。</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_pswd">SMBホストのパスワードを入力してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync">同期</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master">SDCARDが選択されていません、マスターフォルダーを編集してSDCARDを選択してください。</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target">SDCARDが選択されていません、ターゲットフォルダーを編集してSDCARDを選択してください。</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">SDCARDが選択されていません、「SDCARDの選択」を押してSDCARDを選択してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master">SDCARDへの書き込みが許可されていません、マスターフォルダーを編集してSDCARDへの書込みを許可してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target">SDCARDへの書き込みが許可されていません、ターゲットフォルダーを編集してSDCARDへの書込みを許可してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">SDCARDへの書込みが許可されていません、「SDCARDへの書込許可」を押してSDCARDへの書込みを許可してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted">SDCADがマウントされていません</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_internal">内部ストレージ</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">フォルダーの選択</string>
@@ -219,9 +219,9 @@
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_smb">SMB共有</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_usb">USBメディア</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_zip">ZIPフォルダー</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_master">USBメディアが選択されていません、マスターフォルダーを編集してSDCARDを選択してください。</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">USBメディアが選択されていません、ターゲットフォルダーを編集してSDCARDを選択してください。</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">USBメディアが選択されていません、「SDCARDの選択」を押してSDCARDを選択してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_master">USBメディアへの書き込みが許可されていません、マスターフォルダーを編集してUSBメディアへの書込みを許可してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">USBメディアへの書き込みが許可されていません、ターゲットフォルダーを編集してUSBメディアへの書込みを許可してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">USBメディアへの書込みが許可されていません、「USBメディアへの書込許可」を押してUSBメディアへの書込みを許可してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">USBメディアがマウントされていません</string>
         <string name="msgs_main_sync_profile_dlg_syncopt_prompt">同期方式の選択</string>
         <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">ターゲットフォルダーにディレクトリが指定されていません、意図しない削除や上書きが行われる可能性があります。続行しますか？</string>
@@ -280,8 +280,8 @@
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">ポート番号を指定する</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">アカウント名</string>
         <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">SMBサーバーの検索</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">SDCARDの選択</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_select_usb">USBメディアの選択</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">SDCARDへの書込許可</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_usb">USBメディアへの書込許可</string>
         <string name="msgs_profile_edit_sync_folder_dlg_show_password">パスワードの表示</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMBプロトコル</string>

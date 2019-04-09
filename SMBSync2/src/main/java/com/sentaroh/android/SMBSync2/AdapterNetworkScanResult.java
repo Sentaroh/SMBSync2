@@ -91,18 +91,18 @@ public class AdapterNetworkScanResult extends ArrayAdapter<AdapterNetworkScanRes
             holder = (ViewHolder) v.getTag();
         }
         if (o != null) {
-            holder.tv_name.setText(o.server_name);
+            holder.tv_name.setText(o.server_name+"\n"+o.server_smb_supported);
             holder.tv_addr.setText(o.server_address);
-            if (o.server_name.startsWith("---")) {
-                holder.tv_addr.setVisibility(Button.GONE);
-            } else {
-                holder.tv_addr.setVisibility(Button.VISIBLE);
-            }
+//            if (o.server_name.startsWith("---")) {
+//                holder.tv_addr.setVisibility(Button.GONE);
+//            } else {
+//                holder.tv_addr.setVisibility(Button.VISIBLE);
+//            }
             if (o.server_name.equals("")) holder.tv_name.setEnabled(false);
             holder.tv_name.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    if (o.server_name.startsWith("---") || !mButtonEnabled) return;
+                    if (o.server_name.equals("") || !mButtonEnabled) return;
                     mNtfyEvent.notifyToListener(true, new String[]{"N", o.server_name});
                 }
             });
@@ -110,7 +110,7 @@ public class AdapterNetworkScanResult extends ArrayAdapter<AdapterNetworkScanRes
             holder.tv_addr.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    if (o.server_name.startsWith("---") || !mButtonEnabled) return;
+                    if (!mButtonEnabled) return;
                     mNtfyEvent.notifyToListener(true, new String[]{"A", o.server_address});
                 }
             });
@@ -118,15 +118,27 @@ public class AdapterNetworkScanResult extends ArrayAdapter<AdapterNetworkScanRes
         return v;
     }
 
-    ;
-
     class ViewHolder {
         Button tv_name, tv_addr;
     }
 
     static class NetworkScanListItem {
+        public static final String SMB_STATUS_UNSUCCESSFULL="Unsuccessfull";
+        public static final String SMB_STATUS_ACCESS_DENIED="Access denied";
+        public static final String SMB_STATUS_INVALID_LOGON_TYPE="Invalid login type";
+        public static final String SMB_STATUS_UNKNOWN_ACCOUNT="Unknown account or invalid password";
+
         public String server_name = "";
         public String server_address = "";
+
+        public String server_smb_supported = "";
+        public String server_smb_smb1_status = "";
+        public String server_smb_smb2_status = "";
+        public String server_smb_smb3_status = "";
+        public String server_smb_smb1_share_list = "";
+        public String server_smb_smb2_share_list = "";
+        public String server_smb_smb3_share_list = "";
+
     }
 }
 

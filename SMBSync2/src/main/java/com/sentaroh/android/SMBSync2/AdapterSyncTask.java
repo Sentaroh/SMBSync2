@@ -307,7 +307,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 if (dir.equals("")) holder.tv_row_master.setText((mGp.safMgr.getSdcardRootPath()));
                 else holder.tv_row_master.setText((mGp.safMgr.getSdcardRootPath() + "/" + dir));
                 if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                    holder.iv_row_image_master.setImageResource(R.drawable.ic_32_bad_media);
+                    holder.iv_row_image_master.setImageResource(R.drawable.ic_32_sdcard_bad);
                 } else {
                     holder.iv_row_image_master.setImageResource(R.drawable.ic_32_sdcard);
                 }
@@ -316,14 +316,14 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 if (dir.equals("")) holder.tv_row_master.setText((mGp.safMgr.getUsbRootPath()));
                 else holder.tv_row_master.setText((mGp.safMgr.getUsbRootPath() + "/" + dir));
                 if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
-                    holder.iv_row_image_master.setImageResource(R.drawable.ic_32_bad_media);
+                    holder.iv_row_image_master.setImageResource(R.drawable.ic_32_usb_bad);
                 } else {
                     holder.iv_row_image_master.setImageResource(R.drawable.ic_32_usb);
                 }
             } else if (o.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                 String host = o.getMasterSmbAddr();
                 if (o.getMasterSmbAddr().equals("")) host = o.getMasterSmbHostName();
-                String share = o.getMasterRemoteSmbShareName();
+                String share = o.getMasterSmbShareName();
                 String dir = o.getMasterDirectoryName();
                 if (dir.equals("")) holder.tv_row_master.setText("smb://" + host + "/" + share);
                 else holder.tv_row_master.setText("smb://" + host + "/" + share + "/" + dir);
@@ -354,7 +354,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 if (dir.equals("")) holder.tv_row_target.setText((mGp.safMgr.getSdcardRootPath()));
                 else holder.tv_row_target.setText((mGp.safMgr.getSdcardRootPath() + "/" + dir));
                 if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                    holder.iv_row_image_target.setImageResource(R.drawable.ic_32_bad_media);
+                    holder.iv_row_image_target.setImageResource(R.drawable.ic_32_sdcard_bad);
                 } else {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_sdcard);
                 }
@@ -363,7 +363,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 if (dir.equals("")) holder.tv_row_target.setText((mGp.safMgr.getUsbRootPath()));
                 else holder.tv_row_target.setText((mGp.safMgr.getUsbRootPath() + "/" + dir));
                 if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
-                    holder.iv_row_image_target.setImageResource(R.drawable.ic_32_bad_media);
+                    holder.iv_row_image_target.setImageResource(R.drawable.ic_32_usb_bad);
                 } else {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_usb);
                 }
@@ -375,7 +375,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                     holder.tv_row_target.setText((o.getTargetLocalMountPoint() + o.getTargetZipOutputFileName()));
                 if (o.isTargetZipUseExternalSdcard() &&
                         mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                    holder.iv_row_image_target.setImageResource(R.drawable.ic_32_bad_media);
+                    holder.iv_row_image_target.setImageResource(R.drawable.ic_32_sdcard_bad);
                 } else {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_archive);
                 }

@@ -94,6 +94,8 @@ import com.sentaroh.android.Utilities.Widget.CustomViewPagerAdapter;
 import com.sentaroh.android.Utilities.ZipUtil;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -1088,9 +1090,9 @@ public class ActivityMain extends AppCompatActivity {
             }
             menu.findItem(R.id.menu_top_add_shortcut).setEnabled(true);
 
-            menu.findItem(R.id.menu_top_select_storage).setVisible(true);
-//            if (mGp.safMgr.hasExternalSdcardPath()) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
-//            else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
+//            menu.findItem(R.id.menu_top_select_storage).setVisible(true);
+            if (mGp.debuggable) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
+            else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
 
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
@@ -1204,7 +1206,7 @@ public class ActivityMain extends AppCompatActivity {
                 showSystemInfo();
                 return true;
             case R.id.menu_top_select_storage:
-                reselectSdcard("");
+                reselectSdcard("", "");
                 return true;
             case R.id.menu_top_request_grant_coarse_location:
                 mGp.setSettingGrantCoarseLocationRequired(true);
@@ -2086,7 +2088,7 @@ public class ActivityMain extends AppCompatActivity {
                         mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
                         String em=mGp.safMgr.getLastErrorMessage();
                         if (em.length()>0) mUtil.addDebugMsg(1, "I", "SafMessage="+em);
-                        reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
+                        reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg), data.getData().getPath());
                     } else {
                         mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
                         String em=mGp.safMgr.getLastErrorMessage();
@@ -2102,11 +2104,11 @@ public class ActivityMain extends AppCompatActivity {
                             if (mSafSelectActivityNotify != null)
                                 mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
                         } else {
-                            reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg));
+                            reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg), data.getData().getPath());
                         }
                     }
                 } else {
-                    reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_usb_selected_msg));
+                    reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_usb_selected_msg), data.getData().getPath());
                 }
             } else {
                 if (mGp.safMgr.getSdcardRootSafFile() == null && !mIsStorageSelectorActivityNotFound) {
@@ -2130,7 +2132,7 @@ public class ActivityMain extends AppCompatActivity {
                         mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
                         String em=mGp.safMgr.getLastErrorMessage();
                         if (em.length()>0) mUtil.addDebugMsg(1, "I", "SafMessage="+em);
-                        reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg));
+                        reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg), data.getData().getPath());
                     } else {
                         mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
                         String em=mGp.safMgr.getLastErrorMessage();
@@ -2153,11 +2155,11 @@ public class ActivityMain extends AppCompatActivity {
                                 if (mSafSelectActivityNotify != null) mSafSelectActivityNotify.notifyToListener(true, new Object[]{data.getData()});
                             }
                         } else {
-                            reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg));
+                            reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg), data.getData().getPath());
                         }
                     }
                 } else {
-                    reselectSdcard(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_sdcard_selected_msg));
+                    reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_sdcard_selected_msg), data.getData().getPath());
                 }
             } else {
                 if (mGp.safMgr.getSdcardRootSafFile() == null && !mIsStorageSelectorActivityNotFound) {
@@ -2182,9 +2184,16 @@ public class ActivityMain extends AppCompatActivity {
             startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
         } catch (Exception e) {
             mIsStorageSelectorActivityNotFound = true;
+            final StringWriter sw = new StringWriter();
+            final PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            pw.flush();
+            pw.close();
+            String emsg=mContext.getString(R.string.msgs_main_external_sdcard_select_activity_not_found_msg)+"\n"+e.getMessage();
+            mUtil.addLogMsg("E", emsg+"\n"+sw.toString());
             commonDlg.showCommonDialog(false, "E",
                     mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
-                    mContext.getString(R.string.msgs_main_external_sdcard_select_activity_not_found_msg),
+                    emsg,
                     null);
         }
     }
@@ -2196,14 +2205,21 @@ public class ActivityMain extends AppCompatActivity {
             startActivityForResult(intent, ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS);
         } catch (Exception e) {
             mIsStorageSelectorActivityNotFound = true;
+            final StringWriter sw = new StringWriter();
+            final PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            pw.flush();
+            pw.close();
+            String emsg=mContext.getString(R.string.msgs_main_external_usb_select_activity_not_found_msg)+"\n"+e.getMessage();
+            mUtil.addLogMsg("E", emsg+"\n"+sw.toString());
             commonDlg.showCommonDialog(false, "E",
                     mContext.getString(R.string.msgs_main_external_usb_select_required_title),
-                    mContext.getString(R.string.msgs_main_external_usb_select_activity_not_found_msg),
+                    emsg,
                     null);
         }
     }
 
-    private void reselectSdcard(String msg) {
+    private void reselectSdcard(String msg, String intent_data) {
         NotifyEvent ntfy_retry = new NotifyEvent(mContext);
         ntfy_retry.setListener(new NotifyEventListener() {
             @Override
@@ -2248,11 +2264,11 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         if (msg.equals("")) ntfy_retry.notifyToListener(true, null);
-        else commonDlg.showCommonDialog(true, "W", msg, "", ntfy_retry);
+        else commonDlg.showCommonDialog(true, "W", msg, intent_data, ntfy_retry);
 
     }
 
-    private void reselectUsb(String msg) {
+    private void reselectUsb(String msg, String intent_data) {
         NotifyEvent ntfy_retry = new NotifyEvent(mContext);
         ntfy_retry.setListener(new NotifyEventListener() {
             @Override
@@ -2297,7 +2313,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         if (msg.equals("")) ntfy_retry.notifyToListener(true, null);
-        else commonDlg.showCommonDialog(true, "W", msg, "", ntfy_retry);
+        else commonDlg.showCommonDialog(true, "W", msg, intent_data, ntfy_retry);
 
     }
 

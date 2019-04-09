@@ -128,8 +128,8 @@
         <string name="msgs_main_location_service_warning_suppress">Disable this warning (can be enabled in sync settings)</string>
         <string name="msgs_main_location_service_warning_title">Warning about Location service</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
-        <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARD select activity can not be started.</string>
-        <string name="msgs_main_external_sdcard_select_required_cancel_msg">Unable to perform sync until SDCARD is selected.</string>
+        <string name="msgs_main_external_sdcard_select_activity_not_found_msg">Failed to launch activity to write permission to SDCARD.</string>
+        <string name="msgs_main_external_sdcard_select_required_cancel_msg">You cannot synchronize until you are allowed to write to SDCARD.</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_api21">To access the SDCARD:  Tap \“SDCARD\” (1), then tap  \“Select\” (2).\n
 \n
 If the "Open From" panel is not displayed, tap the menu button in the upper left corner.</string>
@@ -138,20 +138,20 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
 If the "Open From" panel is not displayed, tap the menu button in the upper left corner.</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_EN.png</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_EN.png</string>
-        <string name="msgs_main_external_sdcard_select_required_title">Select SDCARD</string>
+        <string name="msgs_main_external_sdcard_select_required_title">Allow Write to SDCARD</string>
         <string name="msgs_main_external_sdcard_select_retry_select_msg">The root directory of the SDCARD was not selected.  Do you want to reselect?</string>
         <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USB storage was selected.  Do you want to select SDCARD instead?</string>
         <string name="msgs_main_external_usb_mp_changed_title">USB Media</string>
-        <string name="msgs_main_external_usb_select_activity_not_found_msg">USB Media select activity can not be started.</string>
-        <string name="msgs_main_external_usb_drive_not_found_msg">USB media cannot be selected because the USB drive is not found</string>
+        <string name="msgs_main_external_usb_select_activity_not_found_msg">Failed to launch activity to write permission to USB media.</string>
+        <string name="msgs_main_external_usb_drive_not_found_msg">USB media is not mounted. Close the screen and then mount the USB media to perform the operation.</string>
         <string name="msgs_main_external_usb_select_path_not_available_msg">A mount point /storage/%s could not be found.  SMBSync2 unable to use this USB media.</string>
-        <string name="msgs_main_external_usb_select_required_cancel_msg">%s unable to perform sync until USB media is selected.</string>
+        <string name="msgs_main_external_usb_select_required_cancel_msg">%s ｙou cannot synchronize until you are allowed to write to USB media.</string>
         <string name="msgs_main_external_usb_select_required_select_msg_api23">To access the USB media:  Tap \“USB\” (1), then tap  \“Select\” (2).\n
 \n
 If the "Open From" panel is not displayed, tap the menu button in the upper left corner.</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_EN.png</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_EN.png</string>
-        <string name="msgs_main_external_usb_select_required_title">Select USB Media</string>
+        <string name="msgs_main_external_usb_select_required_title">Allow Write to USB Media</string>
         <string name="msgs_main_external_usb_select_retry_select_msg">The root directory of the USB media was not selected. Do you want to reselect?</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARD was selected. Do you want to reselect USB storage?</string>
         <string name="msgs_main_permission_coarse_location_denied_msg">Until permission is granted, if \"Connect to SSID\" or \"Connect to specific SSID\" is specified in the sleeping sync, it ends with an error.\n Would you like to disable this message in the future? (In order to display again, enable \"Coarse Location\" request by setting.)</string>
@@ -212,9 +212,9 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_main_sync_profile_dlg_specify_host_userid_pswd">Specify the SMB Host account name and password or password only.</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_pswd">Specify the SMB Host password.</string>
         <string name="msgs_main_sync_profile_dlg_sync">Sync</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master">Tap \"Select SDCARD\" below to select SDCARD volume.</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target">Tap \"Select SDCARD\" below to select SDCARD volume.</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">Tap \"Select SDCARD\" below to select SDCARD volume.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master">Write to SDCARD is not allowed, edit the master folder and allow writing to SDCARD.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target">Write to SDCARD is not allowed, edit the target folder and allow writing to SDCARD.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">Write to SDCARD is not allowed, press "Allow write to SDCARD" to allow writing to SDCARD.</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted">SDCARD is not mounted.</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_internal">Internal Storage</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">Select folder type</string>
@@ -222,9 +222,9 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_smb">SMB Server</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_usb">USB Media</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_zip">ZIP Folder</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_master">USB Media is not selected, please select the SDCARD in master folder editing.</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">USB Media is not selected, please select the SDCARD in target folder editing.</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">USB Media is not selected, please select the SDCARD by pressing the “Select SDCARD”.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_master">Write to USB Media is not allowed, edit the master folder and allow writing to USB Media.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">Write to USB Media is not allowed, edit the target folder and allow writing to USB Media.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">Write to USB Media is not allowed, press "Allow write to USB Media" to allow writing to USB Media.</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">USB Media is not mounted.</string>
         <string name="msgs_main_sync_profile_dlg_syncopt_prompt">Select sync option</string>
         <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">Warning:  No target directory specified for this task.  Unpredictable deletes or overwrites may occur.  Continue?</string>
@@ -283,8 +283,8 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">Use port number</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">Account name</string>
         <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">Search SMB server</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">Select SDCARD</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_select_usb">Select USB Media</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">Allow write to SDCARD</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_usb">Allow write to USB Media</string>
         <string name="msgs_profile_edit_sync_folder_dlg_show_password">Show password</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMB protocol</string>

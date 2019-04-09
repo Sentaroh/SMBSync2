@@ -119,9 +119,9 @@ public class ImportOldProfileList {
                 if (t_pli != null) {
                     if (pli.getTargetType().equals(SMBSYNC_PROF_TYPE_REMOTE)) {
                         sti.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_SMB);
-                        sti.setTargetRemoteAddr(t_pli.getRemoteAddr());
-                        sti.setTargetRemoteHostname(t_pli.getRemoteHostname());
-                        sti.setTargetRemotePort(t_pli.getRemotePort());
+                        sti.setTargetSmbAddr(t_pli.getRemoteAddr());
+                        sti.setTargetSmbHostname(t_pli.getRemoteHostname());
+                        sti.setTargetSmbPort(t_pli.getRemotePort());
                         sti.setTargetSmbShareName(t_pli.getRemoteShareName());
                         sti.setTargetSmbUserName(t_pli.getRemoteUserID());
                         sti.setTargetSmbPassword(t_pli.getRemotePassword());
