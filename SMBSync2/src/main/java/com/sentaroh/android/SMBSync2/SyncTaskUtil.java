@@ -4688,6 +4688,8 @@ public class SyncTaskUtil {
                         priv_key=KeyStoreUtil.getGeneratedPasswordOldVersion(context, SMBSYNC2_KEY_STORE_ALIAS);
                     } else if (pf.equals(SMBSYNC2_PROFILE_FILE_NAME_V8)) {
                         priv_key=KeyStoreUtil.getGeneratedPasswordNewVersion(context, SMBSYNC2_KEY_STORE_ALIAS);
+                    } else {
+                        priv_key=KeyStoreUtil.getGeneratedPasswordNewVersion(context, SMBSYNC2_KEY_STORE_ALIAS);
                     }
                     cp_int=EncryptUtil.initDecryptEnv(priv_key);
                     br = new BufferedReader(new FileReader(gp.applicationRootDirectory + "/" + pf), 8192);
