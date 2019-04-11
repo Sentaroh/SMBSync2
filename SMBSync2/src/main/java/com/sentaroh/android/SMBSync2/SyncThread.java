@@ -703,13 +703,14 @@ public class SyncThread extends Thread {
     }
 
     private boolean isIpaddressConnectable(String addr, int port) {
-        int cnt = 7;
+//        int cnt = 3;
         boolean result = false;
-        while (cnt > 0) {
-            result = isIpAddressAndPortConnected(addr, port, 1000);
-            if (result) break;
-            cnt--;
-        }
+        result = isIpAddressAndPortConnected(addr, port, 3500);//1000);
+//        while (cnt > 0) {
+//            result = isIpAddressAndPortConnected(addr, port, 3500);//1000);
+//            if (result) break;
+//            cnt--;
+//        }
         return result;
     }
 
