@@ -4180,15 +4180,13 @@ public class SyncTaskUtil {
     private boolean isIpAddrSmbHost(String address, String scan_port) {
         boolean smbhost = false;
         if (scan_port.equals("")) {
-            if (!JcifsUtil.isIpAddressAndPortConnected(address, 139, 3000)) {
-                smbhost = JcifsUtil.isIpAddressAndPortConnected(address, 445, 3000);
+            if (!JcifsUtil.isIpAddressAndPortConnected(address, 445, 3500)) {
+                smbhost = JcifsUtil.isIpAddressAndPortConnected(address, 139, 3500);
             } else smbhost = true;
         } else {
-            smbhost = JcifsUtil.isIpAddressAndPortConnected(address,
-                    Integer.parseInt(scan_port), 3000);
+            smbhost = JcifsUtil.isIpAddressAndPortConnected(address, Integer.parseInt(scan_port), 3500);
         }
-        mUtil.addDebugMsg(2, "I", "isIpAddrSmbHost Address=" + address +
-                ", port=" + scan_port + ", smbhost=" + smbhost);
+        mUtil.addDebugMsg(2, "I", "isIpAddrSmbHost Address=" + address + ", port=" + scan_port + ", smbhost=" + smbhost);
         return smbhost;
     }
 

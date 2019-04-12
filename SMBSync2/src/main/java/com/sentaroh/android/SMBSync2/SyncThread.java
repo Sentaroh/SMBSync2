@@ -637,8 +637,8 @@ public class SyncThread extends Thread {
 //				if (!SmbUtil.isIpAddressAndPortConnected(addr,139,3500)
 //						&& !SmbUtil.isIpAddressAndPortConnected(addr,445,3500)
 //					) {
-                if (!isIpaddressConnectable(addr, 139)
-                        && !isIpaddressConnectable(addr, 445)
+                if (!isIpaddressConnectable(addr, 445)
+                        && !isIpaddressConnectable(addr, 139)
                         ) {
                     sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                     showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
@@ -676,8 +676,8 @@ public class SyncThread extends Thread {
             if (sti.getTargetSmbPort().equals("")) {
 //				if (!SmbUtil.isIpAddressAndPortConnected(addr,139,3500) &&
 //						!SmbUtil.isIpAddressAndPortConnected(addr,445,3500)) {
-                if (!isIpaddressConnectable(addr, 139) &&
-                        !isIpaddressConnectable(addr, 445)) {
+                if (!isIpaddressConnectable(addr, 445) &&
+                        !isIpaddressConnectable(addr, 139)) {
                     sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                     showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
                             String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
