@@ -413,7 +413,9 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_select_usb_dir">Select USB Media directory</string>
         <string name="msgs_select_remote_dir">Select SMB directory</string>
         <string name="msgs_select_remote_share">Select SMB share</string>
-        <string name="msgs_share_list_not_obtained">Could not get a list of share names.  Ensure correct account name and password are specified and try again, or specify share name manually.</string>
+        <string name="msgs_share_list_not_obtained">Could not get the list of SMB shares. Please check below.\n
+-Shared on the SMB server side\n
+-Specify account/password if you do not specify an account/password</string>
         <string name="msgs_smbsync_main_no_external_storage">External storage was not mounted. Some functions are not available.</string>
         <string name="msgs_smbsync_main_restart_by_destroyed">Application was restarted after being killed.  To disable restart, enable \"Don\'t keep activities\" in Settings > Developer Options.</string>
         <string name="msgs_smbsync_main_restart_by_killed">Application was restarted because it was killed when it moved to the background.</string>

@@ -1453,8 +1453,8 @@ public class SyncTaskUtil {
         }
         try {
             JcifsFile sf = new JcifsFile(url, auth);
-            String[] fl=sf.list();
-//            sf.connect();
+//            String[] fl=sf.list();
+            sf.connect();
             mUtil.addDebugMsg(1, "I", "Test logon completed, host="+host+", port="+port+", Smb Proto="+ra.smb_smb_protocol+", user="+un);
         } catch (JcifsException e) {
             String cm="";
