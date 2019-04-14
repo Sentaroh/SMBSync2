@@ -622,13 +622,12 @@ public class ScheduleListEditor {
                 for (int i = mScheduleAdapter.getCount() - 1; i >= 0; i--) {
                     if (mScheduleAdapter.getItem(i).isChecked) {
                         si = mScheduleAdapter.getItem(i);
+                        ScheduleItem new_si = si.clone();
+                        ScheduleItemEditor sm = new ScheduleItemEditor(util, mActivity, mContext, commonDlg, ccMenu, mGp,
+                                false, mScheduleList, new_si, ntfy);
                         break;
                     }
                 }
-                ScheduleItem new_si = si.clone();
-                ScheduleItemEditor sm = new ScheduleItemEditor(util, mActivity, mContext, commonDlg, ccMenu, mGp,
-                        false, mScheduleList, new_si, ntfy);
-
             }
         });
         ContextButtonUtil.setButtonLabelListener(mContext, mContextButtonCopy, mContext.getString(R.string.msgs_schedule_cont_label_copy));
