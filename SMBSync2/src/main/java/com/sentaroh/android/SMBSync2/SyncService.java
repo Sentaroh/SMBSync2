@@ -737,51 +737,55 @@ public class SyncService extends Service {
 //        if (mGp.callbackStub != null && sound) playBackDefaultNotification();
 //        if (mGp.callbackStub != null && vibration) vibrateDefaultPattern();
         if (!is_notice_message_showed) {
-            if (sound) playBackDefaultNotification();
-            if (vibration) vibrateDefaultPattern();
+            Intent na=new Intent(mContext, ActivityNotification.class);
+            na.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            na.putExtra("SOUND", sound);
+            na.putExtra("SOUND_VOLUME", mGp.settingNotificationVolume);
+            na.putExtra("VIBRATE", vibration);
+            startActivity(na);
         }
     }
 
-    private void playBackDefaultNotification() {
-        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        if (uri != null) {
-            final MediaPlayer player = MediaPlayer.create(mGp.appContext, uri);
-            if (player != null) {
-                float vol = (float) mGp.settingNotificationVolume / 100.0f;
-                player.setVolume(vol, vol);
-                if (player != null) {
-                    final Thread th = new Thread() {
-                        @Override
-                        public void run() {
-                            int dur = player.getDuration();
-                            player.start();
-                            SystemClock.sleep(dur + 10);
-                            player.stop();
-                            player.reset();
-                            player.release();
-                        }
-                    };
-                    th.setPriority(Thread.MAX_PRIORITY);
-                    th.start();
-                }
-            } else {
-                mUtil.addLogMsg("I", "Default notification can not playback, because default playback is not initialized.");
-            }
-        }
-    }
-
-    private void vibrateDefaultPattern() {
-        Thread th = new Thread() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public void run() {
-                Vibrator vibrator = (Vibrator) mGp.appContext.getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(new long[]{0, 300, 200, 300}, -1);
-            }
-        };
-        th.setPriority(Thread.MAX_PRIORITY);
-        th.start();
-    }
+//    private void playBackDefaultNotification() {
+//        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        if (uri != null) {
+//            final MediaPlayer player = MediaPlayer.create(mGp.appContext, uri);
+//            if (player != null) {
+//                float vol = (float) mGp.settingNotificationVolume / 100.0f;
+//                player.setVolume(vol, vol);
+//                if (player != null) {
+//                    final Thread th = new Thread() {
+//                        @Override
+//                        public void run() {
+//                            int dur = player.getDuration();
+//                            player.start();
+//                            SystemClock.sleep(dur + 10);
+//                            player.stop();
+//                            player.reset();
+//                            player.release();
+//                        }
+//                    };
+//                    th.setPriority(Thread.MAX_PRIORITY);
+//                    th.start();
+//                }
+//            } else {
+//                mUtil.addLogMsg("I", "Default notification can not playback, because default playback is not initialized.");
+//            }
+//        }
+//    }
+//
+//    private void vibrateDefaultPattern() {
+//        Thread th = new Thread() {
+//            @SuppressWarnings("deprecation")
+//            @Override
+//            public void run() {
+//                Vibrator vibrator = (Vibrator) mGp.appContext.getSystemService(Context.VIBRATOR_SERVICE);
+//                vibrator.vibrate(new long[]{0, 300, 200, 300}, -1);
+//            }
+//        };
+//        th.setPriority(Thread.MAX_PRIORITY);
+//        th.start();
+//    }
 
     private void showDialogWindow() {
         mGp.dialogWindowShowed = true;
