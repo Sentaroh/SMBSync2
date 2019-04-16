@@ -170,7 +170,7 @@ public class ReadSmbFilelist implements Runnable {
             auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
         } else {
             auth=new JcifsAuth(smb_level, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password,
-                    mRemoteAuthInfo.smb_ipc_signing_enforced);
+                    mRemoteAuthInfo.smb_ipc_signing_enforced, mRemoteAuthInfo.smb_use_smb2_negotiation);
         }
 
         try {
@@ -295,7 +295,7 @@ public class ReadSmbFilelist implements Runnable {
             auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
         } else {
             auth=new JcifsAuth(smb_level, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password,
-                    mRemoteAuthInfo.smb_ipc_signing_enforced);
+                    mRemoteAuthInfo.smb_ipc_signing_enforced, mRemoteAuthInfo.smb_use_smb2_negotiation);
         }
         JcifsFile[] fl=null;
         try {

@@ -247,7 +247,7 @@ public class SyncThread extends Thread {
                         ", WiFi on=" + sri.wifi_on_before_sync_start +
                         ", WiFi delay=" + sri.start_delay_time_after_wifi_on + ", WiFi off=" + sri.wifi_off_after_sync_ended);
 
-                performWiFiOnIfRequired(sri);
+                boolean wifi_on_issued=performWiFiOnIfRequired(sri);
 
                 mStwa.currentSTI = sri.sync_task_list.poll();
 
@@ -302,14 +302,17 @@ public class SyncThread extends Thread {
                     }
                 }
 
-                if (sri.wifi_off_after_sync_ended) wifi_off_after_end = true;
+                if (sri.wifi_off_after_sync_ended && wifi_on_issued) wifi_off_after_end = true;
 
                 mStwa.util.addLogMsg("I",
                         String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_request_ended), sri.request_id));
                 sri = mGp.syncRequestQueue.poll();
             }
 
-            if (wifi_off_after_end) if (isWifiOn()) setWifiOff();
+            if (wifi_off_after_end) if (isWifiOn()) {
+                mStwa.util.addDebugMsg(1, "I", "WiFi off issued");
+                setWifiOff();
+            }
 
             if (sync_error_detected) {
                 showMsg(mStwa, false, "", "W", "", "",
@@ -331,9 +334,11 @@ public class SyncThread extends Thread {
         System.gc();
     }
 
-    private void performWiFiOnIfRequired(SyncRequestItem sri) {
+    private boolean performWiFiOnIfRequired(SyncRequestItem sri) {
+        boolean wifi_on_issued=false;
         if (sri.wifi_on_before_sync_start) {
             if (!isWifiOn()) {
+                wifi_on_issued=true;
                 setWifiOn();
                 if (sri.start_delay_time_after_wifi_on > 0) {
                     mStwa.util.addLogMsg("I", String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_start_was_delayed), sri.start_delay_time_after_wifi_on));
@@ -344,6 +349,7 @@ public class SyncThread extends Thread {
                 }
             }
         }
+        return wifi_on_issued;
     }
 
     private void setSyncTaskRunning(boolean running) {
@@ -371,6 +377,7 @@ public class SyncThread extends Thread {
                 ", Directory=" + sti.getMasterDirectoryName() +
                 ", SMB Protocol=" + sti.getMasterSmbProtocol() +
                 ", SMB IPC signing enforced=" + sti.isMasterSmbIpcSigningEnforced() +
+                ", SMB Use SMB2 Negotiation=" + sti.isMasterSmbUseSmb2Negotiation() +
                 ", RemovableID=" + sti.getMasterRemovableStorageID() +
                 ", MountPoint=" + sti.getMasterLocalMountPoint() +
                 "");
@@ -386,6 +393,7 @@ public class SyncThread extends Thread {
                 ", Directory=" + sti.getTargetDirectoryName() +
                 ", SMB Protocol=" + sti.getTargetSmbProtocol() +
                 ", SMB IPC signing enforced=" + sti.isTargetSmbIpcSigningEnforced() +
+                ", SMB Use SMB2 Negotiation=" + sti.isTargetSmbUseSmb2Negotiation() +
                 ", RemovableID=" + sti.getTargetRemovableStorageID() +
                 ", MountPoint=" + sti.getTargetLocalMountPoint() +
                 ", UseTakenDateTime=" + sti.isTargetUseTakenDateTimeToDirectoryNameKeyword(),
@@ -437,7 +445,7 @@ public class SyncThread extends Thread {
         if (sti.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
             mStwa.masterAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
         } else {
-            mStwa.masterAuth=new JcifsAuth(mst_smb_level, mst_dom, mst_user, mst_pass, sti.isMasterSmbIpcSigningEnforced());
+            mStwa.masterAuth=new JcifsAuth(mst_smb_level, mst_dom, mst_user, mst_pass, sti.isMasterSmbIpcSigningEnforced(), sti.isMasterSmbUseSmb2Negotiation());
         }
 
         String tgt_dom=null, tgt_user=null, tgt_pass=null;
@@ -448,7 +456,7 @@ public class SyncThread extends Thread {
         if (sti.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
             mStwa.targetAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, tgt_dom, tgt_user, tgt_pass);
         } else {
-            mStwa.targetAuth=new JcifsAuth(tgt_smb_level, tgt_dom, tgt_user, tgt_pass, sti.isTargetSmbIpcSigningEnforced());
+            mStwa.targetAuth=new JcifsAuth(tgt_smb_level, tgt_dom, tgt_user, tgt_pass, sti.isTargetSmbIpcSigningEnforced(), sti.isTargetSmbUseSmb2Negotiation());
         }
 
         mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncOptionRetryCount()) + 1;

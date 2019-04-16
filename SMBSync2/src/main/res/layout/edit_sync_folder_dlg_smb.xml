@@ -79,6 +79,17 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 tools:ignore="RtlHardcoded" />
 
+            <CheckedTextView
+                android:id="@+id/edit_sync_folder_dlg_ctv_smb_use_smb2_negotiation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:gravity="center_vertical"
+                android:text="@string/msgs_profile_edit_sync_folder_dlg_smb_use_smb2_negotiation"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:ignore="RtlHardcoded" />
+
             <LinearLayout
                 android:id="@+id/edit_sync_folder_dlg_port_option_view"
                 android:layout_width="match_parent"

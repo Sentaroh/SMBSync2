@@ -184,7 +184,7 @@ public class ScheduleItemEditor {
         final CheckedTextView ctv_wifi_on = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_wifi_on);
         ctv_wifi_on.setTextColor(mGp.themeColorList.text_color_primary);
         CommonUtilities.setCheckedTextView(ctv_wifi_on);
-//		final LinearLayout ll_wifi_on_delay_time_viewx=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_delay_time_view);
+		final LinearLayout ll_wifi_on_delay_time_view=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_delay_time_view);
         final TextView tv_wifi_on_delay_time = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_delay_time_text);
         final RadioGroup rg_wifi_on_delay_time = (RadioGroup) dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_delay_time_rg);
         final RadioButton rb_wifi_on_delay_1 = (RadioButton) dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_delay_time_rg_1);
@@ -470,19 +470,10 @@ public class ScheduleItemEditor {
         ctv_wifi_on.setChecked(mSched.syncWifiOnBeforeStart);
 
         if (mSched.syncWifiOnBeforeStart) {
-            tv_wifi_on_delay_time.setEnabled(true);//.setVisibility(RadioGroup.VISIBLE);
-            rb_wifi_on_delay_1.setEnabled(true);
-            rb_wifi_on_delay_2.setEnabled(true);
-            rb_wifi_on_delay_3.setEnabled(true);
-            rg_wifi_on_delay_time.setEnabled(true);//.setVisibility(RadioGroup.VISIBLE);
-//            ctv_wifi_off.setEnabled(true);//setVisibility(CheckBox.VISIBLE);
+            ll_wifi_on_delay_time_view.setVisibility(LinearLayout.VISIBLE);
         } else {
-            tv_wifi_on_delay_time.setEnabled(false);//setVisibility(RadioGroup.GONE);
-            rb_wifi_on_delay_1.setEnabled(false);
-            rb_wifi_on_delay_2.setEnabled(false);
-            rb_wifi_on_delay_3.setEnabled(false);
-            rg_wifi_on_delay_time.setEnabled(false);//.setVisibility(RadioGroup.VISIBLE);
-//            ctv_wifi_off.setEnabled(false);//setVisibility(CheckBox.GONE);
+            ll_wifi_on_delay_time_view.setVisibility(LinearLayout.GONE);
+            ctv_wifi_off.setChecked(false);
         }
 
         if (mSched.syncDelayAfterWifiOn == 5) {
@@ -501,20 +492,10 @@ public class ScheduleItemEditor {
                 ctv_wifi_on.toggle();
                 boolean isChecked = ctv_wifi_on.isChecked();
                 if (isChecked) {
-                    tv_wifi_on_delay_time.setEnabled(true);//setVisibility(RadioGroup.VISIBLE);
-                    rb_wifi_on_delay_1.setEnabled(true);
-                    rb_wifi_on_delay_2.setEnabled(true);
-                    rb_wifi_on_delay_3.setEnabled(true);
-                    rg_wifi_on_delay_time.setEnabled(true);//.setVisibility(RadioGroup.VISIBLE);
-//                    ctv_wifi_off.setEnabled(true);//setVisibility(CheckBox.VISIBLE);
+                    ll_wifi_on_delay_time_view.setVisibility(LinearLayout.VISIBLE);
                 } else {
-                    tv_wifi_on_delay_time.setEnabled(false);//setVisibility(RadioGroup.GONE);
-                    rb_wifi_on_delay_1.setEnabled(false);
-                    rb_wifi_on_delay_2.setEnabled(false);
-                    rb_wifi_on_delay_3.setEnabled(false);
-                    rg_wifi_on_delay_time.setEnabled(false);//.setVisibility(RadioGroup.VISIBLE);
-//                    ctv_wifi_off.setEnabled(false);//setVisibility(CheckBox.GONE);
-//                    ctv_wifi_off.setChecked(false);
+                    ll_wifi_on_delay_time_view.setVisibility(LinearLayout.GONE);
+                    ctv_wifi_off.setChecked(false);
                 }
                 setScheduleWasChanged(dialog, true);
             }
@@ -864,9 +845,8 @@ public class ScheduleItemEditor {
             sp.syncDelayAfterWifiOn = 5;
         }
 
-//        if (ctv_wifi_on.isChecked()) sp.syncWifiOffAfterEnd = ctv_wifi_off.isChecked();
-//        else sp.syncWifiOffAfterEnd = false;
-        sp.syncWifiOffAfterEnd = ctv_wifi_off.isChecked();
+        if (ctv_wifi_on.isChecked()) sp.syncWifiOffAfterEnd = ctv_wifi_off.isChecked();
+        else sp.syncWifiOffAfterEnd = false;
     }
 
     private void editSyncTaskList(final String prof_list, final NotifyEvent p_ntfy) {

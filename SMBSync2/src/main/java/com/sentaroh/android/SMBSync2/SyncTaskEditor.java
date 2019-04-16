@@ -601,6 +601,18 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
+        final CheckedTextView ctv_sync_folder_smb_use_smb2_negotiation = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_use_smb2_negotiation);
+        ctv_sync_folder_smb_use_smb2_negotiation.setChecked(sfev.folder_smb_use_smb2_negotiation);
+
+        ctv_sync_folder_smb_use_smb2_negotiation.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
+                ctv_sync_folder_smb_use_smb2_negotiation.setChecked(isChecked);
+                checkSyncFolderValidation(dialog, sfev);
+            }
+        });
+
         final CheckedTextView ctv_sync_folder_use_pswd = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
 
         final EditText et_sync_folder_domain = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_domain);
@@ -737,6 +749,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ra.smb_user_password=pass;
                 ra.smb_smb_protocol=getSmbSelectedProtocol(sp_sync_folder_smb_proto);
                 ra.smb_ipc_signing_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
+                ra.smb_use_smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
                 if (JcifsUtil.isValidIpAddress(et_remote_host.getText().toString())) {
                     mTaskUtil.testSmbLogonDlg("", et_remote_host.getText().toString().trim(),
                             et_sync_folder_port.getText().toString().trim(),
@@ -1817,6 +1830,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         final EditText et_remote_host = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
         final CheckedTextView ctv_sync_folder_smb_ipc_enforced = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_ipc_signing_enforced);
+        final CheckedTextView ctv_sync_folder_smb_use_smb2_negotiation = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_use_smb2_negotiation);
         final CheckedTextView ctv_sync_folder_use_port = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
         final EditText et_sync_folder_port = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
         final CheckedTextView ctv_sync_folder_use_pswd = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
@@ -1921,6 +1935,7 @@ public class SyncTaskEditor extends DialogFragment {
             nsfev.folder_remote_share = et_sync_folder_share_name.getText().toString().trim();
             nsfev.folder_smb_protocol=getSmbSelectedProtocol(sp_sync_folder_smb_proto);;
             nsfev.folder_smb_ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
+            nsfev.folder_smb_use_smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
         }
         return nsfev;
     }
@@ -1943,6 +1958,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner sp_sync_folder_mp = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_local_mount_point_selector);
         final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
         final CheckedTextView ctv_sync_folder_smb_ipc_enforced = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_ipc_signing_enforced);
+        final CheckedTextView ctv_sync_folder_smb_use_smb2_negotiation = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_use_smb2_negotiation);
         final LinearLayout ll_sync_folder_smb_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_view);
         final LinearLayout ll_sync_folder_internal_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_view);
         final LinearLayout ll_sync_folder_sdcard_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_sdcard_view);
@@ -1988,8 +2004,11 @@ public class SyncTaskEditor extends DialogFragment {
             ll_sync_folder_zip_view.setVisibility(LinearLayout.GONE);
             if (getSmbSelectedProtocol(sp_sync_folder_smb_proto).equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
                 ctv_sync_folder_smb_ipc_enforced.setEnabled(false);
+                ctv_sync_folder_smb_use_smb2_negotiation.setEnabled(false);
             } else {
                 ctv_sync_folder_smb_ipc_enforced.setEnabled(true);
+                if (getSmbSelectedProtocol(sp_sync_folder_smb_proto).equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB212)) ctv_sync_folder_smb_use_smb2_negotiation.setEnabled(true);
+                else ctv_sync_folder_smb_use_smb2_negotiation.setEnabled(false);
             }
             checkSyncFolderValidation(dialog, org_sfev);
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_SMB);
@@ -3366,6 +3385,7 @@ public class SyncTaskEditor extends DialogFragment {
                         n_sti.setMasterFolderType(nsfev.folder_type);
                         n_sti.setMasterSmbProtocol(nsfev.folder_smb_protocol);
                         n_sti.setMasterSmbIpcSigningEnforced(nsfev.folder_smb_ipc_enforced);
+                        n_sti.setMasterSmbUseSmb2Negotiation(nsfev.folder_smb_use_smb2_negotiation);
                         n_sti.setMasterRemovableStorageID(nsfev.folder_removable_uuid);
 //						n_sti.setMasterFolderUseInternalUsbFolder(nsfev.folder_use_usb_folder);
 //						Log.v("","mdi="+n_sti.getMasterDirectoryName());
@@ -3443,6 +3463,7 @@ public class SyncTaskEditor extends DialogFragment {
                 sfev.folder_remote_user = n_sti.getMasterSmbUserName();
                 sfev.folder_smb_protocol=n_sti.getMasterSmbProtocol();
                 sfev.folder_smb_ipc_enforced=n_sti.isMasterSmbIpcSigningEnforced();
+                sfev.folder_smb_use_smb2_negotiation=n_sti.isMasterSmbUseSmb2Negotiation();
                 sfev.folder_removable_uuid = n_sti.getMasterRemovableStorageID();
                 sfev.folder_type = n_sti.getMasterFolderType();
                 if (!sfev.folder_remote_user.equals("") || !sfev.folder_remote_pswd.equals("")) {
@@ -3485,6 +3506,7 @@ public class SyncTaskEditor extends DialogFragment {
                 n_sti.setTargetSmbUserName(t_sti.getMasterSmbUserName());
                 n_sti.setTargetSmbProtocol(t_sti.getMasterSmbProtocol());
                 n_sti.setTargetSmbIpcSigningEnforced(t_sti.isMasterSmbIpcSigningEnforced());
+                n_sti.setTargetSmbUseSmb2Negotiation(t_sti.isMasterSmbUseSmb2Negotiation());
                 n_sti.setTargetRemovableStorageID(t_sti.getMasterRemovableStorageID());
 
                 master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
@@ -3518,6 +3540,7 @@ public class SyncTaskEditor extends DialogFragment {
                         n_sti.setTargetFolderType(nsfev.folder_type);
                         n_sti.setTargetSmbProtocol(nsfev.folder_smb_protocol);
                         n_sti.setTargetSmbIpcSigningEnforced(nsfev.folder_smb_ipc_enforced);
+                        n_sti.setTargetSmbUseSmb2Negotiation(nsfev.folder_smb_use_smb2_negotiation);
                         n_sti.setTargetRemovableStorageID(nsfev.folder_removable_uuid);
 
                         n_sti.setTargetZipUseExternalSdcard(nsfev.zip_file_use_sdcard);
@@ -3606,6 +3629,7 @@ public class SyncTaskEditor extends DialogFragment {
                 sfev.folder_type = n_sti.getTargetFolderType();
                 sfev.folder_smb_protocol = n_sti.getTargetSmbProtocol();
                 sfev.folder_smb_ipc_enforced=n_sti.isTargetSmbIpcSigningEnforced();
+                sfev.folder_smb_use_smb2_negotiation=n_sti.isTargetSmbUseSmb2Negotiation();
                 sfev.folder_removable_uuid = n_sti.getTargetRemovableStorageID();
 
                 if (!sfev.folder_remote_user.equals("") || !sfev.folder_remote_pswd.equals("")) {
@@ -4394,6 +4418,7 @@ public class SyncTaskEditor extends DialogFragment {
         public String folder_remote_port = "";
         public String folder_smb_protocol = "1";
         public boolean folder_smb_ipc_enforced=true;
+        public boolean folder_smb_use_smb2_negotiation=false;
         public String folder_removable_uuid = "";
 
         public boolean folder_use_taken_date_time_for_directory_keyword=false;
@@ -4466,7 +4491,8 @@ public class SyncTaskEditor extends DialogFragment {
                         folder_remote_port.equals(comp.folder_remote_port) &&
                         folder_smb_protocol.equals(comp.folder_smb_protocol) &&
                         (folder_remote_use_pswd == comp.folder_remote_use_pswd)  &&
-                        (folder_smb_ipc_enforced==comp.folder_smb_ipc_enforced)
+                        (folder_smb_ipc_enforced==comp.folder_smb_ipc_enforced) &&
+                        (folder_smb_use_smb2_negotiation==comp.folder_smb_use_smb2_negotiation)
                         && folder_use_taken_date_time_for_directory_keyword==comp.folder_use_taken_date_time_for_directory_keyword
                     ) result = true;
             } else if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
@@ -4500,6 +4526,7 @@ public class SyncTaskEditor extends DialogFragment {
             folder_remote_port=objectInput.readUTF();
             folder_smb_protocol=objectInput.readUTF();
             folder_smb_ipc_enforced=objectInput.readBoolean();
+            folder_smb_use_smb2_negotiation=objectInput.readBoolean();
             folder_removable_uuid=objectInput.readUTF();
 
             zip_file_use_sdcard=objectInput.readBoolean();
@@ -4525,6 +4552,7 @@ public class SyncTaskEditor extends DialogFragment {
             objectOutput.writeUTF(folder_remote_port);
             objectOutput.writeUTF(folder_smb_protocol);
             objectOutput.writeBoolean(folder_smb_ipc_enforced);
+            objectOutput.writeBoolean(folder_smb_use_smb2_negotiation);
             objectOutput.writeUTF(folder_removable_uuid);
 
             objectOutput.writeBoolean(zip_file_use_sdcard);

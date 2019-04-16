@@ -284,6 +284,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_select_usb">USBメディアへの書込許可</string>
         <string name="msgs_profile_edit_sync_folder_dlg_show_password">パスワードの表示</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_use_smb2_negotiation">Use SMB2 negotiation</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMBプロトコル</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">SMB1</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">SMB V2(2.01)</string>
@@ -570,7 +571,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_1">5秒</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_2">10秒</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30秒</string>
-        <string name="msgs_scheduler_main_dlg_hdr_wifi_off">同期終了後にWi-Fiをオフにする</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_off">同期開始時にWi-Fiをオンにした場合は同期終了後にWi-Fiをオフにする</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">最初の同期を次の分に行います</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">インターバルスケジュールタイムをリセットする</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_time">同期日時 : %s</string>

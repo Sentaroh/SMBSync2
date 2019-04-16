@@ -287,6 +287,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_edit_sync_folder_dlg_select_usb">Allow write to USB Media</string>
         <string name="msgs_profile_edit_sync_folder_dlg_show_password">Show password</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_use_smb2_negotiation">Use SMB2 negotiation</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMB protocol</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">Use SMB V1</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">Use SMB V2(2.01)</string>
@@ -568,12 +569,12 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_scheduler_main_dlg_hdr_hour">Hour</string>
         <string name="msgs_scheduler_main_dlg_hdr_minute">Minute</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_type">Schedule type</string>
-        <string name="msgs_scheduler_main_dlg_hdr_wifi_on">If disabled, enable Wifi on sync start</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on">Turn on Wi-Fi when Wi-Fi is off at the start of sync.</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_time">Delay period before sync after WiFi enable</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_1">5 Sec</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_2">10 Sec</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30 Sec</string>
-        <string name="msgs_scheduler_main_dlg_hdr_wifi_off">Disable WiFi when sync process ends.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_off">If you turn on Wi-Fi at the start of sync, turn off Wi-Fi after the end of sync.</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">It will make the first sync with the next minute.</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">Reset interval schedule time.</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_time">Schedule time : %s</string>

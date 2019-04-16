@@ -209,19 +209,19 @@
                         android:layout_weight="1"
                         android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3" />
                 </RadioGroup>
-		    
+
+                <CheckedTextView
+                    android:id="@+id/scheduler_main_dlg_ctv_wifi_off"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_off"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
 			</LinearLayout>
 		    		    
-		    <CheckedTextView
-		        android:id="@+id/scheduler_main_dlg_ctv_wifi_off"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="5dp"
-		        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-		        android:gravity="center_vertical"
-		        android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_off" 
-		        android:textAppearance="?android:attr/textAppearanceMedium"/>
-            
         </LinearLayout>
     </ScrollView>
 

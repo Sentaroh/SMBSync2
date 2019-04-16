@@ -90,6 +90,9 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1;
     private boolean syncTaskMasterFolderSmbIpcSigningEnforced = true;
+
+    private boolean syncTaskMasterFolderSmbUseSmb2Negotiation = false;
+
     private String syncTaskMasterFolderRemovableStorageID = "";
 //	private boolean syncTaskMasterFolderUseInternalUsbFolder=false;
 
@@ -105,6 +108,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskTargetFolderSmbDomain = "";
     private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1;
     private boolean syncTaskTargetFolderSmbIpcSigningEnforced = true;
+
+    private boolean syncTaskTargetFolderSmbUseSmb2Negotiation = false;
+
     private String syncTaskTargetFolderRemovableStorageID = "";
 
     private String syncTaskTargetZipFileName = "";
@@ -237,6 +243,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isMasterSmbIpcSigningEnforced() {return syncTaskMasterFolderSmbIpcSigningEnforced;}
     public void setMasterSmbIpcSigningEnforced(boolean enforced) {syncTaskMasterFolderSmbIpcSigningEnforced=enforced;}
 
+    public boolean isMasterSmbUseSmb2Negotiation() {return syncTaskMasterFolderSmbUseSmb2Negotiation;}
+    public void setMasterSmbUseSmb2Negotiation(boolean smb2) {syncTaskMasterFolderSmbUseSmb2Negotiation=smb2;}
+
     public String getMasterFolderType() {return syncTaskMasterFolderType;}
 
     public String getTargetSmbUserName() {return syncTaskTargetFolderSmbUserName;}
@@ -262,8 +271,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setTargetSmbProtocol(String proto) {syncTaskTargetFolderSmbProtocol=proto;}
 
     public boolean isTargetSmbIpcSigningEnforced() {return syncTaskTargetFolderSmbIpcSigningEnforced;}
-
     public void setTargetSmbIpcSigningEnforced(boolean enforced) {syncTaskTargetFolderSmbIpcSigningEnforced=enforced;}
+
+    public boolean isTargetSmbUseSmb2Negotiation() {return syncTaskTargetFolderSmbUseSmb2Negotiation;}
+    public void setTargetSmbUseSmb2Negotiation(boolean smb2) {syncTaskTargetFolderSmbUseSmb2Negotiation=smb2;}
 
     public String getTargetRemovableStorageID() {return syncTaskTargetFolderRemovableStorageID;}
 
@@ -556,6 +567,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskMasterFolderSmbDomain.equals(sti.getMasterSmbDomain())) &&
                 (syncTaskMasterFolderSmbProtocol.equals(sti.getMasterSmbProtocol())) &&
                 (syncTaskMasterFolderSmbIpcSigningEnforced==sti.isMasterSmbIpcSigningEnforced()) &&
+                (syncTaskMasterFolderSmbUseSmb2Negotiation==sti.isMasterSmbUseSmb2Negotiation()) &&
                 (syncTaskMasterFolderRemovableStorageID.equals(sti.getMasterRemovableStorageID()))) {
 //                Log.v("","step1");
             if ((syncTaskTargetFolderType.equals(sti.getTargetFolderType())) &&
@@ -570,6 +582,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                     (syncTaskTargetFolderSmbDomain.equals(sti.getTargetSmbDomain())) &&
                     (syncTaskTargetFolderSmbProtocol.equals(sti.getTargetSmbProtocol())) &&
                     (syncTaskTargetFolderSmbIpcSigningEnforced==sti.isTargetSmbIpcSigningEnforced()) &&
+                    (syncTaskTargetFolderSmbUseSmb2Negotiation==sti.isTargetSmbUseSmb2Negotiation()) &&
                     (syncTaskTargetFolderRemovableStorageID.equals(sti.getTargetRemovableStorageID()))) {
 //                Log.v("","step2");
                 if ((syncTaskTargetZipFileName.equals(sti.getTargetZipOutputFileName())) &&

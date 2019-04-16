@@ -25,6 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 public class RemoteAuthInfo {
     public String smb_smb_protocol="1";
     public boolean smb_ipc_signing_enforced=false;
+    public boolean smb_use_smb2_negotiation=false;
     public String smb_domain_name=null;
     public String smb_user_name=null;
     public String smb_user_password=null;
