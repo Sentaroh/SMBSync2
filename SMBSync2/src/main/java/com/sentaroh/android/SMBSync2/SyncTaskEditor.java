@@ -27,12 +27,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -76,13 +79,17 @@ import com.sentaroh.jcifs.JcifsUtil;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Externalizable;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
@@ -1168,7 +1175,9 @@ public class SyncTaskEditor extends DialogFragment {
         btn_select_usb.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CommonUtilities.getUsbUuidListFromStorageManager(mContext).size()>0) {
+                if (!isUsbMountPointExists(mContext, mUtil, getUsbDeviceUuid(mContext, mUtil))) {
+                    mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists), "", null);
+                } else {
                     NotifyEvent ntfy = new NotifyEvent(mContext);
                     ntfy.setListener(new NotifyEventListener() {
                         @Override
@@ -1195,8 +1204,6 @@ public class SyncTaskEditor extends DialogFragment {
                         }
                     });
                     ((ActivityMain) getActivity()).invokeUsbSelector(ntfy);
-                } else {
-                    mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_external_usb_drive_not_found_msg), "", null);
                 }
             }
         });
@@ -2030,19 +2037,27 @@ public class SyncTaskEditor extends DialogFragment {
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD);
 
             ll_sync_folder_mp.setVisibility(LinearLayout.GONE);
-            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
-                dlg_msg.setVisibility(TextView.VISIBLE);
-                btn_sdcard_select_sdcard.setEnabled(true);
-                btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
-                setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
+            if (isSdcardDeviceExists(mContext,mUtil)) {
+                if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                    dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                    dlg_msg.setVisibility(TextView.VISIBLE);
+                    btn_sdcard_select_sdcard.setEnabled(true);
+                    btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
+                    setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
+                } else {
+                    setSyncFolderSmbListDirectoryButtonEnabled(dialog, true);
+                    dlg_msg.setVisibility(TextView.GONE);
+                    dlg_msg.setText("");
+                    btn_sdcard_select_sdcard.setEnabled(false);
+                    btn_sdcard_select_sdcard.setVisibility(Button.GONE);
+                    checkSyncFolderValidation(dialog, org_sfev);
+                }
             } else {
-                setSyncFolderSmbListDirectoryButtonEnabled(dialog, true);
-                dlg_msg.setVisibility(TextView.GONE);
-                dlg_msg.setText("");
+                setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
+                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+                dlg_msg.setVisibility(TextView.VISIBLE);
                 btn_sdcard_select_sdcard.setEnabled(false);
                 btn_sdcard_select_sdcard.setVisibility(Button.GONE);
-                checkSyncFolderValidation(dialog, org_sfev);
             }
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD);
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_usb))) {
@@ -2055,29 +2070,35 @@ public class SyncTaskEditor extends DialogFragment {
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD);
 
             ll_sync_folder_mp.setVisibility(LinearLayout.GONE);
-            if (CommonUtilities.getUsbUuidListFromStorageManager(mContext).size()==0) {
+            if (!isUsbDeviceExists(mContext, mUtil)) {
                 dlg_msg.setText(mContext.getString(R.string.msgs_main_external_usb_drive_not_found_msg));
                 dlg_msg.setVisibility(TextView.VISIBLE);
                 btn_usb_select_usb.setVisibility(Button.GONE);
                 setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
             } else {
-                if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn));
+                if (!isUsbMountPointExists(mContext, mUtil, getUsbDeviceUuid(mContext, mUtil))) {
+                    dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists));
                     dlg_msg.setVisibility(TextView.VISIBLE);
-                    btn_usb_select_usb.setEnabled(true);
-                    btn_usb_select_usb.setVisibility(Button.VISIBLE);
+                    btn_usb_select_usb.setVisibility(Button.GONE);
                     setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
                 } else {
-                    setSyncFolderSmbListDirectoryButtonEnabled(dialog, true);
-                    dlg_msg.setVisibility(TextView.GONE);
-                    dlg_msg.setText("");
-                    btn_usb_select_usb.setEnabled(true);
-                    btn_usb_select_usb.setVisibility(Button.GONE);
-                    checkSyncFolderValidation(dialog, org_sfev);
+                    if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
+                        dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn));
+                        dlg_msg.setVisibility(TextView.VISIBLE);
+                        btn_usb_select_usb.setEnabled(true);
+                        btn_usb_select_usb.setVisibility(Button.VISIBLE);
+                        setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
+                    } else {
+                        setSyncFolderSmbListDirectoryButtonEnabled(dialog, true);
+                        dlg_msg.setVisibility(TextView.GONE);
+                        dlg_msg.setText("");
+                        btn_usb_select_usb.setEnabled(true);
+                        btn_usb_select_usb.setVisibility(Button.GONE);
+                        checkSyncFolderValidation(dialog, org_sfev);
+                    }
                 }
             }
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_USB);
-
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {
             ll_sync_folder_internal_view.setVisibility(LinearLayout.GONE);
             ll_sync_folder_smb_view.setVisibility(LinearLayout.GONE);
@@ -2107,6 +2128,100 @@ public class SyncTaskEditor extends DialogFragment {
                 checkSyncFolderValidation(dialog, org_sfev);
             }
         }
+    }
+
+    static public boolean isSdcardDeviceExists(Context c, CommonUtilities cu) {
+        boolean result=false;
+        if (Build.VERSION.SDK_INT>=24) {
+            StorageVolume sv=getStorageVolume(c, cu, "SD");
+            if (sv!=null) result=true;
+        } else {
+            result=isStorageVolumeExistsApi23(c, cu, "SD");
+        }
+        return result;
+    }
+
+    static public boolean isUsbDeviceExists(Context c, CommonUtilities cu) {
+        boolean result=false;
+        if (Build.VERSION.SDK_INT>=24) {
+            StorageVolume sv=getStorageVolume(c, cu, "USB");
+            if (sv!=null) result=true;
+        } else {
+            result=isStorageVolumeExistsApi23(c, cu, "USB");
+        }
+        return result;
+    }
+
+    static public String getUsbDeviceUuid(Context c, CommonUtilities cu) {
+        String result=null;
+        if (Build.VERSION.SDK_INT>=24) {
+            StorageVolume sv=getStorageVolume(c, cu, "USB");
+            if (sv!=null) result=sv.getUuid();
+        } else {
+            result=getStorageVolumeUuidApi23(c, cu, "USB");
+        }
+        return result;
+    }
+
+    static public boolean isUsbMountPointExists(Context c, CommonUtilities cu, String uuid) {
+        boolean result=false;
+        File usb_mp=new File("/storage/"+uuid);
+        result=usb_mp.exists();
+        return result;
+    }
+
+    static private boolean isStorageVolumeExistsApi23(Context c, CommonUtilities cu, String type) {
+        boolean exists=false;
+        if (getStorageVolumeUuidApi23(c, cu, type)!=null) exists=true;
+        return exists;
+    }
+
+    static private String getStorageVolumeUuidApi23(Context c, CommonUtilities cu, String type) {
+        String result=null;
+        try {
+            StorageManager sm = (StorageManager) c.getSystemService(Context.STORAGE_SERVICE);
+            Method getVolumeList = sm.getClass().getDeclaredMethod("getVolumeList");
+            Object[] volumeList = (Object[]) getVolumeList.invoke(sm);
+            for (Object volume : volumeList) {
+//	            Method isRemovable = volume.getClass().getDeclaredMethod("isRemovable");
+//                Method isPrimary = volume.getClass().getDeclaredMethod("isPrimary");
+                Method getUuid = volume.getClass().getDeclaredMethod("getUuid");
+                String uuid=(String)getUuid.invoke(volume);
+//                Method getId = volume.getClass().getDeclaredMethod("getId");
+//                Method getPath = volume.getClass().getDeclaredMethod("getPath");
+//                String path = (String) getPath.invoke(volume);
+                Method toString = volume.getClass().getDeclaredMethod("toString");
+                String desc=(String)toString.invoke(volume);
+                if (desc.contains(type)) {
+                    cu.addDebugMsg(1,"I","isStorageVolumeExistsApi23 uuid="+uuid+", desc="+desc);
+                    result=uuid;
+                    break;
+                }
+            }
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    static public StorageVolume getStorageVolume(Context c, CommonUtilities cu, String type) {
+        StorageManager sm = (StorageManager) c.getSystemService(Context.STORAGE_SERVICE);
+        List<StorageVolume> vol_list=sm.getStorageVolumes();
+        StorageVolume sv=null;
+        for(StorageVolume item:vol_list) {
+            if (item.getDescription(c).contains(type)) {
+                sv=item;
+                cu.addDebugMsg(1,"I","getStorageVolume uuid="+item.getUuid()+", desc="+item.getDescription(c));
+                break;
+            }
+        }
+        return sv;
     }
 
     private boolean checkSyncFolderValidation(Dialog dialog, SyncFolderEditValue org_sfev) {

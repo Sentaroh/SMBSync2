@@ -44,6 +44,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.StrictMode;
+import android.os.storage.StorageVolume;
 import android.provider.Settings;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -1903,7 +1904,11 @@ public class ActivityMain extends AppCompatActivity {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        mTaskUtil.showSelectSdcardMsg(ntfy);
+        if (Build.VERSION.SDK_INT>=24 && Build.VERSION.SDK_INT<=28) {
+            ntfy.notifyToListener(true, null);
+        } else {
+            mTaskUtil.showSelectSdcardMsg(ntfy);
+        }
 
     }
 
@@ -1920,8 +1925,11 @@ public class ActivityMain extends AppCompatActivity {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        mTaskUtil.showSelectUsbMsg(ntfy);
-
+        if (Build.VERSION.SDK_INT>=24 && Build.VERSION.SDK_INT<=28) {
+            ntfy.notifyToListener(true, null);
+        } else {
+            mTaskUtil.showSelectUsbMsg(ntfy);
+        }
     }
 
     private final int REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
@@ -2180,8 +2188,19 @@ public class ActivityMain extends AppCompatActivity {
     private void startSdcardSelectorActivity() {
         try {
             mIsStorageSelectorActivityNotFound = false;
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-            startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+            if (Build.VERSION.SDK_INT>=24 && Build.VERSION.SDK_INT<=28) {
+                StorageVolume sv=SyncTaskEditor.getStorageVolume(mContext, mUtil, "SD");
+                if (sv==null) {
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                    startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+                } else {
+                    Intent intent = sv.createAccessIntent(null);
+                    startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+                }
+            } else {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+            }
         } catch (Exception e) {
             mIsStorageSelectorActivityNotFound = true;
             final StringWriter sw = new StringWriter();
@@ -2201,8 +2220,19 @@ public class ActivityMain extends AppCompatActivity {
     private void startUsbSelectorActivity() {
         try {
             mIsStorageSelectorActivityNotFound = false;
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-            startActivityForResult(intent, ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS);
+            if (Build.VERSION.SDK_INT>=24 && Build.VERSION.SDK_INT<=28) {
+                StorageVolume sv=SyncTaskEditor.getStorageVolume(mContext, mUtil, "USB");
+                if (sv==null) {
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                    startActivityForResult(intent, ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS);
+                } else {
+                    Intent intent = sv.createAccessIntent(null);
+                    startActivityForResult(intent, ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS);
+                }
+            } else {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                startActivityForResult(intent, ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS);
+            }
         } catch (Exception e) {
             mIsStorageSelectorActivityNotFound = true;
             final StringWriter sw = new StringWriter();
