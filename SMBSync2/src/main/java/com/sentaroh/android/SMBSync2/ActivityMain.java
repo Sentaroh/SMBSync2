@@ -2189,7 +2189,7 @@ public class ActivityMain extends AppCompatActivity {
         try {
             mIsStorageSelectorActivityNotFound = false;
             if (Build.VERSION.SDK_INT>=24 && Build.VERSION.SDK_INT<=28) {
-                StorageVolume sv=SyncTaskEditor.getStorageVolume(mContext, mUtil, "SD");
+                StorageVolume sv=SyncTaskEditor.getSdcardStorageVolume(mContext, mUtil);
                 if (sv==null) {
                     Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
                     startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);

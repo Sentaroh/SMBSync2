@@ -2133,7 +2133,7 @@ public class SyncTaskEditor extends DialogFragment {
     static public boolean isSdcardDeviceExists(Context c, CommonUtilities cu) {
         boolean result=false;
         if (Build.VERSION.SDK_INT>=24) {
-            StorageVolume sv=getStorageVolume(c, cu, "SD");
+            StorageVolume sv=getSdcardStorageVolume(c, cu);
             if (sv!=null) result=true;
         } else {
             result=isStorageVolumeExistsApi23(c, cu, "SD");
@@ -2219,6 +2219,29 @@ public class SyncTaskEditor extends DialogFragment {
                 sv=item;
                 cu.addDebugMsg(1,"I","getStorageVolume uuid="+item.getUuid()+", desc="+item.getDescription(c));
                 break;
+            }
+        }
+        return sv;
+    }
+
+    static public StorageVolume getSdcardStorageVolume(Context c, CommonUtilities cu) {
+        StorageManager sm = (StorageManager) c.getSystemService(Context.STORAGE_SERVICE);
+        List<StorageVolume> vol_list=sm.getStorageVolumes();
+        StorageVolume sv=null;
+        for(StorageVolume item:vol_list) {
+            if (item.getDescription(c).contains("SD")) {
+                sv=item;
+                cu.addDebugMsg(1,"I","getSdcardStorageVolume uuid="+item.getUuid()+", desc="+item.getDescription(c));
+                break;
+            }
+        }
+        if (sv==null) {
+            for(StorageVolume item:vol_list) {
+                if (!item.isPrimary() && item.isRemovable() && !item.getDescription(c).contains("USB")) {
+                    sv=item;
+                    cu.addDebugMsg(1,"I","getSdcardStorageVolume uuid="+item.getUuid()+", desc="+item.getDescription(c));
+                    break;
+                }
             }
         }
         return sv;
