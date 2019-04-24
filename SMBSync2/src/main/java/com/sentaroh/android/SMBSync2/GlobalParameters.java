@@ -574,6 +574,10 @@ public class GlobalParameters extends CommonGlobalParms {
         System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);
         System.setProperty("jcifs.smb.client.responseTimeout", settingsSmbClientResponseTimeout);
         System.setProperty("jcifs.smb.client.disablePlainTextPasswords",settingsSmbDisablePlainTextPasswords);
+
+//        System.setProperty("jcifs.smb.client.snd_buf_size","61440");
+//        System.setProperty("jcifs.smb.client.tcpNoDelay","true");
+//        System.setProperty("jcifs.smb.maxBuffers","100");
     }
 
     private boolean isDebuggable() {

@@ -498,6 +498,7 @@
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">無線LANがアクセスポイントに接続されていないため同期を終了します。</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr">ネットワークアドレスがローカルアドレスでないため同期を終了します。</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_is_off">無線LANがオフのため同期を終了します。</string>
+        <string name="msgs_mirror_sync_can_not_start_ip_address_not_obtained">ネットワークアドレスが取得されていないため同期を終了します。</string>
         <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">充電中でないため、同期はキャンセルされました。</string>
         <string name="msgs_mirror_sync_request_ended">同期要求が終了しました。リクエスター=%s</string>
         <string name="msgs_mirror_sync_request_started">同期要求を開始しました。リクエスター=%s</string>
@@ -593,7 +594,7 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">同期リストの編集ボタンを押して、同期するプロファイルを指定してください。</string>
         <string name="msgs_scheduler_info_next_schedule_time">同期予定時刻 %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">同期予定 : 時刻=%s, 名前=(%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error">エラー : %s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">スケジュールで指定したタスクが見つかりません。スケジュール:%s, タスク:%s</string>
         <string name="msgs_scheduler_info_schedule_disabled">スケジュール同期:無効</string>
         <string name="msgs_scheduler_info_schedule_enabled">スケジュール同期:有効</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">自動同期タスクすべて</string>

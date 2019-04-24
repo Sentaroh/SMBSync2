@@ -464,7 +464,7 @@ public class ScheduleUtil {
         long latest_sched_time = -1;
         ArrayList<String>sched_array=new ArrayList<String>();
         boolean schedule_error=false;
-        String error_item_name="";
+        String error_sched_name="", error_task_name="";
         for (ScheduleItem si : sl) {
             if (si.scheduleEnabled) {
                 long time = ScheduleUtil.getNextSchedule(si);
@@ -476,14 +476,16 @@ public class ScheduleUtil {
                         for(String stn:stl) {
                             if (getSyncTask(gp,stn)==null) {
                                 schedule_error=true;
-                                error_item_name=si.scheduleName;
+                                error_task_name=stn;
+                                error_sched_name=si.scheduleName;
                                 break;
                             }
                         }
                     } else {
                         if (getSyncTask(gp,si.syncTaskList)==null) {
                             schedule_error=true;
-                            error_item_name=si.scheduleName;
+                            error_task_name=si.syncTaskList;
+                            error_sched_name=si.scheduleName;
                             break;
                         }
                     }
@@ -505,7 +507,7 @@ public class ScheduleUtil {
             }
             String sched_info ="";
             if (schedule_error) {
-                gp.scheduleErrorText = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_main_error), error_item_name);
+                gp.scheduleErrorText = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_main_error), error_sched_name, error_task_name);
                 gp.scheduleErrorView.setText(gp.scheduleErrorText);
                 gp.scheduleErrorView.setTextColor(gp.themeColorList.text_color_warning);
                 gp.scheduleErrorView.setVisibility(TextView.VISIBLE);

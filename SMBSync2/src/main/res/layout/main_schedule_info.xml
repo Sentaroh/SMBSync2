@@ -24,7 +24,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:ellipsize="end"
-        android:maxLines="1"
         android:text="Scheduler error"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

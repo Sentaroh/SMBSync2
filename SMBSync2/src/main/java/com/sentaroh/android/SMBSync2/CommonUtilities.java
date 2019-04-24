@@ -396,7 +396,7 @@ public final class CommonUtilities {
 //	            	Log.v("SMBSync2","ip="+inetAddress.getHostAddress()+", name="+intf.getName());
                     if (inetAddress.isSiteLocalAddress() && (inetAddress instanceof Inet4Address)) {
                         result = inetAddress.getHostAddress();
-                        if (intf.getName().equals(if_name)) {
+                        if (intf.getName().toLowerCase().equals(if_name)) {
                             exit = true;
                             break;
                         }

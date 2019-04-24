@@ -501,6 +501,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">Sync aborted.  Not connected to WiFi access point.</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr">Sync aborted.  Network address is not a local address.</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_is_off">Sync aborted.  Wireless LAN is off.</string>
+        <string name="msgs_mirror_sync_can_not_start_ip_address_not_obtained">Sync aborted.  Network address can not obtained.</string>
         <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">Sync aborted.  Device not charging.</string>
         <string name="msgs_mirror_sync_request_ended">Sync request has ended.  Requestor=%s</string>
         <string name="msgs_mirror_sync_request_started">Sync request has been started.  Requestor=%s</string>
@@ -596,7 +597,8 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Please specify the profile to be sync by pressing the ‘Edit sync list’ button in the .</string>
         <string name="msgs_scheduler_info_next_schedule_time">Next sync time is %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Next sync:  Time=%s, Name=(%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error">Error:  %s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">The task specified in the schedule cannot be found.
+Schedule:%s, Task:%s</string>
         <string name="msgs_scheduler_info_schedule_disabled">Sync schedule disabled</string>
         <string name="msgs_scheduler_info_schedule_enabled">Sync schedule enabled</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">Execute all auto sync tasks</string>

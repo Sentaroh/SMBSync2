@@ -826,6 +826,8 @@ public class SyncService extends Service {
             String ss = "";
             try {
                 ss=mWifiMgr.getConnectionInfo().getSupplicantState().toString();
+//                mUtil.addDebugMsg(1,"I","ss="+ss+", IP addr="+CommonUtilities.getIfIpAddress("wlan0"));
+//                mUtil.addDebugMsg(1,"I","ss="+ss+", IP addr="+String.format("%8x",mWifiMgr.getConnectionInfo().getIpAddress()));
             } catch(Exception e){
                 mUtil.addLogMsg("W", "WIFI receiver, getSupplicantState() failed. msg="+e.getMessage());
             }
@@ -841,7 +843,7 @@ public class SyncService extends Service {
             } else {
                 if (ss.equals("COMPLETED") || ss.equals("ASSOCIATING") || ss.equals("ASSOCIATED")) {
                     if (mGp.wifiSsid.equals("") && !wssid.equals("")) {
-                        mUtil.addDebugMsg(1, "I", "WIFI receiver, Connected WIFI Access point ssid=" + wssid);
+                        mUtil.addDebugMsg(1, "I", "WIFI receiver, Connected WIFI Access point SSID=" + wssid);
                         mGp.wifiSsid = wssid;
                         mGp.wifiIsActive = true;
                     }
@@ -852,7 +854,7 @@ public class SyncService extends Service {
                         ss.equals("SCANNING")) {
                     if (mGp.wifiIsActive) {
                         if (!mGp.wifiSsid.equals("")) {
-                            mUtil.addDebugMsg(1, "I", "WIFI receiver, Disconnected WIFI Access point ssid=" + mGp.wifiSsid);
+                            mUtil.addDebugMsg(1, "I", "WIFI receiver, Disconnected WIFI Access point SSID=" + mGp.wifiSsid);
                             mGp.wifiSsid = "";
                             mGp.wifiIsActive = true;
                         }
