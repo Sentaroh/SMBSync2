@@ -2192,6 +2192,9 @@ public class SyncTaskEditor extends DialogFragment {
 //                String path = (String) getPath.invoke(volume);
                 Method toString = volume.getClass().getDeclaredMethod("toString");
                 String desc=(String)toString.invoke(volume);
+//                cu.addDebugMsg(1,"I","isStorageVolumeExistsApi23 uuid="+uuid+", desc="+desc+", isRemovable="+(boolean)isRemovable.invoke(volume)+
+//                        ", isPrimary="+(boolean)isPrimary.invoke(volume)+", Id="+(String)getId.invoke(volume)+
+//                        ", Path="+(String)getPath.invoke(volume));
                 if (desc.contains(type)) {
                     cu.addDebugMsg(1,"I","isStorageVolumeExistsApi23 uuid="+uuid+", desc="+desc);
                     result=uuid;
