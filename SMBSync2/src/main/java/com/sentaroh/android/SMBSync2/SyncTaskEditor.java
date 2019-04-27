@@ -626,7 +626,7 @@ public class SyncTaskEditor extends DialogFragment {
         et_sync_folder_domain.setVisibility(EditText.GONE);
         final EditText et_sync_folder_user = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
         final EditText et_sync_folder_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
-        if (!sfev.folder_remote_user.equals("") || !sfev.folder_remote_pswd.equals("")) {
+        if (!sfev.folder_remote_user.equals("")) {// || !sfev.folder_remote_pswd.equals("")) {
             ctv_sync_folder_use_pswd.setChecked(true);
             et_sync_folder_user.setEnabled(true);
             et_sync_folder_user.setText(sfev.folder_remote_user);
@@ -2328,13 +2328,13 @@ public class SyncTaskEditor extends DialogFragment {
                             setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_userid_pswd));
                         } else {
 //                            if (!sync_folder_user.equals("") && sync_folder_pswd.equals("")) {
-                            if (sync_folder_pswd.equals("")) {
-                                result = false;
-                                setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_pswd));
-                                btn_sync_folder_list_share.setEnabled(false);
-                                setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
-                                btn_sync_folder_logon.setEnabled(false);
-                            }
+//                            if (sync_folder_pswd.equals("")) {
+//                                result = false;
+//                                setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_pswd));
+//                                btn_sync_folder_list_share.setEnabled(false);
+//                                setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
+//                                btn_sync_folder_logon.setEnabled(false);
+//                            }
                         }
                     }
                     if (result && folder_share_name.equals("")) {
@@ -2348,8 +2348,8 @@ public class SyncTaskEditor extends DialogFragment {
 
             boolean enabled = true;
             if (ctv_sync_folder_use_pswd.isChecked()) {
-                if (et_sync_folder_pswd.getText().toString().equals(""))
-                    enabled = false;
+//                if (et_sync_folder_pswd.getText().toString().equals(""))
+//                    enabled = false;
             }
             if (ctv_sync_folder_use_port.isChecked()) {
                 if (et_sync_folder_port.getText().toString().equals("")) enabled = false;
