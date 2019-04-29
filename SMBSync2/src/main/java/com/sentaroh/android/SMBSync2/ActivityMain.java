@@ -263,7 +263,7 @@ public class ActivityMain extends AppCompatActivity {
         if (restartType == RESTART_WITH_OUT_INITIALYZE) {
             mGp.safMgr.loadSafFile();
             setActivityForeground(true);
-            ScheduleUtil.setSchedulerInfo(mGp);
+            ScheduleUtil.setSchedulerInfo(mGp, mUtil);
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
@@ -304,7 +304,7 @@ public class ActivityMain extends AppCompatActivity {
                     setHistoryContextButtonNormalMode();
 
                     deleteTaskData();
-                    ScheduleUtil.setSchedulerInfo(mGp);
+                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
                     restartType = RESTART_WITH_OUT_INITIALYZE;
                     reshowDialogWindow();
                     if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
@@ -1611,7 +1611,7 @@ public class ActivityMain extends AppCompatActivity {
                     ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
                 }
                 if (parm[1]) {
-                    ScheduleUtil.setSchedulerInfo(mGp);
+                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
                 }
                 setSyncTaskContextButtonNormalMode();
                 mGp.syncTaskAdapter.setShowCheckBox(false);
@@ -3088,7 +3088,7 @@ public class ActivityMain extends AppCompatActivity {
                 if (mGp.syncTaskAdapter.isShowCheckBox()) setSyncTaskContextButtonSelectMode();
                 else setSyncTaskContextButtonNormalMode();
 //				checkSafExternalSdcardTreeUri(null);
-                ScheduleUtil.setSchedulerInfo(mGp);
+                ScheduleUtil.setSchedulerInfo(mGp, mUtil);
             }
 
             @Override
@@ -3763,7 +3763,7 @@ public class ActivityMain extends AppCompatActivity {
 
         mGp.msgListView.setFastScrollEnabled(false);
 
-        ScheduleUtil.setSchedulerInfo(mGp);
+        ScheduleUtil.setSchedulerInfo(mGp, mUtil);
 
         LogUtil.flushLog(mContext, mGp);
     }

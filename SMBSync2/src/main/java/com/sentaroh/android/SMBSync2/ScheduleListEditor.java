@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -68,7 +67,7 @@ public class ScheduleListEditor {
     private GlobalParameters mGp = null;
     private Context mContext = null;
     private ActivityMain mActivity = null;
-    private CommonUtilities util = null;
+    private CommonUtilities mUtil = null;
     private CustomContextMenu ccMenu = null;
     private ArrayList<ScheduleItem> mScheduleList = null;
     private ArrayList<ScheduleItem> mOrgScheduleList = null;
@@ -102,7 +101,7 @@ public class ScheduleListEditor {
         mContext = c;
         mActivity = a;
         mGp = gp;
-        util = mu;
+        mUtil = mu;
         commonDlg = cd;
         ccMenu = ccm;
         initDialog();
@@ -130,7 +129,8 @@ public class ScheduleListEditor {
                                     org_item.syncWifiOffAfterEnd == curr_item.syncWifiOffAfterEnd &&
                                     org_item.syncWifiOnBeforeStart == curr_item.syncWifiOnBeforeStart &&
                                     org_item.scheduleIntervalFirstRunImmed == curr_item.scheduleIntervalFirstRunImmed &&
-                                    org_item.syncDelayAfterWifiOn==curr_item.syncDelayAfterWifiOn
+                                    org_item.syncDelayAfterWifiOn==curr_item.syncDelayAfterWifiOn &&
+                                    org_item.syncAutoSyncTask==curr_item.syncAutoSyncTask
 //                                    org_item.scheduleLastExecTime==curr_item.scheduleLastExecTime
                                     ){
                                 curr_item.isChanged=false;
@@ -241,7 +241,7 @@ public class ScheduleListEditor {
                         public void negativeResponse(Context context, Object[] objects) {
                         }
                     });
-                    ScheduleItemEditor sm = new ScheduleItemEditor(util, mActivity, mContext, commonDlg, ccMenu, mGp,
+                    ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, commonDlg, ccMenu, mGp,
                             true, mScheduleList, mScheduleList.get(i), ntfy);
                 }
             }
@@ -281,7 +281,7 @@ public class ScheduleListEditor {
                 mScheduleAdapter.sort();
                 ScheduleUtil.saveScheduleData(mGp, mScheduleList);
                 ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
-                ScheduleUtil.setSchedulerInfo(mGp);
+                ScheduleUtil.setSchedulerInfo(mGp, mUtil);
 
                 mDialog.dismiss();
             }
@@ -447,7 +447,7 @@ public class ScheduleListEditor {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                ScheduleItemEditor sm = new ScheduleItemEditor(util, mActivity, mContext, commonDlg, ccMenu, mGp,
+                ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, commonDlg, ccMenu, mGp,
                         false, mScheduleList, new ScheduleItem(), ntfy);
             }
         });
@@ -590,7 +590,7 @@ public class ScheduleListEditor {
                     }
                 }
                 if (si==null) {
-                    util.addLogMsg("E","renameSchedule error, schedule item can not be found.");
+                    mUtil.addLogMsg("E","renameSchedule error, schedule item can not be found.");
                     commonDlg.showCommonDialog(false, "E", "renameSchedule error, schedule item can not be found.", "", null);
                 } else {
                     renameSchedule(si, ntfy);
@@ -623,7 +623,7 @@ public class ScheduleListEditor {
                     if (mScheduleAdapter.getItem(i).isChecked) {
                         si = mScheduleAdapter.getItem(i);
                         ScheduleItem new_si = si.clone();
-                        ScheduleItemEditor sm = new ScheduleItemEditor(util, mActivity, mContext, commonDlg, ccMenu, mGp,
+                        ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, commonDlg, ccMenu, mGp,
                                 false, mScheduleList, new_si, ntfy);
                         break;
                     }
@@ -937,32 +937,40 @@ public class ScheduleListEditor {
                             mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_minute);
                 }
                 String sync_prof = "";
-                if (o.syncTaskList.equals("")) {
+                if (o.syncAutoSyncTask) {
                     sync_prof = mContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
                     holder.tv_error_info.setVisibility(TextView.GONE);
                 } else {
                     boolean schedule_error=false;
                     String error_item_name="";
-                    if (o.syncTaskList.indexOf(",")>0) {
-                        String[] stl=o.syncTaskList.split(",");
-                        String sep="";
-                        for(String stn:stl) {
-                            if (ScheduleUtil.getSyncTask(mGp,stn)==null) {
-                                schedule_error=true;
-                                error_item_name=sep+stn;
-                                sep=",";
-                            }
-                        }
+                    if (o.syncTaskList.equals("")) {
+                        schedule_error=true;
                     } else {
-                        if (ScheduleUtil.getSyncTask(mGp, o.syncTaskList)==null) {
-                            schedule_error=true;
-                            error_item_name=o.syncTaskList;
+                        if (o.syncTaskList.indexOf(",")>0) {
+                            String[] stl=o.syncTaskList.split(",");
+                            String sep="";
+                            for(String stn:stl) {
+                                if (ScheduleUtil.getSyncTask(mGp,stn)==null) {
+                                    schedule_error=true;
+                                    error_item_name=sep+stn;
+                                    sep=",";
+                                }
+                            }
+                        } else {
+                            if (ScheduleUtil.getSyncTask(mGp, o.syncTaskList)==null) {
+                                schedule_error=true;
+                                error_item_name=o.syncTaskList;
+                            }
                         }
                     }
                     if (schedule_error) {
                         holder.tv_error_info.setVisibility(TextView.VISIBLE);
-                        holder.tv_error_info.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found),
-                                error_item_name));
+                        if (o.syncTaskList.equals("")) {
+                            holder.tv_error_info.setText(mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty));
+                        } else {
+                            holder.tv_error_info.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found),
+                                    error_item_name));
+                        }
                     } else {
                         holder.tv_error_info.setVisibility(TextView.GONE);
                     }

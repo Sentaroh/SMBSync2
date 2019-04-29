@@ -743,7 +743,7 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String user=et_sync_folder_user.getText().toString().trim().length()>0?et_sync_folder_user.getText().toString().trim():null;
-                String pass=et_sync_folder_pswd.getText().toString().trim().length()>0?et_sync_folder_pswd.getText().toString().trim():null;
+                String pass=et_sync_folder_pswd.getText().toString().length()>0?et_sync_folder_pswd.getText().toString():null;
                 if (!ctv_sync_folder_use_pswd.isChecked()) {
                     user=pass=null;
                 } else {
@@ -1932,7 +1932,7 @@ public class SyncTaskEditor extends DialogFragment {
                 nsfev.folder_remote_port = et_sync_folder_port.getText().toString();
             else nsfev.folder_remote_port = "";
             if (ctv_sync_folder_use_pswd.isChecked()) {
-                nsfev.folder_remote_user = et_sync_folder_user.getText().toString();
+                nsfev.folder_remote_user = et_sync_folder_user.getText().toString().trim();
                 nsfev.folder_remote_pswd = et_sync_folder_pswd.getText().toString();
             } else {
                 nsfev.folder_remote_user = "";

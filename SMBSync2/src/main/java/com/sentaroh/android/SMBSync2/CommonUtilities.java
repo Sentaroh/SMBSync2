@@ -645,6 +645,19 @@ public final class CommonUtilities {
         return isCharging;
     }
 
+    public static String trimTrailingBlank(String s) {
+        if (s == null) return null;
+
+        char[] val = s.toCharArray();
+        int len = val.length;
+        int st = 0;
+
+        while ((st < len) && (val[len - 1] <= ' ' || val[len - 1] == '　')) {
+            len--;
+        }
+
+        return ((st>0) || (len<val.length)) ? s.substring(st,len):s;
+    }
 //	final static private String array2String(StringBuilder sb_buf,String[] sa) {
 //		sb_buf.setLength(0);
 //		if (sa!=null) {

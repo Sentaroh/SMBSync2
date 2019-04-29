@@ -124,19 +124,19 @@ public class SyncReceiver extends BroadcastReceiver {
                     send_intent.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, received_intent.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY));
                     try {
                         mContext.startService(send_intent);
-                        String[] schedule_list=received_intent.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY).split(",");
-                        for (String sched_name:schedule_list) {
-                            if (ScheduleUtil.getScheduleInformation(mSchedList, sched_name) != null) {
-                                ScheduleUtil.getScheduleInformation(mSchedList, sched_name).scheduleLastExecTime = System.currentTimeMillis();
-                            }
-                        }
-                        ScheduleUtil.saveScheduleData(mGp, mSchedList);
-                        setTimer();
                     } catch(Exception e) {
 //                        e.printStackTrace();
                         mLog.addDebugMsg(1,"E", "startService filed, action="+action+", error=" + e.getMessage());
                         mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
                     }
+                    String[] schedule_list=received_intent.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY).split(",");
+                    for (String sched_name:schedule_list) {
+                        if (ScheduleUtil.getScheduleInformation(mSchedList, sched_name) != null) {
+                            ScheduleUtil.getScheduleInformation(mSchedList, sched_name).scheduleLastExecTime = System.currentTimeMillis();
+                        }
+                    }
+                    ScheduleUtil.saveScheduleData(mGp, mSchedList);
+                    setTimer();
                 }
             } else if (action.equals(SMBSYNC2_START_SYNC_INTENT)) {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
@@ -250,9 +250,13 @@ public class SyncReceiver extends BroadcastReceiver {
                 in.setClass(mContext, SyncReceiver.class);
                 PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-                if (Build.VERSION.SDK_INT >= 23)
-                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
-                else am.set(AlarmManager.RTC_WAKEUP, time, pi);
+                try {
+                    if (Build.VERSION.SDK_INT >= 23) am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
+                    else am.set(AlarmManager.RTC_WAKEUP, time, pi);
+                } catch(Exception e) {
+                    String stm= MiscUtil.getStackTraceString(e);
+                    mLog.addDebugMsg(1, "I", "setTimer failed. error="+e.getMessage()+"\n"+stm);
+                }
             }
         }
     }

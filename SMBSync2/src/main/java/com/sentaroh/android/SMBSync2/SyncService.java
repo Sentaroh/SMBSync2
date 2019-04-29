@@ -331,28 +331,32 @@ public class SyncService extends Service {
                 mUtil.addLogMsg("I", "Schedule start, name=" + schedule_name);
                 ScheduleItem si = getScheduleInformation(scheduleInfoList, schedule_name);
                 if (si!=null) {
-                    if (si.syncTaskList != null && si.syncTaskList.length() > 0) {
-                        String[] pl = si.syncTaskList.split(",");
-                        String n_tl = "", sep = "";
-                        for (int i = 0; i < pl.length; i++) {
-                            if (getSyncTask(pl[i]) != null) {
-                                n_tl += sep + pl[i];
-                                sep = ",";
-                            } else {
-                                mUtil.addLogMsg("W",
-                                        mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_task_not_found) + pl[i]);
+                    if (si.syncAutoSyncTask) {
+                        queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE,
+                                si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
+                    } else {
+                        if (si.syncTaskList != null && si.syncTaskList.length() > 0) {
+                            String[] pl = si.syncTaskList.split(",");
+                            String n_tl = "", sep = "";
+                            for (int i = 0; i < pl.length; i++) {
+                                if (getSyncTask(pl[i]) != null) {
+                                    n_tl += sep + pl[i];
+                                    sep = ",";
+                                } else {
+                                    mUtil.addLogMsg("W",
+                                            mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_task_not_found) + pl[i]);
+                                }
                             }
-                        }
-                        if (!n_tl.equals("")) {
-                            String[] n_pl = n_tl.split(",");
-                            queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE,
-                                    si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
+                            if (!n_tl.equals("")) {
+                                String[] n_pl = n_tl.split(",");
+                                queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE,
+                                        si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
+                            } else {
+                                mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
+                            }
                         } else {
                             mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
                         }
-                    } else {
-                        queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE,
-                                si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
                     }
                 } else {
                     mUtil.addLogMsg("W","Specified schedule name was not found, name=",schedule_name);

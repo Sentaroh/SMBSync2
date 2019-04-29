@@ -604,6 +604,8 @@ Schedule:%s, Task:%s</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">Execute all auto sync tasks</string>
         <string name="msgs_scheduler_info_sync_selected_profile">Sync task(s) %s</string>
         <string name="msgs_scheduler_info_sync_task_was_not_found">Specified sync task name was not found, Name=(%s)</string>
+        <string name="msgs_scheduler_info_sync_task_was_deleted_or_renamed">Sync task was already deleted or renamed.</string>
+        <string name="msgs_scheduler_info_sync_task_list_was_empty">Empty sync task list</string>
         <string name="msgs_scheduler_main_dw_not_selected">Please select at least one day of the week.</string>
         <string name="msgs_schedule_list_edit_dlg_title">Edit schedule list</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">That sync task name already exists.  Use a different name.</string>

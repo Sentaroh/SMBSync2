@@ -1106,6 +1106,7 @@ public class SyncTaskUtil {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 ArrayList<SyncTaskItem> dpItemList = new ArrayList<SyncTaskItem>();
+                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mGp);
                 int pos = mGp.syncTaskListView.getFirstVisiblePosition();
                 for (int i = 0; i < dpnum.length; i++) {
                     if (dpnum[i] != -1)
@@ -1114,8 +1115,9 @@ public class SyncTaskUtil {
                 for (int i = 0; i < dpItemList.size(); i++) {
                     mGp.syncTaskAdapter.remove(dpItemList.get(i));
                     mUtil.addDebugMsg(1,"I","Sync task deleted, name="+dpItemList.get(i).getSyncTaskName());
+                    ScheduleUtil.removeSyncTaskFromSchedule(mGp, mUtil, sl, dpItemList.get(i).getSyncTaskName());
                 }
-
+                ScheduleUtil.saveScheduleData(mGp, sl);
                 saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
 
                 mGp.syncTaskAdapter.setNotifyOnChange(true);
@@ -1531,10 +1533,14 @@ public class SyncTaskUtil {
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
+                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mGp);
+
                 String new_name = etInput.getText().toString();
                 String prev_name=pli.getSyncTaskName();
                 pli.setSyncTaskName(new_name);
                 mUtil.addDebugMsg(1,"I","Sync task renamed, from="+prev_name+", new="+new_name);
+                ScheduleUtil.renameSyncTaskFromSchedule(mGp, mUtil, sl, prev_name, new_name);
+                ScheduleUtil.saveScheduleData(mGp, sl);
 
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskAdapter.notifyDataSetChanged();
@@ -1605,7 +1611,7 @@ public class SyncTaskUtil {
         String remote_addr, remote_user = "", remote_pass = "", remote_host;
 
         if (ctv_use_userpass.isChecked()) {
-            remote_user = edituser.getText().toString();
+            remote_user = edituser.getText().toString().trim();
             remote_pass = editpass.getText().toString();
         }
 
@@ -1615,11 +1621,11 @@ public class SyncTaskUtil {
         setSmbUserPass(remote_user, remote_pass);
 //		Log.v("","u="+remote_user+", pass="+remote_pass);
         String t_url = "";
-        if (JcifsUtil.isValidIpAddress(edithost.getText().toString())) {
-            remote_addr = edithost.getText().toString();
+        if (JcifsUtil.isValidIpAddress(edithost.getText().toString().trim())) {
+            remote_addr = edithost.getText().toString().trim();
             t_url = remote_addr;
         } else {
-            remote_host = edithost.getText().toString();
+            remote_host = edithost.getText().toString().trim();
             t_url = remote_host;
         }
         String h_port = "";

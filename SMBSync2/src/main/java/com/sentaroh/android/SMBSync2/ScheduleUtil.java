@@ -47,6 +47,7 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_MINUTES_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V2;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V3;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V4;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_DEFAULT_VALUE;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_KEY;
@@ -63,8 +64,11 @@ public class ScheduleUtil {
         ScheduleItem sp = new ScheduleItem();
         String v2_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V2, "-1");
         String v3_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V3, "-1");
+        String v4_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V4, "-1");
 //    	Log.v("","data="+v2_data);
-        if (!v3_data.equals("-1")) {
+        if (!v4_data.equals("-1")) {
+            sl = buildScheduleListV4(gp, v4_data);
+        } else if (!v3_data.equals("-1")) {
             sl = buildScheduleListV3(gp, v3_data);
         } else if (!v2_data.equals("-1")) {
             sl = buildScheduleListV2(gp, v2_data);
@@ -132,6 +136,8 @@ public class ScheduleUtil {
                 if (sub_array[13].length() > 0)
                     si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace("\u0000", ""));
 
+                if (!si.syncTaskList.equals("")) si.syncAutoSyncTask=false;
+
                 if (si.scheduleLastExecTime == 0)
                     si.scheduleLastExecTime = System.currentTimeMillis();
 
@@ -183,6 +189,62 @@ public class ScheduleUtil {
                 if (sub_array.length >= 15 && sub_array[14]!=null && sub_array[14].length() > 0)
                     si.scheduleDay = sub_array[14].replace("\u0000", "");
 
+                if (!si.syncTaskList.equals("")) si.syncAutoSyncTask=false;
+
+                if (si.scheduleLastExecTime == 0)
+                    si.scheduleLastExecTime = System.currentTimeMillis();
+
+                sl.add(si);
+//                Log.v("","load="+si.scheduleName);
+            }
+        }
+//        if (sl.size()==0) {
+//            ScheduleItem si=new ScheduleItem();
+//            sl.add(si);
+//        }
+        return sl;
+    }
+
+    final static public ArrayList<ScheduleItem> buildScheduleListV4(GlobalParameters gp, String v4_data) {
+        ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
+        String[] sd_array = v4_data.split("\u0001");
+        int nc=0;
+        for (String sd_sub : sd_array) {
+//            Log.v("","sub="+sd_sub);
+            if (sd_sub.equals("end")) break;
+            String[] sub_array = sd_sub.split("\u0002");
+//            Log.v("","array="+sub_array.length);
+            if (sub_array.length >= 14) {
+                for (String item : sub_array) item = item.replace("\u0000", "");
+                ScheduleItem si = new ScheduleItem();
+                si.scheduleEnabled = sub_array[0].replace("\u0000", "").equals("1") ? true : false;
+                si.scheduleName = sub_array[1].replace("\u0000", "");
+                nc++;
+                if (si.scheduleName==null || si.scheduleName.equals("")) si.scheduleName="NO NAME"+nc;
+
+                if (sub_array[2].length() > 0)
+                    si.schedulePosition = Integer.valueOf(sub_array[2].replace("\u0000", ""));
+                si.scheduleType = sub_array[3].replace("\u0000", "");
+                si.scheduleHours = sub_array[4].replace("\u0000", "");
+                si.scheduleMinutes = sub_array[5].replace("\u0000", "");
+                si.scheduleDayOfTheWeek = sub_array[6].replace("\u0000", "");
+                si.scheduleIntervalFirstRunImmed = sub_array[7].replace("\u0000", "").equals("1") ? true : false;
+                if (sub_array[8].length() > 0)
+                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace("\u0000", ""));
+                si.syncTaskList = sub_array[9].replace("\u0000", "");
+                si.syncGroupList = sub_array[10].replace("\u0000", "");
+                si.syncWifiOnBeforeStart = sub_array[11].replace("\u0000", "").equals("1") ? true : false;
+                si.syncWifiOffAfterEnd = sub_array[12].replace("\u0000", "").equals("1") ? true : false;
+                if (sub_array[13].length() > 0)
+                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace("\u0000", ""));
+
+                if (sub_array.length >= 15 && sub_array[14]!=null && sub_array[14].length() > 0)
+                    si.scheduleDay = sub_array[14].replace("\u0000", "");
+
+                if (sub_array.length >= 16 && sub_array[15]!=null && sub_array[15].length() > 0)
+                    si.syncAutoSyncTask = sub_array[15].replace("\u0000", "").equals("1") ? true : false;
+                if (!si.syncTaskList.equals("")) si.syncAutoSyncTask=false;
+
                 if (si.scheduleLastExecTime == 0)
                     si.scheduleLastExecTime = System.currentTimeMillis();
 
@@ -213,6 +275,77 @@ public class ScheduleUtil {
         return n_sp;
     }
 
+    final static public void removeSyncTaskFromSchedule(GlobalParameters gp, CommonUtilities cu, ArrayList<ScheduleItem> sl, String delete_task_name) {
+        for (ScheduleItem si : sl) {
+            if (!si.syncTaskList.equals("")&& si.syncTaskList.contains(delete_task_name)) {
+                if (si.syncTaskList.indexOf(",")>0) {//Multiple entry
+                    String[] task_list=si.syncTaskList.split(",");
+                    ArrayList<String>n_task_list=new ArrayList<String>();
+                    if (task_list!=null) {
+                        for(String stn:task_list) {
+                            if (!stn.equals(delete_task_name)) n_task_list.add(stn);
+                            else {
+                                cu.addDebugMsg(1,"I","removeSyncTaskFromSchedule delete sync task from scheule. Schdule="+si.scheduleName+", Task="+stn);
+                            }
+                        }
+                    }
+                    if (n_task_list.size()>0) {
+                        if (n_task_list.size()==1) si.syncTaskList=n_task_list.get(0);
+                        else {
+                            String sep="";
+                            for(String item:n_task_list) {
+                                si.syncTaskList+=sep+item;
+                                sep=",";
+                            }
+                        }
+                    } else {
+                        cu.addDebugMsg(1,"I","removeSyncTaskFromSchedule all sync task list was deleted. Schdule="+si.scheduleName);
+                        si.syncTaskList="";
+                    }
+                } else {
+                    if (si.syncTaskList.equals(delete_task_name)) {
+                        cu.addDebugMsg(1,"I","removeSyncTaskFromSchedule delete sync task from scheule. Schdule="+si.scheduleName+", Task="+si.syncTaskList);
+                        cu.addDebugMsg(1,"I","removeSyncTaskFromSchedule all sync task list was deleted. Schdule="+si.scheduleName);
+                        si.syncTaskList="";
+                    }
+                }
+            }
+        }
+    }
+
+    final static public void renameSyncTaskFromSchedule(GlobalParameters gp, CommonUtilities cu, ArrayList<ScheduleItem> sl, String rename_task_name, String new_name) {
+        for (ScheduleItem si : sl) {
+            if (!si.syncTaskList.equals("") && si.syncTaskList.contains(rename_task_name)) {
+                if (si.syncTaskList.indexOf(",")>0) {//Multiple entry
+                    String[] task_list=si.syncTaskList.split(",");
+                    ArrayList<String>n_task_list=new ArrayList<String>();
+                    if (task_list!=null) {
+                        for(String stn:task_list) {
+                            if (stn.equals(rename_task_name)) {
+                                cu.addDebugMsg(1,"I","renameSyncTaskFromSchedule rename sync task from scheule. Schdule="+si.scheduleName+", Task="+stn+", New="+new_name);
+                                n_task_list.add(new_name);
+                            } else {
+                                n_task_list.add(stn);
+                            }
+                        }
+                    }
+                    String sep="";
+                    si.syncTaskList="";
+                    for(String item:n_task_list) {
+                        si.syncTaskList+=sep+item;
+                        sep=",";
+                    }
+                } else {
+                    if (si.syncTaskList.equals(rename_task_name)) {
+                        cu.addDebugMsg(1,"I","renameSyncTaskFromSchedule rename sync task from scheule. Schdule="+si.scheduleName+", Task="+si.syncTaskList+", New="+new_name);
+                        si.syncTaskList=new_name;
+                    }
+                }
+            }
+        }
+    }
+
+
     final static public void saveScheduleData(GlobalParameters gp, ArrayList<ScheduleItem> sl) {
         saveScheduleData(gp,sl,false);
     }
@@ -222,27 +355,28 @@ public class ScheduleUtil {
         String data = "";
         for (ScheduleItem si : sl) {
 //                Log.v("","name="+si.scheduleName);
-            data += (si.scheduleEnabled ? "1" : "0") + "\u0000" + "\u0002";
-            data += si.scheduleName + "\u0000" + "\u0002";
-            data += String.valueOf(si.schedulePosition) + "\u0002";
-            data += si.scheduleType + "\u0000" + "\u0002";
-            data += si.scheduleHours + "\u0000" + "\u0002";
-            data += si.scheduleMinutes + "\u0000" + "\u0002";
-            data += si.scheduleDayOfTheWeek + "\u0000" + "\u0002";
-            data += (si.scheduleIntervalFirstRunImmed ? "1" : "0") + "\u0000" + "\u0002";
-            data += String.valueOf(si.scheduleLastExecTime) + "\u0002";
-            data += si.syncTaskList + "\u0000" + "\u0002";
-            data += si.syncGroupList + "\u0000" + "\u0002";
-            data += (si.syncWifiOnBeforeStart ? "1" : "0") + "\u0000" + "\u0002";
-            data += (si.syncWifiOffAfterEnd ? "1" : "0") + "\u0000" + "\u0002";
-            data += String.valueOf(si.syncDelayAfterWifiOn) + "\u0002";
-            data += si.scheduleDay + "\u0000" + "\u0002";
+            data += (si.scheduleEnabled ? "1" : "0") + "\u0000" + "\u0002";     //0
+            data += si.scheduleName + "\u0000" + "\u0002";                      //1
+            data += String.valueOf(si.schedulePosition) + "\u0002";             //2
+            data += si.scheduleType + "\u0000" + "\u0002";                      //3
+            data += si.scheduleHours + "\u0000" + "\u0002";                     //4
+            data += si.scheduleMinutes + "\u0000" + "\u0002";                   //5
+            data += si.scheduleDayOfTheWeek + "\u0000" + "\u0002";              //6
+            data += (si.scheduleIntervalFirstRunImmed ? "1" : "0") + "\u0000" + "\u0002";//7
+            data += String.valueOf(si.scheduleLastExecTime) + "\u0002";         //8
+            data += si.syncTaskList + "\u0000" + "\u0002";                      //9
+            data += si.syncGroupList + "\u0000" + "\u0002";                     //10
+            data += (si.syncWifiOnBeforeStart ? "1" : "0") + "\u0000" + "\u0002";//11
+            data += (si.syncWifiOffAfterEnd ? "1" : "0") + "\u0000" + "\u0002"; //12
+            data += String.valueOf(si.syncDelayAfterWifiOn) + "\u0002";         //13
+            data += si.scheduleDay + "\u0000" + "\u0002";                       //14
+            data += (si.syncAutoSyncTask ? "1" : "0") + "\u0000" + "\u0002";    //15
             data += "\u0001";
 
         }
         data += "end";
-        if (use_apply) prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V3, data).apply();
-        else prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V3, data).commit();
+        if (use_apply) prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V4, data).apply();
+        else prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V4, data).commit();
     }
 
     final static public long getNextSchedule(ScheduleItem sp) {
@@ -457,7 +591,7 @@ public class ScheduleUtil {
         return null;
     }
 
-    public static void setSchedulerInfo(GlobalParameters gp) {
+    public static void setSchedulerInfo(GlobalParameters gp, CommonUtilities cu) {
 //        gp.scheduleInfoList =loadScheduleData(gp);
         ArrayList<ScheduleItem> sl = loadScheduleData(gp);
         String sched_list="", sep="", first="";
@@ -465,35 +599,55 @@ public class ScheduleUtil {
         ArrayList<String>sched_array=new ArrayList<String>();
         boolean schedule_error=false;
         String error_sched_name="", error_task_name="";
+
+/*debug*/for (SyncTaskItem sji : gp.syncTaskList) cu.addDebugMsg(1, "I", "setSchedulerInfo TaskName="+sji.getSyncTaskName());
+
         for (ScheduleItem si : sl) {
+/*debug*/   cu.addDebugMsg(1,"I", "setSchedulerInfo Schedule name="+si.scheduleName+", Enabled="+si.scheduleEnabled+", Type="+si.scheduleType+
+                    ", DayOfTheWeek="+si.scheduleDayOfTheWeek+", Day="+si.scheduleDay+", Hours="+si.scheduleHours+", Minutes="+si.scheduleMinutes+
+                    ", Tasklist="+si.syncTaskList+", Chnaged="+si.isChanged+", IntervalFirstRunImmed="+si.scheduleIntervalFirstRunImmed+
+                    ", WifiOnBeforeStart="+si.syncWifiOnBeforeStart+", DelayAfterWifiOn="+si.syncDelayAfterWifiOn+", WifiOffAfterEnd="+si.syncWifiOffAfterEnd);
             if (si.scheduleEnabled) {
                 long time = ScheduleUtil.getNextSchedule(si);
                 String dt=StringUtil.convDateTimeTo_YearMonthDayHourMin(time);
                 String item=dt+","+si.scheduleName;
-                if (!si.syncTaskList.equals("")) {
-                    if (si.syncTaskList.indexOf(",")>0) {
-                        String[] stl=si.syncTaskList.split(",");
-                        for(String stn:stl) {
-                            if (getSyncTask(gp,stn)==null) {
+                if (si.syncAutoSyncTask) {
+                    //NOP
+                } else {
+                    if (!si.syncTaskList.equals("")) {
+                        if (si.syncTaskList.indexOf(",")>0) {
+                            String[] stl=si.syncTaskList.split(",");
+                            for(String stn:stl) {
+    /*debug*/                   cu.addDebugMsg(1,"I", "setSchedulerInfo findSyncTask1 name="+stn+", result="+getSyncTask(gp,stn));
+                                if (getSyncTask(gp,stn)==null) {
+                                    schedule_error=true;
+                                    error_task_name=stn;
+                                    error_sched_name=si.scheduleName;
+                                    break;
+                                }
+                            }
+                        } else {
+    /*debug*/               cu.addDebugMsg(1,"I", "setSchedulerInfo findSyncTask name="+si.syncTaskList+", result="+getSyncTask(gp,si.syncTaskList));
+                            if (getSyncTask(gp,si.syncTaskList)==null) {
                                 schedule_error=true;
-                                error_task_name=stn;
+                                error_task_name=si.syncTaskList;
                                 error_sched_name=si.scheduleName;
                                 break;
                             }
                         }
                     } else {
-                        if (getSyncTask(gp,si.syncTaskList)==null) {
-                            schedule_error=true;
-                            error_task_name=si.syncTaskList;
-                            error_sched_name=si.scheduleName;
-                            break;
-                        }
+                        schedule_error=true;
+                        error_task_name=si.syncTaskList;
+                        error_sched_name=si.scheduleName;
+                        break;
                     }
                 }
                 sched_array.add(item);
                 if (schedule_error) break;
             }
         }
+/*debug*/cu.addDebugMsg(1,"I", "setSchedulerInfo Error schedule name="+error_sched_name+", task name="+error_task_name);
+
         Collections.sort(sched_array);
 
         if (sched_array.size()>0) {

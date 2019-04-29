@@ -59,6 +59,8 @@ class ScheduleItem implements Serializable, Cloneable {
 
     public String syncTaskList = "";
 
+    public boolean syncAutoSyncTask=true;
+
     public String syncGroupList = "";
 
     public boolean syncWifiOnBeforeStart = false;
