@@ -139,18 +139,41 @@ public final class CommonUtilities {
             out.add("setSettingGrantCoarseLocationRequired="+gp.settingGrantCoarseLocationRequired);
             out.add("ACCESS_COARSE_LOCATION Permission="+gp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
         }
-//        ConnectivityManager cm =(ConnectivityManager)mGp.appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-//        String ssid=activeNetwork.getExtraInfo();
-//        out.add("SSID="+ssid);
-//        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-//        boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+
         if (Build.VERSION.SDK_INT>=28) {
 //            if (mGp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
 //            }
             out.add("LocationService enabled="+isLocationServiceEnabled(gp)+", warning="+gp.settingSupressLocationServiceWarning);
         }
 
+        out.add("");
+        try {
+            out.add("Network information:");
+
+            ConnectivityManager cm =(ConnectivityManager)gp.appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            if (activeNetwork!=null) {
+                String network=activeNetwork.getExtraInfo();
+
+                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+
+                out.add("   Network="+network+", isConnected="+isConnected+", isWiFi="+isWiFi);
+            } else {
+                out.add("   No active network");
+            }
+
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    out.add("   Interface="+intf.getName()+", Address="+inetAddress.getHostAddress()+
+                            ", isSiteLocalAddress="+inetAddress.isSiteLocalAddress());
+                }
+            }
+        } catch (SocketException ex) {
+            out.add("Network address error. error="+ex.getMessage());
+        }
 
         out.add("Settings options:");
         out.add("  Error option="+gp.settingErrorOption);
@@ -394,7 +417,7 @@ public final class CommonUtilities {
                 for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
 //	            	Log.v("SMBSync2","ip="+inetAddress.getHostAddress()+", name="+intf.getName());
-                    if (inetAddress.isSiteLocalAddress() && (inetAddress instanceof Inet4Address)) {
+                    if (!inetAddress.isLoopbackAddress() && inetAddress.isSiteLocalAddress() && (inetAddress instanceof Inet4Address)) {
                         result = inetAddress.getHostAddress();
                         if (intf.getName().toLowerCase().equals(if_name)) {
                             exit = true;
@@ -403,6 +426,45 @@ public final class CommonUtilities {
                     }
                 }
                 if (exit) break;
+            }
+        } catch (SocketException ex) {
+            Log.e(APPLICATION_TAG, ex.toString());
+//            result = "192.168.0.1";
+        }
+        return result;
+    }
+
+    public static String getIfIpAddress() {
+        String result = "";
+        boolean exit = false;
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+//	            	Log.v("SMBSync2","ip="+inetAddress.getHostAddress()+", name="+intf.getName());
+                    if (!inetAddress.isLoopbackAddress() && inetAddress.isSiteLocalAddress() && (inetAddress instanceof Inet4Address)) {
+                        result = inetAddress.getHostAddress();
+                        exit = true;
+                        break;
+                    }
+                }
+                if (exit) break;
+            }
+            if (!exit) {
+                for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                    NetworkInterface intf = en.nextElement();
+                    for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                        InetAddress inetAddress = enumIpAddr.nextElement();
+//	            	Log.v("SMBSync2","ip="+inetAddress.getHostAddress()+", name="+intf.getName());
+                        if (!inetAddress.isLoopbackAddress() &&(inetAddress instanceof Inet4Address)) {
+                            result = inetAddress.getHostAddress();
+                            exit = true;
+                            break;
+                        }
+                    }
+                    if (exit) break;
+                }
             }
         } catch (SocketException ex) {
             Log.e(APPLICATION_TAG, ex.toString());
