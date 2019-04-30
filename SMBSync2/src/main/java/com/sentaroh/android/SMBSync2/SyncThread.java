@@ -64,13 +64,16 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.NetworkInterface;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -421,6 +424,7 @@ public class SyncThread extends Thread {
                 ", UseSmallBuffer=" + sti.isSyncOptionUseSmallIoBuffer() ,
                 ", AllowableTime=" + sti.getSyncOptionDifferentFileAllowableTime() ,
                 ", RetryCount=" + sti.getSyncOptionRetryCount() ,
+                ", WiFi Status Option=" + sti.getSyncOptionWifiStatusOption(),
                 ", UseExtendedDirectoryFilter1=" + sti.isSyncOptionUseExtendedDirectoryFilter1() ,
                 ", SkipIfConnectAnotherWifiSsid=" + sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid() ,
                 ", SyncOnlyCharging=" + sti.isSyncOptionSyncWhenCharging() ,
@@ -1658,7 +1662,7 @@ public class SyncThread extends Thread {
 
     private String isWifiConditionSatisfied(SyncTaskItem sti) {
         String result = "";
-        String if_addr=CommonUtilities.getIfIpAddress("wlan0");
+        String if_addr=CommonUtilities.getIfIpAddress();
         if (!sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
             if (if_addr.equals("")) {//IP Addressが必要だがIP Addressが取得できない
                 result=mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_ip_address_not_obtained);

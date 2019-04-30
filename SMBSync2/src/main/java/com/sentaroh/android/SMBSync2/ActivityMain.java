@@ -234,6 +234,7 @@ public class ActivityMain extends AppCompatActivity {
                     mUiHandler.post(new Runnable(){
                         @Override
                         public void run() {
+                            ScheduleUtil.setSchedulerInfo(mGp, mUtil);
                             mGp.syncTaskAdapter.notifyDataSetChanged();
                             pd.dismiss();
                         }
@@ -304,7 +305,7 @@ public class ActivityMain extends AppCompatActivity {
                     setHistoryContextButtonNormalMode();
 
                     deleteTaskData();
-                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+//                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
                     restartType = RESTART_WITH_OUT_INITIALYZE;
                     reshowDialogWindow();
                     if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);

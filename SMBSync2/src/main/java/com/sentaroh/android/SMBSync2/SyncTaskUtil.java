@@ -137,6 +137,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_T
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING;
 import static com.sentaroh.android.SMBSync2.GlobalParameters.DEFAULT_NOCOMPRESS_FILE_TYPE;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V3;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V4;
 
 public class SyncTaskUtil {
 
@@ -2675,7 +2676,7 @@ public class SyncTaskUtil {
             @Override
             public void onClick(View v) {
                 WifiManager wm = (WifiManager) mGp.appContext.getSystemService(Context.WIFI_SERVICE);
-                String ip_addr = CommonUtilities.getLocalIpAddress();
+                String ip_addr = CommonUtilities.getIfIpAddress();
                 if (!ip_addr.equals("")) {
                     if (isFilterExists(ip_addr, filterAdapter)) {
                         String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified);
@@ -6551,7 +6552,7 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_smb_disable_plain_text_passwords));
         saveSettingsParmsToFileString(c, pw, "30000",   encrypt_required, cp, c.getString(R.string.settings_smb_client_response_timeout));
 
-        saveSettingsParmsToFileString(c, pw, "-1",      encrypt_required, cp, SCHEDULER_SCHEDULE_SAVED_DATA_V3);
+        saveSettingsParmsToFileString(c, pw, "-1",      encrypt_required, cp, SCHEDULER_SCHEDULE_SAVED_DATA_V4);
 
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_exported_profile_encryption));
 
