@@ -3790,7 +3790,7 @@ public class SyncTaskUtil {
         tvmsg.setText(mContext.getString(R.string.msgs_scan_ip_address_press_scan_btn));
         tv_result.setVisibility(TextView.GONE);
 
-        final String from = CommonUtilities.getLocalIpAddress();
+        final String from = CommonUtilities.getIfIpAddress();//.getLocalIpAddress();
         String subnet = from.substring(0, from.lastIndexOf("."));
         String subnet_o1, subnet_o2, subnet_o3;
         subnet_o1 = subnet.substring(0, subnet.indexOf("."));
