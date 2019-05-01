@@ -70,6 +70,34 @@ class ScheduleItem implements Serializable, Cloneable {
     public transient boolean isChecked = false;
     public transient boolean isChanged = false;
 
+    public boolean isSame(ScheduleItem new_item) {
+        if (
+                this.scheduleEnabled ==new_item.scheduleEnabled &&
+                this.scheduleName.equals(new_item.scheduleName) &&
+                this.schedulePosition==new_item.schedulePosition &&
+
+                this.scheduleType.equals(new_item.scheduleType) &&
+                this.scheduleDay.equals(new_item.scheduleDay) &&
+                this.scheduleHours.equals(new_item.scheduleHours) &&
+                this.scheduleMinutes.equals(new_item.scheduleMinutes) &&
+                this.scheduleDayOfTheWeek.equals(new_item.scheduleDayOfTheWeek) &&
+
+                this.scheduleIntervalFirstRunImmed==new_item.scheduleIntervalFirstRunImmed &&
+
+                this.syncTaskList.equals(new_item.syncTaskList) &&
+
+                this.syncAutoSyncTask==new_item.syncAutoSyncTask &&
+
+                this.syncGroupList.equals(new_item.syncGroupList) &&
+
+                this.syncWifiOnBeforeStart==new_item.syncWifiOnBeforeStart &&
+                this.syncWifiOffAfterEnd==new_item.syncWifiOffAfterEnd &&
+                this.syncDelayAfterWifiOn==new_item.syncDelayAfterWifiOn ) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public ScheduleItem clone() {
         ScheduleItem new_si = null;

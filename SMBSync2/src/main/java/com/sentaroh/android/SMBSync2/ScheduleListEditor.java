@@ -70,7 +70,6 @@ public class ScheduleListEditor {
     private CommonUtilities mUtil = null;
     private CustomContextMenu ccMenu = null;
     private ArrayList<ScheduleItem> mScheduleList = null;
-    private ArrayList<ScheduleItem> mOrgScheduleList = null;
     private ScheduleListAdapter mScheduleAdapter = null;
 
     private boolean mAdapterChanged = false;
@@ -107,64 +106,6 @@ public class ScheduleListEditor {
         initDialog();
     }
 
-    private void setScheduleListChanged() {
-        ImageButton btn_ok = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_save);
-        mAdapterChanged = false;
-        if (mOrgScheduleList.size()!=mScheduleList.size()) {
-            mAdapterChanged = true;
-        } else {
-            if (mScheduleList.size()!=0) {
-                if (mOrgScheduleList.size()!=0) {
-                    for(ScheduleItem org_item:mOrgScheduleList) {
-                        ScheduleItem curr_item=getScheduleListItem(org_item.scheduleName, mScheduleList);
-                        if (curr_item!=null) {
-                            if (org_item.scheduleDayOfTheWeek.equals(curr_item.scheduleDayOfTheWeek) &&
-                                    org_item.scheduleDay.equals(curr_item.scheduleDay) &&
-                                    org_item.scheduleHours.equals(curr_item.scheduleHours) &&
-                                    org_item.scheduleType.equals(curr_item.scheduleType) &&
-                                    org_item.syncTaskList.equals(curr_item.syncTaskList) &&
-                                    org_item.scheduleHours.equals(curr_item.scheduleHours) &&
-                                    org_item.scheduleMinutes.equals(curr_item.scheduleMinutes) &&
-                                    org_item.scheduleEnabled == curr_item.scheduleEnabled &&
-                                    org_item.syncWifiOffAfterEnd == curr_item.syncWifiOffAfterEnd &&
-                                    org_item.syncWifiOnBeforeStart == curr_item.syncWifiOnBeforeStart &&
-                                    org_item.scheduleIntervalFirstRunImmed == curr_item.scheduleIntervalFirstRunImmed &&
-                                    org_item.syncDelayAfterWifiOn==curr_item.syncDelayAfterWifiOn &&
-                                    org_item.syncAutoSyncTask==curr_item.syncAutoSyncTask
-//                                    org_item.scheduleLastExecTime==curr_item.scheduleLastExecTime
-                                    ){
-                                curr_item.isChanged=false;
-                            } else {
-                                mAdapterChanged = true;
-                                curr_item.isChanged=true;
-                                break;
-                            }
-                        } else {
-                            mAdapterChanged = true;
-                            break;
-                        }
-                    }
-                } else {
-                    mAdapterChanged = true;
-                }
-
-            }
-        }
-        if (btn_ok != null) {
-            if (mAdapterChanged) {// && !mScheduleAdapter.isSelectMode()) {
-//                btn_ok.setEnabled(true);
-                btn_ok.setVisibility(ImageButton.VISIBLE);
-            } else {
-//                btn_ok.setEnabled(false);
-                btn_ok.setVisibility(ImageButton.INVISIBLE);
-            }
-        }
-    }
-
-    private boolean isScheduleListChanged() {
-        return mAdapterChanged;
-    }
-
     private ScheduleItem getScheduleListItem(String name, ArrayList<ScheduleItem>sl) {
         ScheduleItem result=null;
         for(ScheduleItem item:sl) {
@@ -191,19 +132,13 @@ public class ScheduleListEditor {
         TextView dlg_title = (TextView) mDialog.findViewById(R.id.schedule_list_edit_dlg_title);
         dlg_title.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
-        final ImageButton btn_ok = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_save);
-//        btn_ok.setBackgroundColor(Color.DKGRAY);
         final ImageButton btn_cancel = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_close);
         btn_cancel.setBackgroundColor(Color.TRANSPARENT);//.DKGRAY);
         final TextView tv_msg = (TextView) mDialog.findViewById(R.id.schedule_list_edit_dlg_msg);
 
         final ListView lv = (ListView) mDialog.findViewById(R.id.schedule_list_edit_dlg_schedule_list_view);
 
-        mOrgScheduleList = ScheduleUtil.loadScheduleData(mGp);
-        mScheduleList = new ArrayList<ScheduleItem>();
-        for(ScheduleItem item:mOrgScheduleList) {
-            mScheduleList.add(item.clone());
-        }
+        mScheduleList = ScheduleUtil.loadScheduleData(mGp);
 
         mScheduleAdapter = new ScheduleListAdapter(mActivity, R.layout.schedule_list_edit_list_item, mScheduleList);
         lv.setAdapter(mScheduleAdapter);
@@ -233,7 +168,7 @@ public class ScheduleListEditor {
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
-                            setScheduleListChanged();
+                            saveScheduleList();
                             mScheduleAdapter.notifyDataSetChanged();
                         }
 
@@ -273,41 +208,10 @@ public class ScheduleListEditor {
         });
         mScheduleAdapter.setCbNotify(ntfy);
 
-        setScheduleListChanged();
-
-        btn_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mScheduleAdapter.sort();
-                ScheduleUtil.saveScheduleData(mGp, mScheduleList);
-                ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
-                ScheduleUtil.setSchedulerInfo(mGp, mUtil);
-
-                mDialog.dismiss();
-            }
-        });
-
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isScheduleListChanged()) {
-                    NotifyEvent ntfy = new NotifyEvent(mContext);
-                    ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-                        @Override
-                        public void positiveResponse(Context context, Object[] objects) {
-                            mDialog.dismiss();
-                        }
-
-                        @Override
-                        public void negativeResponse(Context context, Object[] objects) {
-                        }
-                    });
-                    commonDlg.showCommonDialog(true, "W",
-                            mContext.getString(R.string.msgs_schedule_confirm_title_nosave),
-                            mContext.getString(R.string.msgs_schedule_confirm_msg_nosave), ntfy);
-                } else {
-                    mDialog.dismiss();
-                }
+                mDialog.dismiss();
             }
         });
 
@@ -425,6 +329,13 @@ public class ScheduleListEditor {
         }
     }
 
+    private void saveScheduleList() {
+        mScheduleAdapter.sort();
+        ScheduleUtil.saveScheduleData(mGp, mScheduleList);
+        ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
+        ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+    }
+
     private void setContextButtonListener(final Dialog dialog) {
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.schedule_list_edit_dlg_msg);
         mContextButtonAdd.setOnClickListener(new View.OnClickListener() {
@@ -438,9 +349,9 @@ public class ScheduleListEditor {
                         mScheduleAdapter.add(si);
                         mScheduleAdapter.sort();
                         mScheduleAdapter.notifyDataSetChanged();
-                        setScheduleListChanged();
                         tv_msg.setVisibility(TextView.GONE);
                         setContextButtonMode(dialog, mScheduleAdapter);
+                        saveScheduleList();
                     }
 
                     @Override
@@ -470,8 +381,8 @@ public class ScheduleListEditor {
                             tv_msg.setVisibility(TextView.VISIBLE);
                         }
                         setContextButtonMode(dialog, mScheduleAdapter);
-                        setScheduleListChanged();
                         mScheduleAdapter.notifyDataSetChanged();
+                        saveScheduleList();
                     }
 
                     @Override
@@ -508,7 +419,7 @@ public class ScheduleListEditor {
 //                        mScheduleAdapter.setSelectMode(false);
                         mScheduleAdapter.unselectAll();
                         setContextButtonMode(dialog, mScheduleAdapter);
-                        setScheduleListChanged();
+                        saveScheduleList();
                     }
 
                     @Override
@@ -544,7 +455,7 @@ public class ScheduleListEditor {
 //                        mScheduleAdapter.setSelectMode(false);
                         mScheduleAdapter.unselectAll();
                         setContextButtonMode(dialog, mScheduleAdapter);
-                        setScheduleListChanged();
+                        saveScheduleList();
                     }
 
                     @Override
@@ -575,7 +486,7 @@ public class ScheduleListEditor {
                         mScheduleAdapter.sort();
                         mScheduleAdapter.unselectAll();
                         setContextButtonMode(dialog, mScheduleAdapter);
-                        setScheduleListChanged();
+                        saveScheduleList();
                     }
 
                     @Override
@@ -611,7 +522,7 @@ public class ScheduleListEditor {
                         mScheduleAdapter.add(si);
                         mScheduleAdapter.unselectAll();
                         mScheduleAdapter.sort();
-                        setScheduleListChanged();
+                        saveScheduleList();
                     }
 
                     @Override
@@ -670,7 +581,8 @@ public class ScheduleListEditor {
         title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
         title.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
-//		final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
+		final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
+		dlg_msg.setVisibility(TextView.VISIBLE);
         final TextView dlg_cmp = (TextView) dialog.findViewById(R.id.single_item_input_name);
         final Button btn_ok = (Button) dialog.findViewById(R.id.single_item_input_ok_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.single_item_input_cancel_btn);
@@ -681,12 +593,18 @@ public class ScheduleListEditor {
         dlg_cmp.setVisibility(TextView.GONE);
         CommonDialog.setDlgBoxSizeCompact(dialog);
         etInput.setText(si.scheduleName);
+        dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
         btn_ok.setEnabled(false);
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                if (!arg0.toString().equalsIgnoreCase(si.scheduleName)) btn_ok.setEnabled(true);
-                else btn_ok.setEnabled(false);
+                if (!arg0.toString().equalsIgnoreCase(si.scheduleName)) {
+                    btn_ok.setEnabled(true);
+                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_warning));
+                } else {
+                    btn_ok.setEnabled(false);
+                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
+                }
             }
 
             @Override
@@ -844,8 +762,6 @@ public class ScheduleListEditor {
                 holder.ll_view=(LinearLayout)v.findViewById(R.id.schedule_list_view);
                 ll_default_background_color=holder.ll_view.getBackground();
                 holder.tv_name = (TextView) v.findViewById(R.id.schedule_list_name);
-                holder.tv_changed = (TextView) v.findViewById(R.id.schedule_list_changed);
-                holder.tv_changed.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_changed));
                 holder.tv_info = (TextView) v.findViewById(R.id.schedule_list_info);
                 holder.tv_time_info = (TextView) v.findViewById(R.id.schedule_list_time_info);
                 holder.tv_error_info = (TextView) v.findViewById(R.id.schedule_list_error_info);
@@ -867,14 +783,12 @@ public class ScheduleListEditor {
                 }
 
                 if (o.isChanged) {
-                    holder.tv_changed.setVisibility(TextView.VISIBLE);
 //                    if (mGp.themeIsLight) {
 //                        holder.ll_view.setBackgroundColor(Color.argb(255, 0, 192, 192));
 //                    } else {
 //                        holder.ll_view.setBackgroundColor(Color.argb(255, 0, 128, 128));
 //                    }
                 } else {
-                    holder.tv_changed.setVisibility(TextView.GONE);
                     holder.ll_view.setBackground(ll_default_background_color);
                 }
                 String time_info = "";
@@ -997,7 +911,7 @@ public class ScheduleListEditor {
         }
 
         class ViewHolder {
-            TextView tv_name, tv_info, tv_enabled, tv_time_info, tv_error_info, tv_changed;
+            TextView tv_name, tv_info, tv_enabled, tv_time_info, tv_error_info;
             LinearLayout ll_view;
             CheckBox cbChecked;
         }

@@ -622,11 +622,12 @@ Schedule:%s, Task:%s</string>
         <string name="msgs_schedule_confirm_title_enable">Confirm schedule enable</string>
         <string name="msgs_schedule_confirm_title_disable">Confirm schedule disable</string>
         <string name="msgs_schedule_confirm_title_nosave">Confirm Quit</string>
-        <string name="msgs_schedule_confirm_msg_delete">Do you want to delete the following item(s)?</string>
-        <string name="msgs_schedule_confirm_msg_enable">Do you want to enable the following item(s)?</string>
-        <string name="msgs_schedule_confirm_msg_disable">Do you want to disable the following item(s)?</string>
+        <string name="msgs_schedule_confirm_msg_delete">Do you want to delete the following item(s)? The results are immediately reflected and cannot be undone.</string>
+        <string name="msgs_schedule_confirm_msg_enable">Do you want to enable the following item(s)? The results are immediately reflected and cannot be undone.</string>
+        <string name="msgs_schedule_confirm_msg_disable">Do you want to disable the following item(s)? The results are immediately reflected and cannot be undone.</string>
+        <string name="msgs_schedule_confirm_msg_rename_warning">Change the schedule name. The results are immediately reflected and cannot be undone.</string>
+        <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Duplicate schedule name.</string>
         <string name="msgs_schedule_confirm_msg_nosave">The schedule has changed.  Exit without saving?</string>
-        <string name="msgs_schedule_confirm_msg_changed">Changed</string>
         <string name="msgs_schedule_rename_schedule">Rename schedule</string>
         <string name="msgs_schedule_list_edit_no_schedule">Press add button to create new schedule.</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Schedules and WiFi options for multiple tasks will be consolidated to prevent duplicate sync processes.  </string>

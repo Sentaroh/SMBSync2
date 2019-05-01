@@ -618,11 +618,12 @@
         <string name="msgs_schedule_confirm_title_enable">スケジュール有効化の確認</string>
         <string name="msgs_schedule_confirm_title_disable">スケジュール無効化の確認</string>
         <string name="msgs_schedule_confirm_title_nosave">終了確認</string>
-        <string name="msgs_schedule_confirm_msg_delete">下記のスケジュールを削除します。</string>
-        <string name="msgs_schedule_confirm_msg_enable">下記のスケジュールを有効にします。</string>
-        <string name="msgs_schedule_confirm_msg_disable">下記のスケジュールを無効にします。.</string>
+        <string name="msgs_schedule_confirm_msg_delete">下記のスケジュールを削除します。結果は即座に反映され、取り消しできません。</string>
+        <string name="msgs_schedule_confirm_msg_enable">下記のスケジュールを有効にします。結果は即座に反映され、取り消しできません。</string>
+        <string name="msgs_schedule_confirm_msg_disable">下記のスケジュールを無効にします。.結果は即座に反映され、取り消しできません。</string>
+        <string name="msgs_schedule_confirm_msg_rename_warning">スケジュール名を変更します。.結果は即座に反映され、取り消しできません。</string>
+        <string name="msgs_schedule_confirm_msg_rename_duplicate_name">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_confirm_msg_nosave">スケジュールが変更されています、保存せず終了しますか。</string>
-        <string name="msgs_schedule_confirm_msg_changed">変更済</string>
         <string name="msgs_schedule_rename_schedule">スケジュールの改名</string>
         <string name="msgs_schedule_list_edit_no_schedule">追加ボタンを押してスケジュールを作成してください。</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">複数スケジュールが同時刻に起動される場合は同期リストをまとめ、重複した同期タスクを無視します。またWI-FIオプションも各スケジュールで指定したオプションを組み合わせします。</string>
