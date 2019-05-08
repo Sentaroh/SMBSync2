@@ -622,8 +622,14 @@ public class SyncService extends Service {
         queueAutoSyncTask(req_id, false, 0, false);
     }
 
-    private void sendEndNotificationIntent() {
+    private void sendEndNotificationIntent(int sync_result) {
         Intent in = new Intent(SMBSYNC2_SYNC_ENDED);
+        String rc="";
+        if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) rc="SUCCESS";
+        else if (sync_result==SyncTaskItem.SYNC_STATUS_ERROR) rc="ERROR";
+        else if (sync_result==SyncTaskItem.SYNC_STATUS_CANCEL) rc="CANCEL";
+        else if (sync_result==SyncTaskItem.SYNC_STATUS_WARNING) rc="WARNING";
+        in.putExtra("SYNC_RESULT",rc);
         sendBroadcast(in, null);
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Send end boradcast intent");
     }
@@ -658,7 +664,7 @@ public class SyncService extends Service {
                             showSyncEndNotificationMessage();
                             startSyncThread();
                         } else {
-                            sendEndNotificationIntent();
+                            sendEndNotificationIntent(mSyncThreadResult);
                             if (mGp.callbackStub == null) {
                                 stopSelf();
                             } else {
@@ -677,7 +683,7 @@ public class SyncService extends Service {
                     mGp.releaseWakeLock(mUtil);
                     hideDialogWindow();
                     synchronized (mGp.syncRequestQueue) {
-                        sendEndNotificationIntent();
+                        sendEndNotificationIntent(mSyncThreadResult);
                         mGp.syncRequestQueue.clear();
                         if (mGp.callbackStub == null) {
                             stopSelf();

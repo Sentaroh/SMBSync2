@@ -1662,7 +1662,7 @@ public class SyncThread extends Thread {
 
     private String isWifiConditionSatisfied(SyncTaskItem sti) {
         String result = "";
-        String if_addr=CommonUtilities.getIfIpAddress();
+        String if_addr=CommonUtilities.getIfIpAddress(mStwa.util);
         if (!sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
             if (if_addr.equals("")) {//IP Addressが必要だがIP Addressが取得できない
                 result=mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_ip_address_not_obtained);

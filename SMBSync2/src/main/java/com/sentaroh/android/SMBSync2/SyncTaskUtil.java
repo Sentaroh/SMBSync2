@@ -2676,7 +2676,7 @@ public class SyncTaskUtil {
             @Override
             public void onClick(View v) {
                 WifiManager wm = (WifiManager) mGp.appContext.getSystemService(Context.WIFI_SERVICE);
-                String ip_addr = CommonUtilities.getIfIpAddress();
+                String ip_addr = CommonUtilities.getIfIpAddress(mUtil);
                 if (!ip_addr.equals("")) {
                     if (isFilterExists(ip_addr, filterAdapter)) {
                         String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified);
@@ -3790,7 +3790,7 @@ public class SyncTaskUtil {
         tvmsg.setText(mContext.getString(R.string.msgs_scan_ip_address_press_scan_btn));
         tv_result.setVisibility(TextView.GONE);
 
-        final String from = CommonUtilities.getIfIpAddress();//.getLocalIpAddress();
+        final String from = CommonUtilities.getIfIpAddress(mUtil);//.getLocalIpAddress();
         String subnet = from.substring(0, from.lastIndexOf("."));
         String subnet_o1, subnet_o2, subnet_o3;
         subnet_o1 = subnet.substring(0, subnet.indexOf("."));

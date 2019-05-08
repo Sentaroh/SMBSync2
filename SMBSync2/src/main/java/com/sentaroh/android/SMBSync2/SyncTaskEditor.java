@@ -23,12 +23,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
@@ -2455,7 +2457,9 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     static public void checkLocationServiceWarning(Activity activity, GlobalParameters gp, CommonUtilities cu) {
-        if (Build.VERSION.SDK_INT<=27 || gp.settingSupressLocationServiceWarning || CommonUtilities.isLocationServiceEnabled(gp)) return;
+        boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED);
+        if (Build.VERSION.SDK_INT<=26 || gp.settingSupressLocationServiceWarning ||
+                (CommonUtilities.isLocationServiceEnabled(gp) && coarse_granted)) return;
         boolean waring_required=false;
         String used_st="", sep="-";
         for(SyncTaskItem st_item:gp.syncTaskList) {
@@ -2487,8 +2491,13 @@ public class SyncTaskEditor extends DialogFragment {
         title.setTextColor(gp.themeColorList.text_color_warning);
         title.setText(gp.appContext.getString(R.string.msgs_main_location_service_warning_title));
 
-        String msg_text=gp.appContext.getString(R.string.msgs_main_location_service_warning_msg);
-        if (!used_st.equals("")) msg_text+="\n"+used_st;
+        String msg_text="";
+        boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED);
+        if (!CommonUtilities.isLocationServiceEnabled(gp) && !coarse_granted) msg_text=gp.appContext.getString(R.string.msgs_main_location_service_warning_msg_both);
+        else if (!CommonUtilities.isLocationServiceEnabled(gp)) msg_text=gp.appContext.getString(R.string.msgs_main_location_service_warning_msg_location);
+        else if (!coarse_granted) msg_text=gp.appContext.getString(R.string.msgs_main_location_service_warning_msg_coarse);
+
+        if (!used_st.equals("")) msg_text+="\n\n"+used_st;
         ((TextView) dialog.findViewById(R.id.show_warning_message_dlg_msg)).setText(msg_text);
 
         final Button btnClose = (Button) dialog.findViewById(R.id.show_warning_message_dlg_close);
