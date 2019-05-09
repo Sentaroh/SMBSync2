@@ -370,8 +370,9 @@ public class SyncThread extends Thread {
     private void listSyncOption(SyncTaskItem sti) {
         mStwa.util.addDebugMsg(1, "I", "Sync Task : Type=" + sti.getSyncTaskType());
         String mst_uid="";
-        if (mGp.settingSecurityReinitSmbAccountPasswordValue) mst_uid=sti.getMasterSmbUserName().equals("")?"":"????????";
-        else mst_uid=sti.getMasterSmbUserName();
+//        if (mGp.settingSecurityReinitSmbAccountPasswordValue) mst_uid=sti.getMasterSmbUserName().equals("")?"":"????????";
+//        else mst_uid=sti.getMasterSmbUserName();
+        mst_uid=sti.getMasterSmbUserName().equals("")?"":"????????";
         mStwa.util.addDebugMsg(1, "I", "   Master Type=" + sti.getMasterFolderType() +
                 ", Addr=" + sti.getMasterSmbAddr() +
                 ", Hostname=" + sti.getMasterSmbHostName() +
@@ -386,8 +387,9 @@ public class SyncThread extends Thread {
                 ", MountPoint=" + sti.getMasterLocalMountPoint() +
                 "");
         String tgt_uid="";
-        if (mGp.settingSecurityReinitSmbAccountPasswordValue) tgt_uid=sti.getTargetSmbUserName().equals("")?"":"????????";
-        else tgt_uid=sti.getTargetSmbUserName();
+//        if (mGp.settingSecurityReinitSmbAccountPasswordValue) tgt_uid=sti.getTargetSmbUserName().equals("")?"":"????????";
+//        else tgt_uid=sti.getTargetSmbUserName();
+        tgt_uid=sti.getTargetSmbUserName().equals("")?"":"????????";
         mStwa.util.addDebugMsg(1, "I", "   Target Type=" + sti.getTargetFolderType() +
                 ", Addr=" + sti.getTargetSmbAddr() +
                 ", Hostname=" + sti.getTargetSmbHostName() +
