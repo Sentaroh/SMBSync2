@@ -2197,21 +2197,16 @@ public class SyncTaskEditor extends DialogFragment {
 //                cu.addDebugMsg(1,"I","isStorageVolumeExistsApi23 uuid="+uuid+", desc="+desc+", isRemovable="+(boolean)isRemovable.invoke(volume)+
 //                        ", isPrimary="+(boolean)isPrimary.invoke(volume)+", Id="+(String)getId.invoke(volume)+
 //                        ", Path="+(String)getPath.invoke(volume));
+                cu.addDebugMsg(1,"I","getStorageVolumeUuidApi23 uuid="+uuid+", desc="+desc+", type="+type);
                 if (desc.contains(type)) {
-                    cu.addDebugMsg(1,"I","isStorageVolumeExistsApi23 uuid="+uuid+", desc="+desc);
                     result=uuid;
                     break;
                 }
             }
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            cu.addDebugMsg(1,"I","getStorageVolumeUuidApi23 error="+e.getMessage());
         }
+        cu.addDebugMsg(1,"I","getStorageVolumeUuidApi23 exit, uuid="+result);
         return result;
     }
 
@@ -2219,13 +2214,16 @@ public class SyncTaskEditor extends DialogFragment {
         StorageManager sm = (StorageManager) c.getSystemService(Context.STORAGE_SERVICE);
         List<StorageVolume> vol_list=sm.getStorageVolumes();
         StorageVolume sv=null;
+        String uuid="";
         for(StorageVolume item:vol_list) {
+            cu.addDebugMsg(1,"I","getStorageVolume uuid="+item.getUuid()+", desc="+item.getDescription(c));
             if (item.getDescription(c).contains(type)) {
                 sv=item;
-                cu.addDebugMsg(1,"I","getStorageVolume uuid="+item.getUuid()+", desc="+item.getDescription(c));
+                uuid=item.getUuid();
                 break;
             }
         }
+        cu.addDebugMsg(1,"I","getStorageVolume exit, uuid="+uuid);
         return sv;
     }
 
@@ -2233,22 +2231,26 @@ public class SyncTaskEditor extends DialogFragment {
         StorageManager sm = (StorageManager) c.getSystemService(Context.STORAGE_SERVICE);
         List<StorageVolume> vol_list=sm.getStorageVolumes();
         StorageVolume sv=null;
+        String uuid="";
         for(StorageVolume item:vol_list) {
+            cu.addDebugMsg(1,"I","getSdcardStorageVolume(1) uuid="+item.getUuid()+", desc="+item.getDescription(c));
             if (item.getDescription(c).contains("SD")) {
                 sv=item;
-                cu.addDebugMsg(1,"I","getSdcardStorageVolume uuid="+item.getUuid()+", desc="+item.getDescription(c));
+                uuid=item.getUuid();
                 break;
             }
         }
         if (sv==null) {
             for(StorageVolume item:vol_list) {
+                cu.addDebugMsg(1,"I","getSdcardStorageVolume(2) uuid="+item.getUuid()+", desc="+item.getDescription(c));
                 if (!item.isPrimary() && item.isRemovable() && !item.getDescription(c).contains("USB")) {
                     sv=item;
-                    cu.addDebugMsg(1,"I","getSdcardStorageVolume uuid="+item.getUuid()+", desc="+item.getDescription(c));
+                    uuid=item.getUuid();
                     break;
                 }
             }
         }
+        cu.addDebugMsg(1,"I","getSdcardStorageVolume exit, uuid="+uuid);
         return sv;
     }
 
@@ -3184,10 +3186,13 @@ public class SyncTaskEditor extends DialogFragment {
                 ll_wifi_wl_view.setVisibility(Button.GONE);
                 ll_wifi_wl_ap_view.setVisibility(Button.GONE);
                 ll_wifi_wl_address_view.setVisibility(Button.GONE);
+                ctv_sync_allow_global_ip_addr.setVisibility(CheckedTextView.VISIBLE);
                 if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap))) {
                     ll_wifi_wl_view.setVisibility(Button.VISIBLE);
                     ll_wifi_wl_ap_view.setVisibility(Button.VISIBLE);
                     ll_wifi_wl_address_view.setVisibility(Button.GONE);
+                } else if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address))) {
+                    ctv_sync_allow_global_ip_addr.setVisibility(CheckedTextView.GONE);
                 } else if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address))) {
                     ll_wifi_wl_view.setVisibility(Button.VISIBLE);
                     ll_wifi_wl_ap_view.setVisibility(Button.GONE);
