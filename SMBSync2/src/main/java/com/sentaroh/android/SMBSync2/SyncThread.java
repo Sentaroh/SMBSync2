@@ -1679,25 +1679,7 @@ public class SyncThread extends Thread {
             }
         }
         if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR)) {
-            result=mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr);
-            if (if_addr.startsWith("10.")) result="";
-            else if (if_addr.startsWith("192.168.")) result="";
-            else if (if_addr.startsWith("172.16.")) result="";
-            else if (if_addr.startsWith("172.17.")) result="";
-            else if (if_addr.startsWith("172.18.")) result="";
-            else if (if_addr.startsWith("172.19.")) result="";
-            else if (if_addr.startsWith("172.20.")) result="";
-            else if (if_addr.startsWith("172.21.")) result="";
-            else if (if_addr.startsWith("172.22.")) result="";
-            else if (if_addr.startsWith("172.23.")) result="";
-            else if (if_addr.startsWith("172.24.")) result="";
-            else if (if_addr.startsWith("172.25.")) result="";
-            else if (if_addr.startsWith("172.26.")) result="";
-            else if (if_addr.startsWith("172.27.")) result="";
-            else if (if_addr.startsWith("172.28.")) result="";
-            else if (if_addr.startsWith("172.29.")) result="";
-            else if (if_addr.startsWith("172.30.")) result="";
-            else if (if_addr.startsWith("172.31.")) result="";
+            if (!isPrivateAddress(if_addr)) result=mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr);
         } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR)) {
             ArrayList<String> wl = sti.getSyncOptionWifiConnectedAddressWhiteList();
             ArrayList<Pattern> inc = new ArrayList<Pattern>();
@@ -1741,8 +1723,7 @@ public class SyncThread extends Thread {
                     result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_is_off);
                 } else {
                     if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP)) {
-                        if (getWifiConnectedAP().equals(""))
-                            result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
+                        if (getWifiConnectedAP().equals("")) result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
                     } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
                         ArrayList<String> wl = sti.getSyncOptionWifiConnectedAccessPointWhiteList();
                         ArrayList<Pattern> inc = new ArrayList<Pattern>();
@@ -1786,8 +1767,37 @@ public class SyncThread extends Thread {
                 }
             }
         }
+        if (result.equals("")) {
+            if (!isPrivateAddress(if_addr)) {
+                if (!sti.isSyncOptionSyncAllowGlobalIpAddress())
+                    result=String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_ip_address_is_global), if_addr);
+            }
+        }
+
         mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied exited, " + "option=" + sti.getSyncOptionWifiStatusOption() + ", result=" + result);
         return result;
+    }
+
+    private boolean isPrivateAddress(String if_addr) {
+        if (if_addr.startsWith("10.")) return true;
+        else if (if_addr.startsWith("192.168.")) return true;
+        else if (if_addr.startsWith("172.16.")) return true;
+        else if (if_addr.startsWith("172.17.")) return true;
+        else if (if_addr.startsWith("172.18.")) return true;
+        else if (if_addr.startsWith("172.19.")) return true;
+        else if (if_addr.startsWith("172.20.")) return true;
+        else if (if_addr.startsWith("172.21.")) return true;
+        else if (if_addr.startsWith("172.22.")) return true;
+        else if (if_addr.startsWith("172.23.")) return true;
+        else if (if_addr.startsWith("172.24.")) return true;
+        else if (if_addr.startsWith("172.25.")) return true;
+        else if (if_addr.startsWith("172.26.")) return true;
+        else if (if_addr.startsWith("172.27.")) return true;
+        else if (if_addr.startsWith("172.28.")) return true;
+        else if (if_addr.startsWith("172.29.")) return true;
+        else if (if_addr.startsWith("172.30.")) return true;
+        else if (if_addr.startsWith("172.31.")) return true;
+        return false;
     }
 
     private String getWifiConnectedAP() {

@@ -371,6 +371,7 @@
         <string name="msgs_profile_sync_task_sync_option">オプション:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">差分ファイルの判定で許容される最終更新時刻の差(秒)</string>
         <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">指定されたアクセスポイントまたはIPアドレスで無い場合タスクをスキップし、次のタスクを開始する。</string>
+        <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">グローバルIPアドレスでの同期を許可する</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">ファイルの上書または削除の前に確認する</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">ミラーの時は削除を最初に行う</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">マスターのファイルサイズが大きい時だけ差分ファイルとして判定する</string>
@@ -392,7 +393,7 @@
         <string name="msgs_profile_sync_task_sync_option_sync_when_charging">充電中の時だけ開始する</string>
         <string name="msgs_profile_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">拡張されたディレクトリ選択/除外フィルタを使用する</string>
-        <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">無線LAN</string>
+        <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">ネットワークオプション</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">SMBフォルダーへのファイル書き込みで一時ファイルを使用せず直接書き込む</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">ディレクトリーフィルタが指定されていません</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">サブディレクトリーを選択する</string>
@@ -503,6 +504,7 @@
         <string name="msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr">ネットワークアドレスがローカルアドレスでないため同期を終了します。</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_is_off">無線LANがオフのため同期を終了します。</string>
         <string name="msgs_mirror_sync_can_not_start_ip_address_not_obtained">ネットワークアドレスが取得されていないため同期を終了します。</string>
+        <string name="msgs_mirror_sync_can_not_start_ip_address_is_global">ネットワークアドレスがグローバルＩＰアドレス(%s)のため同期を中止します。同期を行う場合は同期オプションでグローバルＩＰアドレスを有効にしてください。</string>
         <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">充電中でないため、同期はキャンセルされました。</string>
         <string name="msgs_mirror_sync_request_ended">同期要求が終了しました。リクエスター=%s</string>
         <string name="msgs_mirror_sync_request_started">同期要求を開始しました。リクエスター=%s</string>

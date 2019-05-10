@@ -373,6 +373,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_sync_task_sync_option">Options:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Minimum age period (in seconds) between source and destination file for synchronization</string>
         <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Skip task if not connected to specified access point, or if wireless LAN IP address does not match specified IP address.</string>
+        <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Allow sync with global IP addresses</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirm before overwrite/delete</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Delete files prior to sync (Mirror method only)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Files are different only when the source is larger than the destination.</string>
@@ -394,7 +395,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_sync_task_sync_option_sync_when_charging">Execute sync tasks only when charging</string>
         <string name="msgs_profile_sync_task_sync_option_test_mode">Test mode (do not copy or delete files)</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Use enhanced directory selection filter</string>
-        <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">WiFi Status</string>
+        <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Network Option</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Write files directly to the SMB folder without using temporary files</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">Select subdirectories</string>
@@ -505,6 +506,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr">Sync aborted.  Network address is not a local address.</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_is_off">Sync aborted.  Wireless LAN is off.</string>
         <string name="msgs_mirror_sync_can_not_start_ip_address_not_obtained">Sync aborted.  Network address can not obtained.</string>
+        <string name="msgs_mirror_sync_can_not_start_ip_address_is_global">The network address is a global IP address(%s) and the sync is aborted. If you want to sync, enable the global IP address with the sync option.</string>
         <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">Sync aborted.  Device not charging.</string>
         <string name="msgs_mirror_sync_request_ended">Sync request has ended.  Requestor=%s</string>
         <string name="msgs_mirror_sync_request_started">Sync request has been started.  Requestor=%s</string>

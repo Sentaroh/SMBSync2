@@ -6132,6 +6132,8 @@ public class SyncTaskUtil {
             if (!parm[85].equals("") && !parm[85].equals("end")) stli.setMasterSmbUseSmb2Negotiation((parm[85].equals("1") ? true : false));
             if (!parm[86].equals("") && !parm[86].equals("end")) stli.setTargetSmbUseSmb2Negotiation((parm[86].equals("1") ? true : false));
 
+            if (!parm[87].equals("") && !parm[87].equals("end")) stli.setSyncOptionSyncAllowGlobalIpAddress((parm[87].equals("1") ? true : false));
+
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -6465,6 +6467,8 @@ public class SyncTaskUtil {
 
                             (item.isMasterSmbUseSmb2Negotiation() ? "1" : "0") + "\t" +          //85
                             (item.isTargetSmbUseSmb2Negotiation() ? "1" : "0") + "\t" +          //86
+
+                            (item.isSyncOptionSyncAllowGlobalIpAddress() ? "1" : "0") + "\t" +   //87
 
                     "end"
                     ;

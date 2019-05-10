@@ -177,6 +177,8 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private boolean syncOptionSyncOnlyCharging = false;
 
+    private boolean syncOptionSyncAllowGlobalIpAddress=false;
+
     private String syncLastSyncTime = "";
     private int syncLastSyncResult = 0;
     static public final int SYNC_STATUS_SUCCESS = SyncHistoryItem.SYNC_STATUS_SUCCESS;
@@ -504,6 +506,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionDoNotUseRenameWhenSmbFileWrite() {return syncOptionDoNotUseRenameWhenSmbFileWrite;}
     public void setSyncOptionDoNotUseRenameWhenSmbFileWrite(boolean p) {syncOptionDoNotUseRenameWhenSmbFileWrite = p;}
 
+    public boolean isSyncOptionSyncAllowGlobalIpAddress() {return syncOptionSyncAllowGlobalIpAddress;}
+    public void setSyncOptionSyncAllowGlobalIpAddress(boolean p) {syncOptionSyncAllowGlobalIpAddress = p;}
+
     public void setLastSyncTime(String p) {syncLastSyncTime = p;}
     public void setLastSyncResult(int p) {syncLastSyncResult = p;}
 
@@ -635,6 +640,9 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionWifiStatus.equals(sti.getSyncOptionWifiStatusOption())) &&
 
                         (syncTaskSkipIfConnectAnotherWifiSsid==sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid()) &&
+
+                        (syncOptionSyncAllowGlobalIpAddress==sti.isSyncOptionSyncAllowGlobalIpAddress()) &&
+
                         (syncOptionSyncOnlyCharging==sti.isSyncOptionSyncWhenCharging())) {
 
                     String ff_cmp1 = "";

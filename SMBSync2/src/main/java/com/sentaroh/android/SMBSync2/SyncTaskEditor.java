@@ -3139,6 +3139,9 @@ public class SyncTaskEditor extends DialogFragment {
         final Button edit_wifi_addr_list = (Button) mDialog.findViewById(R.id.edit_sync_task_option_btn_edit_address_white_list);
         setWifiApWhileListInfo(n_sti.getSyncOptionWifiConnectedAccessPointWhiteList(), edit_wifi_ap_list);
         setWifiApWhileListInfo(n_sti.getSyncOptionWifiConnectedAddressWhiteList(), edit_wifi_addr_list);
+        final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_global_ip_address);
+        ctv_sync_allow_global_ip_addr.setChecked(n_sti.isSyncOptionSyncAllowGlobalIpAddress());
+        setCtvListenerForEditSyncTask(ctv_sync_allow_global_ip_addr, type, n_sti, dlg_msg);
         final CheckedTextView ctv_task_skip_if_ssid_invalid = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ap_list_task_skip_if_ssid_invalid);
         ctv_task_skip_if_ssid_invalid.setChecked(n_sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid());
         setCtvListenerForEditSyncTask(ctv_task_skip_if_ssid_invalid, type, n_sti, dlg_msg);
@@ -4168,6 +4171,9 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvTestMode = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_test_mode);
         final CheckedTextView ctvDiffUseFileSize = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_file_size);
         final CheckedTextView ctDeterminChangedFileByTime = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_last_mod_time);
+
+        final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_global_ip_address);
+
         final Spinner spinnerSyncDiffTimeValue = (Spinner) dialog.findViewById(R.id.edit_sync_task_option_spinner_diff_file_determin_time_value);
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
 
@@ -4195,6 +4201,7 @@ public class SyncTaskEditor extends DialogFragment {
         String wifi_sel = Integer.toString(spinnerSyncWifiStatus.getSelectedItemPosition());
         nstli.setSyncOptionWifiStatusOption(wifi_sel);
         nstli.setSyncOptionTaskSkipIfConnectAnotherWifiSsid(ctv_task_skip_if_ssid_invalid.isChecked());
+        nstli.setSyncOptionSyncAllowGlobalIpAddress(ctv_sync_allow_global_ip_addr.isChecked());
 
         nstli.setSyncOptionSyncWhenCharging(ctv_task_sync_when_cahrging.isChecked());
 
