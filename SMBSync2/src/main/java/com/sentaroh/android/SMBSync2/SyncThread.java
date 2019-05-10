@@ -263,7 +263,14 @@ public class SyncThread extends Thread {
 
                     initSyncParms(mStwa.currentSTI);
 
-                    String wifi_msg = isWifiConditionSatisfied(mStwa.currentSTI);
+                    String wifi_msg = "";
+                    if (mStwa.currentSTI.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
+                            mStwa.currentSTI.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                        wifi_msg=isWifiConditionSatisfied(mStwa.currentSTI);
+                    } else {
+                        mStwa.util.addDebugMsg(1, "I", "WiFi ciondition check bypassed because SMB folder does not used.");
+                    }
+
                     if (wifi_msg.equals("")) {//Continue
                         if ((mStwa.currentSTI.isSyncOptionSyncWhenCharging() && CommonUtilities.isCharging(mGp.appContext)) ||
                                 !mStwa.currentSTI.isSyncOptionSyncWhenCharging()) {

@@ -268,8 +268,9 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_prof_cont_label_up">Move up</string>
         <string name="msgs_prof_cont_to_activate_profile">Set the following tasks to auto</string>
         <string name="msgs_prof_cont_to_inactivate_profile">Set the following tasks to manual</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">If source or destination is located on SMB server.  Set Wireless LAN Condition to \"Connected to AP\"?</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">If source and destination are not located on SMB server.   Set Wireless LAN Condition to \"Off\"?</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">If source or destination is located on SMB server.  Set Wireless LAN Condition to \"Conn any AP\"?</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">If source or destination is located on SMB server.  Set Wireless LAN Condition to \"Has private address\"?</string>
+        <string name="deleted_msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">If source and destination are not located on SMB server.   Set Wireless LAN Condition to \"Off\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_directory">Directory</string>
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">List Directories</string>
         <string name="msgs_profile_edit_sync_folder_dlg_folder_type">Folder type</string>

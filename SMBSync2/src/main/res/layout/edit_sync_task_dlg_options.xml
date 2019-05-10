@@ -94,93 +94,100 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/msgs_profile_sync_task_sync_option_wifi_condition_title"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <Spinner
-                android:id="@+id/edit_sync_task_option_spinner_wifi_status"
-                style="?android:attr/spinnerStyle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:minHeight="36dp"
-                android:paddingLeft="5dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                tools:ignore="RtlSymmetry" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/edit_sync_task_option_wl_view"
+            android:id="@+id/edit_sync_task_option_wifi_condition_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:orientation="vertical" >
+            android:orientation="vertical">
             <LinearLayout
-                android:id="@+id/edit_sync_task_option_ap_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_wifi_condition_title"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Spinner
+                    android:id="@+id/edit_sync_task_option_spinner_wifi_status"
+                    style="?android:attr/spinnerStyle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:minHeight="36dp"
+                    android:paddingLeft="5dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_wl_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:orientation="vertical" >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/msgs_profile_sync_task_dlg_wifi_ap_list"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Button
-                    android:id="@+id/edit_sync_task_option_btn_edit_ap_white_list"
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_ap_list_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|left"
-                    android:text="ap"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/edit_sync_task_option_address_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical" >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/msgs_profile_sync_task_dlg_wifi_address_list"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical" >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/msgs_profile_sync_task_dlg_wifi_ap_list"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <Button
-                    android:id="@+id/edit_sync_task_option_btn_edit_address_white_list"
+                    <Button
+                        android:id="@+id/edit_sync_task_option_btn_edit_ap_white_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|left"
+                        android:text="ap"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_address_list_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|left"
-                    android:text="ap"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    tools:ignore="HardcodedText" />
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical" >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/msgs_profile_sync_task_dlg_wifi_address_list"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:id="@+id/edit_sync_task_option_btn_edit_address_white_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|left"
+                        android:text="ap"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ap_list_task_skip_if_ssid_invalid"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
             </LinearLayout>
-
-            <CheckedTextView
-                android:id="@+id/edit_sync_task_option_ap_list_task_skip_if_ssid_invalid"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:gravity="center_vertical"
-                android:text="@string/msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
         </LinearLayout>
+
 
         <include layout="@layout/divider_line1_turquoise" />
 
