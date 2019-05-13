@@ -218,30 +218,41 @@ public class SyncService extends Service {
             if (mHeartBeatActive) setHeartBeat();
         } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) ||
                 action.equals(Intent.ACTION_MEDIA_EJECT)) {
-            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
+            String path = intent.getDataString();
+            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action+", Path="+path);
             final String sdcard = mGp.safMgr.getSdcardRootPath();
             final String usb_flash = mGp.safMgr.getUsbRootPath();
             Thread th = new Thread() {
                 @Override
                 public void run() {
-                    int count = 10;
-                    while (count > 0) {
-                        mGp.refreshMediaDir();
-                        if (!usb_flash.equals(mGp.safMgr.getUsbRootPath()) ||
-                                !sdcard.equals(mGp.safMgr.getSdcardRootPath())) {
-                            mUtil.addDebugMsg(1, "I", "Media directory, SDCARD=" + mGp.safMgr.getSdcardRootPath() );
-                            mUtil.addDebugMsg(1, "I", "Media directory, USB=" + mGp.safMgr.getUsbRootPath() );
-                            if (mGp.callbackStub != null) {
-                                try {
-                                    mGp.callbackStub.cbMediaStatusChanged();
-                                } catch (RemoteException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            break;
+//                    int count = 10;
+//                    while (count > 0) {
+//                        mGp.refreshMediaDir();
+//                        if (!usb_flash.equals(mGp.safMgr.getUsbRootPath()) ||
+//                                !sdcard.equals(mGp.safMgr.getSdcardRootPath())) {
+//                            mUtil.addDebugMsg(1, "I", "Media directory, SDCARD=" + mGp.safMgr.getSdcardRootPath() );
+//                            mUtil.addDebugMsg(1, "I", "Media directory, USB=" + mGp.safMgr.getUsbRootPath() );
+//                            if (mGp.callbackStub != null) {
+//                                try {
+//                                    mGp.callbackStub.cbMediaStatusChanged();
+//                                } catch (RemoteException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                            break;
+//                        }
+//                        SystemClock.sleep(500);
+//                        count--;
+//                    }
+                    mGp.refreshMediaDir();
+                    mUtil.addDebugMsg(1, "I", "Media directory, SDCARD=" + mGp.safMgr.getSdcardRootPath() );
+                    mUtil.addDebugMsg(1, "I", "Media directory, USB=" + mGp.safMgr.getUsbRootPath() );
+                    if (mGp.callbackStub != null) {
+                        try {
+                            mGp.callbackStub.cbMediaStatusChanged();
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
                         }
-                        SystemClock.sleep(500);
-                        count--;
                     }
                 }
             };

@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,20 +61,30 @@ public class AdapterNetworkScanResult extends ArrayAdapter<AdapterNetworkScanRes
         notifyDataSetChanged();
     }
 
-    ;
-
-    public void sort() {
-        Collections.sort(mResultList, new Comparator<NetworkScanListItem>() {
-            @Override
-            public int compare(NetworkScanListItem lhs,
-                               NetworkScanListItem rhs) {
-                return lhs.server_address.compareTo(rhs.server_address);
-            }
-        });
-        notifyDataSetChanged();
+    @Override
+    public void add(NetworkScanListItem item) {
+        synchronized (mResultList) {
+            mResultList.add(item);
+            notifyDataSetChanged();
+        }
     }
 
-    ;
+    public void sort() {
+        synchronized (mResultList) {
+            Collections.sort(mResultList, new Comparator<NetworkScanListItem>() {
+                @Override
+                public int compare(NetworkScanListItem lhs,
+                                   NetworkScanListItem rhs) {
+                    String r_o4 = rhs.server_address.substring(rhs.server_address.lastIndexOf(".") + 1);
+                    String r_key = String.format("%3s", Integer.parseInt(r_o4)).replace(" ", "0");
+                    String l_o4 = lhs.server_address.substring(lhs.server_address.lastIndexOf(".") + 1);
+                    String l_key = String.format("%3s", Integer.parseInt(l_o4)).replace(" ", "0");
+                    return l_key.compareTo(r_key);
+                }
+            });
+            notifyDataSetChanged();
+        }
+    }
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
@@ -99,6 +110,8 @@ public class AdapterNetworkScanResult extends ArrayAdapter<AdapterNetworkScanRes
 //                holder.tv_addr.setVisibility(Button.VISIBLE);
 //            }
             if (o.server_name.equals("")) holder.tv_name.setEnabled(false);
+            else holder.tv_name.setEnabled(true);
+//            Log.v("SMBSync2","name="+o.server_name+", addr="+o.server_address);
             holder.tv_name.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {

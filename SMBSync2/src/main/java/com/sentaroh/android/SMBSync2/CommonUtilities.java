@@ -69,6 +69,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.DEFAULT_PREFS_FILENAME;
@@ -486,6 +487,24 @@ public final class CommonUtilities {
         }
         return result;
     }
+
+    public static String resolveHostName(GlobalParameters gp, CommonUtilities cu, int smb_level, String hn) {
+        String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb_level, hn);
+        if (ipAddress == null) {//add dns name resolve
+            try {
+                InetAddress[] addr_list = Inet4Address.getAllByName(hn);
+                for (InetAddress item : addr_list) {
+                    if (item.getAddress().length == 4) {
+                        ipAddress = item.getHostAddress();
+                    }
+                }
+            } catch (UnknownHostException e) {
+            }
+        }
+        cu.addDebugMsg(1, "I", "resolveHostName Name=" + hn + ", IP addr=" + ipAddress);
+        return ipAddress;
+    }
+
 
     public static String getIfHwAddress(String if_name) {
         String result = "";

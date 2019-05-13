@@ -102,6 +102,7 @@ public class SyncReceiver extends BroadcastReceiver {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
                 Intent in = new Intent(mContext, SyncService.class);
                 in.setAction(action);
+                in.setData(received_intent.getData());
                 if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
                 try {
                     mContext.startService(in);

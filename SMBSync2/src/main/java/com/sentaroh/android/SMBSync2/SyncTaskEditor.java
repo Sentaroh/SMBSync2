@@ -2459,8 +2459,9 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     static public void checkLocationServiceWarning(Activity activity, GlobalParameters gp, CommonUtilities cu) {
+        if (Build.VERSION.SDK_INT<=26) return;
         boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED);
-        if (Build.VERSION.SDK_INT<=26 || gp.settingSupressLocationServiceWarning ||
+        if (gp.settingSupressLocationServiceWarning ||
                 (CommonUtilities.isLocationServiceEnabled(gp) && coarse_granted)) return;
         boolean waring_required=false;
         String used_st="", sep="-";

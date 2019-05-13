@@ -39,6 +39,7 @@ import java.util.ArrayList;
 
 public class ReadSmbFilelist implements Runnable {
     private ThreadCtrl getFLCtrl = null;
+    private GlobalParameters mGp=null;
 
     private ArrayList<TreeFilelistItem> remoteFileList;
     private String remoteUrl, remoteDir;
@@ -69,6 +70,7 @@ public class ReadSmbFilelist implements Runnable {
         remoteDir = rd;
         getFLCtrl = ac; //new ThreadCtrl();
         notifyEvent = ne;
+        mGp=gp;
 
         mRemoteAuthInfo=rauth;
 
@@ -89,12 +91,13 @@ public class ReadSmbFilelist implements Runnable {
         } else {
             mHostName = t_host2;
         }
-        if (gp.settingSecurityReinitSmbAccountPasswordValue && !gp.settingSecurityApplicationPasswordHashValue.equals("")) {
-            if (rauth.smb_user_name!=null) mRemoteUserNameForLog=(rauth.smb_user_name.equals(""))?"":"????????";
-            else mRemoteUserNameForLog=null;
-        } else {
-            mRemoteUserNameForLog=rauth.smb_user_name;
-        }
+        mRemoteUserNameForLog=(rauth.smb_user_name.equals(""))?"":"????????";
+//        if (gp.settingSecurityReinitSmbAccountPasswordValue && !gp.settingSecurityApplicationPasswordHashValue.equals("")) {
+//            if (rauth.smb_user_name!=null) mRemoteUserNameForLog=(rauth.smb_user_name.equals(""))?"":"????????";
+//            else mRemoteUserNameForLog=null;
+//        } else {
+//            mRemoteUserNameForLog=rauth.smb_user_name;
+//        }
 
         mUtil.addDebugMsg(1, "I", "ReadSmbFilelist init. name=" + mHostName +
                 ", addr=" + mHostAddr + ", port=" + mHostPort + ", remoteUrl=" + remoteUrl + ", Dir=" +
@@ -120,28 +123,26 @@ public class ReadSmbFilelist implements Runnable {
                     error_exit = true;
                     if (getFLCtrl.isEnabled()) {
                         getFLCtrl.setThreadResultError();
-                        getFLCtrl.setThreadMessage(
-                                String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected), mHostAddr));
+                        getFLCtrl.setThreadMessage(String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected), mHostAddr));
                     } else {
                         getFLCtrl.setThreadResultCancelled();
                     }
                 }
             } else {
-                if (!CommonUtilities.isSmbHostAddressConnected(mHostAddr,
-                        Integer.parseInt(mHostPort))) {
+                if (!CommonUtilities.isSmbHostAddressConnected(mHostAddr, Integer.parseInt(mHostPort))) {
                     error_exit = true;
                     if (getFLCtrl.isEnabled()) {
                         getFLCtrl.setThreadResultError();
-                        getFLCtrl.setThreadMessage(
-                                String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected_with_port),
-                                        mHostAddr, mHostPort));
+                        getFLCtrl.setThreadMessage(String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected_with_port), mHostAddr, mHostPort));
                     } else {
                         getFLCtrl.setThreadResultCancelled();
                     }
                 }
             }
         } else {
-            if (JcifsUtil.getSmbHostIpAddressByHostName(mSmbLevel, mHostName) == null) {
+//            if (JcifsUtil.getSmbHostIpAddressByHostName(mSmbLevel, mHostName) == null) {
+            mHostAddr=CommonUtilities.resolveHostName(mGp, mUtil, mSmbLevel, mHostName);
+            if (mHostAddr == null) {
                 error_exit = true;
                 if (getFLCtrl.isEnabled()) {
                     getFLCtrl.setThreadResultError();
@@ -150,6 +151,9 @@ public class ReadSmbFilelist implements Runnable {
                 } else {
                     getFLCtrl.setThreadResultCancelled();
                 }
+            } else {
+                remoteUrl=remoteUrl.replace(mHostName, mHostAddr);
+                mUtil.addDebugMsg(1, "I", "ReadSmbFilelist remoteUrl was changed="+remoteUrl);
             }
         }
         if (!error_exit) {

@@ -12,7 +12,7 @@ android {
         targetSdkVersion 26  //Android 8.0
 
 //
-        versionCode 207
+        versionCode 208
         versionName "2.02"
 
         compileOptions {

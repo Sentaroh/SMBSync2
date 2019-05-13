@@ -128,7 +128,9 @@ public class SyncThread extends Thread {
         public boolean lastModifiedIsFunctional = true;
 
         public JcifsAuth masterAuth=null;
+        public String masterSmbAddress=null;
         public JcifsAuth targetAuth=null;
+        public String targetSmbAddress=null;
 
         public int jcifsNtStatusCode=0;
 
@@ -640,11 +642,11 @@ public class SyncThread extends Thread {
         }
 
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-            String addr = sti.getMasterSmbAddr();
+            mStwa.masterSmbAddress=sti.getMasterSmbAddr();
 //            if (sti.getMasterSmbHostName().equals("") && !sti.getMasterSmbHostName().equals("")) {
             if (!sti.getMasterSmbHostName().equals("")) {
-                addr = resolveHostName(mStwa.masterAuth.getSmbLevel(), sti.getMasterSmbHostName());
-                if (addr == null) {
+                mStwa.masterSmbAddress = CommonUtilities.resolveHostName(mGp, mStwa.util, mStwa.masterAuth.getSmbLevel(), sti.getMasterSmbHostName());
+                if (mStwa.masterSmbAddress == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) +
                             sti.getMasterSmbHostName();
                     mStwa.util.addLogMsg("E", "", msg);
@@ -654,31 +656,31 @@ public class SyncThread extends Thread {
                 }
             }
             if (sti.getMasterSmbPort().equals("")) {
-                if (!isIpaddressConnectable(addr, 445) && !isIpaddressConnectable(addr, 139)) {
+                if (!isIpaddressConnectable(mStwa.masterSmbAddress, 445) && !isIpaddressConnectable(mStwa.masterSmbAddress, 139)) {
                     sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                     showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), mStwa.masterSmbAddress));
                     mGp.syncThreadCtrl.setThreadMessage(
-                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), mStwa.masterSmbAddress));
                     return sync_result;
                 }
             } else {
                 int port = Integer.parseInt(sti.getMasterSmbPort());
-                if (!isIpaddressConnectable(addr, port)) {
+                if (!isIpaddressConnectable(mStwa.masterSmbAddress, port)) {
                     sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                     showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), mStwa.masterSmbAddress, port));
                     mGp.syncThreadCtrl.setThreadMessage(
-                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), mStwa.masterSmbAddress, port));
                     return sync_result;
                 }
             }
         }
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-            String addr = sti.getTargetSmbAddr();
+            mStwa.targetSmbAddress = sti.getTargetSmbAddr();
             if (!sti.getTargetSmbHostName().equals("")) {
-                addr = resolveHostName(mStwa.targetAuth.getSmbLevel(), sti.getTargetSmbHostName());
-                if (addr == null) {
+                mStwa.targetSmbAddress = CommonUtilities.resolveHostName(mGp, mStwa.util, mStwa.targetAuth.getSmbLevel(), sti.getTargetSmbHostName());
+                if (mStwa.targetSmbAddress == null) {
                     String msg = mGp.appContext.getString(R.string.msgs_mirror_remote_name_not_found) + sti.getTargetSmbHostName();
                     mStwa.util.addLogMsg("E", "", msg);
                     mGp.syncThreadCtrl.setThreadMessage(msg);
@@ -687,22 +689,22 @@ public class SyncThread extends Thread {
                 }
             }
             if (sti.getTargetSmbPort().equals("")) {
-                if (!isIpaddressConnectable(addr, 445) && !isIpaddressConnectable(addr, 139)) {
+                if (!isIpaddressConnectable(mStwa.targetSmbAddress, 445) && !isIpaddressConnectable(mStwa.targetSmbAddress, 139)) {
                     sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                     showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), mStwa.targetSmbAddress));
                     mGp.syncThreadCtrl.setThreadMessage(
-                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), mStwa.targetSmbAddress));
                     return sync_result;
                 }
             } else {
                 int port = Integer.parseInt(sti.getTargetSmbPort());
-                if (!isIpaddressConnectable(addr, port)) {
+                if (!isIpaddressConnectable(mStwa.targetSmbAddress, port)) {
                     sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                     showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), mStwa.targetSmbAddress, port));
                     mGp.syncThreadCtrl.setThreadMessage(
-                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), mStwa.targetSmbAddress, port));
                     return sync_result;
                 }
             }
@@ -751,27 +753,6 @@ public class SyncThread extends Thread {
         }
         return reachable;
     }
-
-    private String resolveHostName(int smb_level, String hn) {
-        String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb_level, hn);
-        if (ipAddress == null) {//add dns name resolve
-            try {
-                InetAddress[] addr_list = Inet4Address.getAllByName(hn);
-                for (InetAddress item : addr_list) {
-//					Log.v("","addr="+item.getHostAddress()+", l="+item.getAddress().length);
-                    if (item.getAddress().length == 4) {
-                        ipAddress = item.getHostAddress();
-                    }
-                }
-            } catch (UnknownHostException e) {
-//				e.printStackTrace();
-            }
-        }
-
-        mStwa.util.addDebugMsg(1, "I", "resolveHostName Name=" + hn + ", IP addr=" + ipAddress);
-        return ipAddress;
-    }
-
 
     // Default uncaught exception handler variable
     private UncaughtExceptionHandler defaultUEH;
@@ -957,7 +938,7 @@ public class SyncThread extends Thread {
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             //Internal to SMB
             from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
-            to_temp = buildSmbHostUrl(sti.getTargetSmbAddr(), sti.getTargetSmbHostName(),
+            to_temp = buildSmbHostUrl(mStwa.targetSmbAddress,
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1106,7 +1087,7 @@ public class SyncThread extends Thread {
             //External to SMB
             from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
 
-            to_temp = buildSmbHostUrl(sti.getTargetSmbAddr(), sti.getTargetSmbHostName(),
+            to_temp = buildSmbHostUrl(mStwa.targetSmbAddress,
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1129,7 +1110,7 @@ public class SyncThread extends Thread {
             //External to SMB
             from = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
 
-            to_temp = buildSmbHostUrl(sti.getTargetSmbAddr(), sti.getTargetSmbHostName(),
+            to_temp = buildSmbHostUrl(sti.getTargetSmbAddr(),
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1150,7 +1131,7 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             //External to Internal
-            from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
+            from = buildSmbHostUrl(mStwa.masterSmbAddress,
                     sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
@@ -1175,7 +1156,7 @@ public class SyncThread extends Thread {
             //External to External
             to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
-            from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
+            from = buildSmbHostUrl(mStwa.masterSmbAddress,
                     sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1198,7 +1179,7 @@ public class SyncThread extends Thread {
             //External to External
             to_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getTargetDirectoryName());
 
-            from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
+            from = buildSmbHostUrl(mStwa.masterSmbAddress,
                     sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1219,10 +1200,10 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             //External to External
-            to_temp = buildSmbHostUrl(sti.getTargetSmbAddr(), sti.getTargetSmbHostName(),
+            to_temp = buildSmbHostUrl(mStwa.targetSmbAddress,
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName()) + "/";
 
-            from = buildSmbHostUrl(sti.getMasterSmbAddr(), sti.getMasterSmbHostName(),
+            from = buildSmbHostUrl(mStwa.masterSmbAddress,
                     sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1268,11 +1249,12 @@ public class SyncThread extends Thread {
         else return base + "/" + dir;
     }
 
-    private String buildSmbHostUrl(String addr, String hostname, String port, String share, String dir) {
+    private String buildSmbHostUrl(String addr, String port, String share, String dir) {
         String result = "";
         String smb_host = "smb://";
-        if (!addr.equals("")) smb_host = smb_host + addr;
-        else smb_host = smb_host + hostname;
+//        if (!addr.equals("")) smb_host = smb_host + addr;
+//        else smb_host = smb_host + hostname;
+        smb_host = smb_host + addr;
         if (!port.equals("")) smb_host = smb_host + ":" + port;
         smb_host = smb_host + "/" + share;
         if (!dir.equals("")) result = smb_host + "/" + dir;

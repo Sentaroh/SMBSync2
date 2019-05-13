@@ -1382,8 +1382,8 @@ public class SyncTaskUtil {
                         ntfy.notifyToListener(true, new Object[]{unreachble_msg});
                     }
                 } else {
-                    int smb1=Integer.parseInt(ra.smb_smb_protocol);
-                    String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb1, host);
+                    int smb_level=Integer.parseInt(ra.smb_smb_protocol);
+                    String ipAddress = CommonUtilities.resolveHostName(mGp, mUtil, smb_level, host);
                     mUtil.addDebugMsg(1, "I", "Name resolution IP Address="+ipAddress+", Host="+host);
                     if (ipAddress == null) {
                         try {
@@ -3790,7 +3790,7 @@ public class SyncTaskUtil {
         tvmsg.setText(mContext.getString(R.string.msgs_scan_ip_address_press_scan_btn));
         tv_result.setVisibility(TextView.GONE);
 
-        final String from = CommonUtilities.getIfIpAddress(mUtil);//.getLocalIpAddress();
+        final String from = CommonUtilities.getIfIpAddress(mUtil).equals("")?"192.168.0.1":CommonUtilities.getIfIpAddress(mUtil);
         String subnet = from.substring(0, from.lastIndexOf("."));
         String subnet_o1, subnet_o2, subnet_o3;
         subnet_o1 = subnet.substring(0, subnet.indexOf("."));
@@ -3884,7 +3884,7 @@ public class SyncTaskUtil {
                     String subnet = ba1 + "." + ba2 + "." + ba3;
                     int begin_addr = Integer.parseInt(ba4);
                     int end_addr = Integer.parseInt(ea4);
-                    scanRemoteNetwork(dialog, lv, adap, ipAddressList,
+                    scanRemoteNetwork(dialog, lv, adap, //ipAddressList,
                             subnet, begin_addr, end_addr, ntfy, smb_protocol);
                 } else {
                     //error
@@ -3919,7 +3919,7 @@ public class SyncTaskUtil {
             final Dialog dialog,
             final ListView lv_ipaddr,
             final AdapterNetworkScanResult adap,
-            final ArrayList<AdapterNetworkScanResult.NetworkScanListItem> ipAddressList,
+//            final ArrayList<AdapterNetworkScanResult.NetworkScanListItem> ipAddressList,
             final String subnet, final int begin_addr, final int end_addr,
             final NotifyEvent p_ntfy, final int smb_protcol) {
         final Handler handler = new Handler();
@@ -3968,7 +3968,7 @@ public class SyncTaskUtil {
             public void run() {//non UI thread
                 mScanCompleteCount = 0;
                 mScanAddrCount = end_addr - begin_addr + 1;
-                int scan_thread = 60;
+                int scan_thread = 300;
                 String scan_port = "";
                 if (et_port_number.getText().length()>0) scan_port = et_port_number.getText().toString();
                 for (int i = begin_addr; i <= end_addr; i += scan_thread) {
@@ -3977,7 +3977,9 @@ public class SyncTaskUtil {
                     for (int j = i; j < (i + scan_thread); j++) {
                         if (j <= end_addr) {
                             startRemoteNetworkScanThread(handler, tc, dialog, p_ntfy,
-                                    lv_ipaddr, adap, tvmsg, subnet + "." + j, ipAddressList, scan_port, smb_protcol);
+                                    lv_ipaddr, adap, tvmsg, subnet + "." + j,
+//                                    ipAddressList,
+                                    scan_port, smb_protcol);
                         } else {
                             scan_end = true;
                         }
@@ -3999,6 +4001,7 @@ public class SyncTaskUtil {
                     handler.post(new Runnable() {// UI thread
                         @Override
                         public void run() {
+                            adap.sort();
                             closeScanRemoteNetworkProgressDlg(dialog, p_ntfy, lv_ipaddr, adap, tvmsg);
                         }
                     });
@@ -4013,6 +4016,7 @@ public class SyncTaskUtil {
                         @Override
                         public void run() {
                             synchronized (mLockScanCompleteCount) {
+                                adap.sort();
                                 lv_ipaddr.setSelection(lv_ipaddr.getCount());
                                 adap.notifyDataSetChanged();
                                 closeScanRemoteNetworkProgressDlg(dialog, p_ntfy, lv_ipaddr, adap, tvmsg);
@@ -4054,7 +4058,7 @@ public class SyncTaskUtil {
                                               final AdapterNetworkScanResult adap,
                                               final TextView tvmsg,
                                               final String addr,
-                                              final ArrayList<AdapterNetworkScanResult.NetworkScanListItem> ipAddressList,
+//                                              final ArrayList<AdapterNetworkScanResult.NetworkScanListItem> ipAddressList,
                                               final String scan_port, final int smb_level) {
         final String scan_prog = mContext.getString(R.string.msgs_ip_address_scan_progress);
         Thread th = new Thread(new Runnable() {
@@ -4067,27 +4071,24 @@ public class SyncTaskUtil {
                     final String srv_name = getSmbHostName(smb_level, addr);
                     final AdapterNetworkScanResult.NetworkScanListItem smb_server_item = new AdapterNetworkScanResult.NetworkScanListItem();
                     smb_server_item.server_address = addr;
-                    smb_server_item.server_name = srv_name;
+                    String r_addr=null;
+                    if (srv_name!=null) {
+                        r_addr=CommonUtilities.resolveHostName(mGp, mUtil, smb_level, srv_name);
+                        if (r_addr!=null) {
+                            if (r_addr.equals(addr)) smb_server_item.server_name = srv_name;
+                        }
+                    }
+//                    mUtil.addDebugMsg(1,"I","addr="+addr+", r_addr="+r_addr+", name="+srv_name+", server="+smb_server_item.server_name);
                     buildSmbServerList(smb_server_item, "", "", "", addr);
                     handler.post(new Runnable() {// UI thread
                         @Override
                         public void run() {
                             synchronized (mScanRequestedAddrList) {
                                 mScanRequestedAddrList.remove(addr);
-                                ipAddressList.add(smb_server_item);
-                                Collections.sort(ipAddressList, new Comparator<AdapterNetworkScanResult.NetworkScanListItem>() {
-                                    @Override
-                                    public int compare(AdapterNetworkScanResult.NetworkScanListItem lhs,
-                                                       AdapterNetworkScanResult.NetworkScanListItem rhs) {
-                                        String r_o4 = rhs.server_address.substring(rhs.server_address.lastIndexOf(".") + 1);
-                                        String r_key = String.format("%3s", Integer.parseInt(r_o4)).replace(" ", "0");
-                                        String l_o4 = lhs.server_address.substring(lhs.server_address.lastIndexOf(".") + 1);
-                                        String l_key = String.format("%3s", Integer.parseInt(l_o4)).replace(" ", "0");
-//										Log.v("","r="+r_key+", l="+l_key);
-                                        return l_key.compareTo(r_key);
-                                    }
-                                });
-                                adap.notifyDataSetChanged();
+                                synchronized (adap) {
+                                    adap.add(smb_server_item);
+                                    adap.sort();
+                                }
                             }
                             synchronized (mLockScanCompleteCount) {
                                 mScanCompleteCount++;
@@ -4096,7 +4097,6 @@ public class SyncTaskUtil {
                     });
                 } else {
                     synchronized (mScanRequestedAddrList) {
-//						Log.v("","addr="+addr+", contained="+mScanRequestedAddrList.contains(addr));
                         mScanRequestedAddrList.remove(addr);
                     }
                     synchronized (mLockScanCompleteCount) {
@@ -4108,9 +4108,8 @@ public class SyncTaskUtil {
                     public void run() {
                         synchronized (mLockScanCompleteCount) {
                             lv_ipaddr.setSelection(lv_ipaddr.getCount());
-                            adap.notifyDataSetChanged();
-                            String p_txt = String.format(scan_prog,
-                                    (mScanCompleteCount * 100) / mScanAddrCount);
+//                            adap.notifyDataSetChanged();
+                            String p_txt = String.format(scan_prog, (mScanCompleteCount * 100) / mScanAddrCount);
                             tvmsg.setText(p_txt);
                         }
                     }
