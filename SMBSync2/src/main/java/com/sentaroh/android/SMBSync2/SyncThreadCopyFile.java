@@ -181,7 +181,10 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_file_path = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
+        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files";
+        File tmp_dir=new File(to_dir_tmp);
+        if (!tmp_dir.exists()) tmp_dir.mkdirs();
+        String to_file_path = to_dir_tmp+"/"+"temp_file.tmp";
 
         File out_file = new File(to_file_path);
         File t_dir = new File(to_dir);
@@ -364,7 +367,10 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String temp_path = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
+        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files";
+        File tmp_dir=new File(to_dir_tmp);
+        if (!tmp_dir.exists()) tmp_dir.mkdirs();
+        String temp_path = to_dir_tmp+"/"+"temp_file.tmp";
 
         File temp_file = new File(temp_path);
         File t_dir = new File(to_dir);
@@ -675,7 +681,10 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_file_temp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
+        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files";
+        File tmp_dir=new File(to_dir_tmp);
+        if (!tmp_dir.exists()) tmp_dir.mkdirs();
+        String to_file_temp = to_dir_tmp+"/"+"temp_file.tmp";
 
         File out_file = new File(to_file_temp);
         File t_dir = new File(to_dir);
