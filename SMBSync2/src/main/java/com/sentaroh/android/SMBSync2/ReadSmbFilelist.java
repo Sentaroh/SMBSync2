@@ -91,7 +91,8 @@ public class ReadSmbFilelist implements Runnable {
         } else {
             mHostName = t_host2;
         }
-        mRemoteUserNameForLog=(rauth.smb_user_name.equals(""))?"":"????????";
+        if (rauth.smb_user_name!=null) mRemoteUserNameForLog=(rauth.smb_user_name.equals(""))?"":"????????";
+        else mRemoteUserNameForLog=null;
 //        if (gp.settingSecurityReinitSmbAccountPasswordValue && !gp.settingSecurityApplicationPasswordHashValue.equals("")) {
 //            if (rauth.smb_user_name!=null) mRemoteUserNameForLog=(rauth.smb_user_name.equals(""))?"":"????????";
 //            else mRemoteUserNameForLog=null;
