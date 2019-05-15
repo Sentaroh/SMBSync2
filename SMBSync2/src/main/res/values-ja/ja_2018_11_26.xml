@@ -57,6 +57,8 @@
         <string name="msgs_log_management_dlg_send_zip_file_creating">zipファイルの作成中</string>
         <string name="msgs_log_management_dlg_send_zip_file_cancelled">zipファイル作成がキャンセルされました</string>
         <string name="msgs_log_management_log_file_switched">ログファイルを切り替えました。</string>
+        <string name="msgs_log_management_enable_log_file_warning">有効にすることにより下記のデータがログファイルに記録されます。\nAndroidバージョン、端末名、ディレクトリー名、ファイル名、IPアドレス、ネットワークインターフェース名、システム設定、アプリ情報</string>
+        <string name="msgs_log_management_send_log_file_warning">ログを開発者にE-Mailを使用して送信します。ログファイルにはAndroidバージョン、端末名、ディレクトリー名、ファイル名、IPアドレス、ネットワークインターフェース名、システム設定、アプリ情報が含まれます。\n１．内容表示ボタンを押しtemp_log.txtを表示し、内容を確認してください（テキストファイルを表示するためのアプリケーション選択の画面が表示されたら、アプリケーションを表示してください）\n2．送信する内容を確認したら、送信ボタンを押しE-Mail選択ダイアログでE-Mailを選択\n３. E-Mail本文に問題/疑問を入力し、E-Mailを送信してください。（ログはzipに圧縮し、添付ファイルになっています）</string>
     <!-- Main -->
         <string name="msgs_active_sync_prof_not_found">自動同期タスクがありません。</string>
         <string name="msgs_add_sync_profile">同期タスクの追加</string>
