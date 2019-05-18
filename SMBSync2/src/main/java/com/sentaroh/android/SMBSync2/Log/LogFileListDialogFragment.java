@@ -24,7 +24,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.sentaroh.android.Utilities.LogUtil.CommonLogFileListDialogFragment;
 
