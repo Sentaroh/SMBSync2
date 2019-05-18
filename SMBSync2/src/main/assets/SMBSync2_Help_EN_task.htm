@@ -26,14 +26,14 @@
 	{font-family:"MS UI Gothic";
 	panose-1:2 11 6 0 7 2 5 8 2 4;}
 @font-face
-	{font-family:"\@ＭＳ 明朝";
-	panose-1:2 2 6 9 4 2 5 8 3 4;}
-@font-face
 	{font-family:"\@ＭＳ ゴシック";
 	panose-1:2 11 6 9 7 2 5 8 2 4;}
 @font-face
 	{font-family:"\@MS UI Gothic";
 	panose-1:2 11 6 0 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
  /* Style Definitions */
  p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin:0mm;
@@ -158,6 +158,27 @@ p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
 	margin-bottom:.0001pt;
 	font-size:10.5pt;
 	font-family:"Century","serif";}
+p.MsoBodyTextIndent, li.MsoBodyTextIndent, div.MsoBodyTextIndent
+	{mso-style-link:"本文インデント \(文字\)";
+	margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:42.55pt;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoBodyTextFirstIndent2, li.MsoBodyTextFirstIndent2, div.MsoBodyTextFirstIndent2
+	{mso-style-link:"本文字下げ 2 \(文字\)";
+	margin-top:0mm;
+	margin-right:0mm;
+	margin-bottom:0mm;
+	margin-left:42.55pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:10.5pt;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
 a:link, span.MsoHyperlink
 	{color:blue;
 	text-decoration:underline;}
@@ -238,6 +259,12 @@ span.a1
 	mso-style-link:本文;}
 span.shorttext
 	{mso-style-name:short_text;}
+span.a2
+	{mso-style-name:"本文インデント \(文字\)";
+	mso-style-link:本文インデント;}
+span.20
+	{mso-style-name:"本文字下げ 2 \(文字\)";
+	mso-style-link:"本文字下げ 2";}
 .MsoChpDefault
 	{font-size:10.0pt;}
  /* Page Definitions */
@@ -302,6 +329,71 @@ src="SMBSync2_Help_EN_task.files/image001.png" alt="*"><span style='font:7.0pt "
 <p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>Select mirror,
 copy, move or archive</span></p>
 
+<p class=MsoListBullet style='margin-left:33.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>Mirror</span></p>
+
+<p class=MsoBodyTextFirstIndent2 align=left style='margin-left:36.0pt;
+text-align:left;text-indent:0mm'><span lang=EN-US>If master and target files
+are different, to copied files from master to the target directory. To delete
+target files and directories if does not exist in the master.</span></p>
+
+<p class=MsoListBullet style='margin-left:33.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>Move</span></p>
+
+<p class=MsoBodyTextFirstIndent2 align=left style='margin-left:36.0pt;
+text-align:left;text-indent:0mm'><span lang=EN-US>If master and target files
+are different, to copied files from master to the target directory. To delete
+the master directories and files copied to the target.</span></p>
+
+<p class=MsoBodyTextFirstIndent2 align=left style='margin-left:36.0pt;
+text-align:left;text-indent:0mm'><span lang=EN-US>However, the master and
+target same name, same file modification time and file size, to delete the file
+on the master without copying files.</span></p>
+
+<p class=MsoListBullet style='margin-left:33.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>Copy</span></p>
+
+<p class=MsoBodyTextFirstIndent2 align=left style='margin-left:36.0pt;
+text-align:left;text-indent:0mm'><span lang=EN-US>If master and target files
+are different, to copied files from master to the target directory. However,
+the same file modification time and file size with the same name does not copy
+the master and target.</span></p>
+
+<p class=MsoListBullet style='margin-left:33.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US>Archive</span></p>
+
+<p class=MsoBodyTextFirstIndent2 align=left style='margin-left:36.0pt;
+text-align:left;text-indent:0mm'><span lang=EN-US>Move photos and videos in the
+directory on the master side to the target under conditions such as shooting
+date/time than the date and time of archive execution, such as 7 days or
+earlier or 30 days or earlier. (However, ZIP can not be used for target)</span></p>
+
+<p class=MsoBodyText style='margin-left:12.0pt'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoBodyText style='margin-left:12.0pt'><span lang=EN-US>If the
+determination is satisfied and the differential file one of the following three
+conditions.</span></p>
+
+<p class=MsoListBullet style='margin-left:54.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Wingdings'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span><span lang=EN-US>File does not exist</span></p>
+
+<p class=MsoListBullet style='margin-left:54.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Wingdings'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span><span lang=EN-US>Different file sizes</span></p>
+
+<p class=MsoListBullet style='margin-left:54.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Wingdings'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span><span lang=EN-US>Different over when last updated 3 seconds</span></p>
+
 <p class=MsoNormal><span lang=EN-US style='font-size:10.5pt'>&nbsp;</span></p>
 
 <p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
@@ -344,29 +436,29 @@ check and then sync all of the file. If you check to see details.</span></p>
 
 <p class=MsoNormal style='margin-left:42.0pt;text-indent:-21.0pt'><span
 lang=EN-US style='font-size:10.5pt;font-family:Symbol'><img width=11 height=11
-src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><span lang=EN-US style='font-size:10.5pt'>Sync audio files</span></p>
 
 <p class=MsoBodyText style='margin-left:41.95pt'><span lang=EN-US>If you check
 to sync the files of the following extensions.</span></p>
 
 <p class=MsoBodyText style='margin-left:41.95pt'><span lang=EN-US>aac, aif,
-aifc, aiff, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ra, ram, wav</span></p>
+aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav</span></p>
 
 <p class=MsoNormal style='margin-left:42.0pt;text-indent:-21.0pt'><span
 lang=EN-US style='font-size:10.5pt;font-family:Symbol'><img width=11 height=11
-src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><span lang=EN-US style='font-size:10.5pt'>Sync image files</span></p>
 
 <p class=MsoBodyText style='margin-left:41.95pt'><span lang=EN-US>If you check
 to sync the files of the following extensions.</span></p>
 
 <p class=MsoBodyText style='margin-left:41.95pt'><span lang=EN-US>bmp, cgm,
-djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png,</span></p>
+djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff,</span></p>
 
 <p class=MsoNormal style='margin-left:42.0pt;text-indent:-21.0pt'><span
 lang=EN-US style='font-size:10.5pt;font-family:Symbol'><img width=11 height=11
-src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><span lang=EN-US style='font-size:10.5pt'>Sync video files</span></p>
 
 <p class=MsoBodyText style='margin-left:41.95pt'><span lang=EN-US>If you check
@@ -378,7 +470,7 @@ mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv </span></p>
 <p class=MsoNormal style='margin-left:42.0pt;text-indent:-21.0pt;page-break-after:
 avoid'><span lang=EN-US style='font-size:10.5pt;font-family:Symbol'><img
 width=11 height=11 src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><span lang=EN-US style='font-size:10.5pt'>File filter</span></p>
 
 <p class=MsoBodyText style='margin-left:41.95pt;page-break-after:avoid'><span
@@ -398,7 +490,7 @@ filter button.</span></p>
 
 <p class=MsoNormal style='margin-left:42.0pt;text-indent:-21.0pt'><span
 lang=EN-US style='font-size:10.5pt;font-family:Symbol'><img width=11 height=11
-src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+src="SMBSync2_Help_EN_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><span lang=EN-US style='font-size:10.5pt'>Directory filter</span></p>
 
 <p class=MsoBodyText style='margin-left:41.95pt'><span lang=EN-US>You can
@@ -446,8 +538,6 @@ you have checked.</span></p>
 lang=EN-US style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><span lang=EN-US>WiFi Status</span></p>
-
-<p class=MsoBodyText style='margin-left:21.0pt'><span style='font-family:"ＭＳ 明朝","serif"'>書き直し</span></p>
 
 <p class=MsoBodyText style='margin-left:21.0pt'><span lang=EN-US>&quot;Conn to
 any AP&quot; sync and are not connected to the access point will exit with an

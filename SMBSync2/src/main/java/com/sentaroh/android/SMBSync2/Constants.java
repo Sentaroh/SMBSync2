@@ -141,8 +141,8 @@ public class Constants {
 //    *.avi, *.m4u, *.mov, *.movie, *.mpe, *.mpeg, *.mpg, *.mxu, *.qt, *.wmv
 
 	public static final String[] SYNC_FILE_TYPE_AUDIO=
-			new String[]{"*.aac","*.aif", "*.aifc", "*.aiff", "*.kar", "*.m3u", "*.m4a", "*.mid", "*.midi", "*.mp2", 
-							"*.mp3", "*.mpga", "*.ra", "*.ram", "*.wav"};
+			new String[]{"*.aac","*.aif", "*.aifc", "*.aiff", "*.flac", "*.kar", "*.m3u", "*.m4a", "*.mid", "*.midi", "*.mp2",
+							"*.mp3", "*.mpga", "*.ogg", "*.ra", "*.ram", "*.wav"};
 	public static final String[] SYNC_FILE_TYPE_IMAGE=
 			new String[]{"*.bmp", "*.cgm", "*.djv", "*.djvu", "*.gif", "*.ico", "*.ief", "*.jpe", "*.jpeg", "*.jpg", "*.pbm",
 						"*.pgm", "*.png", "*.pnm", "*.ppm", "*.ras", "*.rgb", "*.svg", "*.tif", "*.tiff", "*.wbmp", "*.xbm", 
