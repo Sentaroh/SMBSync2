@@ -4073,10 +4073,11 @@ public class SyncTaskUtil {
                     smb_server_item.server_address = addr;
                     String r_addr=null;
                     if (srv_name!=null) {
-                        r_addr=CommonUtilities.resolveHostName(mGp, mUtil, smb_level, srv_name);
-                        if (r_addr!=null) {
-                            if (r_addr.equals(addr)) smb_server_item.server_name = srv_name;
-                        }
+                        smb_server_item.server_name = srv_name;
+//                        r_addr=CommonUtilities.resolveHostName(mGp, mUtil, smb_level, srv_name);
+//                        if (r_addr!=null) {
+//                            if (r_addr.equals(addr)) smb_server_item.server_name = srv_name;
+//                        }
                     }
 //                    mUtil.addDebugMsg(1,"I","addr="+addr+", r_addr="+r_addr+", name="+srv_name+", server="+smb_server_item.server_name);
                     buildSmbServerList(smb_server_item, "", "", "", addr);
