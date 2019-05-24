@@ -60,6 +60,7 @@ import java.lang.reflect.Method;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -448,6 +449,29 @@ public final class CommonUtilities {
         return result;
     }
 
+    public static boolean isIpAddressV6(String addr) {
+        boolean result=false;
+        InetAddress ia=getInetAddress(addr);
+        if (ia!=null) result=ia instanceof Inet6Address;
+        return result;
+    }
+
+    public static InetAddress getInetAddress(String addr) {
+        InetAddress result=null;
+        try {
+            result=InetAddress.getByName(addr);
+        } catch (Exception e) {
+        }
+        return result;
+    }
+
+    public static boolean isIpAddressV4(String addr) {
+        boolean result=false;
+        InetAddress ia=getInetAddress(addr);
+        if (ia!=null) result=ia instanceof Inet4Address;
+        return result;
+    }
+
     public static String getIfIpAddress(CommonUtilities cu) {
         String result = "";
         boolean exit = false;
@@ -488,21 +512,36 @@ public final class CommonUtilities {
         return result;
     }
 
-    public static String resolveHostName(GlobalParameters gp, CommonUtilities cu, int smb_level, String hn) {
-        String ipAddress = JcifsUtil.getSmbHostIpAddressByHostName(smb_level, hn);
-        if (ipAddress == null) {//add dns name resolve
-            try {
-                InetAddress[] addr_list = Inet4Address.getAllByName(hn);
-                for (InetAddress item : addr_list) {
-                    if (item.getAddress().length == 4) {
-                        ipAddress = item.getHostAddress();
-                    }
-                }
-            } catch (UnknownHostException e) {
+    public static String addScopeidToIpv6Address(String addr) {
+        if (addr==null) return null;
+        InetAddress ia=getInetAddress(addr);
+        if (ia==null) return null;
+        if ((ia instanceof  Inet6Address)) {
+            if (ia.isLinkLocalAddress()) {
+//                int si=((Inet6Address)ia).getScopeId();
+//                NetworkInterface ni=((Inet6Address)ia).getScopedInterface();
+                if (addr.contains("%")) return addr;
+                else return addr+"%wlan0";
             }
         }
-        cu.addDebugMsg(1, "I", "resolveHostName Name=" + hn + ", IP addr=" + ipAddress);
-        return ipAddress;
+        return addr;
+    }
+
+    public static String resolveHostName(GlobalParameters gp, CommonUtilities cu, int smb_level, String hn) {
+        String resolve_addr = JcifsUtil.getSmbHostIpAddressByHostName(smb_level, hn);
+        if (resolve_addr != null) {//list dns name resolve
+            try {
+                InetAddress[] addr_list = InetAddress.getAllByName(hn);
+                for (InetAddress item : addr_list) {
+                    cu.addDebugMsg(1, "I", "resolveHostName DNS Query Name=" + hn + ", IP addr=" + item.getHostAddress());
+                }
+            } catch (Exception e) {
+                cu.addDebugMsg(1, "I", "resolveHostName DNS Query failed. error="+e.getMessage());
+            }
+        }
+//        resolve_addr="fe80::abd:43ff:fef6:482a";//for IPV6 Test
+        cu.addDebugMsg(1, "I", "resolveHostName Name=" + hn + ", IP addr=" + resolve_addr+", smb="+smb_level);
+        return resolve_addr;
     }
 
 

@@ -239,6 +239,11 @@ public class ActivityMain extends AppCompatActivity {
                             pd.dismiss();
                         }
                     });
+//                    NsdSmbNameResolution ns=new NsdSmbNameResolution(mContext);
+//                    Log.v(APPLICATION_TAG,"Resolved="+ns.query("SEN-NAS3",3500));
+//                    SystemClock.sleep(1000);
+//                    ArrayList<String> nl=ns.list(3500);
+//                    for(String item:nl) Log.v(APPLICATION_TAG,item);
                 }
             };
 //            th.setPriority(Thread.MAX_PRIORITY);

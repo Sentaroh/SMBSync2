@@ -759,12 +759,13 @@ public class SyncTaskEditor extends DialogFragment {
                 ra.smb_smb_protocol=getSmbSelectedProtocol(sp_sync_folder_smb_proto);
                 ra.smb_ipc_signing_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
                 ra.smb_use_smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
-                if (JcifsUtil.isValidIpAddress(et_remote_host.getText().toString())) {
-                    mTaskUtil.testSmbLogonDlg("", et_remote_host.getText().toString().trim(),
+                String host=et_remote_host.getText().toString().trim();
+                if (CommonUtilities.isIpAddressV6(host) ||CommonUtilities.isIpAddressV4(host)) {
+                    mTaskUtil.testSmbLogonDlg("", host,
                             et_sync_folder_port.getText().toString().trim(),
                             et_sync_folder_share_name.getText().toString().trim(), ra, null);
                 } else {
-                    mTaskUtil.testSmbLogonDlg(et_remote_host.getText().toString().trim(), "",
+                    mTaskUtil.testSmbLogonDlg(host, "",
                             et_sync_folder_port.getText().toString().trim(),
                             et_sync_folder_share_name.getText().toString().trim(), ra, null);
                 }
@@ -1922,11 +1923,12 @@ public class SyncTaskEditor extends DialogFragment {
             nsfev.folder_use_taken_date_time_for_directory_keyword=ctv_smb_use_taken_date_time_for_directory_keyword.isChecked();
             nsfev.folder_directory = et_sync_folder_smb_dir_name.getText().toString().trim();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SMB;
-            if (JcifsUtil.isValidIpAddress(et_remote_host.getText().toString())) {
-                nsfev.folder_remote_addr = et_remote_host.getText().toString().trim();
+            String host=et_remote_host.getText().toString();
+            if (CommonUtilities.isIpAddressV6(host) || CommonUtilities.isIpAddressV4(host)) {
+                nsfev.folder_remote_addr = host;
                 nsfev.folder_remote_host="";
             } else {
-                nsfev.folder_remote_host = et_remote_host.getText().toString().trim();
+                nsfev.folder_remote_host = host;
                 nsfev.folder_remote_addr="";
             }
             nsfev.folder_remote_domain = et_sync_folder_domain.getText().toString().trim();
