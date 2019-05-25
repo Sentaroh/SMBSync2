@@ -2187,8 +2187,9 @@ public class SyncTaskEditor extends DialogFragment {
             Method getVolumeList = sm.getClass().getDeclaredMethod("getVolumeList");
             Object[] volumeList = (Object[]) getVolumeList.invoke(sm);
             for (Object volume : volumeList) {
-//	            Method isRemovable = volume.getClass().getDeclaredMethod("isRemovable");
-//                Method isPrimary = volume.getClass().getDeclaredMethod("isPrimary");
+	            Method isRemovable = volume.getClass().getDeclaredMethod("isRemovable");
+	            boolean removable=(boolean)isRemovable.invoke(volume);
+                Method isPrimary = volume.getClass().getDeclaredMethod("isPrimary");
                 Method getUuid = volume.getClass().getDeclaredMethod("getUuid");
                 String uuid=(String)getUuid.invoke(volume);
 //                Method getId = volume.getClass().getDeclaredMethod("getId");
@@ -2199,10 +2200,17 @@ public class SyncTaskEditor extends DialogFragment {
 //                cu.addDebugMsg(1,"I","isStorageVolumeExistsApi23 uuid="+uuid+", desc="+desc+", isRemovable="+(boolean)isRemovable.invoke(volume)+
 //                        ", isPrimary="+(boolean)isPrimary.invoke(volume)+", Id="+(String)getId.invoke(volume)+
 //                        ", Path="+(String)getPath.invoke(volume));
-                cu.addDebugMsg(1,"I","getStorageVolumeUuidApi23 uuid="+uuid+", desc="+desc+", type="+type);
-                if (desc.contains(type)) {
-                    result=uuid;
-                    break;
+                cu.addDebugMsg(1,"I","getStorageVolumeUuidApi23 uuid="+uuid+", desc="+desc+", type="+type+", isRemovable="+removable);
+                if (type.contains("SD")) {
+                    if (!desc.contains("USB") && removable) {
+                        result=uuid;
+                        break;
+                    }
+                } else {
+                    if (desc.contains(type)) {
+                        result=uuid;
+                        break;
+                    }
                 }
             }
         } catch (Exception e) {
