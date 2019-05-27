@@ -2118,7 +2118,7 @@ public class SyncThreadArchiveFile {
                 afli.file=element;
                 afli.file_name=element.getName();
                 afli.full_path=element.getPath();
-                if (date_time==null) {
+                if (date_time==null || date_time[0]==null) {
                     String[] dt=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(element.lastModified()).split(" ");
                     afli.shoot_date=dt[0].replace("/","-");
                     afli.shoot_time=dt[1].replace(":","-");
@@ -2159,7 +2159,7 @@ public class SyncThreadArchiveFile {
                 afli.file=element;
                 afli.file_name=element.getName();
                 afli.full_path=element.getPath();
-                if (date_time==null) {
+                if (date_time==null || date_time[0]==null) {
                     String[] dt=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(element.getLastModified()).split(" ");
                     afli.shoot_date=dt[0].replace("/","-");
                     afli.shoot_time=dt[1].replace(":","-");
