@@ -64,14 +64,14 @@
           android:title="@string/msgs_menu_list_storage_info"
           />
 
-    <item android:id="@+id/menu_top_start_logcat"
-        android:title="@string/msgs_send_logcat_menu_start_logcat"
-        />
-    <item android:id="@+id/menu_top_stop_logcat"
-        android:title="@string/msgs_send_logcat_menu_stop_logcat"
-        />
-    <item android:id="@+id/menu_top_send_logcat"
-        android:title="@string/msgs_send_logcat_menu_send_logcat"
-        />
+    <!--<item android:id="@+id/menu_top_start_logcat"-->
+        <!--android:title="@string/msgs_send_logcat_menu_start_logcat"-->
+        <!--/>-->
+    <!--<item android:id="@+id/menu_top_stop_logcat"-->
+        <!--android:title="@string/msgs_send_logcat_menu_stop_logcat"-->
+        <!--/>-->
+    <!--<item android:id="@+id/menu_top_send_logcat"-->
+        <!--android:title="@string/msgs_send_logcat_menu_send_logcat"-->
+        <!--/>-->
 
 </menu>

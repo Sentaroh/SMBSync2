@@ -44,6 +44,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.os.storage.StorageVolume;
 import android.provider.Settings;
 import android.support.v4.view.ViewPager;
@@ -51,6 +52,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -1064,7 +1066,7 @@ public class ActivityMain extends AppCompatActivity {
 //        } else {
 //            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(false);
 //        }
-        LogCatUtil.prepareOptionMenu(mGp, mUtil, menu);
+//        LogCatUtil.prepareOptionMenu(mGp, mUtil, menu);
 
         if (Build.VERSION.SDK_INT >= 27) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
@@ -1219,15 +1221,15 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.setSettingGrantCoarseLocationRequired(true);
                 checkLocationPermission(false);
                 return true;
-            case R.id.menu_top_start_logcat:
-                LogCatUtil.startLogCat(mGp, mGp.getLogDirName(),"logcat.txt");
-                return true;
-            case R.id.menu_top_stop_logcat:
-                LogCatUtil.stopLogCat(mGp, mUtil);
-                return true;
-            case R.id.menu_top_send_logcat:
-                LogCatUtil.sendLogCat(mActivity, mGp, mUtil, mGp.getLogDirName(), "logcat.txt");
-                return true;
+//            case R.id.menu_top_start_logcat:
+//                LogCatUtil.startLogCat(mGp, mGp.getLogDirName(),"logcat.txt");
+//                return true;
+//            case R.id.menu_top_stop_logcat:
+//                LogCatUtil.stopLogCat(mGp, mUtil);
+//                return true;
+//            case R.id.menu_top_send_logcat:
+//                LogCatUtil.sendLogCat(mActivity, mGp, mUtil, mGp.getLogDirName(), "logcat.txt");
+//                return true;
         }
         if (isUiEnabled()) {
         }

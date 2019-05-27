@@ -24,24 +24,24 @@ import java.io.InputStreamReader;
 
 public class LogCatUtil {
     public static void prepareOptionMenu(GlobalParameters mGp, CommonUtilities mUtil, Menu menu) {
-        if (mGp.logCatActive) {
-            menu.findItem(R.id.menu_top_start_logcat).setEnabled(false);
-            menu.findItem(R.id.menu_top_stop_logcat).setEnabled(true);
-            menu.findItem(R.id.menu_top_send_logcat).setEnabled(false);
-        } else {
-            menu.findItem(R.id.menu_top_start_logcat).setEnabled(true);
-            menu.findItem(R.id.menu_top_stop_logcat).setEnabled(false);
-            menu.findItem(R.id.menu_top_send_logcat).setEnabled(true);
-        }
-        if (mUtil.isDebuggable()) {
-            menu.findItem(R.id.menu_top_start_logcat).setVisible(true);
-            menu.findItem(R.id.menu_top_stop_logcat).setVisible(true);
-            menu.findItem(R.id.menu_top_send_logcat).setVisible(true);
-        } else {
-            menu.findItem(R.id.menu_top_start_logcat).setVisible(false);
-            menu.findItem(R.id.menu_top_stop_logcat).setVisible(false);
-            menu.findItem(R.id.menu_top_send_logcat).setVisible(false);
-        }
+//        if (mGp.logCatActive) {
+//            menu.findItem(R.id.menu_top_start_logcat).setEnabled(false);
+//            menu.findItem(R.id.menu_top_stop_logcat).setEnabled(true);
+//            menu.findItem(R.id.menu_top_send_logcat).setEnabled(false);
+//        } else {
+//            menu.findItem(R.id.menu_top_start_logcat).setEnabled(true);
+//            menu.findItem(R.id.menu_top_stop_logcat).setEnabled(false);
+//            menu.findItem(R.id.menu_top_send_logcat).setEnabled(true);
+//        }
+//        if (mUtil.isDebuggable()) {
+//            menu.findItem(R.id.menu_top_start_logcat).setVisible(true);
+//            menu.findItem(R.id.menu_top_stop_logcat).setVisible(true);
+//            menu.findItem(R.id.menu_top_send_logcat).setVisible(true);
+//        } else {
+//            menu.findItem(R.id.menu_top_start_logcat).setVisible(false);
+//            menu.findItem(R.id.menu_top_stop_logcat).setVisible(false);
+//            menu.findItem(R.id.menu_top_send_logcat).setVisible(false);
+//        }
 
     }
 
