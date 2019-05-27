@@ -3537,17 +3537,21 @@ public class SyncTaskUtil {
                         String sel="";
                         if (tfi.getPath().length() == 1) sel = tfi.getName();
                         else sel = tfi.getPath() + tfi.getName();
-                        sel = sel.substring(remdir.length());
-                        if (isFilterExists(sel, fla)) {
-                            btn_ok.setEnabled(false);
-                            tfi.setChecked(false);
-                            tfa.notifyDataSetChanged();
-                            String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
-                            String dup_msg=String.format(mtxt, sel);
-
-                            Toast.makeText(mContext, dup_msg, Toast.LENGTH_LONG).show();
-                        } else {
-                            btn_ok.setEnabled(true);
+                        try {
+                            sel = sel.substring(remdir.length());
+                            if (isFilterExists(sel, fla)) {
+                                btn_ok.setEnabled(false);
+                                tfi.setChecked(false);
+                                tfa.notifyDataSetChanged();
+                                String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                                String dup_msg=String.format(mtxt, sel);
+                                Toast.makeText(mContext, dup_msg, Toast.LENGTH_LONG).show();
+                            } else {
+                                btn_ok.setEnabled(true);
+                            }
+                        } catch(Exception e) {
+                            mCommonDlg.showCommonDialog(false,"E","Error","sel="+sel+", remdir="+remdir+"\n"+
+                                    e.getMessage()+"\n"+MiscUtil.getStackTraceString(e),null);
                         }
                     }
 
