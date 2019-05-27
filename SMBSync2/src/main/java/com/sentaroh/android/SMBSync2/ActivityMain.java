@@ -2098,6 +2098,11 @@ public class ActivityMain extends AppCompatActivity {
         } else if (requestCode == ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS) {
             mUtil.addDebugMsg(1, "I", "Return from Storage Picker. id=" + requestCode + ", result=" + resultCode);
             if (resultCode == Activity.RESULT_OK) {
+                if (data==null || data.getDataString()==null) {
+                    commonDlg.showCommonDialog(false, "W", "SDCARD Grant write permission failed because null intent data was returned.", "", null);
+                    mUtil.addLogMsg("E", "SDCARD Grant write permission failed because null intent data was returned.", "");
+                    return;
+                }
                 mUtil.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
 //                if (SafManager.getUuidFromUri(data.getData().toString()).equals("0000-0000")) {
 //                    reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_uuid_invalid_msg));
@@ -2145,6 +2150,11 @@ public class ActivityMain extends AppCompatActivity {
         } else if (requestCode == ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS) {
             mUtil.addDebugMsg(1, "I", "Return from Storage Picker. id=" + requestCode + ", result=" + resultCode);
             if (resultCode == Activity.RESULT_OK) {
+                if (data==null || data.getDataString()==null) {
+                    commonDlg.showCommonDialog(false, "W", "USB Media Grant write permission failed because null intent data was returned.", "", null);
+                    mUtil.addLogMsg("E", "USB Media Grant write permission failed because null intent data was returned.", "");
+                    return;
+                }
                 mUtil.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
                 if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
                     if (!mGp.safMgr.isRootTreeUri(data.getData())) {
@@ -2286,7 +2296,8 @@ public class ActivityMain extends AppCompatActivity {
                         }
                     }
                 });
-                mTaskUtil.showSelectSdcardMsg(ntfy);
+                if (Build.VERSION.SDK_INT>=24) ntfy.notifyToListener(true, null);
+                else mTaskUtil.showSelectSdcardMsg(ntfy);
             }
 
             @Override
