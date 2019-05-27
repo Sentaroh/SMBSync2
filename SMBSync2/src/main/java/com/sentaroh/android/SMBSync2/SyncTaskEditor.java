@@ -2193,14 +2193,14 @@ public class SyncTaskEditor extends DialogFragment {
                 Method getUuid = volume.getClass().getDeclaredMethod("getUuid");
                 String uuid=(String)getUuid.invoke(volume);
 //                Method getId = volume.getClass().getDeclaredMethod("getId");
-//                Method getPath = volume.getClass().getDeclaredMethod("getPath");
-//                String path = (String) getPath.invoke(volume);
+                Method getPath = volume.getClass().getDeclaredMethod("getPath");
+                String path = (String) getPath.invoke(volume);
                 Method toString = volume.getClass().getDeclaredMethod("toString");
                 String desc=(String)toString.invoke(volume);
 //                cu.addDebugMsg(1,"I","isStorageVolumeExistsApi23 uuid="+uuid+", desc="+desc+", isRemovable="+(boolean)isRemovable.invoke(volume)+
 //                        ", isPrimary="+(boolean)isPrimary.invoke(volume)+", Id="+(String)getId.invoke(volume)+
 //                        ", Path="+(String)getPath.invoke(volume));
-                cu.addDebugMsg(1,"I","getStorageVolumeUuidApi23 uuid="+uuid+", desc="+desc+", type="+type+", isRemovable="+removable);
+                cu.addDebugMsg(1,"I","getStorageVolumeUuidApi23 uuid="+uuid+", desc="+desc+", type="+type+", isRemovable="+removable+", path="+path);
                 if (type.contains("SD")) {
                     if (!desc.contains("USB") && removable) {
                         result=uuid;
