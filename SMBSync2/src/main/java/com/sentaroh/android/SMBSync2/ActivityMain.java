@@ -3551,7 +3551,7 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         mGp.msgListView.setSelection(0);
-                        mGp.msgListAdapter.clear();
+                        if (mGp.msgListAdapter!=null) mGp.msgListAdapter.clear();
                         mUtil.addLogMsg("W", getString(R.string.msgs_log_msg_cleared));
                     }
 
