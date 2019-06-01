@@ -121,7 +121,7 @@ public class ScheduleItemEditor {
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
         if (mInitialTime) {
         } else {
-            Thread.dumpStack();
+//            Thread.dumpStack();
             ScheduleItem new_si=curr_si.clone();
             buildSchedParms(dialog, new_si);
             mScheduleChanged = !curr_si.isSame(new_si);

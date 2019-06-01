@@ -105,8 +105,8 @@ public class SyncThread extends Thread {
     class SyncThreadWorkArea {
         public GlobalParameters gp = null;
 
-        public ArrayList<TwoWaySyncFileInfoItem> currSyncFileInfoList = new ArrayList<TwoWaySyncFileInfoItem>();
-        public ArrayList<TwoWaySyncFileInfoItem> newSyncFileInfoList = new ArrayList<TwoWaySyncFileInfoItem>();
+//        public ArrayList<TwoWaySyncFileInfoItem> currSyncFileInfoList = new ArrayList<TwoWaySyncFileInfoItem>();
+//        public ArrayList<TwoWaySyncFileInfoItem> newSyncFileInfoList = new ArrayList<TwoWaySyncFileInfoItem>();
 
         public ArrayList<FileLastModifiedTimeEntry> currLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
         public ArrayList<FileLastModifiedTimeEntry> newLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
@@ -878,8 +878,8 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMirrorInternalToInternal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
                 sync_result = SyncThreadArchiveFile.syncArchiveInternalToInternal(mStwa, sti, from, to);
-            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) {
-                sync_result = TwoWaySyncFile.syncTwowayInternalToInternal(mStwa, sti, from, to);
+//            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) {
+//                sync_result = TwoWaySyncFile.syncTwowayInternalToInternal(mStwa, sti, from, to);
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {

@@ -3962,12 +3962,13 @@ public class ActivityMain extends AppCompatActivity {
     private void showConfirmDialog(final String method, final String msg,
                                    final String pair_a_path, final long pair_a_length, final long pair_a_last_mod,
                                    final String pair_b_path, final long pair_b_length, final long pair_b_last_mod) {
-        if (method.equals(SMBSYNC2_CONFIRM_REQUEST_CONFLICT_FILE)) {
-            TwoWaySyncFile.showConfirmDialogConflict(mGp, mUtil, mSvcClient,
-                    method, msg, pair_a_path, pair_a_length, pair_a_last_mod, pair_b_path, pair_b_length, pair_b_last_mod);
-        } else {
-            showConfirmDialogOverride(method, msg, pair_a_path);
-        }
+//        if (method.equals(SMBSYNC2_CONFIRM_REQUEST_CONFLICT_FILE)) {
+//            TwoWaySyncFile.showConfirmDialogConflict(mGp, mUtil, mSvcClient,
+//                    method, msg, pair_a_path, pair_a_length, pair_a_last_mod, pair_b_path, pair_b_length, pair_b_last_mod);
+//        } else {
+//            showConfirmDialogOverride(method, msg, pair_a_path);
+//        }
+        showConfirmDialogOverride(method, msg, pair_a_path);
 
     }
 

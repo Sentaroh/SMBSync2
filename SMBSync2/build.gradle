@@ -37,11 +37,9 @@ android {
                         def versionName = variant.versionName
                         def versionNumber = variant.versionCode.toString()
                         def date = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())
-                        def mod_name = variant.getPackageApplication().projectBaseName
+                        def mod_name = "${rootProject.name}"
                         def fileExtension= outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".")+1)
-//                        def newName = "${mod_name}_${versionName}_${versionNumber}_${date}.${fileExtension}"
-//                        def newName = "${mod_name}_${versionName}_${versionNumber}_debug.${fileExtension}"
-                        def newName = "${mod_name}_debug.${fileExtension}"
+                        def newName = "${mod_name}_${versionName}_debug.${fileExtension}"
                         outputFileName = "../../../../../release/"+newName
                     }
                 }
@@ -58,9 +56,8 @@ android {
                         def versionName = variant.versionName
                         def versionNumber = variant.versionCode.toString()
                         def date = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())
-                        def mod_name = variant.getPackageApplication().projectBaseName
+                        def mod_name = "${rootProject.name}"
                         def fileExtension= outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".")+1)
-//                        def newName = "${mod_name}_${versionName}_${versionNumber}_${date}.${fileExtension}"
                         def newName = "${mod_name}_${versionName}_${versionNumber}_release.${fileExtension}"
                         outputFileName = newName
                     }
