@@ -32,6 +32,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class SyncRequestItem {
 
     public String request_id = "";
+    public String schedule_name = "";
     public boolean wifi_off_after_sync_ended = false;
     public boolean wifi_on_before_sync_start = false;
     public int start_delay_time_after_wifi_on = 0;

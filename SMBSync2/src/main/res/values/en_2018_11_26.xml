@@ -662,6 +662,8 @@ Schedule:%s, Task:%s</string>
         <string name="msgs_svc_received_start_request_from_external_auto_task">Automatic sync task has been started because no sync task specified.</string>
         <string name="msgs_svc_received_start_request_from_shortcut">Sync request received from the shortcut.</string>
         <string name="msgs_svc_received_start_request_ignored_duplicate_request">Sync request ignored because it has already been processed.  ID=%s</string>
+        <string name="msgs_svc_received_start_request_ignored_already_task_queued" formatted="false">Sync task was ignored because Sync task was already queued. Schedule=%s, Task=%s, Requestor=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Start sync task request accepted. Schedule=%s, Task=%s, Requestor=%s</string>
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">Archive Option</string>
         <string name="msgs_sync_folder_archive_file_type">File extension to archive:</string>

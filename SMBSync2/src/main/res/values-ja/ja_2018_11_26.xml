@@ -659,6 +659,8 @@
         <string name="msgs_svc_received_start_request_from_external_auto_task">同期要求を受け付けましたが同期タスクが指定されていないため自動タスクを開始しました。</string>
         <string name="msgs_svc_received_start_request_from_shortcut">ショートカットから同期要求を受け付けました。</string>
         <string name="msgs_svc_received_start_request_ignored_duplicate_request">同期開始要求が受付済みのため無視しました。 ID=%s</string>
+        <string name="msgs_svc_received_start_request_ignored_already_task_queued" formatted="false">同期タスクの開始要求を同期タスクが既に開始済みのため無視しました。スケジュール=%s, タスク=%s, リクエスター=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">同期タスクの開始要求を受け付けました。スケジュール=%s, タスク=%s, リクエスター=%s</string>
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">アーカイブオプション</string>
         <string name="msgs_sync_folder_archive_file_type">アーカイブするファイル拡張子:</string>

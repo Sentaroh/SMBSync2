@@ -314,12 +314,42 @@ public class SyncThread extends Thread {
                         sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
                     }
                 }
-
                 if (sri.wifi_off_after_sync_ended && wifi_on_issued) wifi_off_after_end = true;
 
-                mStwa.util.addLogMsg("I",
-                        String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_request_ended), sri.request_id));
-                sri = mGp.syncRequestQueue.poll();
+                mStwa.util.addLogMsg("I", String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_request_ended), sri.request_id));
+
+                if (sync_result==SyncTaskItem.SYNC_STATUS_CANCEL || sync_result==SyncTaskItem.SYNC_STATUS_ERROR) {
+                    //Put not executed sync task
+                    SyncTaskItem sti=mStwa.currentSTI;
+                    ArrayList<String> task_list=new ArrayList<String>();
+                    ArrayList<String> sched_list=new ArrayList<String>();
+                    while(sti!=null) {
+                        task_list.add(sti.getSyncTaskName());
+                        sched_list.add(sri.schedule_name);
+                        sti=sri.sync_task_list.poll();
+                    }
+                    sri = mGp.syncRequestQueue.poll();
+                    while(sri!=null) {
+                        sti=sri.sync_task_list.poll();
+                        while(sti!=null) {
+                            task_list.add(sti.getSyncTaskName());
+                            sched_list.add(sri.schedule_name);
+                            sti=sri.sync_task_list.poll();
+                        }
+                        sri = mGp.syncRequestQueue.poll();
+                    }
+                    if (task_list.size()>0) {
+                        showMsg(mStwa, false, "", "W", "", "",
+                                "Following sync request was ignored becaus previous sync was ended by cancel or error.");
+                        for(int i=0;i<task_list.size();i++)
+                            showMsg(mStwa, false, "", "W", "", "",
+                                    "  Schedule="+sched_list.get(i)+", Task="+task_list.get(i));
+
+                    }
+                } else {
+                    //Continue sync
+                    sri = mGp.syncRequestQueue.poll();
+                }
             }
 
             if (wifi_off_after_end) if (isWifiOn()) {

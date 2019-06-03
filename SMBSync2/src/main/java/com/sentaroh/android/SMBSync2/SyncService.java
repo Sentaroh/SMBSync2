@@ -307,11 +307,11 @@ public class SyncService extends Service {
             String[] schedule_list=schedule_name_list.split(",");
 
             for(String schedule_name:schedule_list) {
-                mUtil.addLogMsg("I", "Schedule start, name=" + schedule_name);
+                mUtil.addDebugMsg(1, "I", "Schedule start, name=" + schedule_name);
                 ScheduleItem si = getScheduleInformation(scheduleInfoList, schedule_name);
                 if (si!=null) {
                     if (si.syncAutoSyncTask) {
-                        queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE,
+                        queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE, si.scheduleName,
                                 si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
                     } else {
                         if (si.syncTaskList != null && si.syncTaskList.length() > 0) {
@@ -328,7 +328,7 @@ public class SyncService extends Service {
                             }
                             if (!n_tl.equals("")) {
                                 String[] n_pl = n_tl.split(",");
-                                queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE,
+                                queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE, si.scheduleName,
                                         si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
                             } else {
                                 mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
@@ -347,7 +347,7 @@ public class SyncService extends Service {
             }
 
         }
-        mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler));
+//        mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler));
         if (isServiceToBeStopped()) stopSelf();
     }
 
@@ -530,8 +530,9 @@ public class SyncService extends Service {
         return result;
     }
 
-    private void queueSpecificSyncTask(String job_name[], String req_id, boolean wifi_on, int delay_time, boolean wifi_off) {
+    private void queueSpecificSyncTask(String job_name[], String req_id, String schedule_name, boolean wifi_on, int delay_time, boolean wifi_off) {
         SyncRequestItem sri = new SyncRequestItem();
+        sri.schedule_name=schedule_name;
         sri.request_id = req_id;
         sri.wifi_off_after_sync_ended = wifi_off;
         sri.wifi_on_before_sync_start = wifi_on;
@@ -540,10 +541,12 @@ public class SyncService extends Service {
             for (int i = 0; i < job_name.length; i++) {
                 if (getSyncTask(job_name[i]) != null) {
                     if (isSyncTaskAlreadyScheduled(mGp.syncRequestQueue, job_name[i])) {
-                        mUtil.addLogMsg("W", "Sync task was ignored because Sync task was already queued, Sync task=" + job_name[i] + ", Requestor=" + req_id);
+                        mUtil.addLogMsg("W",
+                                String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_already_task_queued), sri.schedule_name, job_name[0], req_id));
                     } else {
                         sri.sync_task_list.add(getSyncTask(job_name[i]).clone());
-                        mUtil.addLogMsg("I", "Sync task was queued, Sync task=" + job_name[i] + ", Requestor=" + req_id);
+                        mUtil.addLogMsg("I",
+                                String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted), sri.schedule_name, job_name[0], req_id));
                     }
                 } else {
                     mUtil.addLogMsg("W", mContext.getString(R.string.msgs_main_sync_selected_task_not_found) + job_name[i]);
@@ -560,17 +563,18 @@ public class SyncService extends Service {
     }
 
     private void queueSpecificSyncTask(String job_name[], String req_id) {
-        queueSpecificSyncTask(job_name, req_id, false, 0, false);
+        queueSpecificSyncTask(job_name, req_id, "", false, 0, false);
         if (!mGp.syncThreadActive) {
             sendStartNotificationIntent();
             startSyncThread();
         }
     }
 
-    private void queueAutoSyncTask(String req_id, boolean wifi_on, int delay_time, boolean wifi_off) {
+    private void queueAutoSyncTask(String req_id, String schedule_name,  boolean wifi_on, int delay_time, boolean wifi_off) {
         int cnt = 0;
         SyncRequestItem sri = new SyncRequestItem();
         sri.request_id = req_id;
+        sri.schedule_name=schedule_name;
         sri.wifi_off_after_sync_ended = wifi_off;
         sri.wifi_on_before_sync_start = wifi_on;
         sri.start_delay_time_after_wifi_on = delay_time;
@@ -579,10 +583,12 @@ public class SyncService extends Service {
                 if (sji.isSyncTaskAuto() && !sji.isSyncTestMode()) {
                     String[] job_name=new String[]{sji.getSyncTaskName()};
                     if (isSyncTaskAlreadyScheduled(mGp.syncRequestQueue, job_name[0])) {
-                        mUtil.addLogMsg("W", "Sync task was ignored because Sync task was already queued, job=" + job_name[0] + ", Requestor=" + req_id);
+                        mUtil.addLogMsg("W",
+                                String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_already_task_queued), sri.schedule_name, job_name[0], req_id));
                     } else {
                         cnt++;
-                        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " job was queued, job=" + sji.getSyncTaskName() + ", Requestor=" + req_id);
+                        mUtil.addLogMsg("I",
+                                String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted), sri.schedule_name, job_name[0], req_id));
                         sri.sync_task_list.add(sji.clone());
                     }
                 }
@@ -598,7 +604,7 @@ public class SyncService extends Service {
     }
 
     private void queueAutoSyncTask(String req_id) {
-        queueAutoSyncTask(req_id, false, 0, false);
+        queueAutoSyncTask(req_id, "", false, 0, false);
     }
 
     private void sendEndNotificationIntent(int sync_result) {
