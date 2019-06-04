@@ -144,7 +144,8 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_EN.png</string>
         <string name="msgs_main_external_sdcard_select_required_title">Allow Write to SDCARD</string>
         <string name="msgs_main_external_sdcard_select_retry_select_msg">The root directory of the SDCARD was not selected.  Do you want to reselect?</string>
-        <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USB storage was selected.  Do you want to select SDCARD instead?</string>
+        <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">Storage that can not be used by SMBSync2 has been selected.  Do you want to select SDCARD instead?</string>
+        <string name="msgs_main_external_sdcard_select_required_mountpoint_does_not_exists">You can not use SDCARD with SMBSync2 because there is no mount point. Mount point=%s</string>
         <string name="msgs_main_external_usb_mp_changed_title">USB Media</string>
         <string name="msgs_main_external_usb_select_activity_not_found_msg">Failed to launch activity to write permission to USB media.</string>
         <string name="msgs_main_external_usb_drive_not_found_msg">USB media is not mounted. Close the screen and then mount the USB media to perform the operation.</string>
@@ -434,7 +435,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_tab_name_history">History</string>
         <string name="msgs_tab_name_msg">Messages</string>
         <string name="msgs_tab_name_prof">Task</string>
-        <string name="msgs_terminate_application">Terminate application?</string>
+        <string name="msgs_terminate_application">Exit SMBSync2.</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Performing management file maintenance.</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Cancel maintenance</string>
@@ -662,8 +663,11 @@ Schedule:%s, Task:%s</string>
         <string name="msgs_svc_received_start_request_from_external_auto_task">Automatic sync task has been started because no sync task specified.</string>
         <string name="msgs_svc_received_start_request_from_shortcut">Sync request received from the shortcut.</string>
         <string name="msgs_svc_received_start_request_ignored_duplicate_request">Sync request ignored because it has already been processed.  ID=%s</string>
-        <string name="msgs_svc_received_start_request_ignored_already_task_queued" formatted="false">Sync task was ignored because Sync task was already queued. Schedule=%s, Task=%s, Requestor=%s</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Start sync task request accepted. Schedule=%s, Task=%s, Requestor=%s</string>
+        <string name="msgs_svc_received_start_request_ignored_already_task_queued" formatted="false">Sync task was ignored because Sync task was already queued. Task=%s, Requestor=%s</string>
+        <string name="msgs_svc_received_start_request_ignored_already_task_queued_schedule" formatted="false">Sync task was ignored because Sync task was already queued. Schedule=%s, Task=%s, Requestor=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Start sync task request accepted. Task=%s, Requestor=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">Start sync task request accepted. Schedule=%s, Task=%s, Requestor=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed" formatted="false">The following sync request was ignored because the previous sync was an error or canceled.</string>
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">Archive Option</string>
         <string name="msgs_sync_folder_archive_file_type">File extension to archive:</string>

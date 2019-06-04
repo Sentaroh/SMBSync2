@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.content.Context;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,8 +121,9 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
 //            holder.tv_row_cat= (TextView) v.findViewById(R.id.msg_list_view_item_cat);
             holder.tv_row_msg = (CustomTextView) v.findViewById(R.id.msg_list_view_item_msg);
             holder.tv_row_msg.setWordWrapMode(mGp.settingSyncMessageUseStandardTextView);
+//            holder.tv_row_msg.setBreakStrategy(Layout.BREAK_STRATEGY_SIMPLE);
             holder.tv_row_time = (TextView) v.findViewById(R.id.msg_list_view_item_time);
-
+            holder.tv_row_date = (TextView) v.findViewById(R.id.msg_list_view_item_date);
 //        	holder.tv_row_msg.setTypeface(msgTypeFace);
 //        	holder.tv_row_msg.setLineBreak(CustomTextView.LINE_BREAK_NO_WORD_WRAP);
 //            holder.config=v.getResources().getConfiguration();
@@ -142,18 +144,24 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
             String cat = o.getCategory();
             if (cat.equals("W")) {
                 holder.tv_row_time.setTextColor(mThemeColorList.text_color_warning);
+                holder.tv_row_date.setTextColor(mThemeColorList.text_color_warning);
                 holder.tv_row_msg.setTextColor(mThemeColorList.text_color_warning);
                 holder.tv_row_time.setText(o.getTime());
+                holder.tv_row_date.setText(o.getDate());
                 holder.tv_row_msg.setText(o.getMessage());
             } else if (cat.equals("E")) {
                 holder.tv_row_time.setTextColor(mThemeColorList.text_color_error);
+                holder.tv_row_date.setTextColor(mThemeColorList.text_color_error);
                 holder.tv_row_msg.setTextColor(mThemeColorList.text_color_error);
                 holder.tv_row_time.setText(o.getTime());
+                holder.tv_row_date.setText(o.getDate());
                 holder.tv_row_msg.setText(o.getMessage());
             } else {
                 holder.tv_row_time.setTextColor(mThemeColorList.text_color_primary);
+                holder.tv_row_date.setTextColor(mThemeColorList.text_color_primary);
                 holder.tv_row_msg.setTextColor(mThemeColorList.text_color_primary);
                 holder.tv_row_time.setText(o.getTime());
+                holder.tv_row_date.setText(o.getDate());
                 holder.tv_row_msg.setText(o.getMessage());
             }
         }
@@ -164,7 +172,7 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
 
     private class ViewHolder {
         //		TextView tv_row_cat;
-        TextView tv_row_time;
+        TextView tv_row_time, tv_row_date;
         CustomTextView tv_row_msg;
 //		Configuration config;
     }

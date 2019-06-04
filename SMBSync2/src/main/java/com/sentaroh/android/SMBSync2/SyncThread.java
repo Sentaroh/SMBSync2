@@ -245,9 +245,7 @@ public class SyncThread extends Thread {
             reconnectWifi();
 
             while (sri != null && sync_result == 0) {
-                mStwa.util.addLogMsg("I",
-                        String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_request_started),
-                                sri.request_id));
+                mStwa.util.addLogMsg("I", String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_request_started), sri.request_id));
                 mGp.syncThreadRequestID = sri.request_id;
                 mStwa.util.addDebugMsg(1, "I", "Sync request option : Requestor=" + mGp.syncThreadRequestID +
                         ", WiFi on=" + sri.wifi_on_before_sync_start +
@@ -303,6 +301,8 @@ public class SyncThread extends Thread {
 
                     saveLocalFileLastModList();
 
+                    CommonUtilities.saveMsgList(mGp);
+
                     postProcessSyncResult(mStwa.currentSTI, sync_result, (System.currentTimeMillis() - start_time));
 
                     mStwa.currentSTI = sri.sync_task_list.poll();
@@ -316,16 +316,17 @@ public class SyncThread extends Thread {
                 }
                 if (sri.wifi_off_after_sync_ended && wifi_on_issued) wifi_off_after_end = true;
 
-                mStwa.util.addLogMsg("I", String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_request_ended), sri.request_id));
-
+                String prev_req_id=sri.request_id;
                 if (sync_result==SyncTaskItem.SYNC_STATUS_CANCEL || sync_result==SyncTaskItem.SYNC_STATUS_ERROR) {
                     //Put not executed sync task
                     SyncTaskItem sti=mStwa.currentSTI;
                     ArrayList<String> task_list=new ArrayList<String>();
                     ArrayList<String> sched_list=new ArrayList<String>();
+                    ArrayList<String> req_list=new ArrayList<String>();
                     while(sti!=null) {
                         task_list.add(sti.getSyncTaskName());
                         sched_list.add(sri.schedule_name);
+                        req_list.add(sri.request_id);
                         sti=sri.sync_task_list.poll();
                     }
                     sri = mGp.syncRequestQueue.poll();
@@ -334,20 +335,25 @@ public class SyncThread extends Thread {
                         while(sti!=null) {
                             task_list.add(sti.getSyncTaskName());
                             sched_list.add(sri.schedule_name);
+                            req_list.add(sri.request_id);
                             sti=sri.sync_task_list.poll();
                         }
                         sri = mGp.syncRequestQueue.poll();
                     }
                     if (task_list.size()>0) {
                         showMsg(mStwa, false, "", "W", "", "",
-                                "Following sync request was ignored becaus previous sync was ended by cancel or error.");
-                        for(int i=0;i<task_list.size();i++)
-                            showMsg(mStwa, false, "", "W", "", "",
-                                    "  Schedule="+sched_list.get(i)+", Task="+task_list.get(i));
+                                mGp.appContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted_but_not_executed));
+                        for(int i=0;i<task_list.size();i++) {
+                            if (sched_list.get(i).equals("")) showMsg(mStwa, false, "", "W", "", "","  Task="+task_list.get(i)+", Requestor="+req_list.get(i));
+                            else showMsg(mStwa, false, "", "W", "", "","  Task="+task_list.get(i)+", Schedule="+sched_list.get(i)+", Requestor="+req_list.get(i));
+                        }
 
                     }
+
+                    mStwa.util.addLogMsg("I", String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_request_ended), prev_req_id));
                 } else {
                     //Continue sync
+                    mStwa.util.addLogMsg("I", String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_request_ended), prev_req_id));
                     sri = mGp.syncRequestQueue.poll();
                 }
             }

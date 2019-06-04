@@ -143,7 +143,8 @@
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_JA.png</string>
         <string name="msgs_main_external_sdcard_select_required_title">SDCARDへの書込許可</string>
         <string name="msgs_main_external_sdcard_select_retry_select_msg">SDCARDのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
-        <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">USBストレージが選択されました。SDCARDを選択しなおしますか？</string>
+        <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">SMBSync2で使用できないストレージが選択されました。SDCARDを選択しなおしますか？</string>
+        <string name="msgs_main_external_sdcard_select_required_mountpoint_does_not_exists">マウントポイントが存在しないためSMBSync2ではSDCARDを使用できません。マウントポイント=%s</string>
         <string name="msgs_main_external_usb_mp_changed_title">USBメディア</string>
         <string name="msgs_main_external_usb_select_activity_not_found_msg">USBメディアへの書込み許可を行うアクティビティを起動できませんでした。</string>
         <string name="msgs_main_external_usb_drive_not_found_msg">USBメディアがマウントされていません。画面を閉じてからUSBメディアをマウントして、操作を行ってください。</string>
@@ -432,7 +433,7 @@
         <string name="msgs_tab_name_history">履歴</string>
         <string name="msgs_tab_name_msg">メッセージ</string>
         <string name="msgs_tab_name_prof">タスク</string>
-        <string name="msgs_terminate_application">SMBSync2を終了しますか？</string>
+        <string name="msgs_terminate_application">SMBSync2を終了します。</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">管理ファイルの保守実行中</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">保守の中止</string>
@@ -659,8 +660,11 @@
         <string name="msgs_svc_received_start_request_from_external_auto_task">同期要求を受け付けましたが同期タスクが指定されていないため自動タスクを開始しました。</string>
         <string name="msgs_svc_received_start_request_from_shortcut">ショートカットから同期要求を受け付けました。</string>
         <string name="msgs_svc_received_start_request_ignored_duplicate_request">同期開始要求が受付済みのため無視しました。 ID=%s</string>
-        <string name="msgs_svc_received_start_request_ignored_already_task_queued" formatted="false">同期タスクの開始要求を同期タスクが既に開始済みのため無視しました。スケジュール=%s, タスク=%s, リクエスター=%s</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">同期タスクの開始要求を受け付けました。スケジュール=%s, タスク=%s, リクエスター=%s</string>
+        <string name="msgs_svc_received_start_request_ignored_already_task_queued" formatted="false">同期タスクの開始要求を同期タスクが既に開始済みのため無視しました。タスク=%s, リクエスター=%s</string>
+        <string name="msgs_svc_received_start_request_ignored_already_task_queued_schedule" formatted="false">同期タスクの開始要求を同期タスクが既に開始済みのため無視しました。スケジュール=%s, タスク=%s, リクエスター=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">同期タスクの開始要求を受け付けました。タスク=%s, リクエスター=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">同期タスクの開始要求を受け付けました。スケジュール=%s, タスク=%s, リクエスター=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed" formatted="false">下記の同期要求は直前の同期がエラーまたはキャンセルされたため無視しました。</string>
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">アーカイブオプション</string>
         <string name="msgs_sync_folder_archive_file_type">アーカイブするファイル拡張子:</string>

@@ -188,7 +188,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public long notificationNextShowedTime = 0;
 //    public Bitmap notificationLargeIcon = null;
 
-    public ArrayList<SyncMessageItem> msgList = new ArrayList<SyncMessageItem>();
+    public ArrayList<SyncMessageItem> msgList = null; //new ArrayList<SyncMessageItem>();
     public boolean freezeMessageViewScroll = false;
     public AdapterSyncMessage msgListAdapter = null;
     public ListView msgListView = null;
@@ -300,7 +300,7 @@ public class GlobalParameters extends CommonGlobalParms {
 ////        scheduleInfoList = ScheduleUtil.loadScheduleData(this);
 //    }
 
-    public void initGlobalParamter(Context c) {
+    synchronized public void initGlobalParamter(Context c) {
 //		Log.v("","onCreate dir="+getFilesDir().toString());
         appContext = c;
         uiHandler = new Handler();
@@ -362,14 +362,18 @@ public class GlobalParameters extends CommonGlobalParms {
         loadSettingsParms();
         setLogParms(this);
 
+        if (msgList == null) {
+            msgList=CommonUtilities.loadMsgList(this);
+        }
+
 //        scheduleInfoList = ScheduleUtil.loadScheduleData(this);
     }
 
     public void clearParms() {
-        synchronized (msgList) {
-            msgList = new ArrayList<SyncMessageItem>();
-            msgListAdapter = null;
-        }
+//        synchronized (msgList) {
+//            msgList = new ArrayList<SyncMessageItem>();
+//            msgListAdapter = null;
+//        }
     }
 
     @SuppressLint("NewApi")

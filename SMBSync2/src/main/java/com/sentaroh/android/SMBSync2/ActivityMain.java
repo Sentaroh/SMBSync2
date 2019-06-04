@@ -52,6 +52,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
 import android.text.InputType;
+import android.text.Layout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -286,7 +287,7 @@ public class ActivityMain extends AppCompatActivity {
                         setUiEnabled();
                         checkStorageStatus();
                         checkRequiredPermissions();
-                        if (mGp.msgList.size()>1) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+                        if (mGp.syncThreadActive) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
                     } else if (restartType == RESTART_BY_KILLED) {
                         setUiEnabled();
                         restoreTaskData();
@@ -401,7 +402,7 @@ public class ActivityMain extends AppCompatActivity {
         if (isFinishing()) {
             deleteTaskData();
             mGp.logCatActive=false;
-            mGp.clearParms();
+//            mGp.clearParms();
         }
         mGp.activityIsFinished = isFinishing();
         closeService();
@@ -433,6 +434,8 @@ public class ActivityMain extends AppCompatActivity {
         tv_msg_old.setVisibility(TextView.GONE);
         final CustomTextView tv_msg=(CustomTextView)dialog.findViewById(R.id.common_dialog_custom_text_view);
         tv_msg.setVisibility(TextView.VISIBLE);
+        tv_msg.setWordWrapMode(mGp.settingSyncMessageUseStandardTextView);
+//        if (Build.VERSION.SDK_INT>=23) tv_msg.setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY);
         final Button btn_copy=(Button)dialog.findViewById(R.id.common_dialog_btn_ok);
         final Button btn_close=(Button)dialog.findViewById(R.id.common_dialog_btn_cancel);
         final Button btn_send=(Button)dialog.findViewById(R.id.common_dialog_extra_button);
@@ -2215,8 +2218,22 @@ public class ActivityMain extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
                     startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
                 } else {
-                    Intent intent = sv.createAccessIntent(null);
-                    startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+                    if (sv.getUuid()!=null) {
+                        File lf=new File("/storage/"+sv.getUuid());
+                        if (lf.exists()) {
+                            Intent intent = sv.createAccessIntent(null);
+                            startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+                        } else {
+                            String emsg=String.format(
+                                    mContext.getString(R.string.msgs_main_external_sdcard_select_required_mountpoint_does_not_exists),
+                                    lf.getPath());
+                            mUtil.addLogMsg("E", emsg);
+                            commonDlg.showCommonDialog(false, "E",
+                                    mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
+                                    emsg,
+                                    null);
+                        }
+                    }
                 }
             } else {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);

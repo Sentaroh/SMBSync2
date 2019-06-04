@@ -49,12 +49,18 @@ import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.SystemInfo;
 import com.sentaroh.jcifs.JcifsUtil;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.DatagramPacket;
@@ -254,9 +260,71 @@ public final class CommonUtilities {
         return mLog.buildPrintLogMsg(cat, msg);
     }
 
+
+    synchronized static public void saveMsgList(GlobalParameters gp) {
+        long b_time=System.currentTimeMillis();
+        try {
+            File mf=new File(gp.appContext.getCacheDir().getPath()+"/"+"message_list.txt");
+            FileWriter fos=new FileWriter(mf);
+            BufferedWriter bos=new BufferedWriter(fos, 1024*1024*2);
+            StringBuffer sb=new StringBuffer(1024);
+            for (SyncMessageItem smi:gp.msgList) {
+                sb.setLength(0);
+                sb.append("\u0001").append(smi.getCategory()).append("\u0000");
+                sb.append("\u0001").append(smi.getDate()).append("\u0000");
+                sb.append("\u0001").append(smi.getTime()).append("\u0000");
+                sb.append("\u0001").append(smi.getMessage()).append("\u0000");
+                String nl=sb.toString();
+                bos.write(sb.toString());
+                bos.newLine();
+            }
+            bos.flush();
+            bos.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+//        Log.v(APPLICATION_TAG," saveMsgList elapsed time="+(System.currentTimeMillis()-b_time));
+    }
+
+    synchronized static public ArrayList<SyncMessageItem> loadMsgList(GlobalParameters gp) {
+        long b_time=System.currentTimeMillis();
+        ArrayList<SyncMessageItem> result=new ArrayList<SyncMessageItem>();
+        try {
+            File mf=new File(gp.appContext.getCacheDir().getPath()+"/"+"message_list.txt");
+            if (mf.exists()) {
+                FileReader fr=new FileReader(mf);
+                BufferedReader bis=new BufferedReader(fr, 1024*1024*2);
+                String line=null;
+                while((line=bis.readLine())!=null) {
+                    String[] msg_array=line.split("\u0000");
+                    if (msg_array.length>=4) {
+                        SyncMessageItem smi=new SyncMessageItem(msg_array[0].replace("\u0001",""),
+                                msg_array[1].replace("\u0001",""),
+                                msg_array[2].replace("\u0001",""),
+                                msg_array[3].replace("\u0001",""));
+                        result.add(smi);
+                    }
+                }
+                bis.close();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+//        Log.v(APPLICATION_TAG," loadMsgList elapsed time="+(System.currentTimeMillis()-b_time));
+        return result;
+    }
+
     private final int MAX_MSG_COUNT = 5000;
 
     final public void addLogMsg(String cat, String... msg) {
+        addLogMsg(false, cat, msg);
+    }
+
+    final public void addLogMsgFromUI(String cat, String... msg) {
+        addLogMsg(true, cat, msg);
+    }
+
+    final public void addLogMsg(boolean ui_thread, String cat, String... msg) {
         mLog.addLogMsg(cat, msg);
 //		final SyncMessageItem mli=new SyncMessageItem(cat, "","",mLog.buildLogCatMsg("", cat, msg));
         StringBuilder log_msg = new StringBuilder(512);
@@ -264,22 +332,30 @@ public final class CommonUtilities {
         String[] dt = StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(System.currentTimeMillis()).split(" ");
 
         final SyncMessageItem mli = new SyncMessageItem(cat, dt[0], dt[1], log_msg.toString());
-        mGp.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (mGp.msgList) {
-                    if (mGp.msgList.size() > (MAX_MSG_COUNT + 100)) {
-                        for (int i = 0; i < 100; i++) mGp.msgList.remove(0);
-                    }
-                    mGp.msgList.add(mli);
-                    if (mGp.msgListAdapter != null) {
-                        mGp.msgListAdapter.notifyDataSetChanged();
-                        if (!mGp.freezeMessageViewScroll)
-                            mGp.msgListView.setSelection(mGp.msgList.size());
-                    }
+        if (ui_thread) {
+            putMsgListArray(mli);
+        } else {
+            mGp.uiHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    putMsgListArray(mli);
                 }
+            });
+        }
+    }
+
+    private void putMsgListArray(SyncMessageItem mli) {
+        synchronized (mGp.msgList) {
+            if (mGp.msgList.size() > (MAX_MSG_COUNT + 200)) {
+                for (int i = 0; i < 200; i++) mGp.msgList.remove(0);
             }
-        });
+            mGp.msgList.add(mli);
+            if (mGp.msgListAdapter != null) {
+                mGp.msgListAdapter.notifyDataSetChanged();
+                if (!mGp.freezeMessageViewScroll)
+                    mGp.msgListView.setSelection(mGp.msgList.size());
+            }
+        }
     }
 
     final public void addDebugMsg(int lvl, String cat, String... msg) {

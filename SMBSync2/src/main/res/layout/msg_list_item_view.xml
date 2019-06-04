@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:ignore="SpUsage" >
 
-    <TextView
-        android:id="@+id/msg_list_view_item_time"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text="HH:MM:SS"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="gone" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/msg_list_view_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="YYYY/MM/DD"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+             />
+        <TextView
+            android:id="@+id/msg_list_view_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="HH:MM:SS"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+             />
+    </LinearLayout>
+
 
     <com.sentaroh.android.Utilities.Widget.CustomTextView
         android:id="@+id/msg_list_view_item_msg"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginRight="5dp"
-        android:layout_weight="1"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 

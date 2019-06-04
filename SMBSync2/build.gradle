@@ -39,7 +39,7 @@ android {
                         def date = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())
                         def mod_name = "${rootProject.name}"
                         def fileExtension= outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".")+1)
-                        def newName = "${mod_name}_${versionName}_debug.${fileExtension}"
+                        def newName = "${mod_name}_debug.${fileExtension}"
                         outputFileName = "../../../../../release/"+newName
                     }
                 }
