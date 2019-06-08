@@ -329,14 +329,14 @@
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">ディレクトリに下記のキーワードを追加する（キーワードは同期実行時に変換されます）</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">ファイル名に下記のキーワードを追加する（キーワードは同期実行時に変換されます）</string>
         <string name="msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword">ターゲットフォルダーのディレクトリーに付加されたキーワード変換に写真/ビデオの撮影日時を使用する</string>
-        <string name="msgs_profile_sync_task_dlg_master">マスター フォルダー</string>
+        <string name="msgs_profile_sync_task_dlg_master">マスター フォルダー(同期元)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">同期方式</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">アーカイブ</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_copy">コピー</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_mirror">ミラー</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_move">移動</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_prompt">同期方式の選択</string>
-        <string name="msgs_profile_sync_task_dlg_target">ターゲット フォルダー</string>
+        <string name="msgs_profile_sync_task_dlg_target">ターゲット フォルダー(宛先)</string>
         <string name="msgs_profile_sync_task_dlg_task_name">同期タスク名</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">現在接続されているIPアドレスを追加する</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_edit_title">IPアドレスの編集</string>

@@ -331,14 +331,14 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Add the following keyword to directory names (The keyword is converted to the date and time that the sync was performed)</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">Add the following keyword to file names (The keyword is converted to the date and time that the sync was performed)</string>
         <string name="msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword">Use the photo/video shooting date and time for keyword conversions attached to the target folder directory.</string>
-        <string name="msgs_profile_sync_task_dlg_master">Master folder</string>
+        <string name="msgs_profile_sync_task_dlg_master">Master folder(Source)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">Sync type</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Archive</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_copy">Copy</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_mirror">Mirror</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_move">Move</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_prompt">Select sync type</string>
-        <string name="msgs_profile_sync_task_dlg_target">Target folder</string>
+        <string name="msgs_profile_sync_task_dlg_target">Target folder(Destination)</string>
         <string name="msgs_profile_sync_task_dlg_task_name">Sync task name</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">Add current IP address</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_edit_title">Edit IP Address</string>

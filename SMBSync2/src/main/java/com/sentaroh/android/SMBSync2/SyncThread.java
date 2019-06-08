@@ -341,11 +341,11 @@ public class SyncThread extends Thread {
                         sri = mGp.syncRequestQueue.poll();
                     }
                     if (task_list.size()>0) {
-                        showMsg(mStwa, false, "", "W", "", "",
+                        mStwa.util.addLogMsg("W",
                                 mGp.appContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted_but_not_executed));
                         for(int i=0;i<task_list.size();i++) {
-                            if (sched_list.get(i).equals("")) showMsg(mStwa, false, "", "W", "", "","  Task="+task_list.get(i)+", Requestor="+req_list.get(i));
-                            else showMsg(mStwa, false, "", "W", "", "","  Task="+task_list.get(i)+", Schedule="+sched_list.get(i)+", Requestor="+req_list.get(i));
+                            if (sched_list.get(i).equals("")) mStwa.util.addLogMsg("W", "  Task="+task_list.get(i)+", Requestor="+req_list.get(i));
+                            else mStwa.util.addLogMsg("W", "  Task="+task_list.get(i)+", Schedule="+sched_list.get(i)+", Requestor="+req_list.get(i));
                         }
 
                     }
