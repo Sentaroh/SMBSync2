@@ -12,8 +12,8 @@ android {
         targetSdkVersion 26  //Android 8.0
 
 //
-        versionCode 216
-        versionName "2.06"
+        versionCode 217
+        versionName "2.07"
 
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
