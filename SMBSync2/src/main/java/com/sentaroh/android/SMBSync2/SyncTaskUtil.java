@@ -197,7 +197,7 @@ public class SyncTaskUtil {
 //    };
 //
     public void importSyncTaskListDlg(final NotifyEvent p_ntfy) {
-
+        mUtil.addDebugMsg(1,"I","importSyncTaskListDlg entered");
         importedSettingParmList.clear();
 
         NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -923,7 +923,7 @@ public class SyncTaskUtil {
     }
 
     public void exportSyncTaskListDlg() {
-
+        mUtil.addDebugMsg(1,"I","exportSyncTaskListDlg entered");
         NotifyEvent ntfy_file_select = new NotifyEvent(mContext);
         ntfy_file_select.setListener(new NotifyEventListener() {
             @Override
