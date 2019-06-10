@@ -393,7 +393,7 @@
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">ネットワークエラーが発生した場合にリトライする</string>
         <string name="msgs_profile_sync_task_sync_option_show_special_option">詳細オプションを表示する</string>
         <string name="msgs_profile_sync_task_sync_option_sub_dir">サブディレクトリーを処理する</string>
-        <string name="msgs_profile_sync_task_sync_option_sync_when_charging">充電中の時だけ開始する</string>
+        <string name="msgs_profile_sync_task_sync_option_sync_when_charging">充電中の時だけ同期を開始する</string>
         <string name="msgs_profile_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">拡張されたディレクトリ選択/除外フィルタを使用する</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">ネットワークオプション</string>
@@ -892,9 +892,19 @@
         <string name="settings_sync_message_use_standard_text_view_title">同期メッセージのテキスト処理</string>
         <string name="settings_sync_title">同期</string>
         <string name="settings_ui_title">ユーザーインターフェース</string>
-        <string name="settings_use_light_theme">settings_use_light_theme</string>
-        <string name="settings_use_light_theme_summary_ena">ライトテーマを使用する</string>
-        <string name="settings_use_light_theme_title">画面テーマ</string>
+        <string name="settings_screen_theme">settings_screen_theme</string>
+        <string name="settings_screen_theme_title">画面テーマ</string>
+        <string name="settings_screen_theme_dialog_title">画面テーマ</string>
+        <string-array name="settings_screen_theme_list_entries">
+            <item>標準</item>
+            <item>ライトテーマ</item>
+            <item>ブラックテーマ</item>
+        </string-array >
+        <string-array name="settings_screen_theme_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
         <string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
         <string name="settings_vibrate_when_sync_ended_dialog_title">端末の振動の条件</string>
         <string-array name="settings_vibrate_when_sync_ended_list_entries">

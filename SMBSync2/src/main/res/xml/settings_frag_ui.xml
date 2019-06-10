@@ -35,10 +35,12 @@
 			android:key="@string/settings_device_orientation_portrait"
 			android:title="@string/settings_device_orientation_portrait_title"
 			android:summary="@string/settings_device_orientation_portrait_summary_ena" />
-  	    <CheckBoxPreference
-			android:key="@string/settings_use_light_theme"
-			android:title="@string/settings_use_light_theme_title"
-			android:summary="@string/settings_use_light_theme_summary_ena" />
+        <ListPreference
+            android:key="@string/settings_screen_theme"
+            android:title="@string/settings_screen_theme_title"
+            android:dialogTitle="@string/settings_screen_theme_dialog_title"
+            android:entries="@array/settings_screen_theme_list_entries"
+            android:entryValues="@array/settings_screen_theme_list_values" />
   	    <CheckBoxPreference
 			android:key="@string/settings_dim_screen_on_while_sync"
 			android:title="@string/settings_dim_screen_on_while_sync_title"

@@ -53,13 +53,9 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
         mNotifyIncExcListener = p;
     }
 
-    ;
-
     public void unsetNotifyIncExcListener() {
         mNotifyIncExcListener = null;
     }
-
-    ;
 
     public NotifyEvent mNotifyDeleteListener = null;
 
@@ -67,13 +63,9 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
         mNotifyDeleteListener = p;
     }
 
-    ;
-
     public void unsetNotifyDeleteListener() {
         mNotifyDeleteListener = null;
     }
-
-    ;
 
     public AdapterFilterList(Context context, int textViewResourceId,
                              ArrayList<FilterListItem> objects) {
@@ -217,8 +209,6 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
 
         return v;
     }
-
-    ;
 
     private static class ViewHolder {
         TextView tv_row_filter, tv_row_cat, tv_row_incExc;

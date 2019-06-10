@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -38,29 +39,31 @@ import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.storage.StorageManager;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.CheckedTextView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
+import com.sentaroh.android.Utilities.Dialog.MessageDialogFragment;
+import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.SystemInfo;
+import com.sentaroh.android.Utilities.ThemeColorList;
+import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.jcifs.JcifsUtil;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.DatagramPacket;
@@ -75,8 +78,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
-import java.util.List;
-import java.util.Properties;
+
+import it.sephiroth.android.library.easing.Linear;
 
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.DEFAULT_PREFS_FILENAME;
@@ -87,11 +90,14 @@ public final class CommonUtilities {
     private GlobalParameters mGp = null;
     private String mLogIdent = "";
 
-    public CommonUtilities(Context c, String li, GlobalParameters gp) {
+    private FragmentManager mFragMgr=null;
+
+    public CommonUtilities(Context c, String li, GlobalParameters gp, FragmentManager fm) {
         mContext = c;// ContextはApplicationContext
         mLog = new LogUtil(c, li, gp);
         mLogIdent = li;
         mGp = gp;
+        mFragMgr=fm;
     }
 
     final public SharedPreferences getPrefMgr() {
@@ -107,6 +113,15 @@ public final class CommonUtilities {
     final static public SharedPreferences getPrefMgr(Context c) {
         return c.getSharedPreferences(DEFAULT_PREFS_FILENAME, Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
     }
+
+    public static ThemeColorList getThemeColorList(Context c) {
+        return ThemeUtil.getThemeColorList(c);
+    }
+
+    public void showCommonDialog(final boolean negative, String type, String title, String msgtext, NotifyEvent ntfy) {
+        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
+        cdf.showDialog(mFragMgr,cdf,ntfy);
+    };
 
     final public void setLogId(String li) {
         mLog.setLogId(li);
@@ -213,7 +228,7 @@ public final class CommonUtilities {
         out.add("  Notification sound volume="+gp.settingNotificationVolume);
         out.add("  Vibrate when sync ended="+gp.settingVibrateWhenSyncEnded);
         out.add("  Fix device oprientation portrait="+gp.settingFixDeviceOrientationToPortrait);
-        out.add("  Use light theme="+gp.settingUseLightTheme);
+        out.add("  Screen theme="+gp.settingScreenTheme);
         out.add("  Screen on if screen on at start of the sync="+gp.settingScreenOnIfScreenOnAtStartOfSync);
 
         out.add("");
@@ -837,6 +852,27 @@ public final class CommonUtilities {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    static public void setDialogBoxOutline(Context c, LinearLayout ll) {
+        setDialogBoxOutline(c, ll, 3, 5);
+    }
+
+    static public void setDialogBoxOutline(Context c, LinearLayout ll, int padding_dp, int margin_dp) {
+        ll.setBackgroundResource(R.drawable.dialog_box_outline);
+        int padding=(int)toPixel(c.getResources(),padding_dp);
+        ll.setPadding(padding, padding, padding, padding);
+
+        ViewGroup.LayoutParams lp = ll.getLayoutParams();
+        ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)lp;
+        int margin=(int)toPixel(c.getResources(), margin_dp);
+        mlp.setMargins(margin, mlp.topMargin, margin, mlp.bottomMargin);
+        ll.setLayoutParams(mlp);
+    }
+
+    final static public float toPixel(Resources res, int dip) {
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, res.getDisplayMetrics());
+        return px;
     }
 
     public static boolean isCharging(Context c) {

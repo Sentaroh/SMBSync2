@@ -895,9 +895,19 @@ Schedule:%s, Task:%s</string>
         <string name="settings_sync_message_use_standard_text_view_title">Text processing of sync messages</string>
         <string name="settings_sync_title">Sync</string>
         <string name="settings_ui_title">User Interface</string>
-        <string name="settings_use_light_theme">settings_use_light_theme</string>
-        <string name="settings_use_light_theme_summary_ena">Use light background color</string>
-        <string name="settings_use_light_theme_title">Use Light Theme</string>
+        <string name="settings_screen_theme">settings_screen_theme</string>
+        <string name="settings_screen_theme_title">Screen theme</string>
+        <string name="settings_screen_theme_dialog_title">Screen theme</string>
+        <string-array name="settings_screen_theme_list_entries">
+            <item>Standard</item>
+            <item>Light theme</item>
+            <item>Black theme</item>
+        </string-array >
+        <string-array name="settings_screen_theme_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
         <string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
         <string name="settings_vibrate_when_sync_ended_dialog_title">Choose option for notification vibration</string>
         <string-array name="settings_vibrate_when_sync_ended_list_entries">

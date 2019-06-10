@@ -36,6 +36,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -62,7 +63,7 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_S
  */
 
 public class ScheduleListEditor {
-    private CommonDialog commonDlg = null;
+    private CommonDialog mCommonDlg = null;
 
     private GlobalParameters mGp = null;
     private Context mContext = null;
@@ -101,7 +102,7 @@ public class ScheduleListEditor {
         mActivity = a;
         mGp = gp;
         mUtil = mu;
-        commonDlg = cd;
+        mCommonDlg = cd;
         ccMenu = ccm;
         initDialog();
     }
@@ -125,12 +126,12 @@ public class ScheduleListEditor {
         mDialog.setContentView(R.layout.schedule_list_edit_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) mDialog.findViewById(R.id.schedule_list_edit_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         LinearLayout title_view = (LinearLayout) mDialog.findViewById(R.id.schedule_list_edit_dlg_title_view);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         TextView dlg_title = (TextView) mDialog.findViewById(R.id.schedule_list_edit_dlg_title);
-        dlg_title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        dlg_title.setTextColor(mGp.themeColorList.title_text_color);
 
         final ImageButton btn_cancel = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_close);
         btn_cancel.setBackgroundColor(Color.TRANSPARENT);//.DKGRAY);
@@ -176,7 +177,7 @@ public class ScheduleListEditor {
                         public void negativeResponse(Context context, Object[] objects) {
                         }
                     });
-                    ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, commonDlg, ccMenu, mGp,
+                    ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, mCommonDlg, ccMenu, mGp,
                             true, mScheduleList, mScheduleList.get(i), ntfy);
                 }
             }
@@ -358,7 +359,7 @@ public class ScheduleListEditor {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, commonDlg, ccMenu, mGp,
+                ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, mCommonDlg, ccMenu, mGp,
                         false, mScheduleList, new ScheduleItem(), ntfy);
             }
         });
@@ -395,7 +396,7 @@ public class ScheduleListEditor {
                         del_list += mScheduleAdapter.getItem(i).scheduleName + "\n";
                     }
                 }
-                commonDlg.showCommonDialog(true, "W",
+                mUtil.showCommonDialog(true, "W",
                         mContext.getString(R.string.msgs_schedule_confirm_title_delete),
                         mContext.getString(R.string.msgs_schedule_confirm_msg_delete) + "\n" + del_list, ntfy);
             }
@@ -432,7 +433,7 @@ public class ScheduleListEditor {
                         del_list += mScheduleAdapter.getItem(i).scheduleName + "\n";
                     }
                 }
-                commonDlg.showCommonDialog(true, "W",
+                mUtil.showCommonDialog(true, "W",
                         mContext.getString(R.string.msgs_schedule_confirm_title_enable),
                         mContext.getString(R.string.msgs_schedule_confirm_msg_enable) + "\n" + del_list, ntfy);
             }
@@ -468,7 +469,7 @@ public class ScheduleListEditor {
                         del_list += mScheduleAdapter.getItem(i).scheduleName + "\n";
                     }
                 }
-                commonDlg.showCommonDialog(true, "W",
+                mUtil.showCommonDialog(true, "W",
                         mContext.getString(R.string.msgs_schedule_confirm_title_disable),
                         mContext.getString(R.string.msgs_schedule_confirm_msg_disable) + "\n" + del_list, ntfy);
             }
@@ -502,7 +503,7 @@ public class ScheduleListEditor {
                 }
                 if (si==null) {
                     mUtil.addLogMsg("E","renameSchedule error, schedule item can not be found.");
-                    commonDlg.showCommonDialog(false, "E", "renameSchedule error, schedule item can not be found.", "", null);
+                    mUtil.showCommonDialog(false, "E", "renameSchedule error, schedule item can not be found.", "", null);
                 } else {
                     renameSchedule(si, ntfy);
                 }
@@ -534,7 +535,7 @@ public class ScheduleListEditor {
                     if (mScheduleAdapter.getItem(i).isChecked) {
                         si = mScheduleAdapter.getItem(i);
                         ScheduleItem new_si = si.clone();
-                        ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, commonDlg, ccMenu, mGp,
+                        ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, mCommonDlg, ccMenu, mGp,
                                 false, mScheduleList, new_si, ntfy);
                         break;
                     }
@@ -568,18 +569,23 @@ public class ScheduleListEditor {
     private void renameSchedule(final ScheduleItem si, final NotifyEvent p_ntfy) {
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.setContentView(R.layout.single_item_input_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+
+//        Drawable db = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.dialog_box_outline, null);
+//        ll_dlg_view.setBackground(db);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.single_item_input_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
 
 		final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
 		dlg_msg.setVisibility(TextView.VISIBLE);
@@ -591,7 +597,7 @@ public class ScheduleListEditor {
         title.setText(mContext.getString(R.string.msgs_schedule_rename_schedule));
 
         dlg_cmp.setVisibility(TextView.GONE);
-        CommonDialog.setDlgBoxSizeCompact(dialog);
+        CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(si.scheduleName);
         dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
         btn_ok.setEnabled(false);

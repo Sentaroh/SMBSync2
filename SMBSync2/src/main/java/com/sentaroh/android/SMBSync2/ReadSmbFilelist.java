@@ -67,7 +67,7 @@ public class ReadSmbFilelist implements Runnable {
                            ArrayList<TreeFilelistItem> fl, RemoteAuthInfo rauth,
                            NotifyEvent ne, boolean dironly, boolean dc, GlobalParameters gp) {
         mContext = c;
-        mUtil = new CommonUtilities(mContext, "FileList", gp);
+        mUtil = new CommonUtilities(mContext, "FileList", gp, null);
         remoteFileList = fl;
         remoteHostAddr=host_addr;
         remoteHostName=host_name;

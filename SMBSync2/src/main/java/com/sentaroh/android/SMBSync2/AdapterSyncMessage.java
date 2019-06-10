@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +66,7 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
 //		msgTypeFace=Typeface.create(Typeface.MONOSPACE, Typeface.NORMAL);
         vi = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        mThemeColorList = ThemeUtil.getThemeColorList(c);
+        mThemeColorList = CommonUtilities.getThemeColorList(c);
     }
 
     final public void remove(int i) {
@@ -110,6 +111,8 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
 
     private LayoutInflater vi;
 
+    private ColorStateList mTextColor=null;
+
     @Override
     final public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -128,6 +131,7 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
 //        	holder.tv_row_msg.setLineBreak(CustomTextView.LINE_BREAK_NO_WORD_WRAP);
 //            holder.config=v.getResources().getConfiguration();
             v.setTag(holder);
+            if (mTextColor==null) mTextColor=holder.tv_row_msg.getTextColors();
         } else {
             holder = (ViewHolder) v.getTag();
         }
@@ -157,9 +161,9 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
                 holder.tv_row_date.setText(o.getDate());
                 holder.tv_row_msg.setText(o.getMessage());
             } else {
-                holder.tv_row_time.setTextColor(mThemeColorList.text_color_primary);
-                holder.tv_row_date.setTextColor(mThemeColorList.text_color_primary);
-                holder.tv_row_msg.setTextColor(mThemeColorList.text_color_primary);
+                holder.tv_row_time.setTextColor(mTextColor);
+                holder.tv_row_date.setTextColor(mTextColor);
+                holder.tv_row_msg.setTextColor(mTextColor);
                 holder.tv_row_time.setText(o.getTime());
                 holder.tv_row_date.setText(o.getDate());
                 holder.tv_row_msg.setText(o.getMessage());

@@ -25,6 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
         items = objects;
         vi = (LayoutInflater) a.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        mThemeColorList = ThemeUtil.getThemeColorList(a);
+        mThemeColorList = CommonUtilities.getThemeColorList(a);
 
         mModeNormal = a.getString(R.string.msgs_main_sync_history_mode_normal);
         mModeTest = a.getString(R.string.msgs_main_sync_history_mode_test);
@@ -156,6 +157,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
     private LayoutInflater vi = null;
     private Drawable ll_default = null;
 //	private int mTextColorPrimary=-1;
+    private ColorStateList mTextColor=null;
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -180,16 +182,16 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
             holder.tv_mode = (TextView) v.findViewById(R.id.sync_history_list_view_mode);
             holder.tv_et = (TextView) v.findViewById(R.id.sync_history_list_view_elapsed_time);
 
-            holder.tv_date.setTextColor(mThemeColorList.text_color_primary);
-            holder.tv_time.setTextColor(mThemeColorList.text_color_primary);
-            holder.tv_prof.setTextColor(mThemeColorList.text_color_primary);
-            holder.tv_status.setTextColor(mThemeColorList.text_color_primary);
-            holder.tv_seq.setTextColor(mThemeColorList.text_color_primary);
-            holder.tv_error.setTextColor(mThemeColorList.text_color_error);
+//            holder.tv_date.setTextColor(mThemeColorList.text_color_primary);
+//            holder.tv_time.setTextColor(mThemeColorList.text_color_primary);
+//            holder.tv_prof.setTextColor(mThemeColorList.text_color_primary);
+//            holder.tv_status.setTextColor(mThemeColorList.text_color_primary);
+//            holder.tv_seq.setTextColor(mThemeColorList.text_color_primary);
+//            holder.tv_error.setTextColor(mThemeColorList.text_color_error);
 
             if (ll_default != null) ll_default = holder.ll_main.getBackground();
 //    		if (mTextColorPrimary==-1) mTextColorPrimary=holder.tv_date.getCurrentTextColor();
-
+            if (mTextColor==null) mTextColor=holder.tv_date.getTextColors();
             v.setTag(holder);
         } else {
             holder = (ViewHolder) v.getTag();
@@ -216,7 +218,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
                 String st_text = "";
                 if (o.sync_status == SyncHistoryItem.SYNC_STATUS_SUCCESS) {
                     st_text = mContext.getString(R.string.msgs_main_sync_history_status_success);
-                    holder.tv_status.setTextColor(mThemeColorList.text_color_primary);
+                    holder.tv_status.setTextColor(mTextColor);
                 } else if (o.sync_status == SyncHistoryItem.SYNC_STATUS_ERROR) {
                     st_text = mContext.getString(R.string.msgs_main_sync_history_status_error);
                     holder.tv_status.setTextColor(mThemeColorList.text_color_error);
@@ -237,7 +239,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
                 holder.tv_mode.setText(o.sync_test_mode ? mModeTest : mModeNormal);
                 if (o.sync_test_mode)
                     holder.tv_mode.setTextColor(mThemeColorList.text_color_warning);
-                else holder.tv_mode.setTextColor(mThemeColorList.text_color_primary);
+                else holder.tv_mode.setTextColor(mTextColor);
 
                 holder.tv_cnt_copied.setText(Integer.toString(o.sync_result_no_of_copied));
                 holder.tv_cnt_deleted.setText(Integer.toString(o.sync_result_no_of_deleted));

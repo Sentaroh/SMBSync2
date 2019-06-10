@@ -58,20 +58,19 @@ import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.ThemeColorList;
-import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
 
 import java.util.ArrayList;
 
 public class ScheduleItemEditor {
-    private CommonDialog commonDlg = null;
+//    private CommonDialog commonDlg = null;
 
     private GlobalParameters mGp = null;
 
     private Context mContext = null;
     private AppCompatActivity mActivity = null;
 
-    private CommonUtilities util = null;
+    private CommonUtilities mUtil = null;
 
     private ScheduleItem mSched = null;
 
@@ -91,18 +90,18 @@ public class ScheduleItemEditor {
         mContext = c;
         mActivity = a;
         mGp = gp;
-        util = mu;
-        commonDlg = cd;
+        mUtil = mu;
+//        commonDlg = cd;
         mSched = si;
 
-//        Log.v("", "name=" + si.scheduleName);
+//        Log.v("", "name=" + si.scheduleName);s
 
         mEditMode = edit_mode;
 
         mNotify = ntfy;
         mScheduleList = sl;
 
-        mThemeColorList = ThemeUtil.getThemeColorList(a);
+        mThemeColorList = CommonUtilities.getThemeColorList(a);
 
         initDialog();
 
@@ -120,11 +119,13 @@ public class ScheduleItemEditor {
     private void setScheduleWasChanged(Dialog dialog, ScheduleItem curr_si) {
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
         if (mInitialTime) {
+            mScheduleChanged=!mEditMode;
         } else {
 //            Thread.dumpStack();
             ScheduleItem new_si=curr_si.clone();
             buildSchedParms(dialog, new_si);
-            mScheduleChanged = !curr_si.isSame(new_si);
+            if (mEditMode) mScheduleChanged = !curr_si.isSame(new_si);
+            else mScheduleChanged=true;
             btn_ok.setEnabled(mScheduleChanged);
         }
     }
@@ -141,15 +142,14 @@ public class ScheduleItemEditor {
         dialog.setContentView(R.layout.schedule_sync_edit_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.schedule_edit_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.schedule_edit_dlg_title_view);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         TextView dlg_title = (TextView) dialog.findViewById(R.id.schedule_edit_dlg_title);
-        dlg_title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        dlg_title.setTextColor(mGp.themeColorList.title_text_color);
 
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
-        btn_ok.setEnabled(false);
 
         final Button btn_cancel = (Button) dialog.findViewById(R.id.scheduler_main_dlg_cancel);
 
@@ -159,7 +159,7 @@ public class ScheduleItemEditor {
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
 
         final CheckedTextView ctv_sched_enabled = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_enabled);
-        ctv_sched_enabled.setTextColor(mGp.themeColorList.text_color_primary);
+//        ctv_sched_enabled.setTextColor(mGp.themeColorList.text_color_primary);
         CommonUtilities.setCheckedTextView(ctv_sched_enabled);
         final Spinner sp_sched_type = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_date_time_type);
         final Spinner sp_sched_day = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_day);
@@ -178,20 +178,20 @@ public class ScheduleItemEditor {
 //		final LinearLayout ll_sched_hours=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
 //		final LinearLayout ll_sched_minutes=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_minute);
         final CheckedTextView ctv_last_day = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_last_day_of_the_month);
-        ctv_last_day.setTextColor(mGp.themeColorList.text_color_primary);
+//        ctv_last_day.setTextColor(mGp.themeColorList.text_color_primary);
 
         final CheckedTextView ctv_first_time = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_first_run);
-        ctv_first_time.setTextColor(mGp.themeColorList.text_color_primary);
+//        ctv_first_time.setTextColor(mGp.themeColorList.text_color_primary);
 
         final CheckedTextView ctv_reset_interval = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_reset);
-        ctv_reset_interval.setTextColor(mGp.themeColorList.text_color_primary);
+//        ctv_reset_interval.setTextColor(mGp.themeColorList.text_color_primary);
 
         final CheckedTextView ctv_sync_all_prof = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_sync_all_sync_task);
-        ctv_sync_all_prof.setTextColor(mGp.themeColorList.text_color_primary);
+//        ctv_sync_all_prof.setTextColor(mGp.themeColorList.text_color_primary);
         CommonUtilities.setCheckedTextView(ctv_sync_all_prof);
 
         final CheckedTextView ctv_wifi_on = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_wifi_on);
-        ctv_wifi_on.setTextColor(mGp.themeColorList.text_color_primary);
+//        ctv_wifi_on.setTextColor(mGp.themeColorList.text_color_primary);
         CommonUtilities.setCheckedTextView(ctv_wifi_on);
 		final LinearLayout ll_wifi_on_delay_time_view=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_delay_time_view);
         final TextView tv_wifi_on_delay_time = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_delay_time_text);
@@ -200,7 +200,7 @@ public class ScheduleItemEditor {
         final RadioButton rb_wifi_on_delay_2 = (RadioButton) dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_delay_time_rg_2);
         final RadioButton rb_wifi_on_delay_3 = (RadioButton) dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_delay_time_rg_3);
         final CheckedTextView ctv_wifi_off = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_wifi_off);
-        ctv_wifi_off.setTextColor(mGp.themeColorList.text_color_primary);
+//        ctv_wifi_off.setTextColor(mGp.themeColorList.text_color_primary);
         CommonUtilities.setCheckedTextView(ctv_wifi_off);
 
         final TextView tv_schedule_time = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_schedule_time);
@@ -626,7 +626,7 @@ public class ScheduleItemEditor {
                         public void negativeResponse(Context context, Object[] objects) {
                         }
                     });
-                    commonDlg.showCommonDialog(true, "W",
+                    mUtil.showCommonDialog(true, "W",
                             mContext.getString(R.string.msgs_schedule_confirm_title_nosave),
                             mContext.getString(R.string.msgs_schedule_confirm_msg_nosave), ntfy);
                 } else {
@@ -649,6 +649,7 @@ public class ScheduleItemEditor {
             @Override
             public void run() {
                 mInitialTime = false;
+                btn_ok.setEnabled(!mEditMode);
             }
         }, 500);
 
@@ -691,7 +692,7 @@ public class ScheduleItemEditor {
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_msg);
-        btn_ok.setEnabled(false);
+        btn_ok.setEnabled(!mEditMode);
         if (et_name.getText().length() == 0) {
             tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
             btn_ok.setEnabled(false);
@@ -910,12 +911,12 @@ public class ScheduleItemEditor {
         dialog.setContentView(R.layout.schedule_sync_edit_synclist_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_title_view);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         TextView dlg_title = (TextView) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_title);
-        dlg_title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        dlg_title.setTextColor(mGp.themeColorList.title_text_color);
 
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_ok);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_cancel);
@@ -1138,7 +1139,7 @@ public class ScheduleItemEditor {
 
     private void setScheduleTypeSpinner(Dialog dialog, String type) {
         final Spinner sp_sched_type = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_date_time_type);
-        CommonUtilities.setSpinnerBackground(mContext, sp_sched_type, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, sp_sched_type, mGp.isScreenThemeIsLight());
 
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -1181,7 +1182,7 @@ public class ScheduleItemEditor {
 
     private void setScheduleDaySpinner(Dialog dialog, String dd) {
         final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_day);
-        CommonUtilities.setSpinnerBackground(mContext, sp_sched_hours, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, sp_sched_hours, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -1200,7 +1201,7 @@ public class ScheduleItemEditor {
 
     private void setScheduleHoursSpinner(Dialog dialog, String hh) {
         final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_hours);
-        CommonUtilities.setSpinnerBackground(mContext, sp_sched_hours, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, sp_sched_hours, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -1219,7 +1220,7 @@ public class ScheduleItemEditor {
 
     private void setScheduleMinutesSpinner(Dialog dialog, String sched_type, String mm) {
         final Spinner sp_sched_minutes = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_minutes);
-        CommonUtilities.setSpinnerBackground(mContext, sp_sched_minutes, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, sp_sched_minutes, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -1254,7 +1255,7 @@ public class ScheduleItemEditor {
 //    	mGp.scheduleInfoList = ScheduleUtil.loadScheduleData(mGp);
 //    	mSched=mGp.scheduleInfoList.get(0);
 //
-//    	util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName()+" type="+mSched.scheduleType+
+//    	mUtil.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName()+" type="+mSched.scheduleType+
 //    			", hours="+mSched.scheduleHours+
 //    			", minutes="+mSched.scheduleMinutes+
 //    			", dw="+mSched.scheduleDayOfTheWeek+

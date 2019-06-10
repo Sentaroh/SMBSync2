@@ -28,7 +28,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -48,6 +47,7 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,8 +75,8 @@ import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.StringUtil;
+import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
-import com.sentaroh.jcifs.JcifsUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -88,7 +88,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,7 +161,7 @@ public class SyncTaskEditor extends DialogFragment {
         if (mContext == null) mContext = this.getActivity();
         mFragment = this;
         mFragMgr = this.getFragmentManager();
-        if (mUtil == null) mUtil = new CommonUtilities(mContext, "SyncTaskEditor", mGp);
+        if (mUtil == null) mUtil = new CommonUtilities(mContext, "SyncTaskEditor", mGp, getFragmentManager());
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         mCommonDlg = new CommonDialog(mContext, getActivity().getSupportFragmentManager());
         if (mTerminateRequired) {
@@ -181,7 +180,7 @@ public class SyncTaskEditor extends DialogFragment {
         super.onAttach(activity);
         if (mContext == null) mContext = this.getActivity();
         mGp=GlobalWorkArea.getGlobalParameters(mContext);
-        if (mUtil == null) mUtil = new CommonUtilities(mContext, "SyncTaskEditor", mGp);
+        if (mUtil == null) mUtil = new CommonUtilities(mContext, "SyncTaskEditor", mGp, getFragmentManager());
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
@@ -238,8 +237,7 @@ public class SyncTaskEditor extends DialogFragment {
         mDialog = new Dialog(getActivity(), mGp.applicationTheme);
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mDialog.setCanceledOnTouchOutside(false);
-        mDialog.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         if (!mTerminateRequired) {
             initViewWidget();
         }
@@ -797,7 +795,7 @@ public class SyncTaskEditor extends DialogFragment {
                         et_sync_folder_dir_name.setText(new_name);
                         if (new_name.length() > 0)
                             et_sync_folder_dir_name.setSelection(new_name.length());
-                        mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
+                        mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
                                 , "", null);
 
                     }
@@ -874,7 +872,7 @@ public class SyncTaskEditor extends DialogFragment {
                         et_sync_folder_dir_name.setText(new_name);
                         if (new_name.length() > 0)
                             et_sync_folder_dir_name.setSelection(new_name.length());
-                        mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
+                        mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
                                 , "", null);
 
                     }
@@ -992,7 +990,7 @@ public class SyncTaskEditor extends DialogFragment {
                         et_sync_folder_dir_name.setText(new_name);
                         if (new_name.length() > 0)
                             et_sync_folder_dir_name.setSelection(new_name.length());
-                        mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
+                        mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
                                 , "", null);
 
                     }
@@ -1132,7 +1130,7 @@ public class SyncTaskEditor extends DialogFragment {
                         et_sync_folder_dir_name.setText(new_name);
                         if (new_name.length() > 0)
                             et_sync_folder_dir_name.setSelection(new_name.length());
-                        mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
+                        mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
                                 , "", null);
 
                     }
@@ -1179,7 +1177,7 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (!isUsbMountPointExists(mContext, mUtil, getUsbDeviceUuid(mContext, mUtil))) {
-                    mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists), "", null);
+                    mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists), "", null);
                 } else {
                     NotifyEvent ntfy = new NotifyEvent(mContext);
                     ntfy.setListener(new NotifyEventListener() {
@@ -1216,7 +1214,7 @@ public class SyncTaskEditor extends DialogFragment {
     private void setSyncFolderArchiveListener(final Dialog dialog, final SyncTaskItem n_sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
 
         final LinearLayout archive_option_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_option_view);
-        archive_option_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        archive_option_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
             if (sfev.folder_master) archive_option_view.setVisibility(LinearLayout.GONE);
@@ -1248,7 +1246,7 @@ public class SyncTaskEditor extends DialogFragment {
         final EditText et_file_template = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_file_name_template);
         et_file_template.setText(n_sti.getArchiveRenameFileTemplate());
         final TextView tv_template = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_new_name);
-        tv_template.setTextColor(mGp.themeColorList.text_color_primary);
+//        tv_template.setTextColor(mGp.themeColorList.text_color_primary);
 
         final CheckedTextView ctvCreateDircetory = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_use_archive_directory);
         final LinearLayout dirTemplateView = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_directory_template_btn_view);
@@ -1370,7 +1368,7 @@ public class SyncTaskEditor extends DialogFragment {
                 if (new_temp.length()!=editable.length()) {
                     et_file_template.setText(new_temp);
                     et_file_template.setSelection(new_temp.length());
-                    mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_file_name_has_invalid_char)
+                    mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_file_name_has_invalid_char)
                             , "", null);
 
                 }
@@ -1427,7 +1425,7 @@ public class SyncTaskEditor extends DialogFragment {
                 if (new_temp.length()!=editable.length()) {
                     et_dir_template.setText(new_temp);
                     et_dir_template.setSelection(new_temp.length());
-                    mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
+                    mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
                             , "", null);
 
                 }
@@ -1655,7 +1653,7 @@ public class SyncTaskEditor extends DialogFragment {
                         //remove invalid char
                         et_zip_file.setText(new_name);
                         if (new_name.length() > 0) et_zip_file.setSelection(new_name.length());
-                        mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_file_name_has_invalid_char)
+                        mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_file_name_has_invalid_char)
                                 , "", null);
                     }
                 }
@@ -1700,12 +1698,13 @@ public class SyncTaskEditor extends DialogFragment {
         dialog.setContentView(R.layout.edit_sync_folder_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_title_view);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         TextView dlg_title = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_title);
-        dlg_title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        dlg_title.setBackgroundColor(mGp.themeColorList.title_background_color);
+        dlg_title.setTextColor(mGp.themeColorList.title_text_color);
         dlg_title.setText(sfev.folder_title);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
@@ -1718,7 +1717,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
             if (sfev.folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
-                mCommonDlg.showCommonDialog(false, "W",
+                mUtil.showCommonDialog(false, "W",
                         mContext.getString(R.string.msgs_sync_folder_archive_zip_folder_not_supported), "", null);
             }
         }
@@ -1787,7 +1786,7 @@ public class SyncTaskEditor extends DialogFragment {
                         @Override
                         public void negativeResponse(Context context, Object[] objects) {}
                     });
-                    mCommonDlg.showCommonDialog(true, "W",
+                    mUtil.showCommonDialog(true, "W",
                             mContext.getString(R.string.msgs_schedule_confirm_title_nosave),
                             mContext.getString(R.string.msgs_profile_sync_folder_dlg_confirm_msg_nosave), ntfy);
                 } else {
@@ -2423,15 +2422,15 @@ public class SyncTaskEditor extends DialogFragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         if (!prefs.getBoolean(mContext.getString(R.string.settings_suppress_warning_app_specific_dir), false)) {
             if (dir.startsWith(APP_SPECIFIC_DIRECTORY)) {
-                final Dialog dialog = new Dialog(getActivity());//, android.R.style.Theme_Black);
+                final Dialog dialog = new Dialog(getActivity(), mGp.applicationTheme);//, android.R.style.Theme_Black);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.show_warning_message_dlg);
 
                 final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.show_warning_message_dlg_title_view);
                 final TextView title = (TextView) dialog.findViewById(R.id.show_warning_message_dlg_title);
-                title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+                title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
                 title.setText(mContext.getString(R.string.msgs_main_app_specific_dir_used_title));
-                title.setTextColor(mGp.themeColorList.text_color_warning);
+                title.setTextColor(mGp.themeColorList.title_text_color);
 
                 ((TextView) dialog.findViewById(R.id.show_warning_message_dlg_msg))
                         .setText(mContext.getString(R.string.msgs_main_app_specific_dir_used_msg) +
@@ -2493,15 +2492,15 @@ public class SyncTaskEditor extends DialogFragment {
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(gp.appContext);
 
-        final Dialog dialog = new Dialog(activity);//, android.R.style.Theme_Black);
+        final Dialog dialog = new Dialog(activity, gp.applicationTheme);//, android.R.style.Theme_Black);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.show_warning_message_dlg);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.show_warning_message_dlg_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.show_warning_message_dlg_title);
-        title_view.setBackgroundColor(gp.themeColorList.dialog_title_background_color);
+        title_view.setBackgroundColor(gp.themeColorList.title_background_color);
         title.setText(gp.appContext.getString(R.string.msgs_main_app_specific_dir_used_title));
-        title.setTextColor(gp.themeColorList.text_color_warning);
+        title.setTextColor(gp.themeColorList.title_text_color);
         title.setText(gp.appContext.getString(R.string.msgs_main_location_service_warning_title));
 
         String msg_text="";
@@ -2697,7 +2696,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncFolderZipCompressionLevel(Spinner spinner, String cv) {
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2722,7 +2721,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncFolderMountPoint(SyncTaskItem sti, Spinner spinner, String cv, boolean write_only) {
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         mGp.safMgr.loadSafFile();
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2770,7 +2769,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncFolderSmbProto(SyncTaskItem sti, Spinner spinner, String cv) {
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         mGp.safMgr.loadSafFile();
@@ -2794,7 +2793,7 @@ public class SyncTaskEditor extends DialogFragment {
     private void setSpinnerSyncFolderType(SyncTaskItem sti, Spinner spinner, String cv, boolean master) {
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
         String sync_type=spinnerSyncType.getSelectedItem().toString();
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         mGp.safMgr.loadSafFile();
@@ -2858,7 +2857,7 @@ public class SyncTaskEditor extends DialogFragment {
     private void setSpinnerSyncFolderTypeWithUsb(SyncTaskItem sti, Spinner spinner, String cv, boolean master) {
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
         String sync_type=spinnerSyncType.getSelectedItem().toString();
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         mGp.safMgr.loadSafFile();
@@ -2937,7 +2936,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncTaskType(Spinner spinnerSyncOption, String prof_syncopt, String target_folder_type) {
-        CommonUtilities.setSpinnerBackground(mContext, spinnerSyncOption, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinnerSyncOption, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapterSyncOption =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapterSyncOption.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2961,7 +2960,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerTwoWaySyncConflictRule(Spinner spinner, String cv) {
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2981,7 +2980,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncTaskWifiOption(Spinner spinner, String cv) {
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -3003,7 +3002,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncTaskDiffTimeValue(Spinner spinner, int cv) {
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -3065,15 +3064,17 @@ public class SyncTaskEditor extends DialogFragment {
         mDialog.setContentView(R.layout.edit_sync_task_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.title_background_color);
 
         final LinearLayout title_view = (LinearLayout) mDialog.findViewById(R.id.edit_profile_sync_title_view);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         final TextView dlg_title = (TextView) mDialog.findViewById(R.id.edit_profile_sync_title);
-        dlg_title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        dlg_title.setTextColor(mGp.themeColorList.title_text_color);
+//        dlg_title.setBackgroundColor(mGp.themeColorList.title_background_color);
 
         final TextView dlg_title_sub = (TextView) mDialog.findViewById(R.id.edit_profile_sync_title_sub);
-        dlg_title_sub.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        dlg_title_sub.setTextColor(mGp.themeColorList.title_text_color);
+//        dlg_title_sub.setBackgroundColor(mGp.themeColorList.title_background_color);
 
         final TextView dlg_msg = (TextView) mDialog.findViewById(R.id.edit_sync_task_msg);
         dlg_msg.setTextColor(mGp.themeColorList.text_color_error);
@@ -3131,7 +3132,7 @@ public class SyncTaskEditor extends DialogFragment {
                 if (spinnerSyncType.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive))) {
                     if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
                         n_sti.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL);
-                        mCommonDlg.showCommonDialog(false, "W",
+                        mUtil.showCommonDialog(false, "W",
                                 mContext.getString(R.string.msgs_sync_folder_archive_zip_folder_not_supported), "", null);
                         target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
                     }
@@ -3268,7 +3269,7 @@ public class SyncTaskEditor extends DialogFragment {
                         f_ext+=sep+item;
                         sep=", ";
                     }
-                    mCommonDlg.showCommonDialog(false, "I",
+                    mUtil.showCommonDialog(false, "I",
                             mContext.getString(R.string.msgs_profile_sync_task_sync_file_type_add_filter_title),f_ext,null );
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
@@ -3288,7 +3289,7 @@ public class SyncTaskEditor extends DialogFragment {
                         f_ext+=sep+item;
                         sep=", ";
                     }
-                    mCommonDlg.showCommonDialog(false, "I",
+                    mUtil.showCommonDialog(false, "I",
                             mContext.getString(R.string.msgs_profile_sync_task_sync_file_type_add_filter_title),f_ext,null );
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
@@ -3308,7 +3309,7 @@ public class SyncTaskEditor extends DialogFragment {
                         f_ext+=sep+item;
                         sep=", ";
                     }
-                    mCommonDlg.showCommonDialog(false, "I",
+                    mUtil.showCommonDialog(false, "I",
                             mContext.getString(R.string.msgs_profile_sync_task_sync_file_type_add_filter_title),f_ext,null );
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
@@ -3589,7 +3590,7 @@ public class SyncTaskEditor extends DialogFragment {
 //                                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
 //                                        }
 //                                    });
-//                                    mCommonDlg.showCommonDialog(true, "W",
+//                                    mUtil.showCommonDialog(true, "W",
 //                                            mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off), "", ntfy);
 //                                }
                             } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
@@ -3618,7 +3619,7 @@ public class SyncTaskEditor extends DialogFragment {
                                             confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                                         }
                                     });
-                                    mCommonDlg.showCommonDialog(true, "W", msg, "", ntfy);
+                                    mUtil.showCommonDialog(true, "W", msg, "", ntfy);
                                 }
                             }
                         } else {
@@ -3762,7 +3763,7 @@ public class SyncTaskEditor extends DialogFragment {
 //                                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
 //                                        }
 //                                    });
-//                                    mCommonDlg.showCommonDialog(true, "W",
+//                                    mUtil.showCommonDialog(true, "W",
 //                                            mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off), "", ntfy);
 //                                }
                             } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
@@ -3791,7 +3792,7 @@ public class SyncTaskEditor extends DialogFragment {
                                             confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                                         }
                                     });
-                                    mCommonDlg.showCommonDialog(true, "W", msg, "", ntfy);
+                                    mUtil.showCommonDialog(true, "W", msg, "", ntfy);
                                 }
                             }
                         } else {
@@ -3919,7 +3920,7 @@ public class SyncTaskEditor extends DialogFragment {
                         public void negativeResponse(Context context, Object[] objects) {
                         }
                     });
-                    mCommonDlg.showCommonDialog(true, "W",
+                    mUtil.showCommonDialog(true, "W",
                             mContext.getString(R.string.msgs_schedule_confirm_title_nosave),
                             mContext.getString(R.string.msgs_profile_sync_folder_dlg_confirm_msg_nosave), ntfy);
                 } else {
@@ -3990,8 +3991,8 @@ public class SyncTaskEditor extends DialogFragment {
                     public void negativeResponse(Context c, Object[] o) {}
                 });
                 if (!new_stli.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP) && new_stli.getTargetDirectoryName().equals("")) {
-                    mCommonDlg.showCommonDialog(true, "W", "",
-                            mContext.getString(R.string.msgs_main_sync_profile_dlg_target_directory_not_specified),
+                    mUtil.showCommonDialog(true, "W",
+                            mContext.getString(R.string.msgs_main_sync_profile_dlg_target_directory_not_specified), "",
                             ntfy_target_dir_not_specified);
                 } else {
                     ntfy_target_dir_not_specified.notifyToListener(true, null);
@@ -4101,7 +4102,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncTaskArchiveSuffixSeq(Spinner spinner, String cv) {
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -4124,7 +4125,7 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncTaskPictureRetainPeriod(Spinner spinner, int cv) {
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.themeIsLight);
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -4262,15 +4263,15 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void showFieldHelp(String title, String help_msg) {
-        Dialog dialog = new Dialog(getActivity());
+        Dialog dialog = new Dialog(getActivity(), mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.help_view);
         LinearLayout ll_view = (LinearLayout) dialog.findViewById(R.id.help_view_title_view);
-        ll_view.setBackgroundColor(Color.WHITE);
+        ll_view.setBackgroundColor(mGp.themeColorList.title_background_color);
 
-        TextView dlg_tv = (TextView) dialog.findViewById(R.id.help_view_title);
-        dlg_tv.setBackgroundColor(Color.WHITE);
-        dlg_tv.setTextColor(Color.BLACK);
+        TextView dlg_tv = (TextView) dialog.findViewById(R.id.help_view_title_text);
+//        dlg_tv.setBackgroundColor(mGp.themeColorList.title_background_color);
+        dlg_tv.setTextColor(mGp.themeColorList.title_text_color);
 //        dlg_tv.setTextSize(32);
 
         WebView dlg_wb = (WebView) dialog.findViewById(R.id.help_view_help);
@@ -4282,7 +4283,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         dlg_tv.setText(title);
 
-        CommonDialog.setDlgBoxSizeLimit(dialog, false);
+//        CommonDialog.setDlgBoxSizeLimit(dialog, false);
 
         dialog.show();
     }
@@ -4317,7 +4318,7 @@ public class SyncTaskEditor extends DialogFragment {
 
     private void setSyncTaskFieldHelpListener(Dialog dialog, SyncTaskItem sti) {
         final ImageButton help_sync_option = (ImageButton) dialog.findViewById(R.id.edit_profile_sync_help);
-        help_sync_option.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+//        help_sync_option.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
 //		final ImageButton help_folder_dir = (ImageButton)dialog.findViewById(R.id.edit_sync_folder_dlg_directory_help);
 //		final ImageButton help_folder_share = (ImageButton)dialog.findViewById(R.id.edit_sync_folder_dlg_share_help);
 //		final ImageButton help_folder_logon = (ImageButton)dialog.findViewById(R.id.edit_sync_folder_dlg_logon_help);
@@ -4332,7 +4333,7 @@ public class SyncTaskEditor extends DialogFragment {
 
     private void setSyncFolderFieldHelpListener(Dialog dialog, final String f_type) {
         final ImageButton help_sync_folder = (ImageButton) dialog.findViewById(R.id.edit_sync_folder_dlg_help);
-        help_sync_folder.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+//        help_sync_folder.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
 //		Log.v("","f_type="+f_type);
         help_sync_folder.setOnClickListener(new OnClickListener() {
             @Override

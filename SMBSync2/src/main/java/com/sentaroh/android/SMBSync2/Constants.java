@@ -23,6 +23,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import com.sentaroh.android.Utilities.ThemeUtil;
+
 public class Constants {
 
 	public static final String APPLICATION_TAG="SMBSync2";
@@ -125,8 +127,12 @@ public class Constants {
 	public static final String SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS = "1";
 	public static final String SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_SUCCESS = "2";
 	public static final String SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR = "3";
-	
-	public static final String SMBSYNC2_PROFILE_RETRY_COUNT="3";
+
+    public static final String SMBSYNC2_SCREEN_THEME_STANDARD = String.valueOf(ThemeUtil.THEME_DEFAULT);
+    public static final String SMBSYNC2_SCREEN_THEME_LIGHT = String.valueOf(ThemeUtil.THEME_LIGHT);
+    public static final String SMBSYNC2_SCREEN_THEME_BLACK = String.valueOf(ThemeUtil.THEME_BLACK);
+
+    public static final String SMBSYNC2_PROFILE_RETRY_COUNT="3";
 	
 	public static final int ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS=40;
     public static final int ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS=50;

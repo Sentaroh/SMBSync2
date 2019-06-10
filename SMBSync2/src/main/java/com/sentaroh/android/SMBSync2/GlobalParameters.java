@@ -75,6 +75,9 @@ import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.LOG_FILE_NAME;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_BLACK;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LIGHT;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_STANDARD;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
 
 public class GlobalParameters extends CommonGlobalParms {
@@ -116,7 +119,8 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean wifiIsActive = false;
     public String wifiSsid = "";
 
-    public boolean themeIsLight = true;
+//    public boolean themeIsLight = true;
+    public String settingScreenTheme =SMBSYNC2_SCREEN_THEME_STANDARD;
     public int applicationTheme = -1;
     public ThemeColorList themeColorList = null;
 
@@ -127,7 +131,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean settingExitClean = true;
     public boolean settingSyncMessageUseStandardTextView =false;
     public int settingDebugLevel = 0;
-    public boolean settingUseLightTheme = false;
+//    public boolean settingUseLightTheme = false;
     public int settingLogMaxFileCount = 5;
     public String settingMgtFileDir = "", settingLogMsgFilename = LOG_FILE_NAME;
     public boolean settingLogOption = false;
@@ -434,6 +438,10 @@ public class GlobalParameters extends CommonGlobalParms {
 
             pe.commit();
         }
+
+        if (!prefs.contains(appContext.getString(R.string.settings_screen_theme)))
+            prefs.edit().putString(appContext.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD).commit();
+
         if (!prefs.contains(appContext.getString(R.string.settings_dim_screen_on_while_sync)))
             prefs.edit().putBoolean(appContext.getString(R.string.settings_dim_screen_on_while_sync), true).commit();
         if (!prefs.contains(appContext.getString(R.string.settings_notification_message_when_sync_ended)))
@@ -522,12 +530,23 @@ public class GlobalParameters extends CommonGlobalParms {
         settingSupressAppSpecifiDirWarning = prefs.getBoolean(appContext.getString(R.string.settings_suppress_warning_app_specific_dir), false);
         settingSupressLocationServiceWarning = prefs.getBoolean(appContext.getString(R.string.settings_suppress_warning_location_service_disabled), false);
 
-        themeIsLight = settingUseLightTheme = prefs.getBoolean(appContext.getString(R.string.settings_use_light_theme), false);
-        if (settingUseLightTheme) {
-            applicationTheme = R.style.MainLight;
-        } else {
-            applicationTheme = R.style.Main;
+        settingScreenTheme =prefs.getString(appContext.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD);
+        if (prefs.contains("settings_use_light_theme")) {
+            boolean themeIsLight = prefs.getBoolean("settings_use_light_theme", false);
+            if (themeIsLight) {
+                prefs.edit().remove("settings_use_light_theme").commit();
+                settingScreenTheme=SMBSYNC2_SCREEN_THEME_LIGHT;
+                prefs.edit().putString(appContext.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_LIGHT).commit();
+            }
         }
+        if (settingScreenTheme.equals(SMBSYNC2_SCREEN_THEME_LIGHT)) applicationTheme = R.style.MainLight;
+        else if (settingScreenTheme.equals(SMBSYNC2_SCREEN_THEME_BLACK)) applicationTheme = R.style.MainBlack;
+        else applicationTheme = R.style.Main;
+//        if (settingUseLightTheme) {
+//            applicationTheme = R.style.MainLight;
+//        } else {
+//            applicationTheme = R.style.MainBlack;
+//        }
         settingFixDeviceOrientationToPortrait = prefs.getBoolean(appContext.getString(R.string.settings_device_orientation_portrait), false);
 
         settingPreventSyncStartDelay = prefs.getBoolean(appContext.getString(R.string.settings_dim_screen_on_while_sync), true);
@@ -548,6 +567,12 @@ public class GlobalParameters extends CommonGlobalParms {
         settingSecurityApplicationPasswordUseExport = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_export_task), false);
         settingSecurityReinitSmbAccountPasswordValue = prefs.getBoolean(appContext.getString(R.string.settings_security_init_smb_account_password), false);
 
+    }
+
+    public boolean isScreenThemeIsLight() {
+        boolean result=false;
+        if (settingScreenTheme.equals(SMBSYNC2_SCREEN_THEME_LIGHT)) result = true;
+        return result;
     }
 
     public String settingsSmbLmCompatibility = "3", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout = "30000";

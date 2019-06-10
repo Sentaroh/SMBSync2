@@ -48,10 +48,10 @@ public class ActivityPasswordSettings extends AppCompatActivity {
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mActivity = this;
-        if (mGp.themeColorList == null) {
-            mGp.themeColorList = ThemeUtil.getThemeColorList(this);
-        }
         setTheme(mGp.applicationTheme);
+        if (mGp.themeColorList == null) {
+            mGp.themeColorList = CommonUtilities.getThemeColorList(this);
+        }
 
         //Remove notification bar
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -60,7 +60,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        mUtil = new CommonUtilities(this.getApplicationContext(), "AppPswd", mGp);
+        mUtil = new CommonUtilities(this.getApplicationContext(), "AppPswd", mGp, getSupportFragmentManager());
 
         commonDlg = new CommonDialog(this, getSupportFragmentManager());
         setResult(RESULT_OK);
@@ -241,7 +241,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
                             @Override
                             public void negativeResponse(Context context, Object[] objects) {}
                         });
-                        commonDlg.showCommonDialog(true, "W",
+                        mUtil.showCommonDialog(true, "W",
                                 mContext.getString(R.string.settings_security_application_password_confirm_remove), "", ntfy_confirm);
 
                     }

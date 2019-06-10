@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -41,9 +42,12 @@ import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -221,7 +225,7 @@ public class SyncTaskUtil {
                         if (tfl.getCount() > 0) {
                             selectImportProfileItem(tfl, p_ntfy);
                         } else {
-                            mCommonDlg.showCommonDialog(false, "W", mContext.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
+                            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
                             p_ntfy.notifyToListener(false, null);
                         }
                     }
@@ -314,18 +318,20 @@ public class SyncTaskUtil {
         return result;
     }
     public void promptPasswordForImport(final String fpath, final NotifyEvent ntfy_pswd) {
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.setContentView(R.layout.password_input_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.password_input_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.password_input_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.password_input_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.password_input_msg);
         final CheckedTextView ctv_protect = (CheckedTextView) dialog.findViewById(R.id.password_input_ctv_protect);
@@ -339,7 +345,7 @@ public class SyncTaskUtil {
 
         dlg_msg.setText(mContext.getString(R.string.msgs_export_import_pswd_password_required));
 
-        CommonDialog.setDlgBoxSizeCompact(dialog);
+        CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
 
         btn_ok.setEnabled(false);
         et_password.addTextChangedListener(new TextWatcher() {
@@ -433,18 +439,21 @@ public class SyncTaskUtil {
     public void promptPasswordForExport(final String fpath, final NotifyEvent ntfy_pswd) {
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         dialog.setContentView(R.layout.password_input_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.password_input_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.password_input_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.password_input_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.password_input_msg);
         final CheckedTextView ctv_protect = (CheckedTextView) dialog.findViewById(R.id.password_input_ctv_protect);
@@ -455,7 +464,7 @@ public class SyncTaskUtil {
 
         dlg_msg.setText(mContext.getString(R.string.msgs_export_import_pswd_specify_password));
 
-        CommonDialog.setDlgBoxSizeCompact(dialog);
+        CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
 
         ctv_protect.setOnClickListener(new OnClickListener() {
             @Override
@@ -590,13 +599,13 @@ public class SyncTaskUtil {
     }
 
     private void selectImportProfileItem(final AdapterSyncTask tfl, final NotifyEvent p_ntfy) {
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.export_import_profile_dlg);
         dialog.setCanceledOnTouchOutside(false);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.export_import_profile_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         ArrayList<AdapterExportImportTask.ExportImportListItem> eipl = new ArrayList<AdapterExportImportTask.ExportImportListItem>();
 
@@ -617,8 +626,8 @@ public class SyncTaskUtil {
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.export_import_profile_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.export_import_profile_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
         title.setText(mContext.getString(R.string.msgs_export_import_profile_title));
         LinearLayout ll_filelist = (LinearLayout) dialog.findViewById(R.id.export_import_profile_file_list);
         ll_filelist.setVisibility(LinearLayout.GONE);
@@ -803,9 +812,9 @@ public class SyncTaskUtil {
                             @Override
                             public void run() {
                                 if (save_success) {
-                                    mCommonDlg.showCommonDialog(false, "I", mContext.getString(R.string.msgs_export_import_profile_import_success), imp_list, null);
+                                    mUtil.showCommonDialog(false, "I", mContext.getString(R.string.msgs_export_import_profile_import_success), imp_list, null);
                                 } else {
-                                    mCommonDlg.showCommonDialog(false, "E", mContext.getString(R.string.msgs_export_import_profile_import_failed), "", null);
+                                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_export_import_profile_import_failed), "", null);
                                 }
                                 if (import_settings || import_schedule) {
                                     boolean[] parm = new boolean[]{import_settings, import_schedule};
@@ -825,7 +834,7 @@ public class SyncTaskUtil {
         });
         if (!repl_list.equals("")) {
             //Confirm
-            mCommonDlg.showCommonDialog(true, "W",
+            mUtil.showCommonDialog(true, "W",
                     mContext.getString(R.string.msgs_export_import_profile_confirm_override),
                     repl_list, ntfy);
         } else {
@@ -1016,11 +1025,11 @@ public class SyncTaskUtil {
 
                     if (saveSyncTaskListToFile(mGp, mContext, mUtil, true, fd, fp,
                             mGp.syncTaskAdapter.getArrayList(), encrypt_required)) {
-                        mCommonDlg.showCommonDialog(false, "I",
+                        mUtil.showCommonDialog(false, "I",
                                 mContext.getString(R.string.msgs_export_prof_success), "File=" + fp, null);
                         mUtil.addDebugMsg(1, "I", "Profile was exported. fn=" + fp);
                     } else {
-                        mCommonDlg.showCommonDialog(false, "E",
+                        mUtil.showCommonDialog(false, "E",
                                 mContext.getString(R.string.msgs_export_prof_fail), "File=" + fp, null);
                     }
                 }
@@ -1029,7 +1038,7 @@ public class SyncTaskUtil {
                 public void negativeResponse(Context c, Object[] o) {
                 }
             });
-            mCommonDlg.showCommonDialog(true, "W",
+            mUtil.showCommonDialog(true, "W",
                     mContext.getString(R.string.msgs_export_prof_title),
                     profile_dir + "/" + profile_filename + " " + mContext.getString(R.string.msgs_override), ntfy);
         } else {
@@ -1037,12 +1046,12 @@ public class SyncTaskUtil {
             String fd = profile_dir;
             if (saveSyncTaskListToFile(mGp, mContext, mUtil, true, fd, fp,
                     mGp.syncTaskAdapter.getArrayList(), encrypt_required)) {
-                mCommonDlg.showCommonDialog(false, "I",
+                mUtil.showCommonDialog(false, "I",
                         mContext.getString(R.string.msgs_export_prof_success),
                         "File=" + fp, null);
                 mUtil.addDebugMsg(1, "I", "Profile was exported. fn=" + fp);
             } else {
-                mCommonDlg.showCommonDialog(false, "E",
+                mUtil.showCommonDialog(false, "E",
                         mContext.getString(R.string.msgs_export_prof_fail),
                         "File=" + fp, null);
             }
@@ -1139,19 +1148,19 @@ public class SyncTaskUtil {
                 p_ntfy.notifyToListener(false, null);
             }
         });
-        mCommonDlg.showCommonDialog(true, "W",
+        mUtil.showCommonDialog(true, "W",
                 mContext.getString(R.string.msgs_delete_following_profile), dpmsg, ntfy);
     }
 
     public void showSelectSdcardMsg(final NotifyEvent ntfy) {
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.show_select_sdcard_dlg);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.show_select_sdcard_dlg_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_msg);
         String msg = "";
@@ -1213,14 +1222,14 @@ public class SyncTaskUtil {
     }
 
     public void showSelectUsbMsg(final NotifyEvent ntfy) {
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.show_select_sdcard_dlg);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.show_select_sdcard_dlg_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
         title.setText(R.string.msgs_main_external_usb_select_required_title);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_msg);
@@ -1332,15 +1341,15 @@ public class SyncTaskUtil {
                         String err_msg = (String) o[0];
                         if (tc.isEnabled()) {
                             if (err_msg != null) {
-                                mCommonDlg.showCommonDialog(false, "E", mContext.getString(R.string.msgs_remote_profile_dlg_logon_error)
+                                mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_remote_profile_dlg_logon_error)
                                         , err_msg, null);
                                 if (p_ntfy != null) p_ntfy.notifyToListener(false, null);
                             } else {
-                                mCommonDlg.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_success), "", null);
+                                mUtil.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_success), "", null);
                                 if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
                             }
                         } else {
-//                            mCommonDlg.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_cancel), "", null);
+//                            mUtil.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_cancel), "", null);
 //                            if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
                         }
                     }
@@ -1485,18 +1494,20 @@ public class SyncTaskUtil {
     public void renameSyncTask(final SyncTaskItem pli, final NotifyEvent p_ntfy) {
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.setContentView(R.layout.single_item_input_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.single_item_input_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
 
 //		final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
         final TextView dlg_cmp = (TextView) dialog.findViewById(R.id.single_item_input_name);
@@ -1507,7 +1518,7 @@ public class SyncTaskUtil {
         title.setText(mContext.getString(R.string.msgs_rename_profile));
 
         dlg_cmp.setVisibility(TextView.GONE);
-        CommonDialog.setDlgBoxSizeCompact(dialog);
+        CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(pli.getSyncTaskName());
         btn_ok.setEnabled(false);
         etInput.addTextChangedListener(new TextWatcher() {
@@ -1642,7 +1653,7 @@ public class SyncTaskUtil {
 //				else dlg_msg.setText("");
                 if (arg1 != null) {
                     String msg_text = (String) arg1[0];
-                    mCommonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
+                    mUtil.showCommonDialog(false, "E", "SMB Error", msg_text, null);
                 }
             }
 
@@ -1728,7 +1739,7 @@ public class SyncTaskUtil {
             @Override
             public void negativeResponse(Context c, Object[] o) {
                 String msg_text = (String) o[0];
-                mCommonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
+                mUtil.showCommonDialog(false, "E", "SMB Error", msg_text, null);
             }
         });
 //        createRemoteFileList(remurl, p_dir, ipc_enforced, smb_proto, ntfy, true);
@@ -1744,12 +1755,12 @@ public class SyncTaskUtil {
         dialog.setContentView(R.layout.common_file_selector_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.common_file_selector_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.common_file_selector_dlg_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.common_file_selector_dlg_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
 //				subtitle.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
         final TextView tv_empty = (TextView) dialog.findViewById(R.id.common_file_selector_empty);
@@ -1767,7 +1778,7 @@ public class SyncTaskUtil {
         final String directory_pre="smb://"+host_name+host_addr+"/"+host_share;
 
         final CustomTextView tv_home = (CustomTextView) dialog.findViewById(R.id.common_file_selector_filepath);
-        tv_home.setTextColor(mGp.themeColorList.text_color_primary);
+//        tv_home.setTextColor(mGp.themeColorList.text_color_primary);
         tv_home.setText(directory_pre);
 
         final Button btn_create = (Button) dialog.findViewById(R.id.common_file_selector_create_btn);
@@ -1780,7 +1791,7 @@ public class SyncTaskUtil {
         final Button btn_top = (Button) dialog.findViewById(R.id.common_file_selector_top_btn);
         final Button btn_refresh = (Button) dialog.findViewById(R.id.common_file_selector_refresh_btn);
 
-        if (mGp.themeIsLight) {
+        if (mGp.isScreenThemeIsLight()) {
             btn_up.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_16_go_up_dark, 0, 0, 0);
             btn_top.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_16_go_top_dark, 0, 0, 0);
         } else {
@@ -1857,7 +1868,7 @@ public class SyncTaskUtil {
                             @Override
                             public void negativeResponse(Context c, Object[] o) {
                                 String msg_text = (String) o[0];
-                                mCommonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
+                                mUtil.showCommonDialog(false, "E", "SMB Error", msg_text, null);
                             }
                         });
                         createRemoteFileList(host_name, host_addr, host_share, host_port, n_dir, ipc_enforced, smb2_negotiation, smb_proto, ntfy, true);
@@ -2090,25 +2101,28 @@ public class SyncTaskUtil {
 
     private void createRemoteDirectoryDlg(final String c_dir, final RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.single_item_input_dlg);
 
+        final LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_dlg_view);
+        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
 
         final TextView dlg_title = (TextView) dialog.findViewById(R.id.single_item_input_title);
-        dlg_title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        dlg_title.setTextColor(mGp.themeColorList.title_text_color);
         dlg_title.setText(mContext.getString(R.string.msgs_file_select_edit_dlg_create));
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
         final TextView dlg_cmp = (TextView) dialog.findViewById(R.id.single_item_input_name);
-        dlg_cmp.setTextColor(mGp.themeColorList.text_color_primary);
+//        dlg_cmp.setTextColor(mGp.themeColorList.text_color_primary);
         final Button btnOk = (Button) dialog.findViewById(R.id.single_item_input_ok_btn);
         final Button btnCancel = (Button) dialog.findViewById(R.id.single_item_input_cancel_btn);
         final EditText etDir=(EditText) dialog.findViewById(R.id.single_item_input_dir);
 
         dlg_cmp.setText(mContext.getString(R.string.msgs_file_select_edit_parent_directory)+":"+c_dir);
-        CommonDialog.setDlgBoxSizeCompact(dialog);
+        CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         btnOk.setEnabled(false);
         final Handler hndl=new Handler();
         etDir.addTextChangedListener(new TextWatcher(){
@@ -2148,7 +2162,7 @@ public class SyncTaskUtil {
 //                            hndl.post(new Runnable() {
 //                                @Override
 //                                public void run() {
-//                                    mCommonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
+//                                    mUtil.showCommonDialog(false,"E","SMB Error",e_msg,null);
 //                                    dialog.dismiss();
 //                                    p_ntfy.notifyToListener(false, null);
 //                                }
@@ -2207,7 +2221,7 @@ public class SyncTaskUtil {
                                                 hndl.post(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        mCommonDlg.showCommonDialog(false,"E","SMB Error",e_msg,null);
+                                                        mUtil.showCommonDialog(false,"E","SMB Error",e_msg,null);
                                                         dialog.dismiss();
                                                         p_ntfy.notifyToListener(false, null);
                                                     }
@@ -2351,18 +2365,18 @@ public class SyncTaskUtil {
         final AdapterFilterList filterAdapter;
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.filter_list_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
         title.setText(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_title));
 
         Button add_current_ssid = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
@@ -2550,18 +2564,18 @@ public class SyncTaskUtil {
         final AdapterFilterList filterAdapter;
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.filter_list_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
         title.setText(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_title));
 
         Button add_current_addr = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
@@ -2749,18 +2763,18 @@ public class SyncTaskUtil {
         final AdapterFilterList filterAdapter;
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.filter_list_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
 
         Button dirbtn = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
         dirbtn.setVisibility(Button.GONE);
@@ -2906,18 +2920,18 @@ public class SyncTaskUtil {
         final AdapterFilterList filterAdapter;
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.filter_list_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
 
         filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList);
         final ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
@@ -3070,7 +3084,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context arg0, Object[] arg1) {
                         if (arg1 != null) {
                             String msg_text = (String) arg1[0];
-                            mCommonDlg.showCommonDialog(false, "E", "SMB Error", msg_text, null);
+                            mUtil.showCommonDialog(false, "E", "SMB Error", msg_text, null);
                         }
                     }
                 });
@@ -3124,21 +3138,22 @@ public class SyncTaskUtil {
                             final AdapterFilterList.FilterListItem fli, final String filter, String title_text, final NotifyEvent p_ntfy) {
 
         // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.filter_edit_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.filter_edit_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_edit_dlg_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.filter_edit_dlg_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
         if (!title_text.equals("")) title.setText(title_text);
 
-        CommonDialog.setDlgBoxSizeCompact(dialog);
+        CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_edit_dlg_filter);
         et_filter.setText(filter);
         // CANCELボタンの指定
@@ -3232,25 +3247,25 @@ public class SyncTaskUtil {
                 ArrayList<TreeFilelistItem>tfl=(ArrayList<TreeFilelistItem>)objects[0];
                 if (tfl.size()==0) {
                     String msg=mContext.getString(R.string.msgs_dir_empty);
-                    mCommonDlg.showCommonDialog(false,"W",msg,"",null);
+                    mUtil.showCommonDialog(false,"W",msg,"",null);
                     return;
                 }
 
                 //カスタムダイアログの生成
-                final Dialog dialog = new Dialog(mActivity);
+                final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.setContentView(R.layout.item_select_list_dlg);
 
                 LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_view);
-                ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//                ll_dlg_view.setBackgroundColor(mGp.themeColorList.title_background_color);
 
                 final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_title_view);
                 final TextView title = (TextView) dialog.findViewById(R.id.item_select_list_dlg_title);
                 final TextView subtitle = (TextView) dialog.findViewById(R.id.item_select_list_dlg_subtitle);
-                title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-                title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-                subtitle.setTextColor(mGp.themeColorList.text_color_dialog_title);
+                title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+                title.setTextColor(mGp.themeColorList.title_text_color);
+//                subtitle.setTextColor(mGp.themeColorList.title_text_color);
 
                 title.setText(mContext.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
 
@@ -3391,7 +3406,7 @@ public class SyncTaskUtil {
 
             @Override
             public void negativeResponse(Context context, Object[] objects) {
-                mCommonDlg.showCommonDialog(false, "E", "Local file list creation aborted", "", null);
+                mUtil.showCommonDialog(false, "E", "Local file list creation aborted", "", null);
             }
         });
 
@@ -3424,25 +3439,25 @@ public class SyncTaskUtil {
 
                 if (rfl.size()==0) {
                     String msg=mContext.getString(R.string.msgs_dir_empty);
-                    mCommonDlg.showCommonDialog(false,"W",msg,"",null);
+                    mUtil.showCommonDialog(false,"W",msg,"",null);
                     return;
                 }
 
                 //カスタムダイアログの生成
-                final Dialog dialog = new Dialog(mActivity);
+                final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.setContentView(R.layout.item_select_list_dlg);
 
                 LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_view);
-                ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//                ll_dlg_view.setBackgroundColor(mGp.themeColorList.title_background_color);
 
                 final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_title_view);
                 final TextView title = (TextView) dialog.findViewById(R.id.item_select_list_dlg_title);
                 final TextView subtitle = (TextView) dialog.findViewById(R.id.item_select_list_dlg_subtitle);
-                title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-                title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-                subtitle.setTextColor(mGp.themeColorList.text_color_primary);
+                title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+                title.setTextColor(mGp.themeColorList.title_text_color);
+//                subtitle.setTextColor(mGp.themeColorList.title_text_color);
 
                 title.setText(mContext.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
                 subtitle.setText((remdir.equals("//")) ? host_name+host_addr+"/"+host_share : host_name+host_addr+"/"+host_share+  remdir);
@@ -3550,7 +3565,7 @@ public class SyncTaskUtil {
                                 btn_ok.setEnabled(true);
                             }
                         } catch(Exception e) {
-                            mCommonDlg.showCommonDialog(false,"E","Error","sel="+sel+", remdir="+remdir+"\n"+
+                            mUtil.showCommonDialog(false,"E","Error","sel="+sel+", remdir="+remdir+"\n"+
                                     e.getMessage()+"\n"+MiscUtil.getStackTraceString(e),null);
                         }
                     }
@@ -3773,18 +3788,18 @@ public class SyncTaskUtil {
     public void scanSmbServerDlg(final NotifyEvent p_ntfy,
                                  String port_number, boolean scan_start, final int smb_protocol) {
         //カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.scan_remote_ntwk_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.scan_remote_ntwk_dlg_view);
-        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.scan_remote_ntwk_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.scan_remote_ntwk_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
 
         final Button btn_scan = (Button) dialog.findViewById(R.id.scan_remote_ntwk_btn_ok);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.scan_remote_ntwk_btn_cancel);
@@ -4473,26 +4488,27 @@ public class SyncTaskUtil {
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
                 for (TreeFilelistItem item:rfl) rows.add(item.getName());
                 if (rows.size() < 1) {
-                    mCommonDlg.showCommonDialog(false, "W",
+                    mUtil.showCommonDialog(false, "W",
                             mContext.getString(R.string.msgs_share_list_not_obtained), "", null);
                     return;
                 }
                 Collections.sort(rows, String.CASE_INSENSITIVE_ORDER);
                 //カスタムダイアログの生成
-                final Dialog dialog = new Dialog(mActivity);
+                final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.setContentView(R.layout.item_select_list_dlg);
 
                 LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_view);
-                ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+                CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+//                ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
                 final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_title_view);
                 final TextView title = (TextView) dialog.findViewById(R.id.item_select_list_dlg_title);
                 final TextView subtitle = (TextView) dialog.findViewById(R.id.item_select_list_dlg_subtitle);
-                title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-                title.setTextColor(mGp.themeColorList.text_color_dialog_title);
-                subtitle.setTextColor(mGp.themeColorList.text_color_dialog_title);
+                title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+                title.setTextColor(mGp.themeColorList.title_text_color);
+//                subtitle.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
                 title.setText(mContext.getString(R.string.msgs_select_remote_share));
                 subtitle.setVisibility(TextView.GONE);
@@ -4610,7 +4626,7 @@ public class SyncTaskUtil {
 
                         @Override
                         public void negativeResponse(Context c, Object[] o) {
-                            mCommonDlg.showCommonDialog(false, "E", "Local file list creation aborted", "", null);
+                            mUtil.showCommonDialog(false, "E", "Local file list creation aborted", "", null);
                         }
                     });
                     createLocalFilelist(dironly, lclurl, tfi.getPath() + tfi.getName(), ne);
@@ -6550,7 +6566,7 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileInt(c, pw, 100,          encrypt_required, cp, c.getString(R.string.settings_playback_ringtone_volume));
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_vibrate_when_sync_ended));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_device_orientation_portrait));
-        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_use_light_theme));
+        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_screen_theme));
         saveSettingsParmsToFileBoolean(c, pw, true,     encrypt_required, cp, c.getString(R.string.settings_dim_screen_on_while_sync));
 
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_log_option));

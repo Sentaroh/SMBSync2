@@ -28,9 +28,10 @@ import android.os.Bundle;
 import com.sentaroh.android.Utilities.LogUtil.CommonLogFileListDialogFragment;
 
 public class LogFileListDialogFragment extends CommonLogFileListDialogFragment {
-    public static LogFileListDialogFragment newInstance(boolean retainInstance, String title, String send_msg, String enable_msg, String send_subject) {
+    public static LogFileListDialogFragment newInstance(String theme_id, boolean retainInstance, String title, String send_msg, String enable_msg, String send_subject) {
         LogFileListDialogFragment frag = new LogFileListDialogFragment();
         Bundle bundle = new Bundle();
+        bundle.putString("theme_id", theme_id);
         bundle.putBoolean("retainInstance", retainInstance);
         bundle.putBoolean("showSaveButton", true);
         bundle.putString("title", title);

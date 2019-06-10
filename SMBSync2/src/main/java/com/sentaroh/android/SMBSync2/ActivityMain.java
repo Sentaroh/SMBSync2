@@ -44,7 +44,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.StrictMode;
-import android.os.SystemClock;
 import android.os.storage.StorageVolume;
 import android.provider.Settings;
 import android.support.v4.view.ViewPager;
@@ -52,8 +51,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
 import android.text.InputType;
-import android.text.Layout;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -89,7 +86,6 @@ import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.SystemInfo;
-import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.Widget.CustomTabContentView;
 import com.sentaroh.android.Utilities.Widget.CustomTextView;
@@ -107,7 +103,6 @@ import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_SDCA
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_CONFLICT_FILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE;
@@ -182,16 +177,13 @@ public class ActivityMain extends AppCompatActivity {
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mActivity = this;
-        if (mGp.themeColorList == null) {
-            mGp.themeColorList = ThemeUtil.getThemeColorList(this);
-        }
         setTheme(mGp.applicationTheme);
+        mGp.themeColorList = CommonUtilities.getThemeColorList(this);
 //        getWindow().setNavigationBarColor(mGp.themeColorList.window_background_color_content);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
 
-        mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
-        mUtil = new CommonUtilities(this.getApplicationContext(), "Main", mGp);
+        mUtil = new CommonUtilities(this.getApplicationContext(), "Main", mGp, getSupportFragmentManager());
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
@@ -425,11 +417,14 @@ public class ActivityMain extends AppCompatActivity {
 
 
     private void showSystemInfo() {
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.common_dialog);
 
+        final LinearLayout ll_title=(LinearLayout) dialog.findViewById(R.id.common_dialog_title_view);
+        ll_title.setBackgroundColor(mGp.themeColorList.title_background_color);
         final TextView tv_title=(TextView)dialog.findViewById(R.id.common_dialog_title);
+        tv_title.setTextColor(mGp.themeColorList.title_text_color);
         final TextView tv_msg_old=(TextView)dialog.findViewById(R.id.common_dialog_msg);
         tv_msg_old.setVisibility(TextView.GONE);
         final CustomTextView tv_msg=(CustomTextView)dialog.findViewById(R.id.common_dialog_custom_text_view);
@@ -514,12 +509,20 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void getProblemDescription(final NotifyEvent p_ntfy) {
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.single_item_input_dlg);
 
-        final TextView tv_title=(TextView)dialog.findViewById(R.id.single_item_input_title);
+        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_dlg_view);
+        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+
+        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
+        final TextView tv_title = (TextView) dialog.findViewById(R.id.single_item_input_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        tv_title.setTextColor(mGp.themeColorList.title_text_color);
         tv_title.setText(mContext.getString(R.string.msgs_your_problem_title));
+
         final TextView tv_msg=(TextView)dialog.findViewById(R.id.single_item_input_msg);
         tv_msg.setVisibility(TextView.GONE);
         final TextView tv_desc=(TextView)dialog.findViewById(R.id.single_item_input_name);
@@ -550,7 +553,7 @@ public class ActivityMain extends AppCompatActivity {
                     }
                 });
                 if (et_msg.getText().length()==0) {
-                    commonDlg.showCommonDialog(true, "W", mContext.getString(R.string.msgs_your_problem_no_desc),"",ntfy_desc);
+                    mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_your_problem_no_desc),"",ntfy_desc);
                 } else {
                     ntfy_desc.notifyToListener(true, null);
                 }
@@ -804,18 +807,18 @@ public class ActivityMain extends AppCompatActivity {
 
         if (vsa.prog_bar_view_visibility != LinearLayout.GONE) {
             mGp.progressBarView.bringToFront();
-            mGp.progressBarView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//            mGp.progressBarView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
             mGp.progressBarView.setVisibility(LinearLayout.VISIBLE);
         } else mGp.progressBarView.setVisibility(LinearLayout.GONE);
 
         if (vsa.prog_spin_view_visibility != LinearLayout.GONE) {
             mGp.progressSpinView.bringToFront();
-            mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//            mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
             mGp.progressSpinView.setVisibility(LinearLayout.VISIBLE);
         } else mGp.progressSpinView.setVisibility(LinearLayout.GONE);
 
         if (vsa.confirm_view_visibility != LinearLayout.GONE) {
-            mGp.confirmView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//            mGp.confirmView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
             mGp.confirmView.setVisibility(LinearLayout.VISIBLE);
             mGp.confirmView.bringToFront();
         } else {
@@ -862,22 +865,22 @@ public class ActivityMain extends AppCompatActivity {
         mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_MESSAGE).setIndicator(tabViewMsg).setContent(android.R.id.tabcontent));
 
         LinearLayout ll_main = (LinearLayout) findViewById(R.id.main_screen_view);
-        ll_main.setBackgroundColor(mGp.themeColorList.window_background_color_content);
+//        ll_main.setBackgroundColor(mGp.themeColorList.window_background_color_content);
 
         LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSyncTaskView = (LinearLayout) vi.inflate(R.layout.main_sync_task, null);
-        mSyncTaskView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
+//        mSyncTaskView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
         mHistoryView = (LinearLayout) vi.inflate(R.layout.main_history, null);
-        mHistoryView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
+//        mHistoryView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
         mMessageView = (LinearLayout) vi.inflate(R.layout.main_message, null);
-        mMessageView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
+//        mMessageView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
 
         mGp.msgListView = (ListView) mMessageView.findViewById(R.id.main_message_list_view);
         mGp.syncTaskListView = (ListView) mSyncTaskView.findViewById(R.id.main_sync_task_view_list);
         mGp.syncHistoryListView = (ListView) mHistoryView.findViewById(R.id.main_history_list_view);
 
         mGp.scheduleInfoView = (TextView) findViewById(R.id.main_schedule_view_info);
-        mGp.scheduleInfoView.setTextColor(mGp.themeColorList.text_color_primary);
+//        mGp.scheduleInfoView.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.scheduleErrorView = (TextView) findViewById(R.id.main_schedule_view_error);
         mGp.scheduleErrorView.setText(mGp.scheduleErrorText);
         mGp.scheduleErrorView.setTextColor(mGp.themeColorList.text_color_warning);
@@ -886,28 +889,28 @@ public class ActivityMain extends AppCompatActivity {
 
 
         mGp.confirmView = (LinearLayout) findViewById(R.id.main_dialog_confirm_view);
-        mGp.confirmView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        mGp.confirmView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
         mGp.confirmView.setVisibility(LinearLayout.GONE);
         mGp.confirmOverrideView=(LinearLayout) findViewById(R.id.main_dialog_confirm_override_view);
         mGp.confirmConflictView=(LinearLayout) findViewById(R.id.main_dialog_confirm_conflict_view);
         mGp.confirmMsg = (TextView) findViewById(R.id.main_dialog_confirm_msg);
-        mGp.confirmMsg.setTextColor(mGp.themeColorList.text_color_primary);
+//        mGp.confirmMsg.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.confirmCancel = (Button) findViewById(R.id.main_dialog_confirm_sync_cancel);
         setButtonColor(mGp.confirmCancel);
-        if (mGp.themeColorList.theme_is_light)
-            mGp.confirmCancel.setTextColor(mGp.themeColorList.text_color_primary);
+//        if (mGp.themeColorList.theme_is_light)
+//            mGp.confirmCancel.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.confirmYes = (Button) findViewById(R.id.copy_delete_confirm_yes);
         setButtonColor(mGp.confirmYes);
-        mGp.confirmYes.setTextColor(mGp.themeColorList.text_color_primary);
+//        mGp.confirmYes.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.confirmNo = (Button) findViewById(R.id.copy_delete_confirm_no);
         setButtonColor(mGp.confirmNo);
-        mGp.confirmNo.setTextColor(mGp.themeColorList.text_color_primary);
+//        mGp.confirmNo.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.confirmYesAll = (Button) findViewById(R.id.copy_delete_confirm_yesall);
         setButtonColor(mGp.confirmYesAll);
-        mGp.confirmYesAll.setTextColor(mGp.themeColorList.text_color_primary);
+//        mGp.confirmYesAll.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.confirmNoAll = (Button) findViewById(R.id.copy_delete_confirm_noall);
         setButtonColor(mGp.confirmNoAll);
-        mGp.confirmNoAll.setTextColor(mGp.themeColorList.text_color_primary);
+//        mGp.confirmNoAll.setTextColor(mGp.themeColorList.text_color_primary);
 
         mGp.confirmDialogConflictFilePathA=(TextView) findViewById(R.id.main_dialog_confirm_conflict_pair_a_path);
         mGp.confirmDialogConflictFileLengthA=(TextView) findViewById(R.id.main_dialog_confirm_conflict_pair_a_length);
@@ -925,33 +928,33 @@ public class ActivityMain extends AppCompatActivity {
         setButtonColor(mGp.confirmDialogConflictButtonCancelSyncTask);
 
         mGp.progressBarView = (LinearLayout) findViewById(R.id.main_dialog_progress_bar_view);
-        mGp.progressBarView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        mGp.progressBarView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
         mGp.progressBarView.setVisibility(LinearLayout.GONE);
         mGp.progressBarMsg = (TextView) findViewById(R.id.main_dialog_progress_bar_msg);
-        mGp.progressBarMsg.setTextColor(mGp.themeColorList.text_color_primary);
+//        mGp.progressBarMsg.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.progressBarPb = (ProgressBar) findViewById(R.id.main_dialog_progress_bar_progress);
 
         mGp.progressBarCancel = (Button) findViewById(R.id.main_dialog_progress_bar_btn_cancel);
         setButtonColor(mGp.progressBarCancel);
-        if (mGp.themeColorList.theme_is_light)
-            mGp.progressBarCancel.setTextColor(mGp.themeColorList.text_color_primary);
+//        if (mGp.themeColorList.theme_is_light)
+//            mGp.progressBarCancel.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.progressBarImmed = (Button) findViewById(R.id.main_dialog_progress_bar_btn_immediate);
         setButtonColor(mGp.progressBarImmed);
-        if (mGp.themeColorList.theme_is_light)
-            mGp.progressBarImmed.setTextColor(mGp.themeColorList.text_color_primary);
+//        if (mGp.themeColorList.theme_is_light)
+//            mGp.progressBarImmed.setTextColor(mGp.themeColorList.text_color_primary);
 
 
         mGp.progressSpinView = (LinearLayout) findViewById(R.id.main_dialog_progress_spin_view);
-        mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
         mGp.progressSpinView.setVisibility(LinearLayout.GONE);
         mGp.progressSpinSyncprof = (TextView) findViewById(R.id.main_dialog_progress_spin_syncprof);
-        mGp.progressSpinSyncprof.setTextColor(mGp.themeColorList.text_color_primary);
+//        mGp.progressSpinSyncprof.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.progressSpinMsg = (TextView) findViewById(R.id.main_dialog_progress_spin_syncmsg);
-        mGp.progressSpinMsg.setTextColor(mGp.themeColorList.text_color_primary);
+//        mGp.progressSpinMsg.setTextColor(mGp.themeColorList.text_color_primary);
         mGp.progressSpinCancel = (Button) findViewById(R.id.main_dialog_progress_spin_btn_cancel);
         setButtonColor(mGp.progressSpinCancel);
-        if (mGp.themeColorList.theme_is_light)
-            mGp.progressSpinCancel.setTextColor(mGp.themeColorList.text_color_primary);
+//        if (mGp.themeColorList.theme_is_light)
+//            mGp.progressSpinCancel.setTextColor(mGp.themeColorList.text_color_primary);
 
         createContextView();
 
@@ -1106,6 +1109,10 @@ public class ActivityMain extends AppCompatActivity {
             if (mGp.debuggable) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
             else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
 
+            menu.findItem(R.id.menu_top_about).setEnabled(true);
+            menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(true);
+            menu.findItem(R.id.menu_top_list_storage).setEnabled(true);
+
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             if (!mGp.settingLogOption) menu.findItem(R.id.menu_top_browse_log).setVisible(false);
@@ -1126,6 +1133,11 @@ public class ActivityMain extends AppCompatActivity {
             menu.findItem(R.id.menu_top_add_shortcut).setEnabled(false);
 
             menu.findItem(R.id.menu_top_select_storage).setVisible(false);
+
+            menu.findItem(R.id.menu_top_about).setEnabled(false);
+            menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(false);
+            menu.findItem(R.id.menu_top_list_storage).setEnabled(false);
+
         }
         menu.findItem(R.id.menu_top_add_shortcut).setVisible(false);
 
@@ -1279,7 +1291,7 @@ public class ActivityMain extends AppCompatActivity {
 ////		        swhome.addCategory(Intent.CATEGORY_HOME);
 ////		        swhome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 ////				startActivity(swhome);
-//                    commonDlg.showCommonDialog(false, "I",
+//                    mUtil.showCommonDialog(false, "I",
 //                            mContext.getString(R.string.msgs_main_shortcut_shortcut_added), "", null);
 //                }
 //            }, 100);
@@ -1290,7 +1302,7 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         setUiDisabled();
         mGp.progressSpinView.setVisibility(LinearLayout.VISIBLE);
-        mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
         mGp.progressSpinView.bringToFront();
         mGp.progressSpinSyncprof.setVisibility(TextView.GONE);
         mGp.progressSpinMsg.setText(getString(R.string.msgs_progress_spin_dlg_housekeep_running));
@@ -1312,7 +1324,7 @@ public class ActivityMain extends AppCompatActivity {
                     public void negativeResponse(Context c, Object[] o) {
                     }
                 });
-                commonDlg.showCommonDialog(true, "W",
+                mUtil.showCommonDialog(true, "W",
                         getString(R.string.msgs_progress_spin_dlg_housekeep_cancel_confirm),
                         "", ntfy);
             }
@@ -1394,7 +1406,7 @@ public class ActivityMain extends AppCompatActivity {
                         }
                     }
                 });
-                commonDlg.showCommonDialog(true, "W",
+                mUtil.showCommonDialog(true, "W",
                         mContext.getString(R.string.msgs_maintenance_result_log_list_del_title), del_msg, ntfy);
                 synchronized (mTcHousekeep) {
                     try {
@@ -1522,7 +1534,7 @@ public class ActivityMain extends AppCompatActivity {
                             } else
                                 msg_txt = mContext.getString(R.string.msgs_maintenance_last_mod_list_cancel_msg);
                             mUtil.addLogMsg("I", msg_txt);
-                            commonDlg.showCommonDialog(false, "W", msg_txt, "", null);
+                            mUtil.showCommonDialog(false, "W", msg_txt, "", null);
                             mGp.uiHandler.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -1533,7 +1545,7 @@ public class ActivityMain extends AppCompatActivity {
 
                         } else {
                             mUtil.addLogMsg("I", mContext.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg));
-                            commonDlg.showCommonDialog(false, "W",
+                            mUtil.showCommonDialog(false, "W",
                                     mContext.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg), "", null);
                         }
                     }
@@ -1547,11 +1559,11 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         if (!mGp.syncThreadActive) {
-            commonDlg.showCommonDialog(true, "W",
+            mUtil.showCommonDialog(true, "W",
                     mContext.getString(R.string.msgs_maintenance_last_mod_list_confirm_start_msg), "", ntfy);
         } else {
             mUtil.addLogMsg("I", mContext.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg));
-            commonDlg.showCommonDialog(false, "W",
+            mUtil.showCommonDialog(false, "W",
                     mContext.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg), "", null);
         }
     }
@@ -1607,7 +1619,7 @@ public class ActivityMain extends AppCompatActivity {
         });
         LogUtil.flushLog(mContext, mGp);
         LogFileListDialogFragment lfm =
-                LogFileListDialogFragment.newInstance(false, getString(R.string.msgs_log_management_title),
+                LogFileListDialogFragment.newInstance(mGp.settingScreenTheme, false, getString(R.string.msgs_log_management_title),
                         getString(R.string.msgs_log_management_send_log_file_warning),
                         getString(R.string.msgs_log_management_enable_log_file_warning),
                         "SMBSync2 log file");
@@ -1662,21 +1674,21 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.externalStorageAccessIsPermitted) {
             if (!mGp.externalStorageIsMounted) {
                 mUtil.addLogMsg("W", getString(R.string.msgs_smbsync_main_no_external_storage));
-                commonDlg.showCommonDialog(false, "W",
+                mUtil.showCommonDialog(false, "W",
                         getString(R.string.msgs_smbsync_main_no_external_storage), "", null);
             }
         }
     }
 
     private void aboutSMBSync() {
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.about_dialog);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.about_dialog_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.about_dialog_title);
-        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
         title.setText(getString(R.string.msgs_dlg_title_about) + "(Ver " + SystemInfo.getApplVersionName(mContext) + ")");
 
         // get our tabHost from the xml
@@ -1806,7 +1818,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void run() {
                 LogUtil.flushLog(mContext, mGp);
-                commonDlg.showCommonDialog(true, "W",
+                mUtil.showCommonDialog(true, "W",
                         mContext.getString(R.string.msgs_smnsync_main_kill_application), "", ntfy);
             }
         });
@@ -1817,7 +1829,7 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
         String p_dir = mGp.settingMgtFileDir;
-        boolean p_light_theme = mGp.themeIsLight;
+        String p_theme = mGp.settingScreenTheme;
         boolean p_log_option = mGp.settingLogOption;
 
         mGp.loadSettingsParms();
@@ -1829,10 +1841,14 @@ public class ActivityMain extends AppCompatActivity {
             LogUtil.closeLog(mContext, mGp);
         }
 
-        if ((p_light_theme && !mGp.themeIsLight) || (!p_light_theme && mGp.themeIsLight)) {
-            setTheme(mGp.applicationTheme);
-            mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
-            screenReload(false);
+        if (!p_theme.equals(mGp.settingScreenTheme)) {
+//            setTheme(mGp.applicationTheme);
+//            mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
+//            screenReload(false);
+            finish();
+            Intent intent = new Intent(this, ActivityMain.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
 
         if (mGp.settingFixDeviceOrientationToPortrait)
@@ -1862,6 +1878,7 @@ public class ActivityMain extends AppCompatActivity {
                 ", settingSupressLocationServiceWarning=" + mGp.settingSupressLocationServiceWarning +
                 ", settingFixDeviceOrientationToPortrait=" + mGp.settingFixDeviceOrientationToPortrait +
                 ", settingExportedProfileEncryptRequired=" + mGp.settingExportedProfileEncryptRequired +
+                ", settingScreenTheme=" + mGp.applicationTheme+//.settingScreenTheme +
 
                 ", settingLogOption=" + mGp.settingLogOption +
                 ", settingMgtFileDir=" + mGp.settingMgtFileDir +
@@ -1890,7 +1907,7 @@ public class ActivityMain extends AppCompatActivity {
                 intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
-                commonDlg.showCommonDialog(false, "E",
+                mUtil.showCommonDialog(false, "E",
                         mContext.getString(R.string.msgs_log_file_browse_app_can_not_found), e.getMessage(), null);
             }
         }
@@ -1979,12 +1996,12 @@ public class ActivityMain extends AppCompatActivity {
 //                                checkLocationPermission();
                             }
                         });
-                        commonDlg.showCommonDialog(false, "W",
+                        mUtil.showCommonDialog(false, "W",
                                 mContext.getString(R.string.msgs_main_permission_external_storage_title),
                                 mContext.getString(R.string.msgs_main_permission_external_storage_denied_msg), ntfy_term);
                     }
                 });
-                commonDlg.showCommonDialog(false, "W",
+                mUtil.showCommonDialog(false, "W",
                         mContext.getString(R.string.msgs_main_permission_external_storage_title),
                         mContext.getString(R.string.msgs_main_permission_external_storage_request_msg), ntfy);
             } else {
@@ -2020,14 +2037,14 @@ public class ActivityMain extends AppCompatActivity {
 //                            @Override
 //                            public void negativeResponse(Context context, Object[] objects) {}
 //                        });
-//                        commonDlg.showCommonDialog(true, "W",
+//                        mUtil.showCommonDialog(true, "W",
 //                                mContext.getString(R.string.msgs_main_permission_coarse_location_title),
 //                                mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
                         mGp.setSettingGrantCoarseLocationRequired(false);
                         SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
                     }
                 });
-                commonDlg.showCommonDialog(true, "W",
+                mUtil.showCommonDialog(true, "W",
                         mContext.getString(R.string.msgs_main_permission_coarse_location_title),
                         mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
             } else {
@@ -2061,7 +2078,7 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void negativeResponse(Context c, Object[] o) {}
                 });
-                commonDlg.showCommonDialog(false, "W",
+                mUtil.showCommonDialog(false, "W",
                         mContext.getString(R.string.msgs_main_permission_external_storage_title),
                         mContext.getString(R.string.msgs_main_permission_external_storage_denied_msg), ntfy_term);
             }
@@ -2080,7 +2097,7 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                commonDlg.showCommonDialog(false, "W",
+                mUtil.showCommonDialog(false, "W",
                         mContext.getString(R.string.msgs_main_permission_coarse_location_title),
                         mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
             }
@@ -2102,7 +2119,7 @@ public class ActivityMain extends AppCompatActivity {
             mUtil.addDebugMsg(1, "I", "Return from Storage Picker. id=" + requestCode + ", result=" + resultCode);
             if (resultCode == Activity.RESULT_OK) {
                 if (data==null || data.getDataString()==null) {
-                    commonDlg.showCommonDialog(false, "W", "SDCARD Grant write permission failed because null intent data was returned.", "", null);
+                    mUtil.showCommonDialog(false, "W", "SDCARD Grant write permission failed because null intent data was returned.", "", null);
                     mUtil.addLogMsg("E", "SDCARD Grant write permission failed because null intent data was returned.", "");
                     return;
                 }
@@ -2124,7 +2141,7 @@ public class ActivityMain extends AppCompatActivity {
                             boolean rc=mGp.safMgr.addSdcardUuid(data.getData());
                             if (!rc) {
                                 String saf_msg=mGp.safMgr.getLastErrorMessage();
-                                commonDlg.showCommonDialog(false, "W", "SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
+                                mUtil.showCommonDialog(false, "W", "SDCARD UUID registration failed, please reselect SDCARD", saf_msg, null);
                                 mUtil.addLogMsg("E", "SDCARD UUID registration failed, please reselect SDCARD\n", saf_msg);
                             }
                             mGp.syncTaskAdapter.notifyDataSetChanged();
@@ -2143,7 +2160,7 @@ public class ActivityMain extends AppCompatActivity {
                     if (pli != null) {
                         String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
                                 pli.getSyncTaskName());
-                        commonDlg.showCommonDialog(false, "W",
+                        mUtil.showCommonDialog(false, "W",
                                 mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
                                 msg,
                                 null);
@@ -2154,7 +2171,7 @@ public class ActivityMain extends AppCompatActivity {
             mUtil.addDebugMsg(1, "I", "Return from Storage Picker. id=" + requestCode + ", result=" + resultCode);
             if (resultCode == Activity.RESULT_OK) {
                 if (data==null || data.getDataString()==null) {
-                    commonDlg.showCommonDialog(false, "W", "USB Media Grant write permission failed because null intent data was returned.", "", null);
+                    mUtil.showCommonDialog(false, "W", "USB Media Grant write permission failed because null intent data was returned.", "", null);
                     mUtil.addLogMsg("E", "USB Media Grant write permission failed because null intent data was returned.", "");
                     return;
                 }
@@ -2174,13 +2191,13 @@ public class ActivityMain extends AppCompatActivity {
                             File tf=new File("/storage/"+uuid);
                             if (!tf.exists()) {
                                 String e_msg=String.format(mContext.getString(R.string.msgs_main_external_usb_select_path_not_available_msg), uuid);
-                                commonDlg.showCommonDialog(false, "W", e_msg, "", null);
+                                mUtil.showCommonDialog(false, "W", e_msg, "", null);
                                 mUtil.addLogMsg("E", e_msg);
                             } else {
                                 boolean rc=mGp.safMgr.addUsbUuid(data.getData());
                                 if (!rc) {
                                     String saf_msg=mGp.safMgr.getLastErrorMessage();
-                                    commonDlg.showCommonDialog(false, "W", "USB Media UUID registration failed, please reselect USB Media", saf_msg, null);
+                                    mUtil.showCommonDialog(false, "W", "USB Media UUID registration failed, please reselect USB Media", saf_msg, null);
                                     mUtil.addLogMsg("E", "USB Media UUID registration failed, please reselect USB Media\n", saf_msg);
                                 }
                                 mGp.syncTaskAdapter.notifyDataSetChanged();
@@ -2199,7 +2216,7 @@ public class ActivityMain extends AppCompatActivity {
                     if (pli != null) {
                         String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
                                 pli.getSyncTaskName());
-                        commonDlg.showCommonDialog(false, "W",
+                        mUtil.showCommonDialog(false, "W",
                                 mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
                                 msg,
                                 null);
@@ -2228,7 +2245,7 @@ public class ActivityMain extends AppCompatActivity {
                                     mContext.getString(R.string.msgs_main_external_sdcard_select_required_mountpoint_does_not_exists),
                                     lf.getPath());
                             mUtil.addLogMsg("E", emsg);
-                            commonDlg.showCommonDialog(false, "E",
+                            mUtil.showCommonDialog(false, "E",
                                     mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
                                     emsg,
                                     null);
@@ -2248,7 +2265,7 @@ public class ActivityMain extends AppCompatActivity {
             pw.close();
             String emsg=mContext.getString(R.string.msgs_main_external_sdcard_select_activity_not_found_msg)+"\n"+e.getMessage();
             mUtil.addLogMsg("E", emsg+"\n"+sw.toString());
-            commonDlg.showCommonDialog(false, "E",
+            mUtil.showCommonDialog(false, "E",
                     mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
                     emsg,
                     null);
@@ -2280,7 +2297,7 @@ public class ActivityMain extends AppCompatActivity {
             pw.close();
             String emsg=mContext.getString(R.string.msgs_main_external_usb_select_activity_not_found_msg)+"\n"+e.getMessage();
             mUtil.addLogMsg("E", emsg+"\n"+sw.toString());
-            commonDlg.showCommonDialog(false, "E",
+            mUtil.showCommonDialog(false, "E",
                     mContext.getString(R.string.msgs_main_external_usb_select_required_title),
                     emsg,
                     null);
@@ -2305,7 +2322,7 @@ public class ActivityMain extends AppCompatActivity {
                             if (pli != null) {
                                 String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
                                         pli.getSyncTaskName());
-                                commonDlg.showCommonDialog(false, "W",
+                                mUtil.showCommonDialog(false, "W",
                                         mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
                                         msg,
                                         null);
@@ -2324,7 +2341,7 @@ public class ActivityMain extends AppCompatActivity {
                     if (pli != null) {
                         String msg = String.format(mContext.getString(R.string.msgs_main_external_sdcard_select_required_cancel_msg),
                                 pli.getSyncTaskName());
-                        commonDlg.showCommonDialog(false, "W",
+                        mUtil.showCommonDialog(false, "W",
                                 mContext.getString(R.string.msgs_main_external_sdcard_select_required_title),
                                 msg,
                                 null);
@@ -2333,7 +2350,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         if (msg.equals("")) ntfy_retry.notifyToListener(true, null);
-        else commonDlg.showCommonDialog(true, "W", msg, intent_data, ntfy_retry);
+        else mUtil.showCommonDialog(true, "W", msg, intent_data, ntfy_retry);
 
     }
 
@@ -2355,7 +2372,7 @@ public class ActivityMain extends AppCompatActivity {
                             if (pli != null) {
                                 String msg = String.format(mContext.getString(R.string.msgs_main_external_usb_select_required_cancel_msg),
                                         pli.getSyncTaskName());
-                                commonDlg.showCommonDialog(false, "W",
+                                mUtil.showCommonDialog(false, "W",
                                         mContext.getString(R.string.msgs_main_external_usb_select_required_title),
                                         msg,
                                         null);
@@ -2373,7 +2390,7 @@ public class ActivityMain extends AppCompatActivity {
                     if (pli != null) {
                         String msg = String.format(mContext.getString(R.string.msgs_main_external_usb_select_required_cancel_msg),
                                 pli.getSyncTaskName());
-                        commonDlg.showCommonDialog(false, "W",
+                        mUtil.showCommonDialog(false, "W",
                                 mContext.getString(R.string.msgs_main_external_usb_select_required_title),
                                 msg,
                                 null);
@@ -2382,7 +2399,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         if (msg.equals("")) ntfy_retry.notifyToListener(true, null);
-        else commonDlg.showCommonDialog(true, "W", msg, intent_data, ntfy_retry);
+        else mUtil.showCommonDialog(true, "W", msg, intent_data, ntfy_retry);
 
     }
 
@@ -2415,7 +2432,7 @@ public class ActivityMain extends AppCompatActivity {
                                     try {
                                         mActivity.startActivity(intent);
                                     } catch(ActivityNotFoundException e) {
-                                        commonDlg.showCommonDialog(false, "E",
+                                        mUtil.showCommonDialog(false, "E",
                                                 mContext.getString(R.string.msgs_main_sync_history_result_activity_not_found_for_log_display), "", null);
                                     }
                                 }
@@ -2831,11 +2848,11 @@ public class ActivityMain extends AppCompatActivity {
 
         if (del_all_history) {
 //			subtitle=getString(R.string.msgs_main_sync_history_del_conf_subtitle);
-            commonDlg.showCommonDialog(true, "W", getString(R.string.msgs_main_sync_history_del_conf_all_history),
+            mUtil.showCommonDialog(true, "W", getString(R.string.msgs_main_sync_history_del_conf_all_history),
                     "", ntfy);
         } else {
 //			subtitle=getString(R.string.msgs_main_sync_history_del_conf_subtitle);
-            commonDlg.showCommonDialog(true, "W", getString(R.string.msgs_main_sync_history_del_conf_selected_history),
+            mUtil.showCommonDialog(true, "W", getString(R.string.msgs_main_sync_history_del_conf_selected_history),
                     conf_list, ntfy);
         }
     }
@@ -3353,7 +3370,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         }
 //		msg+="\n";
-        commonDlg.showCommonDialog(true, "W",
+        mUtil.showCommonDialog(true, "W",
                 mContext.getString(R.string.msgs_prof_cont_to_activate_profile),
                 msg, ntfy);
     }
@@ -3381,7 +3398,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         }
 //		msg+="\n";
-        commonDlg.showCommonDialog(true, "W",
+        mUtil.showCommonDialog(true, "W",
                 mContext.getString(R.string.msgs_prof_cont_to_inactivate_profile),
                 msg, ntfy);
     }
@@ -3576,7 +3593,7 @@ public class ActivityMain extends AppCompatActivity {
                     public void negativeResponse(Context c, Object[] o) {
                     }
                 });
-                commonDlg.showCommonDialog(true, "W",
+                mUtil.showCommonDialog(true, "W",
                         mContext.getString(R.string.msgs_log_confirm_clear_all_msg), "", ntfy);
             }
         });
@@ -3660,7 +3677,7 @@ public class ActivityMain extends AppCompatActivity {
             public void positiveResponse(Context c, Object[] o) {
                 if (t_list.isEmpty()) {
                     mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile));
-                    commonDlg.showCommonDialog(false, "E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
                 } else {
                     mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_selected_profiles));
                     mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_prof_name_list) +
@@ -3679,7 +3696,7 @@ public class ActivityMain extends AppCompatActivity {
 
         });
         if (test_sync_task_found) {
-            commonDlg.showCommonDialog(true, "W",
+            mUtil.showCommonDialog(true, "W",
                     mContext.getString(R.string.msgs_main_sync_test_mode_warnning), "", ntfy_test_mode);
         } else {
             ntfy_test_mode.notifyToListener(true, null);
@@ -3700,7 +3717,7 @@ public class ActivityMain extends AppCompatActivity {
 
         if (t_list.isEmpty()) {
             mUtil.addLogMsg("E", mContext.getString(R.string.msgs_active_sync_prof_not_found));
-            commonDlg.showCommonDialog(false, "E", mContext.getString(R.string.msgs_active_sync_prof_not_found), "", null);
+            mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_active_sync_prof_not_found), "", null);
         } else {
             final String sync_list = sync_list_tmp;
             mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_all_active_profiles));
@@ -3768,7 +3785,7 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         setUiDisabled();
         mGp.progressSpinView.setVisibility(LinearLayout.VISIBLE);
-        mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+//        mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
         mGp.progressSpinView.bringToFront();
         mGp.progressSpinSyncprof.setVisibility(TextView.VISIBLE);
         mGp.progressSpinCancel.setText(getString(R.string.msgs_progress_spin_dlg_sync_cancel));
@@ -3793,7 +3810,7 @@ public class ActivityMain extends AppCompatActivity {
                     public void negativeResponse(Context c, Object[] o) {
                     }
                 });
-                commonDlg.showCommonDialog(true, "W",
+                mUtil.showCommonDialog(true, "W",
                         getString(R.string.msgs_main_sync_cancel_confirm),
                         "", ntfy);
             }
@@ -3999,7 +4016,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmDialogMessage = msg;
 
         mGp.confirmView.setVisibility(LinearLayout.VISIBLE);
-        mGp.confirmView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+        mGp.confirmView.setBackgroundColor(mGp.themeColorList.text_background_color);
         mGp.confirmView.bringToFront();
         String msg_text = "";
         if (method.equals(SMBSYNC2_CONFIRM_REQUEST_COPY)) {
@@ -4120,7 +4137,7 @@ public class ActivityMain extends AppCompatActivity {
                     mGp.settingExitClean=true;
                 }
             });
-            commonDlg.showCommonDialog(true, "W",
+            mUtil.showCommonDialog(true, "W",
                     mContext.getString(R.string.msgs_smbsync_main_settings_jcifs_changed_restart), "", ntfy);
         }
 

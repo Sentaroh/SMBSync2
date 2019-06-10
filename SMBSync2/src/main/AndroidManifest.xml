@@ -24,7 +24,7 @@
     <application
         android:icon="@drawable/smbsync"
         android:label="@string/app_name"
-        android:theme="@style/Main" 
+        android:theme="@style/Main"
         android:largeHeap="true"
         android:allowBackup="false"
         >

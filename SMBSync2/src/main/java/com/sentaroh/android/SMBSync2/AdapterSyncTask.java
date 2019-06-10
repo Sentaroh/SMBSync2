@@ -26,6 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 //import static com.sentaroh.android.SMBSync2.Constants.*;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -60,6 +61,8 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 
     private GlobalParameters mGp = null;
 
+    private ColorStateList mTextColor=null;
+
     public AdapterSyncTask(Context c, int textViewResourceId,
                            ArrayList<SyncTaskItem> objects, GlobalParameters gp) {
         super(c, textViewResourceId, objects);
@@ -77,7 +80,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         tv_status_cancel = mContext.getString(R.string.msgs_main_sync_history_status_cancel);
         tv_status_warning = mContext.getString(R.string.msgs_main_sync_history_status_warning);
 
-        mThemeColorList = ThemeUtil.getThemeColorList(c);
+        mThemeColorList = CommonUtilities.getThemeColorList(c);
 
         mGp = gp;
 
@@ -205,6 +208,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 
             holder.tv_dir_name = (TextView) v.findViewById(R.id.sync_task_sync_dir_name);
 
+            if (mTextColor==null) mTextColor=holder.tv_row_name.getTextColors();
             v.setTag(holder);
         } else {
             holder = (ViewHolder) v.getTag();
@@ -258,7 +262,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             String result = "";
             if (o.isSyncTaskRunning()) {
                 result = tv_status_running;
-                if (mThemeColorList.theme_is_light)
+                if (ThemeUtil.isLightThemeUsed(mContext))
                     holder.ll_view.setBackgroundColor(Color.argb(255, 0, 192, 192));
                 else holder.ll_view.setBackgroundColor(Color.argb(255, 0, 128, 128));
             } else {
@@ -274,7 +278,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             }
             if (!o.getLastSyncTime().equals("")) {
                 holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
-                holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_primary);
+                holder.tv_last_sync_result.setTextColor(mTextColor);
                 holder.tv_last_sync_time.setText(o.getLastSyncTime());
                 holder.tv_last_sync_result.setText(result);
             } else {
@@ -282,7 +286,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 //                	holder.tv_last_sync_time.setText(tv_no_sync);
             }
             if (o.isSyncTestMode()) {
-                if (mThemeColorList.theme_is_light)
+                if (ThemeUtil.isLightThemeUsed(mContext))
                     holder.ll_view.setBackgroundColor(Color.argb(64, 255, 32, 255));
                 else holder.ll_view.setBackgroundColor(Color.argb(64, 255, 0, 128));
             }

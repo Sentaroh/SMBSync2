@@ -11,9 +11,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.Base64Compat;
@@ -90,11 +92,19 @@ public class ApplicationPasswordUtil {
             }
         }
 
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, gp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.setContentView(R.layout.password_input_dlg);
 
+        LinearLayout ll_view = (LinearLayout) dialog.findViewById(R.id.password_input_dlg_view);
+        CommonUtilities.setDialogBoxOutline(mActivity, ll_view);
+
+        LinearLayout ll_title_view = (LinearLayout) dialog.findViewById(R.id.password_input_title_view);
+        ll_title_view.setBackgroundColor(gp.themeColorList.title_background_color);
+
         final TextView tv_title=(TextView)dialog.findViewById(R.id.password_input_title);
+        tv_title.setTextColor(gp.themeColorList.title_text_color);
         tv_title.setText(gp.appContext.getString(R.string.msgs_security_application_password_auth_title));
         final TextView tv_msg=(TextView)dialog.findViewById(R.id.password_input_msg);
         tv_msg.setText(gp.appContext.getString(R.string.msgs_security_application_password_auth_specify_password));
@@ -111,7 +121,7 @@ public class ApplicationPasswordUtil {
         final Button btn_ok=(Button)dialog.findViewById(R.id.password_input_ok_btn);
         final Button btn_cancel=(Button)dialog.findViewById(R.id.password_input_cancel_btn);
 
-        CommonDialog.setDlgBoxSizeCompact(dialog);
+        CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
 
         btn_ok.setEnabled(false);
         et_pswd1.addTextChangedListener(new TextWatcher(){
@@ -158,8 +168,7 @@ public class ApplicationPasswordUtil {
                     pw.flush();
                     pw.close();
 
-                    CommonDialog cd=new CommonDialog(gp.appContext, fm);
-                    cd.showCommonDialog(false, "E","Application password authentication error",sw.toString(), null);
+                    mUtil.showCommonDialog(false, "E","Application password authentication error",sw.toString(), null);
                     mUtil.addLogMsg("E","Application password authentication error");
                     mUtil.addLogMsg("E",sw.toString());
                 }
@@ -192,11 +201,19 @@ public class ApplicationPasswordUtil {
 
     static public void createApplicationPassword(final GlobalParameters gp, final Activity mActivity, final FragmentManager fm,
                                                   final CommonUtilities mUtil, final String title, final NotifyEvent ntfy_create) {
-        final Dialog dialog = new Dialog(mActivity);
+        final Dialog dialog = new Dialog(mActivity, gp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.setContentView(R.layout.password_input_dlg);
 
+        LinearLayout ll_view = (LinearLayout) dialog.findViewById(R.id.password_input_dlg_view);
+        CommonUtilities.setDialogBoxOutline(mActivity, ll_view);
+
+        LinearLayout ll_title_view = (LinearLayout) dialog.findViewById(R.id.password_input_title_view);
+        ll_title_view.setBackgroundColor(gp.themeColorList.title_background_color);
+
         final TextView tv_title=(TextView)dialog.findViewById(R.id.password_input_title);
+        tv_title.setTextColor(gp.themeColorList.title_text_color);
         tv_title.setText(title);
         final TextView tv_msg=(TextView)dialog.findViewById(R.id.password_input_msg);
         tv_msg.setText(gp.appContext.getString(R.string.msgs_security_application_password_auth_specify_password));
@@ -212,7 +229,7 @@ public class ApplicationPasswordUtil {
         final Button btn_ok=(Button)dialog.findViewById(R.id.password_input_ok_btn);
         final Button btn_cancel=(Button)dialog.findViewById(R.id.password_input_cancel_btn);
 
-        CommonDialog.setDlgBoxSizeLimit(dialog, true);
+        CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
 
 //        tv_title.setText("Application startup password");
 
@@ -266,9 +283,7 @@ public class ApplicationPasswordUtil {
                     pw.flush();
                     pw.close();
 
-                    CommonDialog cd=new CommonDialog(gp.appContext, fm);
-                    cd.showCommonDialog(false,"E","Application password creation error",sw.toString(), null);
-
+                    mUtil.showCommonDialog(false,"E","Application password creation error",sw.toString(), null);
                     mUtil.addLogMsg("E","Application password creation error");
                     mUtil.addLogMsg("E",sw.toString());
 

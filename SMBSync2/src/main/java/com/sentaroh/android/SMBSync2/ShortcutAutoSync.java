@@ -31,10 +31,8 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 
-import com.sentaroh.android.Utilities.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
-import com.sentaroh.android.Utilities.ThemeUtil;
 
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_AUTO_SYNC_INTENT;
 
@@ -42,9 +40,8 @@ public class ShortcutAutoSync extends FragmentActivity {
 
     private Context mContext;
 
-    private CommonUtilities util = null;
+    private CommonUtilities mUtil = null;
     private GlobalParameters mGp = null;
-    private CommonDialog commonDlg = null;
 
     private int restartStatus = 0;
     private boolean displayDialogRequired = false;
@@ -55,16 +52,12 @@ public class ShortcutAutoSync extends FragmentActivity {
         outState.putBoolean("displayDialogRequired", displayDialogRequired);
     }
 
-    ;
-
     @Override
     final protected void onRestoreInstanceState(Bundle savedState) {
         super.onRestoreInstanceState(savedState);
         displayDialogRequired = savedState.getBoolean("displayDialogRequired", false);
         restartStatus = 2;
     }
-
-    ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,20 +66,18 @@ public class ShortcutAutoSync extends FragmentActivity {
         setContentView(R.layout.activity_transrucent);
 
 //        envParms.loadSettingParms(context);
-//        util=new CommonUtilities(context, "ShortCutSleep", envParms);
+//        mUtil=new CommonUtilities(context, "ShortCutSleep", envParms);
 //        mGp = (GlobalParameters) getApplication();
 //        mGp = (GlobalParameters) getApplicationContext();
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         if (mGp.themeColorList == null) {
-            mGp.themeColorList = ThemeUtil.getThemeColorList(this);
+            mGp.themeColorList = CommonUtilities.getThemeColorList(this);
         }
 
-        util = new CommonUtilities(this.getApplicationContext(), "Shortcuut", mGp);
+        mUtil = new CommonUtilities(this.getApplicationContext(), "Shortcuut", mGp, getSupportFragmentManager());
 
-        commonDlg = new CommonDialog(this, getSupportFragmentManager());
-
-        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
         // Application process is follow
 
     }
@@ -94,18 +85,18 @@ public class ShortcutAutoSync extends FragmentActivity {
     @Override
     public void onStart() {
         super.onStart();
-        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
     }
 
     @Override
     public void onRestart() {
         super.onRestart();
-        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
     }
 
     final public void onResume() {
         super.onResume();
-        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
 
         if (restartStatus == 0) {
             NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -113,7 +104,7 @@ public class ShortcutAutoSync extends FragmentActivity {
                 @Override
                 public void positiveResponse(Context c, Object[] o) {
 //                    if (SyncService.isDuplicateRequest(mGp, SMBSYNC2_SYNC_REQUEST_SHORTCUT)) {
-//                        util.addLogMsg("W",
+//                        mUtil.addLogMsg("W",
 //                                String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
 //                                        SMBSYNC2_SYNC_REQUEST_SHORTCUT));
 //                        Toast.makeText(mContext,
@@ -141,7 +132,7 @@ public class ShortcutAutoSync extends FragmentActivity {
                 }
             });
             if (!mGp.settingSuppressShortcutWarning) {
-                commonDlg.showCommonDialog(true, "W", "auto syncを実行しますか？", "", ntfy);
+                mUtil.showCommonDialog(true, "W", "auto syncを実行しますか？", "", ntfy);
             } else {
                 ntfy.notifyToListener(true, null);
             }
@@ -160,47 +151,37 @@ public class ShortcutAutoSync extends FragmentActivity {
         }, 100);
     }
 
-    ;
-
     @Override
     public void onPause() {
         super.onPause();
-        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
         // Application process is follow
 
 
     }
-
-    ;
 
     @Override
     public void onStop() {
         super.onStop();
-        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
         // Application process is follow
 
 
     }
-
-    ;
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
         // Application process is follow
         System.gc();
 //		android.os.Process.killProcess(android.os.Process.myPid());
     }
-
-    ;
 
     @Override
     public void onConfigurationChanged(final Configuration newConfig) {
         // Ignore orientation change to keep activity from restarting
         super.onConfigurationChanged(newConfig);
     }
-
-    ;
 
 }

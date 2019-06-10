@@ -181,7 +181,7 @@ public class SyncThread extends Thread {
 //        Thread.dumpStack();
         mGp = gp;
         mNotifyToService = ne;
-        mStwa.util = new CommonUtilities(mGp.appContext, "SyncThread", mGp);
+        mStwa.util = new CommonUtilities(mGp.appContext, "SyncThread", mGp, null);
         mStwa.gp = mGp;
 
         mGp.safMgr.setDebugEnabled(mGp.settingDebugLevel > 1);

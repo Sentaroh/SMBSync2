@@ -97,7 +97,7 @@ public class SyncService extends Service {
         mContext = this;//getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mGp.safMgr.loadSafFile();
-        mUtil = new CommonUtilities(mContext, "Service", mGp);
+        mUtil = new CommonUtilities(mContext, "Service", mGp, null);
 
         mUtil.addDebugMsg(1, "I", "onCreate entered");
 

@@ -24,7 +24,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,6 +56,9 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICA
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_ERROR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_NO;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_SUCCESS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_BLACK;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LIGHT;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_STANDARD;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_NO;
@@ -67,6 +72,8 @@ public class ActivitySettings extends PreferenceActivity {
     private static ActivitySettings mPrefActivity = null;
 
     private static GlobalParameters mGp = null;
+
+    private static String mCurrentScreenTheme=SMBSYNC2_SCREEN_THEME_STANDARD;
 
     private CommonUtilities mUtil = null;
 //    private CommonDialog mCommonDlg = null;
@@ -85,12 +92,17 @@ public class ActivitySettings extends PreferenceActivity {
         mContext = this;
 //        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
+        SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD);
+        if (mCurrentScreenTheme.equals(SMBSYNC2_SCREEN_THEME_STANDARD)) setTheme(R.style.Main);
+        else if (mCurrentScreenTheme.equals(SMBSYNC2_SCREEN_THEME_LIGHT)) setTheme(R.style.MainLight);
+        else if (mCurrentScreenTheme.equals(SMBSYNC2_SCREEN_THEME_BLACK)) setTheme(R.style.MainBlack);
 
-        setTheme(mGp.applicationTheme);
+//        setTheme(mGp.applicationTheme);
         super.onCreate(savedInstanceState);
 
         mPrefActivity = this;
-        if (mUtil == null) mUtil = new CommonUtilities(this, "SettingsActivity", mGp);
+        if (mUtil == null) mUtil = new CommonUtilities(this, "SettingsActivity", mGp, null);
         if (mGp.settingDebugLevel > 0)
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (mGp.settingFixDeviceOrientationToPortrait)
@@ -128,7 +140,7 @@ public class ActivitySettings extends PreferenceActivity {
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
 
 //    	mPrefActivity=this;
-        mUtil = new CommonUtilities(this, "SettingsActivity", mGp);
+        mUtil = new CommonUtilities(this, "SettingsActivity", mGp, null);
         if (mGp.settingDebugLevel > 0)
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         return isTablet(mContext);
@@ -250,8 +262,22 @@ public class ActivitySettings extends PreferenceActivity {
             pref_key.setSummary(
                     String.format(c.getString(R.string.settings_playback_ringtone_volume_summary), vol));
             if (mInitVolume != vol) playBackDefaultNotification(c, fm, vol);
-        } else if (key_string.equals(c.getString(R.string.settings_use_light_theme))) {
+        } else if (key_string.equals(c.getString(R.string.settings_screen_theme))) {
             isChecked = true;
+            String tid=shared_pref.getString(key_string, "0");
+            String[] wl_label = c.getResources().getStringArray(R.array.settings_screen_theme_list_entries);
+            String sum_msg = wl_label[Integer.parseInt(tid)];
+            pref_key.setSummary(sum_msg);
+            if (!mCurrentScreenTheme.equals(tid)) {
+                if (tid.equals(SMBSYNC2_SCREEN_THEME_STANDARD)) mPrefActivity.setTheme(R.style.Main);
+                else if (tid.equals(SMBSYNC2_SCREEN_THEME_LIGHT)) mPrefActivity.setTheme(R.style.MainLight);
+                else if (tid.equals(SMBSYNC2_SCREEN_THEME_BLACK)) mPrefActivity.setTheme(R.style.MainBlack);
+                mCurrentScreenTheme=tid;
+                mPrefActivity.finish();
+                Intent intent = new Intent(mPrefActivity, ActivitySettings.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                mPrefActivity.startActivity(intent);
+            }
         } else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
             isChecked = true;
 //			boolean orientation=shared_pref.getBoolean(key_string,false);
@@ -412,7 +438,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new CommonUtilities(mContext, "SettingsSync", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsSync", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
@@ -466,7 +492,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new CommonUtilities(mContext, "SettingsLog", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsLog", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
@@ -513,7 +539,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new CommonUtilities(mContext, "SettingsMisc", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsMisc", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
@@ -564,7 +590,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new CommonUtilities(mContext, "SettingsSmb", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsSmb", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
@@ -628,7 +654,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new CommonUtilities(mContext, "SettingsUi", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsUi", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
@@ -638,11 +664,13 @@ public class ActivitySettings extends PreferenceActivity {
 
             mInitVolume = shared_pref.getInt(getString(R.string.settings_playback_ringtone_volume), 100);
 
+            mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD);
+
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_notification_message_when_sync_ended), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_playback_ringtone_when_sync_ended), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_playback_ringtone_volume), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_vibrate_when_sync_ended), getFragmentManager());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_use_light_theme), getFragmentManager());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_portrait), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_dim_screen_on_while_sync), getFragmentManager());
 
@@ -692,7 +720,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             mPrefFrag = this;
-            mUtil = new CommonUtilities(mContext, "SettingsSecurity", mGp);
+            mUtil = new CommonUtilities(mContext, "SettingsSecurity", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
