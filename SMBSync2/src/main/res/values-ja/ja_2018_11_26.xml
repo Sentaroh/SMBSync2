@@ -399,6 +399,7 @@
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">ネットワークオプション</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">SMBフォルダーへのファイル書き込みで一時ファイルを使用せず直接書き込む</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">ディレクトリーフィルタが指定されていません</string>
+        <string name="msgs_profile_sync_task_option_remove_directory_if_empty_when_move">(同期方式が移動のみ)マスターディレクトリーが空の時にマスターディレクトリーを削除する。</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">サブディレクトリーを選択する</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">SMBフォルダー書き込み時のIOバッファーを16KBに制限する</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">キャンセル</string>
@@ -635,6 +636,8 @@
         <string name="msgs_schedule_confirm_msg_nosave">スケジュールが変更されています、保存せず終了しますか。</string>
         <string name="msgs_schedule_rename_schedule">スケジュールの改名</string>
         <string name="msgs_schedule_list_edit_no_schedule">追加ボタンを押してスケジュールを作成してください。</string>
+        <string name="msgs_schedule_list_edit_scheduler_disabled">スケジュールが無効になっているためスケジュール同期は実行されません。</string>
+        <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">スケジュールの有効・無効を切り替える</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">複数スケジュールが同時刻に起動される場合は同期リストをまとめ、重複した同期タスクを無視します。またWI-FIオプションも各スケジュールで指定したオプションを組み合わせします。</string>
     <!-- Send logcat -->
         <string name="msgs_send_logcat_menu_start_logcat">LogCatの開始</string>

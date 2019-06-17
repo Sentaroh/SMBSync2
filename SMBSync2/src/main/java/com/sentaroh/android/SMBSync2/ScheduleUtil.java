@@ -573,8 +573,6 @@ public class ScheduleUtil {
         c.sendBroadcast(intent);
     }
 
-    ;
-
     public static boolean isScheduleExists(ArrayList<ScheduleItem> sl, String name) {
         boolean result = false;
         for (ScheduleItem si : sl) {
@@ -602,52 +600,54 @@ public class ScheduleUtil {
         String error_sched_name="", error_task_name="";
 
 ///*debug*/for (SyncTaskItem sji : gp.syncTaskList) cu.addDebugMsg(1, "I", "setSchedulerInfo TaskName=\""+sji.getSyncTaskName()+"\"");
-
-        for (ScheduleItem si : sl) {
+        if (gp.settingScheduleSyncEnabled) {
+            for (ScheduleItem si : sl) {
 ///*debug*/   cu.addDebugMsg(1,"I", "setSchedulerInfo Schedule name="+si.scheduleName+", Enabled="+si.scheduleEnabled+", Type="+si.scheduleType+
 //                    ", DayOfTheWeek="+si.scheduleDayOfTheWeek+", Day="+si.scheduleDay+", Hours="+si.scheduleHours+", Minutes="+si.scheduleMinutes+
 //                    ", Tasklist="+si.syncTaskList+", Chnaged="+si.isChanged+", IntervalFirstRunImmed="+si.scheduleIntervalFirstRunImmed+
 //                    ", WifiOnBeforeStart="+si.syncWifiOnBeforeStart+", DelayAfterWifiOn="+si.syncDelayAfterWifiOn+", WifiOffAfterEnd="+si.syncWifiOffAfterEnd);
-            if (si.scheduleEnabled) {
-                long time = ScheduleUtil.getNextSchedule(si);
-                String dt=StringUtil.convDateTimeTo_YearMonthDayHourMin(time);
-                String item=dt+","+si.scheduleName;
-                if (si.syncAutoSyncTask) {
-                    //NOP
-                } else {
-                    if (!si.syncTaskList.equals("")) {
-                        if (si.syncTaskList.indexOf(",")>0) {
-                            String[] stl=si.syncTaskList.split(",");
-                            for(String stn:stl) {
+                if (si.scheduleEnabled) {
+                    long time = ScheduleUtil.getNextSchedule(si);
+                    String dt=StringUtil.convDateTimeTo_YearMonthDayHourMin(time);
+                    String item=dt+","+si.scheduleName;
+                    if (si.syncAutoSyncTask) {
+                        //NOP
+                    } else {
+                        if (!si.syncTaskList.equals("")) {
+                            if (si.syncTaskList.indexOf(",")>0) {
+                                String[] stl=si.syncTaskList.split(",");
+                                for(String stn:stl) {
 //    /*debug*/                   cu.addDebugMsg(1,"I", "setSchedulerInfo findSyncTask1 name="+stn+", result="+getSyncTask(gp,stn));
-                                if (getSyncTask(gp,stn)==null) {
+                                    if (getSyncTask(gp,stn)==null) {
+                                        schedule_error=true;
+                                        error_task_name="\""+stn+"\"";
+                                        error_sched_name=si.scheduleName;
+                                        break;
+                                    }
+                                }
+                            } else {
+//    /*debug*/               cu.addDebugMsg(1,"I", "setSchedulerInfo findSyncTask name="+si.syncTaskList+", result="+getSyncTask(gp,si.syncTaskList));
+                                if (getSyncTask(gp,si.syncTaskList)==null) {
                                     schedule_error=true;
-                                    error_task_name="\""+stn+"\"";
+                                    error_task_name="\""+si.syncTaskList+"\"";
                                     error_sched_name=si.scheduleName;
                                     break;
                                 }
                             }
                         } else {
-//    /*debug*/               cu.addDebugMsg(1,"I", "setSchedulerInfo findSyncTask name="+si.syncTaskList+", result="+getSyncTask(gp,si.syncTaskList));
-                            if (getSyncTask(gp,si.syncTaskList)==null) {
-                                schedule_error=true;
-                                error_task_name="\""+si.syncTaskList+"\"";
-                                error_sched_name=si.scheduleName;
-                                break;
-                            }
+                            schedule_error=true;
+                            error_task_name="\""+si.syncTaskList+"\"";
+                            error_sched_name=si.scheduleName;
+                            break;
                         }
-                    } else {
-                        schedule_error=true;
-                        error_task_name="\""+si.syncTaskList+"\"";
-                        error_sched_name=si.scheduleName;
-                        break;
                     }
+                    sched_array.add(item);
+                    if (schedule_error) break;
                 }
-                sched_array.add(item);
-                if (schedule_error) break;
             }
-        }
 ///*debug*/cu.addDebugMsg(1,"I", "setSchedulerInfo Error schedule name="+error_sched_name+", task name="+error_task_name);
+
+        }
 
         Collections.sort(sched_array);
 

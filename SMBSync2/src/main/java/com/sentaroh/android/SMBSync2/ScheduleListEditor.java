@@ -30,7 +30,9 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +48,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sentaroh.android.Utilities.ContextButton.ContextButtonUtil;
 import com.sentaroh.android.Utilities.ContextMenu.CustomContextMenu;
@@ -133,9 +136,10 @@ public class ScheduleListEditor {
         TextView dlg_title = (TextView) mDialog.findViewById(R.id.schedule_list_edit_dlg_title);
         dlg_title.setTextColor(mGp.themeColorList.title_text_color);
 
-        final ImageButton btn_cancel = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_close);
-        btn_cancel.setBackgroundColor(Color.TRANSPARENT);//.DKGRAY);
+        final ImageButton btn_toggle = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_toggle_schedule);
+        btn_toggle.setBackgroundColor(Color.TRANSPARENT);//.DKGRAY);
         final TextView tv_msg = (TextView) mDialog.findViewById(R.id.schedule_list_edit_dlg_msg);
+        tv_msg.setTextColor(mGp.themeColorList.text_color_warning);
 
         final ListView lv = (ListView) mDialog.findViewById(R.id.schedule_list_edit_dlg_schedule_list_view);
 
@@ -143,11 +147,6 @@ public class ScheduleListEditor {
 
         mScheduleAdapter = new ScheduleListAdapter(mActivity, R.layout.schedule_list_edit_list_item, mScheduleList);
         lv.setAdapter(mScheduleAdapter);
-
-        tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_no_schedule));
-        if (mScheduleAdapter.getCount() == 0) {
-            tv_msg.setVisibility(TextView.VISIBLE);
-        }
 
         createContextView(mDialog);
         setContextButtonListener(mDialog);
@@ -209,10 +208,25 @@ public class ScheduleListEditor {
         });
         mScheduleAdapter.setCbNotify(ntfy);
 
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        setScheduleMsg();
+        btn_toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDialog.dismiss();
+                mGp.setScheduleEnabled(!mGp.settingScheduleSyncEnabled);
+                setScheduleMsg();
+                ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
+                ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+            }
+        });
+        btn_toggle.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast toast = Toast.makeText(mContext, mContext.getString(R.string.msgs_schedule_list_edit_scheduler_toggle_enable_disable), Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 500, 150);
+                toast.getView().setBackgroundColor(mGp.themeColorList.title_background_color);
+                ((TextView)((LinearLayout)toast.getView()).getChildAt(0)).setTextColor(mGp.themeColorList.title_text_color);
+                toast.show();
+                return true;
             }
         });
 
@@ -226,7 +240,7 @@ public class ScheduleListEditor {
                                 mScheduleAdapter.setSelectMode(false);
                                 setContextButtonMode(mDialog, mScheduleAdapter);
                             } else {
-                                btn_cancel.performClick();
+                                mDialog.dismiss();
                             }
                         }
                         return true;
@@ -239,6 +253,30 @@ public class ScheduleListEditor {
             }
         });
         mDialog.show();
+    }
+
+    private void setScheduleMsg() {
+        final ImageButton btn_toggle = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_toggle_schedule);
+        final TextView tv_msg = (TextView) mDialog.findViewById(R.id.schedule_list_edit_dlg_msg);
+        if (mScheduleAdapter.getCount() == 0) {
+            tv_msg.setVisibility(TextView.VISIBLE);
+            tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_no_schedule));
+        } else {
+            if (mGp.settingScheduleSyncEnabled) {
+                if (mScheduleAdapter.getCount()!=0) {
+                    tv_msg.setVisibility(TextView.GONE);
+                }
+            } else {
+                tv_msg.setVisibility(TextView.VISIBLE);
+                tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_scheduler_disabled));
+            }
+        }
+        if (mGp.settingScheduleSyncEnabled) {
+            btn_toggle.setImageResource(R.drawable.ic_64_schedule);
+        } else {
+            btn_toggle.setImageResource(R.drawable.ic_64_schedule_disabled);
+        }
+
     }
 
     private void setContextButtonMode(Dialog dialog, ScheduleListAdapter adapter) {
@@ -350,9 +388,9 @@ public class ScheduleListEditor {
                         mScheduleAdapter.add(si);
                         mScheduleAdapter.sort();
                         mScheduleAdapter.notifyDataSetChanged();
-                        tv_msg.setVisibility(TextView.GONE);
                         setContextButtonMode(dialog, mScheduleAdapter);
                         saveScheduleList();
+                        setScheduleMsg();
                     }
 
                     @Override
@@ -384,6 +422,7 @@ public class ScheduleListEditor {
                         setContextButtonMode(dialog, mScheduleAdapter);
                         mScheduleAdapter.notifyDataSetChanged();
                         saveScheduleList();
+                        setScheduleMsg();
                     }
 
                     @Override
@@ -788,15 +827,8 @@ public class ScheduleListEditor {
                     holder.cbChecked.setVisibility(CheckBox.INVISIBLE);
                 }
 
-                if (o.isChanged) {
-//                    if (mGp.themeIsLight) {
-//                        holder.ll_view.setBackgroundColor(Color.argb(255, 0, 192, 192));
-//                    } else {
-//                        holder.ll_view.setBackgroundColor(Color.argb(255, 0, 128, 128));
-//                    }
-                } else {
-                    holder.ll_view.setBackground(ll_default_background_color);
-                }
+                holder.ll_view.setBackground(ll_default_background_color);
+                if (!mGp.settingScheduleSyncEnabled) holder.ll_view.setBackgroundColor(mGp.themeColorList.text_color_disabled);
                 String time_info = "";
                 if (o.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS)) {
                     time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_hour) + " " + o.scheduleMinutes + " " +

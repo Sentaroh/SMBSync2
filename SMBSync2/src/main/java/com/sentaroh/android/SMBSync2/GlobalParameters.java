@@ -79,6 +79,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_BLAC
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LIGHT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_STANDARD;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_ENABLED_KEY;
 
 public class GlobalParameters extends CommonGlobalParms {
     public Context appContext = null;
@@ -174,6 +175,8 @@ public class GlobalParameters extends CommonGlobalParms {
     public String settingRingtoneWhenSyncEnded = SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS;
 
     public int settingNotificationVolume = 100;
+
+    public boolean settingScheduleSyncEnabled=true;
 
     public Handler uiHandler = null;
 
@@ -567,7 +570,16 @@ public class GlobalParameters extends CommonGlobalParms {
         settingSecurityApplicationPasswordUseExport = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_export_task), false);
         settingSecurityReinitSmbAccountPasswordValue = prefs.getBoolean(appContext.getString(R.string.settings_security_init_smb_account_password), false);
 
+        settingScheduleSyncEnabled=prefs.getBoolean(SCHEDULER_ENABLED_KEY, true);
+
     }
+
+    public void setScheduleEnabled(boolean enabled) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        settingScheduleSyncEnabled=enabled;
+        prefs.edit().putBoolean(SCHEDULER_ENABLED_KEY, enabled).commit();
+    }
+
 
     public boolean isScreenThemeIsLight() {
         boolean result=false;

@@ -195,11 +195,11 @@ public class SyncReceiver extends BroadcastReceiver {
 
     @SuppressLint("NewApi")
     static private void setTimer() {
-        mLog.addDebugMsg(1, "I", "setTimer entered");
+        mLog.addDebugMsg(1, "I", "setTimer entered, settingScheduleSyncEnabled="+mGp.settingScheduleSyncEnabled);
         cancelTimer();
         boolean scheduleEnabled = false;
         for (ScheduleItem si : mSchedList) if (si.scheduleEnabled) scheduleEnabled = true;
-        if (scheduleEnabled) {
+        if (scheduleEnabled && mGp.settingScheduleSyncEnabled) {
             ArrayList<ScheduleItem> begin_sched_list = new ArrayList<ScheduleItem>();
             ArrayList<String> sched_list=new ArrayList<String>();
             for (ScheduleItem si : mSchedList) {

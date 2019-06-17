@@ -401,6 +401,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Network Option</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Write files directly to the SMB folder without using temporary files</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
+        <string name="msgs_profile_sync_task_option_remove_directory_if_empty_when_move">(Sync type only moves) Delete the master directory when the master directory is empty.</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">Select subdirectories</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">Limit SMB I/O write buffer to 16 KB</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Cancel</string>
@@ -638,6 +639,8 @@ Schedule:%s, Task:%s</string>
         <string name="msgs_schedule_confirm_msg_nosave">The schedule has changed.  Exit without saving?</string>
         <string name="msgs_schedule_rename_schedule">Rename schedule</string>
         <string name="msgs_schedule_list_edit_no_schedule">Press add button to create new schedule.</string>
+        <string name="msgs_schedule_list_edit_scheduler_disabled">Schedule sync will not be performed because the schedule is disabled.</string>
+        <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">Toggle Enable or disable the schedule.</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Schedules and WiFi options for multiple tasks will be consolidated to prevent duplicate sync processes.  </string>
     <!-- Send logcat -->
         <string name="msgs_send_logcat_menu_start_logcat">Start LogCat</string>

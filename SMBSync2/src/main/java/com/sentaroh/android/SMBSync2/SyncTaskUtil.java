@@ -24,7 +24,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -42,10 +41,8 @@ import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -96,11 +93,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.Thread.UncaughtExceptionHandler;
-import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -6157,6 +6152,8 @@ public class SyncTaskUtil {
 
             if (!parm[87].equals("") && !parm[87].equals("end")) stli.setSyncOptionSyncAllowGlobalIpAddress((parm[87].equals("1") ? true : false));
 
+            if (!parm[88].equals("") && !parm[88].equals("end")) stli.setSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty((parm[88].equals("1") ? true : false));
+
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -6492,6 +6489,8 @@ public class SyncTaskUtil {
                             (item.isTargetSmbUseSmb2Negotiation() ? "1" : "0") + "\t" +          //86
 
                             (item.isSyncOptionSyncAllowGlobalIpAddress() ? "1" : "0") + "\t" +   //87
+
+                            (item.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty() ? "1" : "0") + "\t" +   //88
 
                     "end"
                     ;

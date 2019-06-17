@@ -54,4 +54,6 @@ public class ScheduleConstants {
     public static final String SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_DEFAULT_VALUE = "5";
 
     public static final String SCHEDULER_SCHEDULE_NAME_KEY = "scheduler_schedule_name_key";
+
+    public static final String SCHEDULER_ENABLED_KEY = "scheduler_enabled_key";
 }
