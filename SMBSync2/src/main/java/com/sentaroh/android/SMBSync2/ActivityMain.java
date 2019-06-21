@@ -141,7 +141,7 @@ public class ActivityMain extends AppCompatActivity {
     private int restartType = NORMAL_START;
 
     private ServiceConnection mSvcConnection = null;
-    private CommonDialog commonDlg = null;
+    private CommonDialog mCommonDlg = null;
     private Handler mUiHandler = new Handler();
 
     private ActionBar mActionBar = null;
@@ -193,9 +193,11 @@ public class ActivityMain extends AppCompatActivity {
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         ccMenu = new CustomContextMenu(this.getResources(), getSupportFragmentManager());
-        commonDlg = new CommonDialog(this, getSupportFragmentManager());
-        mTaskUtil = new SyncTaskUtil(mUtil, this, commonDlg, ccMenu, mGp, getSupportFragmentManager());
+        mCommonDlg = new CommonDialog(this, getSupportFragmentManager());
+        mTaskUtil = new SyncTaskUtil(mUtil, this, mCommonDlg, ccMenu, mGp, getSupportFragmentManager());
         mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mGp.msgList, mGp);
+
+        mGp.syncTabScheduleList = ScheduleUtil.loadScheduleData(mGp);
 
         createSyncTaskList();
 
@@ -211,41 +213,6 @@ public class ActivityMain extends AppCompatActivity {
 
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET);
         setSyncTaskContextButtonHide();
-    }
-
-    private void createSyncTaskList() {
-        if (mGp.syncTaskList == null) {
-            final Dialog pd=CommonDialog.showProgressSpinIndicator(mActivity);
-            pd.show();
-            mGp.syncTaskList=new ArrayList<SyncTaskItem>();
-            mGp.syncTaskAdapter = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, mGp.syncTaskList, mGp);
-            Thread th = new Thread() {
-                @Override
-                public void run() {
-                    mUtil.addDebugMsg(1, "I", "Sync task list creation started.");
-                    ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil);
-                    for(SyncTaskItem sti:task_list) mGp.syncTaskList.add(sti);
-                    mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
-                    mUiHandler.post(new Runnable(){
-                        @Override
-                        public void run() {
-                            ScheduleUtil.setSchedulerInfo(mGp, mUtil);
-                            mGp.syncTaskAdapter.notifyDataSetChanged();
-                            pd.dismiss();
-                        }
-                    });
-//                    NsdSmbNameResolution ns=new NsdSmbNameResolution(mContext);
-//                    Log.v(APPLICATION_TAG,"Resolved="+ns.query("SEN-NAS3",3500));
-//                    SystemClock.sleep(1000);
-//                    ArrayList<String> nl=ns.list(3500);
-//                    for(String item:nl) Log.v(APPLICATION_TAG,item);
-                }
-            };
-//            th.setPriority(Thread.MAX_PRIORITY);
-            th.start();
-        } else {
-            mGp.syncTaskAdapter = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, mGp.syncTaskList, mGp);
-        }
     }
 
     @SuppressLint("NewApi")
@@ -304,6 +271,11 @@ public class ActivityMain extends AppCompatActivity {
                     setHistoryViewLongClickListener();
                     setHistoryContextButtonNormalMode();
 
+                    setScheduleContextButtonListener();
+                    setScheduleViewItemClickListener();
+                    setScheduleViewLongClickListener();
+                    setScheduleContextButtonNormalMode();
+
                     deleteTaskData();
 //                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
                     restartType = RESTART_WITH_OUT_INITIALYZE;
@@ -317,28 +289,6 @@ public class ActivityMain extends AppCompatActivity {
             openService(svc_ntfy);
         }
 
-    }
-
-    private void applicationPasswordAuthentication() {
-        NotifyEvent start_ntfy = new NotifyEvent(mContext);
-        start_ntfy.setListener(new NotifyEventListener() {
-            @Override
-            public void positiveResponse(Context context, Object[] objects) {
-                mUiHandler.post(new Runnable(){
-                    @Override
-                    public void run() {
-                        mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
-                    }
-                });
-            }
-            @Override
-            public void negativeResponse(Context context, Object[] objects) {
-                finish();
-            }
-        });
-        ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
-                mUtil, false, start_ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION);
-        mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
     }
 
     @Override
@@ -402,6 +352,74 @@ public class ActivityMain extends AppCompatActivity {
 
         System.gc();
 
+    }
+
+    @Override
+    public void onConfigurationChanged(final Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (mUtil != null) {
+            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Entered, ",
+                    "New orientation=" + newConfig.orientation +
+                            ", New language=", newConfig.locale.getLanguage());
+        }
+        reloadScreen(false);
+    }
+
+    private void createSyncTaskList() {
+        if (mGp.syncTaskList == null) {
+            final Dialog pd=CommonDialog.showProgressSpinIndicator(mActivity);
+            pd.show();
+            mGp.syncTaskList=new ArrayList<SyncTaskItem>();
+            mGp.syncTaskAdapter = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, mGp.syncTaskList, mGp);
+            Thread th = new Thread() {
+                @Override
+                public void run() {
+                    mUtil.addDebugMsg(1, "I", "Sync task list creation started.");
+                    ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil);
+                    for(SyncTaskItem sti:task_list) mGp.syncTaskList.add(sti);
+                    mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
+                    mUiHandler.post(new Runnable(){
+                        @Override
+                        public void run() {
+                            ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+                            mGp.syncTaskAdapter.notifyDataSetChanged();
+                            pd.dismiss();
+                        }
+                    });
+//                    NsdSmbNameResolution ns=new NsdSmbNameResolution(mContext);
+//                    Log.v(APPLICATION_TAG,"Resolved="+ns.query("SEN-NAS3",3500));
+//                    SystemClock.sleep(1000);
+//                    ArrayList<String> nl=ns.list(3500);
+//                    for(String item:nl) Log.v(APPLICATION_TAG,item);
+                }
+            };
+//            th.setPriority(Thread.MAX_PRIORITY);
+            th.start();
+        } else {
+            mGp.syncTaskAdapter = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, mGp.syncTaskList, mGp);
+        }
+    }
+
+    private void applicationPasswordAuthentication() {
+        NotifyEvent start_ntfy = new NotifyEvent(mContext);
+        start_ntfy.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                mUiHandler.post(new Runnable(){
+                    @Override
+                    public void run() {
+                        mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
+                    }
+                });
+            }
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {
+                finish();
+            }
+        });
+        ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
+                mUtil, false, start_ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION);
+        mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
     }
 
     private void setActivityForeground(boolean fore_ground) {
@@ -649,18 +667,7 @@ public class ActivityMain extends AppCompatActivity {
         btn.setOnClickListener(ocl);
     }
 
-    @Override
-    public void onConfigurationChanged(final Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (mUtil != null) {
-            mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Entered, ",
-                    "New orientation=" + newConfig.orientation +
-                            ", New language=", newConfig.locale.getLanguage());
-        }
-        screenReload(false);
-    }
-
-    private void screenReload(boolean force_reload) {
+    private void reloadScreen(boolean force_reload) {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Entered");
         ViewSaveArea vsa = null;
         vsa = saveViewContent();
@@ -839,6 +846,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private LinearLayout mSyncTaskView;
+    private LinearLayout mScheduleView;
     private LinearLayout mHistoryView;
     private LinearLayout mMessageView;
 
@@ -858,6 +866,9 @@ public class ActivityMain extends AppCompatActivity {
         CustomTabContentView tabViewProf = new CustomTabContentView(this, getString(R.string.msgs_tab_name_prof));
         mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_TASK).setIndicator(tabViewProf).setContent(android.R.id.tabcontent));
 
+        CustomTabContentView tabViewSchedule = new CustomTabContentView(this, getString(R.string.msgs_tab_name_schedule));
+        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_HIST).setIndicator(tabViewSchedule).setContent(android.R.id.tabcontent));
+
         CustomTabContentView tabViewHist = new CustomTabContentView(this, getString(R.string.msgs_tab_name_history));
         mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_HIST).setIndicator(tabViewHist).setContent(android.R.id.tabcontent));
 
@@ -870,6 +881,8 @@ public class ActivityMain extends AppCompatActivity {
         LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSyncTaskView = (LinearLayout) vi.inflate(R.layout.main_sync_task, null);
 //        mSyncTaskView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
+        mScheduleView = (LinearLayout) vi.inflate(R.layout.main_schedule, null);
+//        mHistoryView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
         mHistoryView = (LinearLayout) vi.inflate(R.layout.main_history, null);
 //        mHistoryView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
         mMessageView = (LinearLayout) vi.inflate(R.layout.main_message, null);
@@ -877,7 +890,13 @@ public class ActivityMain extends AppCompatActivity {
 
         mGp.msgListView = (ListView) mMessageView.findViewById(R.id.main_message_list_view);
         mGp.syncTaskListView = (ListView) mSyncTaskView.findViewById(R.id.main_sync_task_view_list);
+        mGp.syncTabScheduleListView = (ListView) mScheduleView.findViewById(R.id.main_schedule_list_view);
         mGp.syncHistoryListView = (ListView) mHistoryView.findViewById(R.id.main_history_list_view);
+
+        mGp.syncTabScheduleAdapter = new AdapterScheduleList(mActivity, R.layout.schedule_list_edit_list_item, mGp.syncTabScheduleList);
+        mGp.syncTabScheduleListView.setAdapter(mGp.syncTabScheduleAdapter);
+        mGp.syncTabMessage=(TextView)mScheduleView.findViewById(R.id.main_schedule_list_message);
+        mGp.syncTabMessage.setTextColor(mGp.themeColorList.text_color_warning);
 
         mGp.scheduleInfoView = (TextView) findViewById(R.id.main_schedule_view_info);
 //        mGp.scheduleInfoView.setTextColor(mGp.themeColorList.text_color_primary);
@@ -959,7 +978,7 @@ public class ActivityMain extends AppCompatActivity {
         createContextView();
 
         mMainViewPagerAdapter = new CustomViewPagerAdapter(this,
-                new View[]{mSyncTaskView, mHistoryView, mMessageView});
+                new View[]{mSyncTaskView, mScheduleView, mHistoryView, mMessageView});
         mMainViewPager = (CustomViewPager) findViewById(R.id.main_screen_pager);
 //	    mMainViewPager.setBackgroundColor(mThemeColorList.window_color_background);
         mMainViewPager.setAdapter(mMainViewPagerAdapter);
@@ -1084,6 +1103,9 @@ public class ActivityMain extends AppCompatActivity {
             menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
         }
 
+        if (mGp.settingScheduleSyncEnabled) menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule);
+        else menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule_disabled);
+
         if (isUiEnabled()) {
             menu.findItem(R.id.menu_top_housekeep).setEnabled(true);
             if (mGp.syncThreadActive) menu.findItem(R.id.menu_top_housekeep).setVisible(false);
@@ -1191,19 +1213,7 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonNormalMode();
                 return true;
             case R.id.menu_top_scheduler:
-                if (mScheduleEditorAvailable && isUiEnabled()) {
-                    mScheduleEditorAvailable = false;
-//					ScheduleItemEditor sm=new ScheduleItemEditor(mUtil, this, this, commonDlg, ccMenu, mGp, mGp.scheduleInfoList.get(0));
-//					sm.initDialog();
-                    setContextButtonNormalMode();
-                    ScheduleListEditor sm = new ScheduleListEditor(mUtil, this, this, commonDlg, ccMenu, mGp);
-                    mUiHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mScheduleEditorAvailable = true;
-                        }
-                    }, 1000);
-                }
+                toggleScheduleEnabled();
                 return true;
             case R.id.menu_top_about:
                 aboutSMBSync();
@@ -1251,6 +1261,25 @@ public class ActivityMain extends AppCompatActivity {
         return false;
     }
 
+    private void toggleScheduleEnabled() {
+        NotifyEvent ntfy=new NotifyEvent(mContext);
+        ntfy.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                mGp.setScheduleEnabled(!mGp.settingScheduleSyncEnabled);
+                invalidateOptionsMenu();
+                setSyncTabMessage();
+                ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
+                ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+            }
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {}
+        });
+        String msg="";
+        if (mGp.settingScheduleSyncEnabled) msg=mContext.getString(R.string.msgs_schedule_list_edit_confirm_scheduler_to_disabled);
+        else msg=mContext.getString(R.string.msgs_schedule_list_edit_confirm_scheduler_to_enabled);
+        mCommonDlg.showCommonDialog(true,"W",msg,"",ntfy);
+    }
 
     private void addShortcut() {
 
@@ -1844,7 +1873,7 @@ public class ActivityMain extends AppCompatActivity {
         if (!p_theme.equals(mGp.settingScreenTheme)) {
 //            setTheme(mGp.applicationTheme);
 //            mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
-//            screenReload(false);
+//            reloadScreen(false);
             finish();
             Intent intent = new Intent(this, ActivityMain.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -2604,6 +2633,398 @@ public class ActivityMain extends AppCompatActivity {
         th.start();
     }
 
+    private void setSyncTabMessage() {
+        if (mGp.syncTabScheduleAdapter.getCount() == 0) {
+            mGp.syncTabMessage.setVisibility(TextView.VISIBLE);
+            mGp.syncTabMessage.setText(mContext.getString(R.string.msgs_schedule_list_edit_no_schedule));
+        } else {
+            if (mGp.settingScheduleSyncEnabled) {
+                if (mGp.syncTabScheduleAdapter.getCount()!=0) {
+                    mGp.syncTabMessage.setVisibility(TextView.GONE);
+                }
+            } else {
+                mGp.syncTabMessage.setVisibility(TextView.VISIBLE);
+                mGp.syncTabMessage.setText(mContext.getString(R.string.msgs_schedule_list_edit_scheduler_disabled));
+            }
+        }
+    }
+
+    private void setScheduleContextButtonListener() {
+        NotifyEvent ntfy = new NotifyEvent(mContext);
+        ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {
+            }
+        });
+        mGp.syncTabScheduleAdapter.setCbNotify(ntfy);
+
+        mContextScheduleButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        ScheduleItem si = (ScheduleItem) objects[0];
+                        mGp.syncTabScheduleAdapter.add(si);
+                        mGp.syncTabScheduleAdapter.sort();
+                        mGp.syncTabScheduleAdapter.notifyDataSetChanged();
+                        setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+                        saveScheduleList();
+                        setSyncTabMessage();
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                    }
+                });
+                ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, mCommonDlg, ccMenu, mGp,
+                        false, mGp.syncTabScheduleList, new ScheduleItem(), ntfy);
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonAdd, mContext.getString(R.string.msgs_schedule_cont_label_add));
+
+        mContextScheduleButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        for (int i = mGp.syncTabScheduleAdapter.getCount() - 1; i >= 0; i--) {
+                            if (mGp.syncTabScheduleAdapter.getItem(i).isChecked) {
+                                mGp.syncTabScheduleAdapter.remove(mGp.syncTabScheduleAdapter.getItem(i));
+                            }
+                        }
+                        if (mGp.syncTabScheduleAdapter.getCount() == 0) {
+                            mGp.syncTabScheduleAdapter.setSelectMode(false);
+                            mGp.syncTabMessage.setVisibility(TextView.VISIBLE);
+                        }
+                        setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+                        mGp.syncTabScheduleAdapter.notifyDataSetChanged();
+                        saveScheduleList();
+                        setSyncTabMessage();
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                    }
+                });
+                String del_list = "";
+                for (int i = 0; i < mGp.syncTabScheduleAdapter.getCount(); i++) {
+                    if (mGp.syncTabScheduleAdapter.getItem(i).isChecked) {
+                        del_list += mGp.syncTabScheduleAdapter.getItem(i).scheduleName + "\n";
+                    }
+                }
+                mUtil.showCommonDialog(true, "W",
+                        mContext.getString(R.string.msgs_schedule_confirm_title_delete),
+                        mContext.getString(R.string.msgs_schedule_confirm_msg_delete) + "\n" + del_list, ntfy);
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonDelete, mContext.getString(R.string.msgs_schedule_cont_label_delete));
+
+        mContextScheduleButtonActivate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        for (int i = mGp.syncTabScheduleAdapter.getCount() - 1; i >= 0; i--) {
+                            if (mGp.syncTabScheduleAdapter.getItem(i).isChecked && !mGp.syncTabScheduleAdapter.getItem(i).scheduleEnabled) {
+                                mGp.syncTabScheduleAdapter.getItem(i).scheduleEnabled = true;
+                                mGp.syncTabScheduleAdapter.getItem(i).isChanged = true;
+                                mGp.syncTabScheduleAdapter.getItem(i).scheduleLastExecTime = System.currentTimeMillis();
+                            }
+                        }
+                        mGp.syncTabScheduleAdapter.setSelectMode(false);
+                        mGp.syncTabScheduleAdapter.unselectAll();
+                        setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+                        saveScheduleList();
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                    }
+                });
+                String del_list = "";
+                for (int i = 0; i<mGp.syncTabScheduleAdapter.getCount(); i++) {
+                    if (mGp.syncTabScheduleAdapter.getItem(i).isChecked && !mGp.syncTabScheduleAdapter.getItem(i).scheduleEnabled) {
+                        del_list += mGp.syncTabScheduleAdapter.getItem(i).scheduleName + "\n";
+                    }
+                }
+                mUtil.showCommonDialog(true, "W",
+                        mContext.getString(R.string.msgs_schedule_confirm_title_enable),
+                        mContext.getString(R.string.msgs_schedule_confirm_msg_enable) + "\n" + del_list, ntfy);
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonActivate, mContext.getString(R.string.msgs_schedule_cont_label_activate));
+
+        mContextScheduleButtonInactivate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        for (int i = mGp.syncTabScheduleAdapter.getCount() - 1; i >= 0; i--) {
+                            if (mGp.syncTabScheduleAdapter.getItem(i).isChecked && mGp.syncTabScheduleAdapter.getItem(i).scheduleEnabled) {
+                                mGp.syncTabScheduleAdapter.getItem(i).scheduleEnabled = false;
+                                mGp.syncTabScheduleAdapter.getItem(i).isChanged = true;
+                            }
+                        }
+                        mGp.syncTabScheduleAdapter.setSelectMode(false);
+                        mGp.syncTabScheduleAdapter.unselectAll();
+                        setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+                        saveScheduleList();
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                    }
+                });
+                String del_list = "";
+                for (int i = 0; i<mGp.syncTabScheduleAdapter.getCount(); i++) {
+                    if (mGp.syncTabScheduleAdapter.getItem(i).isChecked && mGp.syncTabScheduleAdapter.getItem(i).scheduleEnabled) {
+                        del_list += mGp.syncTabScheduleAdapter.getItem(i).scheduleName + "\n";
+                    }
+                }
+                mUtil.showCommonDialog(true, "W",
+                        mContext.getString(R.string.msgs_schedule_confirm_title_disable),
+                        mContext.getString(R.string.msgs_schedule_confirm_msg_disable) + "\n" + del_list, ntfy);
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonInactivate, mContext.getString(R.string.msgs_schedule_cont_label_inactivate));
+
+        mContextScheduleButtonRename.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        mGp.syncTabScheduleAdapter.setSelectMode(false);
+                        mGp.syncTabScheduleAdapter.sort();
+                        mGp.syncTabScheduleAdapter.unselectAll();
+                        setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+                        saveScheduleList();
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                    }
+                });
+                ScheduleItem si = null;
+                for (int i = mGp.syncTabScheduleAdapter.getCount() - 1; i >= 0; i--) {
+                    if (mGp.syncTabScheduleAdapter.getItem(i).isChecked) {
+                        si = mGp.syncTabScheduleAdapter.getItem(i);
+                        break;
+                    }
+                }
+                if (si==null) {
+                    mUtil.addLogMsg("E","renameSchedule error, schedule item can not be found.");
+                    mUtil.showCommonDialog(false, "E", "renameSchedule error, schedule item can not be found.", "", null);
+                } else {
+//                    renameSchedule(si, ntfy);
+                }
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonRename, mContext.getString(R.string.msgs_schedule_cont_label_rename));
+
+        mContextScheduleButtonCopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        ScheduleItem si = (ScheduleItem) objects[0];
+                        mGp.syncTabScheduleAdapter.setSelectMode(false);
+                        mGp.syncTabScheduleAdapter.add(si);
+                        mGp.syncTabScheduleAdapter.unselectAll();
+                        mGp.syncTabScheduleAdapter.sort();
+                        saveScheduleList();
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                    }
+                });
+                ScheduleItem si = null;
+                for (int i = mGp.syncTabScheduleAdapter.getCount() - 1; i >= 0; i--) {
+                    if (mGp.syncTabScheduleAdapter.getItem(i).isChecked) {
+                        si = mGp.syncTabScheduleAdapter.getItem(i);
+                        ScheduleItem new_si = si.clone();
+                        ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, mCommonDlg, ccMenu, mGp,
+                                false, mGp.syncTabScheduleList, new_si, ntfy);
+                        break;
+                    }
+                }
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonCopy, mContext.getString(R.string.msgs_schedule_cont_label_copy));
+
+        mContextScheduleButtonSelectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGp.syncTabScheduleAdapter.setSelectMode(true);
+                mGp.syncTabScheduleAdapter.selectAll();
+                setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonSelectAll, mContext.getString(R.string.msgs_schedule_cont_label_select_all));
+
+        mContextScheduleButtonUnselectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGp.syncTabScheduleAdapter.setSelectMode(false);
+                mGp.syncTabScheduleAdapter.unselectAll();
+                setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonUnselectAll, mContext.getString(R.string.msgs_schedule_cont_label_unselect_all));
+
+    }
+
+    private void setScheduleViewItemClickListener() {
+        mGp.syncTabScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Log.v("","before="+adapter.getItem(i).scheduleName);
+                if (mGp.syncTabScheduleAdapter.isSelectMode()) {
+                    if (mGp.syncTabScheduleAdapter.getItem(i).isChecked) {
+                        mGp.syncTabScheduleAdapter.getItem(i).isChecked = false;
+                    } else {
+                        mGp.syncTabScheduleAdapter.getItem(i).isChecked = true;
+                    }
+                    mGp.syncTabScheduleAdapter.notifyDataSetChanged();
+                    setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+                } else {
+                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                    ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                        @Override
+                        public void positiveResponse(Context context, Object[] objects) {
+                            saveScheduleList();
+                            mGp.syncTabScheduleAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void negativeResponse(Context context, Object[] objects) {
+                        }
+                    });
+                    ScheduleItemEditor sm = new ScheduleItemEditor(mUtil, mActivity, mContext, mCommonDlg, ccMenu, mGp,
+                            true, mGp.syncTabScheduleList, mGp.syncTabScheduleList.get(i), ntfy);
+                }
+            }
+        });
+    }
+
+    private void setScheduleViewLongClickListener() {
+        mGp.syncTabScheduleListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mGp.syncTabScheduleAdapter.setSelectMode(true);
+                mGp.syncTabScheduleAdapter.getItem(i).isChecked = !mGp.syncTabScheduleAdapter.getItem(i).isChecked;
+                mGp.syncTabScheduleAdapter.notifyDataSetChanged();
+                setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+                return true;
+            }
+        });
+    }
+
+    private void saveScheduleList() {
+        mGp.syncTabScheduleAdapter.sort();
+        ScheduleUtil.saveScheduleData(mGp, mGp.syncTabScheduleList);
+        ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
+        ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+    }
+
+    private void setScheduleContextButtonNormalMode() {
+        setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+    }
+
+    private void setScheduleContextButtonMode(AdapterScheduleList adapter) {
+        boolean selected = false;
+        int sel_cnt = 0;
+        boolean enabled = false, disabled = false;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            if (adapter.getItem(i).isChecked) {
+                selected = true;
+                sel_cnt++;
+                if (adapter.getItem(i).scheduleEnabled) enabled = true;
+                else disabled = true;
+            }
+        }
+
+        mContextScheduleButtonAddView.setVisibility(LinearLayout.VISIBLE);
+        mContextScheduleButtonActivateView.setVisibility(LinearLayout.INVISIBLE);
+        mContextScheduleButtonInactivateView.setVisibility(LinearLayout.INVISIBLE);
+        mContextScheduleButtonCopyView.setVisibility(LinearLayout.INVISIBLE);
+        mContextScheduleButtonRenameView.setVisibility(LinearLayout.INVISIBLE);
+        mContextScheduleButtonDeleteView.setVisibility(LinearLayout.INVISIBLE);
+        mContextScheduleButtonSelectAllView.setVisibility(LinearLayout.VISIBLE);
+        mContextScheduleButtonUnselectAllView.setVisibility(LinearLayout.INVISIBLE);
+
+//        final ImageButton btn_ok = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_save);
+//        final ImageButton btn_cancel = (ImageButton) mDialog.findViewById(R.id.schedule_list_edit_dlg_close);
+
+        if (adapter.isSelectMode()) {
+            if (sel_cnt == 0) {
+                mContextScheduleButtonAddView.setVisibility(LinearLayout.INVISIBLE);
+                mContextScheduleButtonActivateView.setVisibility(LinearLayout.INVISIBLE);
+                mContextScheduleButtonInactivateView.setVisibility(LinearLayout.INVISIBLE);
+                mContextScheduleButtonCopyView.setVisibility(LinearLayout.INVISIBLE);
+                mContextScheduleButtonRenameView.setVisibility(LinearLayout.INVISIBLE);
+                mContextScheduleButtonDeleteView.setVisibility(LinearLayout.INVISIBLE);
+                mContextScheduleButtonSelectAllView.setVisibility(LinearLayout.VISIBLE);
+                mContextScheduleButtonUnselectAllView.setVisibility(LinearLayout.INVISIBLE);
+            } else if (sel_cnt == 1) {
+                mContextScheduleButtonAddView.setVisibility(LinearLayout.INVISIBLE);
+                if (disabled) mContextScheduleButtonActivateView.setVisibility(LinearLayout.VISIBLE);
+                if (enabled) mContextScheduleButtonInactivateView.setVisibility(LinearLayout.VISIBLE);
+                mContextScheduleButtonCopyView.setVisibility(LinearLayout.VISIBLE);
+                mContextScheduleButtonRenameView.setVisibility(LinearLayout.VISIBLE);
+                mContextScheduleButtonDeleteView.setVisibility(LinearLayout.VISIBLE);
+                mContextScheduleButtonSelectAllView.setVisibility(LinearLayout.VISIBLE);
+                mContextScheduleButtonUnselectAllView.setVisibility(LinearLayout.VISIBLE);
+            } else if (sel_cnt >= 2) {
+                mContextScheduleButtonAddView.setVisibility(LinearLayout.INVISIBLE);
+                if (disabled) mContextScheduleButtonActivateView.setVisibility(LinearLayout.VISIBLE);
+                if (enabled) mContextScheduleButtonInactivateView.setVisibility(LinearLayout.VISIBLE);
+                mContextScheduleButtonCopyView.setVisibility(LinearLayout.INVISIBLE);
+                mContextScheduleButtonRenameView.setVisibility(LinearLayout.INVISIBLE);
+                mContextScheduleButtonDeleteView.setVisibility(LinearLayout.VISIBLE);
+                mContextScheduleButtonSelectAllView.setVisibility(LinearLayout.VISIBLE);
+                mContextScheduleButtonUnselectAllView.setVisibility(LinearLayout.VISIBLE);
+            }
+//            btn_ok.setVisibility(Button.INVISIBLE);
+//            btn_cancel.setVisibility(Button.INVISIBLE);
+//            btn_ok.setEnabled(false);
+//            btn_cancel.setEnabled(false);
+        } else {
+            mContextScheduleButtonAddView.setVisibility(LinearLayout.VISIBLE);
+            mContextScheduleButtonActivateView.setVisibility(LinearLayout.INVISIBLE);
+            mContextScheduleButtonInactivateView.setVisibility(LinearLayout.INVISIBLE);
+            mContextScheduleButtonCopyView.setVisibility(LinearLayout.INVISIBLE);
+            mContextScheduleButtonRenameView.setVisibility(LinearLayout.INVISIBLE);
+            mContextScheduleButtonDeleteView.setVisibility(LinearLayout.INVISIBLE);
+            mContextScheduleButtonUnselectAllView.setVisibility(LinearLayout.INVISIBLE);
+            if (adapter.getCount() == 0) {
+                mContextScheduleButtonSelectAllView.setVisibility(LinearLayout.INVISIBLE);
+            }
+//            if (isScheduleListChanged()) btn_ok.setEnabled(true);
+//            else btn_ok.setEnabled(false);
+//            btn_cancel.setEnabled(true);
+        }
+
+    }
+
+
     private void setHistoryContextButtonListener() {
         mContextHistoryButtonSendTo.setOnClickListener(new OnClickListener() {
             @Override
@@ -3025,6 +3446,25 @@ public class ActivityMain extends AppCompatActivity {
     private LinearLayout mContextHistiryViewSelectAll = null;
     private LinearLayout mContextHistiryViewUnselectAll = null;
 
+    private ImageButton mContextScheduleButtonAdd = null;
+    private ImageButton mContextScheduleButtonActivate = null;
+    private ImageButton mContextScheduleButtonInactivate = null;
+    private ImageButton mContextScheduleButtonCopy = null;
+    private ImageButton mContextScheduleButtonRename = null;
+    private ImageButton mContextScheduleButtonDelete = null;
+    private ImageButton mContextScheduleButtonSelectAll = null;
+    private ImageButton mContextScheduleButtonUnselectAll = null;
+
+    private LinearLayout mContextScheduleButtonAddView = null;
+    private LinearLayout mContextScheduleButtonActivateView = null;
+    private LinearLayout mContextScheduleButtonInactivateView = null;
+    private LinearLayout mContextScheduleButtonCopyView = null;
+    private LinearLayout mContextScheduleButtonRenameView = null;
+    private LinearLayout mContextScheduleButtonDeleteView = null;
+    private LinearLayout mContextScheduleButtonSelectAllView = null;
+    private LinearLayout mContextScheduleButtonUnselectAllView = null;
+
+
     private ImageButton mContextMessageButtonMoveTop = null;
     private ImageButton mContextMessageButtonPinned = null;
     private ImageButton mContextMessageButtonMoveBottom = null;
@@ -3095,6 +3535,24 @@ public class ActivityMain extends AppCompatActivity {
 
         mContextSyncTaskViewSelectAll = (LinearLayout) mSyncTaskView.findViewById(R.id.context_button_select_all_view);
         mContextSyncTaskViewUnselectAll = (LinearLayout) mSyncTaskView.findViewById(R.id.context_button_unselect_all_view);
+
+        mContextScheduleButtonAddView = (LinearLayout) mScheduleView.findViewById(R.id.context_button_add_view);
+        mContextScheduleButtonActivateView = (LinearLayout) mScheduleView.findViewById(R.id.context_button_activate_view);
+        mContextScheduleButtonInactivateView = (LinearLayout) mScheduleView.findViewById(R.id.context_button_inactivate_view);
+        mContextScheduleButtonCopyView = (LinearLayout) mScheduleView.findViewById(R.id.context_button_copy_view);
+        mContextScheduleButtonRenameView = (LinearLayout) mScheduleView.findViewById(R.id.context_button_rename_view);
+        mContextScheduleButtonDeleteView = (LinearLayout) mScheduleView.findViewById(R.id.context_button_delete_view);
+        mContextScheduleButtonSelectAllView = (LinearLayout) mScheduleView.findViewById(R.id.context_button_select_all_view);
+        mContextScheduleButtonUnselectAllView = (LinearLayout) mScheduleView.findViewById(R.id.context_button_unselect_all_view);
+
+        mContextScheduleButtonAdd = (ImageButton) mScheduleView.findViewById(R.id.context_button_add);
+        mContextScheduleButtonActivate = (ImageButton) mScheduleView.findViewById(R.id.context_button_activate);
+        mContextScheduleButtonInactivate = (ImageButton) mScheduleView.findViewById(R.id.context_button_inactivate);
+        mContextScheduleButtonCopy = (ImageButton) mScheduleView.findViewById(R.id.context_button_copy);
+        mContextScheduleButtonRename = (ImageButton) mScheduleView.findViewById(R.id.context_button_rename);
+        mContextScheduleButtonDelete = (ImageButton) mScheduleView.findViewById(R.id.context_button_delete);
+        mContextScheduleButtonSelectAll = (ImageButton) mScheduleView.findViewById(R.id.context_button_select_all);
+        mContextScheduleButtonUnselectAll = (ImageButton) mScheduleView.findViewById(R.id.context_button_unselect_all);
 
         mContextHistoryButtonSendTo = (ImageButton) mHistoryView.findViewById(R.id.context_button_share);
         mContextHistoryButtonMoveTop = (ImageButton) mHistoryView.findViewById(R.id.context_button_move_to_top);
@@ -3183,7 +3641,7 @@ public class ActivityMain extends AppCompatActivity {
                     pfli.setSyncOptionUseExtendedDirectoryFilter1(true);
                     SyncTaskEditor pmsp = SyncTaskEditor.newInstance();
                     pmsp.showDialog(getSupportFragmentManager(), pmsp, "ADD", pfli,
-                            mTaskUtil, mUtil, commonDlg, mGp, ntfy);
+                            mTaskUtil, mUtil, mCommonDlg, mGp, ntfy);
                     setContextButtonEnabled(mContextSyncTaskButtonAddSync, true);
                 }
             }
@@ -3630,7 +4088,7 @@ public class ActivityMain extends AppCompatActivity {
                 });
                 SyncTaskEditor pmp = SyncTaskEditor.newInstance();
                 pmp.showDialog(getSupportFragmentManager(), pmp, "EDIT", item,
-                        mTaskUtil, mUtil, commonDlg, mGp, ntfy);
+                        mTaskUtil, mUtil, mCommonDlg, mGp, ntfy);
             }
 
             @Override

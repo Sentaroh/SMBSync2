@@ -432,6 +432,7 @@
         <string name="msgs_smnsync_main_kill_application">SMBSync2を強制終了しますか？</string>
         <string name="msgs_specify_task_name">タスク名を指定してください</string>
         <string name="msgs_tab_name_history">履歴</string>
+        <string name="msgs_tab_name_schedule">スケジュール</string>
         <string name="msgs_tab_name_msg">メッセージ</string>
         <string name="msgs_tab_name_prof">タスク</string>
         <string name="msgs_terminate_application">SMBSync2を終了します。</string>
@@ -637,6 +638,8 @@
         <string name="msgs_schedule_rename_schedule">スケジュールの改名</string>
         <string name="msgs_schedule_list_edit_no_schedule">追加ボタンを押してスケジュールを作成してください。</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">スケジュールが無効になっているためスケジュール同期は実行されません。</string>
+        <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">スケジュールを有効にしますか？</string>
+        <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">スケジュールを無効にしますか？</string>
         <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">スケジュールの有効・無効を切り替える</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">複数スケジュールが同時刻に起動される場合は同期リストをまとめ、重複した同期タスクを無視します。またWI-FIオプションも各スケジュールで指定したオプションを組み合わせします。</string>
     <!-- Send logcat -->

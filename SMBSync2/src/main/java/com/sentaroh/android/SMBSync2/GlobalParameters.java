@@ -204,6 +204,11 @@ public class GlobalParameters extends CommonGlobalParms {
     public AdapterSyncHistory syncHistoryAdapter = null;
     public ListView syncHistoryListView = null;
 
+    public ArrayList<ScheduleItem> syncTabScheduleList = null;
+    public AdapterScheduleList syncTabScheduleAdapter = null;
+    public ListView syncTabScheduleListView = null;
+    public TextView syncTabMessage=null;
+
     public ArrayList<SyncTaskItem> syncTaskList = null;
     public AdapterSyncTask syncTaskAdapter = null;
     public ListView syncTaskListView = null;

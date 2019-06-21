@@ -434,6 +434,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_smnsync_main_kill_application">Kill application?</string>
         <string name="msgs_specify_task_name">Please specify a name for the task</string>
         <string name="msgs_tab_name_history">History</string>
+        <string name="msgs_tab_name_schedule">Schedule</string>
         <string name="msgs_tab_name_msg">Messages</string>
         <string name="msgs_tab_name_prof">Task</string>
         <string name="msgs_terminate_application">Exit SMBSync2.</string>
@@ -640,6 +641,9 @@ Schedule:%s, Task:%s</string>
         <string name="msgs_schedule_rename_schedule">Rename schedule</string>
         <string name="msgs_schedule_list_edit_no_schedule">Press add button to create new schedule.</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">Schedule sync will not be performed because the schedule is disabled.</string>
+        <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Do you want to enable the schedule?
+</string>
+        <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Do you want to disable the schedule?</string>
         <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">Toggle Enable or disable the schedule.</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Schedules and WiFi options for multiple tasks will be consolidated to prevent duplicate sync processes.  </string>
     <!-- Send logcat -->
