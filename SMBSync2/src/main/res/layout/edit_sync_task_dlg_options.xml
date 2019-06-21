@@ -500,6 +500,22 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/edit_sync_task_option_remove_directory_if_empty_when_move_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_remove_directory_if_empty_when_move"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_option_remove_directory_if_empty_when_move"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/edit_sync_task_option_twoway_sync_keep_conflic_file_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

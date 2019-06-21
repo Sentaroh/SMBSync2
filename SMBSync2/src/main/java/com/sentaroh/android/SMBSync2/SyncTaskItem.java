@@ -509,6 +509,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionSyncAllowGlobalIpAddress() {return syncOptionSyncAllowGlobalIpAddress;}
     public void setSyncOptionSyncAllowGlobalIpAddress(boolean p) {syncOptionSyncAllowGlobalIpAddress = p;}
 
+    private boolean syncOptionMoveOnlyRemoveMasterDirectoryIfEmpty =false;
+    public boolean isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty() {return syncOptionMoveOnlyRemoveMasterDirectoryIfEmpty;}
+    public void setSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty(boolean p) {syncOptionMoveOnlyRemoveMasterDirectoryIfEmpty = p;}
+
     public void setLastSyncTime(String p) {syncLastSyncTime = p;}
     public void setLastSyncResult(int p) {syncLastSyncResult = p;}
 
@@ -642,6 +646,8 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncTaskSkipIfConnectAnotherWifiSsid==sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid()) &&
 
                         (syncOptionSyncAllowGlobalIpAddress==sti.isSyncOptionSyncAllowGlobalIpAddress()) &&
+
+                        (syncOptionMoveOnlyRemoveMasterDirectoryIfEmpty ==sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) &&
 
                         (syncOptionSyncOnlyCharging==sti.isSyncOptionSyncWhenCharging())) {
 

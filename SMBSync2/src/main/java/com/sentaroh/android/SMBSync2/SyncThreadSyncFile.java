@@ -569,8 +569,7 @@ public class SyncThreadSyncFile {
             if (t_from_path.startsWith("/")) t_from_path = t_from_path.substring(1);
             if (mf.exists()) {
                 if (mf.isDirectory()) { // Directory copy
-                    if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
-                            SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
+                    if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) && SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
                         if (sti.isSyncOptionSyncEmptyDirectory()) {
                             if (!sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) {
                                 SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
@@ -608,6 +607,14 @@ public class SyncThreadSyncFile {
                                 if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                                     sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                                     break;
+                                }
+                            }
+                            String[] fl=mf.list();
+                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                if (!from_base.equals(mf.getPath())) {
+                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                        SyncThread.deleteInternalStorageItem(stwa, true, sti, mf.getPath());
+                                    }
                                 }
                             }
                         } else {
@@ -863,6 +870,14 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
+                            String[] fl=mf.list();
+                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                if (!from_base.equals(mf.getPath())) {
+                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                        SyncThread.deleteInternalStorageItem(stwa, true, sti, mf.getPath());
+                                    }
+                                }
+                            }
                         } else {
                             stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
@@ -1089,6 +1104,14 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
+                            String[] fl=mf.list();
+                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                if (!from_base.equals(mf.getPath())) {
+                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                        SyncThread.deleteInternalStorageItem(stwa, true, sti, mf.getPath());
+                                    }
+                                }
+                            }
                         } else {
                             stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
@@ -1286,6 +1309,14 @@ public class SyncThreadSyncFile {
                                 if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                                     sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                                     break;
+                                }
+                            }
+                            String[] fl=mf.list();
+                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                if (!from_base.equals(mf.getPath())) {
+                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                        SyncThread.deleteExternalStorageItem(stwa, true, sti, mf.getPath());
+                                    }
                                 }
                             }
                         } else {
@@ -1490,6 +1521,14 @@ public class SyncThreadSyncFile {
                                 if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                                     sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                                     break;
+                                }
+                            }
+                            String[] fl=mf.list();
+                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                if (!from_base.equals(mf.getPath())) {
+                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                        SyncThread.deleteExternalStorageItem(stwa, true, sti, mf.getPath());
+                                    }
                                 }
                             }
                         } else {
@@ -1715,6 +1754,14 @@ public class SyncThreadSyncFile {
                                 if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                                     sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                                     break;
+                                }
+                            }
+                            String[] fl=mf.list();
+                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                if (!from_base.equals(mf.getPath())) {
+                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                        SyncThread.deleteExternalStorageItem(stwa, true, sti, mf.getPath());
+                                    }
                                 }
                             }
                         } else {
@@ -1975,6 +2022,14 @@ public class SyncThreadSyncFile {
                                 if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                                     sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                                     break;
+                                }
+                            }
+                            String[] fl=mf.list();
+                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                if (!from_base.equals(mf.getPath())) {
+                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                        SyncThread.deleteSmbItem(stwa, true, sti, from_base, mf.getPath(), stwa.masterAuth);
+                                    }
                                 }
                             }
                         } else {
@@ -2289,6 +2344,14 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
+                            String[] fl=mf.list();
+                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                if (!from_base.equals(mf.getPath())) {
+                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                        SyncThread.deleteSmbItem(stwa, true, sti, from_base, mf.getPath(), stwa.masterAuth);
+                                    }
+                                }
+                            }
                         } else {
                             stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
@@ -2583,6 +2646,14 @@ public class SyncThreadSyncFile {
                                 if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                                     sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                                     break;
+                                }
+                            }
+                            String[] fl=mf.list();
+                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                if (!from_base.equals(mf.getPath())) {
+                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                        SyncThread.deleteSmbItem(stwa, true, sti, from_base, mf.getPath(), stwa.masterAuth);
+                                    }
                                 }
                             }
                         } else {
