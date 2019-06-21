@@ -1316,19 +1316,19 @@ public class SyncThread extends Thread {
                 .replaceAll("\"", "")
                 .replaceAll("<", "")
                 .replaceAll(">", "")
-                .replaceAll("\\|", "");
+                .replaceAll("|", "");
         return out;
     }
 
     public static String hasInvalidCharForFileDirName(String in_str) {
         if (in_str.contains(":")) return ":";
         if (in_str.contains("\\")) return "\\";
-        if (in_str.contains("\\*")) return "*";
-        if (in_str.contains("\\?")) return "?";
+        if (in_str.contains("*")) return "*";
+        if (in_str.contains("?")) return "?";
         if (in_str.contains("\"")) return "\"";
         if (in_str.contains("<")) return "<";
         if (in_str.contains(">")) return ">";
-        if (in_str.contains("\\|")) return "|";
+        if (in_str.contains("|")) return "|";
         return "";
     }
 
