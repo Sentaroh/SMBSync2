@@ -718,6 +718,10 @@ public class ActivityMain extends AppCompatActivity {
         setHistoryViewItemClickListener();
         setHistoryViewLongClickListener();
 
+        setScheduleContextButtonListener();
+        setScheduleViewItemClickListener();
+        setScheduleViewLongClickListener();
+
         if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK)) {
             if (mGp.syncHistoryAdapter.isShowCheckBox()) setHistoryContextButtonSelectMode();
             else setHistoryContextButtonNormalMode();

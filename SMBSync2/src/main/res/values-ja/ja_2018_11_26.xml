@@ -563,7 +563,7 @@
         <string name="msgs_progress_spin_dlg_test_logon">SMBにログオン中</string>
         <string name="msgs_progress_spin_dlg_test_logon_cancel">ログオンを中止</string>
     <!-- Scheduler -->
-        <string name="msgs_menu_scheduler">スケジュール</string>
+        <string name="msgs_menu_scheduler">スケジュールの有効・無効を切替</string>
         <string name="msgs_scheduler_main_dlg_hdr_title">スケジュールの編集</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">スケジュールを有効にする</string>
         <string name="msgs_scheduler_main_dlg_hdr_edit_prof">同期リストの編集</string>
@@ -637,7 +637,7 @@
         <string name="msgs_schedule_confirm_msg_nosave">スケジュールが変更されています、保存せず終了しますか。</string>
         <string name="msgs_schedule_rename_schedule">スケジュールの改名</string>
         <string name="msgs_schedule_list_edit_no_schedule">追加ボタンを押してスケジュールを作成してください。</string>
-        <string name="msgs_schedule_list_edit_scheduler_disabled">スケジュールが無効になっているためスケジュール同期は実行されません。</string>
+        <string name="msgs_schedule_list_edit_scheduler_disabled">スケジュールが無効になっているためスケジュール同期は実行されません。スケジュール同期を行うには画面上部のスケジュールアイコンをタップして有効にしてください。</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">スケジュールを有効にしますか？</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">スケジュールを無効にしますか？</string>
         <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">スケジュールの有効・無効を切り替える</string>

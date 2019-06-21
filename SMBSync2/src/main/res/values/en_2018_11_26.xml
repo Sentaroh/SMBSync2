@@ -565,7 +565,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_progress_spin_dlg_test_logon">Logon to SMB server</string>
         <string name="msgs_progress_spin_dlg_test_logon_cancel">Cancel logon</string>
     <!-- Scheduler -->
-        <string name="msgs_menu_scheduler">Schedule</string>
+        <string name="msgs_menu_scheduler">Toggle enable/disable schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_title">Edit Schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Enable schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Edit Sync List</string>
@@ -640,7 +640,7 @@ Schedule:%s, Task:%s</string>
         <string name="msgs_schedule_confirm_msg_nosave">The schedule has changed.  Exit without saving?</string>
         <string name="msgs_schedule_rename_schedule">Rename schedule</string>
         <string name="msgs_schedule_list_edit_no_schedule">Press add button to create new schedule.</string>
-        <string name="msgs_schedule_list_edit_scheduler_disabled">Schedule sync will not be performed because the schedule is disabled.</string>
+        <string name="msgs_schedule_list_edit_scheduler_disabled">Schedule sync is not performed because the schedule is disabled. To perform scheduling sync, tap the schedule icon at the top of the screen to enable it.</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Do you want to enable the schedule?
 </string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Do you want to disable the schedule?</string>
