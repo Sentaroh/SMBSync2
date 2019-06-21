@@ -565,7 +565,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_progress_spin_dlg_test_logon">Logon to SMB server</string>
         <string name="msgs_progress_spin_dlg_test_logon_cancel">Cancel logon</string>
     <!-- Scheduler -->
-        <string name="msgs_menu_scheduler">Toggle enable/disable schedule</string>
+        <string name="msgs_menu_scheduler">Schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_title">Edit Schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Enable schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Edit Sync List</string>
