@@ -50,7 +50,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -59,6 +61,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -901,6 +904,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncTabScheduleListView.setAdapter(mGp.syncTabScheduleAdapter);
         mGp.syncTabMessage=(TextView)mScheduleView.findViewById(R.id.main_schedule_list_message);
         mGp.syncTabMessage.setTextColor(mGp.themeColorList.text_color_warning);
+        setSyncTabMessage();
 
         mGp.scheduleInfoView = (TextView) findViewById(R.id.main_schedule_view_info);
 //        mGp.scheduleInfoView.setTextColor(mGp.themeColorList.text_color_primary);
@@ -2651,6 +2655,7 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.syncTabMessage.setText(mContext.getString(R.string.msgs_schedule_list_edit_scheduler_disabled));
             }
         }
+        mGp.syncTabScheduleAdapter.notifyDataSetChanged();
     }
 
     private void setScheduleContextButtonListener() {
@@ -2834,7 +2839,7 @@ public class ActivityMain extends AppCompatActivity {
                     mUtil.addLogMsg("E","renameSchedule error, schedule item can not be found.");
                     mUtil.showCommonDialog(false, "E", "renameSchedule error, schedule item can not be found.", "", null);
                 } else {
-//                    renameSchedule(si, ntfy);
+                    renameSchedule(si, ntfy);
                 }
             }
         });
@@ -2895,6 +2900,90 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
+    private void renameSchedule(final ScheduleItem si, final NotifyEvent p_ntfy) {
+
+        // カスタムダイアログの生成
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        dialog.setContentView(R.layout.single_item_input_dlg);
+
+        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_dlg_view);
+        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+
+//        Drawable db = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.dialog_box_outline, null);
+//        ll_dlg_view.setBackground(db);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+
+        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
+        final TextView title = (TextView) dialog.findViewById(R.id.single_item_input_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
+
+        final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
+        dlg_msg.setVisibility(TextView.VISIBLE);
+        final TextView dlg_cmp = (TextView) dialog.findViewById(R.id.single_item_input_name);
+        final Button btn_ok = (Button) dialog.findViewById(R.id.single_item_input_ok_btn);
+        final Button btn_cancel = (Button) dialog.findViewById(R.id.single_item_input_cancel_btn);
+        final EditText etInput = (EditText) dialog.findViewById(R.id.single_item_input_dir);
+
+        title.setText(mContext.getString(R.string.msgs_schedule_rename_schedule));
+
+        dlg_cmp.setVisibility(TextView.GONE);
+        CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
+        etInput.setText(si.scheduleName);
+        dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
+        btn_ok.setEnabled(false);
+        etInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                if (!arg0.toString().equalsIgnoreCase(si.scheduleName)) {
+                    btn_ok.setEnabled(true);
+                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_warning));
+                } else {
+                    btn_ok.setEnabled(false);
+                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
+        });
+
+        //OK button
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+                String new_name = etInput.getText().toString();
+
+                si.scheduleName = new_name;
+                si.isChanged = true;
+
+                p_ntfy.notifyToListener(true, null);
+            }
+        });
+        // CANCELボタンの指定
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        // Cancelリスナーの指定
+        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface arg0) {
+                btn_cancel.performClick();
+            }
+        });
+        dialog.show();
+
+    }
     private void setScheduleViewItemClickListener() {
         mGp.syncTabScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
