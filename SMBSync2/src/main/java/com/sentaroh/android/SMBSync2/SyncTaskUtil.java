@@ -2117,7 +2117,9 @@ public class SyncTaskUtil {
         final EditText etDir=(EditText) dialog.findViewById(R.id.single_item_input_dir);
 
         dlg_cmp.setText(mContext.getString(R.string.msgs_file_select_edit_parent_directory)+":"+c_dir);
-        CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
+
+        CommonDialog.setDlgBoxSizeCompact(dialog);
+
         btnOk.setEnabled(false);
         final Handler hndl=new Handler();
         etDir.addTextChangedListener(new TextWatcher(){
@@ -2129,42 +2131,6 @@ public class SyncTaskUtil {
             public void afterTextChanged(Editable s) {
                 if (s.length()>0) {
                     btnOk.setEnabled(true);
-//                    btnOk.setEnabled(false);
-//                    String n_dir=c_dir+s.toString();
-//                    NotifyEvent ne=new NotifyEvent(mContext);
-//                    ne.setListener(new NotifyEventListener() {
-//                        @Override
-//                        public void positiveResponse(Context context, Object[] objects) {
-//                            final boolean success=(boolean)objects[0];
-//                            hndl.post(new Runnable() {
-//                                  @Override
-//                                  public void run() {
-//                                      if (success) {
-//                                          btnOk.setEnabled(false);
-//                                          dlg_msg.setText(mContext.getString(
-//                                                  R.string.msgs_single_item_input_dlg_duplicate_dir));
-//                                      } else {
-//                                          btnOk.setEnabled(true);
-//                                          dlg_msg.setText("");
-//                                      }
-//                                  }
-//                              });
-//                        }
-//
-//                        @Override
-//                        public void negativeResponse(Context context, Object[] objects) {
-//                            final String e_msg=(String)objects[0];
-//                            hndl.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    mUtil.showCommonDialog(false,"E","SMB Error",e_msg,null);
-//                                    dialog.dismiss();
-//                                    p_ntfy.notifyToListener(false, null);
-//                                }
-//                            });
-//                        }
-//                    });
-//                    isRemoteItemExists(n_dir, ra, ne);
                 } else {
                     btnOk.setEnabled(false);
                     dlg_msg.setText("");
@@ -2176,7 +2142,7 @@ public class SyncTaskUtil {
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final String creat_dir=etDir.getText().toString();
-                final String n_path=c_dir+creat_dir+"/";
+                final String n_path=c_dir+"/"+creat_dir+"/";
                 NotifyEvent ne_exists=new NotifyEvent(mContext);
                 ne_exists.setListener(new NotifyEventListener() {
                     @Override
@@ -2226,7 +2192,7 @@ public class SyncTaskUtil {
                                         });
                                     }
                                 });
-                                createRemoteDirectory(c_dir+etDir.getText().toString(), ra, notify_create);
+                                createRemoteDirectory(c_dir+"/"+etDir.getText().toString(), ra, notify_create);
                             }
                             @Override
                             public void negativeResponse(Context c, Object[] o) {
