@@ -2584,14 +2584,20 @@ public class SyncTaskEditor extends DialogFragment {
             String dir = sti.getMasterDirectoryName();
 //        	Log.v("","md="+dir);
             if (dir.equals("")) info = sti.getMasterLocalMountPoint();
-            else info = sti.getMasterLocalMountPoint() + "/" + dir;
+            else {
+                if (dir.startsWith("/")) info = sti.getMasterLocalMountPoint() + dir;
+                else info = sti.getMasterLocalMountPoint() + "/" + dir;
+            }
             ib.setCompoundDrawablePadding(32);
             ib.setCompoundDrawablesWithIntrinsicBounds(
                     mContext.getResources().getDrawable(R.drawable.ic_32_mobile, null), null, null, null);
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             String dir = sti.getMasterDirectoryName();
             if (dir.equals("")) info = mGp.safMgr.getSdcardRootPath();
-            else info = mGp.safMgr.getSdcardRootPath() + "/" + dir;
+            else {
+                if (dir.startsWith("/")) info = mGp.safMgr.getSdcardRootPath() + dir;
+                else info = mGp.safMgr.getSdcardRootPath() + "/" + dir;
+            }
             if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                 ib.setCompoundDrawablePadding(32);
                 ib.setCompoundDrawablesWithIntrinsicBounds(
@@ -2604,7 +2610,10 @@ public class SyncTaskEditor extends DialogFragment {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
             String dir = sti.getMasterDirectoryName();
             if (dir.equals("")) info = mGp.safMgr.getUsbRootPath();
-            else info = mGp.safMgr.getUsbRootPath() + "/" + dir;
+            else {
+                if (dir.startsWith("/")) info = mGp.safMgr.getUsbRootPath() + dir;
+                else info = mGp.safMgr.getUsbRootPath() + "/" + dir;
+            }
             if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
                 ib.setCompoundDrawablePadding(32);
                 ib.setCompoundDrawablesWithIntrinsicBounds(
@@ -2620,7 +2629,10 @@ public class SyncTaskEditor extends DialogFragment {
             String share = sti.getMasterSmbShareName();
             String dir = sti.getMasterDirectoryName();
             if (dir.equals("")) info = "smb://" + host + "/" + share;
-            else info = "smb://" + host + "/" + share + "/" + dir;
+            else {
+                if (dir.startsWith("/")) info = "smb://" + host + "/" + share + dir;
+                else info = "smb://" + host + "/" + share + "/" + dir;
+            }
             ib.setCompoundDrawablePadding(32);
             ib.setCompoundDrawablesWithIntrinsicBounds(
                     mContext.getResources().getDrawable(R.drawable.ic_32_server, null), null, null, null);
@@ -2633,14 +2645,20 @@ public class SyncTaskEditor extends DialogFragment {
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             String dir = sti.getTargetDirectoryName();
             if (dir.equals("")) info = sti.getTargetLocalMountPoint();
-            else info = sti.getTargetLocalMountPoint() + "/" + dir;
+            else {
+                if (dir.startsWith("/")) info = sti.getTargetLocalMountPoint() + dir;
+                else info = sti.getTargetLocalMountPoint() + "/" + dir;
+            }
             ib.setCompoundDrawablePadding(32);
             ib.setCompoundDrawablesWithIntrinsicBounds(
                     mContext.getResources().getDrawable(R.drawable.ic_32_mobile, null), null, null, null);
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             String dir = sti.getTargetDirectoryName();
             if (dir.equals("")) info = mGp.safMgr.getSdcardRootPath();
-            else info = mGp.safMgr.getSdcardRootPath() + "/" + dir;
+            else {
+                if (dir.startsWith("/")) info = mGp.safMgr.getSdcardRootPath() + dir;
+                else info = mGp.safMgr.getSdcardRootPath() + "/" + dir;
+            }
             if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                 ib.setCompoundDrawablePadding(32);
                 ib.setCompoundDrawablesWithIntrinsicBounds(
@@ -2653,7 +2671,10 @@ public class SyncTaskEditor extends DialogFragment {
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
             String dir = sti.getTargetDirectoryName();
             if (dir.equals("")) info = mGp.safMgr.getUsbRootPath();
-            else info = mGp.safMgr.getUsbRootPath() + "/" + dir;
+            else {
+                if (dir.startsWith("/")) info = mGp.safMgr.getUsbRootPath() + dir;
+                else info = mGp.safMgr.getUsbRootPath() + "/" + dir;
+            }
             if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
                 ib.setCompoundDrawablePadding(32);
                 ib.setCompoundDrawablesWithIntrinsicBounds(
@@ -2685,7 +2706,10 @@ public class SyncTaskEditor extends DialogFragment {
             String share = sti.getTargetSmbShareName();
             String dir = sti.getTargetDirectoryName();
             if (dir.equals("")) info = "smb://" + host + "/" + share;
-            else info = "smb://" + host + "/" + share + "/" + dir;
+            else {
+                if (dir.startsWith("/")) info = "smb://" + host + "/" + share + dir;
+                else info = "smb://" + host + "/" + share + "/" + dir;
+            }
             ib.setCompoundDrawablePadding(32);
             ib.setCompoundDrawablesWithIntrinsicBounds(
                     mContext.getResources().getDrawable(R.drawable.ic_32_server, null), null, null, null);
