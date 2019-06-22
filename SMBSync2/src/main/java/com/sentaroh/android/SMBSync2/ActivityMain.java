@@ -1142,6 +1142,7 @@ public class ActivityMain extends AppCompatActivity {
             menu.findItem(R.id.menu_top_about).setEnabled(true);
             menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(true);
             menu.findItem(R.id.menu_top_list_storage).setEnabled(true);
+            menu.findItem(R.id.menu_top_scheduler).setVisible(true);
 
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
@@ -1167,6 +1168,7 @@ public class ActivityMain extends AppCompatActivity {
             menu.findItem(R.id.menu_top_about).setEnabled(false);
             menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(false);
             menu.findItem(R.id.menu_top_list_storage).setEnabled(false);
+            menu.findItem(R.id.menu_top_scheduler).setVisible(false);
 
         }
         menu.findItem(R.id.menu_top_add_shortcut).setVisible(false);
