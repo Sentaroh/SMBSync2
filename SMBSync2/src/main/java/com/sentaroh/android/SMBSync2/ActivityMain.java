@@ -1678,6 +1678,12 @@ public class ActivityMain extends AppCompatActivity {
                 }
                 setSyncTaskContextButtonNormalMode();
                 mGp.syncTaskAdapter.setShowCheckBox(false);
+
+                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mGp);
+                mGp.syncTabScheduleList.clear();
+                mGp.syncTabScheduleList.addAll(sl);
+                mGp.syncTabScheduleAdapter.notifyDataSetChanged();
+                setSyncTabMessage();
             }
 
             @Override

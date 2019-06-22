@@ -842,7 +842,7 @@ public class SyncTaskUtil {
         final ArrayList<PreferenceParmListIItem> spl = importedSettingParmList;
 
         if (spl.size() == 0) {
-            mUtil.addDebugMsg(2, "I", "Import setting parms can not be not found.");
+            mUtil.addDebugMsg(1, "I", "Import setting parms can not be not found.");
             return;
         }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -888,7 +888,7 @@ public class SyncTaskUtil {
         final ArrayList<PreferenceParmListIItem> spl = importedSettingParmList;
 
         if (spl.size() == 0) {
-            mUtil.addDebugMsg(2, "I", "Import setting parms can not be not found.");
+            mUtil.addDebugMsg(1, "I", "Import setting parms can not be not found.");
             return;
         }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -896,7 +896,7 @@ public class SyncTaskUtil {
 
         if (spl.size() >= 0) {
             for (int i = 0; i < spl.size(); i++) {
-                if (spl.get(i).parms_key.equals(SCHEDULER_SCHEDULE_SAVED_DATA_V3)) {
+                if (spl.get(i).parms_key.equals(SCHEDULER_SCHEDULE_SAVED_DATA_V4)) {
                     restorePreferenceParms(pe, spl.get(i));
                 }
             }
