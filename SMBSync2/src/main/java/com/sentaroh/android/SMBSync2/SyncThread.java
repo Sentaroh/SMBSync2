@@ -1292,7 +1292,10 @@ public class SyncThread extends Thread {
 
     private String buildStorageDir(String base, String dir) {
         if (dir.equals("")) return base;
-        else return base + "/" + dir;
+        else {
+            if (dir.startsWith("/")) return base + dir;
+            else return base + "/" + dir;
+        }
     }
 
     private String buildSmbHostUrl(String addr, String port, String share, String dir) {
@@ -1303,8 +1306,12 @@ public class SyncThread extends Thread {
         smb_host = smb_host + addr;
         if (!port.equals("")) smb_host = smb_host + ":" + port;
         smb_host = smb_host + "/" + share;
-        if (!dir.equals("")) result = smb_host + "/" + dir;
-        else result = smb_host;
+        if (!dir.equals("")) {
+            if (dir.startsWith("/")) result = smb_host + dir;
+            else result = smb_host + "/" + dir;
+        } else {
+            result = smb_host;
+        }
         return result;
     }
 
