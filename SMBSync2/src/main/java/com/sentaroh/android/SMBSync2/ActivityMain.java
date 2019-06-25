@@ -118,6 +118,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YESA
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SERIALIZABLE_FILE_NAME;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_HIST;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_MESSAGE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_SCHEDULE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_TASK;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET;
@@ -874,7 +875,7 @@ public class ActivityMain extends AppCompatActivity {
         mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_TASK).setIndicator(tabViewProf).setContent(android.R.id.tabcontent));
 
         CustomTabContentView tabViewSchedule = new CustomTabContentView(this, getString(R.string.msgs_tab_name_schedule));
-        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_HIST).setIndicator(tabViewSchedule).setContent(android.R.id.tabcontent));
+        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_SCHEDULE).setIndicator(tabViewSchedule).setContent(android.R.id.tabcontent));
 
         CustomTabContentView tabViewHist = new CustomTabContentView(this, getString(R.string.msgs_tab_name_history));
         mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_HIST).setIndicator(tabViewHist).setContent(android.R.id.tabcontent));
@@ -1142,7 +1143,11 @@ public class ActivityMain extends AppCompatActivity {
             menu.findItem(R.id.menu_top_about).setEnabled(true);
             menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(true);
             menu.findItem(R.id.menu_top_list_storage).setEnabled(true);
-            menu.findItem(R.id.menu_top_scheduler).setVisible(true);
+            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_SCHEDULE)) {
+                menu.findItem(R.id.menu_top_scheduler).setVisible(true);
+            } else {
+                menu.findItem(R.id.menu_top_scheduler).setVisible(false);
+            }
 
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
