@@ -88,7 +88,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB211);
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB212);
 
-    private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1;
+    private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB212;
     private boolean syncTaskMasterFolderSmbIpcSigningEnforced = true;
 
     private boolean syncTaskMasterFolderSmbUseSmb2Negotiation = false;
@@ -106,7 +106,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskTargetFolderSmbUserName = "";
     private String syncTaskTargetFolderSmbPassword = "";
     private String syncTaskTargetFolderSmbDomain = "";
-    private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB1;
+    private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB212;
     private boolean syncTaskTargetFolderSmbIpcSigningEnforced = true;
 
     private boolean syncTaskTargetFolderSmbUseSmb2Negotiation = false;
