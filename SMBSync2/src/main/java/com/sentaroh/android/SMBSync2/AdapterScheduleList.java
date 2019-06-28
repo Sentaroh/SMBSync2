@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
@@ -20,6 +22,7 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
     private Context mContext = null;
     private int text_color = 0;
     private NotifyEvent mCbNotify = null;
+    private NotifyEvent mSwNotify = null;
     private ArrayList<ScheduleItem> mScheduleList = null;
     private GlobalParameters mGp=null;
 
@@ -33,6 +36,10 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
 
     public void setCbNotify(NotifyEvent ntfy) {
         mCbNotify = ntfy;
+    }
+
+    public void setSwNotify(NotifyEvent ntfy) {
+        mSwNotify = ntfy;
     }
 
     public void sort() {
@@ -62,6 +69,7 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
     public void setSelectMode(boolean select_mode) {
         mSelectMode = select_mode;
         if (!mSelectMode) unselectAll();
+        else notifyDataSetChanged();
     }
 
     public boolean isSelectMode() {
@@ -92,14 +100,15 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
             LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(layout_id, null);
             holder = new ViewHolder();
-            holder.ll_view=(LinearLayout)v.findViewById(R.id.schedule_list_view);
+            holder.ll_view=(LinearLayout)v.findViewById(R.id.schedule_sync_list_view);
             ll_default_background_color=holder.ll_view.getBackground();
-            holder.tv_name = (TextView) v.findViewById(R.id.schedule_list_name);
-            holder.tv_info = (TextView) v.findViewById(R.id.schedule_list_info);
-            holder.tv_time_info = (TextView) v.findViewById(R.id.schedule_list_time_info);
-            holder.tv_error_info = (TextView) v.findViewById(R.id.schedule_list_error_info);
+            holder.tv_name = (TextView) v.findViewById(R.id.schedule_sync_list_name);
+            holder.tv_info = (TextView) v.findViewById(R.id.schedule_sync_list_info);
+            holder.tv_time_info = (TextView) v.findViewById(R.id.schedule_sync_list_time_info);
+            holder.tv_error_info = (TextView) v.findViewById(R.id.schedule_sync_list_error_info);
             holder.tv_error_info.setTextColor(mGp.themeColorList.text_color_warning);
-            holder.cbChecked = (CheckBox) v.findViewById(R.id.schedule_list_checked);
+            holder.swEnabled=(Switch)v.findViewById(R.id.schedule_sync_list_switch);
+            holder.cbChecked = (CheckBox) v.findViewById(R.id.schedule_sync_list_checked);
             text_color = holder.tv_name.getCurrentTextColor();
             v.setTag(holder);
         } else {
@@ -111,8 +120,10 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
 
             if (mSelectMode) {
                 holder.cbChecked.setVisibility(CheckBox.VISIBLE);
+                holder.swEnabled.setVisibility(CheckBox.GONE);
             } else {
-                holder.cbChecked.setVisibility(CheckBox.INVISIBLE);
+                holder.cbChecked.setVisibility(CheckBox.GONE);
+                holder.swEnabled.setVisibility(CheckBox.VISIBLE);
             }
 
             holder.ll_view.setBackground(ll_default_background_color);
@@ -219,7 +230,6 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
             }
             holder.tv_time_info.setText(time_info + " " + sync_prof);
 
-            // 必ずsetChecked前にリスナを登録
             holder.cbChecked.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -231,6 +241,18 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
                 }
             });
             holder.cbChecked.setChecked(o.isChecked);
+
+            holder.swEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    o.scheduleEnabled = isChecked;
+                    if (mSwNotify != null)
+                        mSwNotify.notifyToListener(true, new Object[]{position});
+                    notifyDataSetChanged();
+                }
+            });
+            holder.swEnabled.setChecked(o.scheduleEnabled);
+
         }
         return v;
 
@@ -240,6 +262,7 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
         TextView tv_name, tv_info, tv_enabled, tv_time_info, tv_error_info;
         LinearLayout ll_view;
         CheckBox cbChecked;
+        Switch swEnabled;
     }
 
 }

@@ -44,7 +44,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.StrictMode;
-import android.os.SystemClock;
 import android.os.storage.StorageVolume;
 import android.provider.Settings;
 import android.support.v4.view.ViewPager;
@@ -250,7 +249,6 @@ public class ActivityMain extends AppCompatActivity {
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
             mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
-            mGp.msgListView.setVisibility(ListView.INVISIBLE);
             final Dialog pd=CommonDialog.showProgressSpinIndicator(mActivity);
             pd.show();
             Thread th = new Thread() {
@@ -262,7 +260,7 @@ public class ActivityMain extends AppCompatActivity {
                         for(SyncTaskItem sti:task_list) mGp.syncTaskList.add(sti);
                         mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
                     } else {
-                        mUtil.addDebugMsg(1, "I", "Sync task list creation bypassed.");
+                        mUtil.addDebugMsg(1, "I", "Sync task list was already created.");
                     }
                     mUiHandler.post(new Runnable(){
                         @Override
@@ -277,10 +275,8 @@ public class ActivityMain extends AppCompatActivity {
                                         @Override
                                         public void positiveResponse(Context c, Object[] o) {
                                             mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
-                                            mGp.msgListView.setVisibility(ListView.VISIBLE);
                                             if (mGp.syncThreadActive) {
                                                 mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-                                                mGp.msgListView.setSelection(mGp.msgListAdapter.getCount());
                                             }
                                             pd.dismiss();
                                         }
@@ -921,11 +917,12 @@ public class ActivityMain extends AppCompatActivity {
 //        mMessageView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
 
         mGp.msgListView = (ListView) mMessageView.findViewById(R.id.main_message_list_view);
+        mGp.msgListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         mGp.syncTaskListView = (ListView) mSyncTaskView.findViewById(R.id.main_sync_task_view_list);
         mGp.syncTabScheduleListView = (ListView) mScheduleView.findViewById(R.id.main_schedule_list_view);
         mGp.syncHistoryListView = (ListView) mHistoryView.findViewById(R.id.main_history_list_view);
 
-        mGp.syncTabScheduleAdapter = new AdapterScheduleList(mActivity, R.layout.schedule_list_edit_list_item, mGp.syncTabScheduleList);
+        mGp.syncTabScheduleAdapter = new AdapterScheduleList(mActivity, R.layout.schedule_sync_list_item, mGp.syncTabScheduleList);
         mGp.syncTabScheduleListView.setAdapter(mGp.syncTabScheduleAdapter);
         mGp.syncTabMessage=(TextView)mScheduleView.findViewById(R.id.main_schedule_list_message);
         mGp.syncTabMessage.setTextColor(mGp.themeColorList.text_color_warning);
@@ -1068,8 +1065,10 @@ public class ActivityMain extends AppCompatActivity {
                     mGp.uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            if (mGp!=null && mGp.msgListView!=null && mGp.msgListAdapter!=null)
+                            if (mGp!=null && mGp.msgListView!=null && mGp.msgListAdapter!=null) {
+                                mGp.msgListView.setItemChecked(mGp.msgListAdapter.getCount() - 1, true);
                                 mGp.msgListView.setSelection(mGp.msgListAdapter.getCount() - 1);
+                            }
                         }
                     });
                 }
@@ -2703,8 +2702,8 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setScheduleContextButtonListener() {
-        NotifyEvent ntfy = new NotifyEvent(mContext);
-        ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+        NotifyEvent ntfy_cb = new NotifyEvent(mContext);
+        ntfy_cb.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
 //                setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
@@ -2714,7 +2713,24 @@ public class ActivityMain extends AppCompatActivity {
             public void negativeResponse(Context context, Object[] objects) {
             }
         });
-        mGp.syncTabScheduleAdapter.setCbNotify(ntfy);
+        mGp.syncTabScheduleAdapter.setCbNotify(ntfy_cb);
+
+        NotifyEvent ntfy_sw = new NotifyEvent(mContext);
+        ntfy_sw.setListener(new NotifyEvent.NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                int pos=(int)objects[0];
+                if (mGp.syncTabScheduleAdapter.getItem(pos).scheduleEnabled) {
+                    mGp.syncTabScheduleAdapter.getItem(pos).scheduleLastExecTime = System.currentTimeMillis();
+                }
+                saveScheduleList();
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {
+            }
+        });
+        mGp.syncTabScheduleAdapter.setSwNotify(ntfy_sw);
 
         mContextScheduleButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -4164,6 +4180,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setContextButtonEnabled(mContextMessageButtonMoveTop, false);
+                mGp.msgListView.setItemChecked(0, true);
                 mGp.msgListView.setSelection(0);
                 setContextButtonEnabled(mContextMessageButtonMoveTop, true);
             }
@@ -4174,7 +4191,8 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setContextButtonEnabled(mContextMessageButtonMoveBottom, false);
-                mGp.msgListView.setSelection(mGp.msgListView.getCount() - 1);
+                mGp.msgListView.setItemChecked(mGp.msgListAdapter.getCount() - 1, true);
+                mGp.msgListView.setSelection(mGp.msgListAdapter.getCount() - 1);
                 setContextButtonEnabled(mContextMessageButtonMoveBottom, true);
             }
         });

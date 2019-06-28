@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/schedule_list_view"
+    android:id="@+id/schedule_sync_list_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_marginBottom="5dp"
@@ -17,7 +17,7 @@
         android:orientation="horizontal" >
 
         <LinearLayout
-            android:id="@+id/schedule_list_entry_layout"
+            android:id="@+id/schedule_sync_list_entry_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content" >
 
                 <TextView
-                    android:id="@+id/schedule_list_name"
+                    android:id="@+id/schedule_sync_list_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
@@ -42,7 +42,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/schedule_list_info"
+                android:id="@+id/schedule_sync_list_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
@@ -50,7 +50,7 @@
                 android:text="TextView" />
 
             <TextView
-                android:id="@+id/schedule_list_time_info"
+                android:id="@+id/schedule_sync_list_time_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
@@ -58,7 +58,7 @@
                 android:text="TextView" />
 
             <TextView
-                android:id="@+id/schedule_list_error_info"
+                android:id="@+id/schedule_sync_list_error_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
@@ -67,8 +67,17 @@
 
         </LinearLayout>
 
+        <Switch
+            android:id="@+id/schedule_sync_list_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:focusable="false"
+            />
+
         <CheckBox
-            android:id="@+id/schedule_list_checked"
+            android:id="@+id/schedule_sync_list_checked"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

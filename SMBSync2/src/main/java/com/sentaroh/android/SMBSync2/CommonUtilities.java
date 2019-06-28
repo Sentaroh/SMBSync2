@@ -367,8 +367,11 @@ public final class CommonUtilities {
             mGp.msgList.add(mli);
             if (mGp.msgListAdapter != null) {
                 mGp.msgListAdapter.notifyDataSetChanged();
-                if (!mGp.freezeMessageViewScroll)
+                if (!mGp.freezeMessageViewScroll) {
+//                    mGp.msgListView.setItemChecked(mGp.msgList.size() - 1, true);
+//                    mGp.msgListView.setSelection(mGp.msgList.size() - 1);
                     mGp.msgListView.setSelection(mGp.msgList.size());
+                }
             }
         }
     }

@@ -410,9 +410,11 @@ public class ScheduleUtil {
         } else if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY)) {
             cal.clear();
             cal.set(c_year, c_month, c_day, s_hrs, 0, 0);
-            if ((c_hr * 100 + c_mm) >= (s_hrs * 100 + s_min))
+            if ((c_hr * 100 + c_mm) >= (s_hrs * 100 + s_min)) {
                 result = cal.getTimeInMillis() + (60 * 1000 * 60 * 24) + (60 * 1000 * s_min);
-            else result = cal.getTimeInMillis() + (60 * 1000 * s_min);
+            } else {
+                result = cal.getTimeInMillis() + (60 * 1000 * s_min);
+            }
         } else if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_MONTH)) {
             int s_day_last_day=0, s_day_temp=0;
             cal.set(Calendar.YEAR, c_year);
