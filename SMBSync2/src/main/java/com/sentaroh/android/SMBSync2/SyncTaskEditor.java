@@ -94,6 +94,8 @@ import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
 import static com.sentaroh.android.SMBSync2.Constants.ARCHIVE_FILE_TYPE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_DECRYPT_FAILED;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_ENCRYPT_FAILED;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_MONTH;
@@ -624,7 +626,7 @@ public class SyncTaskEditor extends DialogFragment {
         et_sync_folder_domain.setVisibility(EditText.GONE);
         final EditText et_sync_folder_user = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
         final EditText et_sync_folder_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
-        if (!sfev.folder_remote_user.equals("")) {// || !sfev.folder_remote_pswd.equals("")) {
+        if (!sfev.folder_remote_user.equals("") || !sfev.folder_remote_pswd.equals("") || sfev.folder_error_code!=SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR) {
             ctv_sync_folder_use_pswd.setChecked(true);
             et_sync_folder_user.setEnabled(true);
             et_sync_folder_user.setText(sfev.folder_remote_user);
@@ -1759,6 +1761,7 @@ public class SyncTaskEditor extends DialogFragment {
                 final CheckedTextView ctvCreateDircetory = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_use_archive_directory);
                 final EditText et_dir_template = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_directory_name_template);
 
+                nsfev.folder_error_code=SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
                 sti.setSyncOptionConfirmNotExistsExifDate(ctvConfirmExifDate.isChecked());
                 sti.setArchiveCreateDirectory(ctvCreateDircetory.isChecked());
                 sti.setArchiveCreateDirectoryTemplate(et_dir_template.getText().toString());
@@ -2338,6 +2341,13 @@ public class SyncTaskEditor extends DialogFragment {
                             btn_sync_folder_logon.setEnabled(false);
                             setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_userid_pswd));
                         } else {
+                            if (sync_folder_user.equals(SMBSYNC2_PROF_DECRYPT_FAILED) || sync_folder_user.equals(SMBSYNC2_PROF_ENCRYPT_FAILED)) {
+                                setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_import_failed_account_name));
+                                result = false;
+                            } else if (sync_folder_pswd.equals(SMBSYNC2_PROF_DECRYPT_FAILED) || sync_folder_pswd.equals(SMBSYNC2_PROF_ENCRYPT_FAILED)) {
+                                setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_import_failed_account_password));
+                                result = false;
+                            }
 //                            if (!sync_folder_user.equals("") && sync_folder_pswd.equals("")) {
 //                            if (sync_folder_pswd.equals("")) {
 //                                result = false;
@@ -2386,10 +2396,15 @@ public class SyncTaskEditor extends DialogFragment {
                     result = true;
                 } else {
                     if (et_zip_pswd.getText().length() > 0) {
-                        if (et_zip_pswd.getText().toString().equals(et_zip_conf_pswd.getText().toString())) {
-                            result = true;
+                        if (et_zip_pswd.getText().toString().equals(SMBSYNC2_PROF_DECRYPT_FAILED) || et_zip_pswd.getText().toString().equals(SMBSYNC2_PROF_ENCRYPT_FAILED)) {
+                            setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_import_failed_zip_password));
+                            result = false;
                         } else {
-                            setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_diff_zip_password));
+                            if (et_zip_pswd.getText().toString().equals(et_zip_conf_pswd.getText().toString())) {
+                                result = true;
+                            } else {
+                                setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_diff_zip_password));
+                            }
                         }
                     } else {
                         setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_specify_zip_password));
@@ -3590,35 +3605,17 @@ public class SyncTaskEditor extends DialogFragment {
                         n_sti.setMasterRemovableStorageID(nsfev.folder_removable_uuid);
 //						n_sti.setMasterFolderUseInternalUsbFolder(nsfev.folder_use_usb_folder);
 //						Log.v("","mdi="+n_sti.getMasterDirectoryName());
+                        n_sti.setMasterFolderError(nsfev.folder_error_code);
                         master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                         target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
 
                         setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-
                         if (!prev_master_folder_type.equals(n_sti.getMasterFolderType())) {
                             ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
                             if ((!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                                     !n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB))) {
                                 ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
-//                                if (!n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
-//                                    NotifyEvent ntfy = new NotifyEvent(mContext);
-//                                    ntfy.setListener(new NotifyEventListener() {
-//                                        @Override
-//                                        public void positiveResponse(Context context, Object[] objects) {
-//                                            n_sti.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF);
-//                                            spinnerSyncWifiStatus.setSelection(0);
-//                                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
-//                                        }
-//
-//                                        @Override
-//                                        public void negativeResponse(Context context, Object[] objects) {
-//                                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
-//                                        }
-//                                    });
-//                                    mUtil.showCommonDialog(true, "W",
-//                                            mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off), "", ntfy);
-//                                }
                             } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
                                     n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
@@ -3682,6 +3679,7 @@ public class SyncTaskEditor extends DialogFragment {
                 } else {
                     sfev.folder_remote_use_pswd=false;
                 }
+                sfev.folder_error_code=n_sti.getMasterFolderError();
                 editSyncFolder(n_sti, sfev, ntfy);
             }
         });
@@ -3704,6 +3702,7 @@ public class SyncTaskEditor extends DialogFragment {
                 n_sti.setMasterSmbProtocol(t_sti.getTargetSmbProtocol());
                 n_sti.setMasterSmbIpcSigningEnforced(t_sti.isTargetSmbIpcSigningEnforced());
                 n_sti.setMasterRemovableStorageID(t_sti.getTargetRemovableStorageID());
+                n_sti.setMasterFolderError(t_sti.getTargetFolderError());
 
                 n_sti.setTargetDirectoryName(t_sti.getMasterDirectoryName());
                 n_sti.setTargetLocalMountPoint(t_sti.getMasterLocalMountPoint());
@@ -3719,6 +3718,7 @@ public class SyncTaskEditor extends DialogFragment {
                 n_sti.setTargetSmbIpcSigningEnforced(t_sti.isMasterSmbIpcSigningEnforced());
                 n_sti.setTargetSmbUseSmb2Negotiation(t_sti.isMasterSmbUseSmb2Negotiation());
                 n_sti.setTargetRemovableStorageID(t_sti.getMasterRemovableStorageID());
+                n_sti.setTargetFolderError(t_sti.getMasterFolderError());
 
                 master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                 target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
@@ -3759,6 +3759,7 @@ public class SyncTaskEditor extends DialogFragment {
                         n_sti.setTargetZipEncryptMethod(nsfev.zip_enc_method);
                         n_sti.setTargetZipOutputFileName(nsfev.zip_file_name);
                         n_sti.setTargetZipPassword(nsfev.zip_file_password);
+                        n_sti.setTargetFolderError(nsfev.folder_error_code);
 
                         master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                         target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
@@ -3774,24 +3775,6 @@ public class SyncTaskEditor extends DialogFragment {
                             if (!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                                     !n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
-//                                if (!n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
-//                                    NotifyEvent ntfy = new NotifyEvent(mContext);
-//                                    ntfy.setListener(new NotifyEventListener() {
-//                                        @Override
-//                                        public void positiveResponse(Context context, Object[] objects) {
-//                                            n_sti.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF);
-//                                            spinnerSyncWifiStatus.setSelection(0);
-//                                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
-//                                        }
-//
-//                                        @Override
-//                                        public void negativeResponse(Context context, Object[] objects) {
-//                                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
-//                                        }
-//                                    });
-//                                    mUtil.showCommonDialog(true, "W",
-//                                            mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off), "", ntfy);
-//                                }
                             } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
                                     n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
@@ -3865,7 +3848,7 @@ public class SyncTaskEditor extends DialogFragment {
                 sfev.zip_file_name = n_sti.getTargetZipOutputFileName();
                 sfev.zip_file_password = n_sti.getTargetZipPassword();
 
-//				Log.v("","level="+sfev.zip_file_use_sdcard);
+                sfev.folder_error_code=n_sti.getTargetFolderError();
 
                 editSyncFolder(n_sti, sfev, ntfy);
             }
@@ -4007,6 +3990,7 @@ public class SyncTaskEditor extends DialogFragment {
                         }
                         if (mNotifyComplete != null) mNotifyComplete.notifyToListener(true, null);
                         SyncTaskUtil.saveSyncTaskListToFile(mGp, mContext, mUtil, false, "", "", mGp.syncTaskList, false);
+                        SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
                         mFragment.dismissAllowingStateLoss();
                         mUtil.addDebugMsg(1,"I","editSyncTask edit saved, type="+type+", task="+new_stli.getSyncTaskName());
 
@@ -4496,9 +4480,17 @@ public class SyncTaskEditor extends DialogFragment {
                     if (filter_msg.equals("")) {
                         String s_msg = checkStorageStatus(dialog, type, n_sti);
                         if (s_msg.equals("")) {
-                            setDialogMsg(dlg_msg, s_msg);
-                            if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) btn_ok.setEnabled(true);
-                            else btn_ok.setEnabled(false);
+                            if (n_sti.isSyncTaskError()) {
+                                if (n_sti.getMasterFolderError()!=SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR) {
+                                    setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_import_failed_master_folder));
+                                } else if (n_sti.getTargetFolderError()!=SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR) {
+                                    setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_import_failed_target_folder));
+                                }
+                            } else {
+                                setDialogMsg(dlg_msg, s_msg);
+                                if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) btn_ok.setEnabled(true);
+                                else btn_ok.setEnabled(false);
+                            }
                         } else {
                             setDialogMsg(dlg_msg, s_msg);
                             if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) btn_ok.setEnabled(true);
@@ -4660,6 +4652,8 @@ public class SyncTaskEditor extends DialogFragment {
         public String zip_enc_method = "";
         public String zip_file_name = "";
         public String zip_file_password = "";
+
+        public int folder_error_code=SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
 
         public SyncFolderEditValue(){};
 

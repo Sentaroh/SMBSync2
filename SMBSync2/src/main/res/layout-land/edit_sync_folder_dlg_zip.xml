@@ -164,21 +164,41 @@
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256" />
         </RadioGroup>
 
-        <EditText
-            android:id="@+id/edit_sync_folder_dlg_zip_enc_password"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="password"
-            android:inputType="textPassword" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_title_zip_password"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <EditText
-            android:id="@+id/edit_sync_folder_dlg_zip_enc_confirm"
+            <EditText
+                android:id="@+id/edit_sync_folder_dlg_zip_enc_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPassword" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="confirm"
-            android:inputType="textPassword" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_title_zip_confirm_password"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <EditText
+                android:id="@+id/edit_sync_folder_dlg_zip_enc_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPassword" />
+        </LinearLayout>
     </LinearLayout>
     
 </LinearLayout>

@@ -20,12 +20,22 @@
         <string name="msgs_export_import_profile_import_settings">Include task settings</string>
         <string name="msgs_export_import_profile_import_schedule">Include task schedule</string>
         <string name="msgs_export_import_profile_no_import_items">No task items imported.</string>
+        <string name="msgs_import_autosave_dlg_title">Import task list</string>
+        <string name="msgs_import_autosave_dlg_select_exported_file">Select another file</string>
+        <string name="msgs_import_autosave_dlg_autosave_list">Autosaved task list</string>
+        <string name="msgs_import_autosave_dlg_manual_save_list">Manual saved task list</string>
+        <string name="msgs_import_autosave_dlg_autosave_failed">An attempt to auto-save the synchronization task list has failed</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed">The sync task list was automatically saved</string>
+        <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
+        <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (Last saved file)</string>
+        <string name="msgs_export_import_profile_smb_account_name_password_not_restored">The account name, account password or ZIP password used in the following tasks failed to import. If you auto-save the sync task and then reinstall the app, you will not be able to decrypt your account name, account password, and ZIP password. Edit the sync task to correct it to the correct value.</string>
         <string name="msgs_export_import_pswd_password_title">Task List Password Protection</string>
         <string name="msgs_export_import_pswd_password_protect">Protect export file with a password</string>
         <string name="msgs_export_import_pswd_specify_password">Please specify the password.</string>
         <string name="msgs_export_import_pswd_password_required">Enter password for task list file.</string>
         <string name="msgs_export_import_pswd_invalid_password">Password incorrect.  Try again.</string>
         <string name="msgs_export_import_pswd_btn_cancel">Cancel</string>
+        <string name="msgs_export_import_task_list_btn_ok">Import</string>
         <string name="msgs_export_import_pswd_btn_ok">OK</string>
         <string name="msgs_export_import_pswd_hint_password">Password</string>
         <string name="msgs_export_import_pswd_hint_confirm">Confirm password</string>
@@ -301,6 +311,10 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Use SMB V2(2.11)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Use SMB V2/3(2.12)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Determined by system</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">An error exists in the master folder. Please fix it.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_import_failed_target_folder">An error exists in the target folder. Please fix it.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_import_failed_account_name">The account name could not be decrypted while importing the task list.Correct the correct account name.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_import_failed_account_password">The account password could not be decrypted while importing the task list. Correct the correct account password.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">Use Account name and password</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast">Fast</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest">Fastest</string>
@@ -309,6 +323,9 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_title">Compression level</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_ultra">Ultra</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_diff_zip_password">Passwords do not match.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_title_zip_password">Password</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_import_failed_zip_password">The ZIP password could not be decrypted while importing the task list. Correct the correct ZIP password.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_title_zip_confirm_password">Confirm password</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128">AES 128 Bit</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256">AES 256 Bit</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_none">None</string>
@@ -488,7 +505,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_mirror_taken_date_convert_error">The last modified time of the file was used because an error occurred in the conversion of the shooting date. File=</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Sync aborted because a directory with the same name as the file exists in the target. File=</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Sync cancelled because SDCARD is not mounted.</string>
-        <string name="msgs_mirror_external_sdcard_select_required">Sync cancelled because SDCARD not selected.</string>
+        <string name="msgs_mirror_external_sdcard_select_required">Sync cancelled because SDCARD write permission not granted.</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">It seems that the SDCARD contents is not reflected in the media store.  Execute media scan to update the contents of the SDCARD.</string>
         <string name="msgs_mirror_file_set_last_modified_failed">setLastModified() failed.  Enable \"Do not set the update time of the destination file to match the source file\" for the sync task.</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">Copying the ZIP file to the target file... %s%% done.</string>
@@ -670,6 +687,7 @@ Schedule:%s, Task:%s</string>
         <string name="msgs_svc_received_start_request_from_external_auto_task">Automatic sync task has been started because no sync task specified.</string>
         <string name="msgs_svc_received_start_request_from_shortcut">Sync request received from the shortcut.</string>
         <string name="msgs_svc_received_start_request_ignored_duplicate_request">Sync request ignored because it has already been processed.  ID=%s</string>
+        <string name="msgs_svc_received_start_request_ignored_task_is_error" formatted="false">Sync task was ignored because Sync task was in error. Task=%s, Requestor=%s</string>
         <string name="msgs_svc_received_start_request_ignored_already_task_queued" formatted="false">Sync task was ignored because Sync task was already queued. Task=%s, Requestor=%s</string>
         <string name="msgs_svc_received_start_request_ignored_already_task_queued_schedule" formatted="false">Sync task was ignored because Sync task was already queued. Schedule=%s, Task=%s, Requestor=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Start sync task request accepted. Task=%s, Requestor=%s</string>

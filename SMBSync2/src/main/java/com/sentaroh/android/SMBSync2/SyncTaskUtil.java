@@ -32,6 +32,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
@@ -39,10 +40,14 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
+import android.text.Html;
+import android.text.Spannable;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -96,6 +101,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -136,7 +142,6 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_T
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_LONG;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING;
 import static com.sentaroh.android.SMBSync2.GlobalParameters.DEFAULT_NOCOMPRESS_FILE_TYPE;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V3;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V4;
 
 public class SyncTaskUtil {
@@ -195,7 +200,204 @@ public class SyncTaskUtil {
 //        fsdf.showDialog(mFragMgr, fsdf, ntfy);
 //    };
 //
+
     public void importSyncTaskListDlg(final NotifyEvent p_ntfy) {
+        final ArrayList<String>auto_saved_selector_list=new ArrayList<String>();
+        final ArrayList<File>auto_saved_file_list=createAutoSaveFileList(mGp, mUtil);
+        Collections.sort(auto_saved_file_list, new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                return (int)(o2.lastModified()-o1.lastModified());
+            }
+        });
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        boolean latest_used=false;
+        for(File item:auto_saved_file_list) {
+            String entry="";
+            if (!latest_used) {
+                latest_used=true;
+                entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item_latest), sdf.format(item.lastModified()));
+            } else {
+                entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item), sdf.format(item.lastModified()));
+            }
+            auto_saved_selector_list.add(entry);
+        }
+        if (auto_saved_selector_list.size()==0) {
+            importSyncTaskListDlgWithFileSelection(p_ntfy);
+            return;
+        }
+
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.import_autosave_dlg);
+
+        final LinearLayout ll_title=(LinearLayout) dialog.findViewById(R.id.import_autosave_dlg_title_view);
+        ll_title.setBackgroundColor(mGp.themeColorList.title_background_color);
+        final TextView tv_title=(TextView)dialog.findViewById(R.id.import_autosave_dlg_title);
+        tv_title.setTextColor(mGp.themeColorList.title_text_color);
+//        if (Build.VERSION.SDK_INT>=23) tv_msg.setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY);
+
+        final Button btn_ok=(Button)dialog.findViewById(R.id.import_autosave_dlg_btn_ok);
+        btn_ok.setEnabled(false);
+        final Button btn_cancel=(Button)dialog.findViewById(R.id.import_autosave_dlg_btn_cancel);
+        final Button btn_select=(Button)dialog.findViewById(R.id.import_autosave_dlg_select_exported_file);
+
+        CommonDialog.setDlgBoxSizeLimit(dialog,true);
+
+
+        final ListView auto_save_list_view = (ListView) dialog.findViewById(R.id.import_autosave_dlg_autosave_listview);
+        final ListView manual_save_list_view = (ListView) dialog.findViewById(R.id.import_autosave_dlg_manual_save_listview);
+
+        final ArrayList<String>manual_save_file_list=getExportedFileList();
+        final ArrayList<String>manual_save_selector_list=new ArrayList<String>();
+        for(int i=0;i<manual_save_file_list.size();i++) {
+            String fp_item=manual_save_file_list.get(i);
+            File lf=new File(fp_item);
+            String dt=sdf.format(lf.lastModified());
+            String entry="";
+            if (i==0) entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item_latest), dt);
+            else entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item), dt);
+
+            manual_save_selector_list.add(fp_item+"\n"+entry);
+        }
+
+        SyncTaskListFileSelectorAdapter manual_save_adapter=new SyncTaskListFileSelectorAdapter(mActivity, R.layout.sync_task_list_save_file_selector_item,
+                manual_save_selector_list);
+        manual_save_list_view.setAdapter(manual_save_adapter);
+        manual_save_list_view.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        manual_save_list_view.setScrollingCacheEnabled(false);
+        manual_save_list_view.setScrollbarFadingEnabled(false);
+        manual_save_list_view.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
+                auto_save_list_view.setItemChecked(-1, true);
+                btn_ok.setEnabled(true);
+            }
+        });
+
+        SyncTaskListFileSelectorAdapter auto_save_adapter=new SyncTaskListFileSelectorAdapter(mActivity, R.layout.sync_task_list_save_file_selector_item,
+                auto_saved_selector_list);
+        auto_save_list_view.setAdapter(auto_save_adapter);
+        auto_save_list_view.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        auto_save_list_view.setScrollingCacheEnabled(false);
+        auto_save_list_view.setScrollbarFadingEnabled(false);
+        auto_save_list_view.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
+                manual_save_list_view.setItemChecked(-1, true);
+                btn_ok.setEnabled(true);
+            }
+        });
+
+        btn_select.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                importSyncTaskListDlgWithFileSelection(p_ntfy);
+                Handler hndl=new Handler();
+                hndl.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                },500);
+            }
+        });
+
+        btn_ok.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SparseBooleanArray checked_auto_save = auto_save_list_view.getCheckedItemPositions();
+                SparseBooleanArray checked_manual_save = manual_save_list_view.getCheckedItemPositions();
+                boolean auto_selected=false;
+                for (int i = 0; i <= auto_saved_selector_list.size(); i++) {
+                    if (checked_auto_save.get(i) == true) {
+                        importSyncTaskList(p_ntfy, auto_saved_file_list.get(i).getPath(), true);
+                        auto_selected=true;
+                        break;
+                    }
+                }
+                if (!auto_selected) {
+                    for (int i = 0; i <= manual_save_file_list.size(); i++) {
+                        if (checked_manual_save.get(i) == true) {
+                            importSyncTaskList(p_ntfy, manual_save_file_list.get(i), false);
+                            break;
+                        }
+                    }
+                }
+                Handler hndl=new Handler();
+                hndl.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                },500);
+            }
+        });
+
+        btn_cancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                btn_cancel.performClick();
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    private class SyncTaskListFileSelectorAdapter extends ArrayAdapter<String> {
+        private Context c;
+        private int id;
+        private ArrayList<String> items;
+
+        public SyncTaskListFileSelectorAdapter(Context context, int resource, ArrayList<String> objects) {
+            super(context, resource, objects);
+            c = context;
+            id = resource;
+            items = objects;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            final ViewHolder holder;
+
+            View v = convertView;
+            if (v == null) {
+                LayoutInflater vi = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = vi.inflate(id, null);
+                holder = new ViewHolder();
+                holder.tv_text1 =(TextView) v.findViewById(android.R.id.text1);
+//                holder.tv_text2 =(TextView) v.findViewById(android.R.id.text2);
+//                v=new CheckedTextView(c);
+//                ((CheckedTextView) v).setCheckMarkDrawable();
+//                v.setId(android.R.id.text1);
+//                holder.tv_text1=(CheckedTextView)v;
+
+                v.setTag(holder);
+            } else {
+                holder = (ViewHolder) v.getTag();
+            }
+            final String o = getItem(position);
+
+            if (o != null) {
+                holder.tv_text1.setText(o);
+            }
+
+            return v;
+        }
+
+        private class ViewHolder {
+            TextView tv_text1;
+            TextView tv_text2;
+        }
+    }
+
+    public void importSyncTaskListDlgWithFileSelection(final NotifyEvent p_ntfy) {
         mUtil.addDebugMsg(1,"I","importSyncTaskListDlg entered");
         importedSettingParmList.clear();
 
@@ -204,36 +406,7 @@ public class SyncTaskUtil {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 final String fpath = (String) o[0]+o[1]+"/"+(String)o[2];
-
-                NotifyEvent ntfy_pswd = new NotifyEvent(mContext);
-                ntfy_pswd.setListener(new NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context c, Object[] o) {
-                        mGp.profilePassword = (String) o[0];
-                        AdapterSyncTask tfl = null;
-                        if (isSyncTaskListFileOldFormat(fpath)) {
-                            tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, ImportOldProfileList.importOldProfileList(mGp, fpath), mGp);
-                        } else {
-                            tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view,
-                                    createSyncTaskListFromFile(mContext, mGp, mUtil, true, fpath, importedSettingParmList), mGp);
-                        }
-                        if (tfl.getCount() > 0) {
-                            selectImportProfileItem(tfl, p_ntfy);
-                        } else {
-                            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
-                            p_ntfy.notifyToListener(false, null);
-                        }
-                    }
-
-                    @Override
-                    public void negativeResponse(Context c, Object[] o) {
-                    }
-                });
-                if (isSyncTaskListFileEncrypted(fpath)) {
-                    promptPasswordForImport(fpath, ntfy_pswd);
-                } else {
-                    ntfy_pswd.notifyToListener(true, new Object[]{""});
-                }
+                importSyncTaskList(p_ntfy, fpath, false);
             }
 
             @Override
@@ -243,6 +416,38 @@ public class SyncTaskUtil {
         mCommonDlg.fileSelectorFileOnly(true,
                 mGp.internalRootDirectory, "", "", mContext.getString(R.string.msgs_select_import_file), ntfy);
 //                mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_import_file), ntfy);
+    }
+
+    private void importSyncTaskList(final NotifyEvent p_ntfy, final String fpath, final boolean from_auto_save) {
+        NotifyEvent ntfy_pswd = new NotifyEvent(mContext);
+        ntfy_pswd.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context c, Object[] o) {
+                mGp.profilePassword = (String) o[0];
+                AdapterSyncTask tfl = null;
+                if (isSyncTaskListFileOldFormat(fpath)) {
+                    tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, ImportOldProfileList.importOldProfileList(mGp, fpath), mGp);
+                } else {
+                    tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view,
+                            createSyncTaskListFromFile(mContext, mGp, mUtil, true, fpath, importedSettingParmList, from_auto_save), mGp);
+                }
+                if (tfl.getCount() > 0) {
+                    importSyncTaskItemSelector(tfl, fpath, p_ntfy, from_auto_save);
+                } else {
+                    mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
+                    p_ntfy.notifyToListener(false, null);
+                }
+            }
+
+            @Override
+            public void negativeResponse(Context c, Object[] o) {
+            }
+        });
+        if (isSyncTaskListFileEncrypted(fpath)) {
+            promptPasswordForImport(fpath, ntfy_pswd);
+        } else {
+            ntfy_pswd.notifyToListener(true, new Object[]{""});
+        }
     }
 
     private boolean isSyncTaskListFileOldFormat(String fpath) {
@@ -593,7 +798,7 @@ public class SyncTaskUtil {
 
     }
 
-    private void selectImportProfileItem(final AdapterSyncTask tfl, final NotifyEvent p_ntfy) {
+    private void importSyncTaskItemSelector(final AdapterSyncTask tfl, final String fp, final NotifyEvent p_ntfy, final boolean from_auto_save) {
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.export_import_profile_dlg);
@@ -624,6 +829,9 @@ public class SyncTaskUtil {
 //        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
 //        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
         title.setText(mContext.getString(R.string.msgs_export_import_profile_title));
+        final TextView from_path = (TextView) dialog.findViewById(R.id.export_import_profile_from_file_path);
+        from_path.setVisibility(TextView.VISIBLE);
+        from_path.setText(fp);
         LinearLayout ll_filelist = (LinearLayout) dialog.findViewById(R.id.export_import_profile_file_list);
         ll_filelist.setVisibility(LinearLayout.GONE);
         final Button ok_btn = (Button) dialog.findViewById(R.id.export_import_profile_dlg_btn_ok);
@@ -719,7 +927,7 @@ public class SyncTaskUtil {
                 importSelectedSyncTaskItem(imp_list_adapt, tfl,
                         ctv_import_settings.isChecked(),
                         ctv_import_schedule.isChecked(),
-                        p_ntfy);
+                        p_ntfy, from_auto_save);
                 dialog.dismiss();
             }
         });
@@ -748,9 +956,9 @@ public class SyncTaskUtil {
     private void importSelectedSyncTaskItem(
             final AdapterExportImportTask imp_list_adapt,
             final AdapterSyncTask tfl,
-            final boolean import_settings,
-            final boolean import_schedule,
-            final NotifyEvent p_ntfy) {
+            final boolean import_settings_required,
+            final boolean import_schedule_required,
+            final NotifyEvent p_ntfy, final boolean from_auto_save) {
         String repl_list = "";
         for (int i = 0; i < imp_list_adapt.getCount(); i++) {
             AdapterExportImportTask.ExportImportListItem eipli = imp_list_adapt.getItem(i);
@@ -765,13 +973,12 @@ public class SyncTaskUtil {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 String imp_list_temp = "";
+                String imp_error_temp = "";
                 for (int i = 0; i < tfl.getCount(); i++) {
                     SyncTaskItem ipfli = tfl.getItem(i);
                     AdapterExportImportTask.ExportImportListItem eipli = imp_list_adapt.getItem(i);
                     if (eipli.isChecked) {
                         imp_list_temp += ipfli.getSyncTaskName() + "\n";
-//						Log.v("","name1="+ipfli.getName()+
-//								", result="+getProfile(ipfli.getName(), mGp.syncTaskListAdapter));
                         SyncTaskItem mpfli = getSyncTaskByName(mGp.syncTaskAdapter, ipfli.getSyncTaskName());
                         if (mpfli != null) {
                             mGp.syncTaskAdapter.remove(mpfli);
@@ -781,19 +988,25 @@ public class SyncTaskUtil {
                             ipfli.setSyncTaskPosition(mGp.syncTaskAdapter.getCount());
                             mGp.syncTaskAdapter.add(ipfli);
                         }
+                        if (ipfli.isSyncTaskError()) {
+                            imp_error_temp+=ipfli.getSyncTaskName()+"\n";
+                        }
                     }
                 }
                 restoreImportedSystemOption();
-                if (import_settings) {
-                    restoreImportedSettingParms();
-                    imp_list_temp += mContext.getString(R.string.msgs_export_import_profile_setting_parms) + "\n";
+                boolean import_setting_restored_temp=false;
+                boolean import_schedule_restored_temp=false;
+                if (import_settings_required) {
+                    import_setting_restored_temp=restoreImportedSettingParms();
+                    if (import_setting_restored_temp) imp_list_temp += mContext.getString(R.string.msgs_export_import_profile_setting_parms) + "\n";
                 }
-                if (import_schedule) {
-                    restoreImportedScheduleParms();
-                    imp_list_temp += mContext.getString(R.string.msgs_export_import_profile_schedule_parms) + "\n";
+                if (import_schedule_required) {
+                    import_schedule_restored_temp=restoreImportedScheduleParms();
+                    if (import_schedule_restored_temp) imp_list_temp += mContext.getString(R.string.msgs_export_import_profile_schedule_parms) + "\n";
                 }
                 if (imp_list_temp.length() > 0) imp_list_temp += " ";
                 final String imp_list=imp_list_temp;
+                final String imp_smb=imp_error_temp;
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskListView.setSelection(0);
                 final Dialog pd=CommonDialog.showProgressSpinIndicator(mActivity);
@@ -807,15 +1020,44 @@ public class SyncTaskUtil {
                             @Override
                             public void run() {
                                 if (save_success) {
-                                    mUtil.showCommonDialog(false, "I", mContext.getString(R.string.msgs_export_import_profile_import_success), imp_list, null);
+                                    NotifyEvent ntfy_success=new NotifyEvent(mContext);
+                                    ntfy_success.setListener(new NotifyEventListener() {
+                                        @Override
+                                        public void positiveResponse(Context context, Object[] objects) {
+                                            if (from_auto_save && !imp_smb.equals("")) {
+                                                NotifyEvent ntfy_decrypt_warning=new NotifyEvent(mContext);
+                                                ntfy_decrypt_warning.setListener(new NotifyEventListener() {
+                                                    @Override
+                                                    public void positiveResponse(Context context, Object[] objects) {
+                                                        p_ntfy.notifyToListener(true, null);
+                                                        pd.dismiss();
+                                                    }
+                                                    @Override
+                                                    public void negativeResponse(Context context, Object[] objects) {}
+                                                });
+                                                mUtil.showCommonDialog(false, "W",mContext.getString(R.string.msgs_import_autosave_dlg_title),
+                                                        mContext.getString(R.string.msgs_export_import_profile_smb_account_name_password_not_restored)+"\n\n"+imp_smb, ntfy_decrypt_warning);
+                                                mUtil.addLogMsg("W",
+                                                        mContext.getString(R.string.msgs_export_import_profile_smb_account_name_password_not_restored)+"\n"+imp_smb);
+                                            } else {
+                                                p_ntfy.notifyToListener(true, null);
+                                                pd.dismiss();
+                                            }
+                                        }
+                                        @Override
+                                        public void negativeResponse(Context context, Object[] objects) {}
+                                    });
+                                    mUtil.showCommonDialog(false, "I",mContext.getString(R.string.msgs_import_autosave_dlg_title),
+                                            mContext.getString(R.string.msgs_export_import_profile_import_success)+"\n\n"+imp_list, ntfy_success);
+                                    mUtil.addLogMsg("I", mContext.getString(R.string.msgs_export_import_profile_import_success)+"\n"+imp_list);
+                                    SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
                                 } else {
-                                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_export_import_profile_import_failed), "", null);
+                                    mUtil.showCommonDialog(false, "E",mContext.getString(R.string.msgs_import_autosave_dlg_title),
+                                            mContext.getString(R.string.msgs_export_import_profile_import_failed), null);
+                                    mUtil.addLogMsg("E",mContext.getString(R.string.msgs_export_import_profile_import_failed));
+                                    p_ntfy.notifyToListener(true, null);
+                                    pd.dismiss();
                                 }
-                                if (import_settings || import_schedule) {
-                                    boolean[] parm = new boolean[]{import_settings, import_schedule};
-                                    p_ntfy.notifyToListener(true, new Object[]{parm});
-                                }
-                                pd.dismiss();
                             }
                         });
                     }
@@ -838,12 +1080,12 @@ public class SyncTaskUtil {
 
     }
 
-    private void restoreImportedSystemOption() {
+    private boolean restoreImportedSystemOption() {
         final ArrayList<PreferenceParmListIItem> spl = importedSettingParmList;
-
+        boolean result=false;
         if (spl.size() == 0) {
             mUtil.addDebugMsg(1, "I", "Import setting parms can not be not found.");
-            return;
+            return result;
         }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         final Editor pe = prefs.edit();
@@ -851,45 +1093,50 @@ public class SyncTaskUtil {
         if (spl.size() >= 0) {
             for (int i = 0; i < spl.size(); i++) {
                 if (spl.get(i).parms_key.startsWith("system_rest")) {
-                    restorePreferenceParms(pe, spl.get(i));
+                    result=restorePreferenceParms(pe, spl.get(i));
                 }
             }
             pe.commit();
 //			applySettingParms();
         }
+        return result;
     }
 
-    private void restorePreferenceParms(Editor pe, PreferenceParmListIItem pa) {
+    private boolean restorePreferenceParms(Editor pe, PreferenceParmListIItem pa) {
+        boolean result=false;
         if (pa.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING)) {
             pe.putString(pa.parms_key, pa.parms_value);
+            result=true;
             mUtil.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
         } else if (pa.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_BOOLEAN)) {
             boolean b_val = false;
             if (pa.parms_value.equals("false")) b_val = false;
             else b_val = true;
             pe.putBoolean(pa.parms_key, b_val);
+            result=true;
             mUtil.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
         } else if (pa.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_INT)) {
             int i_val = 0;
             i_val = Integer.parseInt(pa.parms_value);
-            ;
             pe.putInt(pa.parms_key, i_val);
+            result=true;
             mUtil.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
         } else if (pa.parms_type.equals(SMBSYNC2_UNLOAD_SETTINGS_TYPE_LONG)) {
             long i_val = 0;
             i_val = Long.parseLong(pa.parms_value);
-            ;
             pe.putLong(pa.parms_key, i_val);
+            result=true;
             mUtil.addDebugMsg(2, "I", "Restored parms=" + pa.parms_key + "=" + pa.parms_value);
         }
+        return result;
     }
 
-    private void restoreImportedScheduleParms() {
+    private boolean restoreImportedScheduleParms() {
         final ArrayList<PreferenceParmListIItem> spl = importedSettingParmList;
-
+        boolean result=false;
         if (spl.size() == 0) {
             mUtil.addDebugMsg(1, "I", "Import setting parms can not be not found.");
-            return;
+            return result;
         }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         final Editor pe = prefs.edit();
@@ -897,20 +1144,21 @@ public class SyncTaskUtil {
         if (spl.size() >= 0) {
             for (int i = 0; i < spl.size(); i++) {
                 if (spl.get(i).parms_key.equals(SCHEDULER_SCHEDULE_SAVED_DATA_V4)) {
-                    restorePreferenceParms(pe, spl.get(i));
+                    result=restorePreferenceParms(pe, spl.get(i));
                 }
             }
             pe.commit();
 //			applySettingParms();
         }
+        return result;
     }
 
-    private void restoreImportedSettingParms() {
+    private boolean restoreImportedSettingParms() {
         final ArrayList<PreferenceParmListIItem> spl = importedSettingParmList;
-
+        boolean result=false;
         if (spl.size() == 0) {
             mUtil.addDebugMsg(2, "I", "Import setting parms can not be not found.");
-            return;
+            return result;
         }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         final Editor pe = prefs.edit();
@@ -918,12 +1166,13 @@ public class SyncTaskUtil {
         if (spl.size() >= 0) {
             for (int i = 0; i < spl.size(); i++) {
                 if (spl.get(i).parms_key.startsWith("settings")) {
-                    restorePreferenceParms(pe, spl.get(i));
+                    result=restorePreferenceParms(pe, spl.get(i));
                 }
             }
             pe.commit();
 //			applySettingParms();
         }
+        return result;
     }
 
     public void exportSyncTaskListDlg() {
@@ -960,51 +1209,6 @@ public class SyncTaskUtil {
         String fn=APPLICATION_TAG+"_profile_"+dt.substring(0,10).replaceAll("/","-")+"_"+dt.substring(11).replaceAll(":","-")+".txt";
         mCommonDlg.fileSelectorFileOnlyWithCreate(true,
                 mGp.internalRootDirectory, "", fn, mContext.getString(R.string.msgs_select_export_file), ntfy_file_select);
-
-//        NotifyEvent ntfy_apswd = new NotifyEvent(mContext);
-//        ntfy_apswd.setListener(new NotifyEventListener() {
-//            @Override
-//            public void positiveResponse(Context c, Object[] o) {
-//                NotifyEvent ntfy_file_select = new NotifyEvent(mContext);
-//                ntfy_file_select.setListener(new NotifyEventListener() {
-//                    @Override
-//                    public void positiveResponse(Context c, Object[] o) {
-//                        final String fpath = (String) o[0]+o[1]+"/"+(String)o[2];
-//                        NotifyEvent ntfy_pswd = new NotifyEvent(mContext);
-//                        ntfy_pswd.setListener(new NotifyEventListener() {
-//                            @Override
-//                            public void positiveResponse(Context c, Object[] o) {
-//                                mGp.profilePassword = (String) o[0];
-//                                boolean encrypt_required = false;
-//                                if (!mGp.profilePassword.equals("")) encrypt_required = true;
-//                                String fd = fpath.substring(0, fpath.lastIndexOf("/"));
-//                                String fn = fpath.replace(fd + "/", "");
-//                                exportSyncTaskListToFile(fd, fn, encrypt_required);
-//                            }
-//
-//                            @Override
-//                            public void negativeResponse(Context c, Object[] o) {
-//                            }
-//                        });
-//                        promptPasswordForExport(fpath, ntfy_pswd);
-//                    }
-//
-//                    @Override
-//                    public void negativeResponse(Context c, Object[] o) {
-//                    }
-//                });
-//                String dt= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis());
-//                String fn=APPLICATION_TAG+"_profile_"+dt.substring(0,10).replaceAll("/","-")+"_"+dt.substring(11).replaceAll(":","-")+".txt";
-//                mCommonDlg.fileSelectorFileOnlyWithCreate(true,
-//                        mGp.internalRootDirectory, "", fn, mContext.getString(R.string.msgs_select_export_file), ntfy_file_select);
-//            }
-//
-//            @Override
-//            public void negativeResponse(Context c, Object[] o) {
-//            }
-//        });
-//        ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, mFragMgr, mUtil, false, ntfy_apswd,
-//                ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_EXPORT_TASK_LIST);
     }
 
     public void exportSyncTaskListToFile(final String profile_dir, final String profile_filename, final boolean encrypt_required) {
@@ -1023,6 +1227,7 @@ public class SyncTaskUtil {
                         mUtil.showCommonDialog(false, "I",
                                 mContext.getString(R.string.msgs_export_prof_success), "File=" + fp, null);
                         mUtil.addDebugMsg(1, "I", "Profile was exported. fn=" + fp);
+                        putExportedFileList(fp);
                     } else {
                         mUtil.showCommonDialog(false, "E",
                                 mContext.getString(R.string.msgs_export_prof_fail), "File=" + fp, null);
@@ -1042,15 +1247,67 @@ public class SyncTaskUtil {
             if (saveSyncTaskListToFile(mGp, mContext, mUtil, true, fd, fp,
                     mGp.syncTaskAdapter.getArrayList(), encrypt_required)) {
                 mUtil.showCommonDialog(false, "I",
-                        mContext.getString(R.string.msgs_export_prof_success),
-                        "File=" + fp, null);
+                        mContext.getString(R.string.msgs_export_prof_success), "File=" + fp, null);
                 mUtil.addDebugMsg(1, "I", "Profile was exported. fn=" + fp);
+                putExportedFileList(fp);
             } else {
                 mUtil.showCommonDialog(false, "E",
-                        mContext.getString(R.string.msgs_export_prof_fail),
-                        "File=" + fp, null);
+                        mContext.getString(R.string.msgs_export_prof_fail), "File=" + fp, null);
             }
         }
+    }
+
+    final static String EXPORTED_FILE_LIST_KEY="exported_file_list_key";
+    private void putExportedFileList(String fp) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        ArrayList<String> saved_file_list=getExportedFileList();
+        if (!saved_file_list.contains(fp)) {
+            saved_file_list.add(fp);
+            Collections.sort(saved_file_list, new Comparator<String>(){
+                @Override
+                public int compare(String o1, String o2) {
+                    File o1_file=new File(o1);
+                    File o2_file=new File(o2);
+                    return (int)(o2_file.lastModified()-o1_file.lastModified());
+                }
+            });
+            if (saved_file_list.size()>9) {
+                for(int i=9;i<saved_file_list.size();i++) saved_file_list.remove(i);
+            }
+            String saved_list="";
+            for(String fp_item:saved_file_list) {
+                saved_list+=fp_item+"\n";
+            }
+            prefs.edit().putString(EXPORTED_FILE_LIST_KEY, saved_list).commit();
+        }
+
+    }
+
+    private ArrayList<String> getExportedFileList() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String saved_list_string=null;
+        try {
+            saved_list_string=prefs.getString(EXPORTED_FILE_LIST_KEY, null);
+        } catch(Exception e) {}
+        ArrayList<String> file_list=new ArrayList<String>();
+        if (saved_list_string!=null) {
+            String[] saved_array=saved_list_string.split("\n");
+            for (String saved_fp:saved_array) {
+                if (saved_fp!=null && !saved_fp.equals("")) {
+                    File lf=new File(saved_fp);
+                    if (lf.exists()) file_list.add(saved_fp);
+                }
+            }
+            Collections.sort(file_list, new Comparator<String>(){
+                @Override
+                public int compare(String o1, String o2) {
+                    File o1_file=new File(o1);
+                    File o2_file=new File(o2);
+                    return (int)(o2_file.lastModified()-o1_file.lastModified());
+                }
+            });
+        }
+        return file_list;
     }
 
     static public void setAllSyncTaskToUnchecked(boolean hideCheckBox, AdapterSyncTask pa) {
@@ -4596,12 +4853,12 @@ public class SyncTaskUtil {
         }
     }
 
-    synchronized public static ArrayList<SyncTaskItem> createSyncTaskList(Context context, GlobalParameters gp, CommonUtilities util) {
-        return createSyncTaskListFromFile(context, gp, util, false, "", null);
+    synchronized public static ArrayList<SyncTaskItem> createSyncTaskList(Context context, GlobalParameters gp, CommonUtilities util, boolean auto_save) {
+        return createSyncTaskListFromFile(context, gp, util, false, "", null, auto_save);
     }
 
     synchronized public static ArrayList<SyncTaskItem> createSyncTaskListFromFile(Context context, GlobalParameters gp, CommonUtilities util,
-                                                                     boolean sdcard, String fp, ArrayList<PreferenceParmListIItem> ispl) {
+                                                                     boolean sdcard, String fp, ArrayList<PreferenceParmListIItem> ispl, boolean auto_save) {
         ArrayList<SyncTaskItem> sync = new ArrayList<SyncTaskItem>();
         if (ispl != null) ispl.clear();
 
@@ -4609,10 +4866,21 @@ public class SyncTaskUtil {
             File sf = new File(fp);
             if (sf.exists()) {
                 CipherParms cp = null;
+                CipherParms cp_autosave=null;
                 boolean prof_encrypted = isSyncTaskListFileEncrypted(fp);
                 if (prof_encrypted) {
-                    cp = EncryptUtil.initDecryptEnv(
-                            gp.profileKeyPrefix + gp.profilePassword);
+                    cp = EncryptUtil.initDecryptEnv(gp.profileKeyPrefix + gp.profilePassword);
+                }
+                if (auto_save) {
+                    String priv_key= null;
+                    try {
+                        priv_key = KeyStoreUtil.getGeneratedPasswordNewVersion(context, SMBSYNC2_KEY_STORE_ALIAS);
+                    } catch (Exception e) {
+                        String stm= MiscUtil.getStackTraceString(e);
+                        util.addDebugMsg(1,"I","createSyncTaskListFromFile error="+e.getMessage()+"\n"+stm);
+                        e.printStackTrace();
+                    }
+                    cp_autosave=EncryptUtil.initDecryptEnv(priv_key);
                 }
                 try {
                     BufferedReader br = new BufferedReader(new FileReader(fp), 8192);
@@ -4633,9 +4901,9 @@ public class SyncTaskUtil {
                                 String enc_str = pl.replace(prof_pre, "");
                                 byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
                                 String dec_str = EncryptUtil.decrypt(enc_array, cp);
-                                addSyncTaskList(sdcard, prof_pre + dec_str, sync, ispl, util);
+                                addSyncTaskList(sdcard, prof_pre + dec_str, sync, ispl, util, cp_autosave, auto_save);
                             } else {
-                                addSyncTaskList(sdcard, pl, sync, ispl, util);
+                                addSyncTaskList(sdcard, pl, sync, ispl, util, cp_autosave, auto_save);
                             }
                         }
                     }
@@ -4700,16 +4968,16 @@ public class SyncTaskUtil {
                             String enc_str = pl.substring(6);
                             byte[] dec_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
                             String dec_str = EncryptUtil.decrypt(dec_array, cp_int);
-                            addSyncTaskList(sdcard, prof_pre + dec_str, sync, ispl, util);
+                            addSyncTaskList(sdcard, prof_pre + dec_str, sync, ispl, util, null, auto_save);
                         } else if (pl.startsWith(SMBSYNC2_PROF_VER8)) {
                             String prof_pre="";
                             if (pl.startsWith(SMBSYNC2_PROF_VER8)) prof_pre=SMBSYNC2_PROF_VER8;
                             String enc_str=pl.substring(6);
                             byte[] dec_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
                             String dec_str = EncryptUtil.decrypt(dec_array, cp_int);
-                            addSyncTaskList(sdcard,prof_pre+dec_str , sync, ispl, util);
+                            addSyncTaskList(sdcard,prof_pre+dec_str , sync, ispl, util, null, auto_save);
                         } else {
-                            addSyncTaskList(sdcard, pl, sync, ispl, util);
+                            addSyncTaskList(sdcard, pl, sync, ispl, util, null, auto_save);
                         }
                     }
                     br.close();
@@ -4829,7 +5097,7 @@ public class SyncTaskUtil {
     }
 
     private static void addSyncTaskList(boolean sdcard, String pl, ArrayList<SyncTaskItem> sync,
-                                        ArrayList<PreferenceParmListIItem> ispl, CommonUtilities util) {
+                                        ArrayList<PreferenceParmListIItem> ispl, CommonUtilities util, CipherParms cp_autosave, boolean auto_save) {
 //		Log.v("","l="+ispl);
         if (pl.startsWith(SMBSYNC2_PROF_VER1)) {
             if (pl.length() > 10) {
@@ -4868,7 +5136,7 @@ public class SyncTaskUtil {
             }
         } else if (pl.startsWith(SMBSYNC2_PROF_VER8)) {
             if (pl.length() > 10) {
-                addSyncTaskListVer8(sdcard, pl.replace(SMBSYNC2_PROF_VER8, ""), sync, util);
+                addSyncTaskListVer8(sdcard, pl.replace(SMBSYNC2_PROF_VER8, ""), sync, util, cp_autosave, auto_save);
                 if (ispl != null) addImportSettingsParm(pl.replace(SMBSYNC2_PROF_VER8, ""), ispl);
             }
         }
@@ -5912,7 +6180,20 @@ public class SyncTaskUtil {
         }
     }
 
-    private static void addSyncTaskListVer8(boolean sdcard, String pl, ArrayList<SyncTaskItem> sync, CommonUtilities util) {
+    private static String decryptByInternalPassword(CommonUtilities util, CipherParms cp_autosave, String enc_str) {
+        String dec_str =null;
+        try {
+            byte[] dec_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
+            dec_str = EncryptUtil.decrypt(dec_array, cp_autosave);
+        } catch(Exception e) {
+            String stm= MiscUtil.getStackTraceString(e);
+            util.addDebugMsg(1,"W","createSyncTaskListFromFile error="+e.getMessage()+"\n"+stm);
+            e.printStackTrace();
+        }
+        return dec_str;
+    }
+
+    private static void addSyncTaskListVer8(boolean sdcard, String pl, ArrayList<SyncTaskItem> sync, CommonUtilities util, CipherParms cp_autosave, boolean auto_save) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
         String list1 = "", list2 = "", list3 = "", list4="", npl = "";
         int ls = pl.indexOf("[");
@@ -5927,8 +6208,8 @@ public class SyncTaskUtil {
         if (list_array.length>=4) list4 = list_array[3].substring(1);
 
         String[] tmp_pl = npl.split("\t");// {"type","name","active",options...};
-        String[] parm = new String[100];
-        for (int i = 0; i < 100; i++) parm[i] = "";
+        String[] parm = new String[200];
+        for (int i = 0; i < 200; i++) parm[i] = "";
         for (int i = 0; i < tmp_pl.length; i++) {
             if (tmp_pl[i] == null) parm[i] = "";
             else {
@@ -5964,8 +6245,31 @@ public class SyncTaskUtil {
             stli.setSyncTaskType(parm[3]);
 
             stli.setMasterFolderType(parm[4]);
-            stli.setMasterSmbUserName(parm[5]);
-            stli.setMasterSmbPassword(parm[6]);
+            if (auto_save && stli.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                if (!parm[5].equals("") ) {
+                    String dec_user=decryptByInternalPassword(util, cp_autosave, parm[5]);
+                    if (dec_user!=null) stli.setMasterSmbUserName(dec_user);
+                    else {
+//                        stli.setMasterSmbUserName(SMBSYNC2_PROF_DECRYPT_FAILED);
+                        stli.setMasterFolderError(stli.getMasterFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_NAME);
+                    }
+                } else {
+                    stli.setMasterSmbUserName(parm[5]);
+                }
+                if (!parm[6].equals("")) {
+                    String dec_pswd = decryptByInternalPassword(util, cp_autosave, parm[6]);
+                    if (dec_pswd != null) stli.setMasterSmbPassword(dec_pswd);
+                    else {
+//                        stli.setMasterSmbPassword(SMBSYNC2_PROF_DECRYPT_FAILED);
+                        stli.setMasterFolderError(stli.getMasterFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_PASSWORD);
+                    }
+                } else {
+                    stli.setMasterSmbPassword(parm[6]);
+                }
+            } else {
+                stli.setMasterSmbUserName(parm[5]);
+                stli.setMasterSmbPassword(parm[6]);
+            }
             stli.setMasterSmbShareName(parm[7]);
             stli.setMasterDirectoryName(parm[8]);
             stli.setMasterSmbAddr(parm[9]);
@@ -5974,8 +6278,31 @@ public class SyncTaskUtil {
             stli.setMasterSmbDomain(parm[12]);
 
             stli.setTargetFolderType(parm[13]);
-            stli.setTargetSmbUserName(parm[14]);
-            stli.setTargetSmbPassword(parm[15]);
+            if (auto_save && stli.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                if (!parm[14].equals("")) {
+                    String dec_user=decryptByInternalPassword(util, cp_autosave, parm[14]);
+                    if (dec_user!=null) stli.setTargetSmbUserName(dec_user);
+                    else {
+//                        stli.setTargetSmbUserName(SMBSYNC2_PROF_DECRYPT_FAILED);
+                        stli.setTargetFolderError(stli.getTargetFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_NAME);
+                    }
+                } else {
+                    stli.setTargetSmbUserName(parm[14]);
+                }
+                if (!parm[15].equals("")) {
+                    String dec_pswd=decryptByInternalPassword(util, cp_autosave, parm[15]);
+                    if (dec_pswd!=null) stli.setTargetSmbPassword(dec_pswd);
+                    else {
+//                        stli.setTargetSmbPassword(SMBSYNC2_PROF_DECRYPT_FAILED);
+                        stli.setTargetFolderError(stli.getTargetFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_PASSWORD);
+                    }
+                } else {
+                    stli.setTargetSmbPassword(parm[15]);
+                }
+            } else {
+                stli.setTargetSmbUserName(parm[14]);
+                stli.setTargetSmbPassword(parm[15]);
+            }
             stli.setTargetSmbShareName(parm[16]);
             stli.setTargetDirectoryName(parm[17]);
             stli.setTargetSmbAddr(parm[18]);
@@ -6040,8 +6367,22 @@ public class SyncTaskUtil {
                 stli.setTargetZipCompressionMethod(parm[50]);
             if (!parm[51].equals("") && !parm[51].equals("end"))
                 stli.setTargetZipEncryptMethod(parm[51]);
-            if (!parm[52].equals("") && !parm[52].equals("end"))
-                stli.setTargetZipPassword(parm[52]);
+            if (!parm[52].equals("") && !parm[52].equals("end")) {
+                if (!parm[52].equals("")) {
+                    if (auto_save && stli.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
+                        String dec_pswd=decryptByInternalPassword(util, cp_autosave, parm[52]);
+                        if (dec_pswd!=null) stli.setTargetZipPassword(dec_pswd);
+                        else {
+//                            stli.setTargetZipPassword(SMBSYNC2_PROF_DECRYPT_FAILED);
+                            stli.setTargetFolderError(stli.getTargetFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ZIP_PASSWORD);
+                        }
+                    } else {
+                        stli.setTargetZipPassword(parm[52]);
+                    }
+                } else {
+                    stli.setTargetZipPassword(parm[52]);
+                }
+            }
             if (!parm[53].equals("") && !parm[53].equals("end"))
                 stli.setSyncOptionTaskSkipIfConnectAnotherWifiSsid(parm[53].equals("1") ? true : false);
 
@@ -6120,6 +6461,9 @@ public class SyncTaskUtil {
 
             if (!parm[88].equals("") && !parm[88].equals("end")) stli.setSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty((parm[88].equals("1") ? true : false));
 
+            if (!parm[89].equals("") && !parm[89].equals("end")) stli.setMasterFolderError(stli.getMasterFolderError()|Integer.parseInt(parm[89]));
+            if (!parm[90].equals("") && !parm[90].equals("end")) stli.setTargetFolderError(stli.getTargetFolderError()|Integer.parseInt(parm[90]));
+
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -6179,12 +6523,116 @@ public class SyncTaskUtil {
         return saveSyncTaskListToFile(mGp, c, util, false, "", "", pfl, false);
     }
 
-    synchronized public static boolean saveSyncTaskListToFile(GlobalParameters mGp, Context c, CommonUtilities util,
+    public static boolean saveSyncTaskListToFile(GlobalParameters mGp, Context c, CommonUtilities util,
                                                  boolean sdcard, String fd, String fp,
                                                  ArrayList<SyncTaskItem> pfl, boolean encrypt_required) {
+        return saveSyncTaskListToFileWithAutosave(mGp, c, util, sdcard, fd, fp, pfl, encrypt_required, false);
+    }
+
+
+    final static private int MAX_AUTOSAVE_FILE_COUNT=50;
+    private static String getAutosaveDirectory(GlobalParameters mGp, CommonUtilities util) {
+        return mGp.settingMgtFileDir+"/"+"autosave";
+    }
+
+    private static ArrayList<File> createAutoSaveFileList(GlobalParameters mGp, CommonUtilities util) {
+        String fd=getAutosaveDirectory(mGp, util);
+        File lf=new File(fd);
+
+        File[] fl=lf.listFiles();
+        ArrayList<File>as_fl=new ArrayList<File>();
+        if (fl!=null) {
+            for(File item:fl) {
+                if (item.isFile() && item.getName().endsWith(".stf")) {
+                    as_fl.add(item);
+                }
+            }
+            Collections.sort(as_fl, new Comparator<File>(){
+                @Override
+                public int compare(File o1, File o2) {
+                    return o1.getPath().compareToIgnoreCase(o2.getPath());
+                }
+            });
+        }
+        return as_fl;
+    }
+    public static boolean autosaveSyncTaskList(GlobalParameters mGp, Context c, CommonUtilities util, CommonDialog cd,
+                                               ArrayList<SyncTaskItem> pfl) {
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String fd=getAutosaveDirectory(mGp, util);
+        String fp="autosave_"+sdf.format(System.currentTimeMillis())+".stf";
+
+        File lf=new File(fd);
+        if (fd.startsWith(mGp.safMgr.getSdcardRootPath())) {
+            SafFile odr=null;
+            if (!lf.exists()) odr=mGp.safMgr.createSdcardDirectory(fd);
+        } else if (fd.startsWith(mGp.safMgr.getUsbRootPath())) {
+            SafFile odr=null;
+            if (!lf.exists()) odr=mGp.safMgr.createUsbDirectory(fd);
+        } else {
+            if (!lf.exists()) {
+                File of=new File(fd);
+                of.mkdirs();
+            }
+        }
+
+        ArrayList<File>as_fl=createAutoSaveFileList(mGp, util);
+
+        //Delete auto save file if max count exceded
+        if (as_fl.size()>MAX_AUTOSAVE_FILE_COUNT) {
+            int dc=as_fl.size()-(MAX_AUTOSAVE_FILE_COUNT-1);
+            for(int i=0;i<dc;i++) {
+                File ai=as_fl.get(0);
+                if (ai.getPath().startsWith(mGp.safMgr.getSdcardRootPath())) {
+                    SafFile odr=mGp.safMgr.createSdcardFile(ai.getPath());
+                } else if (ai.getPath().startsWith(mGp.safMgr.getUsbRootPath())) {
+                    SafFile odr=mGp.safMgr.createUsbFile(ai.getPath());
+                } else {
+                    ai.delete();
+                }
+                as_fl.remove(0);
+                util.addDebugMsg(1,"I","Sync task auto save file was deleted, fp="+ai.getPath());
+            }
+        }
+
+        boolean result=saveSyncTaskListToFileWithAutosave(mGp, c, util, true, fd, fd+"/autosave_temp", pfl, false, true);
+        if (result) {
+            File tmp_file=new File(fd+"/autosave_temp");
+            File out_file=new File(fd+"/"+fp);
+            tmp_file.renameTo(out_file);
+            String msg=c.getString(R.string.msgs_import_autosave_dlg_autosave_completed);
+            util.addLogMsg("I",msg+". Path="+fd+"/"+fp);
+            Toast.makeText(mGp.appContext, msg, Toast.LENGTH_LONG).show();
+        } else {
+            File tmp_file=new File(fd+"/autosave_temp");
+            tmp_file.delete();
+            util.addLogMsg("W",c.getString(R.string.msgs_import_autosave_dlg_autosave_failed));
+            cd.showCommonDialog(false, "E",c.getString(R.string.msgs_import_autosave_dlg_autosave_failed),"",null);
+        }
+        return result;
+    }
+
+    private static String encryptByInternalPassword(GlobalParameters mGp, CommonUtilities util, CipherParms cp_int, String from_str) {
+        String result="";
+        try {
+            result=Base64Compat.encodeToString(EncryptUtil.encrypt(from_str, cp_int), Base64Compat.NO_WRAP);
+        } catch(Exception e) {
+            result=null;
+            e.printStackTrace();
+            util.addLogMsg("E", "encryptByInternalPassword failed");
+            util.addLogMsg("E", e.toString());
+            String stm= MiscUtil.getStackTraceString(e);
+            util.addLogMsg("E", stm);
+        }
+        return result;
+    }
+
+    synchronized private static boolean saveSyncTaskListToFileWithAutosave(GlobalParameters mGp, Context c, CommonUtilities util,
+                                                 boolean sdcard, String fd, String fp,
+                                                 ArrayList<SyncTaskItem> pfl, boolean encrypt_required, boolean auto_save) {
         boolean result = true;
         String ofp = "";
-        PrintWriter pw;
+        PrintWriter pw=null;
         BufferedWriter bw = null;
         try {
             CipherParms cp_sdcard = null;
@@ -6220,6 +6668,10 @@ public class SyncTaskUtil {
                 } else {
                     pw.println(CURRENT_SMBSYNC2_PROFILE_VERSION + SMBSYNC2_PROF_DEC);
                 }
+                if (auto_save) {
+                    String priv_key=KeyStoreUtil.getGeneratedPasswordNewVersion(c, SMBSYNC2_KEY_STORE_ALIAS);
+                    cp_int = EncryptUtil.initDecryptEnv(priv_key);
+                }
             } else {
                 String priv_key=KeyStoreUtil.getGeneratedPasswordNewVersion(c, SMBSYNC2_KEY_STORE_ALIAS);
                 cp_int = EncryptUtil.initDecryptEnv(priv_key);
@@ -6239,8 +6691,29 @@ public class SyncTaskUtil {
                     String pl_active = item.isSyncTaskAuto() ? "1" : "0";
 
                     String pl_master_folder_type = convertToCodeChar(item.getMasterFolderType());
-                    String pl_master_remote_user_id = convertToCodeChar(item.getMasterSmbUserName());
-                    String pl_master_remote_password = convertToCodeChar(item.getMasterSmbPassword());
+
+                    String pl_master_remote_user_id = "";
+                    if (!auto_save) pl_master_remote_user_id = convertToCodeChar(item.getMasterSmbUserName());
+                    else if (!item.getMasterSmbUserName().equals("")) {
+                        String enc_str=encryptByInternalPassword(mGp, util, cp_int, item.getMasterSmbUserName());
+                        if (enc_str!=null) pl_master_remote_user_id = enc_str;
+                        else {
+                            result=false;
+                            break;
+                        }
+                    }
+
+                    String pl_master_remote_password = "";
+                    if (!auto_save) pl_master_remote_password = convertToCodeChar(item.getMasterSmbPassword());
+                    else if (!item.getMasterSmbPassword().equals("")) {
+                        String enc_str=encryptByInternalPassword(mGp, util, cp_int, item.getMasterSmbPassword());
+                        if (enc_str!=null) pl_master_remote_password = enc_str;
+                        else {
+                            result=false;
+                            break;
+                        }
+                    }
+
                     String pl_master_remoteSmbShare = convertToCodeChar(item.getMasterSmbShareName());
                     String pl_master_directory_name = convertToCodeChar(item.getMasterDirectoryName());
                     String pl_master_remote_addr = item.getMasterSmbAddr();
@@ -6249,8 +6722,28 @@ public class SyncTaskUtil {
 //					String pl_master_use_usb_folder=item.isMasterFolderUseInternalUsbFolder()?"1":"0";
 
                     String pl_target_folder_type = convertToCodeChar(item.getTargetFolderType());
-                    String pl_target_remote_user_id = convertToCodeChar(item.getTargetSmbUserName());
-                    String pl_target_remote_password = convertToCodeChar(item.getTargetSmbPassword());
+                    String pl_target_remote_user_id = "";
+                    if (!auto_save) pl_target_remote_user_id = convertToCodeChar(item.getTargetSmbUserName());
+                    else if (!item.getTargetSmbUserName().equals("")) {
+                        String enc_str=encryptByInternalPassword(mGp, util, cp_int, item.getTargetSmbUserName());
+                        if (enc_str!=null) pl_target_remote_user_id = enc_str;
+                        else {
+                            result=false;
+                            break;
+                        }
+                    }
+
+                    String pl_target_remote_password = "";
+                    if (!auto_save) pl_target_remote_password = convertToCodeChar(item.getTargetSmbPassword());
+                    else if (!item.getTargetSmbPassword().equals("")) {
+                        String enc_str=encryptByInternalPassword(mGp, util, cp_int, item.getTargetSmbPassword());
+                        if (enc_str!=null) pl_target_remote_password = enc_str;
+                        else {
+                            result=false;
+                            break;
+                        }
+                    }
+
                     String pl_target_remoteSmbShare = convertToCodeChar(item.getTargetSmbShareName());
                     String pl_target_directory_name = convertToCodeChar(item.getTargetDirectoryName());
                     String pl_target_remote_addr = item.getTargetSmbAddr();
@@ -6326,6 +6819,17 @@ public class SyncTaskUtil {
 
                     String sync_use_ext_dir_filter1 = item.isSyncOptionUseExtendedDirectoryFilter1() ? "1" : "0"; //60
 
+                    String zip_password=item.getTargetZipPassword();
+                    if (!auto_save) zip_password=item.getTargetZipPassword();
+                    else if (!item.getTargetZipPassword().equals("")) {
+                        String enc_str=encryptByInternalPassword(mGp, util, cp_int, item.getTargetZipPassword());
+                        if (enc_str!=null) zip_password = enc_str;
+                        else {
+                            result=false;
+                            break;
+                        }
+                    }
+
                     pl = SMBSYNC2_PROF_TYPE_SYNC + "\t" +
                             pl_name + "\t" + //1
                             pl_active + "\t" +//2
@@ -6395,7 +6899,7 @@ public class SyncTaskUtil {
                             item.getTargetZipCompressionLevel() + "\t" +                        //49
                             item.getTargetZipCompressionMethod() + "\t" +                       //50
                             item.getTargetZipEncryptMethod() + "\t" +                           //51
-                            item.getTargetZipPassword() + "\t" +                                //52
+                            zip_password + "\t" +                                               //52
                             (item.isSyncOptionTaskSkipIfConnectAnotherWifiSsid() ? "1" : "0") + "\t" +//53
 
                             (item.isSyncOptionSyncWhenCharging() ? "1" : "0") + "\t" +          //54
@@ -6448,15 +6952,18 @@ public class SyncTaskUtil {
 
                             (item.isTargetUseTakenDateTimeToDirectoryNameKeyword() ? "1" : "0") + "\t" +     //82
 
-                            item.getSyncTwoWayConflictFileRule() + "\t" +                         //83
-                            (item.isSyncTwoWayKeepConflictFile() ? "1" : "0") + "\t" +          //84
+                            item.getSyncTwoWayConflictFileRule() + "\t" +                           //83
+                            (item.isSyncTwoWayKeepConflictFile() ? "1" : "0") + "\t" +              //84
 
-                            (item.isMasterSmbUseSmb2Negotiation() ? "1" : "0") + "\t" +          //85
-                            (item.isTargetSmbUseSmb2Negotiation() ? "1" : "0") + "\t" +          //86
+                            (item.isMasterSmbUseSmb2Negotiation() ? "1" : "0") + "\t" +             //85
+                            (item.isTargetSmbUseSmb2Negotiation() ? "1" : "0") + "\t" +             //86
 
-                            (item.isSyncOptionSyncAllowGlobalIpAddress() ? "1" : "0") + "\t" +   //87
+                            (item.isSyncOptionSyncAllowGlobalIpAddress() ? "1" : "0") + "\t" +      //87
 
                             (item.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty() ? "1" : "0") + "\t" +   //88
+
+                            (item.getMasterFolderError()) + "\t" +                                       //89
+                            (item.getTargetFolderError()) + "\t" +                                       //90
 
                     "end"
                     ;
@@ -6475,12 +6982,12 @@ public class SyncTaskUtil {
                     }
 
                 }
-                if (sdcard) {
+                if (sdcard && result) {
                     saveSettingsParmsToFile(c, pw, encrypt_required, cp_sdcard);
                 }
             }
+            pw.flush();
             pw.close();
-            bw.close();
         } catch (IOException e) {
             e.printStackTrace();
             util.addLogMsg("E", String.format(mGp.appContext.getString(R.string.msgs_save_to_profile_error), ofp));
@@ -6488,6 +6995,8 @@ public class SyncTaskUtil {
             String stm= MiscUtil.getStackTraceString(e);
             util.addLogMsg("E", stm);
             result = false;
+            pw.flush();
+            pw.close();
         } catch (Exception e) {
             e.printStackTrace();
             util.addLogMsg("E", "Sync task list encryption failed");
@@ -6495,6 +7004,8 @@ public class SyncTaskUtil {
             String stm= MiscUtil.getStackTraceString(e);
             util.addLogMsg("E", stm);
             result = false;
+            pw.flush();
+            pw.close();
         }
 
         return result;

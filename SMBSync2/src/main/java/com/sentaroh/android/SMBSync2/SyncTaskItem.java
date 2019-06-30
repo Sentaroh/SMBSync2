@@ -513,6 +513,18 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty() {return syncOptionMoveOnlyRemoveMasterDirectoryIfEmpty;}
     public void setSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty(boolean p) {syncOptionMoveOnlyRemoveMasterDirectoryIfEmpty = p;}
 
+    static public final int SYNC_FOLDER_ERROR_NO_ERROR =0;
+    static public final int SYNC_FOLDER_ERROR_ACCOUNT_NAME =1;
+    static public final int SYNC_FOLDER_ERROR_ACCOUNT_PASSWORD =2;
+    static public final int SYNC_FOLDER_ERROR_ZIP_PASSWORD =4;
+    private int syncMasterFolderError =SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
+    private int syncTargetFolderError =SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
+    public boolean isSyncTaskError() {return (syncMasterFolderError+syncTargetFolderError)!=SYNC_FOLDER_ERROR_NO_ERROR;}
+    public int getMasterFolderError() {return syncMasterFolderError;}
+    public void setMasterFolderError(int error_code) {syncMasterFolderError = error_code;}
+    public int getTargetFolderError() {return syncTargetFolderError;}
+    public void setTargetFolderError(int error_code) {syncTargetFolderError = error_code;}
+
     public void setLastSyncTime(String p) {syncLastSyncTime = p;}
     public void setLastSyncResult(int p) {syncLastSyncResult = p;}
 
@@ -562,6 +574,8 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskEnabled==sti.isSyncTaskAuto()) &&
                 (syncOptionSyncTestMode==sti.isSyncTestMode()) &&
                 (syncTaskType.equals(sti.getSyncTaskType())) &&
+                (syncMasterFolderError==sti.getMasterFolderError()) &&
+                (syncTargetFolderError==sti.getTargetFolderError()) &&
                 (syncTwoWayConflictOption.equals(sti.getSyncTwoWayConflictFileRule())) &&
                 (syncTwoWayConflictKeepConflictFile==sti.isSyncTwoWayKeepConflictFile() ))&&
                 (syncTaskMasterFolderType.equals(sti.getMasterFolderType())) &&

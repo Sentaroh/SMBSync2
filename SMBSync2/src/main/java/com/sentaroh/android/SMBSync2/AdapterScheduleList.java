@@ -245,9 +245,11 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
             holder.swEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    o.scheduleEnabled = isChecked;
-                    if (mSwNotify != null)
-                        mSwNotify.notifyToListener(true, new Object[]{position});
+                    if (o.scheduleEnabled!=isChecked) {
+                        o.scheduleEnabled = isChecked;
+                        if (mSwNotify != null)
+                            mSwNotify.notifyToListener(true, new Object[]{position});
+                    }
                     notifyDataSetChanged();
                 }
             });

@@ -78,6 +78,9 @@ public class Constants {
     public final static String SMBSYNC2_PROF_VER8="PROF 8";
 	public final static String SMBSYNC2_PROF_ENC="ENC";
 	public final static String SMBSYNC2_PROF_DEC="DEC";
+
+    public final static String SMBSYNC2_PROF_DECRYPT_FAILED="<decrypt failed>";
+    public final static String SMBSYNC2_PROF_ENCRYPT_FAILED="<encrypt failed>";
 	
 	public final static String CURRENT_SMBSYNC2_PROFILE_FILE_NAME=SMBSYNC2_PROFILE_FILE_NAME_V8;
 	public final static String CURRENT_SMBSYNC2_PROFILE_VERSION=SMBSYNC2_PROF_VER8;

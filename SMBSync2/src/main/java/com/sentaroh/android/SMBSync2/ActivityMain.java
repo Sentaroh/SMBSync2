@@ -256,8 +256,9 @@ public class ActivityMain extends AppCompatActivity {
                 public void run() {
                     if (mSyncTaskListCreateRequired) {
                         mUtil.addDebugMsg(1, "I", "Sync task list creation started.");
-                        ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil);
+                        ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil, false);
                         for(SyncTaskItem sti:task_list) mGp.syncTaskList.add(sti);
+//                        SyncTaskXml.saveXmlSyncTaskList(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList, false);
                         mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
                     } else {
                         mUtil.addDebugMsg(1, "I", "Sync task list was already created.");
@@ -865,6 +866,8 @@ public class ActivityMain extends AppCompatActivity {
     private void initAdapterAndView() {
         mGp.msgListView.setAdapter(mGp.msgListAdapter);
         mGp.msgListView.setDrawingCacheEnabled(true);
+        mGp.msgListView.setItemChecked(mGp.msgListAdapter.getCount() - 1, true);
+        mGp.msgListView.setSelection(mGp.msgListAdapter.getCount() - 1);
 
         mGp.syncTaskListView.setAdapter(mGp.syncTaskAdapter);
         mGp.syncTaskListView.setDrawingCacheEnabled(true);
@@ -1061,17 +1064,17 @@ public class ActivityMain extends AppCompatActivity {
                     }
                 });
             } else if (tabId.equals(SMBSYNC2_TAB_NAME_MESSAGE)) {
-                if (!mGp.freezeMessageViewScroll) {
-                    mGp.uiHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mGp!=null && mGp.msgListView!=null && mGp.msgListAdapter!=null) {
-                                mGp.msgListView.setItemChecked(mGp.msgListAdapter.getCount() - 1, true);
-                                mGp.msgListView.setSelection(mGp.msgListAdapter.getCount() - 1);
-                            }
-                        }
-                    });
-                }
+//                if (!mGp.freezeMessageViewScroll) {
+//                    mGp.uiHandler.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if (mGp!=null && mGp.msgListView!=null && mGp.msgListAdapter!=null) {
+//                                mGp.msgListView.setItemChecked(mGp.msgListAdapter.getCount() - 1, true);
+//                                mGp.msgListView.setSelection(mGp.msgListAdapter.getCount() - 1);
+//                            }
+//                        }
+//                    });
+//                }
             }
             mCurrentTab = tabId;
             refreshOptionMenu();
@@ -1698,14 +1701,9 @@ public class ActivityMain extends AppCompatActivity {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                boolean[] parm = (boolean[]) o[0];
-                if (parm[0]) {
-                    reloadSettingParms();
-                    ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
-                }
-                if (parm[1]) {
-                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
-                }
+                reloadSettingParms();
+                ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
+                ScheduleUtil.setSchedulerInfo(mGp, mUtil);
                 setSyncTaskContextButtonNormalMode();
                 mGp.syncTaskAdapter.setShowCheckBox(false);
 
@@ -3099,6 +3097,7 @@ public class ActivityMain extends AppCompatActivity {
         ScheduleUtil.saveScheduleData(mGp, mGp.syncTabScheduleList);
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
         ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+        SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
     }
 
     private void setScheduleContextButtonNormalMode() {
@@ -3764,6 +3763,7 @@ public class ActivityMain extends AppCompatActivity {
                 else setSyncTaskContextButtonNormalMode();
 //				checkSafExternalSdcardTreeUri(null);
                 ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+                SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
             }
 
             @Override
@@ -4283,7 +4283,7 @@ public class ActivityMain extends AppCompatActivity {
         boolean test_sync_task_found = false;
         for (int i = 0; i < mGp.syncTaskAdapter.getCount(); i++) {
             item = mGp.syncTaskAdapter.getItem(i);
-            if (item.isChecked()) {
+            if (item.isChecked()  && !item.isSyncTaskError()) {
                 t_list.add(item);
                 sync_list_tmp += sep + item.getSyncTaskName();
                 sep = ",";
@@ -4329,7 +4329,7 @@ public class ActivityMain extends AppCompatActivity {
         String sync_list_tmp = "", sep = "";
         for (int i = 0; i < mGp.syncTaskAdapter.getCount(); i++) {
             SyncTaskItem item = mGp.syncTaskAdapter.getItem(i);
-            if (item.isSyncTaskAuto() && !item.isSyncTestMode()) {
+            if (item.isSyncTaskAuto() && !item.isSyncTestMode() && !item.isSyncTaskError()) {
                 t_list.add(item);
                 sync_list_tmp += sep + item.getSyncTaskName();
                 sep = ",";

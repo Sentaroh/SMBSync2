@@ -20,12 +20,22 @@
         <string name="msgs_export_import_profile_import_settings">設定パラメーターを取り込む</string>
         <string name="msgs_export_import_profile_import_schedule">スケジュールパラメーターを取り込む</string>
         <string name="msgs_export_import_profile_no_import_items">タスクリストに取り込む項目がありません。</string>
+        <string name="msgs_import_autosave_dlg_title">タスクリストの取込み</string>
+        <string name="msgs_import_autosave_dlg_select_exported_file">取込むファイルの選択</string>
+        <string name="msgs_import_autosave_dlg_autosave_list">自動保存したファイル</string>
+        <string name="msgs_import_autosave_dlg_manual_save_list">手動保存したファイル</string>
+        <string name="msgs_import_autosave_dlg_autosave_failed">同期タスクリストの自動保存に失敗しました。</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed">同期タスクリストを自動保存しました。</string>
+        <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
+        <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (最後に保存されたファイル)</string>
+        <string name="msgs_export_import_profile_smb_account_name_password_not_restored">下記のタスクで使用されているアカウント名、アカウントパスワードまたはZIPパスワードが取込みに失敗しました。同期タスクを自動保存した後にアプリの初期化やアプリを再インストールするとアカウント名、アカウントパスワードおよびZIPパスワードは復号できなくなります。同期タスクを編集して正しい値に修正してください。</string>
         <string name="msgs_export_import_pswd_password_title">タスクリスト パスワード保護</string>
         <string name="msgs_export_import_pswd_password_protect">タスクリストをパスワードで保護する</string>
         <string name="msgs_export_import_pswd_specify_password">パスワードと確認パスワードを入力してください。</string>
         <string name="msgs_export_import_pswd_password_required">ファイルがパスワード保護されています、パスワードを指定してください。</string>
         <string name="msgs_export_import_pswd_invalid_password">パスワードが間違っています、指定し直してください。</string>
         <string name="msgs_export_import_pswd_btn_cancel">キャンセル</string>
+        <string name="msgs_export_import_task_list_btn_ok">取込</string>
         <string name="msgs_export_import_pswd_btn_ok">了解</string>
         <string name="msgs_export_import_pswd_hint_password">パスワード</string>
         <string name="msgs_export_import_pswd_hint_confirm">パスワードの確認</string>
@@ -299,6 +309,10 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">SMB V2(2.11)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">SMB V2/3(2.12)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">システムで判別</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">マスターフォルダーにエラーが存在しています。修正してください。</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_import_failed_target_folder">ターゲットフォルダーにエラーが存在しています。修正してください。</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_import_failed_account_name">タスクリストの取込みでアカウント名の復号ができませんでした。正しいアカウント名に修正してください。</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_import_failed_account_password">タスクリストの取込みでアカウントパスワードの復号ができませんでした。正しいアカウントパスワードに修正してください。</string>
         <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">アカウント名/パスワードを使用する</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast">Fast</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest">Fastest</string>
@@ -307,6 +321,9 @@
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_title">圧縮レベル</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_ultra">Ultra</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_diff_zip_password">パスワードと確認パスワードが違います</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_title_zip_password">パスワード</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_import_failed_zip_password">タスクリストの取込みでZIPパスワードの復号ができませんでした。正しいZIPパスワードに修正してください。</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_title_zip_confirm_password">確認パスワード</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128">AES128ビット</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256">AES256ビット</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_none">無し</string>
@@ -486,7 +503,7 @@
         <string name="msgs_mirror_taken_date_convert_error">撮影日時の変換でエラーが発生したためファイルの最終更新時刻を使用しました。ファイル=</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">ターゲットにファイルと同名のディレクトリーが存在するため同期を中止しました。ファイル=</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">SDCARDがマウントされていないため同期を中止します。</string>
-        <string name="msgs_mirror_external_sdcard_select_required">SDCARDの選択がなされていないため同期を中止します。</string>
+        <string name="msgs_mirror_external_sdcard_select_required">SDCARDの書込み許可がなされていないため同期を中止します。</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">SDCARD上のファイル情報がメディアストアに反映されていないようです、メディアスキャンを実行してファイルの情報をメディアストアに反映してください。</string>
         <string name="msgs_mirror_file_set_last_modified_failed">setLastModified()が失敗しました。同期タスクの「ターゲットファイルの最終更新時刻をマスターと同じにしない」を有効にしてください。</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">ZIPファイルをワークファイルからコピーしています。%s%% 終了。</string>
@@ -666,6 +683,7 @@
         <string name="msgs_svc_received_start_request_from_external_auto_task">同期要求を受け付けましたが同期タスクが指定されていないため自動タスクを開始しました。</string>
         <string name="msgs_svc_received_start_request_from_shortcut">ショートカットから同期要求を受け付けました。</string>
         <string name="msgs_svc_received_start_request_ignored_duplicate_request">同期開始要求が受付済みのため無視しました。 ID=%s</string>
+        <string name="msgs_svc_received_start_request_ignored_task_is_error" formatted="false">同期タスクが開始要求されましたが同期タスクはエラーを含んでいるために無視しました。タスク=%s, リクエスター=%s</string>
         <string name="msgs_svc_received_start_request_ignored_already_task_queued" formatted="false">同期タスクの開始要求を同期タスクが既に開始済みのため無視しました。タスク=%s, リクエスター=%s</string>
         <string name="msgs_svc_received_start_request_ignored_already_task_queued_schedule" formatted="false">同期タスクの開始要求を同期タスクが既に開始済みのため無視しました。スケジュール=%s, タスク=%s, リクエスター=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">同期タスクの開始要求を受け付けました。タスク=%s, リクエスター=%s</string>

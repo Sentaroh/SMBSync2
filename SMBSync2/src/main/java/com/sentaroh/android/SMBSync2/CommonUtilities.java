@@ -58,12 +58,16 @@ import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.jcifs.JcifsUtil;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.DatagramPacket;
@@ -279,9 +283,11 @@ public final class CommonUtilities {
     synchronized static public void saveMsgList(GlobalParameters gp) {
         long b_time=System.currentTimeMillis();
         try {
-            File mf=new File(gp.appContext.getCacheDir().getPath()+"/"+"message_list.txt");
-            FileWriter fos=new FileWriter(mf);
-            BufferedWriter bos=new BufferedWriter(fos, 1024*1024*2);
+            OutputStream fos=null;
+            String dir = gp.settingMgtFileDir;
+            File mf = new File(dir + "/.messages");
+            fos=new FileOutputStream(mf);
+            PrintWriter bos=new PrintWriter(new BufferedOutputStream(fos,1024*1024*4));
             StringBuffer sb=new StringBuffer(1024);
             for (SyncMessageItem smi:gp.msgList) {
                 sb.setLength(0);
@@ -289,9 +295,8 @@ public final class CommonUtilities {
                 sb.append("\u0001").append(smi.getDate()).append("\u0000");
                 sb.append("\u0001").append(smi.getTime()).append("\u0000");
                 sb.append("\u0001").append(smi.getMessage()).append("\u0000");
-                String nl=sb.toString();
-                bos.write(sb.toString());
-                bos.newLine();
+//                String nl=sb.toString();
+                bos.println(sb.toString());
             }
             bos.flush();
             bos.close();
@@ -305,7 +310,9 @@ public final class CommonUtilities {
         long b_time=System.currentTimeMillis();
         ArrayList<SyncMessageItem> result=new ArrayList<SyncMessageItem>();
         try {
-            File mf=new File(gp.appContext.getCacheDir().getPath()+"/"+"message_list.txt");
+            String dir = gp.settingMgtFileDir;
+            File mf = new File(dir + "/.messages");
+//            File mf=new File(gp.appContext.getFilesDir().getPath()+"/"+"message_list.txt");
             if (mf.exists()) {
                 FileReader fr=new FileReader(mf);
                 BufferedReader bis=new BufferedReader(fr, 1024*1024*2);

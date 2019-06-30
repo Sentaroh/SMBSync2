@@ -215,12 +215,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         }
         final SyncTaskItem o = getItem(position);
         if (o != null) {
-//            	if (!mUsbDir.equals(LocalMountPoint.getUsbStorageDir())) {
-//                    mUsbDir=LocalMountPoint.getUsbStorageDir();
-//            	}
-//            	if (!mSdcardDir.equals(SafUtil.getSafExternalSdcardDir(mContext))) {
-//            		mSdcardDir=SafUtil.getSafExternalSdcardDir(mContext);
-//            	}
+            boolean sync_btn_disable=false;
 
             holder.ll_view.setBackgroundDrawable(ll_default);
             holder.ib_row_sync.setBackgroundDrawable(ll_default);
@@ -241,7 +236,6 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
             holder.tv_row_active.setVisibility(LinearLayout.VISIBLE);
             holder.cbv_row_cb1.setVisibility(LinearLayout.VISIBLE);
-//            holder.ib_row_sync.setVisibility(LinearLayout.VISIBLE);
 
             String synctp = "";
 
@@ -283,35 +277,28 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 holder.tv_last_sync_result.setText(result);
             } else {
                 holder.ll_last_sync.setVisibility(LinearLayout.GONE);
-//                	holder.tv_last_sync_time.setText(tv_no_sync);
             }
-            if (o.isSyncTestMode()) {
-                if (ThemeUtil.isLightThemeUsed(mContext))
-                    holder.ll_view.setBackgroundColor(Color.argb(64, 255, 32, 255));
-                else holder.ll_view.setBackgroundColor(Color.argb(64, 255, 0, 128));
+            if (!o.isSyncTaskError()) {
+                if (o.isSyncTestMode()) {
+                    if (ThemeUtil.isLightThemeUsed(mContext))
+                        holder.ll_view.setBackgroundColor(Color.argb(64, 255, 32, 255));
+                    else holder.ll_view.setBackgroundColor(Color.argb(64, 255, 0, 128));
+                }
+            } else {
+                holder.ll_view.setBackgroundColor(Color.argb(64, 255, 0, 0));
             }
-
             if (o.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                 String dir = o.getMasterDirectoryName();
                 if (dir.equals("")) holder.tv_row_master.setText(o.getMasterLocalMountPoint());
                 else holder.tv_row_master.setText(o.getMasterLocalMountPoint() + "/" + dir);
                 holder.iv_row_image_master.setImageResource(R.drawable.ic_32_mobile);
-//                	if (!o.isMasterFolderUseInternalUsbFolder()) {
-//                	} else {
-//                    	if (dir.equals("")) holder.tv_row_master.setText(mGp.safMgr.getUsbFileSystemDirectory());
-//                    	else holder.tv_row_master.setText((mGp.safMgr.getUsbFileSystemDirectory()+"/"+dir));
-//                    	if (mGp.safMgr.getUsbFileSystemDirectory().equals(SafFileManager.UNKNOWN_USB_FS_DIRECTORY)) {
-//                        	holder.iv_row_image_master.setImageResource(R.drawable.ic_32_bad_media);
-//                    	} else {
-//                        	holder.iv_row_image_master.setImageResource(R.drawable.ic_32_usb);
-//                    	}
-//                	}
             } else if (o.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
                 String dir = o.getMasterDirectoryName();
                 if (dir.equals("")) holder.tv_row_master.setText((mGp.safMgr.getSdcardRootPath()));
                 else holder.tv_row_master.setText((mGp.safMgr.getSdcardRootPath() + "/" + dir));
                 if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                     holder.iv_row_image_master.setImageResource(R.drawable.ic_32_sdcard_bad);
+                    sync_btn_disable=true;
                 } else {
                     holder.iv_row_image_master.setImageResource(R.drawable.ic_32_sdcard);
                 }
@@ -321,6 +308,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 else holder.tv_row_master.setText((mGp.safMgr.getUsbRootPath() + "/" + dir));
                 if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
                     holder.iv_row_image_master.setImageResource(R.drawable.ic_32_usb_bad);
+                    sync_btn_disable=true;
                 } else {
                     holder.iv_row_image_master.setImageResource(R.drawable.ic_32_usb);
                 }
@@ -332,33 +320,19 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 if (dir.equals("")) holder.tv_row_master.setText("smb://" + host + "/" + share);
                 else holder.tv_row_master.setText("smb://" + host + "/" + share + "/" + dir);
                 holder.iv_row_image_master.setImageResource(R.drawable.ic_32_server);
-//                } else if (o.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-////                	String dir=o.getMasterDirectoryName();
-////                	if (dir.equals("")) holder.tv_row_master.setText((mGp.safMgr.getUsbDirectory()));
-////                	else holder.tv_row_master.setText("/"+dir);
-//                	holder.iv_row_image_master.setImageResource(R.drawable.ic_32_usb);
             }
             if (o.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                 String dir = o.getTargetDirectoryName();
                 if (dir.equals("")) holder.tv_row_target.setText(o.getTargetLocalMountPoint());
                 else holder.tv_row_target.setText(o.getTargetLocalMountPoint() + "/" + dir);
                 holder.iv_row_image_target.setImageResource(R.drawable.ic_32_mobile);
-//                	if (!o.isTargetFolderUseInternalUsbFolder()) {
-//                	} else {
-//                    	if (dir.equals("")) holder.tv_row_target.setText((mGp.safMgr.getUsbFileSystemDirectory()));
-//                    	else holder.tv_row_target.setText((mGp.safMgr.getUsbFileSystemDirectory()+"/"+dir));
-//                    	if (mGp.safMgr.getUsbFileSystemDirectory().equals(SafFileManager.UNKNOWN_USB_FS_DIRECTORY)) {
-//                        	holder.iv_row_image_target.setImageResource(R.drawable.ic_32_bad_media);
-//                    	} else {
-//                        	holder.iv_row_image_target.setImageResource(R.drawable.ic_32_usb);
-//                    	}
-//                	}
             } else if (o.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
                 String dir = o.getTargetDirectoryName();
                 if (dir.equals("")) holder.tv_row_target.setText((mGp.safMgr.getSdcardRootPath()));
                 else holder.tv_row_target.setText((mGp.safMgr.getSdcardRootPath() + "/" + dir));
                 if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_sdcard_bad);
+                    sync_btn_disable=true;
                 } else {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_sdcard);
                 }
@@ -368,6 +342,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 else holder.tv_row_target.setText((mGp.safMgr.getUsbRootPath() + "/" + dir));
                 if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_usb_bad);
+                    sync_btn_disable=true;
                 } else {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_usb);
                 }
@@ -380,6 +355,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 if (o.isTargetZipUseExternalSdcard() &&
                         mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_sdcard_bad);
+                    sync_btn_disable=true;
                 } else {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_archive);
                 }
@@ -391,11 +367,6 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 if (dir.equals("")) holder.tv_row_target.setText("smb://" + host + "/" + share);
                 else holder.tv_row_target.setText("smb://" + host + "/" + share + "/" + dir);
                 holder.iv_row_image_target.setImageResource(R.drawable.ic_32_server);
-//                } else if (o.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-//                	String dir=o.getTargetDirectoryName();
-//                	if (dir.equals("")) holder.tv_row_target.setText(mGp.safMgr.getUsbFileSystemDirectory());
-//                	else holder.tv_row_target.setText("/"+dir);
-//                	holder.iv_row_image_target.setImageResource(R.drawable.ic_32_usb);
             }
 
             if (isShowCheckBox) {
@@ -403,25 +374,30 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 holder.ib_row_sync.setVisibility(CheckBox.GONE);
             } else {
                 holder.cbv_row_cb1.setVisibility(CheckBox.GONE);
-                holder.ib_row_sync.setVisibility(CheckBox.VISIBLE);
+                if (o.isSyncTaskError() || sync_btn_disable) {
+                    holder.ib_row_sync.setVisibility(CheckBox.INVISIBLE);
+                } else {
+                    holder.ib_row_sync.setVisibility(CheckBox.VISIBLE);
+                }
             }
             final int p = position;
 
             holder.ib_row_sync.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    holder.ib_row_sync.setEnabled(false);
-                    if (mNotifySyncButtonEvent!=null) mNotifySyncButtonEvent.notifyToListener(true,new Object[]{o});
-                    holder.ib_row_sync.postDelayed(new Runnable(){
-                        @Override
-                        public void run() {
-                            holder.ib_row_sync.setEnabled(true);
-                        }
-                    },1000);
+                    if (!o.isSyncTaskError()) {
+                        holder.ib_row_sync.setEnabled(false);
+                        if (mNotifySyncButtonEvent!=null) mNotifySyncButtonEvent.notifyToListener(true,new Object[]{o});
+                        holder.ib_row_sync.postDelayed(new Runnable(){
+                            @Override
+                            public void run() {
+                                holder.ib_row_sync.setEnabled(true);
+                            }
+                        },1000);
+                    }
                 }
             });
 
-            // 必ずsetChecked前にリスナを登録(convertView != null の場合は既に別行用のリスナが登録されている！)
             holder.cbv_row_cb1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -437,8 +413,6 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         }
         return v;
     }
-
-    ;
 
     static class ViewHolder {
         TextView tv_row_name, tv_row_active;
@@ -456,4 +430,3 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         LinearLayout ll_sync, ll_entry, ll_last_sync, ll_view;
     }
 }
-
