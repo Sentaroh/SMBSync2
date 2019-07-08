@@ -9,11 +9,11 @@ android {
         minSdkVersion 21
 //        targetSdkVersion 21  //Android 5.0
 //        targetSdkVersion 23  //Android 6.0
-        targetSdkVersion 28  //Android 8.0
+        targetSdkVersion 26
 
 //
-        versionCode 222
-        versionName "2.12"
+        versionCode 223
+        versionName "2.13"
 
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
