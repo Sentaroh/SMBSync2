@@ -3154,7 +3154,12 @@ public class SyncThread extends Thread {
 
     @SuppressLint("DefaultLocale")
     static final public void scanMediaFile(SyncThreadWorkArea stwa, String fp) {
-        MediaScannerConnection.scanFile(stwa.gp.appContext, new String[]{fp}, null, null);
+        try {
+            MediaScannerConnection.scanFile(stwa.gp.appContext, new String[]{fp}, null, null);
+        } catch(Exception e) {
+            stwa.util.addLogMsg("W","Media scanner scan failed, fp="+fp);
+            stwa.util.addLogMsg("W",e.getMessage());
+        }
 //        stwa.util.addDebugMsg(2, "I", "MediaScanner scan request issued. fn=", fp);
 //        if (!stwa.mediaScanner.isConnected()) {
 //            stwa.util.addLogMsg("W", fp, "Media scanner not not invoked, because mdeia scanner was not connected.");
