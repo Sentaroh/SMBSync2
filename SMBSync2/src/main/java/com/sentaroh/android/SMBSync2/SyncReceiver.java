@@ -74,7 +74,8 @@ public class SyncReceiver extends BroadcastReceiver {
         try {wl.acquire(1000); } catch(Exception e) {};
         mContext = c;
         if (mGp == null) {
-            mGp = GlobalWorkArea.getGlobalParameters(c);
+            mGp =new GlobalParameters();
+            mGp.initGlobalParamter(c);
         }
         mGp.loadSettingsParms();
         mGp.setLogParms(mGp);
@@ -99,20 +100,16 @@ public class SyncReceiver extends BroadcastReceiver {
                     action.equals(Intent.ACTION_MEDIA_REMOVED) ||
                     action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
-                if (mGp.syncServiceActive) {
-                    Intent in = new Intent(mContext, SyncService.class);
-                    in.setAction(action);
-                    in.setData(received_intent.getData());
-                    if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
-                    try {
-                        mContext.startService(in);
-                    } catch(Exception e) {
+                Intent in = new Intent(mContext, SyncService.class);
+                in.setAction(action);
+                in.setData(received_intent.getData());
+                if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
+                try {
+                    mContext.startService(in);
+                } catch(Exception e) {
 //                    e.printStackTrace();
-                        mLog.addDebugMsg(1,"E", "startService filed, action="+action+", error=" + e.getMessage());
-                        mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
-                    }
-                } else {
-                    mLog.addDebugMsg(1,"I", "startService ignored because service not active.");
+                    mLog.addDebugMsg(1,"E", "startService filed, action="+action+", error=" + e.getMessage());
+                    mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
                 }
             } else if (action.equals(SCHEDULER_INTENT_SET_TIMER)) {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);

@@ -96,7 +96,6 @@ public class SyncService extends Service {
 
         mUtil.addDebugMsg(1, "I", "onCreate entered");
 
-        mGp.syncServiceActive=true;
         NotificationUtil.initNotification(mGp, mUtil, mContext);
         NotificationUtil.clearNotification(mGp, mUtil);
 
@@ -246,7 +245,6 @@ public class SyncService extends Service {
     public void onDestroy() {
         super.onDestroy();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-        mGp.syncServiceActive=false;
         unregisterReceiver(mWifiReceiver);
         unregisterReceiver(mSleepReceiver);
 //        unregisterReceiver(mUsbReceiver);
