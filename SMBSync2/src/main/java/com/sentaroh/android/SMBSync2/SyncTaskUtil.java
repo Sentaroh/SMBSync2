@@ -88,6 +88,7 @@ import com.sentaroh.jcifs.JcifsUtil;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -1261,6 +1262,7 @@ public class SyncTaskUtil {
     private void putExportedFileList(String fp) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         ArrayList<String> saved_file_list=getExportedFileList();
+        boolean save_required=false;
         if (!saved_file_list.contains(fp)) {
             saved_file_list.add(fp);
             Collections.sort(saved_file_list, new Comparator<String>(){
@@ -1274,11 +1276,27 @@ public class SyncTaskUtil {
             if (saved_file_list.size()>9) {
                 for(int i=9;i<saved_file_list.size();i++) saved_file_list.remove(i);
             }
+            save_required=true;
+        }
+        if (prefs.contains(EXPORTED_FILE_LIST_KEY)) {
+            prefs.edit().remove(EXPORTED_FILE_LIST_KEY).commit();
+            save_required=true;
+        }
+        if (save_required) {
             String saved_list="";
             for(String fp_item:saved_file_list) {
                 saved_list+=fp_item+"\n";
             }
-            prefs.edit().putString(EXPORTED_FILE_LIST_KEY, saved_list).commit();
+
+            try {
+                File sfd=new File(mGp.settingMgtFileDir);
+                sfd.mkdirs();
+                File sfl=new File(mGp.settingMgtFileDir+"/.saved_sync_task_file_list");
+                FileOutputStream fos=new FileOutputStream(sfl);
+                fos.write(saved_list.getBytes());
+                fos.flush();
+                fos.close();
+            } catch(Exception e) {}
         }
 
     }
@@ -1287,7 +1305,18 @@ public class SyncTaskUtil {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         String saved_list_string=null;
         try {
-            saved_list_string=prefs.getString(EXPORTED_FILE_LIST_KEY, null);
+            File sfd=new File(mGp.settingMgtFileDir);
+            sfd.mkdirs();
+            File sfl=new File(mGp.settingMgtFileDir+"/.saved_sync_task_file_list");
+            if (sfl.exists()) {
+                FileInputStream fis=new FileInputStream(sfl);
+                byte[] buff=new byte[1024*1024];
+                int rc=fis.read(buff);
+                fis.close();
+                saved_list_string=new String(buff,0,rc);
+            } else {
+                saved_list_string=prefs.getString(EXPORTED_FILE_LIST_KEY, null);
+            }
         } catch(Exception e) {}
         ArrayList<String> file_list=new ArrayList<String>();
         if (saved_list_string!=null) {
