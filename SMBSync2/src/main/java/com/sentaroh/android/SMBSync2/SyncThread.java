@@ -137,7 +137,7 @@ public class SyncThread extends Thread {
 
         public CommonUtilities util = null;
 
-        public MediaScannerConnection mediaScanner = null;
+//        public MediaScannerConnection mediaScanner = null;
 
         public PrintWriter syncHistoryWriter = null;
 
@@ -187,7 +187,7 @@ public class SyncThread extends Thread {
         mGp.safMgr.setDebugEnabled(mGp.settingDebugLevel > 1);
         mGp.safMgr.loadSafFile();
         mGp.initJcifsOption();
-        prepareMediaScanner();
+//        prepareMediaScanner();
 
         mStwa.msgs_mirror_task_file_copying = mStwa.gp.appContext.getString(R.string.msgs_mirror_task_file_copying);
         mStwa.msgs_mirror_task_file_replaced = gp.appContext.getString(R.string.msgs_mirror_task_file_replaced);
@@ -233,7 +233,7 @@ public class SyncThread extends Thread {
 
             loadLocalFileLastModList();
 
-            waitMediaScannerConnected();
+//            waitMediaScannerConnected();
 
             mGp.syncThreadCtrl.initThreadCtrl();
 
@@ -376,7 +376,7 @@ public class SyncThread extends Thread {
             mGp.syncThreadRequestID = "";
             mGp.syncThreadActive = false;
 
-            mStwa.mediaScanner.disconnect();
+//            mStwa.mediaScanner.disconnect();
 
             mNotifyToService.notifyToListener(true, new Object[]{sync_result});
         }
@@ -3128,37 +3128,39 @@ public class SyncThread extends Thread {
         }
     }
 
-    private void waitMediaScannerConnected() {
-        int cnt = 100;
-        while (!mStwa.mediaScanner.isConnected() && cnt > 0) {
-            SystemClock.sleep(100);
-            cnt--;
-        }
-    }
+//    private void waitMediaScannerConnected() {
+//        int cnt = 100;
+//        while (!mStwa.mediaScanner.isConnected() && cnt > 0) {
+//            SystemClock.sleep(100);
+//            cnt--;
+//        }
+//    }
 
-    private void prepareMediaScanner() {
-        mStwa.mediaScanner = new MediaScannerConnection(mGp.appContext, new MediaScannerConnectionClient() {
-            @Override
-            public void onMediaScannerConnected() {
-                if (mGp.settingDebugLevel >= 1)
-                    mStwa.util.addDebugMsg(1, "I", "MediaScanner connected.");
-            }
-            @Override
-            public void onScanCompleted(final String fp, final Uri uri) {
-                if (mGp.settingDebugLevel >= 2)
-                    mStwa.util.addDebugMsg(2, "I", "MediaScanner scan completed. fn=", fp, ", Uri=" + uri);
-            }
-        });
-        mStwa.mediaScanner.connect();
-    }
+//    private void prepareMediaScanner() {
+//        mStwa.mediaScanner = new MediaScannerConnection(mGp.appContext, new MediaScannerConnectionClient() {
+//            @Override
+//            public void onMediaScannerConnected() {
+//                if (mGp.settingDebugLevel >= 1)
+//                    mStwa.util.addDebugMsg(1, "I", "MediaScanner connected.");
+//            }
+//            @Override
+//            public void onScanCompleted(final String fp, final Uri uri) {
+//                if (mGp.settingDebugLevel >= 2)
+//                    mStwa.util.addDebugMsg(2, "I", "MediaScanner scan completed. fn=", fp, ", Uri=" + uri);
+//            }
+//        });
+//        mStwa.mediaScanner.connect();
+//    }
 
     @SuppressLint("DefaultLocale")
     static final public void scanMediaFile(SyncThreadWorkArea stwa, String fp) {
-        if (!stwa.mediaScanner.isConnected()) {
-            stwa.util.addLogMsg("W", fp, "Media scanner not not invoked, because mdeia scanner was not connected.");
-            return;
-        }
-        stwa.mediaScanner.scanFile(fp, null);
+        MediaScannerConnection.scanFile(stwa.gp.appContext, new String[]{fp}, null, null);
+//        stwa.util.addDebugMsg(2, "I", "MediaScanner scan request issued. fn=", fp);
+//        if (!stwa.mediaScanner.isConnected()) {
+//            stwa.util.addLogMsg("W", fp, "Media scanner not not invoked, because mdeia scanner was not connected.");
+//            return;
+//        }
+//        stwa.mediaScanner.scanFile(fp, null);
     }
 
     private String mSyncHistroryResultFilepath = "";
