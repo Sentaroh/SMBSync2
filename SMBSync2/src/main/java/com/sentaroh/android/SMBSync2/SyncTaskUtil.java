@@ -223,7 +223,21 @@ public class SyncTaskUtil {
             }
             auto_saved_selector_list.add(entry);
         }
-        if (auto_saved_selector_list.size()==0) {
+
+        final ArrayList<String>manual_save_file_list=getExportedFileList();
+        final ArrayList<String>manual_save_selector_list=new ArrayList<String>();
+        for(int i=0;i<manual_save_file_list.size();i++) {
+            String fp_item=manual_save_file_list.get(i);
+            File lf=new File(fp_item);
+            String dt=sdf.format(lf.lastModified());
+            String entry="";
+            if (i==0) entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item_latest), dt);
+            else entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item), dt);
+
+            manual_save_selector_list.add(fp_item+"\n"+entry);
+        }
+
+        if (auto_saved_selector_list.size()==0 && manual_save_selector_list.size()==0) {
             importSyncTaskListDlgWithFileSelection(p_ntfy);
             return;
         }
@@ -248,19 +262,6 @@ public class SyncTaskUtil {
 
         final ListView auto_save_list_view = (ListView) dialog.findViewById(R.id.import_autosave_dlg_autosave_listview);
         final ListView manual_save_list_view = (ListView) dialog.findViewById(R.id.import_autosave_dlg_manual_save_listview);
-
-        final ArrayList<String>manual_save_file_list=getExportedFileList();
-        final ArrayList<String>manual_save_selector_list=new ArrayList<String>();
-        for(int i=0;i<manual_save_file_list.size();i++) {
-            String fp_item=manual_save_file_list.get(i);
-            File lf=new File(fp_item);
-            String dt=sdf.format(lf.lastModified());
-            String entry="";
-            if (i==0) entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item_latest), dt);
-            else entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item), dt);
-
-            manual_save_selector_list.add(fp_item+"\n"+entry);
-        }
 
         SyncTaskListFileSelectorAdapter manual_save_adapter=new SyncTaskListFileSelectorAdapter(mActivity, R.layout.sync_task_list_save_file_selector_item,
                 manual_save_selector_list);
@@ -6666,20 +6667,16 @@ public class SyncTaskUtil {
         try {
             CipherParms cp_sdcard = null;
             CipherParms cp_int = null;
-            String tmp_path="";
             if (sdcard) {
                 OutputStream pos=null;
                 if (fd.startsWith(mGp.safMgr.getSdcardRootPath())) {
-                    tmp_path=fp;
-                    SafFile of=mGp.safMgr.createSdcardFile(tmp_path);
+                    SafFile of=mGp.safMgr.createSdcardFile(fp);
                     pos=mGp.appContext.getContentResolver().openOutputStream(of.getUri());
                 } else if (fd.startsWith(mGp.safMgr.getUsbRootPath())) {
-                    tmp_path=fp;
-                    SafFile of=mGp.safMgr.createUsbFile(tmp_path);
+                    SafFile of=mGp.safMgr.createUsbFile(fp);
                     pos=mGp.appContext.getContentResolver().openOutputStream(of.getUri());
                 } else {
-                    tmp_path=fp;
-                    pos=new FileOutputStream(tmp_path);
+                    pos=new FileOutputStream(fp);
                 }
                 if (encrypt_required) {
                     cp_sdcard = EncryptUtil.initEncryptEnv(mGp.profileKeyPrefix + mGp.profilePassword);
@@ -6688,7 +6685,7 @@ public class SyncTaskUtil {
 //                if (!lf.exists()) lf.mkdir();
                 bw = new BufferedWriter(new OutputStreamWriter(pos), 8192);
                 pw = new PrintWriter(bw);
-                ofp = tmp_path;
+                ofp = fp;
                 if (encrypt_required) {
                     byte[] enc_array = EncryptUtil.encrypt(SMBSYNC2_PROF_ENC, cp_sdcard);
                     String enc_str = Base64Compat.encodeToString(enc_array, Base64Compat.NO_WRAP);
@@ -7024,8 +7021,10 @@ public class SyncTaskUtil {
             String stm= MiscUtil.getStackTraceString(e);
             util.addLogMsg("E", stm);
             result = false;
-            pw.flush();
-            pw.close();
+            if (pw!=null) {
+                pw.flush();
+                pw.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             util.addLogMsg("E", "Sync task list encryption failed");
@@ -7033,8 +7032,10 @@ public class SyncTaskUtil {
             String stm= MiscUtil.getStackTraceString(e);
             util.addLogMsg("E", stm);
             result = false;
-            pw.flush();
-            pw.close();
+            if (pw!=null) {
+                pw.flush();
+                pw.close();
+            }
         }
 
         return result;
