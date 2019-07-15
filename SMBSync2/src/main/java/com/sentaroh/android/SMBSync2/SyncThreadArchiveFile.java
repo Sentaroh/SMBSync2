@@ -2364,34 +2364,36 @@ public class SyncThreadArchiveFile {
 
     static final private String[] parseDateValue(String date_val) {
         String[] result=null;
-        String[] dt=date_val.split(" ");
-        int year=Integer.parseInt(dt[5]);
-        int month=0;
-        int day=Integer.parseInt(dt[2]);
-        if      (dt[1].equals("Jan")) month=0;
-        else if (dt[1].equals("Feb")) month=1;
-        else if (dt[1].equals("Mar")) month=2;
-        else if (dt[1].equals("Apr")) month=3;
-        else if (dt[1].equals("May")) month=4;
-        else if (dt[1].equals("Jun")) month=5;
-        else if (dt[1].equals("Jul")) month=6;
-        else if (dt[1].equals("Aug")) month=7;
-        else if (dt[1].equals("Sep")) month=8;
-        else if (dt[1].equals("Oct")) month=9;
-        else if (dt[1].equals("Nov")) month=10;
-        else if (dt[1].equals("Dec")) month=11;
+        if (date_val!=null) {
+            String[] dt=date_val.split(" ");
+            int year=Integer.parseInt(dt[5]);
+            int month=0;
+            int day=Integer.parseInt(dt[2]);
+            if      (dt[1].equals("Jan")) month=0;
+            else if (dt[1].equals("Feb")) month=1;
+            else if (dt[1].equals("Mar")) month=2;
+            else if (dt[1].equals("Apr")) month=3;
+            else if (dt[1].equals("May")) month=4;
+            else if (dt[1].equals("Jun")) month=5;
+            else if (dt[1].equals("Jul")) month=6;
+            else if (dt[1].equals("Aug")) month=7;
+            else if (dt[1].equals("Sep")) month=8;
+            else if (dt[1].equals("Oct")) month=9;
+            else if (dt[1].equals("Nov")) month=10;
+            else if (dt[1].equals("Dec")) month=11;
 
-        String[] tm=dt[3].split(":");
-        int hours=  Integer.parseInt(tm[0]);
-        int minutes=Integer.parseInt(tm[1]);
-        int seconds=Integer.parseInt(tm[2]);
+            String[] tm=dt[3].split(":");
+            int hours=  Integer.parseInt(tm[0]);
+            int minutes=Integer.parseInt(tm[1]);
+            int seconds=Integer.parseInt(tm[2]);
 
-        Calendar cal=Calendar.getInstance() ;
-        TimeZone tz=TimeZone.getDefault();
-        tz.setID(dt[3]);
-        cal.setTimeZone(tz);
-        cal.set(year, month, day, hours, minutes, seconds);
-        result=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(cal.getTimeInMillis()).split(" ");
+            Calendar cal=Calendar.getInstance() ;
+            TimeZone tz=TimeZone.getDefault();
+            tz.setID(dt[3]);
+            cal.setTimeZone(tz);
+            cal.set(year, month, day, hours, minutes, seconds);
+            result=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(cal.getTimeInMillis()).split(" ");
+        }
         return result;
     }
 
