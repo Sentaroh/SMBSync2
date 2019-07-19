@@ -327,7 +327,12 @@ public class GlobalParameters extends CommonGlobalParms {
         WifiManager wm = (WifiManager) appContext.getSystemService(Context.WIFI_SERVICE);
         mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "SMBSync2-thread");
 
-        internalRootDirectory = Environment.getExternalStorageDirectory().toString();//getInternalStorageRootDirectory();
+        try {
+            String fp=c.getExternalFilesDirs(null)[0].getPath();
+            internalRootDirectory = fp.substring(0, fp.indexOf("/Android/data"));
+        } catch(Exception ex) {
+            internalRootDirectory = Environment.getExternalStorageDirectory().toString();
+        }
         applicationRootDirectory = appContext.getFilesDir().toString();
 
         final LogUtil jcifs_ng_lu = new LogUtil(appContext, "SLF4J", this);
