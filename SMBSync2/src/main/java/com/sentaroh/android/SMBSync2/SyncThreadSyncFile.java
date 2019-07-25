@@ -609,11 +609,19 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
-                            String[] fl=mf.list();
-                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
-                                if (!from_base.equals(mf.getPath())) {
-                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
-                                        SyncThread.deleteInternalStorageItem(stwa, true, sti, mf.getPath());
+                            if (sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                String[] fl=mf.list();
+                                if (fl==null) {
+                                    stwa.gp.syncThreadCtrl.setThreadMessage("Sync aborted because File#list() returned null");
+                                    SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
+                                    sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+                                } else {
+                                    if (fl.length==0) {
+                                        if (!from_base.equals(mf.getPath())) {
+                                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                                SyncThread.deleteInternalStorageItem(stwa, true, sti, mf.getPath());
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -870,11 +878,19 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
-                            String[] fl=mf.list();
-                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
-                                if (!from_base.equals(mf.getPath())) {
-                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
-                                        SyncThread.deleteInternalStorageItem(stwa, true, sti, mf.getPath());
+                            if (sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                String[] fl=mf.list();
+                                if (fl==null) {
+                                    stwa.gp.syncThreadCtrl.setThreadMessage("Sync aborted because File#list() returned null");
+                                    SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
+                                    sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+                                } else {
+                                    if (fl.length==0) {
+                                        if (!from_base.equals(mf.getPath())) {
+                                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                                SyncThread.deleteInternalStorageItem(stwa, true, sti, mf.getPath());
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1104,11 +1120,19 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
-                            String[] fl=mf.list();
-                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
-                                if (!from_base.equals(mf.getPath())) {
-                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
-                                        SyncThread.deleteInternalStorageItem(stwa, true, sti, mf.getPath());
+                            if (sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                String[] fl=mf.list();
+                                if (fl==null) {
+                                    stwa.gp.syncThreadCtrl.setThreadMessage("Sync aborted because File#list() returned null");
+                                    SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
+                                    sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+                                } else {
+                                    if (fl.length==0) {
+                                        if (!from_base.equals(mf.getPath())) {
+                                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                                SyncThread.deleteInternalStorageItem(stwa, true, sti, mf.getPath());
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1311,11 +1335,19 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
-                            String[] fl=mf.list();
-                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
-                                if (!from_base.equals(mf.getPath())) {
-                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
-                                        SyncThread.deleteExternalStorageItem(stwa, true, sti, mf.getPath());
+                            if (sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                String[] fl=mf.list();
+                                if (fl==null) {
+                                    stwa.gp.syncThreadCtrl.setThreadMessage("Sync aborted because File#list() returned null");
+                                    SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
+                                    sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+                                } else {
+                                    if (fl.length==0) {
+                                        if (!from_base.equals(mf.getPath())) {
+                                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                                SyncThread.deleteExternalStorageItem(stwa, true, sti, mf.getPath());
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1523,11 +1555,19 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
-                            String[] fl=mf.list();
-                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
-                                if (!from_base.equals(mf.getPath())) {
-                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
-                                        SyncThread.deleteExternalStorageItem(stwa, true, sti, mf.getPath());
+                            if (sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                String[] fl=mf.list();
+                                if (fl==null) {
+                                    stwa.gp.syncThreadCtrl.setThreadMessage("Sync aborted because File#list() returned null");
+                                    SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
+                                    sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+                                } else {
+                                    if (fl.length==0) {
+                                        if (!from_base.equals(mf.getPath())) {
+                                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                                SyncThread.deleteExternalStorageItem(stwa, true, sti, mf.getPath());
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1756,11 +1796,19 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
-                            String[] fl=mf.list();
-                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
-                                if (!from_base.equals(mf.getPath())) {
-                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
-                                        SyncThread.deleteExternalStorageItem(stwa, true, sti, mf.getPath());
+                            if (sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                String[] fl=mf.list();
+                                if (fl==null) {
+                                    stwa.gp.syncThreadCtrl.setThreadMessage("Sync aborted because File#list() returned null");
+                                    SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
+                                    sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+                                } else {
+                                    if (fl.length==0) {
+                                        if (!from_base.equals(mf.getPath())) {
+                                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                                SyncThread.deleteExternalStorageItem(stwa, true, sti, mf.getPath());
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -2024,11 +2072,19 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
-                            String[] fl=mf.list();
-                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
-                                if (!from_base.equals(mf.getPath())) {
-                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
-                                        SyncThread.deleteSmbItem(stwa, true, sti, from_base, mf.getPath(), stwa.masterAuth);
+                            if (sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                String[] fl=mf.list();
+                                if (fl==null) {
+                                    stwa.gp.syncThreadCtrl.setThreadMessage("Sync aborted because File#list() returned null");
+                                    SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
+                                    sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+                                } else {
+                                    if (fl.length==0) {
+                                        if (!from_base.equals(mf.getPath())) {
+                                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                                SyncThread.deleteSmbItem(stwa, true, sti, from_base, mf.getPath(), stwa.masterAuth);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -2344,11 +2400,19 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
-                            String[] fl=mf.list();
-                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
-                                if (!from_base.equals(mf.getPath())) {
-                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
-                                        SyncThread.deleteSmbItem(stwa, true, sti, from_base, mf.getPath(), stwa.masterAuth);
+                            if (sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                String[] fl=mf.list();
+                                if (fl==null) {
+                                    stwa.gp.syncThreadCtrl.setThreadMessage("Sync aborted because File#list() returned null");
+                                    SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
+                                    sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+                                } else {
+                                    if (fl.length==0) {
+                                        if (!from_base.equals(mf.getPath())) {
+                                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                                SyncThread.deleteSmbItem(stwa, true, sti, from_base, mf.getPath(), stwa.masterAuth);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -2648,11 +2712,19 @@ public class SyncThreadSyncFile {
                                     break;
                                 }
                             }
-                            String[] fl=mf.list();
-                            if (fl.length==0 && sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
-                                if (!from_base.equals(mf.getPath())) {
-                                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
-                                        SyncThread.deleteSmbItem(stwa, true, sti, from_base, mf.getPath(), stwa.masterAuth);
+                            if (sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty()) {
+                                String[] fl=mf.list();
+                                if (fl==null) {
+                                    stwa.gp.syncThreadCtrl.setThreadMessage("Sync aborted because File#list() returned null");
+                                    SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
+                                    sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+                                } else {
+                                    if (fl.length==0) {
+                                        if (!from_base.equals(mf.getPath())) {
+                                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, mf.getPath())) {
+                                                SyncThread.deleteSmbItem(stwa, true, sti, from_base, mf.getPath(), stwa.masterAuth);
+                                            }
+                                        }
                                     }
                                 }
                             }

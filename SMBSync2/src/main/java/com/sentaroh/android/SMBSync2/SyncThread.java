@@ -859,6 +859,8 @@ public class SyncThread extends Thread {
                     mGp.dialogWindowShowed = false;
                     mGp.syncRequestQueue.clear();
 
+                    SyncTaskUtil.saveSyncTaskListToFile(mGp, mGp.appContext, mStwa.util, false, "", "", mGp.syncTaskList, false);
+
                     mNotifyToService.notifyToListener(false, null);
                     // re-throw critical exception further to the os (important)
 //                defaultUEH.uncaughtException(thread, ex);
