@@ -46,6 +46,7 @@ import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.storage.StorageVolume;
 import android.provider.Settings;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -1975,14 +1976,16 @@ public class ActivityMain extends AppCompatActivity {
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             try {
-//                if (Build.VERSION.SDK_INT>=26) {
-//                    Uri uri= FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(LogUtil.getLogFilePath(mGp)));
-//                    intent.setDataAndType(uri, "text/plain");
-////                    startActivity(Intent.createChooser(intent, LogUtil.getLogFilePath(mGp)));
-//                } else {
+                if (Build.VERSION.SDK_INT>=26) {
+                    Uri uri= FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(LogUtil.getLogFilePath(mGp)));
+                    intent.setDataAndType(uri, "text/plain");
+//                    startActivity(Intent.createChooser(intent, LogUtil.getLogFilePath(mGp)));
+                } else {
+                    Uri uri= FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(LogUtil.getLogFilePath(mGp)));
+                    intent.setDataAndType(uri, "text/plain");
 //                    intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
-//                }
-                intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
+                }
+//                intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 mUtil.showCommonDialog(false, "E",

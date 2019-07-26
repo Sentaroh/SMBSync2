@@ -426,7 +426,8 @@ public class GlobalParameters extends CommonGlobalParms {
         setLogLimitSize(10 * 1024 * 1024);
         setLogMaxFileCount(gp.settingLogMaxFileCount);
         setLogEnabled(gp.settingLogOption);
-        setLogDirName(internalRootDirectory+"/Android/data/com.sentaroh.android.SMBExplorer/files/log/");//gp.settingMgtFileDir);
+
+        setLogDirName(gp.appContext.getExternalFilesDir(null)+"/log/");//gp.settingMgtFileDir);
 //        setLogDirName(gp.settingMgtFileDir);
         setLogFileName(gp.settingLogMsgFilename);
         setApplicationTag(APPLICATION_TAG);
