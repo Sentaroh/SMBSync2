@@ -2320,7 +2320,12 @@ public class ActivityMain extends AppCompatActivity {
                         File lf=new File("/storage/"+sv.getUuid());
                         if (lf.exists()) {
                             Intent intent = sv.createAccessIntent(null);
-                            startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+                            try {
+                                startActivityForResult(intent, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+                            } catch(ActivityNotFoundException e) {
+                                Intent intent_x = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                                startActivityForResult(intent_x, ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS);
+                            }
                         } else {
                             String emsg=String.format(
                                     mContext.getString(R.string.msgs_main_external_sdcard_select_required_mountpoint_does_not_exists),
