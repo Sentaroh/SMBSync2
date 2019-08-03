@@ -602,6 +602,11 @@
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_2">10秒</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30秒</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_off">同期開始時にWi-Fiをオンにした場合は同期終了後にWi-Fiをオフにする</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option">同期タスクのオプションを変更する</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">同期は充電中のみ開始する</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">変更しない</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">有効にする</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">無効にする</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">最初の同期を次の分に行います</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">インターバルスケジュールタイムをリセットする</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_time">同期日時 : %s</string>

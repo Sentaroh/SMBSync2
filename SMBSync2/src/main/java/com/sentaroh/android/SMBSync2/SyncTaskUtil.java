@@ -144,6 +144,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_T
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING;
 import static com.sentaroh.android.SMBSync2.GlobalParameters.DEFAULT_NOCOMPRESS_FILE_TYPE;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V4;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V5;
 
 public class SyncTaskUtil {
 
@@ -7085,7 +7086,7 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_smb_disable_plain_text_passwords));
         saveSettingsParmsToFileString(c, pw, "30000",   encrypt_required, cp, c.getString(R.string.settings_smb_client_response_timeout));
 
-        saveSettingsParmsToFileString(c, pw, "-1",      encrypt_required, cp, SCHEDULER_SCHEDULE_SAVED_DATA_V4);
+        saveSettingsParmsToFileString(c, pw, "-1",      encrypt_required, cp, SCHEDULER_SCHEDULE_SAVED_DATA_V5);
 
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_exported_profile_encryption));
 

@@ -222,6 +222,57 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 			</LinearLayout>
+            <LinearLayout
+                android:id="@+id/scheduler_main_dlg_override_sync_option_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/msgs_scheduler_main_dlg_hdr_override_sync_option"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                <TextView
+                    android:id="@+id/scheduler_main_dlg_ctv_override_sync_option_charge"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_scheduler_main_dlg_hdr_override_sync_option_charge"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                <RadioGroup
+                    android:id="@+id/scheduler_main_dlg_override_sync_option_charge_rg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="horizontal" >
+                    <RadioButton
+                        android:id="@+id/scheduler_main_dlg_override_sync_option_charge_rg_0"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:checked="true"
+                        android:text="@string/msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0" />
+                    <RadioButton
+                        android:id="@+id/scheduler_main_dlg_override_sync_option_charge_rg_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1" />
+                    <RadioButton
+                        android:id="@+id/scheduler_main_dlg_override_sync_option_charge_rg_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2" />
+                </RadioGroup>
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

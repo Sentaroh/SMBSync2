@@ -48,6 +48,7 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V2;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V3;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V4;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V5;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_DEFAULT_VALUE;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_KEY;
@@ -65,8 +66,11 @@ public class ScheduleUtil {
         String v2_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V2, "-1");
         String v3_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V3, "-1");
         String v4_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V4, "-1");
+        String v5_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V5, "-1");
 //    	Log.v("","data="+v2_data);
-        if (!v4_data.equals("-1")) {
+        if (!v5_data.equals("-1")) {
+            sl = buildScheduleListV5(gp, v5_data);
+        } else if (!v4_data.equals("-1")) {
             sl = buildScheduleListV4(gp, v4_data);
         } else if (!v3_data.equals("-1")) {
             sl = buildScheduleListV3(gp, v3_data);
@@ -259,6 +263,66 @@ public class ScheduleUtil {
         return sl;
     }
 
+    final static public ArrayList<ScheduleItem> buildScheduleListV5(GlobalParameters gp, String v5_data) {
+        ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
+        String[] sd_array = v5_data.split("\u0001");
+        int nc=0;
+        for (String sd_sub : sd_array) {
+//            Log.v("","sub="+sd_sub);
+            if (sd_sub.equals("end")) break;
+            String[] sub_array = sd_sub.split("\u0002");
+//            Log.v("","array="+sub_array.length);
+            if (sub_array.length >= 14) {
+                for (String item : sub_array) item = item.replace("\u0000", "");
+                ScheduleItem si = new ScheduleItem();
+                si.scheduleEnabled = sub_array[0].replace("\u0000", "").equals("1") ? true : false;
+                si.scheduleName = sub_array[1].replace("\u0000", "");
+                nc++;
+                if (si.scheduleName==null || si.scheduleName.equals("")) si.scheduleName="NO NAME"+nc;
+
+                if (sub_array[2].length() > 0)
+                    si.schedulePosition = Integer.valueOf(sub_array[2].replace("\u0000", ""));
+                si.scheduleType = sub_array[3].replace("\u0000", "");
+                si.scheduleHours = sub_array[4].replace("\u0000", "");
+                si.scheduleMinutes = sub_array[5].replace("\u0000", "");
+                si.scheduleDayOfTheWeek = sub_array[6].replace("\u0000", "");
+                si.scheduleIntervalFirstRunImmed = sub_array[7].replace("\u0000", "").equals("1") ? true : false;
+                if (sub_array[8].length() > 0)
+                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace("\u0000", ""));
+                si.syncTaskList = sub_array[9].replace("\u0000", "");
+                si.syncGroupList = sub_array[10].replace("\u0000", "");
+                si.syncWifiOnBeforeStart = sub_array[11].replace("\u0000", "").equals("1") ? true : false;
+                si.syncWifiOffAfterEnd = sub_array[12].replace("\u0000", "").equals("1") ? true : false;
+                if (sub_array[13].length() > 0)
+                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace("\u0000", ""));
+
+                if (sub_array.length >= 15 && sub_array[14]!=null && sub_array[14].length() > 0)
+                    si.scheduleDay = sub_array[14].replace("\u0000", "");
+
+                if (sub_array.length >= 16 && sub_array[15]!=null && sub_array[15].length() > 0)
+                    si.syncAutoSyncTask = sub_array[15].replace("\u0000", "").equals("1") ? true : false;
+                if (!si.syncTaskList.equals("")) si.syncAutoSyncTask=false;
+
+                if (sub_array.length >= 17 && sub_array[16]!=null && sub_array[16].length() > 0) {
+                    try {
+                        si.syncOverrideOptionCharge = sub_array[16].replace("\u0000", "");
+                    } catch(Exception e) {}
+                }
+
+                if (si.scheduleLastExecTime == 0)
+                    si.scheduleLastExecTime = System.currentTimeMillis();
+
+                sl.add(si);
+//                Log.v("","load="+si.scheduleName);
+            }
+        }
+//        if (sl.size()==0) {
+//            ScheduleItem si=new ScheduleItem();
+//            sl.add(si);
+//        }
+        return sl;
+    }
+
     final static public ScheduleItem copyScheduleData(GlobalParameters gp, ScheduleItem sp) {
         ScheduleItem n_sp = new ScheduleItem();
         n_sp.scheduleDayOfTheWeek = sp.scheduleDayOfTheWeek;
@@ -272,6 +336,7 @@ public class ScheduleUtil {
         n_sp.syncTaskList = sp.syncTaskList;
         n_sp.syncWifiOffAfterEnd = sp.syncWifiOffAfterEnd;
         n_sp.syncWifiOnBeforeStart = sp.syncWifiOnBeforeStart;
+        n_sp.syncOverrideOptionCharge=sp.syncOverrideOptionCharge;
         return n_sp;
     }
 
@@ -372,12 +437,13 @@ public class ScheduleUtil {
             data += String.valueOf(si.syncDelayAfterWifiOn) + "\u0002";         //13
             data += si.scheduleDay + "\u0000" + "\u0002";                       //14
             data += (si.syncAutoSyncTask ? "1" : "0") + "\u0000" + "\u0002";    //15
+            data += (si.syncOverrideOptionCharge) + "\u0000" + "\u0002";        //16
             data += "\u0001";
 
         }
         data += "end";
-        if (use_apply) prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V4, data).apply();
-        else prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V4, data).commit();
+        if (use_apply) prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V5, data).apply();
+        else prefs.edit().putString(SCHEDULER_SCHEDULE_SAVED_DATA_V5, data).commit();
     }
 
     final static public long getNextSchedule(ScheduleItem sp) {

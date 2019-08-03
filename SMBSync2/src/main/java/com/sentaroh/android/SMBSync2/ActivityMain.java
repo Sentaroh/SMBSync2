@@ -257,8 +257,15 @@ public class ActivityMain extends AppCompatActivity {
                 public void run() {
                     if (mSyncTaskListCreateRequired) {
                         mUtil.addDebugMsg(1, "I", "Sync task list creation started.");
-                        ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil, false);
-                        for(SyncTaskItem sti:task_list) mGp.syncTaskList.add(sti);
+                        synchronized (mGp.syncTaskList) {
+                            ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil, false);
+                            for(SyncTaskItem sti:task_list) {
+                                if (SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, sti.getSyncTaskName())==null) {
+                                    mGp.syncTaskList.add(sti);
+                                    mUtil.addDebugMsg(1, "I", "Sync task list added, name="+sti.getSyncTaskName());
+                                }
+                            }
+                        }
 //                        SyncTaskXml.saveXmlSyncTaskList(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList, false);
                         mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
                     } else {

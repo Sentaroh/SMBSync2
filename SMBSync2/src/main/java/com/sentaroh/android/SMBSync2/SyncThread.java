@@ -249,7 +249,7 @@ public class SyncThread extends Thread {
                 mGp.syncThreadRequestID = sri.request_id;
                 mStwa.util.addDebugMsg(1, "I", "Sync request option : Requestor=" + mGp.syncThreadRequestID +
                         ", WiFi on=" + sri.wifi_on_before_sync_start +
-                        ", WiFi delay=" + sri.start_delay_time_after_wifi_on + ", WiFi off=" + sri.wifi_off_after_sync_ended);
+                        ", WiFi delay=" + sri.start_delay_time_after_wifi_on + ", WiFi off=" + sri.wifi_off_after_sync_ended+", OverrideCharge="+sri.overrideSyncOptionCharge);
 
                 boolean wifi_on_issued=performWiFiOnIfRequired(sri);
 
@@ -273,8 +273,19 @@ public class SyncThread extends Thread {
                     }
 
                     if (wifi_msg.equals("")) {//Continue
-                        if ((mStwa.currentSTI.isSyncOptionSyncWhenCharging() && CommonUtilities.isCharging(mGp.appContext)) ||
-                                !mStwa.currentSTI.isSyncOptionSyncWhenCharging()) {
+                        boolean charge_status=mStwa.currentSTI.isSyncOptionSyncWhenCharging();
+                        if (sri.overrideSyncOptionCharge==ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED) {
+                            charge_status=true;
+                            if (mStwa.currentSTI.isSyncOptionSyncWhenCharging()!=charge_status) {
+                                mStwa.util.addDebugMsg(1, "I", "Charge staus option was enabled by schedule option.");
+                            }
+                        } else if (sri.overrideSyncOptionCharge==ScheduleItem.OVERRIDE_SYNC_OPTION_DISABLED) {
+                            charge_status=false;
+                            if (mStwa.currentSTI.isSyncOptionSyncWhenCharging()!=charge_status) {
+                                mStwa.util.addDebugMsg(1, "I", "Charge staus option was disabled by schedule option.");
+                            }
+                        }
+                        if ((charge_status && CommonUtilities.isCharging(mGp.appContext)) || !charge_status) {
                             compileFilter(mStwa.currentSTI, mStwa.currentSTI.getFileFilter(), mStwa.currentSTI.getDirFilter());
                             sync_result = checkStorageAccess(mStwa.currentSTI);
 

@@ -309,8 +309,7 @@ public class SyncService extends Service {
                 ScheduleItem si = getScheduleInformation(scheduleInfoList, schedule_name);
                 if (si!=null) {
                     if (si.syncAutoSyncTask) {
-                        queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE, si.scheduleName,
-                                si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
+                        queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
                     } else {
                         if (si.syncTaskList != null && si.syncTaskList.length() > 0) {
                             String[] pl = si.syncTaskList.split(",");
@@ -326,8 +325,7 @@ public class SyncService extends Service {
                             }
                             if (!n_tl.equals("")) {
                                 String[] n_pl = n_tl.split(",");
-                                queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE, si.scheduleName,
-                                        si.syncWifiOnBeforeStart, si.syncDelayAfterWifiOn, si.syncWifiOffAfterEnd);
+                                queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
                             } else {
                                 mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
                             }
@@ -528,19 +526,20 @@ public class SyncService extends Service {
         return result;
     }
 
-    private void queueSpecificSyncTask(String job_name[], String req_id, String schedule_name, boolean wifi_on, int delay_time, boolean wifi_off) {
+    private void queueSpecificSyncTask(String job_name[], String req_id, ScheduleItem si) {
         SyncRequestItem sri = new SyncRequestItem();
-        sri.schedule_name=schedule_name;
+        sri.schedule_name=si.scheduleName;
         sri.request_id = req_id;
-        sri.wifi_off_after_sync_ended = wifi_off;
-        sri.wifi_on_before_sync_start = wifi_on;
-        sri.start_delay_time_after_wifi_on = delay_time;
+        sri.wifi_off_after_sync_ended = si.syncWifiOffAfterEnd;
+        sri.wifi_on_before_sync_start = si.syncWifiOnBeforeStart;
+        sri.start_delay_time_after_wifi_on = si.syncDelayAfterWifiOn;
+        sri.overrideSyncOptionCharge=si.syncOverrideOptionCharge;
         if (job_name != null && job_name.length > 0) {
             for (int i = 0; i < job_name.length; i++) {
                 if (getSyncTask(job_name[i]) != null) {
                     if (!getSyncTask(job_name[i]).isSyncTaskError()) {
                         if (isSyncTaskAlreadyScheduled(mGp.syncRequestQueue, job_name[i])) {
-                            if (schedule_name.equals("")) {
+                            if (si.scheduleName.equals("")) {
                                 mUtil.addLogMsg("W", String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_already_task_queued),
                                         job_name[i], req_id));
                             } else {
@@ -549,7 +548,7 @@ public class SyncService extends Service {
                             }
                         } else {
                             sri.sync_task_list.add(getSyncTask(job_name[i]).clone());
-                            if (schedule_name.equals("")) {
+                            if (si.scheduleName.equals("")) {
                                 mUtil.addLogMsg("I", String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted),
                                         job_name[i], req_id));
                             } else {
@@ -577,21 +576,28 @@ public class SyncService extends Service {
     }
 
     private void queueSpecificSyncTask(String job_name[], String req_id) {
-        queueSpecificSyncTask(job_name, req_id, "", false, 0, false);
+        ScheduleItem si=new ScheduleItem();
+        si.scheduleName="";
+        si.syncWifiOnBeforeStart=false;
+        si.syncDelayAfterWifiOn=0;
+        si.syncWifiOffAfterEnd=false;
+        si.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+        queueSpecificSyncTask(job_name, req_id, si);
         if (!mGp.syncThreadActive) {
             sendStartNotificationIntent();
             startSyncThread();
         }
     }
 
-    private void queueAutoSyncTask(String req_id, String schedule_name,  boolean wifi_on, int delay_time, boolean wifi_off) {
+    private void queueAutoSyncTask(String req_id, ScheduleItem si) {
         int cnt = 0;
         SyncRequestItem sri = new SyncRequestItem();
         sri.request_id = req_id;
-        sri.schedule_name=schedule_name;
-        sri.wifi_off_after_sync_ended = wifi_off;
-        sri.wifi_on_before_sync_start = wifi_on;
-        sri.start_delay_time_after_wifi_on = delay_time;
+        sri.schedule_name=si.scheduleName;
+        sri.wifi_off_after_sync_ended = si.syncWifiOffAfterEnd;
+        sri.wifi_on_before_sync_start = si.syncWifiOnBeforeStart;
+        sri.start_delay_time_after_wifi_on = si.syncDelayAfterWifiOn;
+        sri.overrideSyncOptionCharge=si.syncOverrideOptionCharge;
         synchronized (mGp.syncRequestQueue) {
             for (SyncTaskItem sji : mGp.syncTaskList) {
                 if (sji.isSyncTaskAuto() && !sji.isSyncTestMode()) {
@@ -626,7 +632,13 @@ public class SyncService extends Service {
     }
 
     private void queueAutoSyncTask(String req_id) {
-        queueAutoSyncTask(req_id, "", false, 0, false);
+        ScheduleItem si=new ScheduleItem();
+        si.scheduleName="";
+        si.syncWifiOnBeforeStart=false;
+        si.syncDelayAfterWifiOn=0;
+        si.syncWifiOffAfterEnd=false;
+        si.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+        queueAutoSyncTask(req_id, si);
     }
 
     private void sendEndNotificationIntent(int sync_result) {

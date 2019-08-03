@@ -654,6 +654,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctv_show_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_password);
+//        ctv_show_password.setVisibility(CheckedTextView.VISIBLE);
         ctv_show_password.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

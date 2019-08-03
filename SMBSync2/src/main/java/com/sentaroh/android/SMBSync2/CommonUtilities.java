@@ -289,14 +289,16 @@ public final class CommonUtilities {
             fos=new FileOutputStream(mf);
             PrintWriter bos=new PrintWriter(new BufferedOutputStream(fos,1024*1024*4));
             StringBuffer sb=new StringBuffer(1024);
-            for (SyncMessageItem smi:gp.msgList) {
-                sb.setLength(0);
-                sb.append("\u0001").append(smi.getCategory()).append("\u0000");
-                sb.append("\u0001").append(smi.getDate()).append("\u0000");
-                sb.append("\u0001").append(smi.getTime()).append("\u0000");
-                sb.append("\u0001").append(smi.getMessage()).append("\u0000");
+            synchronized (gp.msgList) {
+                for (SyncMessageItem smi:gp.msgList) {
+                    sb.setLength(0);
+                    sb.append("\u0001").append(smi.getCategory()).append("\u0000");
+                    sb.append("\u0001").append(smi.getDate()).append("\u0000");
+                    sb.append("\u0001").append(smi.getTime()).append("\u0000");
+                    sb.append("\u0001").append(smi.getMessage()).append("\u0000");
 //                String nl=sb.toString();
-                bos.println(sb.toString());
+                    bos.println(sb.toString());
+                }
             }
             bos.flush();
             bos.close();

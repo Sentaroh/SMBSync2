@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 /**
@@ -67,6 +68,15 @@ class ScheduleItem implements Serializable, Cloneable {
     public boolean syncWifiOffAfterEnd = false;
     public int syncDelayAfterWifiOn = 5;
 
+    public final static String OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE="0";
+    public final static String OVERRIDE_SYNC_OPTION_ENABLED="1";
+    public final static String OVERRIDE_SYNC_OPTION_DISABLED="2";
+    public String syncOverrideOptionCharge=OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+
+    public String syncOverrideOptionWifiStatus=OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+    public ArrayList<String>syncOverrideOptionWifiApList=new ArrayList<String>();
+    public ArrayList<String>syncOverrideOptionWifiIpAddressList=new ArrayList<String>();
+
     public transient boolean isChecked = false;
     public transient boolean isChanged = false;
 
@@ -92,7 +102,11 @@ class ScheduleItem implements Serializable, Cloneable {
 
                 this.syncWifiOnBeforeStart==new_item.syncWifiOnBeforeStart &&
                 this.syncWifiOffAfterEnd==new_item.syncWifiOffAfterEnd &&
-                this.syncDelayAfterWifiOn==new_item.syncDelayAfterWifiOn ) {
+                this.syncDelayAfterWifiOn==new_item.syncDelayAfterWifiOn &&
+
+                this.syncOverrideOptionCharge==new_item.syncOverrideOptionCharge
+
+                ) {
             return true;
         }
         return false;

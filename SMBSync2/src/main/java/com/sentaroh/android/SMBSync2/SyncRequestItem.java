@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
@@ -36,6 +37,15 @@ public class SyncRequestItem {
     public boolean wifi_off_after_sync_ended = false;
     public boolean wifi_on_before_sync_start = false;
     public int start_delay_time_after_wifi_on = 0;
+
+    public final static String OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE="0";
+    public final static String OVERRIDE_SYNC_OPTION_ENABLED="1";
+    public final static String OVERRIDE_SYNC_OPTION_DISABLED="2";
+
+    public String overrideSyncOptionCharge=OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+    public String overrideSyncOptionWifiStatus=OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+    public ArrayList<String> overrideSyncOptionWifiApList=new ArrayList<String>();
+    public ArrayList<String> overrideSyncOptionWifiIpAddressList=new ArrayList<String>();
     public ArrayBlockingQueue<SyncTaskItem> sync_task_list = new ArrayBlockingQueue<SyncTaskItem>(1000);
 
 }

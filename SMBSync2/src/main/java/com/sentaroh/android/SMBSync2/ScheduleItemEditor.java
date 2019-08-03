@@ -205,6 +205,20 @@ public class ScheduleItemEditor {
 
         final TextView tv_schedule_time = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_schedule_time);
 
+        final RadioGroup rg_override_sync_option_charge=(RadioGroup)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg);
+        final RadioButton rb_override_sync_option_charge_0=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_0);
+        final RadioButton rb_override_sync_option_charge_1=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_1);
+        final RadioButton rb_override_sync_option_charge_2=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_2);
+
+        if (mSched.syncOverrideOptionCharge==ScheduleItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE) rb_override_sync_option_charge_0.setChecked(true);
+        else if (mSched.syncOverrideOptionCharge==ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED) rb_override_sync_option_charge_1.setChecked(true);
+        else if (mSched.syncOverrideOptionCharge==ScheduleItem.OVERRIDE_SYNC_OPTION_DISABLED) rb_override_sync_option_charge_2.setChecked(true);
+        rg_override_sync_option_charge.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                setScheduleWasChanged(dialog, mSched);
+            }
+        });
 //		loadScheduleData();
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
@@ -849,6 +863,11 @@ public class ScheduleItemEditor {
 //		final RadioButton rb_wifi_on_delay_3=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_delay_time_rg_3);
         final CheckedTextView ctv_wifi_off = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_wifi_off);
 
+        final RadioGroup rg_override_sync_option_charge=(RadioGroup)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg);
+        final RadioButton rb_override_sync_option_charge_0=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_0);
+        final RadioButton rb_override_sync_option_charge_1=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_1);
+        final RadioButton rb_override_sync_option_charge_2=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_2);
+
         boolean p_intv_first_run = sp.scheduleIntervalFirstRunImmed;
         sp.scheduleDayOfTheWeek = buildDayOfWeekString(dialog);
         sp.scheduleName = et_name.getText().toString();
@@ -901,6 +920,10 @@ public class ScheduleItemEditor {
 
         if (ctv_wifi_on.isChecked()) sp.syncWifiOffAfterEnd = ctv_wifi_off.isChecked();
         else sp.syncWifiOffAfterEnd = false;
+
+        if (rb_override_sync_option_charge_0.isChecked()) sp.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+        else if (rb_override_sync_option_charge_1.isChecked()) sp.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED;
+        else if (rb_override_sync_option_charge_2.isChecked()) sp.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_DISABLED;
     }
 
     private void editSyncTaskList(final String prof_list, final NotifyEvent p_ntfy) {

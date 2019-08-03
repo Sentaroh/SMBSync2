@@ -604,6 +604,11 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_2">10 Sec</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30 Sec</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_off">If you turn on Wi-Fi at the start of sync, turn off Wi-Fi after the end of sync.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option">Change sync task options</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">Sync only starts while charging.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">Do not change</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">Enabled</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">Disabled</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">It will make the first sync with the next minute.</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">Reset interval schedule time.</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_time">Schedule time : %s</string>

@@ -27,6 +27,7 @@ import android.os.Build;
 
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
+import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.jcifs.JcifsException;
 import com.sentaroh.jcifs.JcifsFile;
 
@@ -796,6 +797,27 @@ public class SyncThreadCopyFile {
 
         SafFile to_sf=SyncThread.createSafFile(stwa, sti, to_file_dest);
         if (to_sf.exists()) to_sf.delete();
+//        //*********** added debug info
+//        try {
+//            stwa.util.addDebugMsg(1,"W","to_sf="+to_sf.getName()+", exists="+to_sf.exists()+", uri="+to_sf.getUri());
+//            if (to_sf.exists()) to_sf.delete();
+//        } catch(Exception e) {
+//            File lf=new File(to_dir);
+//            File[] fl=lf.listFiles();
+//            stwa.util.addDebugMsg(1,"W","List of files="+to_dir);
+//            for(File item:fl) {
+//                stwa.util.addDebugMsg(1,"W","    fp="+item.getPath()+", length="+item.length()+", lmod="+ StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(item.lastModified()));
+//            }
+//            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+//                    CommonUtilities.getExecutedMethodName() + " From=" + from_dir+"/"+file_name + ", To=" + to_file_dest);
+//            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+//            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+//
+//            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+//            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+//            return SyncTaskItem.SYNC_STATUS_ERROR;
+//        }
+//        //***********
         if (!from_sf.moveTo(to_sf)) {
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+from_sf.getLastErrorMessage());
             if (temp_file.exists()) temp_file.delete();
