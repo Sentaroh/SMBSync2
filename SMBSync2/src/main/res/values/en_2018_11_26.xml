@@ -831,7 +831,7 @@ Schedule:%s, Task:%s</string>
         <string name="settings_notification_message_when_sync_ended_dialog_title">Select notification message type</string>
         <string-array name="settings_notification_message_when_sync_ended_list_entries">
             <item>Disable notifications</item>
-            <item>Show all notificaitons</item>
+            <item>Show all notifications</item>
             <item>Only show notifications for tasks that complete successfully</item>
             <item>Only show notifications for tasks that complete with errors</item>
         </string-array >
