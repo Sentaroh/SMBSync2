@@ -178,8 +178,8 @@ public class ActivityMain extends AppCompatActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
+//        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+//        StrictMode.setVmPolicy(builder.build());
 
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
