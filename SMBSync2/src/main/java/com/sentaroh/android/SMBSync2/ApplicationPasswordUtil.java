@@ -172,7 +172,7 @@ public class ApplicationPasswordUtil {
                     mUtil.addLogMsg("E","Application password authentication error");
                     mUtil.addLogMsg("E",sw.toString());
                 }
-                if (decrypted_hv.equals(input_hv)) {
+                if (decrypted_hv!=null && decrypted_hv.equals(input_hv)) {
                     gp.appPasswordAuthValidated=true;
                     gp.appPasswordAuthLastTime=System.currentTimeMillis();
                     dialog.dismiss();
