@@ -23,7 +23,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.content.ContentProviderClient;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.RemoteException;
+import android.os.SystemClock;
 
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
 import com.sentaroh.android.Utilities.SafFile;
@@ -166,7 +170,8 @@ public class SyncThreadCopyFile {
 //        SyncThread.deleteTempMediaStoreItem(stwa,temp_file);
 
         SafFile to_sf=SyncThread.createSafFile(stwa, sti, to_file_dest);
-        if (to_sf.exists()) to_sf.delete();
+//        if (to_sf.exists()) to_sf.delete();
+        deleteSafIfExists(stwa, sti, from_dir, to_dir, to_file_dest, file_name, to_sf);
         if (!temp_sf.moveTo(to_sf)) {
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+temp_sf.getLastErrorMessage());
             if (temp_file.exists()) temp_file.delete();
@@ -492,7 +497,8 @@ public class SyncThreadCopyFile {
 //        SyncThread.deleteTempMediaStoreItem(stwa,temp_file);
 
         SafFile to_sf=SyncThread.createSafFile(stwa, sti, to_file_dest);
-        if (to_sf.exists()) to_sf.delete();
+//        if (to_sf.exists()) to_sf.delete();
+        deleteSafIfExists(stwa, sti, from_dir, to_dir, to_file_dest, file_name, to_sf);
         if (!from_sf.moveTo(to_sf)) {
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+from_sf.getLastErrorMessage());
             if (temp_file.exists()) temp_file.delete();
@@ -796,34 +802,33 @@ public class SyncThreadCopyFile {
 //        SyncThread.deleteTempMediaStoreItem(stwa,temp_file);
 
         SafFile to_sf=SyncThread.createSafFile(stwa, sti, to_file_dest);
-        if (to_sf.exists()) to_sf.delete();
-//        //*********** added debug info
-//        try {
-//            stwa.util.addDebugMsg(1,"W","to_sf="+to_sf.getName()+", exists="+to_sf.exists()+", uri="+to_sf.getUri());
-//            if (to_sf.exists()) to_sf.delete();
-//        } catch(Exception e) {
-//            File lf=new File(to_dir);
-//            File[] fl=lf.listFiles();
-//            stwa.util.addDebugMsg(1,"W","List of files="+to_dir);
-//            for(File item:fl) {
-//                stwa.util.addDebugMsg(1,"W","    fp="+item.getPath()+", length="+item.length()+", lmod="+ StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(item.lastModified()));
-//            }
-//            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
-//                    CommonUtilities.getExecutedMethodName() + " From=" + from_dir+"/"+file_name + ", To=" + to_file_dest);
-//            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
-//            if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
-//
-//            SyncThread.printStackTraceElement(stwa, e.getStackTrace());
-//            stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
-//            return SyncTaskItem.SYNC_STATUS_ERROR;
-//        }
-//        //***********
+        deleteSafIfExists(stwa, sti, from_dir, to_dir, to_file_dest, file_name, to_sf);
         if (!from_sf.moveTo(to_sf)) {
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+from_sf.getLastErrorMessage());
             if (temp_file.exists()) temp_file.delete();
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
+    }
+
+    static private void deleteSafIfExists(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_dir, String to_dir, String to_file_dest, String file_name, SafFile to_sf) {
+        if (to_sf.exists()) {
+            try {
+                final String EXTRA_URI = "uri";
+                final String METHOD_DELETE_DOCUMENT = "android:deleteDocument";
+                ContentProviderClient client=stwa.gp.appContext.getContentResolver().acquireContentProviderClient(to_sf.getUri().getAuthority());
+                final Bundle in = new Bundle();
+                in.putParcelable(EXTRA_URI, to_sf.getUri());
+                client.call(METHOD_DELETE_DOCUMENT, null, in);
+            } catch (Exception e) {
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                        CommonUtilities.getExecutedMethodName() + " From=" + from_dir+"/"+file_name + ", To=" + to_file_dest);
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+                if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+
+                SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+            }
+        }
     }
 
     private final static int SHOW_PROGRESS_THRESHOLD_VALUE = 1024 * 1024 * 4;

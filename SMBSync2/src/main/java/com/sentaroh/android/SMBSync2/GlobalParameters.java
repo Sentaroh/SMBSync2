@@ -451,6 +451,9 @@ public class GlobalParameters extends CommonGlobalParms {
             pe.putString(appContext.getString(R.string.settings_smb_client_response_timeout), "30000");
             pe.putBoolean(appContext.getString(R.string.settings_smb_disable_plain_text_passwords),false);
 
+///*For debug*/pe.putString(appContext.getString(R.string.settings_log_level), "1").commit();
+///*For debug*/pe.putBoolean(appContext.getString(R.string.settings_log_option), true).commit();
+
             pe.commit();
         }
 
