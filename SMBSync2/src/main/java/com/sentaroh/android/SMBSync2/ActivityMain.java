@@ -284,6 +284,8 @@ public class ActivityMain extends AppCompatActivity {
                                         @Override
                                         public void positiveResponse(Context c, Object[] o) {
                                             mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
+                                            if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
+                                            else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
                                             if (mGp.syncThreadActive) {
                                                 mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
                                             }
@@ -722,6 +724,8 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncTaskAdapter = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, pfl, mGp);
         mGp.syncTaskAdapter.setShowCheckBox(vsa.prof_adapter_show_cb);
         mGp.syncTaskAdapter.notifyDataSetChanged();
+        if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
+        else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
 
         mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mfl, mGp);
 
@@ -930,6 +934,8 @@ public class ActivityMain extends AppCompatActivity {
         mGp.msgListView = (ListView) mMessageView.findViewById(R.id.main_message_list_view);
         mGp.msgListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         mGp.syncTaskListView = (ListView) mSyncTaskView.findViewById(R.id.main_sync_task_view_list);
+        mGp.syncTaskEmptyMessage=(TextView)mSyncTaskView.findViewById(R.id.main_sync_task_view_empty_message);
+        mGp.syncTaskEmptyMessage.setTextColor(mGp.themeColorList.text_color_warning);
         mGp.syncTabScheduleListView = (ListView) mScheduleView.findViewById(R.id.main_schedule_list_view);
         mGp.syncHistoryListView = (ListView) mHistoryView.findViewById(R.id.main_history_list_view);
 
@@ -3779,6 +3785,8 @@ public class ActivityMain extends AppCompatActivity {
 //				checkSafExternalSdcardTreeUri(null);
                 ScheduleUtil.setSchedulerInfo(mGp, mUtil);
                 SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
+                if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
+                else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
             }
 
             @Override

@@ -5027,15 +5027,15 @@ public class SyncTaskUtil {
                 e.printStackTrace();
             }
             if (sync.size() == 0) {
-                if (BUILD_FOR_AMAZON) {
-                    //アマゾン用はサンプルプロファイルを作成しない
-                } else {
-                    if (gp.sampleProfileCreateRequired) {
-                        createSampleSyncTask(sync);
-                        saveSyncTaskList(gp, context, util, sync);
-                        gp.sampleProfileCreateRequired = false;
-                    }
-                }
+//                if (BUILD_FOR_AMAZON) {
+//                    //アマゾン用はサンプルプロファイルを作成しない
+//                } else {
+//                    if (gp.sampleProfileCreateRequired) {
+//                        createSampleSyncTask(sync);
+//                        saveSyncTaskList(gp, context, util, sync);
+//                        gp.sampleProfileCreateRequired = false;
+//                    }
+//                }
             }
 
         }
@@ -6589,56 +6589,63 @@ public class SyncTaskUtil {
     }
     public static boolean autosaveSyncTaskList(GlobalParameters mGp, Context c, CommonUtilities util, CommonDialog cd,
                                                ArrayList<SyncTaskItem> pfl) {
-        SimpleDateFormat sdf =new SimpleDateFormat("yyyyMMdd_HHmmss");
-        String fd=getAutosaveDirectory(mGp, util);
-        String fp="autosave_"+sdf.format(System.currentTimeMillis())+".stf";
-
-        File lf=new File(fd);
-        if (fd.startsWith(mGp.safMgr.getSdcardRootPath())) {
-            SafFile odr=null;
-            if (!lf.exists()) odr=mGp.safMgr.createSdcardDirectory(fd);
-        } else if (fd.startsWith(mGp.safMgr.getUsbRootPath())) {
-            SafFile odr=null;
-            if (!lf.exists()) odr=mGp.safMgr.createUsbDirectory(fd);
+        boolean result=false;
+        if (pfl.size()==0) {
+            util.addDebugMsg(1,"I","Sync task auto save was bypassed because empty sync task list");
+//            result=true;
         } else {
-            if (!lf.exists()) {
-                File of=new File(fd);
-                of.mkdirs();
-            }
-        }
+            SimpleDateFormat sdf =new SimpleDateFormat("yyyyMMdd_HHmmss");
+            String fd=getAutosaveDirectory(mGp, util);
+            String fp="autosave_"+sdf.format(System.currentTimeMillis())+".stf";
 
-        ArrayList<File>as_fl=createAutoSaveFileList(mGp, util);
-
-        //Delete auto save file if max count exceded
-        if (as_fl.size()>MAX_AUTOSAVE_FILE_COUNT) {
-            int dc=as_fl.size()-(MAX_AUTOSAVE_FILE_COUNT-1);
-            for(int i=0;i<dc;i++) {
-                File ai=as_fl.get(0);
-                if (ai.getPath().startsWith(mGp.safMgr.getSdcardRootPath())) {
-                    SafFile odr=mGp.safMgr.createSdcardFile(ai.getPath());
-                } else if (ai.getPath().startsWith(mGp.safMgr.getUsbRootPath())) {
-                    SafFile odr=mGp.safMgr.createUsbFile(ai.getPath());
-                } else {
-                    ai.delete();
+            File lf=new File(fd);
+            if (fd.startsWith(mGp.safMgr.getSdcardRootPath())) {
+                SafFile odr=null;
+                if (!lf.exists()) odr=mGp.safMgr.createSdcardDirectory(fd);
+            } else if (fd.startsWith(mGp.safMgr.getUsbRootPath())) {
+                SafFile odr=null;
+                if (!lf.exists()) odr=mGp.safMgr.createUsbDirectory(fd);
+            } else {
+                if (!lf.exists()) {
+                    File of=new File(fd);
+                    of.mkdirs();
                 }
-                as_fl.remove(0);
-                util.addDebugMsg(1,"I","Sync task auto save file was deleted, fp="+ai.getPath());
             }
-        }
 
-        boolean result=saveSyncTaskListToFileWithAutosave(mGp, c, util, true, fd, fd+"/autosave_temp", pfl, false, true);
-        if (result) {
-            File tmp_file=new File(fd+"/autosave_temp");
-            File out_file=new File(fd+"/"+fp);
-            tmp_file.renameTo(out_file);
-            String msg=c.getString(R.string.msgs_import_autosave_dlg_autosave_completed);
-            util.addLogMsg("I",msg+". Path="+fd+"/"+fp);
-            Toast.makeText(mGp.appContext, msg, Toast.LENGTH_LONG).show();
-        } else {
-            File tmp_file=new File(fd+"/autosave_temp");
-            tmp_file.delete();
-            util.addLogMsg("W",c.getString(R.string.msgs_import_autosave_dlg_autosave_failed));
-            cd.showCommonDialog(false, "E",c.getString(R.string.msgs_import_autosave_dlg_autosave_failed),"",null);
+            ArrayList<File>as_fl=createAutoSaveFileList(mGp, util);
+
+            //Delete auto save file if max count exceded
+            if (as_fl.size()>MAX_AUTOSAVE_FILE_COUNT) {
+                int dc=as_fl.size()-(MAX_AUTOSAVE_FILE_COUNT-1);
+                for(int i=0;i<dc;i++) {
+                    File ai=as_fl.get(0);
+                    if (ai.getPath().startsWith(mGp.safMgr.getSdcardRootPath())) {
+                        SafFile odr=mGp.safMgr.createSdcardFile(ai.getPath());
+                    } else if (ai.getPath().startsWith(mGp.safMgr.getUsbRootPath())) {
+                        SafFile odr=mGp.safMgr.createUsbFile(ai.getPath());
+                    } else {
+                        ai.delete();
+                    }
+                    as_fl.remove(0);
+                    util.addDebugMsg(1,"I","Sync task auto save file was deleted, fp="+ai.getPath());
+                }
+            }
+
+            result=saveSyncTaskListToFileWithAutosave(mGp, c, util, true, fd, fd+"/autosave_temp", pfl, false, true);
+            if (result) {
+                File tmp_file=new File(fd+"/autosave_temp");
+                File out_file=new File(fd+"/"+fp);
+                tmp_file.renameTo(out_file);
+                String msg=c.getString(R.string.msgs_import_autosave_dlg_autosave_completed);
+                util.addLogMsg("I",msg+". Path="+fd+"/"+fp);
+                for(SyncTaskItem sti:pfl) util.addDebugMsg(1,"I","  Task="+sti.getSyncTaskName());
+                Toast.makeText(mGp.appContext, msg, Toast.LENGTH_LONG).show();
+            } else {
+                File tmp_file=new File(fd+"/autosave_temp");
+                tmp_file.delete();
+                util.addLogMsg("W",c.getString(R.string.msgs_import_autosave_dlg_autosave_failed));
+                cd.showCommonDialog(false, "E",c.getString(R.string.msgs_import_autosave_dlg_autosave_failed),"",null);
+            }
         }
         return result;
     }

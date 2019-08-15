@@ -212,6 +212,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public ArrayList<SyncTaskItem> syncTaskList = null;
     public AdapterSyncTask syncTaskAdapter = null;
     public ListView syncTaskListView = null;
+    public TextView syncTaskEmptyMessage=null;
 
     public TextView scheduleInfoView = null;
     public String scheduleInfoText = "";

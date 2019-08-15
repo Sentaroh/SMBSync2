@@ -257,6 +257,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_main_sync_selected_task_not_found">Selected task does not exist:</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">The specified sync task will not be executed because it was ignored.</string>
         <string name="msgs_main_sync_test_mode_warnning">Selected task is configured for test only.  No files will be copied or deleted.  Execute the task?</string>
+        <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">Press add button to create new sync task.</string>
         <string name="msgs_move_to_bottom">Move down</string>
         <string name="msgs_move_to_top">Move up</string>
         <string name="msgs_msg_cont_label_clear">Clear message</string>

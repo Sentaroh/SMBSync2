@@ -9,6 +9,16 @@
 
     <include layout="@layout/divider_line3" />
 
+    <TextView
+        android:id="@+id/main_sync_task_view_empty_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        android:text="@string/msgs_main_sync_task_press_add_button_to_create_new_sync_task"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
     <ListView
         android:id="@+id/main_sync_task_view_list"
         android:layout_width="fill_parent"

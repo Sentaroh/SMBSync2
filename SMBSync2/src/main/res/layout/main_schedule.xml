@@ -13,6 +13,7 @@
         android:id="@+id/main_schedule_list_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:visibility="gone">
     </TextView>
