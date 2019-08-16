@@ -178,8 +178,8 @@ public class ActivityMain extends AppCompatActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-//        StrictMode.setVmPolicy(builder.build());
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
 
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
@@ -1989,16 +1989,12 @@ public class ActivityMain extends AppCompatActivity {
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             try {
-                if (Build.VERSION.SDK_INT>=26) {
+                if (Build.VERSION.SDK_INT>=24) {
                     Uri uri= FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(LogUtil.getLogFilePath(mGp)));
                     intent.setDataAndType(uri, "text/plain");
-//                    startActivity(Intent.createChooser(intent, LogUtil.getLogFilePath(mGp)));
                 } else {
-                    Uri uri= FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(LogUtil.getLogFilePath(mGp)));
-                    intent.setDataAndType(uri, "text/plain");
-//                    intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
+                    intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
                 }
-//                intent.setDataAndType(Uri.parse("file://"+LogUtil.getLogFilePath(mGp)), "text/plain");
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 mUtil.showCommonDialog(false, "E",
