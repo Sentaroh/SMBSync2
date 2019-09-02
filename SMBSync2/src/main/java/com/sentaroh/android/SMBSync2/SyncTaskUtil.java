@@ -254,7 +254,7 @@ public class SyncTaskUtil {
 //        if (Build.VERSION.SDK_INT>=23) tv_msg.setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY);
 
         final Button btn_ok=(Button)dialog.findViewById(R.id.import_autosave_dlg_btn_ok);
-        btn_ok.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
         final Button btn_cancel=(Button)dialog.findViewById(R.id.import_autosave_dlg_btn_cancel);
         final Button btn_select=(Button)dialog.findViewById(R.id.import_autosave_dlg_select_exported_file);
 
@@ -273,7 +273,7 @@ public class SyncTaskUtil {
         manual_save_list_view.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
                 auto_save_list_view.setItemChecked(-1, true);
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -286,7 +286,7 @@ public class SyncTaskUtil {
         auto_save_list_view.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
                 manual_save_list_view.setItemChecked(-1, true);
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -550,12 +550,12 @@ public class SyncTaskUtil {
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
 
-        btn_ok.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
         et_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                if (arg0.length() > 0) btn_ok.setEnabled(true);
-                else btn_ok.setEnabled(false);
+                if (arg0.length() > 0) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
             }
 
             @Override
@@ -575,7 +575,7 @@ public class SyncTaskUtil {
                 BufferedReader br;
                 String pl;
                 boolean pswd_invalid = true;
-                btn_ok.setEnabled(false);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 try {
                     br = new BufferedReader(new FileReader(fpath), 8192);
                     pl = br.readLine();
@@ -615,7 +615,7 @@ public class SyncTaskUtil {
                     hndl.postDelayed(new Runnable(){
                         @Override
                         public void run() {
-                            btn_ok.setEnabled(true);
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                         }
                     },1000);
                 }
@@ -681,12 +681,12 @@ public class SyncTaskUtil {
         ctv_protect.setChecked(mGp.settingExportedProfileEncryptRequired);
         setPasswordFieldVisibility(mGp.settingExportedProfileEncryptRequired, et_password, et_confirm, btn_ok, dlg_msg);
 
-        et_password.setEnabled(true);
-        et_confirm.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, et_password, true);
+        CommonDialog.setViewEnabled(mActivity, et_confirm, false);
         et_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                btn_ok.setEnabled(false);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 setPasswordPromptOkButton(et_password, et_confirm, btn_ok, dlg_msg);
             }
 
@@ -702,7 +702,7 @@ public class SyncTaskUtil {
         et_confirm.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                btn_ok.setEnabled(false);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 setPasswordPromptOkButton(et_password, et_confirm, btn_ok, dlg_msg);
             }
 
@@ -770,7 +770,7 @@ public class SyncTaskUtil {
             dlg_msg.setText("");
             et_password.setVisibility(EditText.GONE);
             et_confirm.setVisibility(EditText.GONE);
-            btn_ok.setEnabled(true);
+            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
         }
     }
 
@@ -780,21 +780,21 @@ public class SyncTaskUtil {
         String confirm = et_confirm.getText().toString();
         if (password.length() > 0 && et_confirm.getText().length() == 0) {
             dlg_msg.setText(mContext.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
-            et_confirm.setEnabled(true);
+            CommonDialog.setViewEnabled(mActivity, et_confirm, true);
         } else if (password.length() > 0 && et_confirm.getText().length() > 0) {
-            et_confirm.setEnabled(true);
+            CommonDialog.setViewEnabled(mActivity, et_confirm, true);
             if (!password.equals(confirm)) {
-                btn_ok.setEnabled(false);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 dlg_msg.setText(mContext.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
             } else {
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
         } else if (password.length() == 0 && confirm.length() == 0) {
-            btn_ok.setEnabled(false);
+            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
             dlg_msg.setText(mContext.getString(R.string.msgs_export_import_pswd_specify_password));
-            et_passwd.setEnabled(true);
-            et_confirm.setEnabled(false);
+            CommonDialog.setViewEnabled(mActivity, et_passwd, true);
+            CommonDialog.setViewEnabled(mActivity, et_confirm, false);
         } else if (password.length() == 0 && confirm.length() > 0) {
             dlg_msg.setText(mContext.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
         }
@@ -894,7 +894,7 @@ public class SyncTaskUtil {
                 ctv_import_settings.setChecked(true);
                 ctv_import_schedule.setChecked(true);
                 imp_list_adapt.notifyDataSetChanged();
-                ok_btn.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, ok_btn, true);
             }
         });
         rb_unselect_all.setOnClickListener(new OnClickListener() {
@@ -905,7 +905,7 @@ public class SyncTaskUtil {
                 ctv_import_settings.setChecked(false);
                 ctv_import_schedule.setChecked(false);
                 imp_list_adapt.notifyDataSetChanged();
-                ok_btn.setEnabled(false);
+                CommonDialog.setViewEnabled(mActivity, ok_btn, false);
             }
         });
 
@@ -952,8 +952,8 @@ public class SyncTaskUtil {
             final AdapterExportImportTask imp_list_adapt,
             final Button ok_btn) {
         if (ctv_import_settings.isChecked() || ctv_import_schedule.isChecked() || imp_list_adapt.isItemSelected())
-            ok_btn.setEnabled(true);
-        else ok_btn.setEnabled(false);
+            CommonDialog.setViewEnabled(mActivity, ok_btn, true);
+        else CommonDialog.setViewEnabled(mActivity, ok_btn, false);
     }
 
     private void importSelectedSyncTaskItem(
@@ -1803,13 +1803,12 @@ public class SyncTaskUtil {
         dlg_cmp.setVisibility(TextView.GONE);
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(pli.getSyncTaskName());
-        btn_ok.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                if (!arg0.toString().equalsIgnoreCase(pli.getSyncTaskName()))
-                    btn_ok.setEnabled(true);
-                else btn_ok.setEnabled(false);
+                if (!arg0.toString().equalsIgnoreCase(pli.getSyncTaskName()))CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
             }
 
             @Override
@@ -2348,15 +2347,15 @@ public class SyncTaskUtil {
         final Button btnTop = (Button)dialog.findViewById(R.id.common_file_selector_top_btn);
         final Button btnUp = (Button)dialog.findViewById(R.id.common_file_selector_up_btn);
 
-        btnUp.setEnabled(p);
-        btnTop.setEnabled(p);
-        if (p) {
-            btnUp.setAlpha(1);
-            btnTop.setAlpha(1);
-        } else {
-            btnUp.setAlpha(0.4f);
-            btnTop.setAlpha(0.4f);
-        }
+        CommonDialog.setViewEnabled(mActivity, btnUp, p);
+        CommonDialog.setViewEnabled(mActivity, btnTop, p);
+//        if (p) {
+//            btnUp.setAlpha(1);
+//            btnTop.setAlpha(1);
+//        } else {
+//            btnUp.setAlpha(0.4f);
+//            btnTop.setAlpha(0.4f);
+//        }
     };
 
 
@@ -2408,7 +2407,7 @@ public class SyncTaskUtil {
 
         CommonDialog.setDlgBoxSizeCompact(dialog);
 
-        btnOk.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, btnOk, false);
         final Handler hndl=new Handler();
         etDir.addTextChangedListener(new TextWatcher(){
             @Override
@@ -2418,9 +2417,9 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length()>0) {
-                    btnOk.setEnabled(true);
+                    CommonDialog.setViewEnabled(mActivity, btnOk, true);
                 } else {
-                    btnOk.setEnabled(false);
+                    CommonDialog.setViewEnabled(mActivity, btnOk, false);
                     dlg_msg.setText("");
                 }
             }
@@ -2653,13 +2652,13 @@ public class SyncTaskUtil {
         final Button addBtn = (Button) dialog.findViewById(R.id.filter_select_edit_add_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_select_edit_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_select_edit_ok_btn);
-        btn_ok.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
 
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
 
@@ -2673,7 +2672,7 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
 
@@ -2691,7 +2690,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
 
                     @Override
@@ -2705,7 +2704,7 @@ public class SyncTaskUtil {
         });
 
         // Addボタンの指定
-        addBtn.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, addBtn, false);
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -2713,16 +2712,16 @@ public class SyncTaskUtil {
                     if (isFilterExists(s.toString().trim(), filterAdapter)) {
                         String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified);
                         dlg_msg.setText(String.format(mtxt, s.toString().trim()));
-                        addBtn.setEnabled(false);
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else {
                         dlg_msg.setText("");
-                        addBtn.setEnabled(true);
-                        btn_ok.setEnabled(false);
+                        CommonDialog.setViewEnabled(mActivity, addBtn, true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     }
                 } else {
-                    addBtn.setEnabled(false);
-                    btn_ok.setEnabled(true);
+                    CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 }
 //				et_filter.setText(s);
             }
@@ -2744,14 +2743,14 @@ public class SyncTaskUtil {
                     if (isFilterExists(ssid, filterAdapter)) {
                         String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified);
                         dlg_msg.setText(String.format(mtxt, ssid));
-                        addBtn.setEnabled(false);
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else {
                         dlg_msg.setText("");
                         filterAdapter.add(new AdapterFilterList.FilterListItem(ssid, true));
                         filterAdapter.setNotifyOnChange(true);
                         filterAdapter.sort();
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
                 } else {
                     String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_not_connected);
@@ -2768,7 +2767,7 @@ public class SyncTaskUtil {
                 filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -2852,13 +2851,13 @@ public class SyncTaskUtil {
         final Button addBtn = (Button) dialog.findViewById(R.id.filter_select_edit_add_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_select_edit_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_select_edit_ok_btn);
-        btn_ok.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
 
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
 
@@ -2872,7 +2871,7 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
 
@@ -2890,7 +2889,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
 
                     @Override
@@ -2904,7 +2903,7 @@ public class SyncTaskUtil {
         });
 
         // Addボタンの指定
-        addBtn.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, addBtn, false);
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -2912,16 +2911,16 @@ public class SyncTaskUtil {
                     if (isFilterExists(s.toString().trim(), filterAdapter)) {
                         String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified);
                         dlg_msg.setText(String.format(mtxt, s.toString().trim()));
-                        addBtn.setEnabled(false);
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else {
                         dlg_msg.setText("");
-                        addBtn.setEnabled(true);
-                        btn_ok.setEnabled(false);
+                        CommonDialog.setViewEnabled(mActivity, addBtn, true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     }
                 } else {
-                    addBtn.setEnabled(false);
-                    btn_ok.setEnabled(true);
+                    CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 }
 //				et_filter.setText(s);
             }
@@ -2943,14 +2942,14 @@ public class SyncTaskUtil {
                     if (isFilterExists(ip_addr, filterAdapter)) {
                         String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified);
                         dlg_msg.setText(String.format(mtxt, ip_addr));
-                        addBtn.setEnabled(false);
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else {
                         dlg_msg.setText("");
                         filterAdapter.add(new AdapterFilterList.FilterListItem(ip_addr, true));
                         filterAdapter.setNotifyOnChange(true);
                         filterAdapter.sort();
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
                 } else {
                     String mtxt = mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_not_connected);
@@ -2967,7 +2966,7 @@ public class SyncTaskUtil {
                 filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -3048,13 +3047,13 @@ public class SyncTaskUtil {
         final Button addBtn = (Button) dialog.findViewById(R.id.filter_select_edit_add_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_select_edit_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_select_edit_ok_btn);
-        btn_ok.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
 
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
             @Override
@@ -3066,7 +3065,7 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
             @Override
@@ -3082,7 +3081,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
                     @Override
                     public void negativeResponse(Context c, Object[] o) {}
@@ -3093,7 +3092,7 @@ public class SyncTaskUtil {
         });
 
         // Addボタンの指定
-        addBtn.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, addBtn, false);
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -3101,16 +3100,16 @@ public class SyncTaskUtil {
                     if (isFilterExists(s.toString().trim(), filterAdapter)) {
                         String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                         dlg_msg.setText(String.format(mtxt, s.toString().trim()));
-                        addBtn.setEnabled(false);
-                        btn_ok.setEnabled(false);
+                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     } else {
                         dlg_msg.setText("");
-                        addBtn.setEnabled(true);
-                        btn_ok.setEnabled(false);
+                        CommonDialog.setViewEnabled(mActivity, addBtn, true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     }
                 } else {
-                    addBtn.setEnabled(false);
-                    btn_ok.setEnabled(true);
+                    CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 }
 //				et_filter.setText(s);
             }
@@ -3128,7 +3127,7 @@ public class SyncTaskUtil {
                 filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -3206,7 +3205,7 @@ public class SyncTaskUtil {
         final Button addbtn = (Button) dialog.findViewById(R.id.filter_select_edit_add_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_select_edit_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_select_edit_ok_btn);
-        btn_ok.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
 
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
@@ -3217,7 +3216,7 @@ public class SyncTaskUtil {
                     dlg_msg.setText(e_msg);
                     return;
                 }
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
             @Override
@@ -3234,7 +3233,7 @@ public class SyncTaskUtil {
                     dlg_msg.setText(e_msg);
                     return;
                 }
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
             @Override
@@ -3250,7 +3249,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
@@ -3268,19 +3267,19 @@ public class SyncTaskUtil {
                     if (isFilterExists(s.toString().trim(), filterAdapter)) {
                         String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                         dlg_msg.setText(String.format(mtxt, s.toString().trim()));
-                        addbtn.setEnabled(false);
-                        dirbtn.setEnabled(true);
-                        btn_ok.setEnabled(false);
+                        CommonDialog.setViewEnabled(mActivity, addbtn, false);
+                        CommonDialog.setViewEnabled(mActivity, dirbtn, true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     } else {
                         dlg_msg.setText("");
-                        addbtn.setEnabled(true);
-                        dirbtn.setEnabled(false);
-                        btn_ok.setEnabled(false);
+                        CommonDialog.setViewEnabled(mActivity, addbtn, true);
+                        CommonDialog.setViewEnabled(mActivity, dirbtn, false);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     }
                 } else {
-                    addbtn.setEnabled(false);
-                    dirbtn.setEnabled(true);
-                    btn_ok.setEnabled(true);
+                    CommonDialog.setViewEnabled(mActivity, addbtn, false);
+                    CommonDialog.setViewEnabled(mActivity, dirbtn, true);
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 }
 //				et_filter.setText(s);
             }
@@ -3289,7 +3288,7 @@ public class SyncTaskUtil {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
-        addbtn.setEnabled(false);
+        CommonDialog.setViewEnabled(mActivity, addbtn, false);
         addbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dlg_msg.setText("");
@@ -3309,8 +3308,8 @@ public class SyncTaskUtil {
                     dlg_msg.setText(e_msg);
                     return;
                 }
-                dirbtn.setEnabled(true);
-                btn_ok.setEnabled(true);
+                CommonDialog.setViewEnabled(mActivity, dirbtn, true);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -3326,7 +3325,7 @@ public class SyncTaskUtil {
                             dlg_msg.setText(e_msg);
                             return;
                         }
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                         dlg_msg.setText("");
                     }
                     @Override
@@ -3580,7 +3579,7 @@ public class SyncTaskUtil {
                             if (!tfli.isHideListItem()) tfa.setDataItemIsSelected(i);
                         }
                         tfa.notifyDataSetChanged();
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
                 });
 
@@ -3591,18 +3590,18 @@ public class SyncTaskUtil {
                             tfa.setDataItemIsUnselected(i);
                         }
                         tfa.notifyDataSetChanged();
-                        btn_ok.setEnabled(false);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     }
                 });
 
                 //OKボタンの指定
-                btn_ok.setEnabled(false);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 //Listen setRemoteShare response
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
 
                     @Override
@@ -3614,8 +3613,8 @@ public class SyncTaskUtil {
                                 break;
                             }
                         }
-                        if (checked) btn_ok.setEnabled(true);
-                        else btn_ok.setEnabled(false);
+                        if (checked) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     }
                 });
                 tfa.setCbCheckListener(ntfy);
@@ -3789,7 +3788,7 @@ public class SyncTaskUtil {
 //                });
 
                 //OKボタンの指定
-                btn_ok.setEnabled(false);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 //Listen setRemoteShare response
                 ntfy.setListener(new NotifyEventListener() {
@@ -3804,14 +3803,14 @@ public class SyncTaskUtil {
                         try {
                             sel = sel.substring(remdir.length());
                             if (isFilterExists(sel, fla)) {
-                                btn_ok.setEnabled(false);
+                                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                                 tfi.setChecked(false);
                                 tfa.notifyDataSetChanged();
                                 String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                                 String dup_msg=String.format(mtxt, sel);
                                 Toast.makeText(mContext, dup_msg, Toast.LENGTH_LONG).show();
                             } else {
-                                btn_ok.setEnabled(true);
+                                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                             }
                         } catch(Exception e) {
                             mUtil.showCommonDialog(false,"E","Error","sel="+sel+", remdir="+remdir+"\n"+
@@ -3821,8 +3820,8 @@ public class SyncTaskUtil {
 
                     @Override
                     public void negativeResponse(Context arg0, Object[] arg1) {
-                        if (tfa.isDataItemIsSelected()) btn_ok.setEnabled(true);
-                        else btn_ok.setEnabled(false);
+                        if (tfa.isDataItemIsSelected()) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     }
                 });
                 tfa.setCbCheckListener(ntfy);
@@ -4082,10 +4081,10 @@ public class SyncTaskUtil {
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
         if (port_number.equals("")) {
-            et_port_number.setEnabled(false);
+            CommonDialog.setViewEnabled(mActivity, et_port_number, false);
             ctv_use_port_number.setChecked(false);
         } else {
-            et_port_number.setEnabled(true);
+            CommonDialog.setViewEnabled(mActivity, et_port_number, true);
             et_port_number.setText(port_number);
             ctv_use_port_number.setChecked(true);
         }
@@ -4094,7 +4093,7 @@ public class SyncTaskUtil {
             public void onClick(View v) {
                 ctv_use_port_number.toggle();
                 boolean isChecked = ctv_use_port_number.isChecked();
-                et_port_number.setEnabled(isChecked);
+                CommonDialog.setViewEnabled(mActivity, et_port_number, isChecked);
             }
         });
 
@@ -4208,14 +4207,14 @@ public class SyncTaskUtil {
         btn_scan.setVisibility(Button.GONE);
         btn_cancel.setVisibility(Button.GONE);
         adap.setButtonEnabled(false);
-        scan_cancel.setEnabled(true);
+        CommonDialog.setViewEnabled(mActivity, scan_cancel, true);
         dialog.setOnKeyListener(new DialogBackKeyListener(mContext));
         dialog.setCancelable(false);
         // CANCELボタンの指定
         scan_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 scan_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
-                scan_cancel.setEnabled(false);
+                CommonDialog.setViewEnabled(mActivity, scan_cancel, false);
                 mUtil.addDebugMsg(1, "W", "IP Address list creation was cancelled");
                 tc.setDisabled();
             }
@@ -4764,7 +4763,7 @@ public class SyncTaskUtil {
 
                 final Button btn_cancel = (Button) dialog.findViewById(R.id.item_select_list_dlg_cancel_btn);
                 final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
-                btn_ok.setEnabled(false);
+                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
 
                 CommonDialog.setDlgBoxSizeLimit(dialog, false);
 
@@ -4778,7 +4777,7 @@ public class SyncTaskUtil {
 
                 lv.setOnItemClickListener(new OnItemClickListener() {
                     public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
-                        btn_ok.setEnabled(true);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
                 });
                 //CANCELボタンの指定

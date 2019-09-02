@@ -37,6 +37,7 @@ import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,7 +54,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -90,6 +93,7 @@ import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.SystemInfo;
+import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.Widget.CustomTabContentView;
 import com.sentaroh.android.Utilities.Widget.CustomTextView;
@@ -1156,33 +1160,33 @@ public class ActivityMain extends AppCompatActivity {
         else menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule_disabled);
 
         if (isUiEnabled()) {
-            menu.findItem(R.id.menu_top_housekeep).setEnabled(true);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_housekeep), true);
             if (mGp.syncThreadActive) menu.findItem(R.id.menu_top_housekeep).setVisible(false);
             else menu.findItem(R.id.menu_top_housekeep).setVisible(true);
             menu.findItem(R.id.menu_top_sync).setVisible(true);
-            menu.findItem(R.id.menu_top_settings).setEnabled(true);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_settings), true);
             if (!mGp.externalStorageIsMounted) {
-                menu.findItem(R.id.menu_top_browse_log).setEnabled(false);
-                menu.findItem(R.id.menu_top_export).setEnabled(false);
-                menu.findItem(R.id.menu_top_import).setEnabled(false);
-                menu.findItem(R.id.menu_top_log_management).setEnabled(false);
+                setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_browse_log), false);
+                setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_export), false);
+                setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_import), false);
+                setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_log_management), false);
             } else {
                 if (!mGp.settingLogOption)
                     menu.findItem(R.id.menu_top_browse_log).setVisible(false);
                 else menu.findItem(R.id.menu_top_browse_log).setVisible(true);
-                menu.findItem(R.id.menu_top_export).setEnabled(true);
-                menu.findItem(R.id.menu_top_import).setEnabled(true);
-                menu.findItem(R.id.menu_top_log_management).setEnabled(true);
+                setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_export), true);
+                setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_import), true);
+                setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_log_management), true);
             }
-            menu.findItem(R.id.menu_top_add_shortcut).setEnabled(true);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_add_shortcut), true);
 
 //            menu.findItem(R.id.menu_top_select_storage).setVisible(true);
             if (mGp.debuggable) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
             else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
 
-            menu.findItem(R.id.menu_top_about).setEnabled(true);
-            menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(true);
-            menu.findItem(R.id.menu_top_list_storage).setEnabled(true);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_about), true);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_show_battery_optimization), true);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_list_storage), true);
             if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_SCHEDULE)) {
                 menu.findItem(R.id.menu_top_scheduler).setVisible(true);
             } else {
@@ -1193,26 +1197,26 @@ public class ActivityMain extends AppCompatActivity {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             if (!mGp.settingLogOption) menu.findItem(R.id.menu_top_browse_log).setVisible(false);
             else menu.findItem(R.id.menu_top_browse_log).setVisible(true);
-            menu.findItem(R.id.menu_top_browse_log).setEnabled(true);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_browse_log), true);
             if (!mGp.externalStorageIsMounted) {
-                menu.findItem(R.id.menu_top_browse_log).setEnabled(false);
+                setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_browse_log), false);
             }
             if (!mGp.settingLogOption) {
-                menu.findItem(R.id.menu_top_browse_log).setEnabled(false);
+                setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_browse_log), false);
             }
 
-            menu.findItem(R.id.menu_top_export).setEnabled(false);
-            menu.findItem(R.id.menu_top_import).setEnabled(false);
-            menu.findItem(R.id.menu_top_settings).setEnabled(false);
-            menu.findItem(R.id.menu_top_log_management).setEnabled(false);
-            menu.findItem(R.id.menu_top_housekeep).setEnabled(false);
-            menu.findItem(R.id.menu_top_add_shortcut).setEnabled(false);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_export), false);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_import), false);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_settings), false);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_log_management), false);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_housekeep), false);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_add_shortcut), false);
 
             menu.findItem(R.id.menu_top_select_storage).setVisible(false);
 
-            menu.findItem(R.id.menu_top_about).setEnabled(false);
-            menu.findItem(R.id.menu_top_show_battery_optimization).setEnabled(false);
-            menu.findItem(R.id.menu_top_list_storage).setEnabled(false);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_about), false);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_show_battery_optimization), false);
+            setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_list_storage), false);
             menu.findItem(R.id.menu_top_scheduler).setVisible(false);
 
         }
@@ -1220,6 +1224,11 @@ public class ActivityMain extends AppCompatActivity {
 
         return super.onPrepareOptionsMenu(menu);
     }
+
+    private void setMenuItemEnabled(Menu menu, MenuItem menu_item, boolean enabled) {
+        CommonDialog.setMenuItemEnabled(mActivity, menu, menu_item, enabled);
+    }
+
 
     private boolean mScheduleEditorAvailable = true;
 
@@ -2376,8 +2385,17 @@ public class ActivityMain extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
                     startActivityForResult(intent, ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS);
                 } else {
-                    Intent intent = sv.createAccessIntent(null);
-                    startActivityForResult(intent, ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS);
+                    try {
+//                        String npe=null;
+//                        npe.length();
+                        Intent intent = sv.createAccessIntent(null);
+                        startActivityForResult(intent, ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS);
+                    } catch(Exception e) {//Retry for startActivity error
+//                        e.printStackTrace();
+                        mUtil.addDebugMsg(1,"W", "startActivity failed with createAccessIntent, retry legacy method initiated.");
+                        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                        startActivityForResult(intent, ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS);
+                    }
                 }
             } else {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
