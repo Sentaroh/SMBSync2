@@ -265,7 +265,7 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
+        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/"+file_name+"."+System.currentTimeMillis();//"/temp.tmp";
         JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
 
         JcifsFile out_file = new JcifsFile(to_file_temp, stwa.targetAuth);
@@ -308,6 +308,7 @@ public class SyncThreadCopyFile {
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp=",to_file_dest,
                 ", target="+out_file.getLastModified(),", master="+mf.lastModified(),", target_size="+out_file.length(),", master_size="+mf.length(),
                 ", m_saf_size="+m_saf_length);
+//        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " temp="+out_file.getPath());
         if (out_dest.exists()) out_dest.delete();
         out_file.renameTo(out_dest);
 
@@ -529,7 +530,7 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
+        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/"+file_name+"."+System.currentTimeMillis();//"/temp.tmp";
 
         JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
 
@@ -554,6 +555,7 @@ public class SyncThreadCopyFile {
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_dest+
                 ", target="+out_file.getLastModified()+", master="+mf.lastModified()+", target_size="+out_file.length()+", master_size="+mf.length());
+//        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " temp="+out_file.getPath());
 
         if (out_dest.exists()) out_dest.delete();
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " Rename issued. From="+out_file.getPath()+", To="+out_dest.getPath());
@@ -618,7 +620,7 @@ public class SyncThreadCopyFile {
         stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" from_dir=", from_dir, ", to_dir=", to_dir, ", name=", file_name);
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
-        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/temp.tmp";
+        String to_file_dest = to_dir + "/" + file_name, to_file_temp = to_dir + "/"+file_name+"."+System.currentTimeMillis();//"/temp.tmp";
         JcifsFile out_dest = new JcifsFile(to_file_dest, stwa.targetAuth);
 
         JcifsFile out_file = new JcifsFile(to_file_temp, stwa.targetAuth);
@@ -642,6 +644,7 @@ public class SyncThreadCopyFile {
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_dest+
                 ", target="+out_file.getLastModified()+", master="+mf.getLastModified()+", target_size="+out_file.length()+", master_size="+mf.length());
+//        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " temp="+out_file.getPath());
         if (out_dest.exists()) out_dest.delete();
         out_file.renameTo(out_dest);
 
