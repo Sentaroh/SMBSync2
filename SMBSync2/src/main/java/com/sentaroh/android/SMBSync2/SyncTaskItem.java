@@ -347,8 +347,8 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setArchiveRetentionPeriod(int period) {syncTaskArchiveRetentionPeriod =period;}
     public boolean isArchiveCreateDirectory() {return syncTaskArchiveCreateDirectory;}
     public void setArchiveCreateDirectory(boolean cretae) {syncTaskArchiveCreateDirectory =cretae;}
-    public boolean isArchiveEnabled() {return syncTaskArchiveEnable;}
-    public void setArchiveEnabled(boolean enabled) {syncTaskArchiveEnable =enabled;}
+    public boolean isArchiveEnabled() {return syncTaskArchiveEnable;}// Not used
+    public void setArchiveEnabled(boolean enabled) {syncTaskArchiveEnable =enabled;}// Not used
 
     private boolean syncOptionDeterminChangedFileSizeGreaterThanTargetFile = false;
     public boolean isSyncDifferentFileSizeGreaterThanTagetFile() {return syncOptionDeterminChangedFileSizeGreaterThanTargetFile;}

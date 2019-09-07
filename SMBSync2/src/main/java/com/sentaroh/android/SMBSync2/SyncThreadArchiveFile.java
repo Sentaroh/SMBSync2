@@ -657,9 +657,10 @@ public class SyncThreadArchiveFile {
             if (!sti.isSyncTestMode()) {
                 String dir=tf.getParent();
                 JcifsFile jf_dir=new JcifsFile(dir,stwa.targetAuth);
-                if (sti.isArchiveCreateDirectory()) {
-                    if (!jf_dir.exists()) jf_dir.mkdirs();
-                }
+                if (!jf_dir.exists()) jf_dir.mkdirs();
+//                if (sti.isArchiveCreateDirectory()) {
+//                    if (!jf_dir.exists()) jf_dir.mkdirs();
+//                }
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, new FileInputStream(mf), tf.getOutputStream(), from_path, to_path,
                             tf.getName(), sti.isSyncOptionUseSmallIoBuffer());
@@ -1106,9 +1107,10 @@ public class SyncThreadArchiveFile {
             if (!sti.isSyncTestMode()) {
                 String dir=tf.getParent();
                 JcifsFile jf_dir=new JcifsFile(dir,stwa.targetAuth);
-                if (sti.isArchiveCreateDirectory()) {
-                    if (!jf_dir.exists()) jf_dir.mkdirs();
-                }
+//                if (sti.isArchiveCreateDirectory()) {
+//                    if (!jf_dir.exists()) jf_dir.mkdirs();
+//                }
+                if (!jf_dir.exists()) jf_dir.mkdirs();
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
                             tf.getOutputStream(), from_path, to_path,
