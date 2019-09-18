@@ -24,6 +24,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.Manifest;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -85,6 +87,7 @@ import java.util.Enumeration;
 
 import it.sephiroth.android.library.easing.Linear;
 
+import static android.content.Context.USAGE_STATS_SERVICE;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.DEFAULT_PREFS_FILENAME;
 
@@ -172,6 +175,12 @@ public final class CommonUtilities {
             out.add("LocationService enabled="+isLocationServiceEnabled(gp)+", warning="+gp.settingSupressLocationServiceWarning);
         }
 
+        if (Build.VERSION.SDK_INT >= 28) {
+            UsageStatsManager usageStatsManager = (UsageStatsManager) gp.appContext.getSystemService(USAGE_STATS_SERVICE);
+            if (usageStatsManager != null) {
+                out.add("AppStnadbyBuket="+usageStatsManager.getAppStandbyBucket());
+            }
+        }
         out.add("");
         try {
             out.add("Network information:");
