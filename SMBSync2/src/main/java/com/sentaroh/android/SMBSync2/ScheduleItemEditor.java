@@ -210,9 +210,9 @@ public class ScheduleItemEditor {
         final RadioButton rb_override_sync_option_charge_1=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_1);
         final RadioButton rb_override_sync_option_charge_2=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_2);
 
-        if (mSched.syncOverrideOptionCharge==ScheduleItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE) rb_override_sync_option_charge_0.setChecked(true);
-        else if (mSched.syncOverrideOptionCharge==ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED) rb_override_sync_option_charge_1.setChecked(true);
-        else if (mSched.syncOverrideOptionCharge==ScheduleItem.OVERRIDE_SYNC_OPTION_DISABLED) rb_override_sync_option_charge_2.setChecked(true);
+        if (mSched.syncOverrideOptionCharge.equals(ScheduleItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE)) rb_override_sync_option_charge_0.setChecked(true);
+        else if (mSched.syncOverrideOptionCharge.equals(ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED)) rb_override_sync_option_charge_1.setChecked(true);
+        else if (mSched.syncOverrideOptionCharge.equals(ScheduleItem.OVERRIDE_SYNC_OPTION_DISABLED)) rb_override_sync_option_charge_2.setChecked(true);
         rg_override_sync_option_charge.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {

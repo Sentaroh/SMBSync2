@@ -274,12 +274,12 @@ public class SyncThread extends Thread {
 
                     if (wifi_msg.equals("")) {//Continue
                         boolean charge_status=mStwa.currentSTI.isSyncOptionSyncWhenCharging();
-                        if (sri.overrideSyncOptionCharge==ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED) {
+                        if (sri.overrideSyncOptionCharge.equals(ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED)) {
                             charge_status=true;
                             if (mStwa.currentSTI.isSyncOptionSyncWhenCharging()!=charge_status) {
                                 mStwa.util.addDebugMsg(1, "I", "Charge staus option was enabled by schedule option.");
                             }
-                        } else if (sri.overrideSyncOptionCharge==ScheduleItem.OVERRIDE_SYNC_OPTION_DISABLED) {
+                        } else if (sri.overrideSyncOptionCharge.equals(ScheduleItem.OVERRIDE_SYNC_OPTION_DISABLED)) {
                             charge_status=false;
                             if (mStwa.currentSTI.isSyncOptionSyncWhenCharging()!=charge_status) {
                                 mStwa.util.addDebugMsg(1, "I", "Charge staus option was disabled by schedule option.");
