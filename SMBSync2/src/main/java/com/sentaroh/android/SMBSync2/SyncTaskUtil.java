@@ -4907,10 +4907,10 @@ public class SyncTaskUtil {
                         priv_key = KeyStoreUtil.getGeneratedPasswordNewVersion(context, SMBSYNC2_KEY_STORE_ALIAS);
                     } catch (Exception e) {
                         String stm= MiscUtil.getStackTraceString(e);
-                        util.addDebugMsg(1,"I","createSyncTaskListFromFile error="+e.getMessage()+"\n"+stm);
+                        util.addDebugMsg(1,"W","createSyncTaskListFromFile decrypt password obtain error="+e.getMessage()+"\n"+stm);
                         e.printStackTrace();
                     }
-                    cp_autosave=EncryptUtil.initDecryptEnv(priv_key);
+                    if (priv_key!=null) cp_autosave=EncryptUtil.initDecryptEnv(priv_key);
                 }
                 try {
                     BufferedReader br = new BufferedReader(new FileReader(fp), 8192);
