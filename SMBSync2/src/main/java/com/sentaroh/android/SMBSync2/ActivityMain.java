@@ -271,7 +271,10 @@ public class ActivityMain extends AppCompatActivity {
                                 }
                             }
                         }
-//                        SyncTaskXml.saveXmlSyncTaskList(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList, false);
+                        if (mGp.debuggable) {
+                            SyncTaskXml.saveXmlSyncTaskList(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList, false);
+//                        SyncTaskXml.loadXmlSyncTaskList(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList, false);
+                        }
                         mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
                     } else {
                         mUtil.addDebugMsg(1, "I", "Sync task list was already created.");
@@ -1725,6 +1728,8 @@ public class ActivityMain extends AppCompatActivity {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
+                if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
+                else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
                 reloadSettingParms();
                 ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
                 ScheduleUtil.setSchedulerInfo(mGp, mUtil);
@@ -1734,6 +1739,7 @@ public class ActivityMain extends AppCompatActivity {
                 ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mGp);
                 mGp.syncTabScheduleList.clear();
                 mGp.syncTabScheduleList.addAll(sl);
+
                 mGp.syncTabScheduleAdapter.notifyDataSetChanged();
                 setScheduleTabMessage();
             }
