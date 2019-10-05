@@ -336,31 +336,35 @@ public class ReadSmbFilelist implements Runnable {
             e.printStackTrace();
         }
 
-        for (JcifsFile item:fl) {
-            String fn = item.getName().substring(0,item.getName().length()-1);
-            String fp = item.getPath().substring(0,item.getPath().length()-1);
-            if (getFLCtrl.isEnabled()) {
-                if (!fn.endsWith("$")) {
-                    TreeFilelistItem fi = new TreeFilelistItem(
-                            fn,
-                            "",
-                            true,//fl[i].isDirectory(),
-                            0,//fl[i].length(),
-                            0,//fl[i].lastModified(),
-                            false,
-                            true,//fl[i].canRead(),
-                            false,//fl[i].canWrite(),
-                            false,//fl[i].isHidden(),
-                            fp, 0);
-                    remoteFileList.add(fi);
-                    mUtil.addDebugMsg(2, "I", "filelist added :" + fn);
-                }
+        if (fl!=null) {
+            for (JcifsFile item:fl) {
+                String fn = item.getName().substring(0,item.getName().length()-1);
+                String fp = item.getPath().substring(0,item.getPath().length()-1);
+                if (getFLCtrl.isEnabled()) {
+                    if (!fn.endsWith("$")) {
+                        TreeFilelistItem fi = new TreeFilelistItem(
+                                fn,
+                                "",
+                                true,//fl[i].isDirectory(),
+                                0,//fl[i].length(),
+                                0,//fl[i].lastModified(),
+                                false,
+                                true,//fl[i].canRead(),
+                                false,//fl[i].canWrite(),
+                                false,//fl[i].isHidden(),
+                                fp, 0);
+                        remoteFileList.add(fi);
+                        mUtil.addDebugMsg(2, "I", "filelist added :" + fn);
+                    }
 
-            } else {
-                getFLCtrl.setThreadResultCancelled();
-                mUtil.addDebugMsg(1, "W", "File list creation cancelled by main task.");
-                break;
+                } else {
+                    getFLCtrl.setThreadResultCancelled();
+                    mUtil.addDebugMsg(1, "W", "File list creation cancelled by main task.");
+                    break;
+                }
             }
+        } else {
+            mUtil.addDebugMsg(1, "W", "Share name can not be found.");
         }
     }
 

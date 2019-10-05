@@ -107,6 +107,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
+import javax.crypto.SecretKey;
+
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS;
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS;
@@ -121,6 +123,8 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_NO;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_NOALL;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YES;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YESALL;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_KEY_STORE_AES_ALIAS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_KEY_STORE_ALIAS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SERIALIZABLE_FILE_NAME;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_HIST;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_MESSAGE;
@@ -272,8 +276,20 @@ public class ActivityMain extends AppCompatActivity {
                             }
                         }
                         if (mGp.debuggable) {
-                            SyncTaskXml.saveXmlSyncTaskList(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList, false);
-//                        SyncTaskXml.loadXmlSyncTaskList(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList, false);
+                            try {
+//                                SecretKey priv_key=KeyStoreUtil3.getGeneratedPasswordByAes(mContext, SMBSYNC2_KEY_STORE_AES_ALIAS);
+                            SyncTaskXml.saveXmlSyncTaskListToAutosave(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList);
+//                            ArrayList<SyncTaskItem> temp_task_list = new ArrayList<SyncTaskItem>();
+//                            SyncTaskXml.saveXmlSyncTaskListToExportFile(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList, "test");
+//                            SyncTaskXml.loadXmlSyncTaskListFromExportFile(mGp, mUtil, "/sdcard","syc.xml", temp_task_list, "test");
+//                            synchronized (mGp.syncTaskList) {
+//                                mGp.syncTaskList.clear();
+//                                mGp.syncTaskList.addAll(temp_task_list);
+//                            }
+
+                            } catch(Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                         mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
                     } else {

@@ -58,6 +58,7 @@ public class Constants {
     public static final int SMBSYNC2_CONFIRM_CONFLICT_RESP_CANCEL = -30;
 
     public static final String SMBSYNC2_KEY_STORE_ALIAS = "SMBSync2";
+    public static final String SMBSYNC2_KEY_STORE_AES_ALIAS = "SMBSync2_AES";
 
 	public final static String SMBSYNC2_PROFILE_FILE_NAME_V1="profile_v1.txt";
 	public final static String SMBSYNC2_PROFILE_FILE_NAME_V2="profile_v2.txt";
