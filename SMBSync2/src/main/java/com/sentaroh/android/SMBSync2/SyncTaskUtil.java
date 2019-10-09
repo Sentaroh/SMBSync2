@@ -3672,7 +3672,13 @@ public class SyncTaskUtil {
         String h_port = "";
         if (!sti.getMasterSmbPort().equals("")) h_port = ":" + sti.getMasterSmbPort();
         final String host_port=h_port;
-        final String remdir = "/" + sti.getMasterDirectoryName() + "/";
+        String remdir_tmp="";
+        if (sti.getMasterDirectoryName().equals("/") || sti.getMasterDirectoryName().equals("")) {
+            remdir_tmp = "/";
+        } else {
+            remdir_tmp = sti.getMasterDirectoryName().startsWith("/")?sti.getMasterDirectoryName()+"/":"/" + sti.getMasterDirectoryName() + "/";
+        }
+        final String remdir = remdir_tmp;
         final String smb_proto=sti.getMasterSmbProtocol();
         final boolean ipc_enforced=sti.isMasterSmbIpcSigningEnforced();
         final boolean smb2_negotiation=sti.isMasterSmbUseSmb2Negotiation();
@@ -3918,7 +3924,7 @@ public class SyncTaskUtil {
             if (tfa.getDataItem(i).isChecked()) {
                 if (tfa.getDataItem(i).getPath().length() == 1) sel = tfa.getDataItem(i).getName();
                 else sel = tfa.getDataItem(i).getPath() + tfa.getDataItem(i).getName();
-                sel = sel.substring(cdir.length());
+                if (sel.startsWith("/")) sel = sel.substring(cdir.length());
                 if (isFilterExists(sel, fla)) {
                     String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                     dlg_msg.setText(String.format(mtxt, sel));
