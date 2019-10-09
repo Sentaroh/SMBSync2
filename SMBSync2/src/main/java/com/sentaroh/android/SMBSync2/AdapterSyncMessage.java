@@ -34,7 +34,6 @@ import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThemeUtil;
-import com.sentaroh.android.Utilities.Widget.CustomTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,8 +121,8 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
             v = vi.inflate(id, null);
             holder = new ViewHolder();
 //            holder.tv_row_cat= (TextView) v.findViewById(R.id.msg_list_view_item_cat);
-            holder.tv_row_msg = (CustomTextView) v.findViewById(R.id.msg_list_view_item_msg);
-            holder.tv_row_msg.setWordWrapMode(mGp.settingSyncMessageUseStandardTextView);
+            holder.tv_row_msg = (NonWordwrapTextView) v.findViewById(R.id.msg_list_view_item_msg);
+            holder.tv_row_msg.setWordWrapEnabled(mGp.settingSyncMessageUseStandardTextView);
 //            holder.tv_row_msg.setBreakStrategy(Layout.BREAK_STRATEGY_SIMPLE);
             holder.tv_row_time = (TextView) v.findViewById(R.id.msg_list_view_item_time);
             holder.tv_row_date = (TextView) v.findViewById(R.id.msg_list_view_item_date);
@@ -177,7 +176,7 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
     private class ViewHolder {
         //		TextView tv_row_cat;
         TextView tv_row_time, tv_row_date;
-        CustomTextView tv_row_msg;
+        NonWordwrapTextView tv_row_msg;
 //		Configuration config;
     }
 }

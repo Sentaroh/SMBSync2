@@ -12,7 +12,7 @@ android {
         targetSdkVersion 28
 
 //
-        versionCode 245
+        versionCode 246
         versionName "2.24"
 
         compileOptions {
