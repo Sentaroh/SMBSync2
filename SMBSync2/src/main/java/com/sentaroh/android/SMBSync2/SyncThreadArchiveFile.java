@@ -126,11 +126,12 @@ public class SyncThreadArchiveFile {
                 to_file_name=item.file_name;
             }
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
-
+            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);
+            
             if (!sti.isArchiveUseRename()) {
-                File tf=new File(to_path+"/"+item.file_name);
+                File tf=new File(converted_to_path+"/"+item.file_name);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+to_file_name, to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -144,11 +145,11 @@ public class SyncThreadArchiveFile {
                 }
             } else {
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
-                String temp_dir=buildArchiveDirectoryName(stwa, sti, item);
+                String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
-                File tf=new File(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                File tf=new File(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -159,7 +160,7 @@ public class SyncThreadArchiveFile {
                     }
                 } else {
                     sync_result= moveFileInternalToInternal(stwa, sti, item.full_path, (File)item.file, tf, tf.getPath(),
-                            to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                            converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 }
             }
         }
@@ -358,10 +359,12 @@ public class SyncThreadArchiveFile {
             }
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
 
+            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);
+
             if (!sti.isArchiveUseRename()) {
-                File tf=new File(to_path+"/"+item.file_name);
+                File tf=new File(converted_to_path+"/"+item.file_name);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+to_file_name, to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -375,11 +378,11 @@ public class SyncThreadArchiveFile {
                 }
             } else {
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
-                String temp_dir=buildArchiveDirectoryName(stwa, sti, item);
+                String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
-                File tf=new File(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                File tf=new File(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -390,7 +393,7 @@ public class SyncThreadArchiveFile {
                     }
                 } else {
                     sync_result= moveFileInternalToExternal(stwa, sti, item.full_path, (File)item.file, tf, tf.getPath(),
-                            to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                            converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 }
             }
         }
@@ -494,11 +497,12 @@ public class SyncThreadArchiveFile {
                 to_file_name=item.file_name;
             }
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
+            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);            
 
             if (!sti.isArchiveUseRename()) {//Renameしない
-                JcifsFile jf=new JcifsFile(to_path+"/"+item.file_name, stwa.targetAuth);
+                JcifsFile jf=new JcifsFile(converted_to_path+"/"+item.file_name, stwa.targetAuth);
                 if (jf.exists()) {
-                    String new_name=createArchiveSmbNewFilePath(stwa, sti, to_path, to_path+"/"+to_file_name, to_file_ext) ;
+                    String new_name=createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -512,11 +516,11 @@ public class SyncThreadArchiveFile {
                 }
             } else {//Renameする
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
-                String temp_dir=buildArchiveDirectoryName(stwa, sti, item);
+                String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
-                JcifsFile jf=new JcifsFile(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext, stwa.targetAuth);
+                JcifsFile jf=new JcifsFile(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext, stwa.targetAuth);
                 if (jf.exists()) {
-                    String new_name=createArchiveSmbNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
+                    String new_name=createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -763,6 +767,7 @@ public class SyncThreadArchiveFile {
                 to_file_name=item.file_name;
             }
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
+            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);
 
             if (!sti.isArchiveUseRename()) {
                 File tf=new File(to_path+"/"+item.file_name);
@@ -781,7 +786,7 @@ public class SyncThreadArchiveFile {
                 }
             } else {
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
-                String temp_dir=buildArchiveDirectoryName(stwa, sti, item);
+                String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
                 File tf=new File(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 if (tf.exists()) {
@@ -986,11 +991,12 @@ public class SyncThreadArchiveFile {
                 to_file_name=item.file_name;
             }
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
+            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);
 
             if (!sti.isArchiveUseRename()) {
-                File tf=new File(to_path+"/"+item.file_name);
+                File tf=new File(converted_to_path+"/"+item.file_name);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+to_file_name, to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1004,11 +1010,11 @@ public class SyncThreadArchiveFile {
                 }
             } else {
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
-                String temp_dir=buildArchiveDirectoryName(stwa, sti, item);
+                String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
-                File tf=new File(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                File tf=new File(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1019,7 +1025,7 @@ public class SyncThreadArchiveFile {
                     }
                 } else {
                     sync_result= moveFileExternalToExternal(stwa, sti, item.full_path, (File)item.file, tf, tf.getPath(),
-                            to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                            converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 }
             }
         }
@@ -1176,6 +1182,7 @@ public class SyncThreadArchiveFile {
                 to_file_name=item.file_name;
             }
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
+            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);            
 
             if (!sti.isArchiveUseRename()) {
                 JcifsFile tf=new JcifsFile(to_path+"/"+item.file_name, stwa.targetAuth);
@@ -1194,7 +1201,7 @@ public class SyncThreadArchiveFile {
                 }
             } else {
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
-                String temp_dir=buildArchiveDirectoryName(stwa, sti, item);
+                String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
                 JcifsFile tf=new JcifsFile(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext, stwa.targetAuth);
                 if (tf.exists()) {
@@ -1390,11 +1397,12 @@ public class SyncThreadArchiveFile {
                 to_file_name=item.file_name;
             }
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
+            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);
 
             if (!sti.isArchiveUseRename()) {
-                File tf=new File(to_path+"/"+item.file_name);
+                File tf=new File(converted_to_path+"/"+item.file_name);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+to_file_name, to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1408,11 +1416,11 @@ public class SyncThreadArchiveFile {
                 }
             } else {
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
-                String temp_dir=buildArchiveDirectoryName(stwa, sti, item);
+                String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
-                File tf=new File(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                File tf=new File(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1423,7 +1431,7 @@ public class SyncThreadArchiveFile {
                     }
                 } else {
                     sync_result= moveFileSmbToInternal(stwa, sti, item.full_path, (JcifsFile)item.file, tf, tf.getPath(),
-                            to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                            converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 }
             }
         }
@@ -1678,11 +1686,12 @@ public class SyncThreadArchiveFile {
                 to_file_name=item.file_name;
             }
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
+            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);
 
             if (!sti.isArchiveUseRename()) {
-                File tf=new File(to_path+"/"+item.file_name);
+                File tf=new File(converted_to_path+"/"+item.file_name);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+to_file_name, to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1696,11 +1705,11 @@ public class SyncThreadArchiveFile {
                 }
             } else {
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
-                String temp_dir=buildArchiveDirectoryName(stwa, sti, item);
+                String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
-                File tf=new File(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                File tf=new File(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1711,7 +1720,7 @@ public class SyncThreadArchiveFile {
                     }
                 } else {
                     sync_result= moveFileSmbToExternal(stwa, sti, item.full_path, (JcifsFile)item.file, tf, tf.getPath(),
-                            to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                            converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 }
             }
         }
@@ -1884,11 +1893,12 @@ public class SyncThreadArchiveFile {
                 to_file_name=item.file_name;
             }
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
+            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);
 
             if (!sti.isArchiveUseRename()) {
-                JcifsFile tf=new JcifsFile(to_path+"/"+item.file_name, stwa.targetAuth);
+                JcifsFile tf=new JcifsFile(converted_to_path+"/"+item.file_name, stwa.targetAuth);
                 if (tf.exists()) {
-                    String new_name=createArchiveSmbNewFilePath(stwa, sti, to_path, to_path+"/"+to_file_name, to_file_ext) ;
+                    String new_name=createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1902,11 +1912,11 @@ public class SyncThreadArchiveFile {
                 }
             } else {
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
-                String temp_dir=buildArchiveDirectoryName(stwa, sti, item);
+                String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
-                JcifsFile tf=new JcifsFile(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext, stwa.targetAuth);
+                JcifsFile tf=new JcifsFile(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext, stwa.targetAuth);
                 if (tf.exists()) {
-                    String new_name=createArchiveSmbNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
+                    String new_name=createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1917,7 +1927,7 @@ public class SyncThreadArchiveFile {
                     }
                 } else {
                     sync_result= moveFileSmbToSmb(stwa, sti, item.full_path, (JcifsFile)item.file, tf, tf.getPath(),
-                            to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                            converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 }
             }
         }
@@ -2211,7 +2221,7 @@ public class SyncThreadArchiveFile {
         return result;
     }
 
-    static private String buildArchiveDirectoryName(SyncThreadWorkArea stwa, SyncTaskItem sti, ArchiveFileListItem afli) {
+    static private String buildArchiveSubDirectoryName(SyncThreadWorkArea stwa, SyncTaskItem sti, ArchiveFileListItem afli) {
         String temp_dir="";
         if (sti.isArchiveCreateDirectory()) {
             if (!sti.getArchiveCreateDirectoryTemplate().equals("")){
@@ -2227,6 +2237,25 @@ public class SyncThreadArchiveFile {
         }
 
         return temp_dir;
+    }
+
+    static private String buildArchiveTargetDirectoryName(SyncThreadWorkArea stwa, SyncTaskItem sti, String to_path, ArchiveFileListItem afli) {
+        String target_directory="";
+        if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) {
+            if (!to_path.equals("")){
+                String year=afli.shoot_date.substring(0,4);
+                String month=afli.shoot_date.substring(5,7);
+                String day=afli.shoot_date.substring(8,10);
+
+                target_directory=to_path.replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_YEAR,year)
+                        .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_MONTH,month)
+                        .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_DAY,day);
+            }
+        } else {
+            target_directory=to_path;
+        }
+
+        return target_directory;
     }
 
     static private String buildArchiveFileName(SyncThreadWorkArea stwa, SyncTaskItem sti, ArchiveFileListItem afli, String original_name) {
