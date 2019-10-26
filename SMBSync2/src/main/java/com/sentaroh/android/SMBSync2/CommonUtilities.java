@@ -41,6 +41,7 @@ import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.storage.StorageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -169,6 +170,12 @@ public final class CommonUtilities {
         if (Build.VERSION.SDK_INT>=27) {
             out.add("setSettingGrantCoarseLocationRequired="+gp.settingGrantCoarseLocationRequired);
             out.add("ACCESS_COARSE_LOCATION Permission="+gp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+        }
+
+        if (Build.VERSION.SDK_INT>=29) {
+            boolean backgroundLocationPermissionApproved =
+                    gp.appContext.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)== PackageManager.PERMISSION_GRANTED;
+            out.add("ACCESS_BACKGROUND_LOCATION="+backgroundLocationPermissionApproved);
         }
 
         if (Build.VERSION.SDK_INT>=27) {

@@ -304,6 +304,7 @@ public class SyncThreadArchiveFile {
 
                 SafFile to_saf=SyncThread.createSafFile(stwa, sti, tf.getPath());
                 if (to_saf == null) return SyncTaskItem.SYNC_STATUS_ERROR;
+                to_saf.deleteIfExists();
 
                 sync_result= copyFile(stwa, sti, new FileInputStream(mf), os, from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
 
