@@ -82,9 +82,12 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import it.sephiroth.android.library.easing.Linear;
 
@@ -150,6 +153,20 @@ public final class CommonUtilities {
 
     final public void rotateLogFile() {
         mLog.rotateLogFile();
+    }
+
+    static public String convertDateTimeWithTimzone(String time_zon_name, long time_value) {
+        final Calendar gcal = new GregorianCalendar(TimeZone.getTimeZone(time_zon_name));
+        gcal.setTimeInMillis(time_value);
+        final int yyyy=gcal.get(Calendar.YEAR);
+        final int month=gcal.get(Calendar.MONTH)+1;
+        final int day=gcal.get(Calendar.DATE);
+        final int hours=gcal.get(Calendar.HOUR_OF_DAY);
+        final int minutes=gcal.get(Calendar.MINUTE);
+        final int second=gcal.get(Calendar.SECOND);
+
+        String date=String.format("%4d/%02d/%02d %02d:%02d:%02d", yyyy, month, day, hours, minutes, second);
+        return date;
     }
 
     final public static String getWifiSsidName(WifiManager wm) {

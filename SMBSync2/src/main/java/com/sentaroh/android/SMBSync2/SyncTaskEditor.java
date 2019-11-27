@@ -3993,6 +3993,7 @@ public class SyncTaskEditor extends DialogFragment {
                         SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
                         mFragment.dismissAllowingStateLoss();
                         mUtil.addDebugMsg(1,"I","editSyncTask edit saved, type="+type+", task="+new_stli.getSyncTaskName());
+                        ((ActivityMain)getActivity()).refreshOptionMenu();
 
                         checkLocationServiceWarning(getActivity(), mGp, mUtil);
 

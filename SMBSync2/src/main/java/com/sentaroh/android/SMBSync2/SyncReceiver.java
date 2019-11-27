@@ -244,7 +244,8 @@ public class SyncReceiver extends BroadcastReceiver {
                 }
 
                 long time = ScheduleUtil.getNextSchedule(begin_sched_list.get(0));
-                mLog.addDebugMsg(1, "I", "setTimer result=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec(time) + ", name=(" + sched_names+")");
+                mLog.addDebugMsg(1, "I", "setTimer result=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec(time) + ", name=(" + sched_names+")"+
+                        ", UTC=("+CommonUtilities.convertDateTimeWithTimzone("UTC", time)+"), TimeValue="+time);
                 Intent in = new Intent();
                 in.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
                 in.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, sched_names);

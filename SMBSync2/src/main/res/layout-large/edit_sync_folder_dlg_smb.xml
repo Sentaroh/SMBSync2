@@ -184,6 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:visibility="gone"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_logon" />
 
             <LinearLayout

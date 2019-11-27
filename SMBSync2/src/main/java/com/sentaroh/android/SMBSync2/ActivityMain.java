@@ -1183,7 +1183,17 @@ public class ActivityMain extends AppCompatActivity {
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_housekeep), true);
             if (mGp.syncThreadActive) menu.findItem(R.id.menu_top_housekeep).setVisible(false);
             else menu.findItem(R.id.menu_top_housekeep).setVisible(true);
-            menu.findItem(R.id.menu_top_sync).setVisible(true);
+            if (mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
+                menu.findItem(R.id.menu_top_sync).setVisible(false);
+                for(SyncTaskItem sti:mGp.syncTaskList) {
+                    if (sti.isSyncTaskAuto() && !sti.isSyncTaskError()) {
+                        menu.findItem(R.id.menu_top_sync).setVisible(true);
+                        break;
+                    }
+                }
+            } else {
+                menu.findItem(R.id.menu_top_sync).setVisible(false);
+            }
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_settings), true);
             if (!mGp.externalStorageIsMounted) {
                 setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_browse_log), false);
@@ -4447,8 +4457,7 @@ public class ActivityMain extends AppCompatActivity {
         return enableMainUi;
     }
 
-    @SuppressLint("NewApi")
-    final private void refreshOptionMenu() {
+    final public void refreshOptionMenu() {
         mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered");
 //		if (Build.VERSION.SDK_INT>=11)
 //			this.invalidateOptionsMenu();
