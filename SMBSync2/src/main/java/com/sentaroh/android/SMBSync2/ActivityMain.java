@@ -665,8 +665,13 @@ public class ActivityMain extends AppCompatActivity {
 //                mUtil.addDebugMsg(1, "I", "Request ignore battery optimization");
 //            }
             intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
-            startActivity(intent);
             mUtil.addDebugMsg(1, "I", "Invoke battery optimization settings");
+            try {
+                startActivity(intent);
+            } catch(Exception e) {
+                mCommonDlg.showCommonDialog(false, "E", "Invoke Battery optimization error", "error="+e.getMessage(), null);
+            }
+
         }
     }
 
