@@ -276,20 +276,6 @@ public class ActivityMain extends AppCompatActivity {
                             }
                         }
                         if (mGp.debuggable) {
-                            try {
-//                                SecretKey priv_key=KeyStoreUtil3.getGeneratedPasswordByAes(mContext, SMBSYNC2_KEY_STORE_AES_ALIAS);
-                            SyncTaskXml.saveXmlSyncTaskListToAutosave(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList);
-//                            ArrayList<SyncTaskItem> temp_task_list = new ArrayList<SyncTaskItem>();
-//                            SyncTaskXml.saveXmlSyncTaskListToExportFile(mGp, mUtil, "/sdcard","syc.xml", mGp.syncTaskList, "test");
-//                            SyncTaskXml.loadXmlSyncTaskListFromExportFile(mGp, mUtil, "/sdcard","syc.xml", temp_task_list, "test");
-//                            synchronized (mGp.syncTaskList) {
-//                                mGp.syncTaskList.clear();
-//                                mGp.syncTaskList.addAll(temp_task_list);
-//                            }
-
-                            } catch(Exception e) {
-                                e.printStackTrace();
-                            }
                         }
                         mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
                     } else {
