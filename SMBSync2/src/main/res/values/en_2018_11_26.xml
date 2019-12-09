@@ -505,6 +505,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">The last modified time of the file was used because the shooting date and time cannot be obtained from the EXIF/metadata of the file. File=</string>
         <string name="msgs_mirror_taken_date_convert_error">The last modified time of the file was used because an error occurred in the conversion of the shooting date. File=</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Sync aborted because a directory with the same name as the file exists in the target. File=</string>
+        <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Synchronization was canceled because the length of the file name exceeds 255 bytes. File name byte count=%s, File name=%s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Sync cancelled because SDCARD is not mounted.</string>
         <string name="msgs_mirror_external_sdcard_select_required">Sync cancelled because SDCARD write permission not granted.</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">It seems that the SDCARD contents is not reflected in the media store.  Execute media scan to update the contents of the SDCARD.</string>

@@ -2105,6 +2105,13 @@ public class SyncThreadSyncFile {
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.getLastModified(), from_path, to_path);
                         tf = new File(parsed_to_path);
+                        if (tf.getName().getBytes().length>255) {
+                            String e_msg=String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_name_gt_255_byte), tf.getName().getBytes().length, tf.getName());
+                            stwa.util.addLogMsg("E", e_msg);
+                            sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                            stwa.gp.syncThreadCtrl.setThreadMessage(e_msg);
+                            return sync_result;
+                        }
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword())
                             SyncThread.createDirectoryToInternalStorage(stwa, sti, tf.getParent());
                         boolean tf_exists = tf.exists();
@@ -2430,6 +2437,13 @@ public class SyncThreadSyncFile {
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.getLastModified(), from_path, to_path);
                         tf = new File(parsed_to_path);
+                        if (tf.getName().getBytes().length>255) {
+                            String e_msg=String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_name_gt_255_byte), tf.getName().getBytes().length, tf.getName());
+                            stwa.util.addLogMsg("E", e_msg);
+                            sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                            stwa.gp.syncThreadCtrl.setThreadMessage(e_msg);
+                            return sync_result;
+                        }
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()){
                             SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
                         }

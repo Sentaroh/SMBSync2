@@ -503,6 +503,7 @@
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">ファイルのEXIF/MetaDataから撮影日時が取得できないためファイルの最終更新時刻を使用しました。ファイル=</string>
         <string name="msgs_mirror_taken_date_convert_error">撮影日時の変換でエラーが発生したためファイルの最終更新時刻を使用しました。ファイル=</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">ターゲットにファイルと同名のディレクトリーが存在するため同期を中止しました。ファイル=</string>
+        <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">ファイル名の長さが255バイトを超えているため同期を中止しました。ファイル名のバイト数=%s, ファイル名=%s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">SDCARDがマウントされていないため同期を中止します。</string>
         <string name="msgs_mirror_external_sdcard_select_required">SDCARDの書込み許可がなされていないため同期を中止します。</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">SDCARD上のファイル情報がメディアストアに反映されていないようです、メディアスキャンを実行してファイルの情報をメディアストアに反映してください。</string>
