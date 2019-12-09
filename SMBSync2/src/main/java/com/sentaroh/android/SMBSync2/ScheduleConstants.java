@@ -57,4 +57,6 @@ public class ScheduleConstants {
     public static final String SCHEDULER_SCHEDULE_NAME_KEY = "scheduler_schedule_name_key";
 
     public static final String SCHEDULER_ENABLED_KEY = "scheduler_enabled_key";
+
+    public static final String SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY = "scheduler_last_set_utc_time_key";
 }

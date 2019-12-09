@@ -51,6 +51,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_START_SYNC_INTENT
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_TIMER_EXPIRED;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_NAME_KEY;
 
 public class SyncReceiver extends BroadcastReceiver {
@@ -244,8 +245,11 @@ public class SyncReceiver extends BroadcastReceiver {
                 }
 
                 long time = ScheduleUtil.getNextSchedule(begin_sched_list.get(0));
+                long prev_set_time=ScheduleUtil.getSchedulerLastScheduleTime(mContext);
                 mLog.addDebugMsg(1, "I", "setTimer result=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec(time) + ", name=(" + sched_names+")"+
-                        ", UTC=("+CommonUtilities.convertDateTimeWithTimzone("UTC", time)+"), TimeValue="+time);
+                        ", Next schedule UTC=("+CommonUtilities.convertDateTimeWithTimzone("UTC", time)+"), TimeValue="+time+
+                        ", Prev schedule UTC=("+CommonUtilities.convertDateTimeWithTimzone("UTC", prev_set_time)+"), TimeValue="+prev_set_time);
+                ScheduleUtil.setSchedulerLastScheduleTime(mContext, time);
                 Intent in = new Intent();
                 in.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
                 in.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, sched_names);

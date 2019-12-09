@@ -27,7 +27,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.StringUtil;
@@ -39,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_DAY_OF_THE_WEEK_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_ENABLED_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_HOURS_KEY;
@@ -656,6 +656,16 @@ public class ScheduleUtil {
             }
         }
         return null;
+    }
+
+    public static void setSchedulerLastScheduleTime(Context c, long utc) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        prefs.edit().putLong(SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY, utc).commit();
+    }
+
+    public static long getSchedulerLastScheduleTime(Context c) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        return prefs.getLong(SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY, 0L);
     }
 
     public static void setSchedulerInfo(GlobalParameters gp, CommonUtilities cu) {
