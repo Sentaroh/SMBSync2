@@ -318,6 +318,8 @@ public final class CommonUtilities {
         try {
             OutputStream fos=null;
             String dir = gp.settingMgtFileDir;
+            File mfd=new File(dir);
+            if (!mfd.exists()) mfd.mkdirs();
             File mf = new File(dir + "/.messages");
             fos=new FileOutputStream(mf);
             PrintWriter bos=new PrintWriter(new BufferedOutputStream(fos,1024*1024*4));
