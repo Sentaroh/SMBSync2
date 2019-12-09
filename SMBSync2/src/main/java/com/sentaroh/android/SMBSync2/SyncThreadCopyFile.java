@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.content.ContentProviderClient;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -722,7 +723,14 @@ public class SyncThreadCopyFile {
                 ", target="+out_file.lastModified()+", master="+mf.getLastModified()+", target_size="+out_file.length()+", master_size="+mf.length());
         File out_dest = new File(to_file_dest);
         if (out_dest.exists()) out_dest.delete();
-        out_file.renameTo(out_dest);
+        boolean rc=out_file.renameTo(out_dest);
+//        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " rename result="+rc+", dest path="+file_name);
+//        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " rename result="+rc+", dest path lenth="+file_name.length()+", temp path length="+out_file.getPath().length());
+//        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " rename result="+rc+", dest path lenth="+file_name.getBytes().length+", temp path length="+out_file.getPath().getBytes().length);
+        if (!rc) {
+            stwa.util.addLogMsg("E", sti.getSyncTaskName(), " ", "renae error detected, from="+out_file.getPath()+", to="+out_dest.getPath());
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
@@ -763,7 +771,12 @@ public class SyncThreadCopyFile {
         else o_df=stwa.gp.safMgr.createUsbItem(to_file_dest, false);
 
         if (o_df.exists()) o_df.delete();
-        t_df.renameTo(file_name);
+        boolean rc=t_df.renameTo(file_name);
+        if (!rc) {
+            stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile renameTo Error="+t_df.getLastErrorMessage());
+            if (t_df.exists()) t_df.delete();
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
