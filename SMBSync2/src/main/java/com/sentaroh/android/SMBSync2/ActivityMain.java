@@ -281,6 +281,7 @@ public class ActivityMain extends AppCompatActivity {
                     } else {
                         mUtil.addDebugMsg(1, "I", "Sync task list was already created.");
                     }
+//                    ExportToSMBSync3.saveConfigListToExportFile(mContext, "/sdcard/smbsync2.xml", mGp.syncTaskList, mGp.syncTabScheduleList);
                     mUiHandler.post(new Runnable(){
                         @Override
                         public void run() {
