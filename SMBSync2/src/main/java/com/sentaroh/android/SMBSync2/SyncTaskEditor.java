@@ -2203,7 +2203,7 @@ public class SyncTaskEditor extends DialogFragment {
 //                        ", Path="+(String)getPath.invoke(volume));
                 cu.addDebugMsg(1,"I","getStorageVolumeUuidApi23 uuid="+uuid+", desc="+desc+", type="+type+", isRemovable="+removable+", path="+path);
                 if (type.contains("SD")) {
-                    if (!desc.contains("USB") && removable) {
+                    if (!desc.toLowerCase().contains("USB".toLowerCase()) && removable) {
                         result=uuid;
                         break;
                     }
@@ -2228,7 +2228,7 @@ public class SyncTaskEditor extends DialogFragment {
         String uuid="";
         for(StorageVolume item:vol_list) {
             cu.addDebugMsg(1,"I","getStorageVolume uuid="+item.getUuid()+", desc="+item.getDescription(c));
-            if (item.getDescription(c).contains(type)) {
+            if (item.getDescription(c).toLowerCase().contains(type.toLowerCase())) {
                 sv=item;
                 uuid=item.getUuid();
                 break;

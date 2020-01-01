@@ -2376,13 +2376,13 @@ public class SyncThreadArchiveFile {
         } catch (ImageProcessingException e) {
             e.printStackTrace();
             putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
         }
         try {
             fis.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             putExceptionMessage(stwa, e.getStackTrace(), e.getMessage());
         }

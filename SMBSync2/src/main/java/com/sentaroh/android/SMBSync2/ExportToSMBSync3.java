@@ -37,6 +37,7 @@ public class ExportToSMBSync3 {
     private final static String SYNC_TASK_CONFIG_FILE_IDENTIFIER = "<!--SMBSync3 Configuration file(Do not change this file)-->";
     private final static String SYNC_TASK_XML_TAG_FILTER_ITEM = "filter";
     private final static String SYNC_TASK_XML_TAG_FILTER_INCLUDE = "include";
+    private final static String SYNC_TASK_XML_TAG_FILTER_MATCH_FROM_BEGIN = "match_from_begin";
     private final static String SYNC_TASK_XML_TAG_FILTER_VALUE = "value";
     private final static String SYNC_TASK_XML_TAG_CONFIG = "config_list";
     private final static String SYNC_TASK_XML_TAG_CONFIG_VERSION = "version";
@@ -411,6 +412,10 @@ public class ExportToSMBSync3 {
     private static void buildXmlOptionElement(Context c, Document main_document, Element task_tag, SyncTaskItem item) {
         Element option_tag = main_document.createElement(SYNC_TASK_XML_TAG_OPTION);
 
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_PRESET_AUDIO, item.isSyncFileTypeAudio()?"true":"false");
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_PRESET_IMAGE, item.isSyncFileTypeImage()?"true":"false");
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_PRESET_VIDEO, item.isSyncFileTypeVideo()?"true":"false");
+
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_ALLOW_GLOBAL_IP_ADDRESS, item.isSyncOptionSyncAllowGlobalIpAddress()?"true":"false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_CONFIIRM_OVERRIDE_OR_DELETE, item.isSyncConfirmOverrideOrDelete()?"true":"false");
 
@@ -434,7 +439,7 @@ public class ExportToSMBSync3 {
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_SYNC_EMPTY_DIRECTORY, item.isSyncOptionSyncEmptyDirectory()?"true":"false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_SYNC_HIDDEN_DIRECTORY, item.isSyncOptionSyncHiddenDirectory()?"true":"false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_SYNC_HIDDEN_FILE, item.isSyncOptionSyncHiddenFile()?"true":"false");
-        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_SYNC_SUB_DIRECTORY, item.isSyncOptionUseSmallIoBuffer()?"true":"false");
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_SYNC_SUB_DIRECTORY, item.isSyncOptionSyncSubDirectory()?"true":"false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_TARGET_USE_TAKEN_DATE_DIRECTORY_NAME_KEYWORD, item.isTargetUseTakenDateTimeToDirectoryNameKeyword()?"true":"false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_TARGET_USE_TAKEN_DATE_FILE_NAME_KEYWORD, item.isTargetUseTakenDateTimeToDirectoryNameKeyword()?"true":"false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_TWO_WAY_CONFLICT_FILE_RULE, item.getSyncTwoWayConflictFileRule());
@@ -444,13 +449,20 @@ public class ExportToSMBSync3 {
         task_tag.appendChild(option_tag);
     }
 
+    final private static String WHOLE_DIRECTORY_FILTER_PREFIX="\\\\";
     private static void buildXmlFilterElement(Context c, Document main_document, Element task_tag, String filter_type, ArrayList<String> filter_list) {
         if (filter_list.size()>0) {
             Element user_file_filter_tag = main_document.createElement(filter_type);
             for (String ff_item:filter_list) {
                 Element user_file_filter_entry_tag = main_document.createElement(SYNC_TASK_XML_TAG_FILTER_ITEM);
                 user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_INCLUDE,ff_item.startsWith("I")?"true":"false");
-                user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_VALUE, ff_item.substring(1));
+                String filter_value=ff_item.substring(1);
+                if (filter_value.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                    user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_MATCH_FROM_BEGIN,"true");
+                    user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_VALUE, filter_value.replace(WHOLE_DIRECTORY_FILTER_PREFIX, ""));
+                } else {
+                    user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_VALUE, filter_value);
+                }
                 user_file_filter_tag.appendChild(user_file_filter_entry_tag);
             }
             task_tag.appendChild(user_file_filter_tag);
