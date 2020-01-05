@@ -67,6 +67,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities.LocalMountPoint;
@@ -536,6 +537,19 @@ public class SyncTaskEditor extends DialogFragment {
         return out;
     }
 
+    private static String removeInvalidCharForFileName(String in_str) {
+        String out = in_str.replaceAll(":", "")
+                .replaceAll("\\\\", "")
+                .replaceAll("\\*", "")
+                .replaceAll("\\?", "")
+                .replaceAll("\"", "")
+                .replaceAll("<", "")
+                .replaceAll(">", "")
+                .replaceAll("/", "")
+                .replaceAll("\\|", "");
+        return out;
+    }
+
     private void setSyncFolderSmbListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
         final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
@@ -790,6 +804,13 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > 0) {
+                    for(int i = editable.length()-1; i >= 0; i--){
+                        if(editable.charAt(i) == '\n'){
+                            editable.delete(i, i + 1);
+                            return;
+                        }
+                    }
+
                     String new_name = removeInvalidCharForFileDirName(editable.toString());
                     if (editable.length() != new_name.length()) {
                         //remove invalid char
@@ -867,15 +888,23 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > 0) {
+                    for(int i = editable.length()-1; i >= 0; i--){
+                        if(editable.charAt(i) == '\n'){
+                            editable.delete(i, i + 1);
+                            return;
+                        }
+                    }
+                    checkSyncFolderValidation(dialog, sfev);
+
                     String new_name = removeInvalidCharForFileDirName(editable.toString());
                     if (editable.length() != new_name.length()) {
                         //remove invalid char
                         et_sync_folder_dir_name.setText(new_name);
                         if (new_name.length() > 0)
                             et_sync_folder_dir_name.setSelection(new_name.length());
+//                        Toast.makeText(mContext, mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char), Toast.LENGTH_SHORT).show();
                         mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_name_has_invalid_char)
                                 , "", null);
-
                     }
                     setSyncFolderArchiveFileImage(dialog, sti, new_name, true);
                 }
@@ -985,6 +1014,13 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > 0) {
+                    for(int i = editable.length()-1; i >= 0; i--){
+                        if(editable.charAt(i) == '\n'){
+                            editable.delete(i, i + 1);
+                            return;
+                        }
+                    }
+
                     String new_name = removeInvalidCharForFileDirName(editable.toString());
                     if (editable.length() != new_name.length()) {
                         //remove invalid char
@@ -1125,6 +1161,13 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > 0) {
+                    for(int i = editable.length()-1; i >= 0; i--){
+                        if(editable.charAt(i) == '\n'){
+                            editable.delete(i, i + 1);
+                            return;
+                        }
+                    }
+
                     String new_name = removeInvalidCharForFileDirName(editable.toString());
                     if (editable.length() != new_name.length()) {
                         //remove invalid char
@@ -1365,6 +1408,15 @@ public class SyncTaskEditor extends DialogFragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
+                if (editable.length()>0) {
+                    for(int i = editable.length()-1; i >= 0; i--){
+                        if(editable.charAt(i) == '\n'){
+                            editable.delete(i, i + 1);
+                            return;
+                        }
+                    }
+                }
+
                 String new_temp=removeInvalidCharForFileDirName(editable.toString()).replaceAll("/","");;
                 if (new_temp.length()!=editable.length()) {
                     et_file_template.setText(new_temp);
@@ -1498,7 +1550,7 @@ public class SyncTaskEditor extends DialogFragment {
         String zip_dir="", zip_file="";
         if (sfev.zip_file_name.lastIndexOf("/")>1) {
             //Directory付
-            zip_dir=sfev.zip_file_name.substring(0,sfev.zip_file_name.lastIndexOf("/")+1);
+            zip_dir=sfev.zip_file_name.substring(0,sfev.zip_file_name.lastIndexOf("/"));
             zip_file=sfev.zip_file_name.substring(sfev.zip_file_name.lastIndexOf("/")+1);
         } else {
             zip_dir="/";
@@ -1610,18 +1662,19 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        String zip_path = (String) o[1]+(String) o[2];
-                        String zip_dir="", zip_file="";
-                        if (zip_path.lastIndexOf("/")>1) {
-                            //Directory付
-                            zip_dir=zip_path.substring(0,zip_path.lastIndexOf("/")+1);
-                            zip_file=zip_path.substring(zip_path.lastIndexOf("/")+1);
-                        } else {
-                            zip_dir="/";
-                            if (zip_path.length()!=0) {
-                                zip_file=zip_path.startsWith(("/"))?zip_path.substring(1):zip_path;
-                            }
-                        }
+//                        String zip_path = (String) o[1]+"/"+(String) o[2];
+                        String zip_dir=((String)o[1]).equals("")?"/":((String)o[1]);
+                        String zip_file=(String) o[2];
+//                        if (zip_path.lastIndexOf("/")>1) {
+//                            //Directory付
+//                            zip_dir=zip_path.substring(0,zip_path.lastIndexOf("/")+1);
+//                            zip_file=zip_path.substring(zip_path.lastIndexOf("/")+1);
+//                        } else {
+//                            zip_dir="/";
+//                            if (zip_path.length()!=0) {
+//                                zip_file=zip_path.startsWith(("/"))?zip_path.substring(1):zip_path;
+//                            }
+//                        }
                         if (!ctv_zip_file_save_sdcard.isChecked()) {
                             tv_zip_dir.setText(zip_dir.replace(mGp.internalRootDirectory, ""));
                             et_zip_file.setText(zip_file);
@@ -1649,7 +1702,14 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() > 0) {
-                    String new_name = removeInvalidCharForFileDirName(s.toString());
+                    for(int i = s.length()-1; i >= 0; i--){
+                        if(s.charAt(i) == '\n'){
+                            s.delete(i, i + 1);
+                            return;
+                        }
+                    }
+
+                    String new_name = removeInvalidCharForFileName(s.toString());
                     if (s.length() != new_name.length()) {
                         //remove invalid char
                         et_zip_file.setText(new_name);
@@ -1913,7 +1973,8 @@ public class SyncTaskEditor extends DialogFragment {
             else if (rb_zip_enc_aes128.isChecked()) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128;
             else if (rb_zip_enc_aes256.isChecked()) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256;
 
-            nsfev.zip_file_name=tv_zip_dir.getText().toString().trim()+et_zip_file.getText().toString().trim();
+            if (tv_zip_dir.getText().toString().trim().equals("/")) nsfev.zip_file_name="/"+et_zip_file.getText().toString().trim();
+            else nsfev.zip_file_name=tv_zip_dir.getText().toString().trim()+"/"+et_zip_file.getText().toString().trim();
             if (!rb_zip_enc_none.isChecked()) {
                 nsfev.zip_file_password = et_zip_pswd.getText().toString();
             } else {

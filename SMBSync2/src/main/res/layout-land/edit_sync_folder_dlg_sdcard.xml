@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="@string/msgs_profile_edit_sync_folder_dlg_directory"
-                        android:inputType="text"
+                        android:inputType="text|textMultiLine"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 </LinearLayout>

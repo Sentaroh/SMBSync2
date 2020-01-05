@@ -261,6 +261,19 @@ public class SyncThreadSyncZip {
         ZipParameters zp = new ZipParameters();
         ZipFile zf = null;
         if (sti.isTargetZipUseExternalSdcard()) {
+            File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+dest_file);
+            File df=new File(lf.getParent());
+            if (!df.exists()) {
+                SafFile sf=stwa.gp.safMgr.createSdcardDirectory(df.getPath());
+            }
+        } else {
+            File lf=new File(stwa.gp.internalRootDirectory+"/"+dest_file);
+            File df=new File(lf.getParent());
+            if (!df.exists()) {
+                df.mkdirs();
+            }
+        }
+        if (sti.isTargetZipUseExternalSdcard()) {
             stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/zip_work_file.zip";
             if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
             zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
@@ -310,6 +323,20 @@ public class SyncThreadSyncZip {
         ZipParameters zp = new ZipParameters();
         ZipFile zf = null;
         if (sti.isTargetZipUseExternalSdcard()) {
+            File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+dest_file);
+            File df=new File(lf.getParent());
+            if (!df.exists()) {
+                SafFile sf=stwa.gp.safMgr.createSdcardDirectory(df.getPath());
+            }
+        } else {
+            File lf=new File(stwa.gp.internalRootDirectory+"/"+dest_file);
+            File df=new File(lf.getParent());
+            if (!df.exists()) {
+                df.mkdirs();
+            }
+        }
+
+        if (sti.isTargetZipUseExternalSdcard()) {
             stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/zip_work_file.zip";
             if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
             zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
@@ -333,6 +360,20 @@ public class SyncThreadSyncZip {
         int sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
         ZipParameters zp = new ZipParameters();
         ZipFile zf = null;
+        if (sti.isTargetZipUseExternalSdcard()) {
+            File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+dest_file);
+            File df=new File(lf.getParent());
+            if (!df.exists()) {
+                SafFile sf=stwa.gp.safMgr.createSdcardDirectory(df.getPath());
+            }
+        } else {
+            File lf=new File(stwa.gp.internalRootDirectory+"/"+dest_file);
+            File df=new File(lf.getParent());
+            if (!df.exists()) {
+                df.mkdirs();
+            }
+        }
+
         if (sti.isTargetZipUseExternalSdcard()) {
             stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/zip_work_file.zip";
             if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
