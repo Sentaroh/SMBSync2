@@ -1146,7 +1146,7 @@ public class SyncTaskUtil {
 
         if (spl.size() >= 0) {
             for (int i = 0; i < spl.size(); i++) {
-                if (spl.get(i).parms_key.equals(SCHEDULER_SCHEDULE_SAVED_DATA_V4)) {
+                if (spl.get(i).parms_key.equals(SCHEDULER_SCHEDULE_SAVED_DATA_V5)) {
                     result=restorePreferenceParms(pe, spl.get(i));
                 }
             }
