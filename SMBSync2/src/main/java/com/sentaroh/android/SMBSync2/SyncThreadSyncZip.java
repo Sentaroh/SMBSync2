@@ -274,7 +274,9 @@ public class SyncThreadSyncZip {
             }
         }
         if (sti.isTargetZipUseExternalSdcard()) {
-            stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/zip_work_file.zip";
+            File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache");
+            lf.mkdirs();
+            stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/zip_work_file.zip";
             if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
             zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
         } else {
@@ -337,7 +339,9 @@ public class SyncThreadSyncZip {
         }
 
         if (sti.isTargetZipUseExternalSdcard()) {
-            stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/zip_work_file.zip";
+            File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache");
+            lf.mkdirs();
+            stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/zip_work_file.zip";
             if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
             zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
         } else {
@@ -375,7 +379,9 @@ public class SyncThreadSyncZip {
         }
 
         if (sti.isTargetZipUseExternalSdcard()) {
-            stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/zip_work_file.zip";
+            File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache");
+            lf.mkdirs();
+            stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/zip_work_file.zip";
             if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
             zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
         } else {
