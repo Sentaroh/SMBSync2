@@ -4694,6 +4694,9 @@ public class ActivityMain extends AppCompatActivity {
 
     private void showConfirmDialogOverride(String method, String msg, String fp) {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+        final int prog_view=mGp.progressSpinView.getVisibility();
+        mGp.progressSpinView.setVisibility(ProgressBar.GONE);
+
         mGp.confirmOverrideView.setVisibility(LinearLayout.VISIBLE);
         mGp.confirmConflictView.setVisibility(LinearLayout.GONE);
         mGp.confirmDialogShowed = true;
@@ -4724,6 +4727,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmYesListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
+                mGp.progressSpinView.setVisibility(prog_view);
                 sendConfirmResponse(mGp, mSvcClient, SMBSYNC2_CONFIRM_RESP_YES);
             }
         };
@@ -4732,6 +4736,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmYesAllListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
+                mGp.progressSpinView.setVisibility(prog_view);
                 sendConfirmResponse(mGp, mSvcClient, SMBSYNC2_CONFIRM_RESP_YESALL);
             }
         };
@@ -4740,6 +4745,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmNoListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
+                mGp.progressSpinView.setVisibility(prog_view);
                 sendConfirmResponse(mGp, mSvcClient, SMBSYNC2_CONFIRM_RESP_NO);
             }
         };
@@ -4748,6 +4754,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmNoAllListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
+                mGp.progressSpinView.setVisibility(prog_view);
                 sendConfirmResponse(mGp, mSvcClient, SMBSYNC2_CONFIRM_RESP_NOALL);
             }
         };
@@ -4756,6 +4763,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmCancelListener = new View.OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
+                mGp.progressSpinView.setVisibility(prog_view);
                 sendConfirmResponse(mGp, mSvcClient, SMBSYNC2_CONFIRM_RESP_CANCEL);
             }
         };
