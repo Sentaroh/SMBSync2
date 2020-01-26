@@ -442,6 +442,8 @@
         <string name="msgs_share_list_not_obtained">SMB共有の一覧を取得できませんでした。下記を確認してください。\n
 -SMBサーバー側で共有されている\n
 -アカウント/パスワードを指定していない場合はアカウント/パスワードを指定する</string>
+        <string name="msgs_smbsync_main_private_key_corrupted_title">内部暗号化キーエラー</string>
+        <string name="msgs_smbsync_main_private_key_corrupted_msg">内部暗号化キーが無効のため同期タスクリストを保存できません。\n内部暗号化キーを再作成しますか？</string>
         <string name="msgs_smbsync_main_no_external_storage">外部メディアが使用できないため、いくつかの機能が使用できません。</string>
         <string name="msgs_smbsync_main_restart_by_destroyed">アプリケーションはアクティビティの破棄により終了しました。 設定->開発者向オプションで「アクティビティを保持しない」を有効にしているのであれば無効にしてください。</string>
         <string name="msgs_smbsync_main_restart_by_killed">アプリケーションがバックグラウンドに遷移後、強制終了しました。</string>

@@ -89,6 +89,7 @@ import com.sentaroh.android.Utilities.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities.Dialog.MessageDialogFragment;
 import com.sentaroh.android.Utilities.Dialog.ProgressBarDialogFragment;
 import com.sentaroh.android.Utilities.LocalMountPoint;
+import com.sentaroh.android.Utilities.MiscUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
@@ -258,70 +259,108 @@ public class ActivityMain extends AppCompatActivity {
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
-            mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
-            final Dialog pd=CommonDialog.showProgressSpinIndicator(mActivity);
-            pd.show();
-            Thread th = new Thread() {
+            NotifyEvent ntfy_priv_key=new NotifyEvent(mContext);
+            ntfy_priv_key.setListener(new NotifyEventListener() {
                 @Override
-                public void run() {
-                    if (mSyncTaskListCreateRequired) {
-                        mUtil.addDebugMsg(1, "I", "Sync task list creation started.");
-                        synchronized (mGp.syncTaskList) {
-                            ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil, false);
-                            for(SyncTaskItem sti:task_list) {
-                                if (SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, sti.getSyncTaskName())==null) {
-                                    mGp.syncTaskList.add(sti);
-                                    mUtil.addDebugMsg(1, "I", "Sync task list added, name="+sti.getSyncTaskName());
-                                }
+                public void positiveResponse(Context context, Object[] objects) {
+                    KeyStoreUtil.resetSavedKey(mContext);
+                    processOnResumeForStart();
+                }
+
+                @Override
+                public void negativeResponse(Context context, Object[] objects) {
+                    processOnResumeForStart();
+                }
+            });
+            if (!isValidPrivateKey()) {
+                mCommonDlg.showCommonDialog(true, "E",mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_title),
+                        mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_msg), ntfy_priv_key);
+            } else {
+                processOnResumeForStart();
+            }
+
+
+        }
+    }
+
+    private boolean isValidPrivateKey() {
+        boolean result=false;
+        try {
+            KeyStoreUtil.getGeneratedPasswordNewVersion(mContext, SMBSYNC2_KEY_STORE_ALIAS);
+            result=true;
+        } catch (Exception e) {
+            e.printStackTrace();
+//                mUtil.addDebugMsg(1, "E", e.toString());
+            String stm= MiscUtil.getStackTraceString(e);
+            mUtil.addDebugMsg(1, "E", stm);
+        }
+        return result;
+    }
+
+    private void processOnResumeForStart() {
+        mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
+        final Dialog pd=CommonDialog.showProgressSpinIndicator(mActivity);
+        pd.show();
+        Thread th = new Thread() {
+            @Override
+            public void run() {
+                if (mSyncTaskListCreateRequired) {
+                    mUtil.addDebugMsg(1, "I", "Sync task list creation started.");
+                    synchronized (mGp.syncTaskList) {
+                        ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil, false);
+                        for(SyncTaskItem sti:task_list) {
+                            if (SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, sti.getSyncTaskName())==null) {
+                                mGp.syncTaskList.add(sti);
+                                mUtil.addDebugMsg(1, "I", "Sync task list added, name="+sti.getSyncTaskName());
                             }
                         }
-                        if (mGp.debuggable) {
-                        }
-                        mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
-                    } else {
-                        mUtil.addDebugMsg(1, "I", "Sync task list was already created.");
                     }
-//                    ExportToSMBSync3.saveConfigListToExportFile(mContext, "/sdcard/smbsync2.xml", mGp.syncTaskList, mGp.syncTabScheduleList);
-                    mUiHandler.post(new Runnable(){
-                        @Override
-                        public void run() {
-                            NotifyEvent svc_ntfy = new NotifyEvent(mContext);
-                            svc_ntfy.setListener(new NotifyEventListener() {
-                                @Override
-                                public void positiveResponse(Context c, Object[] o) {
-                                    setMainListener();
-                                    NotifyEvent app_pswd_ntfy = new NotifyEvent(mContext);
-                                    app_pswd_ntfy.setListener(new NotifyEventListener() {
-                                        @Override
-                                        public void positiveResponse(Context c, Object[] o) {
-                                            mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
-                                            if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
-                                            else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
-                                            if (mGp.syncThreadActive) {
-                                                mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-                                            }
-                                            pd.dismiss();
-                                        }
-                                        @Override
-                                        public void negativeResponse(Context c, Object[] o) {
-                                            pd.dismiss();
-                                            finish();
-                                        }
-                                    });
-                                    ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
-                                            mUtil, false, app_pswd_ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION);
-                                }
-                                @Override
-                                public void negativeResponse(Context c, Object[] o) {}
-                            });
-                            openService(svc_ntfy);
-                        }
-                    });
+                    if (mGp.debuggable) {
+                    }
+                    mUtil.addDebugMsg(1, "I", "Sync task list creation ended.");
+                } else {
+                    mUtil.addDebugMsg(1, "I", "Sync task list was already created.");
                 }
-            };
-            th.setPriority(Thread.NORM_PRIORITY);
-            th.start();
-        }
+//                    ExportToSMBSync3.saveConfigListToExportFile(mContext, "/sdcard/smbsync2.xml", mGp.syncTaskList, mGp.syncTabScheduleList);
+                mUiHandler.post(new Runnable(){
+                    @Override
+                    public void run() {
+                        NotifyEvent svc_ntfy = new NotifyEvent(mContext);
+                        svc_ntfy.setListener(new NotifyEventListener() {
+                            @Override
+                            public void positiveResponse(Context c, Object[] o) {
+                                setMainListener();
+                                NotifyEvent app_pswd_ntfy = new NotifyEvent(mContext);
+                                app_pswd_ntfy.setListener(new NotifyEventListener() {
+                                    @Override
+                                    public void positiveResponse(Context c, Object[] o) {
+                                        mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
+                                        if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
+                                        else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
+                                        if (mGp.syncThreadActive) {
+                                            mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+                                        }
+                                        pd.dismiss();
+                                    }
+                                    @Override
+                                    public void negativeResponse(Context c, Object[] o) {
+                                        pd.dismiss();
+                                        finish();
+                                    }
+                                });
+                                ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
+                                        mUtil, false, app_pswd_ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION);
+                            }
+                            @Override
+                            public void negativeResponse(Context c, Object[] o) {}
+                        });
+                        openService(svc_ntfy);
+                    }
+                });
+            }
+        };
+        th.setPriority(Thread.NORM_PRIORITY);
+        th.start();
     }
 
     private void setMainListener() {

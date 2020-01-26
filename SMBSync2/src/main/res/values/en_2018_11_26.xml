@@ -444,6 +444,8 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_share_list_not_obtained">Could not get the list of SMB shares. Please check below.\n
 -Shared on the SMB server side\n
 -Specify account/password if you do not specify an account/password</string>
+        <string name="msgs_smbsync_main_private_key_corrupted_title">Internal encrypt key error</string>
+        <string name="msgs_smbsync_main_private_key_corrupted_msg">The sync task list cannot be saved because the internal encryption key is invalid. \nRecreate internal encryption key?</string>
         <string name="msgs_smbsync_main_no_external_storage">External storage was not mounted. Some functions are not available.</string>
         <string name="msgs_smbsync_main_restart_by_destroyed">Application was restarted after being killed.  To disable restart, enable \"Don\'t keep activities\" in Settings > Developer Options.</string>
         <string name="msgs_smbsync_main_restart_by_killed">Application was restarted because it was killed when it moved to the background.</string>

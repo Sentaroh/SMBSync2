@@ -63,6 +63,18 @@ public class KeyStoreUtil {
     static final private String KEY_PARE_CREATE_VERSION_KEY="settings_key_store_util_key_pare_version";
     static final private String KEY_PARE_CREATE_VERSION_API28="28";
 
+    public static boolean isSavedKeyExists(Context c) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        String saved_key=prefs.getString(SAVED_KEY_ID, "");
+        if (saved_key.equals("")) return false;
+        else return true;
+    }
+
+    public static void resetSavedKey(Context c) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        prefs.edit().remove(SAVED_KEY_ID).commit();
+    }
+
     public static String getGeneratedPasswordOldVersion(Context context, String alias) throws Exception {
 //        Thread.dumpStack();
         slf4jLog.info("getGeneratedPasswordOldVersion entered");
