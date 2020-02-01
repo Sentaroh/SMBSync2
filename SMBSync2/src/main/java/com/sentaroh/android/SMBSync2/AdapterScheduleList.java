@@ -127,7 +127,12 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
             }
 
             holder.ll_view.setBackground(ll_default_background_color);
-            if (!mGp.settingScheduleSyncEnabled) holder.ll_view.setBackgroundColor(mGp.themeColorList.text_color_disabled);
+            if (!mGp.settingScheduleSyncEnabled) {
+                holder.ll_view.setBackgroundColor(mGp.themeColorList.text_color_disabled);
+                holder.swEnabled.setEnabled(false);
+            } else {
+                holder.swEnabled.setEnabled(true);
+            }
             String time_info = "";
             if (o.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_HOURS)) {
                 time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_hour) + " " + o.scheduleMinutes + " " +
