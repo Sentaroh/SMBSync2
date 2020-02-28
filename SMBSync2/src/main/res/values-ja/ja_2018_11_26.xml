@@ -136,9 +136,9 @@
         <string name="msgs_main_app_specific_dir_used_msg">アプリケーション固有ディレクトリがファイルの保存先に使用されています。このディレクトリはアプリケーションがアンインストールされると削除され、保存しているデータも削除されます。ご注意ください。</string>
         <string name="msgs_main_app_specific_dir_used_suppress">この警告を次回以降表示しない （アプリ設定のユーザーインターフェース設定で再表示できます）</string>
         <string name="msgs_main_app_specific_dir_used_title">アプリケーション固有ディレクトリ使用についての警告</string>
-        <string name="msgs_main_location_service_warning_msg_location">Android 8.1から下記のタスクは位置情報サービスが無効のため、同期はエラーで終了します。 システム設定でロケーションサービスを有効にするか同期オプションで「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
-        <string name="msgs_main_location_service_warning_msg_coarse">Android 8.1から下記のタスクは「低精度ロケーション許可」が与えられていないため、同期はエラーで終了します。 メニューから許可を与えるか同期オプションで「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
-        <string name="msgs_main_location_service_warning_msg_both">Android 8.1から下記のタスクは位置情報サービスと低精度ロケーションが無効なため同期はエラーで終了します。 以下の何れかの対応を行ってください。\n1.システム設定でロケーションサービスを有効にし、その後にアプリメニューから「低精度ロケーション許可」与える。\n2.同期オプションで「プライベートアドレス」または「IPアドレスリスト」に変更する。
+        <string name="msgs_main_location_service_warning_msg_location">Android 8.1から下記のタスクは位置情報サービスが無効のため、同期はエラーで終了します。 システム設定でロケーションサービスを有効にするか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
+        <string name="msgs_main_location_service_warning_msg_coarse">Android 8.1から下記のタスクは「低精度ロケーション許可」が与えられていないため、同期はエラーで終了します。 メニューから許可を与えるか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
+        <string name="msgs_main_location_service_warning_msg_both">Android 8.1から下記のタスクは位置情報サービスと低精度ロケーションが無効なため同期はエラーで終了します。 以下の何れかの対応を行ってください。\n1.システム設定でロケーションサービスを有効にし、その後にアプリメニューから「低精度ロケーション許可」与える。\n2.同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更する。
 </string>
         <string name="msgs_main_location_service_warning_suppress">この警告を次回以降表示しない （アプリ設定の同期設定で再表示できます）</string>
         <string name="msgs_main_location_service_warning_title">ロケーションサービスについての警告</string>
@@ -168,7 +168,7 @@
         <string name="msgs_main_external_usb_select_retry_select_msg">USBメディアのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARDが選択されました。USBストレージを選択しなおしますか？</string>
         <string name="msgs_main_permission_coarse_location_denied_msg">権限が許可されるまでは同期タスクで「APに接続されている時」または「アクセスポイントリスト」を指定している場合はエラーで終了します。許可を与える場合はメニューから「低精度ロケーション許可」を実行してください。</string>
-        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「APに接続されている時」または「アクセスポイントリスト」を指定している場合はエラーで終了します。\n低精度ロケーション許可を要求しますか？</string>
+        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\n低精度ロケーション許可を要求しますか？</string>
         <string name="msgs_main_permission_coarse_location_title">低精度ロケーション許可</string>
         <string name="msgs_main_permission_external_storage_denied_msg">内部ストレージにアクセスする許可が与えられていないためアプリケーションを起動できません。</string>
         <string name="msgs_main_permission_external_storage_request_msg">内部ストレージに同期するデータや管理用データの読み書きを行うために、内部ストレージにアクセスする許可を与えてください。</string>

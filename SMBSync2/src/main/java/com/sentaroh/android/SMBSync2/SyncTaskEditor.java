@@ -2562,8 +2562,7 @@ public class SyncTaskEditor extends DialogFragment {
         boolean waring_required=false;
         String used_st="", sep="-";
         for(SyncTaskItem st_item:gp.syncTaskList) {
-            if (st_item.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP) ||
-                    st_item.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
+            if (st_item.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
                 waring_required=true;
                 used_st+=sep+st_item.getSyncTaskName();
                 sep="\n-";

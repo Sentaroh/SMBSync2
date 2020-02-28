@@ -28,8 +28,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
-import android.media.MediaScannerConnection.MediaScannerConnectionClient;
-import android.net.Uri;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -51,7 +51,6 @@ import com.sentaroh.android.Utilities.ZipFileListItem;
 import com.sentaroh.jcifs.JcifsAuth;
 import com.sentaroh.jcifs.JcifsException;
 import com.sentaroh.jcifs.JcifsFile;
-import com.sentaroh.jcifs.JcifsUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -60,21 +59,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
-import java.net.NetworkInterface;
 import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1720,12 +1714,6 @@ public class SyncThread extends Thread {
     private String isWifiConditionSatisfied(SyncTaskItem sti) {
         String result = "";
         String if_addr=CommonUtilities.getIfIpAddress(mStwa.util);
-        if (!sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
-            if (if_addr.equals("")) {//IP Addressが必要だがIP Addressが取得できない
-                result=mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_ip_address_not_obtained);
-                return result;
-            }
-        }
         if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR)) {
             if (!isPrivateAddress(if_addr)) result=mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr);
         } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR)) {
@@ -1771,7 +1759,7 @@ public class SyncThread extends Thread {
                     result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_is_off);
                 } else {
                     if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP)) {
-                        if (getWifiConnectedAP().equals("")) result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
+                        if (!isConnectedToAnyWifiAP()) result = mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
                     } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
                         ArrayList<String> wl = sti.getSyncOptionWifiConnectedAccessPointWhiteList();
                         ArrayList<Pattern> inc = new ArrayList<Pattern>();
@@ -1816,9 +1804,16 @@ public class SyncThread extends Thread {
             }
         }
         if (result.equals("")) {
-            if (!isPrivateAddress(if_addr)) {
-                if (!sti.isSyncOptionSyncAllowGlobalIpAddress())
-                    result=String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_ip_address_is_global), if_addr);
+            if (!sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
+                if (if_addr.equals("")) {//IP Addressが必要だがIP Addressが取得できない
+                    result=mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_ip_address_not_obtained);
+                }
+            }
+            if (result.equals("")) {
+                if (!isPrivateAddress(if_addr)) {
+                    if (!sti.isSyncOptionSyncAllowGlobalIpAddress())
+                        result=String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_can_not_start_ip_address_is_global), if_addr);
+                }
             }
         }
 
@@ -1857,6 +1852,24 @@ public class SyncThread extends Thread {
         } else {
             mStwa.util.addDebugMsg(1, "I", "getWifiConnectedAP WiFi is not enabled.");
         }
+        return result;
+    }
+
+    private boolean isConnectedToAnyWifiAP() {
+        boolean isConnected = false;
+        boolean isWiFi = false;
+        boolean result=true;
+        ConnectivityManager cm =(ConnectivityManager)mGp.appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork!=null) {
+            String network=activeNetwork.getExtraInfo();
+            isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+            isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+        }
+        if (!isWiFi || !isConnected) {//getWifiConnectedAP().equals("")) {
+            result=false;
+        }
+
         return result;
     }
 
