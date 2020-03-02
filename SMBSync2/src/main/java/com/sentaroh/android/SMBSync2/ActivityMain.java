@@ -1470,7 +1470,7 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         mTcHousekeep.setDisabled();
-                        mGp.progressSpinCancel.setText(getString(R.string.msgs_progress_dlg_canceling));
+//                        mGp.progressSpinCancel.setText(getString(R.string.msgs_progress_dlg_canceling));
                         mGp.progressSpinCancel.setEnabled(false);
                     }
 
@@ -4527,7 +4527,7 @@ public class ActivityMain extends AppCompatActivity {
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
-                        mGp.progressSpinCancel.setText(getString(R.string.msgs_progress_dlg_canceling));
+//                        mGp.progressSpinCancel.setText(getString(R.string.msgs_progress_dlg_canceling));
                         mGp.progressSpinCancel.setEnabled(false);
                     }
 
@@ -4535,9 +4535,7 @@ public class ActivityMain extends AppCompatActivity {
                     public void negativeResponse(Context c, Object[] o) {
                     }
                 });
-                mUtil.showCommonDialog(true, "W",
-                        getString(R.string.msgs_main_sync_cancel_confirm),
-                        "", ntfy);
+                mUtil.showCommonDialog(true, "W", getString(R.string.msgs_main_sync_cancel_confirm), "", ntfy);
             }
         };
         mGp.progressSpinCancel.setOnClickListener(mGp.progressSpinCancelListener);

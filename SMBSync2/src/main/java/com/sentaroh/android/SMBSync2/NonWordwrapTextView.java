@@ -1,4 +1,26 @@
 package com.sentaroh.android.SMBSync2;
+/*
+The MIT License (MIT)
+Copyright (c) 2011-2019 Sentaroh
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+*/
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -25,14 +47,22 @@ public class NonWordwrapTextView extends TextView {
 
     public NonWordwrapTextView(Context context) {
         super(context);
+        if (mDebugEnabled) log.info("constructor 1");
     }
 
     public NonWordwrapTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        if (mDebugEnabled) log.info("constructor 2");
     }
 
     public NonWordwrapTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        if (mDebugEnabled) log.info("constructor 3");
+    }
+
+    public NonWordwrapTextView(Context context, AttributeSet attrs, int defStyle, int defStyleRes) {
+        super(context, attrs, defStyle, defStyleRes);
+        if (mDebugEnabled) log.info("constructor 4");
     }
 
     public void setDebugEnable(boolean enabled) {mDebugEnabled=enabled;}
@@ -61,7 +91,7 @@ public class NonWordwrapTextView extends TextView {
         if (mDebugEnabled) log.info("onMeasure w="+MeasureSpec.getSize(w)+", h="+MeasureSpec.getSize(h));
         if (!isWordWrapEnabled()) {
             mSpannableSplitText=buildSplitText(MeasureSpec.getSize(w), MeasureSpec.getSize(h));
-            super.setText(mSpannableSplitText, mOrgBufferType);
+            super.setText(mSpannableSplitText, BufferType.SPANNABLE);//mOrgBufferType);
             super.onMeasure(w, h);
         } else {
             super.onMeasure(w, h);
@@ -79,7 +109,7 @@ public class NonWordwrapTextView extends TextView {
         mOrgText = text;
         mOrgBufferType = type;
         super.setText(text, type);
-        requestLayout();
+//        requestLayout();
         if (mDebugEnabled) log.info("setText length="+text.length()+", type="+type.toString()+", text="+text);
     }
 
@@ -113,30 +143,32 @@ public class NonWordwrapTextView extends TextView {
                 log.info("buildSplitText input  hex ="+ StringUtil.getDumpFormatHexString(mOrgText.toString().getBytes(), 0, mOrgText.toString().getBytes().length));
             }
 
-            while(start<output.length()) {
+            if (output.length()>1) {
+                while(start<output.length()) {
 //                if (mDebugEnabled)  log.info("start="+start);
-                String in_text=output.subSequence(start, output.length()).toString();
-                int cr_pos=in_text.indexOf("\n");
-                if (cr_pos>0) {
-                    in_text = output.subSequence(start, start + cr_pos).toString();
-                    int nc = paint.breakText(in_text, true, width, null);
-                    if (output.charAt(start + nc) != '\n') {
-                        output.insert(start + nc, "\n");
+                    String in_text=output.subSequence(start, output.length()).toString();
+                    int cr_pos=in_text.indexOf("\n");
+                    if (cr_pos>0) {
+                        in_text = output.subSequence(start, start + cr_pos).toString();
+                        int nc = paint.breakText(in_text, true, width-1, null);
+                        if (output.charAt(start + nc) != '\n') {
+                            output.insert(start + nc, "\n");
 //                        log.info("cr inserted1, pos="+(start + nc));
-                    }
-                    start = start + nc + 1;
-                } else if (cr_pos==0) {
-                    start = start + 1;
-                } else {
-                    int nc=paint.breakText(in_text, true, width, null);
+                        }
+                        start = start + nc + 1;
+                    } else if (cr_pos==0) {
+                        start = start + 1;
+                    } else {
+                        int nc=paint.breakText(in_text, true, width-1, null);
 //                    log.info("start="+start+", nc="+nc);
 //                    log.info("in_text length="+in_text.length()+", text="+in_text);
-                    if (nc<=(output.length()-start-1)) {
-                        output.insert(start+nc, "\n");
+                        if (nc<=(output.length()-start-1)) {
+                            output.insert(start+nc, "\n");
 //                        log.info("cr inserted2, pos="+(start + nc)+", output length="+output.length());
-                        start=start+nc+1;
-                    } else {
-                        start=start+nc+1;
+                            start=start+nc+1;
+                        } else {
+                            start=start+nc+1;
+                        }
                     }
                 }
             }

@@ -580,7 +580,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">Begin address is greater than end address.</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">End address must be 2 to 254.</string>
         <string name="msgs_ip_address_range_dlg_not_private">Unable to search public addresses.</string>
-        <string name="msgs_progress_dlg_canceling">Cancelling…</string>
+        <string name="delmsgs_progress_dlg_canceling">Cancelling…</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Obtaining file list…</string>
         <string name="msgs_progress_spin_dlg_filelist_cancel">Cancel</string>
         <string name="msgs_progress_spin_dlg_test_logon">Logon to SMB server</string>

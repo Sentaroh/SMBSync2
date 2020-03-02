@@ -4219,7 +4219,7 @@ public class SyncTaskUtil {
         // CANCELボタンの指定
         scan_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                scan_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
+//                scan_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
                 CommonDialog.setViewEnabled(mActivity, scan_cancel, false);
                 mUtil.addDebugMsg(1, "W", "IP Address list creation was cancelled");
                 tc.setDisabled();

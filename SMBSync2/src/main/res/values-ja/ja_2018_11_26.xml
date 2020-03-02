@@ -578,7 +578,7 @@
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">終了アドレスは1から254の範囲で指定してください。</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">開始アドレスが終了アドレスより大きい。</string>
         <string name="msgs_ip_address_range_dlg_not_private">グローバルアドレスのため検索できません。</string>
-        <string name="msgs_progress_dlg_canceling">キャンセルしています</string>
+        <string name="delmsgs_progress_dlg_canceling">キャンセルしています</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">ファイルリスト取得中</string>
         <string name="msgs_progress_spin_dlg_filelist_cancel">ファイルリスト取得を中止</string>
         <string name="msgs_progress_spin_dlg_test_logon">SMBにログオン中</string>
