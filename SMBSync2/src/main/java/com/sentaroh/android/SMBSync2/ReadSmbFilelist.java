@@ -102,49 +102,35 @@ public class ReadSmbFilelist implements Runnable {
 
         mUtil.addDebugMsg(1, "I", "ReadSmbFilelist started, readSubDirCnt=" + readSubDirCnt + ", readDirOnly=" + readDirOnly);
 
-        buildRemoteUrl();
-
         boolean error_exit = false;
-//        if (mHostName.equals("")) {
-//            if (mHostPort.equals("")) {
-//                if (!CommonUtilities.isSmbHostAddressConnected(mHostAddr)) {
-//                    error_exit = true;
-//                    if (getFLCtrl.isEnabled()) {
-//                        getFLCtrl.setThreadResultError();
-//                        getFLCtrl.setThreadMessage(String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected), mHostAddr));
-//                    } else {
-//                        getFLCtrl.setThreadResultCancelled();
-//                    }
-//                }
-//            } else {
-//                if (!CommonUtilities.isSmbHostAddressConnected(mHostAddr, Integer.parseInt(mHostPort))) {
-//                    error_exit = true;
-//                    if (getFLCtrl.isEnabled()) {
-//                        getFLCtrl.setThreadResultError();
-//                        getFLCtrl.setThreadMessage(String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected_with_port), mHostAddr, mHostPort));
-//                    } else {
-//                        getFLCtrl.setThreadResultCancelled();
-//                    }
-//                }
-//            }
-//        } else {
-////            if (JcifsUtil.getSmbHostIpAddressByHostName(mSmbLevel, mHostName) == null) {
-//            mHostAddr=CommonUtilities.resolveHostName(mGp, mUtil, mSmbLevel, mHostName);
-//            if (mHostAddr == null) {
-//                error_exit = true;
-//                if (getFLCtrl.isEnabled()) {
-//                    getFLCtrl.setThreadResultError();
-//                    getFLCtrl.setThreadMessage(
-//                            mContext.getString(R.string.msgs_mirror_smb_name_not_found) + mHostName);
-//                } else {
-//                    getFLCtrl.setThreadResultCancelled();
-//                }
-////            } else {
-////                remoteUrl=remoteUrl.replace(mHostName, mHostAddr);
-////                mUtil.addDebugMsg(1, "I", "ReadSmbFilelist remoteUrl was changed="+remoteUrl);
-//            }
-//        }
+        String smb_addr=null;
+        if (remoteHostName.equals("")) {
+            if (!CommonUtilities.isSmbHostAddressConnected(remoteHostAddr)) {
+                error_exit = true;
+                if (getFLCtrl.isEnabled()) {
+                    getFLCtrl.setThreadResultError();
+                    getFLCtrl.setThreadMessage(String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected), remoteHostAddr));
+                } else {
+                    getFLCtrl.setThreadResultCancelled();
+                }
+            } else {
+                smb_addr=remoteHostAddr;
+            }
+        } else {
+            smb_addr=CommonUtilities.resolveHostName(mGp, mUtil, mSmbLevel, remoteHostName);
+            if (smb_addr == null) {
+                error_exit = true;
+                if (getFLCtrl.isEnabled()) {
+                    getFLCtrl.setThreadResultError();
+                    getFLCtrl.setThreadMessage(
+                            mContext.getString(R.string.msgs_mirror_smb_name_not_found) + remoteHostName);
+                } else {
+                    getFLCtrl.setThreadResultCancelled();
+                }
+            }
+        }
         if (!error_exit) {
+            buildRemoteUrl();
             if (remoteDir != null) readFileList();
             else readShareList();
         }
