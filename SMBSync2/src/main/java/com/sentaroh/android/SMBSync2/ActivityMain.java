@@ -1199,7 +1199,15 @@ public class ActivityMain extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= 27) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
-                menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
+                if (Build.VERSION.SDK_INT>=29) {
+                    if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED) {
+                        menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
+                    } else {
+                        menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
+                    }
+                } else {
+                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
+                }
             } else {
                 menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
             }
