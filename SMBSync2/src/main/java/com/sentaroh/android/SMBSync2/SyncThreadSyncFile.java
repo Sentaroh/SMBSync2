@@ -643,6 +643,13 @@ public class SyncThreadSyncFile {
                             stwa.util.addLogMsg("W","Ignoring sync because master and target are the same file. File="+from_path);
                         } else {
                             tf = new File(parsed_to_path);
+                            if (tf.getName().getBytes().length>255) {
+                                String e_msg=String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_name_gt_255_byte), tf.getName().getBytes().length, tf.getName());
+                                stwa.util.addLogMsg("E", e_msg);
+                                sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                                stwa.gp.syncThreadCtrl.setThreadMessage(e_msg);
+                                return sync_result;
+                            }
                             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword())
                                 SyncThread.createDirectoryToInternalStorage(stwa, sti, tf.getParent());
                             boolean tf_exists = tf.exists();
@@ -909,6 +916,13 @@ public class SyncThreadSyncFile {
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
                         tf = new File(parsed_to_path);
+                        if (tf.getName().getBytes().length>255) {
+                            String e_msg=String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_name_gt_255_byte), tf.getName().getBytes().length, tf.getName());
+                            stwa.util.addLogMsg("E", e_msg);
+                            sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                            stwa.gp.syncThreadCtrl.setThreadMessage(e_msg);
+                            return sync_result;
+                        }
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()){
                             SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
                         }
@@ -1367,6 +1381,13 @@ public class SyncThreadSyncFile {
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
                         tf = new File(parsed_to_path);
+                        if (tf.getName().getBytes().length>255) {
+                            String e_msg=String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_name_gt_255_byte), tf.getName().getBytes().length, tf.getName());
+                            stwa.util.addLogMsg("E", e_msg);
+                            sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                            stwa.gp.syncThreadCtrl.setThreadMessage(e_msg);
+                            return sync_result;
+                        }
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword())
                             SyncThread.createDirectoryToInternalStorage(stwa, sti, tf.getParent());
                         boolean tf_exists = tf.exists();
@@ -1590,6 +1611,13 @@ public class SyncThreadSyncFile {
                             stwa.util.addLogMsg("W","Ignoring sync because master and target are the same file. File="+from_path);
                         } else {
                             tf = new File(parsed_to_path);
+                            if (tf.getName().getBytes().length>255) {
+                                String e_msg=String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_name_gt_255_byte), tf.getName().getBytes().length, tf.getName());
+                                stwa.util.addLogMsg("E", e_msg);
+                                sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                                stwa.gp.syncThreadCtrl.setThreadMessage(e_msg);
+                                return sync_result;
+                            }
                             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()){
                                 SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
                             }
@@ -1827,6 +1855,13 @@ public class SyncThreadSyncFile {
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
                         tf = new JcifsFile(parsed_to_path, stwa.targetAuth);
+                        if (tf.getName().getBytes().length>255) {
+                            String e_msg=String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_name_gt_255_byte), tf.getName().getBytes().length, tf.getName());
+                            stwa.util.addLogMsg("E", e_msg);
+                            sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                            stwa.gp.syncThreadCtrl.setThreadMessage(e_msg);
+                            return sync_result;
+                        }
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword())
                             SyncThread.createDirectoryToSmb(stwa, sti, tf.getParent(), stwa.targetAuth);
                         boolean tf_exists = tf.exists();
