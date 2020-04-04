@@ -215,6 +215,7 @@
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_1">1</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
+        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_dst">3603</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">最終更新時刻の差（秒）</string>
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal">マスターフォルダーとターゲットフォルダーの両方が内部ストレージでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir">マスターフォルダーとターゲットフォルダーで同じディレクトリにアクセスします、どちらかのディレクトリを変更するかディレクトリフィルターを指定してください。</string>
