@@ -3121,12 +3121,12 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_1));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_3));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_10));
-	adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_dst));
+        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_dst));
 
         if (cv == 1) spinner.setSelection(0);
         else if (cv == 3) spinner.setSelection(1);
         else if (cv == 10) spinner.setSelection(2);
-	else if (cv == 3603) spinner.setSelection(3);
+        else if (cv == 3603) spinner.setSelection(3);
 
         adapter.notifyDataSetChanged();
     }
