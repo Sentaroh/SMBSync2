@@ -71,6 +71,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -169,6 +170,9 @@ public class SyncThread extends Thread {
 
         public SafFile lastWriteSafFile=null;
         public File lastWriteFile=null;
+
+        SimpleDateFormat sdfLocalTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat sdfUTCTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     }
 
     private SyncThreadWorkArea mStwa = new SyncThreadWorkArea();
@@ -191,6 +195,7 @@ public class SyncThread extends Thread {
         mStwa.msgs_mirror_task_file_moved = gp.appContext.getString(R.string.msgs_mirror_task_file_moved);
         mStwa.msgs_mirror_task_file_archived = gp.appContext.getString(R.string.msgs_mirror_task_file_archived);
 
+        mStwa.sdfUTCTime.setTimeZone(TimeZone.getTimeZone("UTC"));
 //        mStwa.zipWorkFileName = gp.appContext.getCacheDir().toString() + "/zip_work_file";
 
         printSafDebugInfo();
@@ -2390,15 +2395,10 @@ public class SyncThread extends Thread {
             }
             if (diff && !stwa.lastModifiedIsFunctional) {//Use lastModified
                 if (lf_exists) {
-                    updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                            lf_path, lf_time, tf_time);
+                    updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path, lf_time, tf_time);
                 } else {
-                    boolean updated =
-                            updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                    lf_path, lf_time, tf_time);
-                    if (!updated)
-                        addLastModifiedItem(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList,
-                                lf_path, lf_time, tf_time);
+                    boolean updated = updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path, lf_time, tf_time);
+                    if (!updated) addLastModifiedItem(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path, lf_time, tf_time);
                 }
             }
         } else {//Check lastModified()
@@ -2449,6 +2449,14 @@ public class SyncThread extends Thread {
         } else {
             stwa.util.addDebugMsg(1, "I", "isFileChanged fp="+fp+ ", exists_diff=" + exists_diff +
                     ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+lf_time+", master_time="+tf_time);
+        }
+        if (stwa.gp.settingDebugLevel >= 1) {
+            String lt_target=stwa.sdfLocalTime.format(lf_time);
+            String lt_master=stwa.sdfLocalTime.format(tf_time);
+            String ut_target=stwa.sdfUTCTime.format(lf_time);
+            String ut_master=stwa.sdfUTCTime.format(tf_time);
+            stwa.util.addDebugMsg(1, "I", "isFileChanged Local time target="+lt_target+", master="+lt_master);
+            stwa.util.addDebugMsg(1, "I", "isFileChanged UTC        target="+ut_target+", master="+ut_master);
         }
         return diff;
     }
@@ -2501,6 +2509,15 @@ public class SyncThread extends Thread {
             stwa.util.addDebugMsg(1, "I", "isFileChangedForLocalToRemote fp="+fp+ ", exists_diff=" + exists_diff +
                     ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+hf_time+", master_time="+lf_time);
         }
+        if (stwa.gp.settingDebugLevel >= 1) {
+            String lt_target=stwa.sdfLocalTime.format(lf_time);
+            String lt_master=stwa.sdfLocalTime.format(hf_time);
+            String ut_target=stwa.sdfUTCTime.format(lf_time);
+            String ut_master=stwa.sdfUTCTime.format(lf_time);
+            stwa.util.addDebugMsg(1, "I", "isFileChangedForLocalToRemote Local time target="+lt_target+", master="+lt_master);
+            stwa.util.addDebugMsg(1, "I", "isFileChangedForLocalToRemote UTC        target="+ut_target+", master="+ut_master);
+        }
+
         return diff;
     }
 
