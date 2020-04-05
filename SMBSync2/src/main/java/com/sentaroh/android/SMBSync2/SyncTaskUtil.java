@@ -6004,6 +6004,8 @@ public class SyncTaskUtil {
 
             if (!parm[79].equals("") && !parm[79].equals("end")) stli.setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile((parm[79].equals("1") ? true : false));
 
+            if (!parm[91].equals("") && !parm[91].equals("end")) stli.setSyncOptionIgnoreDstDifference((parm[91].equals("1") ? true : false));
+
             if (!parm[80].equals("") && !parm[80].equals("end")) stli.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters((parm[80].equals("1") ? true : false));
 
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -6205,6 +6207,8 @@ public class SyncTaskUtil {
             if (!parm[78].equals("") && !parm[78].equals("end")) stli.setTargetZipUseUsb((parm[78].equals("1") ? true : false));
 
             if (!parm[79].equals("") && !parm[79].equals("end")) stli.setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile((parm[79].equals("1") ? true : false));
+
+            if (!parm[91].equals("") && !parm[91].equals("end")) stli.setSyncOptionIgnoreDstDifference((parm[91].equals("1") ? true : false));
 
             if (!parm[80].equals("") && !parm[80].equals("end")) stli.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters((parm[80].equals("1") ? true : false));
 
@@ -6480,6 +6484,8 @@ public class SyncTaskUtil {
             if (!parm[78].equals("") && !parm[78].equals("end")) stli.setTargetZipUseUsb((parm[78].equals("1") ? true : false));
 
             if (!parm[79].equals("") && !parm[79].equals("end")) stli.setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile((parm[79].equals("1") ? true : false));
+
+            if (!parm[91].equals("") && !parm[91].equals("end")) stli.setSyncOptionIgnoreDstDifference((parm[91].equals("1") ? true : false));
 
             if (!parm[80].equals("") && !parm[80].equals("end")) stli.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters((parm[80].equals("1") ? true : false));
 
@@ -7003,6 +7009,7 @@ public class SyncTaskUtil {
 
                             (item.getMasterFolderError()) + "\t" +                                       //89
                             (item.getTargetFolderError()) + "\t" +                                       //90
+                            (item.isSyncOptionIgnoreDstDifference() ? "1" : "0") + "\t" +                //91
 
                     "end"
                     ;
