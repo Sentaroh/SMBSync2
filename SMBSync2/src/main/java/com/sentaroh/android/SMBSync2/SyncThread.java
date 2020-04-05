@@ -470,6 +470,7 @@ public class SyncThread extends Thread {
                 ", LastModSmbsync2=" + sti.isSyncDetectLastModifiedBySmbsync() ,
                 ", UseLastMod=" + sti.isSyncOptionDifferentFileByTime() ,
                 ", NeverOverwriteTargetFileIfItIsNewerThanTheMasterFile=" + sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(),
+				", IgnoreDstDifference=" + sti.isSyncOptionIgnoreDstDifference(),
                 ", UseFileSize=" + sti.isSyncOptionDifferentFileBySize() ,
                 ", UseFileSizeGreaterThanTagetFile=" + sti.isSyncDifferentFileSizeGreaterThanTagetFile() ,
                 ", DoNotResetFileLastMod=" + sti.isSyncDoNotResetFileLastModified() ,
@@ -490,8 +491,7 @@ public class SyncThread extends Thread {
                 ", SyncOnlyCharging=" + sti.isSyncOptionSyncWhenCharging() ,
                 ", DeleteFirst=" + sti.isSyncOptionDeleteFirstWhenMirror() ,
 
-                ", NeverOverwriteTargetFileIfItIsNewerThanTheMasterFile="+sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(),
-                ", IgnoreUnusableCharacterUsedDirectoryFileName="+sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(),
+                ", IgnoreUnusableCharacterUsedDirectoryFileName=" + sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(),
                 ", DoNotUseRenameWhenSmbFileWrite=" + sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite() ,
                 "");
         mStwa.util.addDebugMsg(1, "I", "   SMB1 Option, LM Compatiibility=" + mGp.settingsSmbLmCompatibility +
@@ -526,6 +526,7 @@ public class SyncThread extends Thread {
 
         mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncOptionRetryCount()) + 1;
         mStwa.syncDifferentFileAllowableTime = sti.getSyncOptionDifferentFileAllowableTime() * 1000;
+		if (sti.isSyncOptionIgnoreDstDifference()) mStwa.syncDifferentFileAllowableTime += 3600000;  // ignore DST difference: further increment the user set allowable time by 1h (3600 000 msec)
 
         mStwa.totalTransferByte = mStwa.totalTransferTime = 0;
         mStwa.totalCopyCount = mStwa.totalDeleteCount = mStwa.totalIgnoreCount = mStwa.totalRetryCount = 0;
