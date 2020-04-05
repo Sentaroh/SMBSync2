@@ -499,6 +499,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(boolean enabled) {syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile=enabled;}
     public boolean isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile() {return syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile;}
 
+    private boolean SyncOptionIgnoreDstDifference = false;
+    public void setSyncOptionIgnoreDstDifference(boolean enabled) {SyncOptionIgnoreDstDifference=enabled;}
+    public boolean isSyncOptionIgnoreDstDifference() {return SyncOptionIgnoreDstDifference;}
+
     private boolean syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters = false;
     public void setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(boolean enabled) {syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters=enabled;}
     public boolean isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters() {return syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters;}
@@ -650,6 +654,8 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionUseExtendedDirectoryFilter1==sti.isSyncOptionUseExtendedDirectoryFilter1()) &&
 
                         (syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile==sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) &&
+
+                        (SyncOptionIgnoreDstDifference==sti.isSyncOptionIgnoreDstDifference()) &&
 
                         (syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters==sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) &&
 
