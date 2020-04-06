@@ -3625,7 +3625,6 @@ public class SyncTaskEditor extends DialogFragment {
                 ((CheckedTextView) v).setChecked(isChecked);
                 if (isChecked) {
                     ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(true);
-                    ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(true);
                     ctv_ignore_dst_difference.setEnabled(true);
                     CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, true);
                 } else {
