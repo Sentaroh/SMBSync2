@@ -526,7 +526,6 @@ public class SyncThread extends Thread {
 
         mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncOptionRetryCount()) + 1;
         mStwa.syncDifferentFileAllowableTime = sti.getSyncOptionDifferentFileAllowableTime() * 1000;
-		if (sti.isSyncOptionIgnoreDstDifference()) mStwa.syncDifferentFileAllowableTime += 3600000;  // ignore DST difference: further increment the user set allowable time by 1h (3600 000 msec)
 
         mStwa.totalTransferByte = mStwa.totalTransferTime = 0;
         mStwa.totalCopyCount = mStwa.totalDeleteCount = mStwa.totalIgnoreCount = mStwa.totalRetryCount = 0;
@@ -2407,23 +2406,32 @@ public class SyncThread extends Thread {
                 if (stwa.lastModifiedIsFunctional) {//Use lastModified
                     if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
 //                        diff = true;
-                        boolean t_diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
-                                stwa.currLastModifiedList,
-                                stwa.newLastModifiedList,
-                                lf_path, lf_time, tf_time);
-                        if (t_diff) {
-                            diff = true;
-                        } else {
+                        if (sti.isSyncOptionIgnoreDstDifference() && (Math.abs((time_diff - 3600000)) <= stwa.syncDifferentFileAllowableTime)) { // difference is exactly 1h +/- less than user set tolerance (msec)
                             diff = false;
-                        }
+                        } else {
+                            boolean t_diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
+                                    stwa.currLastModifiedList,
+                                    stwa.newLastModifiedList,
+                                    lf_path, lf_time, tf_time);
+                            if (t_diff) {
+                                diff = true;
+                            } else {
+                                diff = false;
+                            }
+			}
                     } else {
                         diff = false;
                     }
                 } else {//Use Filelist
                     boolean found=isLocalFileLastModifiedFileItemExists(stwa, sti, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path);
                     if (!found) {
-                        if (time_diff > stwa.syncDifferentFileAllowableTime) diff=true;
-                        else diff=false;
+                        if (time_diff > stwa.syncDifferentFileAllowableTime) {
+                            if (sti.isSyncOptionIgnoreDstDifference() && (Math.abs((time_diff - 3600000)) <= stwa.syncDifferentFileAllowableTime)) { // difference is exactly 1h +/- less than user set tolerance (msec)
+                                diff = false;
+                            } else
+                                diff = true;
+                        } else
+                            diff = false;
                         addLastModifiedItem(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path, lf_time, tf_time );
                     } else {
                         diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
@@ -2489,7 +2497,11 @@ public class SyncThread extends Thread {
         } else {//Check lastModified()
             if (!sti.isSyncDoNotResetFileLastModified() && sti.isSyncOptionDifferentFileByTime()) {
                 if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
-                    diff = true;
+                    if (sti.isSyncOptionIgnoreDstDifference() && (Math.abs((time_diff - 3600000)) <= stwa.syncDifferentFileAllowableTime)) { // difference is exactly 1h +/- less than user set tolerance (msec)
+                        diff = false;
+                    } else {
+                        diff = true;
+                    }
                 } else diff = false;
             }
         }
