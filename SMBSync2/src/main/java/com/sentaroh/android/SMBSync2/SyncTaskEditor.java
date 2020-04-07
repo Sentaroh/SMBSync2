@@ -3126,7 +3126,7 @@ public class SyncTaskEditor extends DialogFragment {
         else if (cv == 3) spinner.setSelection(1);
         else if (cv == 10) spinner.setSelection(2);
         else {
-            (cv == 1);
+            (cv = 1);
             spinner.setSelection(0);
         }
 
