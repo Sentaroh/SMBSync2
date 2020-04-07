@@ -139,7 +139,6 @@ public class SyncThread extends Thread {
         public PrintWriter syncHistoryWriter = null;
 
         public int syncDifferentFileAllowableTime = 0;
-        public int syncDifferentFileAllowableTimeForDst = 0;
         public int offsetOfDaylightSavingTime=0;
         public int syncTaskRetryCount = 0;
         public int syncTaskRetryCountOriginal = 0;
@@ -199,7 +198,6 @@ public class SyncThread extends Thread {
         mStwa.msgs_mirror_task_file_archived = gp.appContext.getString(R.string.msgs_mirror_task_file_archived);
 
         mStwa.sdfUTCTime.setTimeZone(TimeZone.getTimeZone("UTC"));
-        mStwa.offsetOfDaylightSavingTime=TimeZone.getDefault().getDSTSavings();
 //        mStwa.zipWorkFileName = gp.appContext.getCacheDir().toString() + "/zip_work_file";
 
         printSafDebugInfo();
@@ -494,6 +492,7 @@ public class SyncThread extends Thread {
                 ", DeleteFirst=" + sti.isSyncOptionDeleteFirstWhenMirror() ,
 
                 ", IgnoreDstDifference=" + sti.isSyncOptionIgnoreDstDifference(),
+                ", OffsetOfDst=" + sti.getSyncOptionOffsetOfDst(),
                 ", NeverOverwriteTargetFileIfItIsNewerThanTheMasterFile="+sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(),
                 ", IgnoreUnusableCharacterUsedDirectoryFileName="+sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(),
                 ", DoNotUseRenameWhenSmbFileWrite=" + sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite() ,
@@ -529,8 +528,8 @@ public class SyncThread extends Thread {
         }
 
         mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncOptionRetryCount()) + 1;
-        mStwa.syncDifferentFileAllowableTime = sti.getSyncOptionDifferentFileAllowableTime() * 1000;
-        mStwa.syncDifferentFileAllowableTimeForDst=TimeZone.getDefault().getDSTSavings()+mStwa.syncDifferentFileAllowableTime;
+        mStwa.syncDifferentFileAllowableTime = sti.getSyncOptionDifferentFileAllowableTime() * 1000;//Convert to milisec
+        mStwa.offsetOfDaylightSavingTime=sti.getSyncOptionOffsetOfDst()*60*1000;//Convert to milisec
 
         mStwa.totalTransferByte = mStwa.totalTransferTime = 0;
         mStwa.totalCopyCount = mStwa.totalDeleteCount = mStwa.totalIgnoreCount = mStwa.totalRetryCount = 0;
@@ -2215,7 +2214,7 @@ public class SyncThread extends Thread {
         boolean result = FileLastModifiedTime.isCurrentListWasDifferent(
                 curr_last_modified_list, new_last_modified_list,
                 fp, l_lm, r_lm, stwa.syncDifferentFileAllowableTime,
-                sti.isSyncOptionIgnoreDstDifference(), stwa.offsetOfDaylightSavingTime, stwa.syncDifferentFileAllowableTimeForDst);
+                sti.isSyncOptionIgnoreDstDifference(), stwa.offsetOfDaylightSavingTime);
         if (stwa.gp.settingDebugLevel >= 3)
             stwa.util.addDebugMsg(3, "I", "isLocalFileLastModifiedWasDifferent result=" + result + ", item=" + fp);
         return result;
@@ -2412,7 +2411,7 @@ public class SyncThread extends Thread {
                 if (stwa.lastModifiedIsFunctional) {//Use lastModified
                     if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
                         if (sti.isSyncOptionIgnoreDstDifference()) {
-                            if (time_diff>=stwa.offsetOfDaylightSavingTime && time_diff<=stwa.syncDifferentFileAllowableTimeForDst) {
+                            if (Math.abs(time_diff-stwa.offsetOfDaylightSavingTime)<=stwa.syncDifferentFileAllowableTime) {
                                 diff=false;
                             } else {
                                 diff=true;
@@ -2494,7 +2493,7 @@ public class SyncThread extends Thread {
             if (!sti.isSyncDoNotResetFileLastModified() && sti.isSyncOptionDifferentFileByTime()) {
                 if ((time_diff > stwa.syncDifferentFileAllowableTime)) { //LastModified was changed
                     if (sti.isSyncOptionIgnoreDstDifference()) {
-                        if (time_diff>=stwa.offsetOfDaylightSavingTime && time_diff<=stwa.syncDifferentFileAllowableTimeForDst) {
+                        if (Math.abs(time_diff-stwa.offsetOfDaylightSavingTime)<=stwa.syncDifferentFileAllowableTime) {
                             diff=false;
                         } else {
                             diff=true;

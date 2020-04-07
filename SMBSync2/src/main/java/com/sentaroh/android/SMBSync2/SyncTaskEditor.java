@@ -3129,6 +3129,21 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.notifyDataSetChanged();
     }
 
+    private void setSpinnerSyncTaskDstOffsetValue(Spinner spinner, int cv) {
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
+        final CustomSpinnerAdapter adapter =
+                new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        spinner.setPrompt(mContext.getString(R.string.msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title));
+        spinner.setAdapter(adapter);
+        for(int i=10;i<121;i+=10) adapter.add(String.valueOf(i));
+        if (cv>=10 && cv<=120) {
+            spinner.setSelection((cv/10)-1);
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
     private String buildFilterInfo(ArrayList<String> filter_list) {
         String info = "";
         if (filter_list != null && filter_list.size() > 0) {
@@ -3281,7 +3296,6 @@ public class SyncTaskEditor extends DialogFragment {
 
         final CheckedTextView ctv_ignore_dst_difference = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_ignore_dst_difference);
         ctv_ignore_dst_difference.setChecked(n_sti.isSyncOptionIgnoreDstDifference());
-        setCtvListenerForEditSyncTask(ctv_ignore_dst_difference, type, n_sti, dlg_msg);
 
         final CheckedTextView ctv_edit_sync_task_option_ignore_unusable_character_used_directory_file_name = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_unusable_character_used_directory_file_name);
         ctv_edit_sync_task_option_ignore_unusable_character_used_directory_file_name.setChecked(n_sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters());
@@ -3604,6 +3618,15 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner spinnerSyncDiffTimeValue = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_diff_file_determin_time_value);
         setSpinnerSyncTaskDiffTimeValue(spinnerSyncDiffTimeValue, n_sti.getSyncOptionDifferentFileAllowableTime());
 
+        final Spinner spinnerSyncDstOffsetValue = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_offset_daylight_saving_time_value);
+        setSpinnerSyncTaskDstOffsetValue(spinnerSyncDstOffsetValue, n_sti.getSyncOptionOffsetOfDst());
+        final LinearLayout ll_offset_dst_view=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_spinner_offset_daylight_saving_time_value_view);
+        if (n_sti.isSyncOptionIgnoreDstDifference()) {
+            ll_offset_dst_view.setVisibility(LinearLayout.VISIBLE);
+        } else {
+            ll_offset_dst_view.setVisibility(LinearLayout.GONE);
+        }
+
         final CheckedTextView ctDeterminChangedFileByTime = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_last_mod_time);
 //        CommonUtilities.setCheckedTextView(ctDeterminChangedFileByTime);
         ctDeterminChangedFileByTime.setChecked(n_sti.isSyncOptionDifferentFileByTime());
@@ -3625,7 +3648,6 @@ public class SyncTaskEditor extends DialogFragment {
                 ((CheckedTextView) v).setChecked(isChecked);
                 if (isChecked) {
                     ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(true);
-                    ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(true);
                     ctv_ignore_dst_difference.setEnabled(true);
                     CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, true);
                 } else {
@@ -3639,6 +3661,19 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
+        ctv_ignore_dst_difference.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !((CheckedTextView) v).isChecked();
+                ((CheckedTextView) v).setChecked(isChecked);
+                if (isChecked) {
+                    ll_offset_dst_view.setVisibility(LinearLayout.VISIBLE);
+                } else {
+                    ll_offset_dst_view.setVisibility(LinearLayout.GONE);
+                }
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+        });
 
         CommonDialog.setDlgBoxSizeLimit(mDialog, true);
 
@@ -4250,6 +4285,8 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctv_task_sync_when_cahrging = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
         final CheckedTextView ctv_never_overwrite_target_file_newer_than_the_master_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file);
         final CheckedTextView ctv_ignore_dst_difference = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_ignore_dst_difference);
+        final Spinner spinnerSyncDstOffsetValue = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_offset_daylight_saving_time_value);
+
         final CheckedTextView ctv_ignore_unusable_character_used_directory_file_name = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_unusable_character_used_directory_file_name);
         final CheckedTextView ctv_do_not_use_rename_when_smb_file_write = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_do_mot_use_rename_when_smb_file_write);
 
@@ -4331,6 +4368,10 @@ public class SyncTaskEditor extends DialogFragment {
         nstli.setSyncOptionDifferentFileByTime(ctDeterminChangedFileByTime.isChecked());
 
         nstli.setSyncOptionIgnoreDstDifference(ctv_ignore_dst_difference.isChecked());
+        try {
+            String dst_offset=(String)spinnerSyncDstOffsetValue.getSelectedItem();
+            nstli.setSyncOptionOffsetOfDst(Integer.valueOf(dst_offset));
+        } catch(Exception e) {}
 
         nstli.setSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(ctv_never_overwrite_target_file_newer_than_the_master_file.isChecked());
 
