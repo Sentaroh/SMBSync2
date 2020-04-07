@@ -500,7 +500,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile() {return syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile;}
 
     private boolean syncOptionIgnoreDstDifference = false;
-    public void setSyncOptionIgnoreDstDifference(boolean enabled) {syncOptionIgnoreDstDifference =enabled;}
+    public void setSyncOptionIgnoreDstDifference(boolean enabled) {syncOptionIgnoreDstDifference = enabled;}
     public boolean isSyncOptionIgnoreDstDifference() {return syncOptionIgnoreDstDifference;}
 
     private boolean syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters = false;
