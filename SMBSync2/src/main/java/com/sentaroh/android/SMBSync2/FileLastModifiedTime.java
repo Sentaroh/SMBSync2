@@ -102,9 +102,8 @@ public class FileLastModifiedTime {
     final public static boolean isCurrentListWasDifferent(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
             ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
-            String fp, long l_lm, long r_lm, int timeDifferenceLimit) {
+            String fp, long l_lm, long r_lm, int timeDifferenceLimit, boolean ignore_dst_time, int dstOffset, int timeDifferenceForDst) {
         boolean result = false;
-//		Log.v("","size c="+curr_last_modified_list.size()+", a="+new_last_modified_list.size());
         if (curr_last_modified_list.size() != 0) {
             int idx = Collections.binarySearch(curr_last_modified_list,
                     new FileLastModifiedTimeEntry(fp, 0, 0, false),
@@ -115,28 +114,28 @@ public class FileLastModifiedTime {
                             return ci.getFilePath().compareToIgnoreCase(ni.getFilePath());
                         }
                     });
-//			Log.v("","idx="+idx+", fp="+fp);
             if (idx >= 0) {
                 long diff_lcl = Math.abs(curr_last_modified_list.get(idx).getLocalFileLastModified() - l_lm);
                 long diff_rmt = Math.abs(curr_last_modified_list.get(idx).getRemoteFileLastModified() - r_lm);
-//				Log.v("","diff_lcl="+diff_lcl+", diff_rmt="+diff_rmt);
                 if (diff_lcl > timeDifferenceLimit || diff_rmt > timeDifferenceLimit) {
-//					Log.v("","list l_lm="+curr_last_modified_list.get(idx).getLocalFileLastModified()+", r_lm="+curr_last_modified_list.get(idx).getRemoteFileLastModified());
-//					Log.v("","file l_lm="+l_lm+", r_lm="+r_lm);
-                    result = true;
+                    if (ignore_dst_time) {
+                        if (diff_lcl<dstOffset || diff_lcl>timeDifferenceForDst) result = true;
+                        if (diff_rmt<dstOffset || diff_rmt>timeDifferenceForDst) result = true;
+                    } else {
+                        result=true;
+                    }
                 }
                 curr_last_modified_list.get(idx).setReferenced(true);
             } else {
-//				Log.v("","added file l_lm="+l_lm+", r_lm="+r_lm);
                 result = isAddedListWasDifferent(
                         curr_last_modified_list, new_last_modified_list,
-                        fp, l_lm, r_lm, timeDifferenceLimit);
+                        fp, l_lm, r_lm, timeDifferenceLimit, ignore_dst_time, dstOffset, timeDifferenceForDst);
             }
         } else {
 //			Log.v("","added fp="+fp);
             result = isAddedListWasDifferent(
                     curr_last_modified_list, new_last_modified_list,
-                    fp, l_lm, r_lm, timeDifferenceLimit);
+                    fp, l_lm, r_lm, timeDifferenceLimit, ignore_dst_time, dstOffset, timeDifferenceForDst);
         }
         return result;
     }
@@ -174,7 +173,7 @@ public class FileLastModifiedTime {
     final public static boolean isAddedListWasDifferent(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
             ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
-            String fp, long l_lm, long r_lm, int timeDifferenceLimit) {
+            String fp, long l_lm, long r_lm, int timeDifferenceLimit, boolean ignore_dst_time, int dstOffset, int timeDifferenceForDst) {
         boolean result = true, found = false;
         if (new_last_modified_list.size() == 0) result = true;
         else for (FileLastModifiedTimeEntry fli : new_last_modified_list) {
@@ -182,8 +181,16 @@ public class FileLastModifiedTime {
                 found = true;
                 long diff_lcl = Math.abs(fli.getLocalFileLastModified() - l_lm);
                 long diff_rmt = Math.abs(fli.getRemoteFileLastModified() - r_lm);
-                if (diff_lcl <= 1 || diff_rmt <= 1) result = false;
-                else result = true;
+                if (diff_lcl <= timeDifferenceLimit || diff_rmt <= timeDifferenceLimit) {
+                    result = false;
+                } else {
+                    if (ignore_dst_time) {
+                        if (diff_lcl<dstOffset || diff_lcl>timeDifferenceForDst) result = true;
+                        if (diff_rmt<dstOffset || diff_rmt>timeDifferenceForDst) result = true;
+                    } else {
+                        result=true;
+                    }
+                }
                 break;
             }
         }

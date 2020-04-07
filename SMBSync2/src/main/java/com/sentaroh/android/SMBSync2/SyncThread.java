@@ -139,6 +139,8 @@ public class SyncThread extends Thread {
         public PrintWriter syncHistoryWriter = null;
 
         public int syncDifferentFileAllowableTime = 0;
+        public int syncDifferentFileAllowableTimeForDst = 0;
+        public int offsetOfDaylightSavingTime=0;
         public int syncTaskRetryCount = 0;
         public int syncTaskRetryCountOriginal = 0;
 
@@ -171,8 +173,9 @@ public class SyncThread extends Thread {
         public SafFile lastWriteSafFile=null;
         public File lastWriteFile=null;
 
-        SimpleDateFormat sdfLocalTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        SimpleDateFormat sdfUTCTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        public SimpleDateFormat sdfLocalTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        public SimpleDateFormat sdfUTCTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
     }
 
     private SyncThreadWorkArea mStwa = new SyncThreadWorkArea();
@@ -196,6 +199,7 @@ public class SyncThread extends Thread {
         mStwa.msgs_mirror_task_file_archived = gp.appContext.getString(R.string.msgs_mirror_task_file_archived);
 
         mStwa.sdfUTCTime.setTimeZone(TimeZone.getTimeZone("UTC"));
+        mStwa.offsetOfDaylightSavingTime=TimeZone.getDefault().getDSTSavings();
 //        mStwa.zipWorkFileName = gp.appContext.getCacheDir().toString() + "/zip_work_file";
 
         printSafDebugInfo();
@@ -469,7 +473,6 @@ public class SyncThread extends Thread {
         mStwa.util.addDebugMsg(1, "I", "   Confirm=" + sti.isSyncConfirmOverrideOrDelete() ,
                 ", LastModSmbsync2=" + sti.isSyncDetectLastModifiedBySmbsync() ,
                 ", UseLastMod=" + sti.isSyncOptionDifferentFileByTime() ,
-                ", NeverOverwriteTargetFileIfItIsNewerThanTheMasterFile=" + sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(),
                 ", UseFileSize=" + sti.isSyncOptionDifferentFileBySize() ,
                 ", UseFileSizeGreaterThanTagetFile=" + sti.isSyncDifferentFileSizeGreaterThanTagetFile() ,
                 ", DoNotResetFileLastMod=" + sti.isSyncDoNotResetFileLastModified() ,
@@ -490,6 +493,7 @@ public class SyncThread extends Thread {
                 ", SyncOnlyCharging=" + sti.isSyncOptionSyncWhenCharging() ,
                 ", DeleteFirst=" + sti.isSyncOptionDeleteFirstWhenMirror() ,
 
+                ", IgnoreDstDifference=" + sti.isSyncOptionIgnoreDstDifference(),
                 ", NeverOverwriteTargetFileIfItIsNewerThanTheMasterFile="+sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(),
                 ", IgnoreUnusableCharacterUsedDirectoryFileName="+sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(),
                 ", DoNotUseRenameWhenSmbFileWrite=" + sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite() ,
@@ -526,6 +530,7 @@ public class SyncThread extends Thread {
 
         mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncOptionRetryCount()) + 1;
         mStwa.syncDifferentFileAllowableTime = sti.getSyncOptionDifferentFileAllowableTime() * 1000;
+        mStwa.syncDifferentFileAllowableTimeForDst=TimeZone.getDefault().getDSTSavings()+mStwa.syncDifferentFileAllowableTime;
 
         mStwa.totalTransferByte = mStwa.totalTransferTime = 0;
         mStwa.totalCopyCount = mStwa.totalDeleteCount = mStwa.totalIgnoreCount = mStwa.totalRetryCount = 0;
@@ -2209,7 +2214,8 @@ public class SyncThread extends Thread {
                                                                     String fp, long l_lm, long r_lm) {
         boolean result = FileLastModifiedTime.isCurrentListWasDifferent(
                 curr_last_modified_list, new_last_modified_list,
-                fp, l_lm, r_lm, stwa.syncDifferentFileAllowableTime);
+                fp, l_lm, r_lm, stwa.syncDifferentFileAllowableTime,
+                sti.isSyncOptionIgnoreDstDifference(), stwa.offsetOfDaylightSavingTime, stwa.syncDifferentFileAllowableTimeForDst);
         if (stwa.gp.settingDebugLevel >= 3)
             stwa.util.addDebugMsg(3, "I", "isLocalFileLastModifiedWasDifferent result=" + result + ", item=" + fp);
         return result;
@@ -2405,15 +2411,14 @@ public class SyncThread extends Thread {
             if (sti.isSyncOptionDifferentFileByTime()) {
                 if (stwa.lastModifiedIsFunctional) {//Use lastModified
                     if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
-//                        diff = true;
-                        boolean t_diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
-                                stwa.currLastModifiedList,
-                                stwa.newLastModifiedList,
-                                lf_path, lf_time, tf_time);
-                        if (t_diff) {
-                            diff = true;
+                        if (sti.isSyncOptionIgnoreDstDifference()) {
+                            if (time_diff>=stwa.offsetOfDaylightSavingTime && time_diff<=stwa.syncDifferentFileAllowableTimeForDst) {
+                                diff=false;
+                            } else {
+                                diff=true;
+                            }
                         } else {
-                            diff = false;
+                            diff = true;
                         }
                     } else {
                         diff = false;
@@ -2487,9 +2492,19 @@ public class SyncThread extends Thread {
             diff = true;
         } else {//Check lastModified()
             if (!sti.isSyncDoNotResetFileLastModified() && sti.isSyncOptionDifferentFileByTime()) {
-                if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
-                    diff = true;
-                } else diff = false;
+                if ((time_diff > stwa.syncDifferentFileAllowableTime)) { //LastModified was changed
+                    if (sti.isSyncOptionIgnoreDstDifference()) {
+                        if (time_diff>=stwa.offsetOfDaylightSavingTime && time_diff<=stwa.syncDifferentFileAllowableTimeForDst) {
+                            diff=false;
+                        } else {
+                            diff=true;
+                        }
+                    } else {
+                        diff = false;
+                    }
+                } else {
+                    diff = false;
+                }
             }
         }
         if (stwa.gp.settingDebugLevel >= 3) {
