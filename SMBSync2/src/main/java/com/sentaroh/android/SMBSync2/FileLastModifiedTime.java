@@ -102,7 +102,7 @@ public class FileLastModifiedTime {
     final public static boolean isCurrentListWasDifferent(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
             ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
-            String fp, long l_lm, long r_lm, int timeDifferenceLimit, boolean ignore_dst_time, int dstOffset, int timeDifferenceForDst) {
+            String fp, long l_lm, long r_lm, int timeDifferenceLimit, boolean ignore_dst_time, int dstOffset) {
         boolean result = false;
         if (curr_last_modified_list.size() != 0) {
             int idx = Collections.binarySearch(curr_last_modified_list,
@@ -119,8 +119,8 @@ public class FileLastModifiedTime {
                 long diff_rmt = Math.abs(curr_last_modified_list.get(idx).getRemoteFileLastModified() - r_lm);
                 if (diff_lcl > timeDifferenceLimit || diff_rmt > timeDifferenceLimit) {
                     if (ignore_dst_time) {
-                        if (diff_lcl<dstOffset || diff_lcl>timeDifferenceForDst) result = true;
-                        if (diff_rmt<dstOffset || diff_rmt>timeDifferenceForDst) result = true;
+                        if ((Math.abs((diff_lcl - dstOffset)) <= timeDifferenceLimit) && (Math.abs((diff_rmt - dstOffset)) <= timeDifferenceLimit))
+                            result = false;
                     } else {
                         result=true;
                     }
@@ -129,13 +129,13 @@ public class FileLastModifiedTime {
             } else {
                 result = isAddedListWasDifferent(
                         curr_last_modified_list, new_last_modified_list,
-                        fp, l_lm, r_lm, timeDifferenceLimit, ignore_dst_time, dstOffset, timeDifferenceForDst);
+                        fp, l_lm, r_lm, timeDifferenceLimit, ignore_dst_time, dstOffset);
             }
         } else {
 //			Log.v("","added fp="+fp);
             result = isAddedListWasDifferent(
                     curr_last_modified_list, new_last_modified_list,
-                    fp, l_lm, r_lm, timeDifferenceLimit, ignore_dst_time, dstOffset, timeDifferenceForDst);
+                    fp, l_lm, r_lm, timeDifferenceLimit, ignore_dst_time, dstOffset);
         }
         return result;
     }
@@ -173,7 +173,7 @@ public class FileLastModifiedTime {
     final public static boolean isAddedListWasDifferent(
             ArrayList<FileLastModifiedTimeEntry> curr_last_modified_list,
             ArrayList<FileLastModifiedTimeEntry> new_last_modified_list,
-            String fp, long l_lm, long r_lm, int timeDifferenceLimit, boolean ignore_dst_time, int dstOffset, int timeDifferenceForDst) {
+            String fp, long l_lm, long r_lm, int timeDifferenceLimit, boolean ignore_dst_time, int dstOffset) {
         boolean result = true, found = false;
         if (new_last_modified_list.size() == 0) result = true;
         else for (FileLastModifiedTimeEntry fli : new_last_modified_list) {
@@ -185,8 +185,8 @@ public class FileLastModifiedTime {
                     result = false;
                 } else {
                     if (ignore_dst_time) {
-                        if (diff_lcl<dstOffset || diff_lcl>timeDifferenceForDst) result = true;
-                        if (diff_rmt<dstOffset || diff_rmt>timeDifferenceForDst) result = true;
+                        if ((Math.abs((diff_lcl - dstOffset)) <= timeDifferenceLimit) && (Math.abs((diff_rmt - dstOffset)) <= timeDifferenceLimit))
+                            result = false;
                     } else {
                         result=true;
                     }
