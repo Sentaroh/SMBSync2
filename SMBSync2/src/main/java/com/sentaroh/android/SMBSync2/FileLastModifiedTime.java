@@ -119,10 +119,10 @@ public class FileLastModifiedTime {
                 long diff_rmt = Math.abs(curr_last_modified_list.get(idx).getRemoteFileLastModified() - r_lm);
                 if (diff_lcl > timeDifferenceLimit || diff_rmt > timeDifferenceLimit) {
                     if (ignore_dst_time) {
-                        if (diff_lcl<dstOffset || diff_lcl>timeDifferenceForDst) result = true;
-                        if (diff_rmt<dstOffset || diff_rmt>timeDifferenceForDst) result = true;
+                        if (diff_lcl<dstOffset || diff_lcl>timeDifferenceForDst) result = true; // 1
+                        if (diff_rmt<dstOffset || diff_rmt>timeDifferenceForDst) result = true; // 2
                     } else {
-                        result=true;
+                        result=true; // 3: same as 1 and 2 comments !!
                     }
                 }
                 curr_last_modified_list.get(idx).setReferenced(true);
