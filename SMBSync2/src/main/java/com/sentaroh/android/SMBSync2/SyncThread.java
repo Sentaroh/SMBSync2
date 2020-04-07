@@ -2412,7 +2412,7 @@ public class SyncThread extends Thread {
                 if (stwa.lastModifiedIsFunctional) {//Use lastModified
                     if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
                         if (sti.isSyncOptionIgnoreDstDifference()) {
-                            if (time_diff>=stwa.offsetOfDaylightSavingTime && time_diff<=stwa.syncDifferentFileAllowableTimeForDst) {
+                            if (Math.abs((time_diff - stwa.offsetOfDaylightSavingTime)) <= stwa.syncDifferentFileAllowableTime) { // see comments: I would replace stwa.offsetOfDaylightSavingTime by 3600'000 and only have manual setting for DST
                                 diff=false;
                             } else {
                                 diff=true;
