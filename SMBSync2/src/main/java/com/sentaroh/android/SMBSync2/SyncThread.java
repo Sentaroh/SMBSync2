@@ -139,7 +139,6 @@ public class SyncThread extends Thread {
         public PrintWriter syncHistoryWriter = null;
 
         public int syncDifferentFileAllowableTime = 0;
-        public int syncDifferentFileAllowableTimeForDst = 0;
         public int offsetOfDaylightSavingTime=0;
         public int syncTaskRetryCount = 0;
         public int syncTaskRetryCountOriginal = 0;
@@ -199,7 +198,7 @@ public class SyncThread extends Thread {
         mStwa.msgs_mirror_task_file_archived = gp.appContext.getString(R.string.msgs_mirror_task_file_archived);
 
         mStwa.sdfUTCTime.setTimeZone(TimeZone.getTimeZone("UTC"));
-        mStwa.offsetOfDaylightSavingTime=TimeZone.getDefault().getDSTSavings();
+        // mStwa.offsetOfDaylightSavingTime=TimeZone.getDefault().getDSTSavings();
 //        mStwa.zipWorkFileName = gp.appContext.getCacheDir().toString() + "/zip_work_file";
 
         printSafDebugInfo();
@@ -494,8 +493,8 @@ public class SyncThread extends Thread {
                 ", DeleteFirst=" + sti.isSyncOptionDeleteFirstWhenMirror() ,
 
                 ", IgnoreDstDifference=" + sti.isSyncOptionIgnoreDstDifference(),
-                ", NeverOverwriteTargetFileIfItIsNewerThanTheMasterFile="+sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(),
-                ", IgnoreUnusableCharacterUsedDirectoryFileName="+sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(),
+                ", NeverOverwriteTargetFileIfItIsNewerThanTheMasterFile=" + sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile(),
+                ", IgnoreUnusableCharacterUsedDirectoryFileName=" + sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(),
                 ", DoNotUseRenameWhenSmbFileWrite=" + sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite() ,
                 "");
         mStwa.util.addDebugMsg(1, "I", "   SMB1 Option, LM Compatiibility=" + mGp.settingsSmbLmCompatibility +
@@ -530,7 +529,10 @@ public class SyncThread extends Thread {
 
         mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncOptionRetryCount()) + 1;
         mStwa.syncDifferentFileAllowableTime = sti.getSyncOptionDifferentFileAllowableTime() * 1000;
-        mStwa.syncDifferentFileAllowableTimeForDst=TimeZone.getDefault().getDSTSavings()+mStwa.syncDifferentFileAllowableTime;
+        if (sti.isSyncOptionIgnoreDstDifference())
+            mStwa.offsetOfDaylightSavingTime = 3600000; // to fix with proper getDSTSavings(), if it returns 0, a user setting must override it: isSyncOptionIgnoreDstDifference() cannot be true while offsetOfDaylightSavingTime == 0
+        else
+            mStwa.offsetOfDaylightSavingTime = 0;
 
         mStwa.totalTransferByte = mStwa.totalTransferTime = 0;
         mStwa.totalCopyCount = mStwa.totalDeleteCount = mStwa.totalIgnoreCount = mStwa.totalRetryCount = 0;
@@ -2215,7 +2217,7 @@ public class SyncThread extends Thread {
         boolean result = FileLastModifiedTime.isCurrentListWasDifferent(
                 curr_last_modified_list, new_last_modified_list,
                 fp, l_lm, r_lm, stwa.syncDifferentFileAllowableTime,
-                sti.isSyncOptionIgnoreDstDifference(), stwa.offsetOfDaylightSavingTime, stwa.syncDifferentFileAllowableTimeForDst);
+                sti.isSyncOptionIgnoreDstDifference(), stwa.offsetOfDaylightSavingTime);
         if (stwa.gp.settingDebugLevel >= 3)
             stwa.util.addDebugMsg(3, "I", "isLocalFileLastModifiedWasDifferent result=" + result + ", item=" + fp);
         return result;
@@ -2310,7 +2312,7 @@ public class SyncThread extends Thread {
                                                                    long master_time, long target_time) {
         boolean result=true;
         if (sti.isSyncOptionDifferentFileByTime() && sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) {
-            if (stwa.lastModifiedIsFunctional) {//Use lastModified
+            if (stwa.lastModifiedIsFunctional) { //Use lastModified
                 if (master_time>target_time) {
                     result=true;
                 } else {
@@ -2407,27 +2409,30 @@ public class SyncThread extends Thread {
                     if (!updated) addLastModifiedItem(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path, lf_time, tf_time);
                 }
             }
-        } else {//Check lastModified()
+        } else { //Check lastModified()
             if (sti.isSyncOptionDifferentFileByTime()) {
-                if (stwa.lastModifiedIsFunctional) {//Use lastModified
+                if (stwa.lastModifiedIsFunctional) { //Use lastModified
                     if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
-                        if (sti.isSyncOptionIgnoreDstDifference()) {
-                            if (time_diff>=stwa.offsetOfDaylightSavingTime && time_diff<=stwa.syncDifferentFileAllowableTimeForDst) {
-                                diff=false;
-                            } else {
-                                diff=true;
-                            }
+                        if (sti.isSyncOptionIgnoreDstDifference() && (Math.abs((time_diff - stwa.offsetOfDaylightSavingTime)) <= stwa.syncDifferentFileAllowableTime)) { // difference is exactly 1h +/- less than user set tolerance (msec)
+                                diff = false;
                         } else {
-                            diff = true;
-                        }
+                                diff = true;
+                            }
                     } else {
                         diff = false;
                     }
-                } else {//Use Filelist
+                } else { //Use Filelist
                     boolean found=isLocalFileLastModifiedFileItemExists(stwa, sti, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path);
                     if (!found) {
-                        if (time_diff > stwa.syncDifferentFileAllowableTime) diff=true;
-                        else diff=false;
+                        if (time_diff > stwa.syncDifferentFileAllowableTime) {
+                            if (sti.isSyncOptionIgnoreDstDifference() && (Math.abs((time_diff - stwa.offsetOfDaylightSavingTime)) <= stwa.syncDifferentFileAllowableTime)) { // difference is exactly 1h +/- less than user set tolerance (msec)
+                                diff = false;
+                            } else {
+                                diff = true;
+                            }
+                        } else {
+                            diff = false;
+                        }
                         addLastModifiedItem(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path, lf_time, tf_time );
                     } else {
                         diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
@@ -2490,17 +2495,13 @@ public class SyncThread extends Thread {
         if (hf_exists != lf_exists) exists_diff = true;
         if (exists_diff || (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) || ac) {
             diff = true;
-        } else {//Check lastModified()
+        } else { //Check lastModified()
             if (!sti.isSyncDoNotResetFileLastModified() && sti.isSyncOptionDifferentFileByTime()) {
-                if ((time_diff > stwa.syncDifferentFileAllowableTime)) { //LastModified was changed
-                    if (sti.isSyncOptionIgnoreDstDifference()) {
-                        if (time_diff>=stwa.offsetOfDaylightSavingTime && time_diff<=stwa.syncDifferentFileAllowableTimeForDst) {
-                            diff=false;
-                        } else {
-                            diff=true;
-                        }
-                    } else {
+                if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
+                    if (sti.isSyncOptionIgnoreDstDifference() && (Math.abs((time_diff - stwa.offsetOfDaylightSavingTime)) <= stwa.syncDifferentFileAllowableTime)) { // difference is exactly 1h +/- less than user set tolerance (msec)
                         diff = false;
+                    } else {
+                        diff = true;
                     }
                 } else {
                     diff = false;
