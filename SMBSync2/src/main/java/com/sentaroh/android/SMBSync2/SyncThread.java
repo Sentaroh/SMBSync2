@@ -2499,7 +2499,7 @@ public class SyncThread extends Thread {
                             diff=true;
                         }
                     } else {
-                        diff = false;
+                        diff = true;
                     }
                 } else {
                     diff = false;
