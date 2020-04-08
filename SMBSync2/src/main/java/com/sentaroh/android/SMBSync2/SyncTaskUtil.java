@@ -6497,11 +6497,25 @@ public class SyncTaskUtil {
 
             if (!parm[88].equals("") && !parm[88].equals("end")) stli.setSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty((parm[88].equals("1") ? true : false));
 
-            if (!parm[89].equals("") && !parm[89].equals("end")) stli.setMasterFolderError(stli.getMasterFolderError()|Integer.parseInt(parm[89]));
-            if (!parm[90].equals("") && !parm[90].equals("end")) stli.setTargetFolderError(stli.getTargetFolderError()|Integer.parseInt(parm[90]));
+            if (!parm[89].equals("") && !parm[89].equals("end"))
+                try {
+                    stli.setMasterFolderError(stli.getMasterFolderError()|Integer.parseInt(parm[89]));
+                } catch(Exception e) {
+                    stli.setMasterFolderError(stli.getMasterFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_NAME);
+                }
+            if (!parm[90].equals("") && !parm[90].equals("end"))
+                try {
+                    stli.setTargetFolderError(stli.getTargetFolderError()|Integer.parseInt(parm[90]));
+                } catch(Exception e) {
+                    stli.setTargetFolderError(stli.getTargetFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_NAME);
+                }
 
             if (!parm[91].equals("") && !parm[91].equals("end")) stli.setSyncOptionIgnoreDstDifference((parm[91].equals("1") ? true : false));
-            if (!parm[92].equals("") && !parm[92].equals("end")) stli.setSyncOptionOffsetOfDst(Integer.valueOf(parm[92]));
+            try {
+                if (!parm[92].equals("") && !parm[92].equals("end")) stli.setSyncOptionOffsetOfDst(Integer.valueOf(parm[92]));
+            } catch (Exception e) {
+                stli.setSyncOptionOffsetOfDst(60);
+            }
 
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
