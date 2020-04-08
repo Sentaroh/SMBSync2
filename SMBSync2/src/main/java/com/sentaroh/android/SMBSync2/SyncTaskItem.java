@@ -32,6 +32,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 /**
  * Created by sentaroh on 2018/03/21.
@@ -193,9 +194,16 @@ class SyncTaskItem implements Serializable, Cloneable {
         syncTasｋName = stn;
         syncTaskEnabled = pfa;
         isChecked = ic;
+        initOffsetOfDst();
     }
 
     public SyncTaskItem() {
+        initOffsetOfDst();
+    }
+
+    private void initOffsetOfDst() {
+        if (TimeZone.getDefault().useDaylightTime()) setSyncOptionOffsetOfDst(TimeZone.getDefault().getDSTSavings()/(60*1000));
+        else setSyncOptionOffsetOfDst(60);
     }
 
     public String getSyncTaskName() {return syncTasｋName;}
@@ -503,6 +511,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setSyncOptionIgnoreDstDifference(boolean enabled) {syncOptionIgnoreDstDifference =enabled;}
     public boolean isSyncOptionIgnoreDstDifference() {return syncOptionIgnoreDstDifference;}
 
+    private int syncOptionOffsetOfDst = 60;
+    public void setSyncOptionOffsetOfDst(int offset) {syncOptionOffsetOfDst =offset;}
+    public int getSyncOptionOffsetOfDst() {return syncOptionOffsetOfDst;}
+
     private boolean syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters = false;
     public void setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(boolean enabled) {syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters=enabled;}
     public boolean isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters() {return syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters;}
@@ -656,6 +668,8 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile==sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) &&
 
                         (syncOptionIgnoreDstDifference==sti.isSyncOptionIgnoreDstDifference()) &&
+
+                        (syncOptionOffsetOfDst==sti.getSyncOptionOffsetOfDst()) &&
 
                         (syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters==sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) &&
 

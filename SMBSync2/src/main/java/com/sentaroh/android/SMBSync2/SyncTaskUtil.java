@@ -6501,6 +6501,7 @@ public class SyncTaskUtil {
             if (!parm[90].equals("") && !parm[90].equals("end")) stli.setTargetFolderError(stli.getTargetFolderError()|Integer.parseInt(parm[90]));
 
             if (!parm[91].equals("") && !parm[91].equals("end")) stli.setSyncOptionIgnoreDstDifference((parm[91].equals("1") ? true : false));
+            if (!parm[92].equals("") && !parm[92].equals("end")) stli.setSyncOptionOffsetOfDst(Integer.valueOf(parm[92]));
 
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
@@ -7003,11 +7004,11 @@ public class SyncTaskUtil {
 
                             (item.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty() ? "1" : "0") + "\t" +   //88
 
-                            (item.getMasterFolderError()) + "\t" +                                       //89
-                            (item.getTargetFolderError()) + "\t" +                                       //90
+                            (item.getMasterFolderError()) + "\t" +                                      //89
+                            (item.getTargetFolderError()) + "\t" +                                      //90
 
-                            (item.isSyncOptionIgnoreDstDifference() ? "1" : "0") + "\t" +                //91
-
+                            (item.isSyncOptionIgnoreDstDifference() ? "1" : "0") + "\t" +               //91
+                            item.getSyncOptionOffsetOfDst()+ "\t" +                                     //92
 
                             "end"
                     ;
