@@ -3650,12 +3650,14 @@ public class SyncTaskEditor extends DialogFragment {
                     ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(true);
                     ctv_ignore_dst_difference.setEnabled(true);
                     CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, true);
+                    CommonDialog.setViewEnabled(getActivity(), spinnerSyncDstOffsetValue, true);
                 } else {
                     ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(false);
                     ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(false);
                     ctv_ignore_dst_difference.setChecked(false);
                     ctv_ignore_dst_difference.setEnabled(false);
                     CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, false);
+                    CommonDialog.setViewEnabled(getActivity(), spinnerSyncDstOffsetValue, false);
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
