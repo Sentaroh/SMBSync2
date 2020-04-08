@@ -395,7 +395,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_sync_task_sync_file_type_specific">Select files for sync</string>
         <string name="msgs_profile_sync_task_sync_file_type_video">Sync video files</string>
         <string name="msgs_profile_sync_task_sync_option">Options:</string>
-        <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">The difference (in seconds) between the last update time of the master and the target file to be allowed</string>
+        <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Min allowed time difference (in seconds) between source and destination file for synchronization</string>
         <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Skip task if not connected to specified access point, or if wireless LAN IP address does not match specified IP address.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Allow sync with global IP addresses</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirm before overwrite/delete</string>
