@@ -3081,11 +3081,13 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_older));
         adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file));
 
-        if (cv.equals("0")) spinner.setSelection(0);
-        else if (cv.equals("1")) spinner.setSelection(1);
-        else if (cv.equals("2")) spinner.setSelection(2);
-        else if (cv.equals("3")) spinner.setSelection(3);
+	int sel = 0;
+        if (cv.equals("0")) sel = 0;
+        else if (cv.equals("1")) sel = 1;
+        else if (cv.equals("2")) sel = 2;
+        else if (cv.equals("3")) sel = 3;
 
+        spinner.setSelection(sel);
         adapter.notifyDataSetChanged();
     }
 
@@ -3102,12 +3104,14 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address));
 
-        if (cv.equals("0")) spinner.setSelection(0);
-        else if (cv.equals("1")) spinner.setSelection(1);
-        else if (cv.equals("2")) spinner.setSelection(2);
-        else if (cv.equals("3")) spinner.setSelection(3);
-        else if (cv.equals("4")) spinner.setSelection(4);
+	int sel = 0;
+        if (cv.equals("0")) sel = 0;
+        else if (cv.equals("1")) sel = 1;
+        else if (cv.equals("2")) sel = 2;
+        else if (cv.equals("3")) sel = 3;
+        else if (cv.equals("4")) sel = 4;
 
+        spinner.setSelection(sel);
         adapter.notifyDataSetChanged();
     }
 
@@ -3122,9 +3126,12 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_3));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_10));
 
-        if (cv == 1) spinner.setSelection(0);
-        else if (cv == 3) spinner.setSelection(1);
-        else if (cv == 10) spinner.setSelection(2);
+        int sel = 0;
+        if (cv == 1) sel = 0;
+        else if (cv == 3) sel = 1;
+        else if (cv == 10) sel = 2;
+
+	spinner.setSelection(sel);
 
         adapter.notifyDataSetChanged();
     }
