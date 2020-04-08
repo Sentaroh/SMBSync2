@@ -2425,8 +2425,15 @@ public class SyncThread extends Thread {
                 } else {//Use Filelist
                     boolean found=isLocalFileLastModifiedFileItemExists(stwa, sti, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path);
                     if (!found) {
-                        if (time_diff > stwa.syncDifferentFileAllowableTime) diff=true;
-                        else diff=false;
+                        if (time_diff > stwa.syncDifferentFileAllowableTime) {
+                            if (sti.isSyncOptionIgnoreDstDifference() && (Math.abs((time_diff - stwa.offsetOfDaylightSavingTime)) <= stwa.syncDifferentFileAllowableTime)) { // difference is exactly 1h +/- less than user set tolerance (msec)
+                                diff = false;
+                            } else {
+                                diff = true;
+                            }
+                        } else {
+                            diff = false;
+                        }
                         addLastModifiedItem(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path, lf_time, tf_time );
                     } else {
                         diff = isLocalFileLastModifiedWasDifferent(stwa, sti,
