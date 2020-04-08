@@ -409,9 +409,9 @@
         <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">強制的にSMBSync2で最終更新日時を取得</string>
         <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">マスターで指定されたディレクトリの直下に存在するファイルを処理する</string>
         <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file">ターゲットファイルがマスターファイルより新しい時はターゲットファイルを上書きしない</string>
-        <string name="msgs_profile_sync_task_sync_option_diff_file_ignore_dst_difference">夏時間を無視する</string>
-        <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value">夏時間と標準時との時間差</string>
-        <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">夏時間と標準時の時間差の選択</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_ignore_dst_difference">夏時間と標準時の時間差を無視する</string>
+        <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value">夏時間と標準時との時間差(分)</string>
+        <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">夏時間と標準時の時間差(分)の選択</string>
         <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">ターゲットファイルの最終更新時刻をマスターと同じにしない</string>
         <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">ファイルを上書きする</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">ネットワークエラーが発生した場合にリトライする</string>
