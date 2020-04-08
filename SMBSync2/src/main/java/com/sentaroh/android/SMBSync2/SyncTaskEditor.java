@@ -3081,7 +3081,7 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_older));
         adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file));
 
-	int sel = 0;
+        int sel = 0;
         if (cv.equals("0")) sel = 0;
         else if (cv.equals("1")) sel = 1;
         else if (cv.equals("2")) sel = 2;
@@ -3104,7 +3104,7 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address));
 
-	int sel = 0;
+        int sel = 0;
         if (cv.equals("0")) sel = 0;
         else if (cv.equals("1")) sel = 1;
         else if (cv.equals("2")) sel = 2;
