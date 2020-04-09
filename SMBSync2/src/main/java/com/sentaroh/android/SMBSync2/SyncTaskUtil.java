@@ -6369,7 +6369,11 @@ public class SyncTaskUtil {
             stli.setSyncOptionSyncSubDirectory(parm[31].equals("1") ? true : false);
             stli.setSyncOptionUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            try {stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));} catch(Exception e) {}
+            try {
+                stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));
+            } catch(Exception e) {
+                setSyncOptionDifferentFileAllowableTime(3);
+            }
             stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
 //            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
