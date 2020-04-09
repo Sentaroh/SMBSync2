@@ -3148,6 +3148,8 @@ public class SyncTaskEditor extends DialogFragment {
         for(int i=10;i<121;i+=10) adapter.add(String.valueOf(i));
         if (cv>=10 && cv<=120) {
             spinner.setSelection((cv/10)-1);
+        } else {
+            spinner.setSelection(5); // position 5, default 60 mn if invalid range provided from settings file
         }
 
         adapter.notifyDataSetChanged();
