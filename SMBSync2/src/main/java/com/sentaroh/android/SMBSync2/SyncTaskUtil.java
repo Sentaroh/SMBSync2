@@ -32,7 +32,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
@@ -40,8 +39,6 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
-import android.text.Html;
-import android.text.Spannable;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -112,7 +109,6 @@ import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScan
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_UNKNOWN_ACCOUNT;
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_UNSUCCESSFULL;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
-import static com.sentaroh.android.SMBSync2.Constants.BUILD_FOR_AMAZON;
 import static com.sentaroh.android.SMBSync2.Constants.CURRENT_SMBSYNC2_PROFILE_FILE_NAME;
 import static com.sentaroh.android.SMBSync2.Constants.CURRENT_SMBSYNC2_PROFILE_VERSION;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_KEY_STORE_ALIAS;
@@ -143,7 +139,6 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_T
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_LONG;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING;
 import static com.sentaroh.android.SMBSync2.GlobalParameters.DEFAULT_NOCOMPRESS_FILE_TYPE;
-import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V4;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V5;
 
 public class SyncTaskUtil {
@@ -6229,6 +6224,15 @@ public class SyncTaskUtil {
         return dec_str;
     }
 
+    private static void putTaskListValueErrorMessage(CommonUtilities cu, String item_name, Object assumed_value) {
+        String msg_template="Invalid \"%s\" was detected while reading the task list, so \"%s\" was set to \"%s\".";
+        String val="";
+        if (assumed_value instanceof String) val=(String)assumed_value;
+        else if (assumed_value instanceof Integer) val=String.valueOf((Integer)assumed_value);
+        else val="?????";
+        cu.addLogMsg("W", String.format(msg_template, item_name, val, item_name));
+    }
+
     private static void addSyncTaskListVer8(boolean sdcard, String pl, ArrayList<SyncTaskItem> sync, CommonUtilities util, CipherParms cp_autosave, boolean auto_save) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
         String list1 = "", list2 = "", list3 = "", list4="", npl = "";
@@ -6278,71 +6282,105 @@ public class SyncTaskUtil {
             } else wifi_addr_list.clear();
 
             SyncTaskItem stli = new SyncTaskItem(parm[1], parm[2].equals("0") ? false : true, false);
-            stli.setSyncTaskType(parm[3]);
+            if (isValidTaskItemValue(SyncTaskItem.SYNC_TASK_TYPE_LIST, parm[3])) {
+                stli.setSyncTaskType(parm[3]);
+            } else {
+                stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_COPY);
+                putTaskListValueErrorMessage(util, "Sync task type", "COPY");
+            }
 
-            stli.setMasterFolderType(parm[4]);
-            if (auto_save && stli.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                if (!parm[5].equals("") ) {
-                    String dec_user=decryptByInternalPassword(util, cp_autosave, parm[5]);
-                    if (dec_user!=null) stli.setMasterSmbUserName(dec_user);
-                    else {
+            if (isValidTaskItemValue(SyncTaskItem.SYNC_FOLDER_TYPE_LIST, parm[4])) {
+                stli.setMasterFolderType(parm[4]);
+                if (auto_save && stli.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                    if (!parm[5].equals("") ) {
+                        String dec_user=decryptByInternalPassword(util, cp_autosave, parm[5]);
+                        if (dec_user!=null) stli.setMasterSmbUserName(dec_user);
+                        else {
 //                        stli.setMasterSmbUserName(SMBSYNC2_PROF_DECRYPT_FAILED);
-                        stli.setMasterFolderError(stli.getMasterFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_NAME);
+                            stli.setMasterFolderError(stli.getMasterFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_NAME);
+                        }
+                    } else {
+                        stli.setMasterSmbUserName(parm[5]);
+                    }
+                    if (!parm[6].equals("")) {
+                        String dec_pswd = decryptByInternalPassword(util, cp_autosave, parm[6]);
+                        if (dec_pswd != null) stli.setMasterSmbPassword(dec_pswd);
+                        else {
+//                        stli.setMasterSmbPassword(SMBSYNC2_PROF_DECRYPT_FAILED);
+                            stli.setMasterFolderError(stli.getMasterFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_PASSWORD);
+                        }
+                    } else {
+                        stli.setMasterSmbPassword(parm[6]);
                     }
                 } else {
                     stli.setMasterSmbUserName(parm[5]);
-                }
-                if (!parm[6].equals("")) {
-                    String dec_pswd = decryptByInternalPassword(util, cp_autosave, parm[6]);
-                    if (dec_pswd != null) stli.setMasterSmbPassword(dec_pswd);
-                    else {
-//                        stli.setMasterSmbPassword(SMBSYNC2_PROF_DECRYPT_FAILED);
-                        stli.setMasterFolderError(stli.getMasterFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_PASSWORD);
-                    }
-                } else {
                     stli.setMasterSmbPassword(parm[6]);
                 }
             } else {
-                stli.setMasterSmbUserName(parm[5]);
-                stli.setMasterSmbPassword(parm[6]);
+                stli.setMasterFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_DEFAULT);
+                putTaskListValueErrorMessage(util, "Master folder type", SyncTaskItem.SYNC_FOLDER_TYPE_DEFAULT);
             }
+
             stli.setMasterSmbShareName(parm[7]);
             stli.setMasterDirectoryName(parm[8]);
             stli.setMasterSmbAddr(parm[9]);
-            stli.setMasterSmbPort(parm[10]);
+            if (!parm[10].equals("")) {
+                int port_number=445;
+                try {
+                    port_number=Integer.parseInt(parm[10]);
+                    stli.setMasterSmbPort(parm[10]);
+                } catch(Exception e) {
+                    stli.setMasterSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Master SMB port number", SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT);
+                }
+            }
             stli.setMasterSmbHostName(parm[11]);
             stli.setMasterSmbDomain(parm[12]);
 
-            stli.setTargetFolderType(parm[13]);
-            if (auto_save && stli.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                if (!parm[14].equals("")) {
-                    String dec_user=decryptByInternalPassword(util, cp_autosave, parm[14]);
-                    if (dec_user!=null) stli.setTargetSmbUserName(dec_user);
-                    else {
+            if (isValidTaskItemValue(SyncTaskItem.SYNC_FOLDER_TYPE_LIST, parm[13])) {
+                stli.setTargetFolderType(parm[13]);
+                if (auto_save && stli.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                    if (!parm[14].equals("")) {
+                        String dec_user=decryptByInternalPassword(util, cp_autosave, parm[14]);
+                        if (dec_user!=null) stli.setTargetSmbUserName(dec_user);
+                        else {
 //                        stli.setTargetSmbUserName(SMBSYNC2_PROF_DECRYPT_FAILED);
-                        stli.setTargetFolderError(stli.getTargetFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_NAME);
+                            stli.setTargetFolderError(stli.getTargetFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_NAME);
+                        }
+                    } else {
+                        stli.setTargetSmbUserName(parm[14]);
+                    }
+                    if (!parm[15].equals("")) {
+                        String dec_pswd=decryptByInternalPassword(util, cp_autosave, parm[15]);
+                        if (dec_pswd!=null) stli.setTargetSmbPassword(dec_pswd);
+                        else {
+//                        stli.setTargetSmbPassword(SMBSYNC2_PROF_DECRYPT_FAILED);
+                            stli.setTargetFolderError(stli.getTargetFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_PASSWORD);
+                        }
+                    } else {
+                        stli.setTargetSmbPassword(parm[15]);
                     }
                 } else {
                     stli.setTargetSmbUserName(parm[14]);
-                }
-                if (!parm[15].equals("")) {
-                    String dec_pswd=decryptByInternalPassword(util, cp_autosave, parm[15]);
-                    if (dec_pswd!=null) stli.setTargetSmbPassword(dec_pswd);
-                    else {
-//                        stli.setTargetSmbPassword(SMBSYNC2_PROF_DECRYPT_FAILED);
-                        stli.setTargetFolderError(stli.getTargetFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_PASSWORD);
-                    }
-                } else {
                     stli.setTargetSmbPassword(parm[15]);
                 }
             } else {
-                stli.setTargetSmbUserName(parm[14]);
-                stli.setTargetSmbPassword(parm[15]);
+                stli.setMasterFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_DEFAULT);
+                putTaskListValueErrorMessage(util, "Target folder type", SyncTaskItem.SYNC_FOLDER_TYPE_DEFAULT);
             }
             stli.setTargetSmbShareName(parm[16]);
             stli.setTargetDirectoryName(parm[17]);
             stli.setTargetSmbAddr(parm[18]);
-            stli.setTargetSmbPort(parm[19]);
+            if (!parm[19].equals("")) {
+                int port_number=445;
+                try {
+                    port_number=Integer.parseInt(parm[19]);
+                    stli.setMasterSmbPort(parm[19]);
+                } catch(Exception e) {
+                    stli.setMasterSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Master SMB port number", SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT);
+                }
+            }
             stli.setTargetSmbHostname(parm[20]);
             stli.setTargetSmbDomain(parm[21]);
 
@@ -6360,7 +6398,8 @@ public class SyncTaskUtil {
 
             stli.setSyncDoNotResetFileLastModified(parm[26].equals("1") ? true : false);
 
-            stli.setSyncOptionRetryCount(parm[27]);
+//          Currently This option cannot be changed. 2020/04/10
+//            stli.setSyncOptionRetryCount(parm[27]);
 
             stli.setSyncOptionSyncEmptyDirectory(parm[28].equals("1") ? true : false);
             stli.setSyncOptionSyncHiddenFile(parm[29].equals("1") ? true : false);
@@ -6369,16 +6408,53 @@ public class SyncTaskUtil {
             stli.setSyncOptionSyncSubDirectory(parm[31].equals("1") ? true : false);
             stli.setSyncOptionUseSmallIoBuffer(parm[32].equals("1") ? true : false);
             stli.setSyncTestMode(parm[33].equals("1") ? true : false);
-            try {stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));} catch(Exception e) {}
+            try {
+                if (isValidTaskItemValue(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_LIST, Integer.parseInt(parm[34]))) {
+                    stli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(parm[34]));
+                } else {
+                    stli.setSyncOptionDifferentFileAllowableTime(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Min allowed time", SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT);
+                }
+            } catch(Exception e) {
+                stli.setSyncOptionDifferentFileAllowableTime(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT);
+                putTaskListValueErrorMessage(util, "Min allowed time", SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT);
+            }
             stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
 //            stli.setSyncUseFileCopyByTempNamex(parm[36].equals("1") ? true : false);
-            stli.setSyncOptionWifiStatusOption(parm[37]);
+            try {
+                if (isValidTaskItemValue(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_LIST, parm[37])) {
+                    stli.setSyncOptionWifiStatusOption(parm[37]);
+                } else {
+                    stli.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_DEFAULT );
+                    putTaskListValueErrorMessage(util, "WiFi status option", "Conn any AP");
+                }
+            } catch(Exception e) {
+                stli.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_DEFAULT );
+                putTaskListValueErrorMessage(util, "WiFi status option", "Conn any AP");
+            }
 
             stli.setLastSyncTime(parm[38]);
-            try {stli.setLastSyncResult(Integer.parseInt(parm[39]));} catch(Exception e) {}
+            try {
+                if (isValidTaskItemValue(SyncTaskItem.SYNC_STATUS_LIST, Integer.parseInt(parm[39]))) {
+                    stli.setLastSyncResult(Integer.parseInt(parm[39]));
+                } else {
+                    stli.setLastSyncResult(SyncTaskItem.SYNC_STATUS_SUCCESS);
+                    putTaskListValueErrorMessage(util, "Last sync result", "Success");
+                }
+            } catch(Exception e) {
+                stli.setLastSyncResult(SyncTaskItem.SYNC_STATUS_SUCCESS);
+                putTaskListValueErrorMessage(util, "Last sync result", "Success");
+            }
 
-            try {if (!parm[40].equals("") && !parm[40].equals("end"))stli.setSyncTaskPosition(Integer.parseInt(parm[40]));} catch(Exception e) {}
+            try {
+                if (!parm[40].equals("") && !parm[40].equals("end")) {
+                    stli.setSyncTaskPosition(Integer.parseInt(parm[40]));
+                }
+            } catch(Exception e) {
+                stli.setSyncTaskPosition(0);
+                putTaskListValueErrorMessage(util, "Task list position", "0");
+            }
 
 //            if (!parm[41].equals("") && !parm[41].equals("end")) stli.setMasterFolderUseInternalUsbFolder(parm[41].equals("1")?true:false);
 //            if (!parm[42].equals("") && !parm[42].equals("end")) stli.setTargetFolderUseInternalUsbFolder(parm[42].equals("1")?true:false);
@@ -6397,19 +6473,36 @@ public class SyncTaskUtil {
 
             if (!parm[48].equals("") && !parm[48].equals("end"))
                 stli.setTargetZipOutputFileName(parm[48]);
-            if (!parm[49].equals("") && !parm[49].equals("end"))
-                stli.setTargetZipCompressionLevel(parm[49]);
-            if (!parm[50].equals("") && !parm[50].equals("end"))
-                stli.setTargetZipCompressionMethod(parm[50]);
-            if (!parm[51].equals("") && !parm[51].equals("end"))
-                stli.setTargetZipEncryptMethod(parm[51]);
+            if (!parm[49].equals("") && !parm[49].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.ZIP_OPTION_COMP_LEVEL_LIST, parm[49])) {
+                    stli.setTargetZipCompressionLevel(parm[49]);
+                } else {
+                    stli.setTargetZipCompressionLevel(SyncTaskItem.ZIP_OPTION_COMP_LEVEL_DEFAULT);
+                    putTaskListValueErrorMessage(util, "ZIP compression level", SyncTaskItem.ZIP_OPTION_COMP_LEVEL_DEFAULT);
+                }
+            }
+            if (!parm[50].equals("") && !parm[50].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.ZIP_OPTION_COMP_METGOD_LIST, parm[50])) {
+                    stli.setTargetZipCompressionMethod(parm[50]);
+                } else {
+                    stli.setTargetZipCompressionMethod(SyncTaskItem.ZIP_OPTION_COMP_METHOD_DEFAULT);
+                    putTaskListValueErrorMessage(util, "ZIP compression method", SyncTaskItem.ZIP_OPTION_COMP_METHOD_DEFAULT);
+                }
+            }
+            if (!parm[51].equals("") && !parm[51].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.ZIP_OPTION_ENCRYPT_LIST, parm[51])) {
+                    stli.setTargetZipEncryptMethod(parm[51]);
+                } else {
+                    stli.setTargetZipEncryptMethod(SyncTaskItem.ZIP_OPTION_ENCRYPT_DEFAULT);
+                    putTaskListValueErrorMessage(util, "ZIP encrypt method", SyncTaskItem.ZIP_OPTION_ENCRYPT_DEFAULT);
+                }
+            }
             if (!parm[52].equals("") && !parm[52].equals("end")) {
                 if (!parm[52].equals("")) {
                     if (auto_save && stli.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
                         String dec_pswd=decryptByInternalPassword(util, cp_autosave, parm[52]);
                         if (dec_pswd!=null) stli.setTargetZipPassword(dec_pswd);
                         else {
-//                            stli.setTargetZipPassword(SMBSYNC2_PROF_DECRYPT_FAILED);
                             stli.setTargetFolderError(stli.getTargetFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ZIP_PASSWORD);
                         }
                     } else {
@@ -6433,8 +6526,9 @@ public class SyncTaskUtil {
 //            if (!parm[57].equals("") && !parm[57].equals("end"))
 //                stli.setSyncTwoWayConflictFileRule(parm[57]);
 
-            if (!parm[58].equals("") && !parm[58].equals("end"))
-                stli.setTargetZipFileNameEncoding(parm[58]);
+//          Currently This option cannot be changed. 2020/04/10
+//            if (!parm[58].equals("") && !parm[58].equals("end"))
+//                stli.setTargetZipFileNameEncoding(parm[58]);
 
             if (!parm[59].equals("") && !parm[59].equals("end"))
                 stli.setSyncOptionDifferentFileBySize((parm[59].equals("1") ? true : false));
@@ -6450,22 +6544,56 @@ public class SyncTaskUtil {
 
             if (!parm[63].equals("") && !parm[63].equals("end")) stli.setSyncTaskGroup(parm[63]);
 
-            if (!parm[64].equals("") && !parm[64].equals("end")) stli.setMasterSmbProtocol(parm[64]);
+            if (!parm[64].equals("") && !parm[64].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_LIST, parm[64])) {
+                    stli.setMasterSmbProtocol(parm[64]);
+                } else {
+                    stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Master SMB protocol", "SMB212");
+                }
+            }
 
-            if (!parm[65].equals("") && !parm[65].equals("end")) stli.setTargetSmbProtocol(parm[65]);
+            if (!parm[65].equals("") && !parm[65].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_LIST, parm[65])) {
+                    stli.setTargetSmbProtocol(parm[65]);
+                } else {
+                    stli.setTargetSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Target SMB protocol", "SMB212");
+                }
+            }
 
             if (!parm[66].equals("") && !parm[66].equals("end")) stli.setMasterSmbIpcSigningEnforced((parm[66].equals("1") ? true : false));
             if (!parm[67].equals("") && !parm[67].equals("end")) stli.setTargetSmbIpcSigningEnforced((parm[67].equals("1") ? true : false));
 
             if (!parm[68].equals("") && !parm[68].equals("end")) stli.setArchiveRenameFileTemplate(parm[68]);
             if (!parm[69].equals("") && !parm[69].equals("end")) stli.setArchiveUseRename((parm[69].equals("1") ? true : false));
-            try {if (!parm[70].equals("") && !parm[70].equals("end")) stli.setArchiveRetentionPeriod(Integer.parseInt(parm[70]));} catch(Exception e) {}
+            if (!parm[70].equals("") && !parm[70].equals("end")) {
+                try {
+                    if (isValidTaskItemValue(SyncTaskItem.PICTURE_ARCHIVE_RETAIN_FOR_A_LIST, Integer.parseInt(parm[70]))) {
+                        stli.setArchiveRetentionPeriod(Integer.parseInt(parm[70]));
+                    } else {
+                        stli.setArchiveRetentionPeriod(SyncTaskItem.PICTURE_ARCHIVE_RETAIN_FOR_A_DEFAULT);
+                        putTaskListValueErrorMessage(util, "Archive retention period", "180 Days");
+                    }
+                } catch(Exception e) {
+                    stli.setArchiveRetentionPeriod(SyncTaskItem.PICTURE_ARCHIVE_RETAIN_FOR_A_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Archive retention period", "180 Days");
+                }
+            }
 
             if (!parm[71].equals("") && !parm[71].equals("end")) stli.setArchiveCreateDirectory((parm[71].equals("1") ? true : false));
             if (!parm[72].equals("") && !parm[72].equals("end")) {
-                if (parm[72].equals("1")) stli.setArchiveSuffixOption("5");
-                else if (parm[72].equals("1")) stli.setArchiveSuffixOption("6");
-                else stli.setArchiveSuffixOption(parm[72]);
+                try {
+                    if (isValidTaskItemValue(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_LIST, Integer.parseInt(parm[72]))) {
+                        stli.setArchiveSuffixOption(parm[72]);
+                    } else {
+                        stli.setArchiveSuffixOption(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT));
+                        putTaskListValueErrorMessage(util, "Archive suffix digit", SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT);
+                    }
+                } catch(Exception e) {
+                    stli.setArchiveSuffixOption(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT));
+                    putTaskListValueErrorMessage(util, "Archive suffix digit", SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT);
+                }
             }
 
             if (!parm[73].equals("") && !parm[73].equals("end")) stli.setArchiveCreateDirectoryTemplate(parm[73]);
@@ -6487,8 +6615,9 @@ public class SyncTaskUtil {
 
             if (!parm[82].equals("") && !parm[82].equals("end")) stli.setTargetUseTakenDateTimeToDirectoryNameKeyword((parm[82].equals("1") ? true : false));
 
-            if (!parm[83].equals("") && !parm[83].equals("end")) stli.setSyncTwoWayConflictFileRule(parm[83]);
-            if (!parm[84].equals("") && !parm[84].equals("end")) stli.setSyncTwoWayKeepConflictFile((parm[84].equals("1") ? true : false));
+//          Currently This option cannot be changed. 2020/04/10
+//            if (!parm[83].equals("") && !parm[83].equals("end")) stli.setSyncTwoWayConflictFileRule(parm[83]);
+//            if (!parm[84].equals("") && !parm[84].equals("end")) stli.setSyncTwoWayKeepConflictFile((parm[84].equals("1") ? true : false));
 
             if (!parm[85].equals("") && !parm[85].equals("end")) stli.setMasterSmbUseSmb2Negotiation((parm[85].equals("1") ? true : false));
             if (!parm[86].equals("") && !parm[86].equals("end")) stli.setTargetSmbUseSmb2Negotiation((parm[86].equals("1") ? true : false));
@@ -6502,19 +6631,29 @@ public class SyncTaskUtil {
                     stli.setMasterFolderError(stli.getMasterFolderError()|Integer.parseInt(parm[89]));
                 } catch(Exception e) {
                     stli.setMasterFolderError(stli.getMasterFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_NAME);
+                    putTaskListValueErrorMessage(util, "Master folder error", "Account name");
                 }
             if (!parm[90].equals("") && !parm[90].equals("end"))
                 try {
                     stli.setTargetFolderError(stli.getTargetFolderError()|Integer.parseInt(parm[90]));
                 } catch(Exception e) {
                     stli.setTargetFolderError(stli.getTargetFolderError()|SyncTaskItem.SYNC_FOLDER_ERROR_ACCOUNT_NAME);
+                    putTaskListValueErrorMessage(util, "Target folder error", "Account name");
                 }
 
             if (!parm[91].equals("") && !parm[91].equals("end")) stli.setSyncOptionIgnoreDstDifference((parm[91].equals("1") ? true : false));
-            try {
-                if (!parm[92].equals("") && !parm[92].equals("end")) stli.setSyncOptionOffsetOfDst(Integer.valueOf(parm[92]));
-            } catch (Exception e) {
-                stli.setSyncOptionOffsetOfDst(60);
+            if (!parm[92].equals("") && !parm[92].equals("end")) {
+                try {
+                    if (isValidTaskItemValue(SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_LIST, Integer.valueOf(parm[92]))) {
+                        stli.setSyncOptionOffsetOfDst(Integer.valueOf(parm[92]));
+                    } else {
+                        stli.setSyncOptionOffsetOfDst(SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
+                        putTaskListValueErrorMessage(util, "Offset of DST", SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
+                    }
+                } catch (Exception e) {
+                    stli.setSyncOptionOffsetOfDst(SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Offset of DST", SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
+                }
             }
 
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -6523,6 +6662,28 @@ public class SyncTaskUtil {
                 stli.setTargetSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             sync.add(stli);
         }
+    }
+
+    private static boolean isValidTaskItemValue(String[] valid_value, String obtained_value) {
+        boolean result=false;
+        for(String item:valid_value) {
+            if (item.equals(obtained_value)) {
+                result=true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private static boolean isValidTaskItemValue(int[] valid_value, int obtained_value) {
+        boolean result=false;
+        for(int item:valid_value) {
+            if (item==obtained_value) {
+                result=true;
+                break;
+            }
+        }
+        return result;
     }
 
     private static String convertToSpecChar(String in) {

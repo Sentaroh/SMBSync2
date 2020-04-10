@@ -53,12 +53,17 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_TASK_TYPE_MOVE = "X";
     public final static String SYNC_TASK_TYPE_SYNC = "S";
     public final static String SYNC_TASK_TYPE_ARCHIVE = "A";
+    public final static String SYNC_TASK_TYPE_DEFAULT = SYNC_TASK_TYPE_COPY;
+    public final static String[] SYNC_TASK_TYPE_LIST=new String[]{SYNC_TASK_TYPE_ARCHIVE, SYNC_TASK_TYPE_COPY, SYNC_TASK_TYPE_MIRROR, SYNC_TASK_TYPE_MOVE, SYNC_TASK_TYPE_SYNC};
     private String syncTaskType = SYNC_TASK_TYPE_MIRROR;
 
     public final static String SYNC_TASK_TWO_WAY_OPTION_ASK_USER = "0";
     public final static String SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER = "1";
     public final static String SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER = "2";
     public final static String SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE = "3";
+    public final static String SYNC_TASK_TWO_WAY_OPTION_DEFAULT = SYNC_TASK_TWO_WAY_OPTION_ASK_USER;
+    public final static String[] SYNC_TASK_TWO_WAY_OPTION_LIST=new String[]{
+            SYNC_TASK_TWO_WAY_OPTION_ASK_USER, SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER, SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER, SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE};
     public final static String SYNC_TASK_TWO_WAY_CONFLICT_FILE_SUFFIX=".smbsync2_conflict";
     private String syncTwoWayConflictOption =SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER;
     private boolean syncTwoWayConflictKeepConflictFile = false;
@@ -68,6 +73,8 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_TYPE_USB="USB";
     public final static String SYNC_FOLDER_TYPE_SMB = "SMB";
     public final static String SYNC_FOLDER_TYPE_ZIP = "ZIP";
+    public final static String SYNC_FOLDER_TYPE_DEFAULT = SYNC_FOLDER_TYPE_INTERNAL;
+    public final static String[] SYNC_FOLDER_TYPE_LIST=new String[]{SYNC_FOLDER_TYPE_INTERNAL, SYNC_FOLDER_TYPE_SDCARD, SYNC_FOLDER_TYPE_USB, SYNC_FOLDER_TYPE_ZIP, SYNC_FOLDER_TYPE_SMB};
     private String syncTaskMasterFolderType = SYNC_FOLDER_TYPE_INTERNAL;
 
     private String syncTaskMasterFolderDirName = "";
@@ -79,6 +86,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskMasterFolderSmbUserName = "";
     private String syncTaskMasterFolderSmbPassword = "";
     private String syncTaskMasterFolderSmbDomain = "";
+    public final static String SYNC_FOLDER_SMB_PORT_DEFAULT = "445";
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SYSTEM = "0";
 //    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1 = "1";
 //    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = "2";
@@ -88,6 +96,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB201);
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB211);
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB212);
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT = SYNC_FOLDER_SMB_PROTOCOL_SMB212;
+    public final static String[] SYNC_FOLDER_SMB_PROTOCOL_LIST=new String[]{
+            SYNC_FOLDER_SMB_PROTOCOL_SMB1, SYNC_FOLDER_SMB_PROTOCOL_SMB201, SYNC_FOLDER_SMB_PROTOCOL_SMB211, SYNC_FOLDER_SMB_PROTOCOL_SMB212};
 
     private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB212;
     private boolean syncTaskMasterFolderSmbIpcSigningEnforced = true;
@@ -120,12 +131,18 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String ZIP_OPTION_COMP_LEVEL_NORMAL = "NORMAL";
     public final static String ZIP_OPTION_COMP_LEVEL_MAXIMUM = "MAXIMUM";
     public final static String ZIP_OPTION_COMP_LEVEL_ULTRA = "ULTRA";
+    public final static String ZIP_OPTION_COMP_LEVEL_DEFAULT = ZIP_OPTION_COMP_LEVEL_NORMAL;
+    public final static String[] ZIP_OPTION_COMP_LEVEL_LIST=new String[]{ZIP_OPTION_COMP_LEVEL_FASTEST, ZIP_OPTION_COMP_LEVEL_FAST, ZIP_OPTION_COMP_LEVEL_NORMAL, ZIP_OPTION_COMP_LEVEL_MAXIMUM, ZIP_OPTION_COMP_LEVEL_ULTRA};
     public final static String ZIP_OPTION_COMP_METHOD_STORE = "STORE";
     public final static String ZIP_OPTION_COMP_METHOD_DEFLATE = "DEFLATE";
+    public final static String ZIP_OPTION_COMP_METHOD_DEFAULT = ZIP_OPTION_COMP_METHOD_DEFLATE;
+    public final static String[] ZIP_OPTION_COMP_METGOD_LIST=new String[]{ZIP_OPTION_COMP_METHOD_STORE, ZIP_OPTION_COMP_METHOD_DEFLATE};
     public final static String ZIP_OPTION_ENCRYPT_NONE = "NONE";
     public final static String ZIP_OPTION_ENCRYPT_STANDARD = "STANDARD";
     public final static String ZIP_OPTION_ENCRYPT_AES128 = "AES128";
     public final static String ZIP_OPTION_ENCRYPT_AES256 = "AES256";
+    public final static String ZIP_OPTION_ENCRYPT_DEFAULT = ZIP_OPTION_ENCRYPT_STANDARD ;
+    public final static String[] ZIP_OPTION_ENCRYPT_LIST=new String[]{ZIP_OPTION_ENCRYPT_NONE, ZIP_OPTION_ENCRYPT_STANDARD, ZIP_OPTION_ENCRYPT_AES128, ZIP_OPTION_ENCRYPT_AES256};
     private String syncTaskTargetZipCompOptionCompLevel = ZIP_OPTION_COMP_LEVEL_NORMAL;
     private String syncTaskTargetZipCompOptionCompMethod = ZIP_OPTION_COMP_METHOD_DEFLATE;
     private String syncTaskTargetZipCompOptionEncrypt = ZIP_OPTION_ENCRYPT_NONE;
@@ -149,7 +166,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     private boolean syncOptionForceLastModifiedUseSmbsync = false;
     private boolean syncOptionNotUsedLastModifiedForRemote = false;
 
-    private String syncOptionRetryCount = "3";
+    public final static String NETWORK_ERROR_RETRY_COUNT="3";
+    public final static String NETWORK_ERROR_RETRY_COUNT_DEFSULT=NETWORK_ERROR_RETRY_COUNT;
+    public final static String[] NETWORK_ERROR_RETRY_COUNT_LIST=new String[]{NETWORK_ERROR_RETRY_COUNT_DEFSULT};
+    private String syncOptionRetryCount = NETWORK_ERROR_RETRY_COUNT_DEFSULT;
     private boolean syncOptionSyncEmptyDir = true;
     private boolean syncTaskTargetUseTakenDateTimeForDirectoryNameKeyword = false;
     private boolean syncOptionSyncHiddenFile = true;
@@ -160,7 +180,12 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private boolean syncOptionDeterminChangedFileBySize = true;
     private boolean syncOptionDeterminChangedFileByTime = true;
-    private int syncOptionDeterminChangedFileByTimeValue = 3;//Seconds
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_1=1;
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_3=3;
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_10=10;
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT=SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_3;
+    public final static int[] SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_LIST =new int[]{SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_1, SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_3, SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_10};
+    private int syncOptionDeterminChangedFileByTimeValue = SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_3;//Seconds
 
     private boolean syncOptionDoNotUseRenameWhenSmbFileWrite = false;
 
@@ -173,6 +198,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP = "2";
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR = "3";
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR = "4";
+    public final static String SYNC_WIFI_STATUS_WIFI_DEFAULT = SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
+    public final static String[] SYNC_WIFI_STATUS_WIFI_LIST = new String[]{SYNC_WIFI_STATUS_WIFI_OFF , SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP,
+            SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR, SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR, SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP};
     private String syncOptionWifiStatus = SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
     private boolean syncTaskSkipIfConnectAnotherWifiSsid = false;
 
@@ -186,6 +214,8 @@ class SyncTaskItem implements Serializable, Cloneable {
     static public final int SYNC_STATUS_CANCEL = SyncHistoryItem.SYNC_STATUS_CANCEL;
     static public final int SYNC_STATUS_ERROR = SyncHistoryItem.SYNC_STATUS_ERROR;
     static public final int SYNC_STATUS_WARNING = SyncHistoryItem.SYNC_STATUS_WARNING;
+    static public final int SYNC_STATUS_DEFAULT = SYNC_STATUS_SUCCESS;
+    public final static int[] SYNC_STATUS_LIST = new int[]{SYNC_STATUS_SUCCESS, SYNC_STATUS_CANCEL, SYNC_STATUS_ERROR, SYNC_STATUS_WARNING};
 
     //Not save variables
     private boolean syncTaskIsRunning = false;
@@ -320,8 +350,11 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_YEAR = "%YEAR%";
     public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_MONTH = "%MONTH%";
     public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_DAY = "%DAY%";
+    public final static String[] PICTURE_ARCHIVE_RENAME_KEYWORD_LIST = new String[]{PICTURE_ARCHIVE_RENAME_KEYWORD_DATE,
+            PICTURE_ARCHIVE_RENAME_KEYWORD_TIME, PICTURE_ARCHIVE_RENAME_KEYWORD_ORIGINAL_NAME, PICTURE_ARCHIVE_RENAME_KEYWORD_YEAR,
+            PICTURE_ARCHIVE_RENAME_KEYWORD_MONTH, PICTURE_ARCHIVE_RENAME_KEYWORD_DAY};
     private String syncTaskArchiveRenameFileTemplate = "DSC_%DATE%";
-    private String syncTaskArchiveSaveDirectoryTemplate = "%YEAR%";
+    private String syncTaskArchiveSaveDirectoryTemplate = PICTURE_ARCHIVE_RENAME_KEYWORD_YEAR;
 
     private boolean syncTaskArchiveRenameWhenArchive = true;
 
@@ -332,13 +365,25 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_90_DAYS = 4;
     public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_180_DAYS = 5;
     public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_1_YEARS = 6;
+    public final static int PICTURE_ARCHIVE_RETAIN_FOR_A_DEFAULT = PICTURE_ARCHIVE_RETAIN_FOR_A_180_DAYS;
+    public final static int[] PICTURE_ARCHIVE_RETAIN_FOR_A_LIST = new int[]{PICTURE_ARCHIVE_RETAIN_FOR_A_0_DAYS,
+            PICTURE_ARCHIVE_RETAIN_FOR_A_7_DAYS, PICTURE_ARCHIVE_RETAIN_FOR_A_30_DAYS, PICTURE_ARCHIVE_RETAIN_FOR_A_60_DAYS,
+            PICTURE_ARCHIVE_RETAIN_FOR_A_90_DAYS, PICTURE_ARCHIVE_RETAIN_FOR_A_180_DAYS, PICTURE_ARCHIVE_RETAIN_FOR_A_1_YEARS};
     private int syncTaskArchiveRetentionPeriod = PICTURE_ARCHIVE_RETAIN_FOR_A_180_DAYS;
 
     private boolean syncTaskArchiveCreateDirectory = false;
 
     private boolean syncTaskArchiveEnable = true;
 
-    private String syncTaskArchiveSuffixDigit = "4";//0=Not used, 3=3 Digit, 4=4 digit, 5=5 Digit, 6=6 Digit
+    public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_NOT_USED = 0;
+    public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_3_DIGIT = 3;
+    public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT = 4;
+    public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_5_DIGIT = 5;
+    public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_6_DIGIT = 6;
+    public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT = PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT ;
+    public final static int[] PICTURE_ARCHIVE_SUFFIX_DIGIT_LIST = new int[]{PICTURE_ARCHIVE_SUFFIX_DIGIT_NOT_USED, PICTURE_ARCHIVE_SUFFIX_DIGIT_3_DIGIT,
+            PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT, PICTURE_ARCHIVE_SUFFIX_DIGIT_5_DIGIT, PICTURE_ARCHIVE_SUFFIX_DIGIT_6_DIGIT};
+    private String syncTaskArchiveSuffixDigit = String.valueOf(PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT);
 
     public String getArchiveSuffixOption() {return syncTaskArchiveSuffixDigit;}
     public void setArchiveSuffixOption(String digit) {syncTaskArchiveSuffixDigit =digit;}
@@ -511,7 +556,25 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setSyncOptionIgnoreDstDifference(boolean enabled) {syncOptionIgnoreDstDifference =enabled;}
     public boolean isSyncOptionIgnoreDstDifference() {return syncOptionIgnoreDstDifference;}
 
-    private int syncOptionOffsetOfDst = 60;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_10_MIN=10;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_20_MIN=20;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_30_MIN=30;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_40_MIN=40;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_50_MIN=50;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_60_MIN=60;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_70_MIN=70;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_80_MIN=80;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_90_MIN=90;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_100_MIN=100;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_110_MIN=110;
+    public static final int SYNC_OPTION_OFFSET_OF_DST_120_MIN=120;
+    public static final int[] SYNC_OPTION_OFFSET_OF_DST_LIST=new int[]{SYNC_OPTION_OFFSET_OF_DST_10_MIN, SYNC_OPTION_OFFSET_OF_DST_20_MIN,
+            SYNC_OPTION_OFFSET_OF_DST_30_MIN, SYNC_OPTION_OFFSET_OF_DST_40_MIN, SYNC_OPTION_OFFSET_OF_DST_50_MIN, SYNC_OPTION_OFFSET_OF_DST_60_MIN,
+            SYNC_OPTION_OFFSET_OF_DST_70_MIN, SYNC_OPTION_OFFSET_OF_DST_80_MIN, SYNC_OPTION_OFFSET_OF_DST_90_MIN, SYNC_OPTION_OFFSET_OF_DST_100_MIN,
+            SYNC_OPTION_OFFSET_OF_DST_110_MIN, SYNC_OPTION_OFFSET_OF_DST_120_MIN};
+
+    public static final int SYNC_OPTION_OFFSET_OF_DST_DEFAULT=SYNC_OPTION_OFFSET_OF_DST_60_MIN;
+    private int syncOptionOffsetOfDst = SYNC_OPTION_OFFSET_OF_DST_DEFAULT;
     public void setSyncOptionOffsetOfDst(int offset) {syncOptionOffsetOfDst =offset;}
     public int getSyncOptionOffsetOfDst() {return syncOptionOffsetOfDst;}
 

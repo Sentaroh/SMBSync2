@@ -3145,10 +3145,13 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title));
         spinner.setAdapter(adapter);
-        for(int i=10;i<121;i+=10) adapter.add(String.valueOf(i));
-        if (cv>=10 && cv<=120) {
-            spinner.setSelection((cv/10)-1);
+        int sel=5;
+        for(int i=0;i<SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_LIST.length;i++) {
+            int item=SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_LIST[i];
+            adapter.add(String.valueOf(item));
+            if (item==cv) sel=i;
         }
+        spinner.setSelection(sel);
 
         adapter.notifyDataSetChanged();
     }
@@ -3685,6 +3688,16 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         spinnerSyncDstOffsetValue.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        spinnerSyncDiffTimeValue.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
