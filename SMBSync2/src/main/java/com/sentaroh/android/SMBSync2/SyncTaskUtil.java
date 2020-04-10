@@ -5072,7 +5072,7 @@ public class SyncTaskUtil {
         stli.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL);
         stli.setTargetDirectoryName("Pictures");
 
-        stli.setSyncOptionWifiStatusOption("1");
+        stli.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP);
         stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(0);
         pfl.add(stli);
@@ -5090,7 +5090,7 @@ public class SyncTaskUtil {
         stli.setSyncTestMode(false);
         stli.setTargetDirectoryName("Android/DCIM");
 
-        stli.setSyncOptionWifiStatusOption("1");
+        stli.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP);
         stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(1);
         pfl.add(stli);
@@ -5103,7 +5103,7 @@ public class SyncTaskUtil {
         stli.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD);
         stli.setTargetDirectoryName("Pictures");
         stli.setSyncTestMode(false);
-        stli.setSyncOptionWifiStatusOption("0");
+        stli.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF);
 
         stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(2);

@@ -3234,7 +3234,7 @@ public class SyncTaskEditor extends DialogFragment {
         } else if (type.equals("ADD")) {
             dlg_title.setText(mContext.getString(R.string.msgs_add_sync_profile));
             dlg_title_sub.setVisibility(TextView.GONE);
-            n_sti.setSyncOptionWifiStatusOption("0");
+            n_sti.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF);
         }
         final CheckedTextView ctv_auto = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_ctv_auto);
         CommonUtilities.setCheckedTextView(ctv_auto);
@@ -3783,7 +3783,7 @@ public class SyncTaskEditor extends DialogFragment {
                                         @Override
                                         public void positiveResponse(Context context, Object[] objects) {
                                             n_sti.setSyncOptionWifiStatusOption(option);
-                                            spinnerSyncWifiStatus.setSelection(1);
+                                            spinnerSyncWifiStatus.setSelection(Integer.valueOf(option));
                                             confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                                         }
 
@@ -3942,7 +3942,7 @@ public class SyncTaskEditor extends DialogFragment {
                                         @Override
                                         public void positiveResponse(Context context, Object[] objects) {
                                             n_sti.setSyncOptionWifiStatusOption(option);
-                                            spinnerSyncWifiStatus.setSelection(1);
+                                            spinnerSyncWifiStatus.setSelection(Integer.valueOf(option));
                                             confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                                         }
 
