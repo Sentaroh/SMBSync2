@@ -3667,6 +3667,7 @@ public class SyncTaskEditor extends DialogFragment {
                     ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(false);
                     ctv_ignore_dst_difference.setChecked(false);
                     ctv_ignore_dst_difference.setEnabled(false);
+                    ll_offset_dst_view.setVisibility(LinearLayout.GONE);
                     CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, false);
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
