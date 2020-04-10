@@ -74,7 +74,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_TYPE_SMB = "SMB";
     public final static String SYNC_FOLDER_TYPE_ZIP = "ZIP";
     public final static String SYNC_FOLDER_TYPE_DEFAULT = SYNC_FOLDER_TYPE_INTERNAL;
-    public final static String[] SYNC_FOLDER_TYPE_LIST=new String[]{SYNC_FOLDER_TYPE_INTERNAL, SYNC_FOLDER_TYPE_SDCARD, SYNC_FOLDER_TYPE_USB, SYNC_FOLDER_TYPE_ZIP};
+    public final static String[] SYNC_FOLDER_TYPE_LIST=new String[]{SYNC_FOLDER_TYPE_INTERNAL, SYNC_FOLDER_TYPE_SDCARD, SYNC_FOLDER_TYPE_USB, SYNC_FOLDER_TYPE_ZIP, SYNC_FOLDER_TYPE_SMB};
     private String syncTaskMasterFolderType = SYNC_FOLDER_TYPE_INTERNAL;
 
     private String syncTaskMasterFolderDirName = "";
