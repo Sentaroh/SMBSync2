@@ -128,7 +128,7 @@
 	            android:maxLines="1"
 	            android:text="900"
 	            tools:ignore="HardcodedText" />
-	        	        
+
 	        <TextView
 	            android:id="@+id/sync_history_list_view_requestor"
 	            android:layout_width="match_parent"
@@ -138,8 +138,28 @@
 	            android:text="Activity"
 	            tools:ignore="HardcodedText" />
 	        	        
-	        	        	        	        	
 	    </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/msgs_main_sync_history_transfer_speed"
+                    />
+
+                <TextView
+                    android:id="@+id/sync_history_list_view_transfer_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="9900.999"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
 	    
 	    <TextView
 	        android:id="@+id/sync_history_list_view_error_text"
