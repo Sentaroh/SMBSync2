@@ -6331,7 +6331,7 @@ public class SyncTaskUtil {
                 } catch(Exception e) {
                     stli.setMasterSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT);
                     String msg_template="Invalid \"%s\" was detected while reading the task list, so set to system determination.";
-                    util.addLogMsg("W", String.format(msg_template, "Master SMB port number"));
+                    util.addLogMsg("W", String.format(msg_template, SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION));
                 }
             }
             stli.setMasterSmbHostName(parm[11]);
@@ -6372,13 +6372,13 @@ public class SyncTaskUtil {
             stli.setTargetDirectoryName(parm[17]);
             stli.setTargetSmbAddr(parm[18]);
             if (!parm[19].equals("")) {
-                int port_number=445;
                 try {
-                    port_number=Integer.parseInt(parm[19]);
-                    stli.setMasterSmbPort(parm[19]);
+                    int port_number=Integer.parseInt(parm[19]);
+                    stli.setTargetSmbPort(parm[19]);
                 } catch(Exception e) {
-                    stli.setMasterSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT);
-                    putTaskListValueErrorMessage(util, "Master SMB port number", SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT);
+                    stli.setTargetSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT);
+                    String msg_template="Invalid \"%s\" was detected while reading the task list, so set to system determination.";
+                    util.addLogMsg("W", String.format(msg_template, SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION));
                 }
             }
             stli.setTargetSmbHostname(parm[20]);
