@@ -214,9 +214,6 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_main_sync_profile">Sync task (%s)</string>
         <string name="msgs_main_sync_profile_dlg_archive">Archive</string>
         <string name="msgs_main_sync_profile_dlg_copy">Copy</string>
-        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_1">1</string>
-        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
-        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Last time of tolerance(Sec)</string>
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal">Duplicate directory names exist at both internal storage source and destination.  Source and destination directory names must be different.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir">Duplicate directory names exist at both source and destination.  Source and destination directory names must be different.</string>

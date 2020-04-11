@@ -5072,7 +5072,7 @@ public class SyncTaskUtil {
         stli.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL);
         stli.setTargetDirectoryName("Pictures");
 
-        stli.setSyncOptionWifiStatusOption("1");
+        stli.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP);
         stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(0);
         pfl.add(stli);
@@ -5090,7 +5090,7 @@ public class SyncTaskUtil {
         stli.setSyncTestMode(false);
         stli.setTargetDirectoryName("Android/DCIM");
 
-        stli.setSyncOptionWifiStatusOption("1");
+        stli.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP);
         stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(1);
         pfl.add(stli);
@@ -5103,7 +5103,7 @@ public class SyncTaskUtil {
         stli.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD);
         stli.setTargetDirectoryName("Pictures");
         stli.setSyncTestMode(false);
-        stli.setSyncOptionWifiStatusOption("0");
+        stli.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF);
 
         stli.setSyncOptionUseExtendedDirectoryFilter1(true);
         stli.setSyncTaskPosition(2);
@@ -6285,8 +6285,8 @@ public class SyncTaskUtil {
             if (isValidTaskItemValue(SyncTaskItem.SYNC_TASK_TYPE_LIST, parm[3])) {
                 stli.setSyncTaskType(parm[3]);
             } else {
-                stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_COPY);
-                putTaskListValueErrorMessage(util, "Sync task type", "COPY");
+                stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_DEFAULT);
+                putTaskListValueErrorMessage(util, "Sync task type", SyncTaskItem.SYNC_TASK_TYPE_DEFAULT_DESCRIPTION);
             }
 
             if (isValidTaskItemValue(SyncTaskItem.SYNC_FOLDER_TYPE_LIST, parm[4])) {
@@ -6325,13 +6325,13 @@ public class SyncTaskUtil {
             stli.setMasterDirectoryName(parm[8]);
             stli.setMasterSmbAddr(parm[9]);
             if (!parm[10].equals("")) {
-                int port_number=445;
                 try {
-                    port_number=Integer.parseInt(parm[10]);
+                    int port_number=Integer.parseInt(parm[10]);
                     stli.setMasterSmbPort(parm[10]);
                 } catch(Exception e) {
                     stli.setMasterSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT);
-                    putTaskListValueErrorMessage(util, "Master SMB port number", SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT);
+                    String msg_template="Invalid \"%s\" was detected while reading the task list, so set to system determination.";
+                    util.addLogMsg("W", String.format(msg_template, "Master SMB port number"));
                 }
             }
             stli.setMasterSmbHostName(parm[11]);
@@ -6427,11 +6427,11 @@ public class SyncTaskUtil {
                     stli.setSyncOptionWifiStatusOption(parm[37]);
                 } else {
                     stli.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_DEFAULT );
-                    putTaskListValueErrorMessage(util, "WiFi status option", "Conn any AP");
+                    putTaskListValueErrorMessage(util, "WiFi status option", SyncTaskItem.SYNC_WIFI_STATUS_WIFI_DEFAULT_DESCRIPTION);
                 }
             } catch(Exception e) {
                 stli.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_DEFAULT );
-                putTaskListValueErrorMessage(util, "WiFi status option", "Conn any AP");
+                putTaskListValueErrorMessage(util, "WiFi status option", SyncTaskItem.SYNC_WIFI_STATUS_WIFI_DEFAULT_DESCRIPTION);
             }
 
             stli.setLastSyncTime(parm[38]);
@@ -6439,12 +6439,12 @@ public class SyncTaskUtil {
                 if (isValidTaskItemValue(SyncTaskItem.SYNC_STATUS_LIST, Integer.parseInt(parm[39]))) {
                     stli.setLastSyncResult(Integer.parseInt(parm[39]));
                 } else {
-                    stli.setLastSyncResult(SyncTaskItem.SYNC_STATUS_SUCCESS);
-                    putTaskListValueErrorMessage(util, "Last sync result", "Success");
+                    stli.setLastSyncResult(SyncTaskItem.SYNC_STATUS_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Last sync result", SyncTaskItem.SYNC_STATUS_DEFAULT_DESCRIPTION);
                 }
             } catch(Exception e) {
-                stli.setLastSyncResult(SyncTaskItem.SYNC_STATUS_SUCCESS);
-                putTaskListValueErrorMessage(util, "Last sync result", "Success");
+                stli.setLastSyncResult(SyncTaskItem.SYNC_STATUS_DEFAULT);
+                putTaskListValueErrorMessage(util, "Last sync result", SyncTaskItem.SYNC_STATUS_DEFAULT_DESCRIPTION);
             }
 
             try {
@@ -6549,7 +6549,7 @@ public class SyncTaskUtil {
                     stli.setMasterSmbProtocol(parm[64]);
                 } else {
                     stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT);
-                    putTaskListValueErrorMessage(util, "Master SMB protocol", "SMB212");
+                    putTaskListValueErrorMessage(util, "Master SMB protocol", SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_DESCRIPTION);
                 }
             }
 
@@ -6558,7 +6558,7 @@ public class SyncTaskUtil {
                     stli.setTargetSmbProtocol(parm[65]);
                 } else {
                     stli.setTargetSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT);
-                    putTaskListValueErrorMessage(util, "Target SMB protocol", "SMB212");
+                    putTaskListValueErrorMessage(util, "Target SMB protocol", SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_DESCRIPTION);
                 }
             }
 
@@ -6573,11 +6573,11 @@ public class SyncTaskUtil {
                         stli.setArchiveRetentionPeriod(Integer.parseInt(parm[70]));
                     } else {
                         stli.setArchiveRetentionPeriod(SyncTaskItem.PICTURE_ARCHIVE_RETAIN_FOR_A_DEFAULT);
-                        putTaskListValueErrorMessage(util, "Archive retention period", "180 Days");
+                        putTaskListValueErrorMessage(util, "Archive retention period", SyncTaskItem.PICTURE_ARCHIVE_RETAIN_FOR_A_DEFAULT_DESCRIPTION);
                     }
                 } catch(Exception e) {
                     stli.setArchiveRetentionPeriod(SyncTaskItem.PICTURE_ARCHIVE_RETAIN_FOR_A_DEFAULT);
-                    putTaskListValueErrorMessage(util, "Archive retention period", "180 Days");
+                    putTaskListValueErrorMessage(util, "Archive retention period", SyncTaskItem.PICTURE_ARCHIVE_RETAIN_FOR_A_DEFAULT_DESCRIPTION);
                 }
             }
 
@@ -6588,11 +6588,11 @@ public class SyncTaskUtil {
                         stli.setArchiveSuffixOption(parm[72]);
                     } else {
                         stli.setArchiveSuffixOption(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT));
-                        putTaskListValueErrorMessage(util, "Archive suffix digit", SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT);
+                        putTaskListValueErrorMessage(util, "Archive suffix digit", String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT));
                     }
                 } catch(Exception e) {
                     stli.setArchiveSuffixOption(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT));
-                    putTaskListValueErrorMessage(util, "Archive suffix digit", SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Archive suffix digit", String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT));
                 }
             }
 

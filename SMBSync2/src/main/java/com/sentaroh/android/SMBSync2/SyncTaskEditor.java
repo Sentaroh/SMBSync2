@@ -3082,10 +3082,10 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file));
 
         int sel = 0;
-        if (cv.equals("0")) sel = 0;
-        else if (cv.equals("1")) sel = 1;
-        else if (cv.equals("2")) sel = 2;
-        else if (cv.equals("3")) sel = 3;
+        if (cv.equals(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_ASK_USER)) sel = 0;
+        else if (cv.equals(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER)) sel = 1;
+        else if (cv.equals(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER)) sel = 2;
+        else if (cv.equals(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE)) sel = 3;
 
         spinner.setSelection(sel);
 
@@ -3106,11 +3106,11 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address));
 
         int sel = 0;
-        if (cv.equals("0")) sel = 0;
-        else if (cv.equals("1")) sel = 1;
-        else if (cv.equals("2")) sel = 2;
-        else if (cv.equals("3")) sel = 3;
-        else if (cv.equals("4")) sel = 4;
+        if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) sel = 0;
+        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP)) sel = 1;
+        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) sel = 2;
+        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR)) sel = 3;
+        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR)) sel = 4;
 
         spinner.setSelection(sel);
 
@@ -3124,15 +3124,12 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_prompt));
         spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_1));
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_3));
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_10));
-
-        int sel = 0;
-        if (cv == 1) sel = 0;
-        else if (cv == 3) sel = 1;
-        else if (cv == 10) sel = 2;
-
+        int sel=SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_LIST_DEFAULT_ITEM_INDEX;
+        for(int i=0;i<SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_LIST.length;i++) {
+            int item=SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_LIST[i];
+            adapter.add(String.valueOf(item));
+            if (item==cv) sel=i;
+        }
         spinner.setSelection(sel);
 
         adapter.notifyDataSetChanged();
@@ -3145,7 +3142,7 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title));
         spinner.setAdapter(adapter);
-        int sel=5;
+        int sel=SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_LIST_DEFAULT_ITEM_INDEX;
         for(int i=0;i<SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_LIST.length;i++) {
             int item=SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_LIST[i];
             adapter.add(String.valueOf(item));
@@ -3234,7 +3231,7 @@ public class SyncTaskEditor extends DialogFragment {
         } else if (type.equals("ADD")) {
             dlg_title.setText(mContext.getString(R.string.msgs_add_sync_profile));
             dlg_title_sub.setVisibility(TextView.GONE);
-            n_sti.setSyncOptionWifiStatusOption("0");
+            n_sti.setSyncOptionWifiStatusOption(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF);
         }
         final CheckedTextView ctv_auto = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_ctv_auto);
         CommonUtilities.setCheckedTextView(ctv_auto);
@@ -3630,6 +3627,8 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner spinnerSyncDiffTimeValue = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_diff_file_determin_time_value);
         setSpinnerSyncTaskDiffTimeValue(spinnerSyncDiffTimeValue, n_sti.getSyncOptionDifferentFileAllowableTime());
 
+        final LinearLayout ll_DeterminChangedFileByTime_dependant_view=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_sync_diff_use_last_mod_time_dependant_view);
+
         final Spinner spinnerSyncDstOffsetValue = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_offset_daylight_saving_time_value);
         setSpinnerSyncTaskDstOffsetValue(spinnerSyncDstOffsetValue, n_sti.getSyncOptionOffsetOfDst());
         final LinearLayout ll_offset_dst_view=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_spinner_offset_daylight_saving_time_value_view);
@@ -3643,15 +3642,17 @@ public class SyncTaskEditor extends DialogFragment {
 //        CommonUtilities.setCheckedTextView(ctDeterminChangedFileByTime);
         ctDeterminChangedFileByTime.setChecked(n_sti.isSyncOptionDifferentFileByTime());
         if (n_sti.isSyncOptionDifferentFileByTime()) {
-            ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(true);
-            ctv_ignore_dst_difference.setEnabled(true);
-            CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, true);
+            ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.VISIBLE);
+            if (n_sti.isSyncOptionIgnoreDstDifference()) {
+                ll_offset_dst_view.setVisibility(LinearLayout.VISIBLE);
+            } else {
+                ll_offset_dst_view.setVisibility(LinearLayout.GONE);
+            }
         } else {
+            ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
             ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(false);
-            ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(false);
             ctv_ignore_dst_difference.setChecked(false);
-            ctv_ignore_dst_difference.setEnabled(false);
-            CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, false);
+            ll_offset_dst_view.setVisibility(LinearLayout.GONE);
         }
         ctDeterminChangedFileByTime.setOnClickListener(new OnClickListener() {
             @Override
@@ -3659,15 +3660,16 @@ public class SyncTaskEditor extends DialogFragment {
                 boolean isChecked = !((CheckedTextView) v).isChecked();
                 ((CheckedTextView) v).setChecked(isChecked);
                 if (isChecked) {
-                    ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(true);
-                    ctv_ignore_dst_difference.setEnabled(true);
-                    CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, true);
+                    ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.VISIBLE);
+                    if (ctv_ignore_dst_difference.isChecked()) {
+                        ll_offset_dst_view.setVisibility(LinearLayout.VISIBLE);
+                    } else {
+                        ll_offset_dst_view.setVisibility(LinearLayout.GONE);
+                    }
                 } else {
+                    ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
                     ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(false);
-                    ctv_never_overwrite_target_file_newer_than_the_master_file.setEnabled(false);
                     ctv_ignore_dst_difference.setChecked(false);
-                    ctv_ignore_dst_difference.setEnabled(false);
-                    CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, false);
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -3783,7 +3785,7 @@ public class SyncTaskEditor extends DialogFragment {
                                         @Override
                                         public void positiveResponse(Context context, Object[] objects) {
                                             n_sti.setSyncOptionWifiStatusOption(option);
-                                            spinnerSyncWifiStatus.setSelection(1);
+                                            spinnerSyncWifiStatus.setSelection(Integer.valueOf(option));
                                             confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                                         }
 
@@ -3942,7 +3944,7 @@ public class SyncTaskEditor extends DialogFragment {
                                         @Override
                                         public void positiveResponse(Context context, Object[] objects) {
                                             n_sti.setSyncOptionWifiStatusOption(option);
-                                            spinnerSyncWifiStatus.setSelection(1);
+                                            spinnerSyncWifiStatus.setSelection(Integer.valueOf(option));
                                             confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                                         }
 
@@ -4275,12 +4277,12 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_5));
         adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_6));
 
-        int sel=0;
-        if (cv.equals("0")) sel=0;
-        else if (cv.equals("3")) sel=1;
-        else if (cv.equals("4")) sel=2;
-        else if (cv.equals("5")) sel=3;
-        else if (cv.equals("6")) sel=4;
+        int sel=SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT;
+        if (cv.equals(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_NOT_USED)) sel=0;
+        else if (cv.equals(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_3_DIGIT)) sel=1;
+        else if (cv.equals(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT)) sel=2;
+        else if (cv.equals(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_5_DIGIT)) sel=3;
+        else if (cv.equals(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_6_DIGIT)) sel=4;
         spinner.setSelection(sel);
 
     }
