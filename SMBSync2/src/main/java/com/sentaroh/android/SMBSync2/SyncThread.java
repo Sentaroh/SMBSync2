@@ -589,6 +589,7 @@ public class SyncThread extends Thread {
 
         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
             showMsg(mStwa, false, sti.getSyncTaskName(), "I", "", "", mGp.appContext.getString(R.string.msgs_mirror_task_result_ok));
+            showMsg(mStwa, false, sti.getSyncTaskName(), "S", "", "", mGp.appContext.getString(R.string.msgs_mirror_task_result_ok));
         } else if (sync_result == SyncTaskItem.SYNC_STATUS_WARNING) {
             showMsg(mStwa, false, sti.getSyncTaskName(), "I", "", "", mGp.appContext.getString(R.string.msgs_mirror_task_result_ok));
         } else if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL) {
