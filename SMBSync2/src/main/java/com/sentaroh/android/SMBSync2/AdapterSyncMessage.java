@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import android.graphics.Color;
 import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThemeUtil;
 
@@ -156,6 +157,13 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
                 holder.tv_row_time.setTextColor(mThemeColorList.text_color_error);
                 holder.tv_row_date.setTextColor(mThemeColorList.text_color_error);
                 holder.tv_row_msg.setTextColor(mThemeColorList.text_color_error);
+                holder.tv_row_time.setText(o.getTime());
+                holder.tv_row_date.setText(o.getDate());
+                holder.tv_row_msg.setText(o.getMessage());
+            } else if (o.getMessage().endsWith(mGp.appContext.getString(R.string.msgs_mirror_task_result_ok))) {
+                holder.tv_row_time.setTextColor(Color.GREEN);
+                holder.tv_row_date.setTextColor(Color.GREEN);
+                holder.tv_row_msg.setTextColor(Color.GREEN);
                 holder.tv_row_time.setText(o.getTime());
                 holder.tv_row_date.setText(o.getDate());
                 holder.tv_row_msg.setText(o.getMessage());
