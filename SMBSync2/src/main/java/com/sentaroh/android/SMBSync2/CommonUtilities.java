@@ -793,7 +793,7 @@ public final class CommonUtilities {
                             hli.sync_error_text = l_array[10].replaceAll("\u0002", "\n");
                             if (!l_array[11].equals(" "))
                                 hli.sync_result_no_of_retry = Integer.valueOf(l_array[11]);
-//				    		hli.sync_deleted_file=string2Array(l_array[10]);
+  				    		hli.sync_transfer_speed=l_array[12];
 //				    		hli.sync_ignored_file=string2Array(l_array[11]);
                             if (l_array.length >= 15) {
                                 hli.sync_log_file_path = l_array[14];
@@ -878,7 +878,7 @@ public final class CommonUtilities {
                                 .append(shli.sync_req).append("\u0001")
                                 .append(shli.sync_error_text.replaceAll("\n", "\u0002")).append("\u0001")
                                 .append(shli.sync_result_no_of_retry).append("\u0001") //retry count
-                                .append(" ").append("\u0001") //Dummy
+                                .append(shli.sync_transfer_speed).append("\u0001")
                                 .append(" ").append("\u0001") //Dummy
                                 .append(lfp).append("\u0001")
                                 .append(shli.sync_result_file_path)

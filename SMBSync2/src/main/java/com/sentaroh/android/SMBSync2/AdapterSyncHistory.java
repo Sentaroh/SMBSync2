@@ -181,6 +181,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
             holder.ll_main = (LinearLayout) v.findViewById(R.id.sync_history_list_view);
             holder.tv_mode = (TextView) v.findViewById(R.id.sync_history_list_view_mode);
             holder.tv_et = (TextView) v.findViewById(R.id.sync_history_list_view_elapsed_time);
+            holder.tv_tr = (TextView) v.findViewById(R.id.sync_history_list_view_transfer_speed);
 
 //            holder.tv_date.setTextColor(mThemeColorList.text_color_primary);
 //            holder.tv_time.setTextColor(mThemeColorList.text_color_primary);
@@ -233,6 +234,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
                 }
 
                 holder.tv_et.setText(o.sync_elapsed_time);
+                holder.tv_tr.setText(o.sync_transfer_speed);
 
                 holder.tv_status.setText(st_text);
 
@@ -289,6 +291,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
         TextView tv_date, tv_time, tv_prof, tv_status, tv_cnt_copied, tv_cnt_deleted;
         TextView tv_error, tv_seq, tv_req, tv_mode;
         TextView tv_et;
+        TextView tv_tr;
         LinearLayout ll_count, ll_main;
     }
 
