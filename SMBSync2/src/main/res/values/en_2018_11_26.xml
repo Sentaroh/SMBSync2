@@ -189,8 +189,8 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_main_sync_history_count_retry">Retry:</string>
         <string name="msgs_main_sync_history_del_conf_all_history">Do you want to delete all history?</string>
         <string name="msgs_main_sync_history_del_conf_selected_history">Do you want to delete following history?</string>
-        <string name="msgs_main_sync_history_elapsed_time">Elapsed time(Sec):</string>
-        <string name="msgs_main_sync_history_transfer_speed">Average transfer rate :</string>
+        <string name="msgs_main_sync_history_elapsed_time">Elapsed time:</string>
+        <string name="msgs_main_sync_history_transfer_speed">Average transfer rate:</string>
         <string name="msgs_main_sync_history_mode">Mode:</string>
         <string name="msgs_main_sync_history_mode_normal">Normal</string>
         <string name="msgs_main_sync_history_mode_test">Test</string>
@@ -555,7 +555,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_mirror_task_file_moved">File moved.</string>
         <string name="msgs_mirror_task_file_replaced">File overwritten.</string>
         <string name="msgs_mirror_task_master_not_found">Source file or directory not found.</string>
-        <string name="msgs_mirror_task_no_of_copy" formatted="false"># of copies=%s, # of deletes=%s, # of ignores=%s, Elapsed time=%s(Sec)</string>
+        <string name="msgs_mirror_task_no_of_copy" formatted="false"># of copies=%s, # of deletes=%s, # of ignores=%s, Elapsed time=%s</string>
         <string name="msgs_mirror_task_result_cancel">Sync task cancelled.</string>
         <string name="msgs_mirror_task_result_error_ended">Sync task ended with error.</string>
         <string name="msgs_mirror_task_result_error_skipped">Ignore errors enabled.  Error ignored.</string>

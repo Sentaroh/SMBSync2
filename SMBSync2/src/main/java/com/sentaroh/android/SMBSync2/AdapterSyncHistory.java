@@ -233,8 +233,8 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
                     holder.tv_error.setTextColor(mThemeColorList.text_color_warning);
                 }
 
-                holder.tv_et.setText(o.sync_elapsed_time);
-                holder.tv_tr.setText(o.sync_transfer_speed);
+                holder.tv_et.setText(String.format(" %s", o.sync_elapsed_time));
+                holder.tv_tr.setText(String.format(" %s", o.sync_transfer_speed));
 
                 holder.tv_status.setText(st_text);
 
