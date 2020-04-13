@@ -793,7 +793,7 @@ public final class CommonUtilities {
                             hli.sync_error_text = l_array[10].replaceAll("\u0002", "\n");
                             if (!l_array[11].equals(" "))
                                 hli.sync_result_no_of_retry = Integer.valueOf(l_array[11]);
-//				    		hli.sync_deleted_file=string2Array(l_array[10]);
+                            hli.sync_transfer_speed=l_array[12];
 //				    		hli.sync_ignored_file=string2Array(l_array[11]);
                             if (l_array.length >= 15) {
                                 hli.sync_log_file_path = l_array[14];
@@ -866,22 +866,22 @@ public final class CommonUtilities {
                         String lfp = "";
                         if (shli.isLogFileAvailable) lfp = shli.sync_log_file_path;
                         sb_buf.setLength(0);
-                        sb_buf.append(shli.sync_date).append("\u0001")
-                                .append(shli.sync_time).append("\u0001")
-                                .append(shli.sync_elapsed_time).append("\u0001")
-                                .append(shli.sync_prof).append("\u0001")
-                                .append(shli.sync_status).append("\u0001")
-                                .append(shli.sync_test_mode ? "1" : "0").append("\u0001")
-                                .append(shli.sync_result_no_of_copied).append("\u0001")
-                                .append(shli.sync_result_no_of_deleted).append("\u0001")
-                                .append(shli.sync_result_no_of_ignored).append("\u0001")
-                                .append(shli.sync_req).append("\u0001")
-                                .append(shli.sync_error_text.replaceAll("\n", "\u0002")).append("\u0001")
-                                .append(shli.sync_result_no_of_retry).append("\u0001") //retry count
-                                .append(" ").append("\u0001") //Dummy
-                                .append(" ").append("\u0001") //Dummy
-                                .append(lfp).append("\u0001")
-                                .append(shli.sync_result_file_path)
+                        sb_buf.append(shli.sync_date).append("\u0001")                                      //0
+                                .append(shli.sync_time).append("\u0001")                                    //1
+                                .append(shli.sync_elapsed_time).append("\u0001")                            //2
+                                .append(shli.sync_prof).append("\u0001")                                    //3
+                                .append(shli.sync_status).append("\u0001")                                  //4
+                                .append(shli.sync_test_mode ? "1" : "0").append("\u0001")                   //5
+                                .append(shli.sync_result_no_of_copied).append("\u0001")                     //6
+                                .append(shli.sync_result_no_of_deleted).append("\u0001")                    //7
+                                .append(shli.sync_result_no_of_ignored).append("\u0001")                    //8
+                                .append(shli.sync_req).append("\u0001")                                     //9
+                                .append(shli.sync_error_text.replaceAll("\n", "\u0002")).append("\u0001")   //10
+                                .append(shli.sync_result_no_of_retry).append("\u0001")                      //11 retry count
+                                .append(shli.sync_transfer_speed).append("\u0001")                          //12
+                                .append(" ").append("\u0001")                                               //13 Dummy
+                                .append(lfp).append("\u0001")                                               //14
+                                .append(shli.sync_result_file_path)                                         //15
                                 .append("\n");
 
                         bw.append(sb_buf.toString());

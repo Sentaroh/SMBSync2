@@ -48,14 +48,14 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private int syncTaskPosition = 0;
 
-    public final static String SYNC_TASK_TYPE_MIRROR = "M";
-    public final static String SYNC_TASK_TYPE_COPY = "C";
-    public final static String SYNC_TASK_TYPE_MOVE = "X";
-    public final static String SYNC_TASK_TYPE_SYNC = "S";
-    public final static String SYNC_TASK_TYPE_ARCHIVE = "A";
+    public final static String SYNC_TASK_TYPE_MIRROR = "M"; // index 0 (Indexes position from SYNC_TASK_TYPE_LIST not used for now)
+    public final static String SYNC_TASK_TYPE_COPY = "C"; // index 1
+    public final static String SYNC_TASK_TYPE_MOVE = "X"; // index 2
+    public final static String SYNC_TASK_TYPE_SYNC = "S"; // index 3
+    public final static String SYNC_TASK_TYPE_ARCHIVE = "A"; // index 4
     public final static String SYNC_TASK_TYPE_DEFAULT = SYNC_TASK_TYPE_COPY;
     public final static String SYNC_TASK_TYPE_DEFAULT_DESCRIPTION = "COPY";
-    public final static String[] SYNC_TASK_TYPE_LIST=new String[]{SYNC_TASK_TYPE_MIRROR, SYNC_TASK_TYPE_COPY, SYNC_TASK_TYPE_MOVE, SYNC_TASK_TYPE_ARCHIVE, SYNC_TASK_TYPE_SYNC};
+    public final static String[] SYNC_TASK_TYPE_LIST=new String[]{SYNC_TASK_TYPE_MIRROR, SYNC_TASK_TYPE_COPY, SYNC_TASK_TYPE_MOVE, SYNC_TASK_TYPE_SYNC, SYNC_TASK_TYPE_ARCHIVE};
     private String syncTaskType = SYNC_TASK_TYPE_DEFAULT;
 
     public final static String SYNC_TASK_TWO_WAY_OPTION_ASK_USER = "0";
@@ -88,6 +88,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskMasterFolderSmbPassword = "";
     private String syncTaskMasterFolderSmbDomain = "";
     public final static String SYNC_FOLDER_SMB_PORT_DEFAULT = "";//default is not specified
+    public final static String SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION = "Autodetect SMB port";
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SYSTEM = "0";
 //    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1 = "1";
 //    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = "2";
@@ -196,15 +197,15 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private boolean syncOptionDeleteFirstWhenMirror = false;
 
-    public final static String SYNC_WIFI_STATUS_WIFI_OFF = "0";
-    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP = "1";
-    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP = "2";
-    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR = "3";
-    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR = "4";
+    public final static String SYNC_WIFI_STATUS_WIFI_OFF = "0"; // list index 0
+    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP = "1"; // list index 1
+    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP = "2"; // list index 2
+    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR = "3"; // list index 3
+    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR = "4"; // list index 4
     public final static String SYNC_WIFI_STATUS_WIFI_DEFAULT = SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
     public final static String SYNC_WIFI_STATUS_WIFI_DEFAULT_DESCRIPTION = "Conn any AP";
     public final static String[] SYNC_WIFI_STATUS_WIFI_LIST = new String[]{SYNC_WIFI_STATUS_WIFI_OFF , SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP,
-            SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR, SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR, SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP};
+            SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP, SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR, SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR};
     private String syncOptionWifiStatus = SYNC_WIFI_STATUS_WIFI_DEFAULT;
     private boolean syncTaskSkipIfConnectAnotherWifiSsid = false;
 

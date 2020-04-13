@@ -25,6 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -156,6 +157,13 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
                 holder.tv_row_time.setTextColor(mThemeColorList.text_color_error);
                 holder.tv_row_date.setTextColor(mThemeColorList.text_color_error);
                 holder.tv_row_msg.setTextColor(mThemeColorList.text_color_error);
+                holder.tv_row_time.setText(o.getTime());
+                holder.tv_row_date.setText(o.getDate());
+                holder.tv_row_msg.setText(o.getMessage());
+            } else if (o.getMessage().endsWith(mGp.appContext.getString(R.string.msgs_mirror_task_result_ok))) {
+                holder.tv_row_time.setTextColor(Color.GREEN);
+                holder.tv_row_date.setTextColor(Color.GREEN);
+                holder.tv_row_msg.setTextColor(Color.GREEN);
                 holder.tv_row_time.setText(o.getTime());
                 holder.tv_row_date.setText(o.getDate());
                 holder.tv_row_msg.setText(o.getMessage());

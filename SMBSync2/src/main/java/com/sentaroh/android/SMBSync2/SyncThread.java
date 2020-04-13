@@ -575,9 +575,10 @@ public class SyncThread extends Thread {
 //				mStwa.syncHistoryWriter.println(print_msg);
 //			}
 //		}
+        String transfer_rate = calTransferRate(mStwa.totalTransferByte, mStwa.totalTransferTime);
         addHistoryList(sti, sync_result,
                 mStwa.totalCopyCount, mStwa.totalDeleteCount, mStwa.totalIgnoreCount, mStwa.totalRetryCount,
-                error_msg, sync_et);
+                error_msg, sync_et, transfer_rate);
 //		if (!error_msg.equals("")) showMsg(mStca, false,sti.getSyncTaskName(),"E", "","",error_msg);
 
         showMsg(mStwa, true, sti.getSyncTaskName(), "I", "", "",
@@ -585,7 +586,7 @@ public class SyncThread extends Thread {
                         mStwa.totalCopyCount, mStwa.totalDeleteCount, mStwa.totalIgnoreCount, sync_et));
         showMsg(mStwa, true, sti.getSyncTaskName(), "I", "", "",
                 String.format(mGp.appContext.getString(R.string.msgs_mirror_task_avg_rate),
-                        calTransferRate(mStwa.totalTransferByte, mStwa.totalTransferTime)));
+                        transfer_rate));
 
         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
             showMsg(mStwa, false, sti.getSyncTaskName(), "I", "", "", mGp.appContext.getString(R.string.msgs_mirror_task_result_ok));
@@ -864,7 +865,7 @@ public class SyncThread extends Thread {
                     if (mStwa.currentSTI != null) {
                         addHistoryList(mStwa.currentSTI, SyncHistoryItem.SYNC_STATUS_ERROR,
                                 mStwa.totalCopyCount, mStwa.totalDeleteCount, mStwa.totalIgnoreCount, mStwa.totalRetryCount,
-                                end_msg, "");
+                                end_msg, "", "");
 //        			mUtil.saveHistoryList(mGp.syncHistoryList);
                         setSyncTaskRunning(false);
                     }
@@ -3318,7 +3319,7 @@ public class SyncThread extends Thread {
 
     final private void addHistoryList(SyncTaskItem sti,
                                       int status, int copy_cnt, int del_cnt, int ignore_cnt,
-                                      int retry_cnt, String error_msg, String sync_elapsed_time) {
+                                      int retry_cnt, String error_msg, String sync_elapsed_time, String sync_transfer_speed) {
         String date_time = StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis());
         String date = date_time.substring(0, 10);
         String time = date_time.substring(11);
@@ -3327,6 +3328,7 @@ public class SyncThread extends Thread {
         hli.sync_time = time;
         hli.sync_elapsed_time = sync_elapsed_time;
         hli.sync_prof = sti.getSyncTaskName();
+        hli.sync_transfer_speed = sync_transfer_speed;
         hli.sync_status = status;
         hli.sync_test_mode = sti.isSyncTestMode();
 
@@ -3382,7 +3384,7 @@ public class SyncThread extends Thread {
             BigDecimal dft3 = new BigDecimal("0.000000");
             dft3 = dft1.divide(dft2);
             bd_tr = dfs3.divide(dft3, 2, BigDecimal.ROUND_HALF_UP);
-            tfs = bd_tr + "KBytes/sec";
+            tfs = bd_tr + " KBytes/sec";
 //			Log.v("","dfs1="+dfs1+", dfs2="+dfs2+", dfs3="+dfs3);
 //			Log.v("","dft1="+dft1+", dft2="+dft2+", dft3="+dft3);
 //			Log.v("","bd_tr="+bd_tr+", tfs="+tfs);
@@ -3396,7 +3398,7 @@ public class SyncThread extends Thread {
             BigDecimal dft3 = new BigDecimal("0.000000");
             dft3 = dft1.divide(dft2);
             bd_tr = dfs3.divide(dft3, 2, BigDecimal.ROUND_HALF_UP);
-            tfs = bd_tr + "Bytes/sec";
+            tfs = bd_tr + " Bytes/sec";
 //			Log.v("","dfs1="+dfs1+", dfs2="+dfs2+", dfs3="+dfs3);
 //			Log.v("","dft1="+dft1+", dft2="+dft2+", dft3="+dft3);
 //			Log.v("","bd_tr="+bd_tr+", tfs="+tfs);
