@@ -139,6 +139,8 @@
 	            android:text="Activity"
 	            tools:ignore="HardcodedText" />
 
+	    </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
@@ -158,7 +160,6 @@
                     android:maxLines="1"
                     android:text="1000000.00"
                     tools:ignore="HardcodedText" />
-            </LinearLayout>
 	    </LinearLayout>
 	    
 	    <TextView
