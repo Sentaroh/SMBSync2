@@ -161,9 +161,16 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
                 holder.tv_row_date.setText(o.getDate());
                 holder.tv_row_msg.setText(o.getMessage());
             } else if (o.getMessage().endsWith(mGp.appContext.getString(R.string.msgs_mirror_task_result_ok))) {
-                holder.tv_row_time.setTextColor(Color.GREEN);
-                holder.tv_row_date.setTextColor(Color.GREEN);
-                holder.tv_row_msg.setTextColor(Color.GREEN);
+                if (ThemeUtil.isLightThemeUsed(c)) {
+                    int color=0xff0088ff;
+                    holder.tv_row_time.setTextColor(color);
+                    holder.tv_row_date.setTextColor(color);
+                    holder.tv_row_msg.setTextColor(color);
+                } else {
+                    holder.tv_row_time.setTextColor(Color.GREEN);
+                    holder.tv_row_date.setTextColor(Color.GREEN);
+                    holder.tv_row_msg.setTextColor(Color.GREEN);
+                }
                 holder.tv_row_time.setText(o.getTime());
                 holder.tv_row_date.setText(o.getDate());
                 holder.tv_row_msg.setText(o.getMessage());
