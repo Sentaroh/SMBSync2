@@ -187,7 +187,7 @@
         <string name="msgs_main_sync_history_count_retry">リトライ:</string>
         <string name="msgs_main_sync_history_del_conf_all_history">全ての履歴を削除しますか?</string>
         <string name="msgs_main_sync_history_del_conf_selected_history">下記の履歴を削除しますか?</string>
-        <string name="msgs_main_sync_history_elapsed_time">処理時間(秒):</string>
+        <string name="msgs_main_sync_history_elapsed_time">処理時間:</string>
         <string name="msgs_main_sync_history_transfer_speed">平均転送率:</string>
         <string name="msgs_main_sync_history_mode">モード:</string>
         <string name="msgs_main_sync_history_mode_normal">通常</string>
