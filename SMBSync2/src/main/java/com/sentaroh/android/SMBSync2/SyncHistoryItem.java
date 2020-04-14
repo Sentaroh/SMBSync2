@@ -30,7 +30,7 @@ class SyncHistoryItem {
     public String sync_time = null;
     public String sync_elapsed_time = null;
     public String sync_prof = "";
-    public String sync_transfer_speed = null;
+    public String sync_transfer_speed = "";
     public String sync_req = "";
     public boolean sync_test_mode = false;
     public int sync_status = SYNC_STATUS_SUCCESS;

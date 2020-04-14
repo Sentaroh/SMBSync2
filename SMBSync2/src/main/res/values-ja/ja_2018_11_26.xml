@@ -188,7 +188,7 @@
         <string name="msgs_main_sync_history_del_conf_all_history">全ての履歴を削除しますか?</string>
         <string name="msgs_main_sync_history_del_conf_selected_history">下記の履歴を削除しますか?</string>
         <string name="msgs_main_sync_history_elapsed_time">処理時間(秒):</string>
-        <string name="msgs_main_sync_history_transfer_speed">平均転送率 :</string>
+        <string name="msgs_main_sync_history_transfer_speed">平均転送率:</string>
         <string name="msgs_main_sync_history_mode">モード:</string>
         <string name="msgs_main_sync_history_mode_normal">通常</string>
         <string name="msgs_main_sync_history_mode_test">テスト</string>
@@ -553,7 +553,7 @@
         <string name="msgs_mirror_task_file_moved">ファイルを移動しました。</string>
         <string name="msgs_mirror_task_file_replaced">ファイルを上書きコピーしました。</string>
         <string name="msgs_mirror_task_master_not_found">マスターのファイルまたはディレクトリーが見つかりません。</string>
-        <string name="msgs_mirror_task_no_of_copy" formatted="false">コピー=%s, 削除=%s, 無視=%s, 経過時間=%s(秒)</string>
+        <string name="msgs_mirror_task_no_of_copy" formatted="false">コピー=%s, 削除=%s, 無視=%s, 経過時間=%s</string>
         <string name="msgs_mirror_task_result_cancel">同期タスクがキャンセルされました。</string>
         <string name="msgs_mirror_task_result_error_ended">同期タスクはエラーで終了しました。</string>
         <string name="msgs_mirror_task_result_error_skipped">エラー処理オプションの設定によりエラーを無視しました。</string>

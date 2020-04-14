@@ -61,17 +61,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.Socket;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -559,10 +563,16 @@ public class SyncThread extends Thread {
     }
 
     private void postProcessSyncResult(SyncTaskItem sti, int sync_result, long et) {
-        int t_et_sec = (int) (et / 1000);
-        int t_et_ms = (int) (et - (t_et_sec * 1000));
+        long msecs = et;
+        long hr = TimeUnit.MILLISECONDS.toHours(msecs); msecs -= TimeUnit.HOURS.toMillis(hr);
+        long min = TimeUnit.MILLISECONDS.toMinutes(msecs); msecs -= TimeUnit.MINUTES.toMillis(min);
+        long sec = TimeUnit.MILLISECONDS.toSeconds(msecs); msecs -= TimeUnit.SECONDS.toMillis(sec);
+        long ms = TimeUnit.MILLISECONDS.toMillis(msecs);
 
-        String sync_et = String.valueOf(t_et_sec) + "." + String.format("%3d", t_et_ms).replaceAll(" ", "0");
+        String sync_et = null;
+        if (hr != 0) sync_et = String.format("%2d:%02d:%02d", hr, min, sec);
+        else if (min != 0) sync_et = String.format("%2d min %2d.%02d sec", min, sec, ms/10);
+        else sync_et = String.format("%2d.%03d sec", sec, ms);
 
         String error_msg = "";
         if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR || sync_result == SyncTaskItem.SYNC_STATUS_WARNING) {
@@ -3363,46 +3373,45 @@ public class SyncThread extends Thread {
         }
     }
 
-    ;
-
     static final public String calTransferRate(long tb, long tt) {
         String tfs = null;
+        String units = null;
         BigDecimal bd_tr;
 //		Log.v("","byte="+tb+", time="+tt);
 
         if (tb == 0) return "0Bytes/sec";
 
         long n_tt = (tt == 0) ? 1 : tt;
+        if (tb == 0) return " 0 Bytes/sec";
 
-        if (tb > (1024)) {//KB
-            BigDecimal dfs1 = new BigDecimal(tb * 1.000);
-            BigDecimal dfs2 = new BigDecimal(1024 * 1.000);
-            BigDecimal dfs3 = new BigDecimal("0.000000");
-            dfs3 = dfs1.divide(dfs2);
-            BigDecimal dft1 = new BigDecimal(n_tt * 1.000);
-            BigDecimal dft2 = new BigDecimal(1000.000);
-            BigDecimal dft3 = new BigDecimal("0.000000");
-            dft3 = dft1.divide(dft2);
-            bd_tr = dfs3.divide(dft3, 2, BigDecimal.ROUND_HALF_UP);
-            tfs = bd_tr + " KBytes/sec";
-//			Log.v("","dfs1="+dfs1+", dfs2="+dfs2+", dfs3="+dfs3);
-//			Log.v("","dft1="+dft1+", dft2="+dft2+", dft3="+dft3);
-//			Log.v("","bd_tr="+bd_tr+", tfs="+tfs);
-        } else {
-            BigDecimal dfs1 = new BigDecimal(tb * 1.000);
-            BigDecimal dfs2 = new BigDecimal(1024 * 1.000);
-            BigDecimal dfs3 = new BigDecimal("0.000000");
-            dfs3 = dfs1.divide(dfs2);
-            BigDecimal dft1 = new BigDecimal(n_tt * 1.000);
-            BigDecimal dft2 = new BigDecimal(1000.000);
-            BigDecimal dft3 = new BigDecimal("0.000000");
-            dft3 = dft1.divide(dft2);
-            bd_tr = dfs3.divide(dft3, 2, BigDecimal.ROUND_HALF_UP);
-            tfs = bd_tr + " Bytes/sec";
-//			Log.v("","dfs1="+dfs1+", dfs2="+dfs2+", dfs3="+dfs3);
-//			Log.v("","dft1="+dft1+", dft2="+dft2+", dft3="+dft3);
-//			Log.v("","bd_tr="+bd_tr+", tfs="+tfs);
+        if (tt == 0) return " N/A"; // elapsed time 0 msec
+
+        BigDecimal dfs = new BigDecimal(tb * 1.000000);
+        BigDecimal dft1 = new BigDecimal(tt * 1.000);
+        BigDecimal dft2 = new BigDecimal(1000.000);
+        BigDecimal dft = new BigDecimal("0.000000");
+        dft = dft1.divide(dft2); // convert elapsed time from msec to sec
+        BigDecimal bd_tr1 = dfs.divide(dft, 6, BigDecimal.ROUND_HALF_UP); // transfer speed in bytes /sec
+
+        if (bd_tr1.compareTo(new BigDecimal(1048576)) >= 0) {//  MB/sec (transfer speed >= 1024 * 1024 bytes)
+            units = " MBytes/sec";
+            BigDecimal bd_tr2 = new BigDecimal(1024 * 1024 * 1.000000);
+            bd_tr = bd_tr1.divide(bd_tr2, 2, BigDecimal.ROUND_HALF_UP);
+        } else if (bd_tr1.compareTo(new BigDecimal(1024)) >= 0) { // KB/sec (transfer speed >= 1024 bytes)
+            units = " KBytes/sec";
+            BigDecimal bd_tr2 = new BigDecimal(1024 * 1.000000);
+            bd_tr = bd_tr1.divide(bd_tr2, 1, BigDecimal.ROUND_HALF_UP);
+        } else { // Bytes/sec
+            units = " Bytes/sec";
+            bd_tr = bd_tr1.setScale(0, RoundingMode.HALF_UP);
         }
+
+        // proper formatting and grouping
+        DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols();
+        formatSymbols.setDecimalSeparator('.');
+        formatSymbols.setGroupingSeparator(' ');
+        DecimalFormat formatter = new DecimalFormat("###,###.###", formatSymbols);
+        tfs = formatter.format(bd_tr) + units;
 
         return tfs;
     }
