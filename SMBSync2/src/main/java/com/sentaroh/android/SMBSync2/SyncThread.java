@@ -571,7 +571,7 @@ public class SyncThread extends Thread {
 
         String sync_et = null;
         if (hr != 0) sync_et = String.format("%2d:%02d:%02d", hr, min, sec);
-        else if (min != 0) sync_et = String.format("%2d min %2d.%02d sec", min, sec, ms/10);
+        else if (min != 0) sync_et = String.format("%2d min %d.%03d sec", min, sec, ms);
         else sync_et = String.format("%2d.%03d sec", sec, ms);
 
         String error_msg = "";
