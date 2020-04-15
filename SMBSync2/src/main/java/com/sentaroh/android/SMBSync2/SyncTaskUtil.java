@@ -1878,7 +1878,7 @@ public class SyncTaskUtil {
         }
         String remote_port = "";
         if (ctv_use_port_number.isChecked() && editport.getText().length() > 0)
-            remote_port = ":" + editport.getText().toString();
+            remote_port = editport.getText().toString();
         NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
             @Override
@@ -1937,7 +1937,7 @@ public class SyncTaskUtil {
         }
         String t_remote_port = "";
         if (ctv_use_port_number.isChecked() && editport.getText().length() > 0)
-            t_remote_port = ":" + editport.getText().toString();
+            t_remote_port = editport.getText().toString();
         final String remote_addr=t_remote_addr;
         final String remote_host=t_remote_host;
         final String remote_share = editshare.getText().toString();
@@ -3569,7 +3569,7 @@ public class SyncTaskUtil {
         String host_name = sti.getMasterSmbHostName();
         String host_share = sti.getMasterSmbShareName();
         String h_port = "";
-        if (!sti.getMasterSmbPort().equals("")) h_port = ":" + sti.getMasterSmbPort();
+        if (!sti.getMasterSmbPort().equals("")) h_port = sti.getMasterSmbPort();
         final String host_port=h_port;
         String remdir_tmp="";
         if (sti.getMasterDirectoryName().equals("/") || sti.getMasterDirectoryName().equals("")) {
