@@ -724,26 +724,26 @@ public class SyncThread extends Thread {
             InetAddress ia=CommonUtilities.getInetAddress(addr);
             if ((ia instanceof  Inet6Address)) mStwa.masterSmbAddress="["+CommonUtilities.addScopeidToIpv6Address(addr)+"]";
             else mStwa.masterSmbAddress=addr;
-//            if (sti.getMasterSmbPort().equals("")) {
-//                if (!isIpaddressConnectable(addr, 445) && !isIpaddressConnectable(addr, 139)) {
-//                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-//                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-//                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
-//                    mGp.syncThreadCtrl.setThreadMessage(
-//                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
-//                    return sync_result;
-//                }
-//            } else {
-//                int port = Integer.parseInt(sti.getMasterSmbPort());
-//                if (!isIpaddressConnectable(addr, port)) {
-//                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-//                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-//                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
-//                    mGp.syncThreadCtrl.setThreadMessage(
-//                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
-//                    return sync_result;
-//                }
-//            }
+            if (sti.getMasterSmbPort().equals("")) {
+                if (!isIpaddressConnectable(addr, 445) && !isIpaddressConnectable(addr, 139)) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
+                    mGp.syncThreadCtrl.setThreadMessage(
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
+                    return sync_result;
+                }
+            } else {
+                int port = Integer.parseInt(sti.getMasterSmbPort());
+                if (!isIpaddressConnectable(addr, port)) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
+                    mGp.syncThreadCtrl.setThreadMessage(
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
+                    return sync_result;
+                }
+            }
         }
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr=null;
@@ -761,26 +761,26 @@ public class SyncThread extends Thread {
             }
             if (CommonUtilities.isIpAddressV6(addr)) mStwa.targetSmbAddress="["+CommonUtilities.addScopeidToIpv6Address(addr)+"]";
             else mStwa.targetSmbAddress=addr;
-//            if (sti.getTargetSmbPort().equals("")) {
-//                if (!isIpaddressConnectable(addr, 445) && !isIpaddressConnectable(addr, 139)) {
-//                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-//                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-//                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
-//                    mGp.syncThreadCtrl.setThreadMessage(
-//                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
-//                    return sync_result;
-//                }
-//            } else {
-//                int port = Integer.parseInt(sti.getTargetSmbPort());
-//                if (!isIpaddressConnectable(addr, port)) {
-//                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-//                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-//                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
-//                    mGp.syncThreadCtrl.setThreadMessage(
-//                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
-//                    return sync_result;
-//                }
-//            }
+            if (sti.getTargetSmbPort().equals("")) {
+                if (!isIpaddressConnectable(addr, 445) && !isIpaddressConnectable(addr, 139)) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
+                    mGp.syncThreadCtrl.setThreadMessage(
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
+                    return sync_result;
+                }
+            } else {
+                int port = Integer.parseInt(sti.getTargetSmbPort());
+                if (!isIpaddressConnectable(addr, port)) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
+                    mGp.syncThreadCtrl.setThreadMessage(
+                            String.format(mGp.appContext.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
+                    return sync_result;
+                }
+            }
         }
 
         return sync_result;
