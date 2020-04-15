@@ -422,19 +422,32 @@ public class SyncTaskUtil {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 mGp.profilePassword = (String) o[0];
-                AdapterSyncTask tfl = null;
-                if (isSyncTaskListFileOldFormat(fpath)) {
-                    tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, ImportOldProfileList.importOldProfileList(mGp, fpath), mGp);
-                } else {
-                    tfl = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view,
-                            createSyncTaskListFromFile(mContext, mGp, mUtil, true, fpath, importedSettingParmList, from_auto_save), mGp);
-                }
-                if (tfl.getCount() > 0) {
-                    importSyncTaskItemSelector(tfl, fpath, p_ntfy, from_auto_save);
-                } else {
-                    mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
-                    p_ntfy.notifyToListener(false, null);
-                }
+                final Handler hndl=new Handler();
+                Thread th=new Thread() {
+                    @Override
+                    public void run() {
+                        AdapterSyncTask tfl_temp = null;
+                        if (isSyncTaskListFileOldFormat(fpath)) {
+                            tfl_temp = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, ImportOldProfileList.importOldProfileList(mGp, fpath), mGp);
+                        } else {
+                            tfl_temp = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view,
+                                    createSyncTaskListFromFile(mContext, mGp, mUtil, true, fpath, importedSettingParmList, from_auto_save), mGp);
+                        }
+                        final AdapterSyncTask tfl = tfl_temp;
+                        hndl.post(new Runnable(){//
+                            @Override
+                            public void run() {
+                                if (tfl.getCount() > 0) {
+                                    importSyncTaskItemSelector(tfl, fpath, p_ntfy, from_auto_save);
+                                } else {
+                                    mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
+                                    p_ntfy.notifyToListener(false, null);
+                                }
+                            }
+                        });
+                    }
+                };
+                th.start();
             }
 
             @Override
@@ -5278,8 +5291,6 @@ public class SyncTaskUtil {
             sync.add(stli);
         }
     }
-
-    ;
 
     private static void addSyncTaskListVer2(String pl, ArrayList<SyncTaskItem> sync) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
