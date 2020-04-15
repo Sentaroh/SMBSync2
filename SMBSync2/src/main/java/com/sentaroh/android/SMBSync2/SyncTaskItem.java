@@ -123,7 +123,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskTargetFolderSmbUserName = "";
     private String syncTaskTargetFolderSmbPassword = "";
     private String syncTaskTargetFolderSmbDomain = "";
-    private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_SMB212;
+    private String syncTaskTargetFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_DEFAULT;
     private boolean syncTaskTargetFolderSmbIpcSigningEnforced = true;
 
     private boolean syncTaskTargetFolderSmbUseSmb2Negotiation = false;
