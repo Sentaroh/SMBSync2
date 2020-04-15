@@ -370,11 +370,6 @@ public class SyncTaskUtil {
                 v = vi.inflate(id, null);
                 holder = new ViewHolder();
                 holder.tv_text1 =(TextView) v.findViewById(android.R.id.text1);
-//                holder.tv_text2 =(TextView) v.findViewById(android.R.id.text2);
-//                v=new CheckedTextView(c);
-//                ((CheckedTextView) v).setCheckMarkDrawable();
-//                v.setId(android.R.id.text1);
-//                holder.tv_text1=(CheckedTextView)v;
 
                 v.setTag(holder);
             } else {
@@ -413,7 +408,6 @@ public class SyncTaskUtil {
         });
         mCommonDlg.fileSelectorFileOnly(true,
                 mGp.internalRootDirectory, "", "", mContext.getString(R.string.msgs_select_import_file), ntfy);
-//                mGp.internalRootDirectory, "/" + APPLICATION_TAG, "profile.txt", mContext.getString(R.string.msgs_select_import_file), ntfy);
     }
 
     private void importSyncTaskList(final NotifyEvent p_ntfy, final String fpath, final boolean from_auto_save) {
@@ -504,7 +498,6 @@ public class SyncTaskUtil {
                 e.printStackTrace();
             }
         }
-//		Log.v("","result="+result);
         return result;
     }
 
@@ -537,12 +530,9 @@ public class SyncTaskUtil {
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.password_input_dlg_view);
         CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
-//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.password_input_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.password_input_title);
-//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.password_input_msg);
         final CheckedTextView ctv_protect = (CheckedTextView) dialog.findViewById(R.id.password_input_ctv_protect);
@@ -592,19 +582,15 @@ public class SyncTaskUtil {
                         if (pl.substring(6).startsWith(SMBSYNC2_PROF_ENC)) {
                             enc_str = pl.substring(6).replace(SMBSYNC2_PROF_ENC, "");
                         }
-//						Log.v("","pl="+pl.substring(6));
-//						Log.v("","enc="+enc_str);
                         if (!enc_str.equals("")) {
                             byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
                             String dec_str = "";
                             CipherParms cp = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefix + passwd);
                             dec_str = EncryptUtil.decrypt(enc_array, cp);
-//							Log.v("","dec1="+dec_str);
                             if (!SMBSYNC2_PROF_ENC.equals(dec_str)) {
                                 CipherParms cp_old = EncryptUtil.initDecryptEnv(mGp.profileKeyPrefixOld + passwd);
                                 dec_str = EncryptUtil.decrypt(enc_array, cp_old);
                             }
-//							Log.v("","dec2="+dec_str);
                             if (!SMBSYNC2_PROF_ENC.equals(dec_str)) {
                                 dlg_msg.setText(mContext.getString(R.string.msgs_export_import_pswd_invalid_password));
                             } else {
@@ -659,12 +645,9 @@ public class SyncTaskUtil {
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.password_input_dlg_view);
         CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
-//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.password_input_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.password_input_title);
-//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.password_input_msg);
         final CheckedTextView ctv_protect = (CheckedTextView) dialog.findViewById(R.id.password_input_ctv_protect);
@@ -816,7 +799,6 @@ public class SyncTaskUtil {
         dialog.setCanceledOnTouchOutside(false);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.export_import_profile_view);
-//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         ArrayList<AdapterExportImportTask.ExportImportListItem> eipl = new ArrayList<AdapterExportImportTask.ExportImportListItem>();
 
@@ -837,8 +819,6 @@ public class SyncTaskUtil {
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.export_import_profile_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.export_import_profile_title);
-//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
         title.setText(mContext.getString(R.string.msgs_export_import_profile_title));
         final TextView from_path = (TextView) dialog.findViewById(R.id.export_import_profile_from_file_path);
         from_path.setVisibility(TextView.VISIBLE);
@@ -1108,7 +1088,6 @@ public class SyncTaskUtil {
                 }
             }
             pe.commit();
-//			applySettingParms();
         }
         return result;
     }
@@ -1358,8 +1337,6 @@ public class SyncTaskUtil {
     public void setSyncTaskToAuto(GlobalParameters gp) {
         SyncTaskItem item;
 
-//		int pos=gp.profileListView.getFirstVisiblePosition();
-//		int posTop=gp.profileListView.getChildAt(0).getTop();
         for (int i = 0; i < gp.syncTaskAdapter.getCount(); i++) {
             item = gp.syncTaskAdapter.getItem(i);
             if (item.isChecked()) {
@@ -1382,7 +1359,6 @@ public class SyncTaskUtil {
             item = mGp.syncTaskAdapter.getItem(i);
             if (item.isChecked()) {
                 item.setSyncTaskAuto(false);
-//				item.setChecked(false);
             }
         }
 
@@ -1450,8 +1426,6 @@ public class SyncTaskUtil {
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.show_select_sdcard_dlg_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_title);
-//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_msg);
         String msg = "";
@@ -1519,8 +1493,6 @@ public class SyncTaskUtil {
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.show_select_sdcard_dlg_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_title);
-//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
         title.setText(R.string.msgs_main_external_usb_select_required_title);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.show_select_sdcard_dlg_msg);
@@ -1575,7 +1547,6 @@ public class SyncTaskUtil {
     public boolean isExternalSdcardUsedByOutput() {
         boolean result = false;
         for (SyncTaskItem pli : mGp.syncTaskAdapter.getArrayList()) {
-//			Log.v("","name="+pli.getProfileName()+", type="+pli.getProfileType()+", act="+pli.isProfileActive());
             if (pli.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
                 result = true;
                 break;
@@ -1583,18 +1554,6 @@ public class SyncTaskUtil {
         }
         return result;
     }
-
-//	public boolean isUsbSafUsedByOutput() {
-//		boolean result=false;
-//		for(SyncTaskItem pli:mGp.syncTaskAdapter.getArrayList()) {
-////			Log.v("","name="+pli.getProfileName()+", type="+pli.getProfileType()+", act="+pli.isProfileActive());
-//			if (pli.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-//				result=true;
-//				break;
-//			}
-//		}
-//		return result;
-//	};
 
     public void testSmbLogonDlg(final String host, final String addr, final String port, final String share,
                                 RemoteAuthInfo ra, final NotifyEvent p_ntfy) {
@@ -1640,8 +1599,7 @@ public class SyncTaskUtil {
                                 if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
                             }
                         } else {
-//                            mUtil.showCommonDialog(false, "I", mContext.getString(R.string.msgs_remote_profile_dlg_logon_cancel), "", null);
-//                            if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
+                            //NOP
                         }
                     }
 
@@ -1664,13 +1622,6 @@ public class SyncTaskUtil {
                         }
                     }
                     reachable = true;
-//                    if (port_num==0) {
-//                        if (JcifsUtil.isIpAddressAndPortConnected(addr, 139, 3500) || JcifsUtil.isIpAddressAndPortConnected(addr, 445, 3500)) {
-//                            reachable = true;
-//                        }
-//                    } else {
-//                        reachable = JcifsUtil.isIpAddressAndPortConnected(addr, port_num, 3500);
-//                    }
                     if (reachable) {
                         testSmbAuth(addr, port, share, ra, ntfy);
                     } else {
@@ -1918,7 +1869,6 @@ public class SyncTaskUtil {
         final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
         final boolean smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
         setSmbUserPass(remote_user, remote_pass);
-//		Log.v("","u="+remote_user+", pass="+remote_pass);
         String host=edithost.getText().toString().trim();
         if (JcifsUtil.isValidIpAddress(host)) {
             remote_addr = host;
@@ -1930,7 +1880,6 @@ public class SyncTaskUtil {
         if (ctv_use_port_number.isChecked() && editport.getText().length() > 0)
             remote_port = ":" + editport.getText().toString();
         NotifyEvent ntfy = new NotifyEvent(mContext);
-        //Listen setRemoteShare response
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context arg0, Object[] arg1) {
@@ -1939,8 +1888,6 @@ public class SyncTaskUtil {
 
             @Override
             public void negativeResponse(Context arg0, Object[] arg1) {
-//				if (arg1!=null) dlg_msg.setText((String)arg1[0]);
-//				else dlg_msg.setText("");
                 if (arg1 != null) {
                     String msg_text = (String) arg1[0];
                     mUtil.showCommonDialog(false, "E", "SMB Error", msg_text, null);
@@ -1956,10 +1903,7 @@ public class SyncTaskUtil {
         smbPass = pass;
     }
 
-//    private String mSmbBaseUrl="";
     public void selectRemoteDirectoryDlg(Dialog p_dialog, final boolean show_create) {
-//		final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
-
         final Spinner sp_sync_folder_smb_proto = (Spinner) p_dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
         final EditText edithost = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
         final EditText edituser = (EditText) p_dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
@@ -2045,13 +1989,11 @@ public class SyncTaskUtil {
         dialog.setContentView(R.layout.common_file_selector_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.common_file_selector_dlg_view);
-//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.common_file_selector_dlg_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.common_file_selector_dlg_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
-//				subtitle.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
         final TextView tv_empty = (TextView) dialog.findViewById(R.id.common_file_selector_empty);
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.common_file_selector_dlg_msg);
@@ -2062,8 +2004,6 @@ public class SyncTaskUtil {
         final LinearLayout dir_name_view = (LinearLayout) dialog.findViewById(R.id.common_file_selector_dir_name_view);
         dir_name_view.setVisibility(LinearLayout.GONE);
         final EditText et_dir_name = (EditText) dialog.findViewById(R.id.common_file_selector_dir_name);
-//        et_dir_name.setText(p_dir);
-//        et_file_name.setVisibility(EditText.GONE);
 
         final String directory_pre="smb://"+host_name+host_addr+"/"+host_share;
 
@@ -2114,16 +2054,6 @@ public class SyncTaskUtil {
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
 
-//        if (p_dir.length() != 0)
-//            for (int i = 0; i < tfa.getDataItemCount(); i++) {
-//                if (tfa.getDataItem(i).getName().equals(p_dir)) {
-//                    lv.setSelection(i);
-//                    tfa.getDataItem(i).setChecked(true);
-//                    tfa.notifyDataSetChanged();
-//                    break;
-//                }
-//            }
-
         setTopUpButtonEnabled(dialog, false);
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
@@ -2131,7 +2061,6 @@ public class SyncTaskUtil {
                 final TreeFilelistItem tfi = tfa.getDataItem(pos);
                 if (tfi.isDir()) {
                     final String n_dir=tfi.getPath()+tfi.getName()+"/";
-//                    String t_dir=c_dir.substring(0,c_dir.lastIndexOf("/"));
                     if (tfi.getSubDirItemCount()>=0) {
                         NotifyEvent ntfy = new NotifyEvent(mContext);
                         ntfy.setListener(new NotifyEventListener() {
@@ -2192,13 +2121,6 @@ public class SyncTaskUtil {
 
             @Override
             public void negativeResponse(Context c, Object[] o) {
-//                btn_ok.setEnabled(false);
-//                for (int i = 0; i < tfa.getDataItemCount(); i++) {
-//                    if (tfa.getDataItem(i).isChecked()) {
-//                        btn_ok.setEnabled(true);
-//                        break;
-//                    }
-//                }
             }
         });
         tfa.setCbCheckListener(ctv_ntfy);
@@ -2317,17 +2239,6 @@ public class SyncTaskUtil {
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
-//                ArrayList<String> sel=new ArrayList<String>();
-//                for (int i = 0; i < tfa.getCount(); i++) {
-//                    if (tfa.getDataItem(i).isChecked()) {
-//                        if (tfa.getDataItem(i).getPath().length() == 1)
-//                            sel.add(tfa.getDataItem(i).getName());
-//                        else sel.add(tfa.getDataItem(i).getPath()
-//                                .substring(1, tfa.getDataItem(i).getPath().length()) +tfa.getDataItem(i).getName());
-//                        break;
-//                    }
-//                }
-//                String sel=et_dir_name.getText().toString();
                 String sel=tv_home.getText().toString().replace(directory_pre,"");
                 if (sel.endsWith("/")) p_ntfy.notifyToListener(true, new Object[]{sel.substring(0,sel.length()-1)});
                 else p_ntfy.notifyToListener(true, new Object[]{sel});
@@ -2357,13 +2268,6 @@ public class SyncTaskUtil {
 
         CommonDialog.setViewEnabled(mActivity, btnUp, p);
         CommonDialog.setViewEnabled(mActivity, btnTop, p);
-//        if (p) {
-//            btnUp.setAlpha(1);
-//            btnTop.setAlpha(1);
-//        } else {
-//            btnUp.setAlpha(0.4f);
-//            btnTop.setAlpha(0.4f);
-//        }
     };
 
 
@@ -2605,17 +2509,6 @@ public class SyncTaskUtil {
         th.start();
     }
 
-//	static public SyncTaskItem getUsbSafUsedSyncTask(GlobalParameters gp) {
-//		SyncTaskItem pli=null;
-//		for (int i=0;i<gp.syncTaskAdapter.getCount();i++) {
-//			if (gp.syncTaskAdapter.getItem(i).getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-//				pli=gp.syncTaskAdapter.getItem(i);
-//				break;
-//			}
-//		}
-//		return pli;
-//	};
-
     public void editWifiAccessPointListDlg(final ArrayList<String> ap_list, final NotifyEvent p_ntfy) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
         final AdapterFilterList filterAdapter;
@@ -2826,7 +2719,6 @@ public class SyncTaskUtil {
         dialog.setContentView(R.layout.filter_list_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_view);
-//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
@@ -2837,8 +2729,7 @@ public class SyncTaskUtil {
         Button add_current_addr = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
         add_current_addr.setText(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_add_current_addr));
 
-        filterAdapter = new AdapterFilterList(mActivity,
-                R.layout.filter_list_item_view, filterList, false);
+        filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList, false);
         ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
 
         for (int i = 0; i < addr_list.size(); i++) {
@@ -3778,29 +3669,6 @@ public class SyncTaskUtil {
                     }
                 });
 
-//                ib_select_all.setOnClickListener(new OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        for (int i = 0; i < tfa.getDataItemCount(); i++) {
-//                            TreeFilelistItem tfli = tfa.getDataItem(i);
-//                            if (!tfli.isHideListItem()) tfa.setDataItemIsSelected(i);
-//                        }
-//                        tfa.notifyDataSetChanged();
-//                        btn_ok.setEnabled(true);
-//                    }
-//                });
-//
-//                ib_unselect_all.setOnClickListener(new OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        for (int i = 0; i < tfa.getDataItemCount(); i++) {
-//                            tfa.setDataItemIsUnselected(i);
-//                        }
-//                        tfa.notifyDataSetChanged();
-//                        btn_ok.setEnabled(false);
-//                    }
-//                });
-
                 //OKボタンの指定
                 CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -4354,12 +4222,7 @@ public class SyncTaskUtil {
                     String r_addr=null;
                     if (srv_name!=null) {
                         smb_server_item.server_name = srv_name;
-//                        r_addr=CommonUtilities.resolveHostName(mGp, mUtil, smb_level, srv_name);
-//                        if (r_addr!=null) {
-//                            if (r_addr.equals(addr)) smb_server_item.server_name = srv_name;
-//                        }
                     }
-//                    mUtil.addDebugMsg(1,"I","addr="+addr+", r_addr="+r_addr+", name="+srv_name+", server="+smb_server_item.server_name);
                     buildSmbServerList(smb_server_item, "", "", "", addr);
                     handler.post(new Runnable() {// UI thread
                         @Override
@@ -4617,7 +4480,6 @@ public class SyncTaskUtil {
               if (ff != null) {
                   for (int i = 0; i < ff.length; i++) {
                       if (!tc.isEnabled()) break;
-//				Log.v("","name="+ff[i].getName()+", d="+ff[i].isDirectory()+", r="+ff[i].canRead());
                       if (ff[i].canRead()) {
                           int dirct = 0;
                           if (ff[i].isDirectory()) {
@@ -4728,10 +4590,6 @@ public class SyncTaskUtil {
         final Dialog dialog=new Dialog(a, android.R.style.Theme_Translucent);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.progress_spin_indicator_dlg);
-//		RelativeLayout rl_view=(RelativeLayout)dialog.findViewById(R.id.progress_spin_indicator_dlg_view);
-//		rl_view.setBackgroundColor(Color.TRANSPARENT);
-//		ProgressBar pb_view=(ProgressBar)dialog.findViewById(R.id.progress_spin_indicator_dlg_progress_bar);
-//		pb_view.setBackgroundColor(Color.TRANSPARENT);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
@@ -5005,7 +4863,6 @@ public class SyncTaskUtil {
                     util.addDebugMsg(1,"I","createSyncTaskListFromFile profile="+lf.getPath());
                     String pl;
                     while ((pl = br.readLine()) != null) {
-//						Log.v("","read pl="+pl);
                         if (pl.startsWith(SMBSYNC2_PROF_VER7)) {
                             String prof_pre = "";
                             if (pl.startsWith(SMBSYNC2_PROF_VER7)) prof_pre = SMBSYNC2_PROF_VER7;
@@ -5142,7 +4999,6 @@ public class SyncTaskUtil {
 
     private static void addSyncTaskList(boolean sdcard, String pl, ArrayList<SyncTaskItem> sync,
                                         ArrayList<PreferenceParmListIItem> ispl, CommonUtilities util, CipherParms cp_autosave, boolean auto_save) {
-//		Log.v("","l="+ispl);
         if (pl.startsWith(SMBSYNC2_PROF_VER1)) {
             if (pl.length() > 10) {
                 addSyncTaskListVer1(pl.replace(SMBSYNC2_PROF_VER1, ""), sync);
@@ -7199,7 +7055,6 @@ public class SyncTaskUtil {
                             "end"
                     ;
 
-//					Log.v("","write pl="+pl);
                     if (sdcard) {
                         if (encrypt_required) {
                             String enc = Base64Compat.encodeToString(EncryptUtil.encrypt(pl, cp_sdcard), Base64Compat.NO_WRAP);
