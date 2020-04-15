@@ -282,8 +282,8 @@ public class ReadSmbFilelist implements Runnable {
             if (resolved_addr.contains(":")) remoteUrl="smb://"+"["+resolved_addr+"]"+"/"+t_share;
             else remoteUrl="smb://"+resolved_addr+"/"+t_share;
         } else {
-            if (resolved_addr.contains(":")) remoteUrl="smb://"+"["+resolved_addr+"]"+":"+remoteHostPort+"/"+t_share;
-            else remoteUrl="smb://"+resolved_addr+":"+remoteHostPort+"/"+t_share;
+            if (resolved_addr.contains(":")) remoteUrl="smb://"+"["+resolved_addr+"]"+remoteHostPort+"/"+t_share;
+            else remoteUrl="smb://"+resolved_addr+remoteHostPort+"/"+t_share;
         }
         mUtil.addDebugMsg(1, "I", "buildRemoteUrl result="+remoteUrl);
     }
