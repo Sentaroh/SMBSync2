@@ -310,6 +310,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">SMB V2(2.01)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">SMB V2(2.11)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">SMB V2/3(2.12)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">SMB V2/3(2.14)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">システムで判別</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">マスターフォルダーにエラーが存在しています。修正してください。</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_target_folder">ターゲットフォルダーにエラーが存在しています。修正してください。</string>

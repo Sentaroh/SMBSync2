@@ -98,9 +98,11 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB201);
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB211);
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB212);
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB214 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB214);
     public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT = SYNC_FOLDER_SMB_PROTOCOL_SMB212;
     public final static String[] SYNC_FOLDER_SMB_PROTOCOL_LIST=new String[]{
-            SYNC_FOLDER_SMB_PROTOCOL_SMB1, SYNC_FOLDER_SMB_PROTOCOL_SMB201, SYNC_FOLDER_SMB_PROTOCOL_SMB211, SYNC_FOLDER_SMB_PROTOCOL_SMB212};
+            SYNC_FOLDER_SMB_PROTOCOL_SMB1, SYNC_FOLDER_SMB_PROTOCOL_SMB201, SYNC_FOLDER_SMB_PROTOCOL_SMB211,
+            SYNC_FOLDER_SMB_PROTOCOL_SMB212, SYNC_FOLDER_SMB_PROTOCOL_SMB214};
 
     public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_DESCRIPTION = "SMB212";
     private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_DEFAULT;
