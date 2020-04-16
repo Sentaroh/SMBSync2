@@ -280,7 +280,7 @@ public class ActivityMain extends AppCompatActivity {
                     mUiHandler.post(new Runnable(){
                         @Override
                         public void run() {
-                            if (!isValidPrivateKey()) {
+                            if (!corrupted) {
                                 mCommonDlg.showCommonDialog(true, "E",mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_title),
                                         mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_msg), ntfy_priv_key);
                             } else {
