@@ -570,9 +570,9 @@ public class SyncThread extends Thread {
         long ms = TimeUnit.MILLISECONDS.toMillis(msecs);
 
         String sync_et = null;
-        if (hr != 0) sync_et = String.format("%2d:%02d:%02d", hr, min, sec);
-        else if (min != 0) sync_et = String.format("%2d min %2d.%02d sec", min, sec, ms/10);
-        else sync_et = String.format("%2d.%03d sec", sec, ms);
+        if (hr != 0) sync_et = String.format("%02d:%02d:%02d", hr, min, sec);
+        else if (min != 0) sync_et = String.format("%d min %d.%03d sec", min, sec, ms);
+        else sync_et = String.format("%d.%03d sec", sec, ms);
 
         String error_msg = "";
         if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR || sync_result == SyncTaskItem.SYNC_STATUS_WARNING) {
