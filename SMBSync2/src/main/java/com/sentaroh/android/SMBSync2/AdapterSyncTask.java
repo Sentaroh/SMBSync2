@@ -368,7 +368,10 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 String share = o.getTargetSmbShareName();
                 String dir = o.getTargetDirectoryName();
                 if (dir.equals("")) holder.tv_row_target.setText("smb://" + host + "/" + share);
-                else holder.tv_row_target.setText("smb://" + host + "/" + share + "/" + dir);
+                else {
+                    if (dir.startsWith("/")) holder.tv_row_target.setText("smb://" + host + "/" + share + dir);
+                    else holder.tv_row_target.setText("smb://" + host + "/" + share + "/"+ dir);
+                }
                 holder.iv_row_image_target.setImageResource(R.drawable.ic_32_server);
             }
 
