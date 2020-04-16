@@ -2388,6 +2388,7 @@ public class SyncTaskEditor extends DialogFragment {
             if (remote_host.equals("")) {
                 result = false;
                 setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_address_or_name));
+                CommonDialog.setViewEnabled(getActivity(), btn_sync_folder_smb_list_share, false);
             } else {
                 CommonDialog.setViewEnabled(getActivity(), btn_sync_folder_logon, true);
                 if (ctv_sync_folder_use_port.isChecked() && sync_folder_port.equals("")) {
@@ -2427,7 +2428,7 @@ public class SyncTaskEditor extends DialogFragment {
                     }
                     if (result && folder_share_name.equals("")) {
                         setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_share_name));
-                        CommonDialog.setViewEnabled(getActivity(), btn_sync_folder_smb_list_share, false);
+                        CommonDialog.setViewEnabled(getActivity(), btn_sync_folder_smb_list_share, true);
                         CommonDialog.setViewEnabled(getActivity(), btn_sync_folder_smb_list_dir, false);
                         result = false;
                     } else {
