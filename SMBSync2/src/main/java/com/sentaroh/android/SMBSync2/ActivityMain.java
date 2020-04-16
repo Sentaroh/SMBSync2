@@ -259,7 +259,7 @@ public class ActivityMain extends AppCompatActivity {
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
-            NotifyEvent ntfy_priv_key=new NotifyEvent(mContext);
+            final NotifyEvent ntfy_priv_key=new NotifyEvent(mContext);
             ntfy_priv_key.setListener(new NotifyEventListener() {
                 @Override
                 public void positiveResponse(Context context, Object[] objects) {
@@ -272,13 +272,25 @@ public class ActivityMain extends AppCompatActivity {
                     processOnResumeForStart();
                 }
             });
-            if (!isValidPrivateKey()) {
-                mCommonDlg.showCommonDialog(true, "E",mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_title),
-                        mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_msg), ntfy_priv_key);
-            } else {
-                processOnResumeForStart();
-            }
 
+            Thread th=new Thread() {
+                @Override
+                public void run() {
+                    final boolean corrupted=isValidPrivateKey();
+                    mUiHandler.post(new Runnable(){
+                        @Override
+                        public void run() {
+                            if (!isValidPrivateKey()) {
+                                mCommonDlg.showCommonDialog(true, "E",mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_title),
+                                        mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_msg), ntfy_priv_key);
+                            } else {
+                                processOnResumeForStart();
+                            }
+                        }
+                    });
+                }
+            };
+            th.start();
 
         }
     }
