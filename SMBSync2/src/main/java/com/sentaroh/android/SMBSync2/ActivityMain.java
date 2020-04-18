@@ -193,14 +193,14 @@ public class ActivityMain extends AppCompatActivity {
 
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
-        mActivity = this;
+        mActivity = ActivityMain.this;
         setTheme(mGp.applicationTheme);
-        mGp.themeColorList = CommonUtilities.getThemeColorList(this);
+        mGp.themeColorList = CommonUtilities.getThemeColorList(mActivity);
 //        getWindow().setNavigationBarColor(mGp.themeColorList.window_background_color_content);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
 
-        mUtil = new CommonUtilities(this.getApplicationContext(), "Main", mGp, getSupportFragmentManager());
+        mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
@@ -209,10 +209,10 @@ public class ActivityMain extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-        ccMenu = new CustomContextMenu(this.getResources(), getSupportFragmentManager());
-        mCommonDlg = new CommonDialog(this, getSupportFragmentManager());
-        mTaskUtil = new SyncTaskUtil(mUtil, this, mCommonDlg, ccMenu, mGp, getSupportFragmentManager());
-        mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mGp.msgList, mGp);
+        ccMenu = new CustomContextMenu(getResources(), getSupportFragmentManager());
+        mCommonDlg = new CommonDialog(mActivity, getSupportFragmentManager());
+        mTaskUtil = new SyncTaskUtil(mUtil, mActivity, mCommonDlg, ccMenu, mGp, getSupportFragmentManager());
+        mGp.msgListAdapter = new AdapterSyncMessage(mActivity, R.layout.msg_list_item_view, mGp.msgList, mGp);
 
         mGp.syncTabScheduleList = ScheduleUtil.loadScheduleData(mGp);
 
