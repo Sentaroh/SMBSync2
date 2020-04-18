@@ -13,12 +13,13 @@ import android.os.Vibrator;
 import android.view.Window;
 
 public class ActivityNotification extends Activity {
+    private ActivityNotification mActivity=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_transrucent);
-
+        mActivity=ActivityNotification.this;
         Intent in=getIntent();
         if (in!=null) {
             if (in.getBooleanExtra("SOUND",false)) playBackDefaultNotification(in.getIntExtra("SOUND_VOLUME",100));
@@ -40,7 +41,7 @@ public class ActivityNotification extends Activity {
     private void playBackDefaultNotification(int volume) {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         if (uri != null) {
-            final MediaPlayer player = MediaPlayer.create(this, uri);
+            final MediaPlayer player = MediaPlayer.create(mActivity, uri);
             if (player != null) {
                 float vol = (float) volume / 100.0f;
                 player.setVolume(vol, vol);

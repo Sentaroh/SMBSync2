@@ -89,7 +89,7 @@ public class SyncService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = this;//getApplicationContext();
+        mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mGp.safMgr.loadSafFile();
         mUtil = new CommonUtilities(mContext, "Service", mGp, null);
@@ -670,7 +670,7 @@ public class SyncService extends Service {
             if (NotificationUtil.isNotificationEnabled(mGp))
                 startForeground(R.string.app_name, mGp.notification);
             mGp.acquireWakeLock(mUtil);
-            NotifyEvent ntfy = new NotifyEvent(this);
+            NotifyEvent ntfy = new NotifyEvent(mContext);
             ntfy.setListener(new NotifyEventListener() {
                 @Override
                 public void positiveResponse(Context c, Object[] o) {

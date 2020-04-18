@@ -794,7 +794,7 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
         else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
 
-        mGp.msgListAdapter = new AdapterSyncMessage(this, R.layout.msg_list_item_view, mfl, mGp);
+        mGp.msgListAdapter = new AdapterSyncMessage(mActivity, R.layout.msg_list_item_view, mfl, mGp);
 
         mGp.syncHistoryAdapter = new AdapterSyncHistory(mActivity, R.layout.sync_history_list_item_view, vsa.sync_hist_list);
         mGp.syncHistoryAdapter.setShowCheckBox(vsa.sync_adapter_show_cb);
@@ -973,16 +973,16 @@ public class ActivityMain extends AppCompatActivity {
         mMainTabWidget.setStripEnabled(false);
         mMainTabWidget.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
 
-        CustomTabContentView tabViewProf = new CustomTabContentView(this, getString(R.string.msgs_tab_name_prof));
+        CustomTabContentView tabViewProf = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_prof));
         mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_TASK).setIndicator(tabViewProf).setContent(android.R.id.tabcontent));
 
-        CustomTabContentView tabViewSchedule = new CustomTabContentView(this, getString(R.string.msgs_tab_name_schedule));
+        CustomTabContentView tabViewSchedule = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_schedule));
         mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_SCHEDULE).setIndicator(tabViewSchedule).setContent(android.R.id.tabcontent));
 
-        CustomTabContentView tabViewHist = new CustomTabContentView(this, getString(R.string.msgs_tab_name_history));
+        CustomTabContentView tabViewHist = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_history));
         mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_HIST).setIndicator(tabViewHist).setContent(android.R.id.tabcontent));
 
-        CustomTabContentView tabViewMsg = new CustomTabContentView(this, getString(R.string.msgs_tab_name_msg));
+        CustomTabContentView tabViewMsg = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_msg));
         mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_MESSAGE).setIndicator(tabViewMsg).setContent(android.R.id.tabcontent));
 
         LinearLayout ll_main = (LinearLayout) findViewById(R.id.main_screen_view);
@@ -1091,7 +1091,7 @@ public class ActivityMain extends AppCompatActivity {
 
         createContextView();
 
-        mMainViewPagerAdapter = new CustomViewPagerAdapter(this,
+        mMainViewPagerAdapter = new CustomViewPagerAdapter(mActivity,
                 new View[]{mSyncTaskView, mScheduleView, mHistoryView, mMessageView});
         mMainViewPager = (CustomViewPager) findViewById(R.id.main_screen_pager);
 //	    mMainViewPager.setBackgroundColor(mThemeColorList.window_color_background);
@@ -1801,7 +1801,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void importSyncTaskAndParms() {
-        NotifyEvent ntfy = new NotifyEvent(this);
+        NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -1878,10 +1878,10 @@ public class ActivityMain extends AppCompatActivity {
         tab_widget.setStripEnabled(false);
         tab_widget.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
 
-        CustomTabContentView tabViewProf = new CustomTabContentView(this, getString(R.string.msgs_about_dlg_func_btn));
+        CustomTabContentView tabViewProf = new CustomTabContentView(mContext, getString(R.string.msgs_about_dlg_func_btn));
         tab_host.addTab(tab_host.newTabSpec("func").setIndicator(tabViewProf).setContent(android.R.id.tabcontent));
 
-        CustomTabContentView tabViewHist = new CustomTabContentView(this, getString(R.string.msgs_about_dlg_change_btn));
+        CustomTabContentView tabViewHist = new CustomTabContentView(mContext, getString(R.string.msgs_about_dlg_change_btn));
         tab_host.addTab(tab_host.newTabSpec("change").setIndicator(tabViewHist).setContent(android.R.id.tabcontent));
 
         LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -1899,7 +1899,7 @@ public class ActivityMain extends AppCompatActivity {
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         change_view.getSettings().setBuiltInZoomControls(true);
 
-        final CustomViewPagerAdapter mAboutViewPagerAdapter = new CustomViewPagerAdapter(this,
+        final CustomViewPagerAdapter mAboutViewPagerAdapter = new CustomViewPagerAdapter(mActivity,
                 new WebView[]{func_view, change_view});
         final CustomViewPager mAboutViewPager = (CustomViewPager) dialog.findViewById(R.id.about_view_pager);
 //	    mMainViewPager.setBackgroundColor(mThemeColorList.window_color_background);
@@ -2031,7 +2031,7 @@ public class ActivityMain extends AppCompatActivity {
 //            mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
 //            reloadScreen(false);
             finish();
-            Intent intent = new Intent(this, ActivityMain.class);
+            Intent intent = new Intent(mContext, ActivityMain.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
@@ -2099,7 +2099,7 @@ public class ActivityMain extends AppCompatActivity {
     private void invokeSettingsActivity() {
         mUtil.addDebugMsg(1, "I", "Invoke Settings.");
         Intent intent = null;
-        intent = new Intent(this, ActivitySettings.class);
+        intent = new Intent(mContext, ActivitySettings.class);
         startActivityForResult(intent, 0);
     }
 
@@ -3512,7 +3512,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         }
         if (del_cnt == mGp.syncHistoryAdapter.getCount()) del_all_history = true;
-        NotifyEvent ntfy = new NotifyEvent(this);
+        NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {

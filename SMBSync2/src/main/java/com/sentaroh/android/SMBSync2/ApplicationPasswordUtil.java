@@ -310,15 +310,15 @@ public class ApplicationPasswordUtil {
             if (et_pswd1.getText().length()>0 && et_pswd2.getText().length()>0) {
                 if (et_pswd1.getText().toString().equals(et_pswd2.getText().toString())) {
                     btn_ok.setEnabled(true);
-                    msg.setText(gp.appContext.getString(com.sentaroh.android.Utilities.R.string.msgs_password_input_preference_match));
+                    msg.setText(gp.appContext.getString(R.string.msgs_password_input_preference_match));
                 } else {
-                    msg.setText(gp.appContext.getString(com.sentaroh.android.Utilities.R.string.msgs_password_input_preference_unmatch));
+                    msg.setText(gp.appContext.getString(R.string.msgs_password_input_preference_unmatch));
                 }
             } else {
                 if (et_pswd1.getText().length()==0) {
-                    msg.setText(gp.appContext.getString(com.sentaroh.android.Utilities.R.string.msgs_password_input_preference_new_not_specified));
+                    msg.setText(gp.appContext.getString(R.string.msgs_password_input_preference_new_not_specified));
                 } else {
-                    msg.setText(gp.appContext.getString(com.sentaroh.android.Utilities.R.string.msgs_password_input_preference_conf_not_specified));
+                    msg.setText(gp.appContext.getString(R.string.msgs_password_input_preference_conf_not_specified));
                 }
             }
         } else {

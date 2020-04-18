@@ -89,7 +89,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mContext = this;
+        mContext = getApplicationContext();
 //        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -101,8 +101,8 @@ public class ActivitySettings extends PreferenceActivity {
 //        setTheme(mGp.applicationTheme);
         super.onCreate(savedInstanceState);
 
-        mPrefActivity = this;
-        if (mUtil == null) mUtil = new CommonUtilities(this, "SettingsActivity", mGp, null);
+        mPrefActivity = ActivitySettings.this;
+        if (mUtil == null) mUtil = new CommonUtilities(mPrefActivity, "SettingsActivity", mGp, null);
         if (mGp.settingDebugLevel > 0)
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (mGp.settingFixDeviceOrientationToPortrait)
@@ -134,13 +134,13 @@ public class ActivitySettings extends PreferenceActivity {
 
     @Override
     public boolean onIsMultiPane() {
-        mContext = this;
+        mContext =getApplicationContext();
 //        mGp = (GlobalParameters) getApplication();
 //        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
 
 //    	mPrefActivity=this;
-        mUtil = new CommonUtilities(this, "SettingsActivity", mGp, null);
+        mUtil = new CommonUtilities(mPrefActivity, "SettingsActivity", mGp, null);
         if (mGp.settingDebugLevel > 0)
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         return isTablet(mContext);
@@ -437,7 +437,7 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mPrefFrag = this;
+            mPrefFrag = SettingsSync.this;
             mUtil = new CommonUtilities(mContext, "SettingsSync", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
@@ -491,7 +491,7 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mPrefFrag = this;
+            mPrefFrag = SettingsLog.this;
             mUtil = new CommonUtilities(mContext, "SettingsLog", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
@@ -538,7 +538,7 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mPrefFrag = this;
+            mPrefFrag = SettingsMisc.this;
             mUtil = new CommonUtilities(mContext, "SettingsMisc", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
@@ -589,7 +589,7 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mPrefFrag = this;
+            mPrefFrag = SettingsSmb.this;
             mUtil = new CommonUtilities(mContext, "SettingsSmb", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
@@ -653,7 +653,7 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mPrefFrag = this;
+            mPrefFrag = SettingsUi.this;
             mUtil = new CommonUtilities(mContext, "SettingsUi", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
@@ -719,7 +719,7 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mPrefFrag = this;
+            mPrefFrag = SettingsSecurity.this;
             mUtil = new CommonUtilities(mContext, "SettingsSecurity", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");

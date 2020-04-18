@@ -26,13 +26,15 @@ OTHER DEALINGS IN THE SOFTWARE.
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 
 public class ShortcutMakeAutoSync extends Activity {
-
+    private ShortcutMakeAutoSync mActivity=null;
+    private Context mContext=null;
     @TargetApi(25)
     @SuppressLint("NewApi")
     @Override
@@ -40,8 +42,10 @@ public class ShortcutMakeAutoSync extends Activity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.main);
 
+        mActivity=ShortcutMakeAutoSync.this;
+        mContext=mActivity.getApplicationContext();
         Intent shortcutIntent = new Intent(Intent.ACTION_VIEW);
-        shortcutIntent.setClassName(this, ShortcutAutoSync.class.getName());
+        shortcutIntent.setClassName(mActivity, ShortcutAutoSync.class.getName());
         String shortcutName = getString(R.string.app_name_auto_sync);
 
         if (Build.VERSION.SDK_INT >= 26) {
@@ -63,7 +67,7 @@ public class ShortcutMakeAutoSync extends Activity {
             intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
             intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutName);
             Parcelable iconResource =
-                    Intent.ShortcutIconResource.fromContext(this, R.drawable.auto_sync);
+                    Intent.ShortcutIconResource.fromContext(mContext, R.drawable.auto_sync);
             intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
             intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
             setResult(RESULT_OK, intent);
@@ -72,7 +76,7 @@ public class ShortcutMakeAutoSync extends Activity {
             intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
             intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcutName);
             Parcelable iconResource =
-                    Intent.ShortcutIconResource.fromContext(this, R.drawable.auto_sync);
+                    Intent.ShortcutIconResource.fromContext(mContext, R.drawable.auto_sync);
             intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
             intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
             setResult(RESULT_OK, intent);

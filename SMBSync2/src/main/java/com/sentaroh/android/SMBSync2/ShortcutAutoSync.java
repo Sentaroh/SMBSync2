@@ -42,6 +42,7 @@ public class ShortcutAutoSync extends FragmentActivity {
 
     private CommonUtilities mUtil = null;
     private GlobalParameters mGp = null;
+    private ShortcutAutoSync mActivity=null;
 
     private int restartStatus = 0;
     private boolean displayDialogRequired = false;
@@ -64,7 +65,7 @@ public class ShortcutAutoSync extends FragmentActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_transrucent);
-
+        mActivity=ShortcutAutoSync.this;
 //        envParms.loadSettingParms(context);
 //        mUtil=new CommonUtilities(context, "ShortCutSleep", envParms);
 //        mGp = (GlobalParameters) getApplication();
@@ -72,10 +73,10 @@ public class ShortcutAutoSync extends FragmentActivity {
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         if (mGp.themeColorList == null) {
-            mGp.themeColorList = CommonUtilities.getThemeColorList(this);
+            mGp.themeColorList = CommonUtilities.getThemeColorList(mActivity);
         }
 
-        mUtil = new CommonUtilities(this.getApplicationContext(), "Shortcuut", mGp, getSupportFragmentManager());
+        mUtil = new CommonUtilities(mActivity.getApplicationContext(), "Shortcuut", mGp, getSupportFragmentManager());
 
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
         // Application process is follow

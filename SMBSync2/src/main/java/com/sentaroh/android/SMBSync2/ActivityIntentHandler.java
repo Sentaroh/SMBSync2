@@ -15,7 +15,7 @@ public class ActivityIntentHandler extends Activity {
         Intent received_intent=getIntent();
         if (received_intent.getAction()!=null && !received_intent.getAction().equals("")) {
             Intent in=new Intent(received_intent.getAction());
-            in.setClass(this, SyncReceiver.class);
+            in.setClass(ActivityIntentHandler.this, SyncReceiver.class);
             if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
             sendBroadcast(in,null);
         }
