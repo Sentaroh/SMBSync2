@@ -47,10 +47,10 @@ public class ActivityPasswordSettings extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
-        mActivity = this;
+        mActivity = ActivityPasswordSettings.this;
         setTheme(mGp.applicationTheme);
         if (mGp.themeColorList == null) {
-            mGp.themeColorList = CommonUtilities.getThemeColorList(this);
+            mGp.themeColorList = CommonUtilities.getThemeColorList(mActivity);
         }
 
         //Remove notification bar
@@ -60,9 +60,9 @@ public class ActivityPasswordSettings extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        mUtil = new CommonUtilities(this.getApplicationContext(), "AppPswd", mGp, getSupportFragmentManager());
+        mUtil = new CommonUtilities(mActivity.getApplicationContext(), "AppPswd", mGp, getSupportFragmentManager());
 
-        commonDlg = new CommonDialog(this, getSupportFragmentManager());
+        commonDlg = new CommonDialog(mActivity, getSupportFragmentManager());
         setResult(RESULT_OK);
 
         mPreferenceView=(LinearLayout)findViewById(R.id.preference_application_password_dlg_view);
