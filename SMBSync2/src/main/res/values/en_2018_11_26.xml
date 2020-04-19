@@ -199,7 +199,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_main_sync_history_status_cancel">Canceled</string>
         <string name="msgs_main_sync_history_status_error">Error</string>
         <string name="msgs_main_sync_history_status_running">Running</string>
-        <string name="msgs_main_sync_history_status_success">Succeded</string>
+        <string name="msgs_main_sync_history_status_success">Succeeded</string>
         <string name="msgs_main_sync_history_status_warning">Warning</string>
         <string name="msgs_main_sync_list_array_activ_activ">AUTO</string>
         <string name="msgs_main_sync_list_array_activ_inact">MANUAL</string>
