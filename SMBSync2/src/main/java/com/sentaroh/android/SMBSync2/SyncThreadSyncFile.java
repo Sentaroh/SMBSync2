@@ -749,6 +749,7 @@ public class SyncThreadSyncFile {
             if (isMovieFile(from_path) || isPictureFile(from_path)) {
                 if (isPictureFile(from_path)) taken_date=SyncThreadArchiveFile.getExifDateTime(stwa, is);
                 else taken_date=SyncThreadArchiveFile.getMp4ExifDateTime(stwa, is);
+                try {is.close();} catch (Exception e) {};
                 if (taken_date!=null && taken_date.length==2 && taken_date[0]!=null && taken_date[1]!=null) {
                     SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
                     Date date = null;
