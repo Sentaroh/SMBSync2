@@ -276,7 +276,7 @@ public class SyncThreadSyncZip {
         if (sti.isTargetZipUseExternalSdcard()) {
             File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache");
             lf.mkdirs();
-            stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/zip_work_file.zip";
+            stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache"+dest_file;
             if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
             zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
         } else {
