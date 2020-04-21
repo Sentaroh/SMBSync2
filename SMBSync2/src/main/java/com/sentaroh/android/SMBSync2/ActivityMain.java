@@ -193,6 +193,7 @@ public class ActivityMain extends AppCompatActivity {
 
         mContext = getApplicationContext();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
+        mGp.loadSettingsParms();
         mActivity = ActivityMain.this;
         setTheme(mGp.applicationTheme);
         mGp.themeColorList = CommonUtilities.getThemeColorList(mActivity);
@@ -2030,10 +2031,16 @@ public class ActivityMain extends AppCompatActivity {
 //            setTheme(mGp.applicationTheme);
 //            mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
 //            reloadScreen(false);
+            mGp.settingExitClean=false;
             finish();
-            Intent intent = new Intent(mContext, ActivityMain.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            mUiHandler.postDelayed(new Runnable(){
+                @Override
+                public void run() {
+                    Intent intent = new Intent(mContext, ActivityMain.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            }, 500);
         }
 
         if (mGp.settingFixDeviceOrientationToPortrait)
