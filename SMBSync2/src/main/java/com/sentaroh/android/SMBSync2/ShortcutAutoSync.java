@@ -26,6 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -121,9 +122,17 @@ public class ShortcutAutoSync extends FragmentActivity {
 //                        in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
 //                        mContext.startService(in);
 //                    }
-                    Intent in = new Intent(mContext, SyncService.class);
-                    in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
-                    mContext.startService(in);
+                    if (Build.VERSION.SDK_INT<26) {//Android 5/6/7
+                        mUtil.addDebugMsg(1,"I","startService issued");
+                        Intent in = new Intent(mContext, SyncService.class);
+                        in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
+                        mContext.startService(in);
+                    } else {//Android 8/9/10
+                        mUtil.addDebugMsg(1,"I","startActivity issued");
+                        Intent in = new Intent(SMBSYNC2_AUTO_SYNC_INTENT);
+                        in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(in);
+                    }
                     terminateShortcut();
                 }
 
