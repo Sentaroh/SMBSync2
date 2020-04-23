@@ -35,6 +35,7 @@ import android.view.Window;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 
+import static com.sentaroh.android.SMBSync2.Constants.PACKAGE_NAME;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_AUTO_SYNC_INTENT;
 
 public class ShortcutAutoSync extends FragmentActivity {
@@ -130,6 +131,7 @@ public class ShortcutAutoSync extends FragmentActivity {
                     } else {//Android 8/9/10
                         mUtil.addDebugMsg(1,"I","startActivity issued");
                         Intent in = new Intent(SMBSYNC2_AUTO_SYNC_INTENT);
+                        in.setClassName(PACKAGE_NAME, PACKAGE_NAME+".ActivityIntentHandler");
                         in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(in);
                     }
