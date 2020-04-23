@@ -2812,7 +2812,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
+        spinner.setPrompt(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_title));
         spinner.setAdapter(adapter);
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest));
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast));
@@ -2908,7 +2908,6 @@ public class SyncTaskEditor extends DialogFragment {
 
     private void setSpinnerSyncFolderType(SyncTaskItem sti, Spinner spinner, String cv, boolean master) {
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
-        String sync_type=spinnerSyncType.getSelectedItem().toString();
         CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
@@ -2972,7 +2971,6 @@ public class SyncTaskEditor extends DialogFragment {
 
     private void setSpinnerSyncFolderTypeWithUsb(SyncTaskItem sti, Spinner spinner, String cv, boolean master) {
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
-        String sync_type=spinnerSyncType.getSelectedItem().toString();
         CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
@@ -3320,7 +3318,7 @@ public class SyncTaskEditor extends DialogFragment {
         ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write.setChecked(n_sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite());
         setCtvListenerForEditSyncTask(ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write, type, n_sti, dlg_msg);
 
-        final CheckedTextView ctv_sync_remove_master_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_remove_directory_if_empty_when_move);
+        final CheckedTextView ctv_sync_remove_master_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
         ctv_sync_remove_master_if_empty.setChecked(n_sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty());
         setCtvListenerForEditSyncTask(ctv_sync_remove_master_if_empty, type, n_sti, dlg_msg);
 
@@ -4364,7 +4362,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_global_ip_address);
 
-        final CheckedTextView ctv_sync_remove_master_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_remove_directory_if_empty_when_move);
+        final CheckedTextView ctv_sync_remove_master_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
 
         final Spinner spinnerSyncDiffTimeValue = (Spinner) dialog.findViewById(R.id.edit_sync_task_option_spinner_diff_file_determin_time_value);
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
@@ -4565,11 +4563,13 @@ public class SyncTaskEditor extends DialogFragment {
         final LinearLayout ll_ctDeterminChangedFileByTime = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_sync_diff_use_last_mod_time_view);
 
         final LinearLayout ll_diff_time_allowed_time = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_diff_file_determin_time_value_view);
+        final LinearLayout ll_sync_remove_master_if_empty = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_remove_directory_if_empty_when_move_view);
+
 
         final CheckedTextView ctvDeterminChangedFileSizeGtTarget = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_file_size_greater_than_target);
         final CheckedTextView ctvDiffUseFileSize = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_file_size);
 
-        final CheckedTextView ctv_sync_remove_master_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_remove_directory_if_empty_when_move);
+        final CheckedTextView ctv_sync_remove_master_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
 
         final LinearLayout ll_edit_sync_tak_option_keep_conflict_file=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file_view);
         final LinearLayout ll_spinnerTwoWaySyncConflictRule=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_view);
@@ -4582,6 +4582,14 @@ public class SyncTaskEditor extends DialogFragment {
         ll_edit_sync_tak_option_keep_conflict_file.setVisibility(LinearLayout.GONE);
         ll_spinnerTwoWaySyncConflictRule.setVisibility(LinearLayout.GONE);
         swap_master_target.setVisibility(Button.VISIBLE);
+
+        if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) {
+            ll_sync_remove_master_if_empty.setVisibility(CheckedTextView.VISIBLE);
+        } else {
+            ll_sync_remove_master_if_empty.setVisibility(CheckedTextView.GONE);
+            ctv_sync_remove_master_if_empty.setChecked(false);
+        }
+
         if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
             ll_file_filter.setVisibility(LinearLayout.GONE);
 

@@ -547,12 +547,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/edit_sync_task_option_remove_directory_if_empty_when_move_view"
+                android:id="@+id/edit_sync_task_option_ll_remove_directory_if_empty_when_move_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_remove_directory_if_empty_when_move"
+                    android:id="@+id/edit_sync_task_option_ctv_remove_directory_if_empty_when_move"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
