@@ -2812,7 +2812,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
+        spinner.setPrompt(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_title));
         spinner.setAdapter(adapter);
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest));
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast));
@@ -2908,7 +2908,6 @@ public class SyncTaskEditor extends DialogFragment {
 
     private void setSpinnerSyncFolderType(SyncTaskItem sti, Spinner spinner, String cv, boolean master) {
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
-        String sync_type=spinnerSyncType.getSelectedItem().toString();
         CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
@@ -2972,7 +2971,6 @@ public class SyncTaskEditor extends DialogFragment {
 
     private void setSpinnerSyncFolderTypeWithUsb(SyncTaskItem sti, Spinner spinner, String cv, boolean master) {
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
-        String sync_type=spinnerSyncType.getSelectedItem().toString();
         CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
