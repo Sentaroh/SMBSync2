@@ -3672,8 +3672,12 @@ public class SyncTaskEditor extends DialogFragment {
                     }
                 } else {
                     ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
+                    setSpinnerSyncTaskDiffTimeValue(spinnerSyncDiffTimeValue, n_sti.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT);
                     ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(false);
                     ctv_ignore_dst_difference.setChecked(false);
+                    n_sti.initOffsetOfDst();
+                    setSpinnerSyncTaskDstOffsetValue(spinnerSyncDstOffsetValue, n_sti.getSyncOptionOffsetOfDst());
+                    // setSpinnerSyncTaskDstOffsetValue(spinnerSyncDstOffsetValue, n_sti.SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -3688,6 +3692,9 @@ public class SyncTaskEditor extends DialogFragment {
                     ll_offset_dst_view.setVisibility(LinearLayout.VISIBLE);
                 } else {
                     ll_offset_dst_view.setVisibility(LinearLayout.GONE);
+                    n_sti.initOffsetOfDst();
+                    setSpinnerSyncTaskDstOffsetValue(spinnerSyncDstOffsetValue, n_sti.getSyncOptionOffsetOfDst());
+                    // setSpinnerSyncTaskDstOffsetValue(spinnerSyncDstOffsetValue, n_sti.SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
