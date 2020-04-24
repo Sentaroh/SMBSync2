@@ -239,9 +239,9 @@ class SyncTaskItem implements Serializable, Cloneable {
         initOffsetOfDst();
     }
 
-    private void initOffsetOfDst() {
+    public void initOffsetOfDst() {
         if (TimeZone.getDefault().useDaylightTime()) setSyncOptionOffsetOfDst(TimeZone.getDefault().getDSTSavings()/(60*1000));
-        else setSyncOptionOffsetOfDst(60);
+        else setSyncOptionOffsetOfDst(SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
     }
 
     public String getSyncTaskName() {return syncTasｋName;}
