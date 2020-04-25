@@ -3651,8 +3651,6 @@ public class SyncTaskEditor extends DialogFragment {
             }
         } else {
             ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
-            ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(false);
-            ctv_ignore_dst_difference.setChecked(false);
             ll_offset_dst_view.setVisibility(LinearLayout.GONE);
         }
         ctDeterminChangedFileByTime.setOnClickListener(new OnClickListener() {
@@ -3669,8 +3667,6 @@ public class SyncTaskEditor extends DialogFragment {
                     }
                 } else {
                     ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
-                    ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(false);
-                    ctv_ignore_dst_difference.setChecked(false);
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -4544,16 +4540,16 @@ public class SyncTaskEditor extends DialogFragment {
 //        final CheckedTextView ctvSyncHiddenFile = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_hidden_file);
 
         final LinearLayout ll_ctvProcessOverride = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_process_override_delete_file);
-        final LinearLayout ll_ctvConfirmOverride = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_confirm_override_delete_file);
+//        final LinearLayout ll_ctvConfirmOverride = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_confirm_override_delete_file);
 
 //        final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
 //        final CheckedTextView ctvShowSpecialOption = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
-        final LinearLayout ll_ctvDoNotResetFileLasyMod = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_do_mot_reset_file_last_mod_time);
-        final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time);
+        final LinearLayout ll_ctvDoNotResetFileLastMod = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_do_mot_reset_file_last_mod_time);
+//        final CheckedTextView ctvDoNotResetRemoteFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time);
 
         final LinearLayout ll_ctvUseSmbsyncLastMod = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_use_smbsync_last_mod_time_view);
         final CheckedTextView ctvUseSmbsyncLastMod = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_use_smbsync_last_mod_time);
-        final CheckedTextView ctv_ignore_dst_difference = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_ignore_dst_difference);
+//        final CheckedTextView ctv_ignore_dst_difference = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_ignore_dst_difference);
 //        final CheckedTextView ctvRetry = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
 //        final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
 //        final CheckedTextView ctvTestMode = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_test_mode);
@@ -4563,7 +4559,6 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctDeterminChangedFileByTime = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_last_mod_time);
         final LinearLayout ll_DeterminChangedFileByTime_dependant_view=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_sync_diff_use_last_mod_time_dependant_view);
 
-        final LinearLayout ll_diff_time_allowed_time = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_diff_file_determin_time_value_view);
         final LinearLayout ll_sync_remove_master_if_empty = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_remove_directory_if_empty_when_move_view);
 
 
@@ -4591,49 +4586,43 @@ public class SyncTaskEditor extends DialogFragment {
             ctv_sync_remove_master_if_empty.setChecked(false);
         }
 
+        if (!n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
+            ll_ctvUseSmbsyncLastMod.setVisibility(LinearLayout.GONE);
+            ctvUseSmbsyncLastMod.setChecked(false);
+        } else ll_ctvUseSmbsyncLastMod.setVisibility(LinearLayout.VISIBLE);
+
         if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
             ll_file_filter.setVisibility(LinearLayout.GONE);
 
             ll_ctvProcessOverride.setVisibility(CheckedTextView.GONE);
 //            ll_ctvConfirmOverride.setVisibility(CheckedTextView.GONE);
 
-            ll_ctvDoNotResetFileLasyMod.setVisibility(CheckedTextView.GONE);
+            ll_ctvDoNotResetFileLastMod.setVisibility(CheckedTextView.GONE);
+            ll_ctvDiffUseFileSize.setVisibility(CheckedTextView.GONE);
+
             ll_ctvUseSmbsyncLastMod.setVisibility(CheckedTextView.GONE);
 
-            ll_ctvDiffUseFileSize.setVisibility(CheckedTextView.GONE);
             ll_ctDeterminChangedFileByTime.setVisibility(CheckedTextView.GONE);
-
-            ll_diff_time_allowed_time.setVisibility(CheckedTextView.GONE);
+            ll_DeterminChangedFileByTime_dependant_view.setVisibility(CheckedTextView.GONE);
         } else {
             ll_file_filter.setVisibility(LinearLayout.VISIBLE);
 
             ll_ctvProcessOverride.setVisibility(CheckedTextView.VISIBLE);
 //            ll_ctvConfirmOverride.setVisibility(CheckedTextView.VISIBLE);
 
-            ll_ctvDoNotResetFileLasyMod.setVisibility(CheckedTextView.VISIBLE);
-            ll_ctvUseSmbsyncLastMod.setVisibility(CheckedTextView.VISIBLE);
+            ll_ctvDoNotResetFileLastMod.setVisibility(CheckedTextView.VISIBLE);
 
             ll_ctvDiffUseFileSize.setVisibility(CheckedTextView.VISIBLE);
 
             if (ctvDiffUseFileSize.isChecked() && ctvDeterminChangedFileSizeGtTarget.isChecked()) {
                 ll_ctvUseSmbsyncLastMod.setVisibility(LinearLayout.GONE);
                 ll_ctDeterminChangedFileByTime.setVisibility(LinearLayout.GONE);
-                ll_diff_time_allowed_time.setVisibility(LinearLayout.GONE);
+                ctDeterminChangedFileByTime.setChecked(false); // mandatory if we want that this option forces a compare by size only mode, no checks inside code to bypass time diff if sizes are the same
+                ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
             } else {
-                if (ctvDoNotResetRemoteFile.isChecked()) {
-                    ll_ctvUseSmbsyncLastMod.setVisibility(LinearLayout.GONE);
-                    ctvUseSmbsyncLastMod.setChecked(false);
-                    ll_ctDeterminChangedFileByTime.setVisibility(LinearLayout.GONE);
-                    ctDeterminChangedFileByTime.setChecked(false);
-                    ll_diff_time_allowed_time.setVisibility(LinearLayout.GONE);
-                    ctv_ignore_dst_difference.setChecked(false);
-                } else {
-                    ll_ctvUseSmbsyncLastMod.setVisibility(LinearLayout.VISIBLE);
-                    ll_ctDeterminChangedFileByTime.setVisibility(LinearLayout.VISIBLE);
-                    ll_diff_time_allowed_time.setVisibility(LinearLayout.VISIBLE);
-                    if (ctDeterminChangedFileByTime.isChecked()) ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.VISIBLE);
-                    else ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
-                }
+                ll_ctDeterminChangedFileByTime.setVisibility(LinearLayout.VISIBLE);
+                if (ctDeterminChangedFileByTime.isChecked()) ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.VISIBLE);
+                else ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
             }
 
             if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) {

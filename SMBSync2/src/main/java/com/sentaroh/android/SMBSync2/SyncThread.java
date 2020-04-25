@@ -2512,7 +2512,7 @@ public class SyncThread extends Thread {
         if (exists_diff || (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) || ac) {
             diff = true;
         } else {//Check lastModified()
-            if (!sti.isSyncDoNotResetFileLastModified() && sti.isSyncOptionDifferentFileByTime()) {
+            if (sti.isSyncOptionDifferentFileByTime()) {
                 if ((time_diff > stwa.syncDifferentFileAllowableTime)) { //LastModified was changed
                     if (sti.isSyncOptionIgnoreDstDifference()) {
                         if (Math.abs(time_diff-stwa.offsetOfDaylightSavingTime)<=stwa.syncDifferentFileAllowableTime) {
