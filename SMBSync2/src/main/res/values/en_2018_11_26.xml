@@ -421,7 +421,8 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_sync_task_sync_option_sync_when_charging">Execute sync tasks only when charging</string>
         <string name="msgs_profile_sync_task_sync_option_test_mode">Test mode (do not copy or delete files)</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Use enhanced directory selection filter</string>
-        <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Network Option</string>
+        <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Network Options:</string>
+        <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Wifi AP Options:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Write files directly to the SMB folder without using temporary files</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
         <string name="msgs_profile_sync_task_option_remove_directory_if_empty_when_move">(Sync type only moves) Delete the master directory when the master directory is empty.</string>

@@ -3284,6 +3284,7 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
         final LinearLayout ll_wifi_condition_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_wifi_condition_view);
+        final LinearLayout ll_spinner_wifi_status = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_spinner_wifi_status);
         final LinearLayout ll_wifi_wl_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_wl_view);
         final LinearLayout ll_wifi_wl_ap_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ap_list_view);
         final LinearLayout ll_wifi_wl_address_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_address_list_view);
@@ -3321,6 +3322,17 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctv_sync_remove_master_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
         ctv_sync_remove_master_if_empty.setChecked(n_sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty());
         setCtvListenerForEditSyncTask(ctv_sync_remove_master_if_empty, type, n_sti, dlg_msg);
+
+        final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
+        CommonUtilities.setCheckedTextView(ctvRetry);
+        if (n_sti.getSyncOptionRetryCount().equals("0")) ctvRetry.setChecked(false);
+        else ctvRetry.setChecked(true);
+        setCtvListenerForEditSyncTask(ctvRetry, type, n_sti, dlg_msg);
+
+        final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
+        CommonUtilities.setCheckedTextView(ctvSyncUseRemoteSmallIoArea);
+        ctvSyncUseRemoteSmallIoArea.setChecked(n_sti.isSyncOptionUseSmallIoBuffer());
+        setCtvListenerForEditSyncTask(ctvSyncUseRemoteSmallIoArea, type, n_sti, dlg_msg);
 
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
         setSpinnerSyncTaskWifiOption(spinnerSyncWifiStatus, n_sti.getSyncOptionWifiStatusOption());
@@ -3568,17 +3580,6 @@ public class SyncTaskEditor extends DialogFragment {
         CommonUtilities.setCheckedTextView(ctvUseSmbsyncLastMod);
         ctvUseSmbsyncLastMod.setChecked(n_sti.isSyncDetectLastModifiedBySmbsync());
         setCtvListenerForEditSyncTask(ctvUseSmbsyncLastMod, type, n_sti, dlg_msg);
-
-        final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
-        CommonUtilities.setCheckedTextView(ctvRetry);
-        if (n_sti.getSyncOptionRetryCount().equals("0")) ctvRetry.setChecked(false);
-        else ctvRetry.setChecked(true);
-        setCtvListenerForEditSyncTask(ctvRetry, type, n_sti, dlg_msg);
-
-        final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
-        CommonUtilities.setCheckedTextView(ctvSyncUseRemoteSmallIoArea);
-        ctvSyncUseRemoteSmallIoArea.setChecked(n_sti.isSyncOptionUseSmallIoBuffer());
-        setCtvListenerForEditSyncTask(ctvSyncUseRemoteSmallIoArea, type, n_sti, dlg_msg);
 
         final CheckedTextView ctvTestMode = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_test_mode);
         ctvTestMode.setOnClickListener(new OnClickListener() {
