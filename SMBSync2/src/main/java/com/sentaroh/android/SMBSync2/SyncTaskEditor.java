@@ -3323,6 +3323,7 @@ public class SyncTaskEditor extends DialogFragment {
         ctv_sync_remove_master_if_empty.setChecked(n_sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty());
         setCtvListenerForEditSyncTask(ctv_sync_remove_master_if_empty, type, n_sti, dlg_msg);
 
+        final LinearLayout ll_advanced_network_option_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_advanced_network_option_view);
         final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
         CommonUtilities.setCheckedTextView(ctvRetry);
         if (n_sti.getSyncOptionRetryCount().equals("0")) ctvRetry.setChecked(false);
@@ -3337,7 +3338,8 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
         setSpinnerSyncTaskWifiOption(spinnerSyncWifiStatus, n_sti.getSyncOptionWifiStatusOption());
         if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) || n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-            ll_wifi_condition_view.setVisibility(Button.VISIBLE);
+            ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
+            ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
             if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
                 ll_wifi_wl_view.setVisibility(Button.VISIBLE);
                 ll_wifi_wl_ap_view.setVisibility(Button.VISIBLE);
@@ -3346,7 +3348,8 @@ public class SyncTaskEditor extends DialogFragment {
                 ll_wifi_wl_ap_view.setVisibility(Button.GONE);
             }
         } else {
-            ll_wifi_condition_view.setVisibility(Button.GONE);
+            ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
+            ll_advanced_network_option_view.setVisibility(LinearLayout.GONE);
         }
 
         spinnerSyncWifiStatus.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -3763,9 +3766,11 @@ public class SyncTaskEditor extends DialogFragment {
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                         if (!prev_master_folder_type.equals(n_sti.getMasterFolderType())) {
                             ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
+                            ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
                             if ((!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                                     !n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB))) {
                                 ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
+                                ll_advanced_network_option_view.setVisibility(LinearLayout.GONE);
                             } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
                                     n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
@@ -3922,9 +3927,11 @@ public class SyncTaskEditor extends DialogFragment {
 
                         if (!prev_target_folder_type.equals(n_sti.getTargetFolderType())) {
                             ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
+                            ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
                             if (!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                                     !n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
+                                ll_advanced_network_option_view.setVisibility(LinearLayout.GONE);
                             } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
                                     n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {

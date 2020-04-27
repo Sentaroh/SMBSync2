@@ -415,6 +415,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">Select Daylight Saving Time offset (minutes)</string>
         <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">Do not set last modified time of destination file to match source file</string>
         <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">Overwrite destination file(s)</string>
+        <string name="msgs_profile_sync_task_sync_option_network_adv_options">Network advanced options:</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Retry on network error</string>
         <string name="msgs_profile_sync_task_sync_option_show_special_option">Show advanced options</string>
         <string name="msgs_profile_sync_task_sync_option_sub_dir">Include subdirectories</string>
