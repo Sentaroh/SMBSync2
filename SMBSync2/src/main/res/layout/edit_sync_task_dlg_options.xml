@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-	    <TextView
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center_vertical"
-	        android:layout_weight="1"
-	        android:text="@string/msgs_profile_sync_task_sync_option"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/msgs_profile_sync_task_sync_option"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>
 
@@ -104,6 +104,18 @@
                 android:layout_gravity="center_vertical"
                 android:text="@string/msgs_profile_sync_task_sync_option_wifi_condition_title"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_spinner_wifi_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/msgs_profile_sync_task_sync_option_spinner_wifi_title"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
             <Spinner
                 android:id="@+id/edit_sync_task_option_spinner_wifi_status"
                 style="?android:attr/spinnerStyle"
@@ -180,11 +192,12 @@
                     android:text="@string/msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
+            <include layout="@layout/divider_line1" />
             <CheckedTextView
                 android:id="@+id/edit_sync_task_option_sync_allow_global_ip_address"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:gravity="center_vertical"
                 android:text="@string/msgs_profile_sync_task_sync_option_sync_allow_global_ip_address"
@@ -290,22 +303,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/edit_sync_task_option_ll_retry_if_error_occured"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_ctv_retry_if_error_occured"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:gravity="center_vertical"
-                    android:text="@string/msgs_profile_sync_task_sync_option_retry_if_error_occured"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-                <include layout="@layout/divider_line1" />
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/edit_sync_task_option_ll_sync_use_extended_filter1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -336,7 +333,36 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
                 <include layout="@layout/divider_line1" />
             </LinearLayout>
-
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_retry_if_error_occured"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_retry_if_error_occured"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_retry_if_error_occured"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_sync_use_remote_small_io_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_use_remote_small_io_area"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_use_small_ioarea"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/edit_sync_task_option_ll_do_mot_reset_file_last_mod_time"
                 android:layout_width="match_parent"
@@ -365,22 +391,6 @@
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_last_modified_smbsync"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-                <include layout="@layout/divider_line1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/edit_sync_task_option_ll_sync_use_remote_small_io_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_ctv_sync_use_remote_small_io_area"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:gravity="center_vertical"
-                    android:text="@string/msgs_profile_sync_task_sync_use_small_ioarea"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
                 <include layout="@layout/divider_line1" />
             </LinearLayout>
