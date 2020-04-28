@@ -415,6 +415,7 @@
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">Выберите смещение летнего времени (минуты)</string>
         <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">Не устанавливайте время обновления файла назначения в соответствии с исходным файлом</string>
         <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">Перезаписать целевой файл (файлы)</string>
+        <string name="msgs_profile_sync_task_sync_option_network_adv_options">Расширенные возможности сети:</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Повторите попытку при сетевой ошибке</string>
         <string name="msgs_profile_sync_task_sync_option_show_special_option">Показать расширенные опции</string>
         <string name="msgs_profile_sync_task_sync_option_sub_dir">Включить подкаталоги</string>

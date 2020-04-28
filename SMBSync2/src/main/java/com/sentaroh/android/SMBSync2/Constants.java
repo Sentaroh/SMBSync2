@@ -102,10 +102,10 @@ public class Constants {
     public final static String SMBSYNC2_SERVICE_MEDIA_STATUS_CAHNGED="com.sentaroh.android."+APPLICATION_TAG+".ACTION_MEDIA_STATUS_CHANGED";
 
 
-    public final static String SMBSYNC2_SYNC_REQUEST_ACTIVITY="ACTIVITY";
-	public final static String SMBSYNC2_SYNC_REQUEST_EXTERNAL="EXTERNAL";
-	public final static String SMBSYNC2_SYNC_REQUEST_SHORTCUT="SHORTCUT";
-	public final static String SMBSYNC2_SYNC_REQUEST_SCHEDULE="SCHEDULE";
+    public final static String SMBSYNC2_SYNC_REQUEST_ACTIVITY="ACTIVITY"; // need translation im History
+	public final static String SMBSYNC2_SYNC_REQUEST_EXTERNAL="EXTERNAL"; // need translation im History
+	public final static String SMBSYNC2_SYNC_REQUEST_SHORTCUT="SHORTCUT"; // need translation im History
+	public final static String SMBSYNC2_SYNC_REQUEST_SCHEDULE="SCHEDULE"; // need translation im History
 	
 	public final static String SMBSYNC2_PROF_TYPE_SYNC="S";
 	public final static String SMBSYNC2_PROF_TYPE_SETTINGS="T";

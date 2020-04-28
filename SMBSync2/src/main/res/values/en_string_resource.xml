@@ -8,7 +8,7 @@
         <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.htm</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Select tasks and settings to import</string>
-        <string name="msgs_export_import_profile_listing">List settings file</string>
+        <string name="msgs_export_import_profile_listing">List configuration files</string>
         <string name="msgs_export_import_profile_setting_parms">Restore global application settings</string>
         <string name="msgs_export_import_profile_schedule_parms">Restore task schedule settings</string>
         <string name="msgs_export_import_profile_select_all">Select all</string>
@@ -75,7 +75,7 @@
         <string name="msgs_security_application_password_create_title">Create App password</string>
         <string name="msgs_security_application_password_create_min_length_is_4_digit">Password requires 4 characters or more.</string>
         <string name="msgs_security_application_password_create_forget_recovery">If you forget your password please initialize or reinstall the application.</string>
-        <string name="msgs_security_application_password_create_forget_warning">If you forget your password, you will need to initialize or reinstall the application so please do not forget it.</string>
+        <string name="msgs_security_application_password_create_forget_warning">If you forget your password, you will need to initialize or reinstall the application. Continue ?</string>
         <string name="msgs_security_application_password_auth_title">App password authentication</string>
         <string name="msgs_security_application_password_auth_specify_password">Please specify app password</string>
         <string name="msgs_security_application_password_auth_wrong_password_specified">Password is incorrect.</string>
@@ -130,9 +130,9 @@
         <string name="msgs_your_problem_hint">Example: The sdcard is not recognized by SMBSync2.</string>
         <string name="msgs_your_problem_no_desc">There is no description about your problem/question. Do you want to send it anyway?</string>
         <string name="msgs_log_activate_pinned">Auto Scroll disabled</string>
-        <string name="msgs_log_confirm_clear_all_msg">Delete log entry?</string>
+        <string name="msgs_log_confirm_clear_all_msg">Delete all message entries ?</string>
         <string name="msgs_log_inactivate_pinned">Auto Scroll enabled</string>
-        <string name="msgs_log_msg_cleared">Log message cleared</string>
+        <string name="msgs_log_msg_cleared">Log messages cleared</string>
         <string name="msgs_main_app_specific_dir_used_msg">The selected storage path is located under the application data folder.  This directory, and any data you have saved there, will be deleted when the application is uninstalled.</string>
         <string name="msgs_main_app_specific_dir_used_suppress">Disable this warning (can be enabled again in user interface settings)</string>
         <string name="msgs_main_app_specific_dir_used_title">Warning about using the application data folder</string>
@@ -394,19 +394,19 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_sync_task_sync_file_type_specific">Select files for sync</string>
         <string name="msgs_profile_sync_task_sync_file_type_video">Sync video files</string>
         <string name="msgs_profile_sync_task_sync_option">Options:</string>
-        <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Min allowed time difference (in seconds) between source and destination files for synchronization</string>
+        <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Min allowed time difference (in seconds) between source and destination files</string>
         <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Skip task if the WLAN is not connected to the specified access point, or if WLAN IP does not match the specified IP address.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Allow sync with all IP addresses (include public)</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirm before overwrite/delete</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Delete files prior to sync (available in Mirror mode)</string>
-        <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Files are considered different only if size of the source is larger than the destination (Size only compare, disables time difference).</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Size only compare (files are considered different only if size of the source is larger than the destination)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">Use file size to determine if files are different</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time">Use time of last modification to determine if files are different</string>
         <string name="msgs_profile_sync_task_sync_option_empty_directory">Include empty directories</string>
         <string name="msgs_profile_sync_task_sync_option_hidden_directory">Include hidden directories</string>
         <string name="msgs_profile_sync_task_sync_option_hidden_file">Include hidden files</string>
         <string name="msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled">File sync skipped because \"Do not overwrite destination file if it is newer than source file\" option is enabled.</string>
-        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Skipping directory and file names that contain invalid characters (\", :, \\, *, &lt;, &gt; \|)</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Skip directory and file names that contain invalid characters (\", :, \\, *, &lt;, &gt; \|)</string>
         <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Obtain last modification time of files from SMBSync2 application custom list</string>
         <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">Sync includes the files located directly in root of the source directory (if unchecked, only folders and their files/subfolders are synchronized)</string>
         <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file">Do not overwrite destination file if it is newer than source file</string>
@@ -415,6 +415,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">Select Daylight Saving Time offset (minutes)</string>
         <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">Do not set last modified time of destination file to match source file</string>
         <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">Overwrite destination file(s)</string>
+        <string name="msgs_profile_sync_task_sync_option_network_adv_options">Network advanced options:</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Retry on network error</string>
         <string name="msgs_profile_sync_task_sync_option_show_special_option">Show advanced options</string>
         <string name="msgs_profile_sync_task_sync_option_sub_dir">Include subdirectories</string>
@@ -440,7 +441,7 @@ If the "Open From" panel is not displayed, tap the menu button in the upper left
         <string name="msgs_remote_profile_dlg_logon_success">Logon Successful</string>
         <string name="msgs_rename_profile">Rename task</string>
         <string name="msgs_save_to_profile_error">Failed to save the sync settings file: %s</string>
-        <string name="msgs_select_export_file">Select export file</string>
+        <string name="msgs_select_export_file">Select export destination</string>
         <string name="msgs_select_import_file">Select import file</string>
         <string name="msgs_select_local_dir">Select local directory</string>
         <string name="msgs_select_sdcard_dir">Select SDCARD directory</string>
@@ -786,7 +787,7 @@ Schedule: %s, Task: %s</string>
         <string name="settings_log_title">Logging</string>
         <string name="settings_mgt_dir">settings_mgt_dir</string>
         <string name="settings_mgt_dir_summary">Not specified=</string>
-        <string name="settings_mgt_dir_title">Path to app data files</string>
+        <string name="settings_mgt_dir_title">Path to configuration files</string>
         <string name="settings_put_logcat_option">settings_put_logcat_option</string>
         <string name="settings_put_logcat_option_summary_ena">Send event messages to Android Logcat</string>
         <string name="settings_put_logcat_option_title">Enable Android Logcat</string>
@@ -804,7 +805,7 @@ Schedule: %s, Task: %s</string>
         <string name="settings_security_application_password_desc_change">Change application password</string>
         <string name="settings_security_application_password_desc_remove">Remove application password</string>
         <string name="settings_security_application_password_confirm_remove">Do you want to remove App password?</string>
-        <string name="settings_security_application_password_protect_title">Items to protect</string>
+        <string name="settings_security_application_password_protect_title">Password protection settings</string>
         <string name="settings_security_application_password_use_app_startup_title">Prompt for password on application start</string>
         <string name="settings_security_application_password_use_app_startup">settings_security_application_password_use_app_startup</string>
         <string name="settings_security_application_password_use_edit_task_title">Prompt for password when editing a task</string>
@@ -815,7 +816,7 @@ Schedule: %s, Task: %s</string>
         <string name="settings_security_init_smb_account_password">settings_security_init_smb_account_password</string>
         <string name="settings_security_use_auth_timeout_title">Require user to reauthenticate after 30 minutes</string>
         <string name="settings_security_use_auth_timeout">settings_security_use_auth_timeout</string>
-        <string name="settings_default_current_setting">current settings=</string>
+        <string name="settings_default_current_setting">current path=</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Display app in portrait mode</string>
         <string name="settings_device_orientation_portrait_title">Force Portrait Mode</string>
@@ -838,12 +839,12 @@ Schedule: %s, Task: %s</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">Do Not Compress These File Types</string>
         <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
-        <string name="settings_notification_message_when_sync_ended_dialog_title">Select notification message type</string>
+        <string name="settings_notification_message_when_sync_ended_dialog_title">Select notifications to display</string>
         <string-array name="settings_notification_message_when_sync_ended_list_entries">
-            <item>Disable notifications</item>
+            <item>Disable all notifications</item>
             <item>Show all notifications</item>
-            <item>Only show notifications for tasks that complete successfully</item>
-            <item>Only show notifications for tasks that complete with errors</item>
+            <item>Only for tasks that complete successfully</item>
+            <item>Only for tasks that complete with errors</item>
         </string-array >
         <string-array name="settings_notification_message_when_sync_ended_list_values">
             <item>0</item>
@@ -862,12 +863,12 @@ Schedule: %s, Task: %s</string>
         <string name="settings_playback_ringtone_volume_summary">%s%% of system volume</string>
         <string name="settings_playback_ringtone_volume_title">Notification Sound Volume</string>
         <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
-        <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Select when to play notification sound</string>
+        <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Select when to play the default notification sound</string>
         <string-array name="settings_playback_ringtone_when_sync_ended_list_entries">
             <item>Disable notification sound</item>
-            <item>Play default notification sound for all completed tasks</item>
-            <item>Play default notification sound for tasks that complete successfully</item>
-            <item>Play default notification sound for tasks that complete with errors</item>
+            <item>Play for all completed tasks</item>
+            <item>Play only for tasks that complete successfully</item>
+            <item>Play only for tasks that complete with errors</item>
         </string-array >
         <string-array name="settings_playback_ringtone_when_sync_ended_list_values">
             <item>0</item>
@@ -879,7 +880,7 @@ Schedule: %s, Task: %s</string>
         <string name="settings_playback_ringtone_when_sync_ended_summary_error">Play default notification sound for tasks that complete with errors</string>
         <string name="settings_playback_ringtone_when_sync_ended_summary_no">Disable notification sound</string>
         <string name="settings_playback_ringtone_when_sync_ended_summary_success">Play default notification sound for tasks that complete successfully</string>
-        <string name="settings_playback_ringtone_when_sync_ended_title">Notification Sounds</string>
+        <string name="settings_playback_ringtone_when_sync_ended_title">Notifications Sound</string>
         <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
         <string name="settings_smb_client_response_timeout_dialog_title">Choose response timeout delay (in milliseconds)</string>
         <string-array name="settings_smb_client_response_timeout_list_entries">
@@ -922,8 +923,8 @@ Schedule: %s, Task: %s</string>
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
         <string name="settings_smb_use_extended_security_title">Use Extended Security</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
-        <string name="settings_suppress_warning_app_specific_dir_summary_ena">Disable warning when app data folder is included in sync task</string>
-        <string name="settings_suppress_warning_app_specific_dir_title">Do Not Warn When Syncing App Data Directory</string>
+        <string name="settings_suppress_warning_app_specific_dir_summary_ena">Disable warning when app settings folder is included in sync task</string>
+        <string name="settings_suppress_warning_app_specific_dir_title">Do Not Warn When Syncing Settings Directory</string>
         <string name="settings_suppress_warning_location_service_disabled">settings_suppress_warning_location_service_disabled</string>
         <string name="settings_suppress_warning_location_service_enabled_summary_ena">Disable warning for location service enabling.</string>
         <string name="settings_suppress_warning_location_service_enabled_title">Do not warn when location service disabled.</string>
@@ -952,9 +953,9 @@ Schedule: %s, Task: %s</string>
         <string name="settings_vibrate_when_sync_ended_dialog_title">Select when to vibrate on notifications</string>
         <string-array name="settings_vibrate_when_sync_ended_list_entries">
             <item>Never vibrate on notifications</item>
-            <item>Vibrate on notification for all completed tasks</item>
-            <item>Vibrate on notification for tasks that complete successfully</item>
-            <item>Vibrate on notification for tasks that complete with errors</item>
+            <item>Vibrate for all completed tasks</item>
+            <item>Only for tasks that complete successfully</item>
+            <item>Only for tasks that complete with errors</item>
         </string-array >
         <string-array name="settings_vibrate_when_sync_ended_list_values">
             <item>0</item>

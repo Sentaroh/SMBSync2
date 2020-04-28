@@ -413,6 +413,7 @@
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">夏時間と標準時の時間差(分)の選択</string>
         <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">ターゲットファイルの最終更新時刻をマスターと同じにしない</string>
         <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">ファイルを上書きする</string>
+        <string name="msgs_profile_sync_task_sync_option_network_adv_options">ネットワークの詳細オプション:</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">ネットワークエラーが発生した場合にリトライする</string>
         <string name="msgs_profile_sync_task_sync_option_show_special_option">詳細オプションを表示する</string>
         <string name="msgs_profile_sync_task_sync_option_sub_dir">サブディレクトリーを処理する</string>
