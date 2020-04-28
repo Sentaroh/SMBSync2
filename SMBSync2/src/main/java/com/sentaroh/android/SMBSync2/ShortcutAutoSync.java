@@ -123,18 +123,22 @@ public class ShortcutAutoSync extends FragmentActivity {
 //                        in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
 //                        mContext.startService(in);
 //                    }
-                    if (Build.VERSION.SDK_INT<26) {//Android 5/6/7
-                        mUtil.addDebugMsg(1,"I","startService issued");
-                        Intent in = new Intent(mContext, SyncService.class);
-                        in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
-                        mContext.startService(in);
-                    } else {//Android 8/9/10
-                        mUtil.addDebugMsg(1,"I","startActivity issued");
-                        Intent in = new Intent(SMBSYNC2_AUTO_SYNC_INTENT);
-                        in.setClassName(PACKAGE_NAME, PACKAGE_NAME+".ActivityIntentHandler");
-                        in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        mContext.startActivity(in);
-                    }
+                    mUtil.addDebugMsg(1,"I","startService issued");
+                    Intent in = new Intent(mContext, SyncService.class);
+                    in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
+                    mContext.startService(in);
+//                    if (Build.VERSION.SDK_INT<26) {//Android 5/6/7
+//                        mUtil.addDebugMsg(1,"I","startService issued");
+//                        Intent in = new Intent(mContext, SyncService.class);
+//                        in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
+//                        mContext.startService(in);
+//                    } else {//Android 8/9/10
+//                        mUtil.addDebugMsg(1,"I","startActivity issued");
+//                        Intent in = new Intent(SMBSYNC2_AUTO_SYNC_INTENT);
+//                        in.setClassName(PACKAGE_NAME, PACKAGE_NAME+".ActivityIntentHandler");
+//                        in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        mContext.startActivity(in);
+//                    }
                     terminateShortcut();
                 }
 
