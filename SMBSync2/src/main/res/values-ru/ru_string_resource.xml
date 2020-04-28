@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- About -->
+        <string name="msgs_about_dlg_func_btn">Функции</string>
+        <string name="msgs_about_dlg_change_btn">Журнал изменений</string>
+        <string name="msgs_dlg_title_about">О программе SMBSync2</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_EN_Short.htm</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.htm</string>
+    <!-- Export/Import -->
+        <string name="msgs_export_import_profile_title">Импорт файла задания</string>
+        <string name="msgs_export_import_profile_listing">Список файлов</string>
+        <string name="msgs_export_import_profile_setting_parms">Параметры задания</string>
+        <string name="msgs_export_import_profile_schedule_parms">Расписание задания</string>
+        <string name="msgs_export_import_profile_select_all">Выбрать все</string>
+        <string name="msgs_export_import_profile_unselect_all">Снять выделение</string>
+        <string name="msgs_export_import_profile_confirm_override">Импортируемый файл содержит задания, имена которых соответствуют существующим заданиям. Перезаписать существующие задачи?</string>
+        <string name="msgs_export_import_profile_import_success">Следующие задачи успешно импортированы</string>
+        <string name="msgs_export_import_profile_import_failed">Не удалось импортировать. Проверьте вкладку "Сообщения" для уточнения.</string>
+        <string name="msgs_export_import_profile_reset_current_profile">Удалить все существующие задачи перед импортом?</string>
+        <string name="msgs_export_import_profile_import_settings">Параметры задания</string>
+        <string name="msgs_export_import_profile_import_schedule">Расписание задания</string>
+        <string name="msgs_export_import_profile_no_import_items">Элементы для импорта не выбраны.</string>
+        <string name="msgs_import_autosave_dlg_title">Импортировать список задач</string>
+        <string name="msgs_import_autosave_dlg_select_exported_file">Выберите другой файл</string>
+        <string name="msgs_import_autosave_dlg_autosave_list">Список задач сохраненный автоматически</string>
+        <string name="msgs_import_autosave_dlg_manual_save_list">Список задач сохраненный вручную</string>
+        <string name="msgs_import_autosave_dlg_autosave_failed">Автосохранение задачи синхронизации не удалось</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed">Задача синхронизации цспешно сохранилась</string>
+        <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
+        <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (последний сохраненный файл)</string>
+        <string name="msgs_export_import_profile_smb_account_name_password_not_restored">Не удалось импортировать имя учетной записи, пароль учетной записи или пароль ZIP, использованные в следующих задачах. Если вы автоматически сохраните задачу синхронизации, а затем переустановите приложение, вы не сможете расшифровать имя своей учетной записи, пароль учетной записи и пароль ZIP. Отредактируйте задачу синхронизации, чтобы исправить ее на правильное значение.</string>
+        <string name="msgs_export_import_pswd_password_title">Защита списка задач при помощи пароля</string>
+        <string name="msgs_export_import_pswd_password_protect">Защита файла экспорта паролем</string>
+        <string name="msgs_export_import_pswd_specify_password">Пожалуйста, введите пароль.</string>
+        <string name="msgs_export_import_pswd_password_required">Введите пароль для файла списка задач.</string>
+        <string name="msgs_export_import_pswd_invalid_password">Неверный пароль. Попробуйте еще раз.</string>
+        <string name="msgs_export_import_pswd_btn_cancel">Отмена</string>
+        <string name="msgs_export_import_task_list_btn_ok">Импорт</string>
+        <string name="msgs_export_import_pswd_btn_ok">Ок</string>
+        <string name="msgs_export_import_pswd_hint_password">Введите пароль</string>
+        <string name="msgs_export_import_pswd_hint_confirm">Подтвердите пароль</string>
+        <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Пароли не совпадают.</string>
+    <!-- Help -->
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_EN_task.htm</string>
+        <string name="msgs_help_sync_task_title">Справка по задачам синхронизации</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_EN_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_title">Справка по внутреннему хранилищу</string>
+        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_EN_folder_sdcard.htm</string>
+        <string name="msgs_help_sync_folder_sdcard_title">Справка по карте памяти</string>
+        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_EN_folder_usb.htm</string>
+        <string name="msgs_help_sync_folder_usb_title">Справка по USB</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_EN_folder_smb.htm</string>
+        <string name="msgs_help_sync_folder_smb_title">Справка по SMB-серверу</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_EN_folder_zip.htm</string>
+        <string name="msgs_help_sync_folder_zip_title">Справка по ZIP файлу</string>
+        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_EN_task_picture.htm</string>
+        <string name="msgs_help_sync_task_picture_title">Справка по синхронизации в картинках</string>
+    <!-- Log management -->
+        <string name="msgs_log_management_title">Управление журналом</string>
+        <string name="msgs_log_management_label_delete">Удалить файл журнала</string>
+        <string name="msgs_log_management_label_share">Поделиться файлом журнала</string>
+        <string name="msgs_log_management_label_select_all">Выбрать все файлы</string>
+        <string name="msgs_log_management_label_unselect_all">Снять выделение</string>
+        <string name="msgs_log_management_no_log_file">Файлы журнала отсутствуют</string>
+        <string name="msgs_log_management_delete_confirm_msg">Удалить файлы журнала?</string>
+        <string name="msgs_log_management_dlg_close">Закрыть</string>
+        <string name="msgs_log_management_dlg_send_zip_file_creating">Создать ZIP файл</string>
+        <string name="msgs_log_management_dlg_send_zip_file_cancelled">Создание ZIP файла отменено</string>
+        <string name="msgs_log_management_log_file_switched">Файл журнала переключен</string>
+        <string name="msgs_log_management_enable_log_file_warning">Следующие данные будут записаны в файл журнала, если его включить. \nВерсия Android, Имя устройства, Имя каталога, Имя файла, Имя учетной записи SMB, IP-адрес, Имя сетевого интерфейса, Настройки системы, Информация о приложении</string>
+        <string name="msgs_log_management_send_log_file_warning">Отправить файл журнала по электронной почте разработчику. Файл журнала содержит версию Android, имя устройства, имя каталога, имя файла, имя учетной записи SMB, IP-адрес, имя сетевого интерфейса, настройки системы и информацию о приложении.\n1.Нажмите кнопку предварительного просмотра, чтобы увидеть файл temp_log.txt, затем проверьте содержимое. (Если отображается экран выбора приложения то выберите приложение для отображения текстового файла.)\n2.По окончании чтения файла для отправки выберите E-Mail в диалоговом окне выбора EMail. \n3.Пожалуйста, введите проблему/вопрос в тексте электронного письма и отправьте электронное письмо. (Файл журнала прилагается в zip)</string>
+    <!-- Main -->
+        <string name="msgs_active_sync_prof_not_found">Задача автоматической синхронизации не найдена.</string>
+        <string name="msgs_add_sync_profile">Добавить задачу синхронизации</string>
+        <string name="msgs_security_application_password_create_title">Задать пароль на приложение</string>
+        <string name="msgs_security_application_password_create_min_length_is_4_digit">Для пароля требуется минимум 4 символа.</string>
+        <string name="msgs_security_application_password_create_forget_recovery">Если вы забыли свой пароль, пожалуйста переустановите приложение.</string>
+        <string name="msgs_security_application_password_create_forget_warning">Если вы забудите свой пароль, вам потребуется переустановка приложения, поэтому не забывайте его.</string>
+        <string name="msgs_security_application_password_auth_title">Проверка подлинности пароля приложения</string>
+        <string name="msgs_security_application_password_auth_specify_password">Пожалуйста, укажите пароль для приложения</string>
+        <string name="msgs_security_application_password_auth_wrong_password_specified">Неверный пароль.</string>
+        <string name="msgs_audit_hostname_not_spec">Укажите имя удаленного сервера или его IP адрес.</string>
+        <string name="msgs_audit_hostport_not_spec">Укажите номер порта сервера.</string>
+        <string name="msgs_audit_msgs_local_dir">Имя локального каталога содержит %s. Неверный символ удален.</string>
+        <string name="msgs_audit_share_not_spec">Укажите название общего ресурса.</string>
+        <string name="msgs_clear_log_message">Очистить сообщения журнала.</string>
+        <string name="msgs_cont_button_diabled_by_sync">Запрошенная операция была проигнорированна во время синхронизации.</string>
+        <string name="msgs_copy_sync_profile">Копировать процесс синхронизации</string>
+        <string name="msgs_create_profile_error">Не удалось создать файл списка задач: %s</string>
+        <string name="msgs_create_profile_not_found">Не удалось создать профиль. Имя файла %s не найдено.</string>
+        <string name="msgs_current_dir">Текущий каталог:</string>
+        <string name="msgs_delete_following_profile">Удалить следующие задачи?</string>
+        <string name="msgs_dir_empty">Каталог не найден</string>
+        <string name="msgs_duplicate_task_name">Задача с таким именем существует.</string>
+        <string name="msgs_edit_sync_profile">Изменить задачу синхронизации</string>
+        <string name="msgs_export_prof_fail">Не удалось экспортировать список задач.</string>
+        <string name="msgs_export_prof_success">Список задач успешно экспортирован.</string>
+        <string name="msgs_export_prof_title">Экспорт списка задач</string>
+        <string name="msgs_extra_data_sync_profile_type_error">Синхронизация отменена, поскольку синхронизация не String.</string>
+        <string name="msgs_filelist_cancel">Создание удаленного списка файлов отменено.</string>
+        <string name="msgs_filelist_error">Произошла ошибка при создании списка файлов SMB.</string>
+        <string name="msgs_filter_edit_dlg_title">Изменить фтльтр</string>
+        <string name="msgs_filter_list_dlg_add">Добавить</string>
+        <string name="msgs_filter_list_dlg_add_dir_filter">Добавить фтльтр каталогов</string>
+        <string name="msgs_filter_list_dlg_close">Закрыть</string>
+        <string name="msgs_filter_list_dlg_dir_filter">Фильтр каталогов</string>
+        <string name="msgs_filter_list_dlg_file_filter">Фильтр файлов</string>
+        <string name="msgs_filter_list_dlg_filter_added">Фильтр %s был добавлен.</string>
+        <string name="msgs_filter_list_dlg_filter_hint">Фильтр</string>
+        <string name="msgs_filter_list_dlg_not_specified">Не определен</string>
+        <string name="msgs_filter_list_duplicate_filter_specified">%s уже существует.</string>
+        <string name="msgs_filter_list_filter_deleted">Эта запись была удалена.</string>
+        <string name="msgs_filter_list_same_directory_access">Фильтр недействителен. Исходный и целевой каталоги одинаковы. Фильтр =%s</string>
+        <string name="msgs_filter_list_same_directory_access_not_excluded">Пожалуйста, исключите отредактируйте каталоги таким образом, чтобы имходный и целевой каталоги отличались. Каталог =%s</string>
+        <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
+        <string name="msgs_hist_cont_label_delete">Удалить историю</string>
+        <string name="msgs_hist_cont_label_move_bottom">Двигаться вниз</string>
+        <string name="msgs_hist_cont_label_move_top">Переместить наверх</string>
+        <string name="msgs_hist_cont_label_select_all">Выбрать все элементы истории</string>
+        <string name="msgs_hist_cont_label_share">Общий ресурс</string>
+        <string name="msgs_hist_cont_label_unselect_all">Удалить все элементы истории</string>
+        <string name="msgs_import_prof_fail">Не удалось импортировать список задач</string>
+        <string name="msgs_import_prof_fail_no_valid_item">%s не содержит допустимых элементов задачи.</string>
+        <string name="msgs_info_storage_copy_clipboard">Копировать</string>
+        <string name="msgs_info_storage_copy_completed">Скопировано в буфер обмена</string>
+        <string name="msgs_info_storage_send_btn_title">Отправить разработчику</string>
+        <string name="msgs_info_storage_title">Хранение информации</string>
+        <string name="msgs_your_problem_title">Ваша проблема/вопрос о SMBSync2</string>
+        <string name="msgs_your_problem_msg">Пожалуйста, заполните детали вашей проблемы или вопроса о SMBSync2.</string>
+        <string name="msgs_your_problem_hint">Пример: SDCard не распознается SMBSync2.</string>
+        <string name="msgs_your_problem_no_desc">Проблема / вопрос не описан в отношении SMBSync2, вы хотите отправить его в любом случае?</string>
+        <string name="msgs_log_activate_pinned">Автопрокрутка отключена</string>
+        <string name="msgs_log_confirm_clear_all_msg">Удалить запись в журнале?</string>
+        <string name="msgs_log_inactivate_pinned">Автопрокрутка включена</string>
+        <string name="msgs_log_msg_cleared">Сообщение очищено</string>
+        <string name="msgs_main_app_specific_dir_used_msg">В качестве места хранения выбран каталог приложения. Этот каталог и все данные, которые вы там сохранили, удаляются при удалении приложения.</string>
+        <string name="msgs_main_app_specific_dir_used_suppress">Отключить это предупреждение (можно включить в настройках интерфейса пользователя)</string>
+        <string name="msgs_main_app_specific_dir_used_title">Предупреждение об использовании каталога приложения</string>
+        <string name="msgs_main_location_service_warning_msg_location">Начиная с Android 8.1, следующая задача будет завершена с ошибкой, поскольку служба определения местоположения отключена. Пожалуйста, включите службу определения местоположения в настройках системы или измените параметр синхронизации на «при подключении к точке доступа», «частный адрес» или «список IP-адресов».</string>
+        <string name="msgs_main_location_service_warning_msg_coarse">Начиная с Android 8.1, следующие задачи не имеют «Разрешение определения низкой точности», поэтому синхронизация завершается с ошибкой. Пожалуйста, дайте разрешение из меню или измените на «Частный адрес» или «Список IP-адресов», если «Подключен к точке доступа» в опции синхронизации.</string>
+        <string name="msgs_main_location_service_warning_msg_both">«В Android 8.1 следующие задачи будут завершены с ошибкой, поскольку служба определения местоположения и местоположение с низкой точностью недоступны. Выполните одно из следующих действий: \n1. Включите службу определения местоположения в настройках системы, После этого дайте «разрешение на локацию низкой точности» из меню приложения. \n2 Измените на «Частный адрес» или «Список IP-адресов», когда «Подключен к точке доступа» в опции синхронизации.</string>
+        <string name="msgs_main_location_error_location_service_is_disabled">Не удается получить имя точки доступа WiFi, поскольку служба определения местоположения не включена. Пожалуйста, включите местоположение в настроек.</string>
+        <string name="msgs_main_location_error_location_permission_not_granted">Невозможно получить имя точки доступа WiFi, поскольку местоположение с низкой точностью не доступно. Пожалуйста, выберите местоположение низкой точности в меню.</string>
+        <string name="msgs_main_location_error_background_location_permission_not_granted">Невозможно получить имя точки доступа WiFi, поскольку определение местоположения с низкой точностью - «Разрешено только при использовании приложения». Пожалуйста, измените местоположение низкой точности в меню на «Всегда разрешать».</string>
+        <string name="msgs_main_location_service_warning_suppress">Не показывать это предупреждение снова в следующий раз</string>
+        <string name="msgs_main_location_service_warning_title">Предупреждение службы определения местоположения</string>
+        <string name="msgs_main_external_sdcard_mp_changed_title">Карта SD</string>
+        <string name="msgs_main_external_sdcard_select_activity_not_found_msg">Не удалось получить разрешение на запись SD карты.</string>
+        <string name="msgs_main_external_sdcard_select_required_cancel_msg">Вы не можите синхронизироваться, пока не будет предоставлено разрешение на запись в SD карту.</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">Для доступа к SDCARD: нажмите  SDCARD »(1), затем нажмите «Выбрать»(2). \n
+\n
+Если панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу. </string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">Для доступа к SDCARD: нажмите  SDCARD »(1), затем нажмите «Выбрать»(2). \n
+\n
+Если панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу. </string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_EN.png</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_EN.png</string>
+        <string name="msgs_main_external_sdcard_select_required_title">Разрешить запись на SDCARD</string>
+        <string name="msgs_main_external_sdcard_select_retry_select_msg">Корневой каталог SDCARD не был выбран. Хотите выбрать заново?</string>
+        <string name="msgs_main_external_sdcard_select_retry_select_usb_selected_msg">Было выбрано хранилище, которое не может быть использовано SMBSync2. Хотите вместо этого выбрать SDCARD?</string>
+        <string name="msgs_main_external_sdcard_select_required_mountpoint_does_not_exists">Вы не можете использовать SDCARD с SMBSync2, потому что нет точки монтирования. Точка монтирования = %s</string>
+        <string name="msgs_main_external_usb_mp_changed_title">USB Media</string>
+        <string name="msgs_main_external_usb_select_activity_not_found_msg">Не удалось получить разрешение на запись USB-носитель.</string>
+        <string name="msgs_main_external_usb_drive_not_found_msg">USB-носитель не подключен. Закройте окно, а затем подключите USB-носитель для выполнения операции.</string>
+        <string name="msgs_main_external_usb_select_path_not_available_msg">Точка монтирования /storage/% s не найдена. SMBSync2 не может использовать этот USB-носитель.</string>
+        <string name="msgs_main_external_usb_select_required_cancel_msg">%s. Вы не сможете выполнить синхронизацию, пока не получите разрешение записи на USB-носитель.</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_api23">Для доступа к USB-носителю: нажмите«USB»(1), затем нажмите «Выбрать»(2). \n
+\n
+Если панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу.</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_EN.png</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_EN.png</string>
+        <string name="msgs_main_external_usb_select_required_title">Разрешить запись на USB-носитель</string>
+        <string name="msgs_main_external_usb_select_retry_select_msg">Корневой каталог USB-носителя не был выбран. Хотите его выбрать?</string>
+        <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARD была выбрана. Хотите повторно выбрать USB-накопитель?</string>
+        <string name="msgs_main_permission_coarse_location_denied_msg">Если в задаче синхронизации указать «подключиться к SSID» или «Список точек доступа» до тех пор, пока не будет предоставлено разрешение, будет прекращено с ошибкой. Чтобы предоставить разрешение, запустите «Разрешение на неточное расположение» из меню.</string>
+        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 привилегии, необходимые для чтения SSID WiFi. \nЕсли вы укажете \ "Список точек доступа \" в задаче синхронизации, пока не будет предоставлено разрешение, завершится с ошибкой. \nВы хотите запросить разрешение на неточное местоопределение?</string>
+        <string name="msgs_main_permission_coarse_location_title">Разрешение на неточное местоположение</string>
+        <string name="msgs_main_permission_external_storage_denied_msg">Невозможно запустить приложение, так как вам не было предоставлено разрешение на доступ к внутренней памяти.</string>
+        <string name="msgs_main_permission_external_storage_request_msg">Предоставьте разрешение на доступ к внутреннему хранилищу для чтения и записи данных, которые синхронизированы с внутренним хранилищем и для административных данных.</string>
+        <string name="msgs_main_permission_external_storage_title">Разрешение на внутреннее хранение</string>
+        <string name="msgs_main_shortcut_shortcut_added">Ярлык добавлен на домашний экран.</string>
+        <string name="msgs_main_sync_all_active_profiles">Выполнить все задачи, настроенные для автоматической синхронизации.</string>
+        <string name="msgs_main_sync_can_not_sync_no_valid_profile">Нет доступных задач синхронизации для выполнения. Пожалуйста, создайте задачу синхронизации.</string>
+        <string name="msgs_main_sync_cancel_confirm">Отменить синхронизацию?</string>
+        <string name="msgs_main_sync_history_copy_completed">Выбранные элементы скопированы в буфер обмена.</string>
+        <string name="msgs_main_sync_history_count_copied">Скопировано:</string>
+        <string name="msgs_main_sync_history_count_deleted">Удалено:</string>
+        <string name="msgs_main_sync_history_count_ignored">Игнорируется:</string>
+        <string name="msgs_main_sync_history_count_retry">Повтор:</string>
+        <string name="msgs_main_sync_history_del_conf_all_history">Вы хотите удалить всю историю?</string>
+        <string name="msgs_main_sync_history_del_conf_selected_history">Вы хотите удалить следующую историю?</string>
+        <string name="msgs_main_sync_history_elapsed_time">Затраченное время:</string>
+        <string name="msgs_main_sync_history_transfer_speed">Средняя скорость передачи:</string>
+        <string name="msgs_main_sync_history_mode">Режим:</string>
+        <string name="msgs_main_sync_history_mode_normal">Обычный</string>
+        <string name="msgs_main_sync_history_mode_test">Тестовый режим</string>
+        <string name="msgs_main_sync_history_result_log_not_found">Файл журнала истории не найден.</string>
+        <string name="msgs_main_sync_history_result_activity_not_found_for_log_display">Вы не сможете увидеть детали, потому что не можете найти приложение для отображения текстового файла.</string>
+        <string name="msgs_main_sync_history_status_cancel">Отмена</string>
+        <string name="msgs_main_sync_history_status_error">Ошибка</string>
+        <string name="msgs_main_sync_history_status_running">Запуск</string>
+        <string name="msgs_main_sync_history_status_success">Выполенно</string>
+        <string name="msgs_main_sync_history_status_warning">Предупреждение</string>
+        <string name="msgs_main_sync_list_array_activ_activ">АВТО</string>
+        <string name="msgs_main_sync_list_array_activ_inact">РУЧНОЙ</string>
+        <string name="msgs_main_sync_list_array_activ_test">ТЕСТ</string>
+        <string name="msgs_main_sync_list_array_last_sync_time">Последняя синхронизация:</string>
+        <string name="msgs_main_sync_list_array_mtype_archive">АРХИВ</string>
+        <string name="msgs_main_sync_list_array_mtype_copy">КОПИРОВАТЬ</string>
+        <string name="msgs_main_sync_list_array_mtype_mirr">ЗЕРКАЛО</string>
+        <string name="msgs_main_sync_list_array_mtype_move">ПЕРЕНЕСТИ</string>
+        <string name="msgs_main_sync_list_array_mtype_sync">СИНХРОНИЗИРОВАТЬ</string>
+        <string name="msgs_main_sync_list_array_no_last_sync_time">Задача синхронизации не была выполнена.</string>
+        <string name="msgs_main_sync_prof_name_list">Запущена задача синхронизации:</string>
+        <string name="msgs_main_sync_profile">Синхронизация задачи (%s)</string>
+        <string name="msgs_main_sync_profile_dlg_archive">Архив</string>
+        <string name="msgs_main_sync_profile_dlg_copy">Копия</string>
+        <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Last time of tolerance(Sec)</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal">Повторяющиеся имена каталогов существуют как во внутреннем хранилище, так и в месте назначения. Имена каталогов источника и назначения должны быть разными.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir">Дублирующиеся имена каталогов существуют как в источнике, так и в месте назначения. Имена каталогов источника и назначения должны быть разными.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_sdcard">Повторяющиеся имена каталогов существуют как в источнике, так и в месте назначения SDCARD. Имена каталогов источника и назначения должны быть разными.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_smb">Повторяющиеся имена каталогов существуют как в SMB-источнике, так и в месте назначения. Имена каталогов источника и назначения должны быть разными.</string>
+        <string name="msgs_main_sync_profile_dlg_mirror">Зеркало</string>
+        <string name="msgs_main_sync_profile_dlg_move">Переместить</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Укажите IP-адрес или имя хоста SMB-сервера.</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_port_number">Укажите номер порта сервера SMB.</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_share_name">Укажите имя общего ресурса SMB.</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_userid_pswd">Укажите только имя учетной записи хоста SMB и пароль или только пароль.</string>
+        <string name="msgs_main_sync_profile_dlg_specify_host_pswd">Укажите пароль хоста SMB.</string>
+        <string name="msgs_main_sync_profile_dlg_sync">Синхронизация</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master">Запись на SDCARD запрещена, измените основную папку и разрешите запись на SDCARD.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target">Запись на SDCARD запрещена, измените целевую папку и разрешите запись на SDCARD.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">Запись на SDCARD запрещена, нажмите «Разрешить запись на SDCARD», чтобы разрешить запись на SDCARD.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted">SDCARD не установлена.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_internal">Внутренняя память</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">Выберите тип папки</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_sdcard">SDCARD</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_smb">Сервер SMB</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_usb">Медиа USB</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_type_zip">Папка ZIP</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_master">Запись на USB Media не доступна, измените основную папку и разрешите запись в USB Media.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">Запись на USB Media не доступна, измените целевую папку и разрешите запись в USB Media.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">Запись на USB Media не разрешена, нажмите "Allow write to USB Media", чтобы разрешить запись в USB Media.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">USB Media не смонтирована.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">Медиа UBS не доступны, потому что нет никакой точки монтирования медиа USB.</string>
+        <string name="msgs_main_sync_profile_dlg_syncopt_prompt">Выберите синхронизирующую опцию</string>
+        <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">Предупреждение: Для этой задачи не определен целевой каталог. Возможно удаление или перезапись данных. Продолжить?</string>
+        <string name="msgs_main_sync_profile_dlg_title_master">Изменить папку источник</string>
+        <string name="msgs_main_sync_profile_dlg_title_target">Изменить папку назначения</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">Синхронизирующее условие запуска Беспроводной LAN</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Подключаться к любой точке доступа</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Имеет частный адрес</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Список IP-адресов</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">Список точек доступа</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Выполнить, даже когда офлайн</string>
+        <string name="msgs_main_sync_select_prof_no_active_profile">Синхронизирующая задача не была выбрана.</string>
+        <string name="msgs_main_sync_selected_profiles">Выполните выбранную синхронизирующую задачу</string>
+        <string name="msgs_main_sync_selected_task_not_found">Выбранная задача не существует:</string>
+        <string name="msgs_main_sync_specified_sync_task_not_scheduled">Указанная синхронизирующая задача не будет выполняться, потому что она была проигнорирована.</string>
+        <string name="msgs_main_sync_test_mode_warnning">Выбранная задача настроена только для теста. Никакие файлы не будут скопированы или удалены. Выполнить задачу?</string>
+        <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">Нажатие добавляет кнопку для создания новой синхронизирующей задачи.</string>
+        <string name="msgs_move_to_bottom">Переместить вниз</string>
+        <string name="msgs_move_to_top">Переместить вверх</string>
+        <string name="msgs_msg_cont_label_clear">Очистить сообщения</string>
+        <string name="msgs_msg_cont_label_move_bottom">Переместиться вниз</string>
+        <string name="msgs_msg_cont_label_move_top">Переместиться вверх</string>
+        <string name="msgs_msg_cont_label_pinned_active">Отключите автопрокрутку</string>
+        <string name="msgs_msg_cont_label_pinned_inactive">Включите автопрокрутку</string>
+        <string name="msgs_no_profile_entry">Нет заданий</string>
+        <string name="msgs_notification_smbsync_active">SMBSync был запущен.</string>
+        <string name="msgs_notification_sync_active">синхронизация активна.</string>
+        <string name="msgs_override">переопределение?</string>
+        <string name="msgs_prof_cont_label_activate">Автовыбор</string>
+        <string name="msgs_prof_cont_label_add_sync">Создайте синхронизирующую задачу</string>
+        <string name="msgs_prof_cont_label_copy">Копировать задачу</string>
+        <string name="msgs_prof_cont_label_delete">Удалить задачу</string>
+        <string name="msgs_prof_cont_label_down">Переместиться вниз</string>
+        <string name="msgs_prof_cont_label_inactivate">Ручной выбор</string>
+        <string name="msgs_prof_cont_label_rename">Переименовать задачу</string>
+        <string name="msgs_prof_cont_label_select_all">Выбрать все задачи</string>
+        <string name="msgs_prof_cont_label_sync">Запуск синхронизации</string>
+        <string name="msgs_prof_cont_label_unselect_all">Отменить выбор всех задач</string>
+        <string name="msgs_prof_cont_label_up">Переместиться вверх</string>
+        <string name="msgs_prof_cont_to_activate_profile">Установить авто следование</string>
+        <string name="msgs_prof_cont_to_inactivate_profile">Установить ручное следование</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">Если источник или место назначения расположены на сервере SMB. Установите Беспроводное Условие LAN на \"Подключаться к любой точке доступа \"?</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">Если источник или место назначения расположены на сервере SMB. Установите Беспроводное Условие LAN на \, "Имеет частный адрес \"?</string>
+        <string name="deleted_msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">Если источник и место назначения не расположены на сервере SMB. Установить Беспроводное Условие LAN на \"Другое \"?</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_directory">Каталог</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_dirlist">Список каталогов</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_folder_type">Тип папки</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_local_mount_point">Точка монтирования</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon">Вход в систему</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon_cancel">Процесс входа в систему отменен</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon_error">Ошибка во время входа в систему</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_logon_success">Успешный вход в систему</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_password">Пароль</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_port">Номер порта</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_server">Имя хоста сервера / адрес IP</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share">Имя сетевого ресурса</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">Список сетевых ресурсов</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">Используйте номер порта</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">Имя учетной записи</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">Поиск сервера SMB</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">Разрешите запись SDCARD</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_usb">Разрешите запись USB Media</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_show_password">Показать пароль</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB вынужденное подписание IPC</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_use_smb2_negotiation">Используйте согласование SMB2</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">Протокол SMB</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">Используйте SMB V1</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">Используйте SMB V2 (2.01)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Используйте SMB V2 (2.11)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Используйте SMB V2/3 (2.12)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">Используйте SMB V2/3 (2.14)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Определенный системой</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">Ошибка в основной папке. Измените ее.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_import_failed_target_folder">Ошибка в целевой папке. Измените ее.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_import_failed_account_name">Имя учетной записи не могло быть дешифровано при импорте списка задач. Исправьте имя учетной записи.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_import_failed_account_password">Пароль учетной записи не мог быть дешифрован при импорте списка задач. Исправьте пароль учетной записи.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">Использовать имя учетной записи и пароль</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast">Быстро</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest">Самый быстрый</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_maximum">Максимум</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_normal">Нормальный</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_title">Уровень сжатия</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_ultra">Ультра</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_diff_zip_password">Пароли не соответствуют.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_title_zip_password">Пароль</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_import_failed_zip_password">Пароль ZIP не мог быть дешифрован при импорте списка задач. Исправьте пароль ZIP.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_title_zip_confirm_password">Подтвердите пароль</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128">AES 128 битов</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256">AES 256 битов</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_none">Ничего</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_title">Метод шифрования</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto">ZipCrypto</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_filelist">Файлы списка</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_filename">Zip-файл</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_select_file_title">Выберите zip-файл</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_specify_zip_file_name">Определите название zip-файла</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_specify_zip_password">Определите пароль zip-файла</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_time_stamp">Добавьте метку времени к названию zip-файла</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_use_sdcard">Сохраните zip-файл к SDCARD.</string>
+        <string name="msgs_profile_sync_folder_dlg_confirm_msg_nosave">Предупреждение: синхронизирующие настройки папки изменились. Выйти без сохранения?</string>
+        <string name="msgs_profile_sync_task_dlg_active">Автоматическая синхронизация</string>
+        <string name="msgs_profile_sync_task_dlg_change_master_and_target">Источник подкачки и место назначения</string>
+        <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Фильтр каталога не был определен</string>
+        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">Имя каталога содержало недопустимые символы, и они былио удалены (\": \\, *, &lt; &gt; \|).</string>
+        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">Фильтр файла не был определен</string>
+        <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">Недопустимые символы (/, \": \\, *, &lt; &gt; \|), были удалены из имени файла.</string>
+        <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Add the following keyword to directory names (The keyword is converted to the date and time that the sync was performed)</string>
+        <string name="msgs_profile_sync_task_dlg_keyword_insert_file">Add the following keyword to file names (The keyword is converted to the date and time that the sync was performed)</string>
+        <string name="msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword">Use the photo/video shooting date and time for keyword conversions attached to the target folder directory.</string>
+        <string name="msgs_profile_sync_task_dlg_master">Основная папка (Источник)</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type">Тип синхронизации</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_archive">Архив</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_copy">Копия</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_mirror">Зеркало</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_move">Переместиться</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type_prompt">Выберите тип синхронизации</string>
+        <string name="msgs_profile_sync_task_dlg_target">Целевая папка (Место назначения)</string>
+        <string name="msgs_profile_sync_task_dlg_task_name">Имя задачи синхронизации</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">Добавьте текущий IP-адрес</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_edit_title">Отредактируйте IP-адрес</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_hint">IP-адрес</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_list">Беспроводной список IP-адреса LAN</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_title">Отредактируйте IP-адрес WiFi</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list">Беспроводной список IP-адреса LAN</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">Беспроводной IP-адрес LAN, не определен.</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">Добавьте активную точку доступа</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">Отредактируйте название точки доступа (SSID)</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_hint">Имя точки доступа (SSID)</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_list">Список беспроводных точек доступа к LAN</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_not_connected">Беспроводная LAN не подключена к указанной точке доступа.</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_not_specified">Определите беспроводную точку доступа к LAN (SSID).</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_ap_title">Изменить точки доступа (\SSID)</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified">%s уже существует.</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified">%s уже существует.</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_title">Изменить фильтр</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_add">Добавить</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_delete">Удалить</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Список каталога</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Исключить</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Фильтр файла</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Фильтр</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_include">Включать</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Не определенный</string>
+        <string name="msgs_profile_sync_task_filter_title">Фильтры файла:</string>
+        <string name="msgs_profile_sync_task_sync_direction_two_way">Используйте двунаправленную синхронизацию</string>
+        <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Включить следующие фильтры:</string>
+        <string name="msgs_profile_sync_task_sync_file_type_audio">Синхронизировать аудио файлы</string>
+        <string name="msgs_profile_sync_task_sync_file_type_detail_not_specified">Необходимо определить по крайней мере одну опцию фильтра файла.</string>
+        <string name="msgs_profile_sync_task_sync_file_type_image">Синхронизировать файлы изображений</string>
+        <string name="msgs_profile_sync_task_sync_file_type_specific">Выберите файлы для синхронизации</string>
+        <string name="msgs_profile_sync_task_sync_file_type_video">Синхронизировать видеофайлы</string>
+        <string name="msgs_profile_sync_task_sync_option">Опции:</string>
+        <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Минимально допустимая разница во времени (в секундах) между исходным и целевым файлами для синхронизации</string>
+        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Пропустить задачу, если она не подключена к указанной точке доступа или IP-адрес беспроводной локальной сети не соответствует указанному IP-адресу.</string>
+        <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Разрешить синхронизацию с глобальными IP-адресами</string>
+        <string name="msgs_profile_sync_task_sync_option_confirm_required">Подтвердите, прежде чем перезаписать/удалить</string>
+        <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Удалите файлы до синхронизации (Только зеркальный метод)</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Файлы считаются разными только в том случае, если размер источника больше, чем место назначения (только сравнение размеров, отключение разницы во времени).</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">Использовать размер файла для определения различия в файле</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time">Используйте время последнего обновления для определения различия в файле</string>
+        <string name="msgs_profile_sync_task_sync_option_empty_directory">Включить пустые каталоги</string>
+        <string name="msgs_profile_sync_task_sync_option_hidden_directory">Включить скрытые каталоги</string>
+        <string name="msgs_profile_sync_task_sync_option_hidden_file">Включить скрытые файлы</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled">Копирование файла не выполнено, потому что включена опция «Никогда не перезаписывать конечный файл, если он новее исходного файла».</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Пропуск каталогов и имен файлов, содержащих недопустимые символы (\": \\, *, &lt; &gt; \|)</string>
+        <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Принудительно получить дату и время последнего обновления в SMBSync2</string>
+        <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">Синхронизировать файлы, расположенные в корне исходного каталога.</string>
+        <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file">Не перезаписывайте конечный файл, если он новее исходного файла</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_ignore_dst_difference">Игнорировать разницу во времени между файлами</string>
+        <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value">Разница во времени между летним и стандартным временем (минуты)</string>
+        <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">Выберите смещение летнего времени (минуты)</string>
+        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">Не устанавливайте время обновления файла назначения в соответствии с исходным файлом</string>
+        <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">Перезаписать целевой файл (файлы)</string>
+        <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Повторите попытку при сетевой ошибке</string>
+        <string name="msgs_profile_sync_task_sync_option_show_special_option">Показать расширенные опции</string>
+        <string name="msgs_profile_sync_task_sync_option_sub_dir">Включить подкаталоги</string>
+        <string name="msgs_profile_sync_task_sync_option_sync_when_charging">Выполнять синхронизирующие задачи только при зарядке</string>
+        <string name="msgs_profile_sync_task_sync_option_test_mode">Тестовый режим (не копировать и не удалять файлы)</string>
+        <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Использовать расширенный фильтр выбора каталогов</string>
+        <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Сетевые настройки</string>
+        <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Опции Wifi AP:</string>
+        <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Запись файлов непосредственно в папку SMB без использования временных файлов</string>
+        <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">Фильтр каталога не был указан.</string>
+        <string name="msgs_profile_sync_task_option_remove_directory_if_empty_when_move">(Тип синхронизации только перемещается) Удалите главный каталог, когда главный каталог пуст.</string>
+        <string name="msgs_profile_sync_task_sync_sub_directory_specific">Выберите подкаталоги</string>
+        <string name="msgs_profile_sync_task_sync_use_small_ioarea">Ограничить буфер записи ввода / вывода SMB 16 КБ</string>
+        <string name="msgs_progress_spin_dlg_sync_cancel">Отмена</string>
+        <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">Хранить файл конфликта двусторонней синхронизации</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle">Правила двусторонней синхронизации</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_ask_user">Спросите пользователя</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file">Пропустить синхронизацию файлов</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer">Copy new date files</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_older">Copy old date files</string>
+        <string name="msgs_remote_profile_dlg_logon_cancel">Вход отменен</string>
+        <string name="msgs_remote_profile_dlg_logon_error">Ошибка входа</string>
+        <string name="msgs_remote_profile_dlg_logon_success">Вход успешный</string>
+        <string name="msgs_rename_profile">Переименовать задачу</string>
+        <string name="msgs_save_to_profile_error">Не удалось сохранить файл списка задач: %s</string>
+        <string name="msgs_select_export_file">Выберите файл экспорта</string>
+        <string name="msgs_select_import_file">Выберите файл для импорта</string>
+        <string name="msgs_select_local_dir">Выберите локальный каталог</string>
+        <string name="msgs_select_sdcard_dir">Выберите каталог SDCARD</string>
+        <string name="msgs_select_usb_dir">Выберите каталог USB Media</string>
+        <string name="msgs_select_remote_dir">Выберите каталог SMB</string>
+        <string name="msgs_select_remote_share">Выберите общий ресурс SMB</string>
+        <string name="msgs_share_list_not_obtained">Could not get the list of SMB shares. Please check below.\n
+-Shared on the SMB server side\n
+-Specify account/password if you do not specify an account/password</string>
+        <string name="msgs_smbsync_main_private_key_corrupted_title">Внутренняя ошибка ключа шифрования</string>
+        <string name="msgs_smbsync_main_private_key_corrupted_msg">Невозможно сохранить список задач синхронизации, поскольку внутренний ключ шифрования недействителен. \n Создать внутренний ключ шифрования?</string>
+        <string name="msgs_smbsync_main_no_external_storage">Внешнее хранилище не было установлено. Некоторые функции недоступны.</string>
+        <string name="msgs_smbsync_main_restart_by_destroyed">Приложение было перезапущено после KillProcess. Чтобы отключить перезапуск, включите \ "Не сохранять действия \" в Настройках> Параметры разработчика.</string>
+        <string name="msgs_smbsync_main_restart_by_killed">Приложение было перезапущено, потому что оно было отключено при перемещении в фоновый режим.</string>
+        <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Параметры SMBv1 были изменены. Это изменение не вступит в силу, пока приложение не будет перезапущено. Выход из этого приложения сейчас?</string>
+        <string name="msgs_smbsync_main_start">Приложение запущено.</string>
+        <string name="msgs_smnsync_main_kill_application">Убить приложение?</string>
+        <string name="msgs_specify_task_name">Пожалуйста, укажите название для задачи</string>
+        <string name="msgs_tab_name_history">История</string>
+        <string name="msgs_tab_name_schedule">Расписание</string>
+        <string name="msgs_tab_name_msg">Сообщения</string>
+        <string name="msgs_tab_name_prof">Задача</string>
+        <string name="msgs_terminate_application">Выход из SMBSync2.</string>
+    <!-- Maintenance -->
+        <string name="msgs_progress_spin_dlg_housekeep_running">Выполнение управления файлами обслуживания.</string>
+        <string name="msgs_progress_spin_dlg_housekeep_cancel">Отмена обслуживания</string>
+        <string name="msgs_progress_spin_dlg_housekeep_cancel_confirm">Подтвердить отмену обслуживания файла управления?</string>
+        <string name="msgs_maintenance_last_mod_list_confirm_start_msg">Никакие задачи синхронизации не могут быть выполнены, пока ведется обслуживание файла управления. Запустить обслуживание файла управления?</string>
+        <string name="msgs_maintenance_last_mod_list_can_not_start_msg">Невозможно выполнить обслуживание файла управления во время выполнения задачи синхронизации.</string>
+        <string name="msgs_maintenance_last_mod_list_cancel_msg">Управление файлом управления было отменено.</string>
+        <string name="msgs_maintenance_last_mod_list_del_count">%s элементов удалено из последнего измененного списка времени.</string>
+        <string name="msgs_maintenance_last_mod_list_end_msg">Обслуживание файла управления завершено.</string>
+        <string name="msgs_maintenance_last_mod_list_start_msg">Началось обслуживание файла управления.</string>
+        <string name="msgs_maintenance_result_log_list_del_count">Файлы журнала истории %s были удалены.</string>
+        <string name="msgs_maintenance_result_log_list_del_file">Удалено %s.</string>
+        <string name="msgs_maintenance_result_log_list_del_title">Файлы и каталоги, не относящиеся к журналам истории, были найдены в каталоге журналов истории. Удалить эти файлы?</string>
+    <!-- Menu -->
+        <string name="msgs_menu_sync">Синхронизация</string>
+        <string name="msgs_menu_browse_logfile">Показать журнал</string>
+        <string name="msgs_menu_export">Экспорт списка задач</string>
+        <string name="msgs_menu_import">Импортировать список задач</string>
+        <string name="msgs_menu_log_management">Управление файлами журналов</string>
+        <string name="msgs_menu_about">О SMBSync2</string>
+        <string name="msgs_menu_settings">Настройки</string>
+        <string name="msgs_menu_housekeep">Обслуживание файлов администратора</string>
+        <string name="msgs_menu_kill">Убить приложение</string>
+        <string name="msgs_menu_add_shortcut">Добавьте ярлык</string>
+        <string name="msgs_menu_list_storage_info">Системная информация</string>
+        <string name="msgs_menu_show_battery_optimization_screen">Показать экран оптимизации батареи</string>
+    <!-- Mirror -->
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">Архив отменен по запросу пользователя</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">Время и дата изображения не могут быть получены из данных EXIF. Вместо этого использовать время и дату обновления файла? (Отключите параметр архивации \ "Подтвердить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_copy_cancel">Копирование отменено по запросу пользователя.</string>
+        <string name="msgs_mirror_confirm_copy_confirm">Подтвердить перезапись файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_delete_cancel">Удаление отменено по запросу пользователя.</string>
+        <string name="msgs_mirror_confirm_delete_dir_confirm">Подтвердите удаление каталога \n %s \n (отключите параметр \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_delete_file_confirm">Подтвердите удаление файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_move_cancel">Перемещение отменено по запросу пользователя.</string>
+        <string name="msgs_mirror_confirm_move_confirm">Подтвердить перемещение файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_no_btn">Нет</string>
+        <string name="msgs_mirror_confirm_noall_btn">Нет для всех</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_archive">Нажмите здесь, чтобы подтвердить архивирование файла.</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_copy">Нажмите здесь, чтобы подтвердить перезапись файла.</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_delete_dir">Нажмите здесь, чтобы подтвердить удаление каталога.</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_delete_file">Нажмите здесь, чтобы подтвердить удаление файла.</string>
+        <string name="msgs_mirror_confirm_please_check_confirm_msg_move">Нажмите здесь, чтобы подтвердить перемещение файла.</string>
+        <string name="msgs_mirror_confirm_task_cancel_btn">Отмена синхронизации</string>
+        <string name="msgs_mirror_confirm_yes_btn">Да</string>
+        <string name="msgs_mirror_confirm_yesall_btn">Да для всех последующих</string>
+        <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">Время последнего изменения файла было использовано, поскольку дату и время съемки невозможно получить из EXIF ​​/ метаданных файла. Файл =</string>
+        <string name="msgs_mirror_taken_date_convert_error">Время последнего изменения файла было использовано, поскольку произошла ошибка при преобразовании даты съемки. Файл =</string>
+        <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Синхронизация прервана, поскольку в целевой папке существует каталог с тем же именем, что и у файла. Файл =</string>
+        <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Синхронизация была отменена, поскольку длина имени файла превышает 255 байтов. Число байтов в имени файла = %s, Имя файла = %s</string>
+        <string name="msgs_mirror_external_sdcard_not_mounted">Синхронизация отменена, поскольку SDCARD не смонтирован.</string>
+        <string name="msgs_mirror_external_sdcard_select_required">Синхронизация отменена, поскольку разрешение на запись SDCARD не предоставлено.</string>
+        <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">Кажется, что содержимое SDCARD не отражается в хранилище мультимедиа. Выполните сканирование носителя для обновления содержимого SDCARD.</string>
+        <string name="msgs_mirror_file_set_last_modified_failed">setLastModified () не удалось. Включите \ "Не устанавливайте время обновления целевого файла в соответствии с исходным файлом \" для задачи синхронизации.</string>
+        <string name="msgs_mirror_file_zip_copy_back_from_work">Копирование файла ZIP в целевой файл ...%s %% завершено.</string>
+        <string name="msgs_mirror_file_zip_copy_to_work">Копирование файла ZIP в рабочий файл ...%s %% завершено.</string>
+        <string name="msgs_mirror_ignore_override_copy_file">Копирование файла игнорируется, поскольку для этой задачи отключена опция \ "Перезаписать файл (ы) назначения \".</string>
+        <string name="msgs_mirror_ignore_override_move_file">Перемещение файла игнорируется, поскольку для этой задачи отключена опция \ "Перезаписать файл (ы) назначения \".</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">Исходный файл или имя каталога содержит символы, которые недопустимы для места назначения. Измените имя, чтобы разрешить синхронизацию. Персонаж:%s, Путь:%s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">Файл или каталог исключены из процесса синхронизации, поскольку имя источника содержит символы, недопустимые для места назначения. Персонаж:%s, Путь:%s</string>
+        <string name="msgs_mirror_remote_addr_not_connected">Невозможно подключиться к адресу хоста SMB %s</string>
+        <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Невозможно подключиться к узлу SMB %s через порт %s</string>
+        <string name="msgs_mirror_remote_name_not_found">Не удалось найти имя хоста SMB, попробуйте его с IP-адресом. Имя хоста =</string>
+        <string name="msgs_mirror_same_directory_ignored">Каталог игнорируется, поскольку один и тот же каталог не может быть синхронизирован. Каталог = %s</string>
+        <string name="msgs_mirror_smb_addr_not_connected">Невозможно подключиться к указанному серверу SMB. IP-адрес = %s</string>
+        <string name="msgs_mirror_smb_addr_not_connected_with_port" formatted="false">Невозможно подключиться к указанному серверу SMB. IP-адрес = %s, порт = %s</string>
+        <string name="msgs_mirror_smb_invalid_port_specified">Неверный номер порта: %s</string>
+        <string name="msgs_mirror_smb_name_not_found">Указанное имя хоста SMB-сервера не найдено. Имя хоста =</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_address_conn_other">Синхронизация прервана. Беспроводной адаптер не имеет указанного IP-адреса.</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">Синхронизация прервана. Не подключен к указанной точке беспроводного доступа.</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">Синхронизация прервана. Не подключен к точке доступа WiFi.</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr">Синхронизация прервана. Сетевой адрес не является локальным адресом.</string>
+        <string name="msgs_mirror_sync_can_not_start_wifi_is_off">Синхронизация прервана. Беспроводная локальная сеть выключена.</string>
+        <string name="msgs_mirror_sync_can_not_start_ip_address_not_obtained">Синхронизация прервана. Сетевой адрес не может быть получен.</string>
+        <string name="msgs_mirror_sync_can_not_start_ip_address_is_global">Сетевой адрес является глобальным IP-адресом (%s), и синхронизация отменена. Если вы хотите синхронизировать, включите глобальный IP-адрес с опцией синхронизации.</string>
+        <string name="msgs_mirror_sync_cancelled_battery_option_not_satisfied">Синхронизация прервана. Устройство не заряжается.</string>
+        <string name="msgs_mirror_sync_request_ended">Запрос синхронизации завершен. Запросчик = %s</string>
+        <string name="msgs_mirror_sync_request_started">Запрос синхронизации запущен. Запросчик = %s</string>
+        <string name="msgs_mirror_sync_skipped_wifi_address_conn_other">Задача синхронизации пропущена, поскольку адрес беспроводной локальной сети не соответствует указанному IP-адресу</string>
+        <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">Задача синхронизации пропущена, поскольку беспроводная локальная сеть не подключена к указанной точке доступа WiFi</string>
+        <string name="msgs_mirror_sync_start_was_delayed">Чтобы у беспроводной сети было время задержки после того, как было указано ВКЛ, оно задерживает начало синхронизации %s секунд.</string>
+        <string name="msgs_mirror_sync_wifi_can_not_enabled">Не удалось включить WiFi.</string>
+        <string name="msgs_mirror_task_avg_rate">Средняя скорость передачи %s</string>
+        <string name="msgs_mirror_task_dir_create">Каталог создан.</string>
+        <string name="msgs_mirror_task_dir_create_failed">Не удалось создать каталог.</string>
+        <string name="msgs_mirror_task_dir_deleted">Каталог удален.</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">%s заархивировано в %s</string>
+        <string name="msgs_mirror_task_file_copied">Файл скопирован.</string>
+        <string name="msgs_mirror_task_file_copying">Копирование файла … %s %% завершено.</string>
+        <string name="msgs_mirror_task_file_deleted">Файл удален.</string>
+        <string name="msgs_mirror_task_file_moved">Файл перемещен.</string>
+        <string name="msgs_mirror_task_file_replaced">Файл перезаписан.</string>
+        <string name="msgs_mirror_task_master_not_found">Исходный файл или каталог не найден.</string>
+        <string name="msgs_mirror_task_no_of_copy" formatted="false">Количество копий = %s, количество удалений = %s, количество игнорирований = %s, истекшее время = %s</string>
+        <string name="msgs_mirror_task_result_cancel">Задача синхронизации отменена.</string>
+        <string name="msgs_mirror_task_result_error_ended">Синхронизация задачи завершилась с ошибкой.</string>
+        <string name="msgs_mirror_task_result_error_skipped">Игнорировать ошибки включены. Ошибка игнорируется.</string>
+        <string name="msgs_mirror_task_result_ok">Задача синхронизации успешно завершена.</string>
+        <string name="msgs_mirror_task_result_stats" formatted="false"># копий =%s, # удалений =%s, # игнорирований =%s, # предупреждений =%s, # повторов =%s, # ошибок =%s</string>
+        <string name="msgs_mirror_task_started">Задача синхронизации запущена.</string>
+        <string name="msgs_mirror_task_success_end">закончилась успешно.</string>
+        <string name="msgs_mirror_task_sync_request_error_detected">Синхронизация завершилась с ошибками.</string>
+        <string name="msgs_mirror_task_was_cancelled">отменен.</string>
+        <string name="msgs_mirror_usb_storage_not_mounted">Синхронизация отменена, поскольку USB-носитель не подключен.</string>
+    <!-- Scan network -->
+        <string name="msgs_scan_progress_spin_dlg_addr_cancel">Отменить поиск</string>
+        <string name="msgs_scan_ip_address_select_title">Поиск SMB-сервера</string>
+        <string name="msgs_scan_ip_address_scan_btn">Поиск</string>
+        <string name="msgs_scan_ip_address_press_scan_btn">Укажите диапазон IP-адресов, затем нажмите кнопку поиска</string>
+        <string name="msgs_scan_ip_address_not_detected">Сервер SMB не найден.</string>
+        <string name="msgs_scan_ip_address_select_detected_host">Выберите имя хоста или IP-адрес из результатов поиска</string>
+        <string name="msgs_scan_ip_address_scan_result_title">результаты поиска</string>
+        <string name="msgs_ip_address_scan_progress">Поиск хоста SMB…% s %% завершен.</string>
+        <string name="msgs_ip_address_range_dlg_begin">Начать</string>
+        <string name="msgs_ip_address_range_dlg_end">Конец</string>
+        <string name="msgs_ip_address_range_dlg_begin_notspecified">Укажите начало диапазона адресов.</string>
+        <string name="msgs_ip_address_range_dlg_addr_range_error">Диапазон адресов должен быть от 1 до 254.</string>
+        <string name="msgs_ip_address_range_dlg_begin_range_error">Начальный адрес должен быть от 1 до 253.</string>
+        <string name="msgs_ip_address_range_dlg_end_notspecified">Укажите конец диапазона адресов.</string>
+        <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">Начальный адрес больше конечного.</string>
+        <string name="msgs_ip_address_range_dlg_end_range_error">Конечный адрес должен быть от 2 до 254.</string>
+        <string name="msgs_ip_address_range_dlg_not_private">Невозможно найти публичные адреса.</string>
+        <string name="msgs_progress_dlg_canceling">Отмена ...</string>
+        <string name="msgs_progress_spin_dlg_filelist_getting">Получение списка файлов…</string>
+        <string name="msgs_progress_spin_dlg_filelist_cancel">Отмена</string>
+        <string name="msgs_progress_spin_dlg_test_logon">Вход на сервер SMB</string>
+        <string name="msgs_progress_spin_dlg_test_logon_cancel">Отменить вход</string>
+    <!-- Scheduler -->
+        <string name="msgs_menu_scheduler">Расписание</string>
+        <string name="msgs_scheduler_main_dlg_hdr_title">Изменить расписание</string>
+        <string name="msgs_scheduler_main_dlg_hdr_enable">Включить расписание</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Изменить список синхронизации</string>
+        <string name="msgs_scheduler_main_dlg_hdr_sun">Вс</string>
+        <string name="msgs_scheduler_main_dlg_hdr_mon">Пн</string>
+        <string name="msgs_scheduler_main_dlg_hdr_tue">Вт</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wed">Ср</string>
+        <string name="msgs_scheduler_main_dlg_hdr_thu">Чт</string>
+        <string name="msgs_scheduler_main_dlg_hdr_fri">Пт</string>
+        <string name="msgs_scheduler_main_dlg_hdr_sat">Сб</string>
+        <string name="msgs_scheduler_main_dlg_hdr_month">Месяц</string>
+        <string name="msgs_scheduler_main_dlg_hdr_day">День</string>
+        <string name="msgs_scheduler_main_dlg_hdr_hour">Час</string>
+        <string name="msgs_scheduler_main_dlg_hdr_minute">Минуты</string>
+        <string name="msgs_scheduler_main_dlg_hdr_schedule_type">Тип расписания</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on">Включить Wi-Fi, если Wi-Fi отключен в начале синхронизации.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_time">Время задержки перед синхронизацией после включения WiFi</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_1">5 сек</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_2">10 сек</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30 сек</string>
+        <string name="msgs_scheduler_main_dlg_hdr_wifi_off">Если  Wi-Fi был включен в начале синхронизации, выключить Wi-Fi после окончания синхронизации.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option">Изменить параметры задачи синхронизации</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">Синхронизация начинается только во время зарядки.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">Не изменять</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">Включено</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">Отключено</string>
+        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">Сделать первую синхронизацию со следующей минутой.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">Сбросить время расписания.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_schedule_time">Время в расписании: %s</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_prompt">Выберите тип расписания</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_every_hour">Каждый час</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_every_day">Каждый день</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_every_month">Каждый месяц</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_day_of_week">День недели</string>
+        <string name="msgs_scheduler_main_spinner_sched_type_interval">Интервал</string>
+        <string name="msgs_scheduler_main_spinner_sched_day_prompt">Выберите расписание дней</string>
+        <string name="msgs_scheduler_main_spinner_sched_hours_prompt">Выберите расписание часов</string>
+        <string name="msgs_scheduler_main_spinner_sched_minutes_prompt">Выберите расписание минут</string>
+        <string name="msgs_scheduler_info_last_day_of_the_month">Последний день</string>
+        <string name="msgs_scheduler_main_last_day_of_the_month">Синхронизация в последний день каждого месяца</string>
+        <string name="msgs_scheduler_main_last_day_of_the_month_warning">Предупреждение: месяцы, которые имеют менее 29 дней, могут не запускать выполнение задач, если указано 29 - 31-е. Включите параметр «Синхронизировать в последний день месяца», чтобы задача выполнялась в последний день каждого месяца.</string>
+        <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Синхронизировать список задач</string>
+        <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Выполнить все задачи автосинхронизации</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Укажите профиль для синхронизации, нажав кнопку «Редактировать список синхронизации».</string>
+        <string name="msgs_scheduler_info_next_schedule_time">Время следующей синхронизации %s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Следующая синхронизация: время = %s, имя = (%s)</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">Задача, указанная в расписании, не найдена.
+Расписание: %s, задача: %s </string>
+        <string name="msgs_scheduler_info_schedule_disabled">Расписание синхронизации отключено</string>
+        <string name="msgs_scheduler_info_schedule_enabled">Расписание синхронизации включено</string>
+        <string name="msgs_scheduler_info_sync_all_active_profile">Выполнить все задачи автосинхронизации</string>
+        <string name="msgs_scheduler_info_sync_selected_profile">Синхронизировать задачу %s</string>
+        <string name="msgs_scheduler_info_sync_task_was_not_found">Указанное имя задачи синхронизации не найдено, Имя = (%s)</string>
+        <string name="msgs_scheduler_info_sync_task_was_deleted_or_renamed">Задача синхронизации уже удалена или переименована.</string>
+        <string name="msgs_scheduler_info_sync_task_list_was_empty">Пустой список задач синхронизации</string>
+        <string name="msgs_scheduler_main_dw_not_selected">Пожалуйста, выберите хотя бы один день недели.</string>
+        <string name="msgs_schedule_list_edit_dlg_title">Изменить список расписаний</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Это имя задачи синхронизации уже существует. Используйте другое имя.</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Имя синхронизации не указано.</string>
+        <string name="msgs_schedule_cont_label_add">Добавить расписание</string>
+        <string name="msgs_schedule_cont_label_activate">Включить</string>
+        <string name="msgs_schedule_cont_label_inactivate">Отключить</string>
+        <string name="msgs_schedule_cont_label_delete">Удалить расписание</string>
+        <string name="msgs_schedule_cont_label_copy">Копировать</string>
+        <string name="msgs_schedule_cont_label_rename">Переименовать</string>
+        <string name="msgs_schedule_cont_label_select_all">Выбрать все</string>
+        <string name="msgs_schedule_cont_label_unselect_all">Убрать выделение со всего</string>
+        <string name="msgs_schedule_confirm_title_delete">Подтвердите удаление расписания</string>
+        <string name="msgs_schedule_confirm_title_enable">Подтвердите включение расписания</string>
+        <string name="msgs_schedule_confirm_title_disable">Подтвердите отключение расписания</string>
+        <string name="msgs_schedule_confirm_title_nosave">Подтвердите выход</string>
+        <string name="msgs_schedule_confirm_msg_delete">Вы хотите удалить следующие элементы? Результаты немедленно отражаются и не могут быть отменены.</string>
+        <string name="msgs_schedule_confirm_msg_enable">Вы хотите включить следующие пункты? Результаты немедленно отражаются и не могут быть отменены.</string>
+        <string name="msgs_schedule_confirm_msg_disable">Вы хотите отключить следующие элементы? Результаты немедленно отражаются и не могут быть отменены.</string>
+        <string name="msgs_schedule_confirm_msg_rename_warning">Изменить название расписания. Результаты немедленно отражаются и не могут быть отменены.</string>
+        <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Дубликат названия расписания.</string>
+        <string name="msgs_schedule_confirm_msg_nosave">Расписание изменилось. Выход без сохранения?</string>
+        <string name="msgs_schedule_rename_schedule">Переименовать расписание</string>
+        <string name="msgs_schedule_list_edit_no_schedule">Нажмите кнопку Добавить, чтобы создать новое расписание.</string>
+        <string name="msgs_schedule_list_edit_scheduler_disabled">Синхронизация расписания не выполненна, поскольку расписание отключено. Чтобы выполнить синхронизацию по расписанию, коснитесь значка расписания в верхней части экрана, чтобы включить его.</string>
+        <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Вы хотите включить расписание?</string>
+        <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Вы хотите отключить расписание?</string>
+        <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">Включить или отключить расписание.</string>
+        <string name="msgs_schedule_list_edit_multi_sched_warn">Расписание и параметры Wi-Fi для нескольких задач будут объединены, чтобы избежать дублирования процессов синхронизации.</string>
+    <!-- Send logcat -->
+        <string name="msgs_send_logcat_menu_start_logcat">Запустить LogCat</string>
+        <string name="msgs_send_logcat_menu_stop_logcat">Стоп LogCat</string>
+        <string name="msgs_send_logcat_menu_send_logcat">Отправить LogCat</string>
+        <string name="msgs_send_logcat_btn_send">Отправить</string>
+        <string name="msgs_send_logcat_btn_preview_logcat">Предварительный LogCat</string>
+        <string name="msgs_send_logcat_btn_preview_applog">Предварительный просмотр AppLog</string>
+        <string name="msgs_send_logcat_title">Отправить LogCat и AppLog</string>
+        <string name="msgs_send_logcat_message">Отправьте LogCat и AppLog разработчикам электронным-mail\n 
+1. Проверьте содержание путем нажатия кнопки отображения LogCat, и кнопка отображения AppLog (выберите приложение, когда экран выбора приложения отображен).\n 2. После подтверждения содержания, которое будет отправлено, нажмите отправить кнопку и выберите электронную почту в почтовом диалоговом окне выбора  \n
+3. Введите, сообщение в теле электронного письма при необходимости прикрепите электронное письмо (журнал сжат до zip и присоединен к электронной почте).</string>
+    <!-- svc -->
+        <string name="msgs_svc_can_not_start_sync_task_disabled">Поскольку задача синхронизации отключена, она не смогла запустить задачу синхронизации.</string>
+        <string name="msgs_svc_received_start_request_from_scheduler">Запрос синхронизации получен от планировщика SMBSync2.</string>
+        <string name="msgs_svc_received_start_request_from_scheduler_task_not_found">Запрос синхронизации получен от планировщика SMBSync2, но он был проигнорирован, поскольку эта задача не существует:</string>
+        <string name="msgs_svc_received_start_request_from_scheduler_no_task_list">Выполнение прервано, потому что задача синхронизации не существует.</string>
+        <string name="msgs_svc_received_start_request_from_external">Запрос синхронизации получен из внешнего приложения.</string>
+        <string name="msgs_svc_received_start_request_from_external_task_not_found">Запрос синхронизации получен от внешнего приложения, но он был проигнорирован, поскольку указанная задача синхронизации не существует:</string>
+        <string name="msgs_svc_received_start_request_from_external_no_task_list">Выполнение прервано, потому что задача синхронизации не существует.</string>
+        <string name="msgs_svc_received_start_request_from_external_no_task_specified">Выполнение прервано, поскольку не задана задача синхронизации.</string>
+        <string name="msgs_svc_received_start_request_from_external_auto_task">Задача автоматической синхронизации запущена, поскольку не задана задача синхронизации.</string>
+        <string name="msgs_svc_received_start_request_from_shortcut">Запрос синхронизации получен из ярлыка.</string>
+        <string name="msgs_svc_received_start_request_ignored_duplicate_request">Запрос синхронизации игнорируется, поскольку он уже обработан. ID = %s</string>
+        <string name="msgs_svc_received_start_request_ignored_task_is_error" formatted="false">Задание синхронизации было проигнорировано, поскольку задание синхронизации было ошибочным. Задача = %s, Запрос = %s</string>
+        <string name="msgs_svc_received_start_request_ignored_already_task_queued" formatted="false">Задача синхронизации была проигнорирована, поскольку задача синхронизации уже была поставлена ​​в очередь. Задача = %s, Запросчик = %s</string>
+        <string name="msgs_svc_received_start_request_ignored_already_task_queued_schedule" formatted="false">Задача синхронизации была проигнорирована, поскольку задача синхронизации уже была поставлена ​​в очередь. Расписание = %s, Задача = %s, Запросчик = %s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Запрос на запуск задачи синхронизации принят. Задача = %s, Запросчик = %s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">Запрос на запуск задачи синхронизации принят. Расписание = %s, Задача = %s, Запросчик = %s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed" formatted="false">Следующий запрос синхронизации был проигнорирован, поскольку предыдущая синхронизация была ошибкой или отменена.</string>
+    <!-- sync archive -->
+        <string name="msgs_sync_folder_archive_option">Вариант архива</string>
+        <string name="msgs_sync_folder_archive_file_type">Расширение файла архива:</string>
+        <string name="msgs_sync_folder_archive_retention_period">Архивировать</string>
+        <string name="msgs_sync_folder_archive_output_image">Сохраненные файлы и каталоги (указанная дата / время не являются датой / временем захвата изображения)</string>
+        <string name="msgs_sync_folder_archive_rename_rule">Измените имя файла и сохраните его в указанном каталоге при архивировании</string>
+        <string name="msgs_sync_folder_archive_seq_number_title">Порядковый номер</string>
+        <string name="msgs_sync_folder_archive_create_directory">Создайте каталог на основе даты, взятой при архивировании, и сохраните файл.</string>
+        <string name="msgs_sync_folder_archive_btn_title_date">Дата</string>
+        <string name="msgs_sync_folder_archive_btn_title_time">Время</string>
+        <string name="msgs_sync_folder_archive_btn_title_original_name">Оригинальное имя</string>
+        <string name="msgs_sync_folder_archive_confirm_exif_date">Если дата и время не могут быть определены по данным EXIF, появится сообщение с подтверждением.</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">Файлы ZIP не могут использоваться в качестве адресатов для типа синхронизации архива. Вместо этого будет использовано внутреннее хранилище.</string>
+        <string name="msgs_sync_folder_archive_btn_title_year">Год</string>
+        <string name="msgs_sync_folder_archive_btn_title_month">Месяц</string>
+        <string name="msgs_sync_folder_archive_btn_title_day">День</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_prompt_title">Выберите суффикс следующий диапазон номеров</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_0">Не использовать</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">Добавить трехзначный порядковый номер (001-999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_4">Добавить 4-значный порядковый номер (0001-9999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_5">Добавить 5-значный порядковый номер (00001-99999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_6">Добавить 6-значный порядковый номер (000001-999999)</string>
+        <string name="msgs_sync_folder_archive_period_prompt_title">Выберите фотографии для архивирования</string>
+        <string name="msgs_sync_folder_archive_period_0_days">Сразу все</string>
+        <string name="msgs_sync_folder_archive_period_7_days">Старше 7 дней</string>
+        <string name="msgs_sync_folder_archive_period_30_days">Старше 30 дней</string>
+        <string name="msgs_sync_folder_archive_period_60_days">Старше 60 дней</string>
+        <string name="msgs_sync_folder_archive_period_90_days">Старше 90 дней</string>
+        <string name="msgs_sync_folder_archive_period_180_days">Старше 180 дней</string>
+        <string name="msgs_sync_folder_archive_period_1_years">Старше 1 года</string>
+    <!-- string -->
+        <string name="app_name">SMBSync2</string>
+        <string name="smbsync_main_title">SMBSync2</string>
+        <string name="app_name_auto_sync">StartSync</string>
+    <!-- Setting log -->
+        <string name="settings_log_file_max_count">settings_log_file_max_count</string>
+        <string name="settings_log_file_max_count_dialog_title">Максимальное количество файлов</string>
+        <string-array name="settings_log_file_max_count_list_entries">
+            <item>1</item>
+            <item>5</item>
+            <item>10</item>
+            <item>20</item>
+            <item>30</item>
+            <item>50</item>
+        </string-array >
+        <string-array name="settings_log_file_max_count_list_values">
+            <item>1</item>
+            <item>5</item>
+            <item>10</item>
+            <item>20</item>
+            <item>30</item>
+            <item>50</item>
+        </string-array >
+        <string name="settings_log_file_max_count_summary">Максимальное количество файлов журнала = %s</string>
+        <string name="settings_log_file_max_count_title">Максимальное количество файлов журнала</string>
+        <string name="settings_log_level">settings_log_level</string>
+        <string name="settings_log_level_dialog_title">Выберите уровень сообщения отладки</string>
+        <string-array name="settings_log_level_list_entries">
+            <item>0 - Отключить отладочные сообщения</item>
+            <item>1 - Включить отладочные сообщения</item>
+            <item>2 - Включить подробные сообщения отладки</item>
+            <item>3 - Включить сообщения сравнения файлов</item>
+        </string-array >
+        <string-array name="settings_log_level_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_log_level_summary">Текущий уровень сообщения отладки = %s</string>
+        <string name="settings_log_level_title">Уровень сообщения отладки</string>
+        <string name="settings_log_option">settings_log_option</string>
+        <string name="settings_log_option_summary_ena">Запись событий приложения и задачь в файл журнала</string>
+        <string name="settings_log_option_title">Создать файл журнала</string>
+        <string name="settings_log_preference_screen_title">логирование</string>
+        <string name="settings_log_title">логирование</string>
+        <string name="settings_mgt_dir">settings_mgt_dir</string>
+        <string name="settings_mgt_dir_summary">Не указано =</string>
+        <string name="settings_mgt_dir_title">Расположение файлов управления</string>
+        <string name="settings_put_logcat_option">settings_put_logcat_option</string>
+        <string name="settings_put_logcat_option_summary_ena">Отправка сообщений о событиях на Android Logcat</string>
+        <string name="settings_put_logcat_option_title">Включить Android Logcat</string>
+    <!-- Setting main -->
+        <string name="settings_security_title">Безопасность</string>
+        <string name="settings_security_application_password_title">Пароль приложения</string>
+        <string name="settings_security_application_password">settings_application_password</string>
+        <string name="settings_security_application_password_setting_title">Пожалуйста, нажмите здесь, чтобы установить детали безопасности</string>
+        <string name="settings_security_application_password_created">Пароль приложения создан.</string>
+        <string name="settings_security_application_password_not_created">Пароль приложения еще не создан.</string>
+        <string name="settings_security_application_password_label_create">Придумайте пароль</string>
+        <string name="settings_security_application_password_label_remove">Удалить пароль</string>
+        <string name="settings_security_application_password_label_change">Изменить пароль</string>
+        <string name="settings_security_application_password_desc_create">Создать пароль приложения</string>
+        <string name="settings_security_application_password_desc_change">Изменить пароль приложения</string>
+        <string name="settings_security_application_password_desc_remove">Удалить пароль приложения</string>
+        <string name="settings_security_application_password_confirm_remove">Вы хотите удалить пароль приложения?</string>
+        <string name="settings_security_application_password_protect_title">Элементы для защиты</string>
+        <string name="settings_security_application_password_use_app_startup_title">Выполните аутентификацию по паролю приложения, когда \ "Запустите приложение \"</string>
+        <string name="settings_security_application_password_use_app_startup">settings_security_application_password_use_app_startup</string>
+        <string name="settings_security_application_password_use_edit_task_title">Выполните проверку подлинности пароля приложения, когда \ "Задача Erdit \"</string>
+        <string name="settings_security_application_password_use_edit_task">settings_security_application_password_use_edit_task</string>
+        <string name="settings_security_application_password_use_export_task_title">Выполните проверку подлинности пароля приложения, когда \ "Экспорт списка задач \"</string>
+        <string name="settings_security_application_password_use_export_task">settings_security_application_password_use_export_task</string>
+        <string name="settings_security_init_smb_account_password_title">Скрыть сохраненную учетную запись и пароль при редактировании папки SMB</string>
+        <string name="settings_security_init_smb_account_password">settings_security_init_smb_account_password</string>
+        <string name="settings_security_use_auth_timeout_title">Установить срок действия аутентификации по паролю 30 минут.</string>
+        <string name="settings_security_use_auth_timeout">settings_security_use_auth_timeout</string>
+        <string name="settings_default_current_setting">текущие настройки =</string>
+        <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
+        <string name="settings_device_orientation_portrait_summary_ena">Показать приложение в портретной ориентации</string>
+        <string name="settings_device_orientation_portrait_title">Разрешить портретную ориентацию</string>
+        <string name="settings_dim_screen_on_while_sync">settings_dim_screen_on_while_sync</string>
+        <string name="settings_dim_screen_on_while_sync_summary_ena">Если вы начнете синхронизацию, когда экран горит, экран будет гореть до конца синхронизации.</string>
+        <string name="settings_dim_screen_on_while_sync_title">Активировать отображение во время выполнения задачи</string>
+        <string name="settings_error_option">settings_error_option</string>
+        <string name="settings_error_option_summary_ena">Продолжить выполнение при возникновении ошибки</string>
+        <string name="settings_error_option_title">Обработка ошибок</string>
+        <string name="settings_exit_clean">settings_exit_clean</string>
+        <string name="settings_exit_clean_summary_ena">Убить процесс приложения после очистки приложения</string>
+        <string name="settings_exit_clean_title">Выход посли очистки</string>
+        <string name="settings_exported_profile_encryption">settings_exported_profile_encryption</string>
+        <string name="settings_force_screen_on_while_sync">settings_force_screen_on_while_sync</string>
+        <string name="settings_force_screen_on_while_sync_summary_ena">The screen lights up when the sync starts and wakes up</string>
+        <string name="settings_force_screen_on_while_sync_title">Предотвратить задержку начала синхронизации во время сна</string>
+        <string name="settings_main_title">Настройки</string>
+        <string name="settings_media_scanner_option_title">MediaScanner</string>
+        <string name="settings_misc_title">Разное</string>
+        <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
+        <string name="settings_no_compress_file_type_title">Не сжимать эти типы файлов</string>
+        <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
+        <string name="settings_notification_message_when_sync_ended_dialog_title">Выберите тип уведомления</string>
+        <string-array name="settings_notification_message_when_sync_ended_list_entries">
+            <item>Отключить уведомления</item>
+            <item>Показать все уведомления</item>
+            <item>Отображать только уведомления для задач, которые успешно завершены</item>
+            <item>Отображать только уведомления для задач, которые завершены с ошибками</item>
+        </string-array >
+        <string-array name="settings_notification_message_when_sync_ended_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_notification_message_when_sync_ended_summary_always">Показать все уведомления</string>
+        <string name="settings_notification_message_when_sync_ended_summary_error">Отображать только уведомления для задач, которые завершены с ошибками</string>
+        <string name="settings_notification_message_when_sync_ended_summary_no">Отключить уведомления</string>
+        <string name="settings_notification_message_when_sync_ended_summary_success">Отображать только уведомления для задач, которые успешно завершены</string>
+        <string name="settings_notification_message_when_sync_ended_title">Уведомления</string>
+        <string name="settings_other_title">Другое</string>
+        <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
+        <string name="settings_playback_ringtone_volume_disabled">Звук уведомления по умолчанию не был установлен.</string>
+        <string name="settings_playback_ringtone_volume_summary">%s %% системного тома</string>
+        <string name="settings_playback_ringtone_volume_title">Громкость звука уведомлений</string>
+        <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
+        <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Выберите условия воспроизведения звука</string>
+        <string-array name="settings_playback_ringtone_when_sync_ended_list_entries">
+            <item>Отключить звук уведомления</item>
+            <item>Воспроизвести звук уведомления по умолчанию для всех выполненных задач</item>
+            <item>Воспроизвести звук уведомления по умолчанию для задач, которые успешно завершены</item>
+            <item>Воспроизвести звук уведомления по умолчанию для задач, которые завершаются с ошибками</item>
+        </string-array >
+        <string-array name="settings_playback_ringtone_when_sync_ended_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_playback_ringtone_when_sync_ended_summary_always">Воспроизвести звук уведомления по умолчанию для всех выполненных задач</string>
+        <string name="settings_playback_ringtone_when_sync_ended_summary_error">Воспроизвести звук уведомления по умолчанию для задач, которые завершаются с ошибками</string>
+        <string name="settings_playback_ringtone_when_sync_ended_summary_no">Отключить звук уведомления</string>
+        <string name="settings_playback_ringtone_when_sync_ended_summary_success">Воспроизвести звук уведомления по умолчанию для задач, которые успешно завершены</string>
+        <string name="settings_playback_ringtone_when_sync_ended_title">Звуки уведомлений</string>
+        <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
+        <string name="settings_smb_client_response_timeout_dialog_title">Выберите значение времени ожидания ответа (в миллисекундах)</string>
+        <string-array name="settings_smb_client_response_timeout_list_entries">
+            <item>30000</item>
+            <item>45000</item>
+            <item>60000</item>
+            <item>120000</item>
+        </string-array >
+        <string-array name="settings_smb_client_response_timeout_list_values">
+            <item>30000</item>
+            <item>45000</item>
+            <item>60000</item>
+            <item>120000</item>
+        </string-array >
+        <string name="settings_smb_client_response_timeout_summary">Время ожидания ответа</string>
+        <string name="settings_smb_client_response_timeout_title">Время ожидания ответа клиента</string>
+        <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
+        <string name="settings_smb_disable_plain_text_passwords_summary_ena">Отключить обычные текстовые пароли</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Отключить обычные текстовые пароли</string>
+        <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
+        <string name="settings_smb_lm_compatibility_dialog_title">Уровень совместимости с Lm</string>
+        <string-array name="settings_smb_lm_compatibility_list_entries">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+        </string-array >
+        <string-array name="settings_smb_lm_compatibility_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+        </string-array >
+        <string name="settings_smb_lm_compatibility_summary">Уровень LmCompatibility</string>
+        <string name="settings_smb_lm_compatibility_title">Уровень LmCompatibility</string>
+        <string name="settings_smb_title">Настройки SMB</string>
+        <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
+        <string name="settings_smb_use_extended_security_summary_ena">Использовать расширенную безопасность</string>
+        <string name="settings_smb_use_extended_security_title">Использовать расширенную безопасность</string>
+        <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
+        <string name="settings_suppress_warning_app_specific_dir_summary_ena">Отключить предупреждение, когда конкретный каталог приложения включен в задачу синхронизации</string>
+        <string name="settings_suppress_warning_app_specific_dir_title">Не предупреждать при синхронизации конкретного каталога приложения</string>
+        <string name="settings_suppress_warning_location_service_disabled">settings_suppress_warning_location_service_disabled</string>
+        <string name="settings_suppress_warning_location_service_enabled_summary_ena">Отключить предупреждение для включения службы определения местоположения.</string>
+        <string name="settings_suppress_warning_location_service_enabled_title">Не предупреждать, когда служба определения местоположения отключена.</string>
+        <string name="settings_sync_history_log">settings_sync_history_log</string>
+        <string name="settings_sync_history_log_summary_ena">Вести подробный журнал истории синхронизации</string>
+        <string name="settings_sync_history_log_title">Синхронизация истории</string>
+        <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
+        <string name="settings_sync_message_use_standard_text_view_summary_ena">Выполнить стандартную обработку Android</string>
+        <string name="settings_sync_message_use_standard_text_view_title">Обработка текста синхронизированных сообщений</string>
+        <string name="settings_sync_title">Синхронизация</string>
+        <string name="settings_ui_title">Пользовательский интерфейс</string>
+        <string name="settings_screen_theme">settings_screen_theme</string>
+        <string name="settings_screen_theme_title">Тема экрана</string>
+        <string name="settings_screen_theme_dialog_title">Тема экрана</string>
+        <string-array name="settings_screen_theme_list_entries">
+            <item>Стандарт</item>
+            <item>Светлая тема</item>
+            <item>Черная тема</item>
+        </string-array >
+        <string-array name="settings_screen_theme_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
+        <string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
+        <string name="settings_vibrate_when_sync_ended_dialog_title">Выберите опцию для уведомления вибрации</string>
+        <string-array name="settings_vibrate_when_sync_ended_list_entries">
+            <item>Отключить вибрацию уведомлений</item>
+            <item>Включить уведомление вибрации для всех выполненных задач</item>
+            <item>Включить уведомление вибрации для задач, которые успешно завершены</item>
+            <item>Включить уведомление вибрации для задач, которые завершаются с ошибками</item>
+        </string-array >
+        <string-array name="settings_vibrate_when_sync_ended_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
+        <string name="settings_vibrate_when_sync_ended_summary_always">Включить уведомление вибрации для всех выполненных задач</string>
+        <string name="settings_vibrate_when_sync_ended_summary_error">Включить уведомление вибрации для задач, которые завершаются с ошибками</string>
+        <string name="settings_vibrate_when_sync_ended_summary_no">Отключить вибрацию уведомлений</string>
+        <string name="settings_vibrate_when_sync_ended_summary_success">Включить уведомление вибрации для задач, которые успешно завершены</string>
+        <string name="settings_vibrate_when_sync_ended_title">Вибрация уведомлений</string>
+        <string name="settings_wifi_lock">settings_wifi_lock</string>
+        <string name="settings_wifi_lock_summary_ena">Не давать уходить в сон Wi-Fi до завершенной синхронизации</string>
+        <string name="settings_wifi_lock_title">Блокировка Wi-Fi</string>
+</resources>
