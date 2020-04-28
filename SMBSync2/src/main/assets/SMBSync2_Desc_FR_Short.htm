@@ -1,0 +1,712 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=shift_jis">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<title>SMBSync Description</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:"ＭＳ ゴシック";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"MS UI Gothic";
+	panose-1:2 11 6 0 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:"\@ＭＳ ゴシック";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@MS UI Gothic";
+	panose-1:2 11 6 0 7 2 5 8 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+h1
+	{mso-style-link:"見出し 1 \(文字\)";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.25pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.25pt;
+	page-break-before:always;
+	page-break-after:avoid;
+	word-break:break-all;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h2
+	{mso-style-link:"見出し 2 \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h3
+	{mso-style-link:"見出し 3 \(文字\)";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.0pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h4
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+h5
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;}
+h6
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:10.5pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	layout-grid-mode:char;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	layout-grid-mode:char;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoListBullet, li.MsoListBullet, div.MsoListBullet
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:18.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-18.0pt;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{mso-style-link:"見出しマップ \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:9.0pt;
+	font-family:"MS UI Gothic";}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"吹き出し \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:9.0pt;
+	font-family:"Arial","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.MsoTocHeading, li.MsoTocHeading, div.MsoTocHeading
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	color:#365F91;
+	font-weight:bold;}
+p.148mm, li.148mm, div.148mm
+	{mso-style-name:"スタイル 左 \:  14\.8 mm";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.2Century, li.2Century, div.2Century
+	{mso-style-name:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝";
+	mso-style-link:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝 \(文字\)";
+	margin-top:18.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Century","serif";
+	text-decoration:underline;}
+span.2
+	{mso-style-name:"見出し 2 \(文字\)";
+	mso-style-link:"見出し 2";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.2Century0
+	{mso-style-name:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝 \(文字\)";
+	mso-style-link:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.a
+	{mso-style-name:"吹き出し \(文字\)";
+	mso-style-link:吹き出し;
+	font-family:"Arial","sans-serif";}
+span.a0
+	{mso-style-name:"見出しマップ \(文字\)";
+	mso-style-link:見出しマップ;
+	font-family:"MS UI Gothic";}
+span.1
+	{mso-style-name:"見出し 1 \(文字\)";
+	mso-style-link:"見出し 1";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.3
+	{mso-style-name:"見出し 3 \(文字\)";
+	mso-style-link:"見出し 3";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+p.20mm8261, li.20mm8261, div.20mm8261
+	{mso-style-name:"スタイル 見出し 2 + 左 \:  0 mm ぶら下げインデント \:  8\.26 字 段落前 \:  1 行";
+	margin-top:5.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:41.4pt;
+	margin-bottom:.0001pt;
+	text-indent:-41.4pt;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+.MsoChpDefault
+	{font-size:10.0pt;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:42.55pt 3.0cm 42.55pt 3.0cm;
+	layout-grid:18.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='text-justify-trim:punctuation'>
+
+<div class=WordSection1 style='layout-grid:18.0pt'>
+
+<p class=MsoTocHeading><a name="_Toc450110949"></a><span lang=JA>Table des
+mati&egrave;res</span></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a
+href="#_Toc38985134">1. caract&eacute;ristiques<span style='color:windowtext;
+display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>1</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc38985135">2.
+autorisation d'utilisation<span style='color:windowtext;display:none;
+text-decoration:none'>.. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc38985136">2.1.
+informations sur la localisation<span style='color:windowtext;display:none;
+text-decoration:none'>.. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc38985137">2.2.
+Photos, m&eacute;dias et fichiers<span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc38985138">2.3.
+stockage<span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc38985139">2.4.Wi-Fi
+informations de connexion<span style='color:windowtext;display:none;text-decoration:
+none'>.. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc38985140">2.5. les
+autres<span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc38985141">2.5.1. view
+network connections<span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc38985142">2.5.2.connect
+and disconnect from Wi-Fi<span style='color:windowtext;display:none;text-decoration:
+none'> </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc38985143">2.5.3. full
+network access<span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc38985144">2.5.4.run
+at startup<span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc38985145">2.5.5.control
+vibration<span style='color:windowtext;display:none;text-decoration:none'>.. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc38985146">2.5.6.prevent
+device from sleeping<span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc38985147">2.5.7.install
+shortcuts<span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc38985148">3. les
+donn&eacute;es enregistr&eacute;es par l'application<span style='color:windowtext;display:
+none;text-decoration:none'>.. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc38985149">3.1. liste
+de t&acirc;ches synchrones<span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc38985150">3.2. fiche
+d'activit&eacute; de la demande<span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc38985151">3.3. Liste
+de t&acirc;ches synchrones export&eacute;es<span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc38985152">4.FAQ<span
+style='color:windowtext;display:none;text-decoration:none'>.. </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc38985153">5.
+Biblioth&egrave;que externe<span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc38985154">6. Plus
+d'informations.<span style='color:windowtext;display:none;text-decoration:none'> </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc38985134">1.</a> caract&eacute;ristiques</h2>
+
+<p class=MsoNormal>SMBSync2 est un outil permettant de synchroniser des
+fichiers entre le stockage interne d'un appareil Android, SDCARD et PC/NAS via
+un r&eacute;seau local sans fil en utilisant le protocole SMB1, SMB2 ou SMB3. La
+synchronisation est &agrave; sens unique du ma&icirc;tre &agrave; la cible et peut &ecirc;tre mise en
+miroir, d&eacute;plac&eacute;e, copi&eacute;e et archiv&eacute;e. (Une combinaison de stockage interne,
+SDCARD, SMB et ZIP est possible)</p>
+
+<p class=MsoNormal>Il est possible de d&eacute;marrer la synchronisation
+p&eacute;riodiquement par la fonction de planification de SMBSync2 ou d'une
+application externe (Tasker, AutoMagic, etc.).</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>Miller</p>
+
+<p class=MsoNormal>Le r&eacute;pertoire et les fichiers du c&ocirc;t&eacute; ma&icirc;tre seront copi&eacute;s
+dans le c&ocirc;t&eacute; cible (*1), et les fichiers et r&eacute;pertoires du c&ocirc;t&eacute; cible qui
+n'existent pas dans le c&ocirc;t&eacute; ma&icirc;tre seront supprim&eacute;s une fois la copie termin&eacute;e.</p>
+
+<p class=MsoNormal>mouvement</p>
+
+<p class=MsoNormal>Le r&eacute;pertoire et le fichier du c&ocirc;t&eacute; ma&icirc;tre sont copi&eacute;s dans
+le c&ocirc;t&eacute; cible, et le fichier du c&ocirc;t&eacute; ma&icirc;tre est supprim&eacute; une fois la copie
+termin&eacute;e. (Toutefois, si le fichier porte le m&ecirc;me nom que le fichier ma&icirc;tre et
+le fichier cible, que la taille du fichier et la date de mise &agrave; jour sont les
+m&ecirc;mes, le fichier ma&icirc;tre est supprim&eacute; au lieu d'&ecirc;tre copi&eacute;.</p>
+
+<p class=MsoNormal>copier</p>
+
+<p class=MsoNormal>Les fichiers du r&eacute;pertoire du ma&icirc;tre sont copi&eacute;s sur la
+cible.</p>
+
+<p class=MsoNormal>archives</p>
+
+<p class=MsoNormal>Les photos et vid&eacute;os du r&eacute;pertoire principal seront
+d&eacute;plac&eacute;es vers la cible si la date de tournage est ant&eacute;rieure de 7 jours ou de
+30 jours &agrave; la date d'ex&eacute;cution de l'archive. (Mais vous ne pouvez pas utiliser
+le zip sur la cible).</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>Note 1 : Si l'une des trois conditions suivantes est
+remplie, le fichier est jug&eacute; comme un fichier de diff&eacute;rence et est copi&eacute; ou
+d&eacute;plac&eacute;. Vous pouvez &eacute;galement ignorer la taille du fichier et l'heure de la
+derni&egrave;re mise &agrave; jour dans les options de la t&acirc;che de synchronisation.</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Le dossier n'existe pas.</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>La taille du fichier est diff&eacute;rente.</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>La derni&egrave;re date de mise &agrave; jour du fichier est diff&eacute;rente de plus
+de 3 secondes (le nombre de secondes peut &ecirc;tre modifi&eacute; par l'option de la t&acirc;che
+de synchronisation)</p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc450110990"></a><a name="_Toc38985135">2.
+autorisation d'utilisation</a></h2>
+
+<p class=MsoNormal>L'application utilise les autorisations suivantes</p>
+
+<p class=20mm8261 style='margin-top:18.0pt'><a name="_Toc38985136"></a><a
+name="_Toc9071194"></a><a name="_Toc8456826">2.1</a>. informations sur la
+localisation</p>
+
+<p class=MsoListParagraph style='margin-left:48.0pt'>-approximate location
+(network-based)</p>
+
+<p class=MsoNormal>Utilis&eacute; pour obtenir le nom du SSID WiFi sur Android 8.1 et
+sup&eacute;rieur.</p>
+
+<p class=20mm8261 style='margin-top:18.0pt'><a name="_Toc38985137"></a><a
+name="_Toc9071195">2.2.</a> Photos, m&eacute;dias et fichiers</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>-read the contents of your USB storage</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>-modify or delete the contents of your USB storage</p>
+
+<p class=MsoNormal>Utilis&eacute; pour synchroniser les fichiers avec le stockage
+interne et lire/&eacute;crire les fichiers administratifs.</p>
+
+<p class=20mm8261 style='margin-top:18.0pt'><a name="_Toc38985138"></a><a
+name="_Toc9071196">2.3.</a> stockage</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>-read the contents of your USB storage</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>-modify or delete the contents of your USB storage</p>
+
+<p class=MsoNormal>Utilis&eacute; pour synchroniser les fichiers avec le stockage USB
+et les fichiers de gestion en lecture/&eacute;criture.</p>
+
+<p class=20mm8261 style='margin-top:18.0pt'><a name="_Toc38985139"></a><a
+name="_Toc9071197">2.4.Wi-Fi </a>informations de connexion</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>view Wi-Fi connections</p>
+
+<p class=MsoNormal>Il sert &agrave; v&eacute;rifier l'&eacute;tat de votre Wi-Fi lorsque vous
+commencez la synchronisation.</p>
+
+<p class=20mm8261 style='margin-top:18.0pt'><a name="_Toc38985140"></a><a
+name="_Toc9071198">2.5.</a> les autres</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc38985141"></a><a name="_Toc9071199"></a><a
+name="_Toc8456827">2.5.1. </a>view network connections</h3>
+
+<p class=MsoNormal>Elle sert &agrave; v&eacute;rifier que vous &ecirc;tes connect&eacute; au r&eacute;seau
+lorsque vous commencez la synchronisation.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc38985142"></a><a name="_Toc9071200">2.5.2.connect
+and disconnect from Wi-Fi</a></h3>
+
+<p class=MsoNormal>Utilisez-le pour activer et d&eacute;sactiver le Wi-Fi avec la
+synchronisation des horaires.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc38985143"></a><a name="_Toc9071201">2.5.3.
+full network access</a></h3>
+
+<p class=MsoNormal>Il est utilis&eacute; pour la synchronisation sur le r&eacute;seau &agrave;
+l'aide du protocole SMB.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc38985144"></a><a name="_Toc9071202">2.5.4.run
+at startup</a></h3>
+
+<p class=MsoNormal>Ceci est utilis&eacute; pour synchroniser le calendrier.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc38985145"></a><a name="_Toc9071203">2.5.5.control
+vibration</a></h3>
+
+<p class=MsoNormal>Elle est utilis&eacute;e pour notifier &agrave; l'utilisateur la fin de la
+synchronisation.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc38985146"></a><a name="_Toc9071204">2.5.6.prevent
+device from sleeping</a></h3>
+
+<p class=MsoNormal>Utilisez-le pour d&eacute;marrer la synchronisation &agrave; partir d'un
+horaire ou d'une application externe.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc38985147"></a><a name="_Toc9071205">2.5.7.install
+shortcuts</a></h3>
+
+<p class=MsoNormal>Utilisez-le pour ajouter un raccourci de d&eacute;marrage de la
+synchronisation sur votre bureau.</p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc38985148">3. les donn&eacute;es
+enregistr&eacute;es par l'application</a></h2>
+
+<p class=MsoNormal>Les donn&eacute;es enregistr&eacute;es ne seront pas envoy&eacute;es au monde
+ext&eacute;rieur par l'application sans l'intervention de l'utilisateur.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc38985149"></a><a name="_Toc9071207"></a><a
+name="_同期タスクリスト"></a>3.1. liste de t&acirc;ches synchrones</h3>
+
+<p class=MsoNormal>L'application enregistre les donn&eacute;es n&eacute;cessaires pour
+effectuer la synchronisation.</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Nom de r&eacute;pertoire, nom de fichier, nom d'h&ocirc;te du serveur SMB,
+adresse IP, num&eacute;ro de port, nom de compte, mot de passe(*1)</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Nom du SSID Wi-Fi</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Mot de passe de l'application pour prot&eacute;ger le lancement de
+l'application et les changements de param&egrave;tres(*1)</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>valeur de r&eacute;glage de la demande</p>
+
+<p class=MsoNormal>*1 Il est stock&eacute; crypt&eacute; avec un mot de passe g&eacute;n&eacute;r&eacute; par le
+syst&egrave;me et stock&eacute; dans le magasin de cl&eacute;s d'Android.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc38985150"></a><a name="_Toc9071208">3.2.</a>
+fiche d'activit&eacute; de la demande</h3>
+
+<p class=MsoNormal>L'application enregistre les donn&eacute;es suivantes pour la
+v&eacute;rification des r&eacute;sultats de la synchronisation et le d&eacute;pannage</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Version d'Android, fabricant de l'appareil, nom de l'appareil,
+mod&egrave;le de l'appareil et version de l'application</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Nom du r&eacute;pertoire, nom du fichier, taille du fichier et date de
+la derni&egrave;re modification du fichier</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Nom d'h&ocirc;te du serveur SMB, adresse IP, num&eacute;ro de port et nom de
+compte</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Nom de l'interface r&eacute;seau, adresse IP, nom du SSID Wi-Fi</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>valeur fix&eacute;e par le syst&egrave;me</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>valeur de r&eacute;glage de la demande</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc38985151"></a><a name="_Toc9071209">3.3.</a>
+Liste de t&acirc;ches synchrones export&eacute;es</h3>
+
+<p class=MsoNormal>L'application peut &eacute;crire &quot;3.1. Liste de t&acirc;ches
+synchronis&eacute;es&quot; dans un fichier. Il peut &ecirc;tre prot&eacute;g&eacute; par un mot de passe
+au moment de l'exportation.</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Nom du r&eacute;pertoire, nom du fichier</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Nom d'h&ocirc;te du serveur SMB, adresse IP, num&eacute;ro de port, nom de
+compte et mot de passe</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Nom du SSID Wi-Fi</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>valeur de r&eacute;glage de la demande</p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc38985152">4.FAQ</a></h2>
+
+<p class=MsoNormal>Veuillez vous r&eacute;f&eacute;rer au PDF du lien ci-dessous.</p>
+
+<p class=MsoNormal><a
+href="https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing">https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing</a></p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc38985153">5.</a> Biblioth&egrave;que
+externe</h2>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><a href="https://github.com/AgNO3/jcifs-ng">jcifs-ng ClientLibrary</a></p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><a href="https://jcifs.samba.org/">jcifs-1.3.17</a></p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Zip4J 1.3.2</p>
+
+<p class=MsoListBullet style='margin-left:36.0pt'><span style='font-family:
+Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><a href="https://www.adobe.com/devnet/xmp.html">Xmpcore-5.1.3</a></p>
+
+<p class=MsoListBullet style='margin-left:36.0pt'><span style='font-family:
+Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><a href="https://github.com/drewnoakes/metadata-extractor">Metadata-extractor</a></p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc38985154">6. Plus d'informations.</a></h2>
+
+<p class=MsoNormal style='word-break:break-all'><a
+href="https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing">https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing</a></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
