@@ -41,9 +41,9 @@
         <string name="msgs_export_import_pswd_hint_confirm">Confirmer mot de passe</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Les mots de passe saisis sont différents.</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync2_Help_FR_task.htm</string>
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_EN_task.htm</string>
         <string name="msgs_help_sync_task_title">Aide de Configuration de Tâche</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_FR_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_EN_folder_internal.htm</string>
         <string name="msgs_help_sync_folder_internal_title">Aide sur le Stockage Interne</string>
         <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_EN_folder_sdcard.htm</string>
         <string name="msgs_help_sync_folder_sdcard_title">Aide sur le Stockage Externe (carte SD)</string>
