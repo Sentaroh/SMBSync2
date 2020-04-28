@@ -1365,6 +1365,10 @@ public class SyncThread extends Thread {
         if (in_str.contains("<")) return "<";
         if (in_str.contains(">")) return ">";
         if (in_str.contains("|")) return "|";
+        if (in_str.contains("\n")) return "CR";
+        if (in_str.contains("\t")) return "TAB";
+        String printable=in_str.replaceAll("\\p{C}", "");
+        if (in_str.length()!=printable.length()) return "UNPRINTABLE";
         return "";
     }
 
