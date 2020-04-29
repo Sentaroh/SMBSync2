@@ -334,34 +334,62 @@
                 <include layout="@layout/divider_line1" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/edit_sync_task_option_ll_retry_if_error_occured"
+                android:id="@+id/edit_sync_task_option_ll_advanced_network_option_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_ctv_retry_if_error_occured"
-                    android:layout_width="fill_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:gravity="center_vertical"
-                    android:text="@string/msgs_profile_sync_task_sync_option_retry_if_error_occured"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_network_adv_options"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                <include layout="@layout/divider_line1" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/edit_sync_task_option_ll_sync_use_remote_small_io_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_ctv_sync_use_remote_small_io_area"
-                    android:layout_width="fill_parent"
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_ll_retry_if_error_occured"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:gravity="center_vertical"
-                    android:text="@string/msgs_profile_sync_task_sync_use_small_ioarea"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-                <include layout="@layout/divider_line1" />
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+                    <CheckedTextView
+                        android:id="@+id/edit_sync_task_option_ctv_retry_if_error_occured"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                        android:gravity="center_vertical"
+                        android:text="@string/msgs_profile_sync_task_sync_option_retry_if_error_occured"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_ll_sync_use_remote_small_io_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+                    <CheckedTextView
+                        android:id="@+id/edit_sync_task_option_ctv_sync_use_remote_small_io_area"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                        android:gravity="center_vertical"
+                        android:text="@string/msgs_profile_sync_task_sync_use_small_ioarea"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_do_mot_use_rename_when_smb_file_write_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+                    <CheckedTextView
+                        android:id="@+id/edit_sync_task_option_do_mot_use_rename_when_smb_file_write"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                        android:gravity="center_vertical"
+                        android:text="@string/msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <include layout="@layout/divider_line1" />
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/edit_sync_task_option_ll_do_mot_reset_file_last_mod_time"
@@ -536,22 +564,6 @@
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-                <include layout="@layout/divider_line1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/edit_sync_task_option_do_mot_use_rename_when_smb_file_write_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_do_mot_use_rename_when_smb_file_write"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:gravity="center_vertical"
-                    android:text="@string/msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
                 <include layout="@layout/divider_line1" />
             </LinearLayout>
