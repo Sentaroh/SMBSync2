@@ -138,8 +138,7 @@
         <string name="msgs_main_app_specific_dir_used_title">アプリケーション固有ディレクトリ使用についての警告</string>
         <string name="msgs_main_location_service_warning_msg_location">Android 8.1から下記のタスクは位置情報サービスが無効のため、同期はエラーで終了します。 システム設定でロケーションサービスを有効にするか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
         <string name="msgs_main_location_service_warning_msg_coarse">Android 8.1から下記のタスクは「低精度ロケーション許可」が与えられていないため、同期はエラーで終了します。 メニューから許可を与えるか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
-        <string name="msgs_main_location_service_warning_msg_both">Android 8.1から下記のタスクは位置情報サービスと低精度ロケーションが無効なため同期はエラーで終了します。 以下の何れかの対応を行ってください。\n1.システム設定でロケーションサービスを有効にし、その後にアプリメニューから「低精度ロケーション許可」与える。\n2.同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更する。
-</string>
+        <string name="msgs_main_location_service_warning_msg_both">Android 8.1から下記のタスクは位置情報サービスと低精度ロケーションが無効なため同期はエラーで終了します。 以下の何れかの対応を行ってください。\n1.システム設定でロケーションサービスを有効にし、その後にアプリメニューから「低精度ロケーション許可」与える。\n2.同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更する。</string>
         <string name="msgs_main_location_error_location_service_is_disabled">ロケーションサービスが有効になっていないためWiFi AP名を取得できません。設定からロケーションを有効にしてください。</string>
         <string name="msgs_main_location_error_location_permission_not_granted">低精度ロケーションが許可されていないためWiFi AP名を取得できません。メニューから低精度ロケーションを許可してください。</string>
         <string name="msgs_main_location_error_background_location_permission_not_granted">低精度ロケーションが「アプリの使用中のみ許可」になっているためWiFi AP名を取得できません。メニューから低精度ロケーションを「常に許可」に変更してください。</string>
@@ -148,10 +147,8 @@
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARDへの書込み許可を行うアクティビティを起動できませんでした。</string>
         <string name="msgs_main_external_sdcard_select_required_cancel_msg">SDCARDへの書込が許可されるまで同期は実行できません。 タスク=%s</string>
-        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">SDCARDへの書込を許可するために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「ＳＤＣＡＲＤを選択」をタップしてください。\n
-(ステップ２の「ＳＤＣＡＲＤを選択」の画面が直接表示された時は「ＳＤＣＡＲＤを選択」をタップしてください)</string>
-        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">SDCARDへの書込を許可するために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
-(ステップ２で左上に「ＳＤＣＡＲＤ」の画面が直接表示された時は「選択」をタップしてください。左上に「ＳＤＣＡＲＤ」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">SDCARDへの書込を許可するために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「ＳＤＣＡＲＤを選択」をタップしてください。\n(ステップ２の「ＳＤＣＡＲＤを選択」の画面が直接表示された時は「ＳＤＣＡＲＤを選択」をタップしてください)</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">SDCARDへの書込を許可するために、ステップ１.「SDCARD」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n(ステップ２で左上に「ＳＤＣＡＲＤ」の画面が直接表示された時は「選択」をタップしてください。左上に「ＳＤＣＡＲＤ」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_JA.png</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_JA.png</string>
         <string name="msgs_main_external_sdcard_select_required_title">SDCARDへの書込許可</string>
@@ -163,8 +160,7 @@
         <string name="msgs_main_external_usb_drive_not_found_msg">USBメディアがマウントされていません。画面を閉じてからUSBメディアをマウントして、操作を行ってください。</string>
         <string name="msgs_main_external_usb_select_path_not_available_msg">マウントポイント(/storage/%s)が見つかりません。この装置に於いてSMBSync2ではUSBメディアを使用できません。</string>
         <string name="msgs_main_external_usb_select_required_cancel_msg">USBメディアへの書込許可がされるまで同期は実行できません。 タスク=%s</string>
-        <string name="msgs_main_external_usb_select_required_select_msg_api23">USBメディアの書込を許可するために、ステップ１.「USB」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n
-(ステップ２で左上に「USB」の画面が直接表示された時は「選択」をタップしてください。左上に「USB」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_api23">USBメディアの書込を許可するために、ステップ１.「USB」をタップしてください、ステップ２.その後表示された画面で「選択」をタップしてください。\n(ステップ２で左上に「USB」の画面が直接表示された時は「選択」をタップしてください。左上に「USB」以外が表示されている場合は左上のメニューをタップし、ステップ１からやり直してください。)</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_JA.png</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_JA.png</string>
         <string name="msgs_main_external_usb_select_required_title">USBメディアへの書込許可</string>
@@ -413,6 +409,7 @@
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">夏時間と標準時の時間差(分)の選択</string>
         <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">ターゲットファイルの最終更新時刻をマスターと同じにしない</string>
         <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">ファイルを上書きする</string>
+        <string name="msgs_profile_sync_task_sync_option_network_adv_options">ネットワークの詳細オプション:</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">ネットワークエラーが発生した場合にリトライする</string>
         <string name="msgs_profile_sync_task_sync_option_show_special_option">詳細オプションを表示する</string>
         <string name="msgs_profile_sync_task_sync_option_sub_dir">サブディレクトリーを処理する</string>
@@ -445,9 +442,7 @@
         <string name="msgs_select_usb_dir">USBメディア ディレクトリの選択</string>
         <string name="msgs_select_remote_dir">SMBディレクトリの選択</string>
         <string name="msgs_select_remote_share">SMB共有の選択</string>
-        <string name="msgs_share_list_not_obtained">SMB共有の一覧を取得できませんでした。下記を確認してください。\n
--SMBサーバー側で共有されている\n
--アカウント/パスワードを指定していない場合はアカウント/パスワードを指定する</string>
+        <string name="msgs_share_list_not_obtained">SMB共有の一覧を取得できませんでした。下記を確認してください。\n-SMBサーバー側で共有されている\n-アカウント/パスワードを指定していない場合はアカウント/パスワードを指定する</string>
         <string name="msgs_smbsync_main_private_key_corrupted_title">内部暗号化キーエラー</string>
         <string name="msgs_smbsync_main_private_key_corrupted_msg">内部暗号化キーが無効のため同期タスクリストを保存できません。\n内部暗号化キーを再作成しますか？</string>
         <string name="msgs_smbsync_main_no_external_storage">外部メディアが使用できないため、いくつかの機能が使用できません。</string>
@@ -682,10 +677,7 @@
         <string name="msgs_send_logcat_btn_preview_logcat">LogCatの表示</string>
         <string name="msgs_send_logcat_btn_preview_applog">AppLogの表示</string>
         <string name="msgs_send_logcat_title">LogCatとAppLogの送信</string>
-        <string name="msgs_send_logcat_message">LogCatとAppLogを開発者にE-Mailで送信します\n
-１．LogCat表示ボタンとAppLog表示ボタンを押し内容を確認してください（テキストファイルを表示するためのアプリケーション選択の画面が表示されたら、アプリケーションを選択してください）\n
-２．送信する内容を確認したら、送信ボタンを押しE-Mail選択ダイアログでE-Mailを選択\n
-３．必要ならばE-Mail本文にメッセージを入力し送信してください。（ログはzipに圧縮し、添付ファイルになっています）</string>
+        <string name="msgs_send_logcat_message">LogCatとAppLogを開発者にE-Mailで送信します\n１．LogCat表示ボタンとAppLog表示ボタンを押し内容を確認してください（テキストファイルを表示するためのアプリケーション選択の画面が表示されたら、アプリケーションを選択してください）\n２．送信する内容を確認したら、送信ボタンを押しE-Mail選択ダイアログでE-Mailを選択\n３．必要ならばE-Mail本文にメッセージを入力し送信してください。（ログはzipに圧縮し、添付ファイルになっています）</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">同期タスクが無効になっているため、同期タスクを開始できませんでした。</string>
         <string name="msgs_svc_received_start_request_from_scheduler">SMBSync2スケジューラーから同期要求を受け付けました。</string>

@@ -164,7 +164,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public long appPasswordAuthLastTime=0L;
 
     public boolean settingPreventSyncStartDelay = true;
-    public boolean settingScreenOnIfScreenOnAtStartOfSync = false;
+    public boolean settingForceScreenOnAtStartOfSync = false;
 
     public boolean settingExportedProfileEncryptRequired = true;
 
@@ -576,7 +576,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingGrantCoarseLocationRequired = prefs.getBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, true);
 
-        settingScreenOnIfScreenOnAtStartOfSync =prefs.getBoolean(appContext.getString(R.string.settings_force_screen_on_while_sync), false);
+        settingForceScreenOnAtStartOfSync =prefs.getBoolean(appContext.getString(R.string.settings_force_screen_on_while_sync), false);
 
         settingSyncMessageUseStandardTextView =prefs.getBoolean(appContext.getString(R.string.settings_sync_message_use_standard_text_view), false);
 
@@ -686,7 +686,7 @@ public class GlobalParameters extends CommonGlobalParms {
             }
         }
 
-        if (settingScreenOnIfScreenOnAtStartOfSync || (settingPreventSyncStartDelay && isScreenOn(appContext, util))) {// && !activityIsBackground) {
+        if (settingForceScreenOnAtStartOfSync || (settingPreventSyncStartDelay && isScreenOn(appContext, util))) {// && !activityIsBackground) {
             if (!mDimWakeLock.isHeld()) {
                 mDimWakeLock.acquire();
                 util.addDebugMsg(1, "I", "Dim wakelock acquired");

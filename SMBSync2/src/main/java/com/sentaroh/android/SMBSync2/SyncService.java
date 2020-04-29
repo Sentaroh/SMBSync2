@@ -906,8 +906,8 @@ public class SyncService extends Service {
             String action = in.getAction();
             if (action.equals(Intent.ACTION_SCREEN_ON)) {
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
-//                Log.v("Sync","force="+mGp.settingScreenOnIfScreenOnAtStartOfSync+", thread="+mGp.syncThreadActive+", wait="+mGp.syncThreadConfirmWait);
-                if (mGp.settingScreenOnIfScreenOnAtStartOfSync && mGp.syncThreadActive && !mGp.syncThreadConfirmWait) {
+//                Log.v("Sync","force="+mGp.settingForceScreenOnAtStartOfSync+", thread="+mGp.syncThreadActive+", wait="+mGp.syncThreadConfirmWait);
+                if (mGp.settingForceScreenOnAtStartOfSync && mGp.syncThreadActive && !mGp.syncThreadConfirmWait) {
                     if (mGp.forceDimScreenWakelock.isHeld()) mGp.forceDimScreenWakelock.release();
                     mGp.forceDimScreenWakelock.acquire();
                     mUtil.addDebugMsg(1, "I", "Sleep receiver, ForceDim wake lock acquired");

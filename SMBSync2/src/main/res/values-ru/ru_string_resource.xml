@@ -147,12 +147,8 @@
         <string name="msgs_main_external_sdcard_mp_changed_title">Карта SD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">Не удалось получить разрешение на запись SD карты.</string>
         <string name="msgs_main_external_sdcard_select_required_cancel_msg">Вы не можите синхронизироваться, пока не будет предоставлено разрешение на запись в SD карту.</string>
-        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">Для доступа к SDCARD: нажмите  SDCARD »(1), затем нажмите «Выбрать»(2). \n
-\n
-Если панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу. </string>
-        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">Для доступа к SDCARD: нажмите  SDCARD »(1), затем нажмите «Выбрать»(2). \n
-\n
-Если панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу. </string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">Для доступа к SDCARD: нажмите  SDCARD »(1), затем нажмите «Выбрать»(2). \n\nЕсли панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу. </string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">Для доступа к SDCARD: нажмите  SDCARD »(1), затем нажмите «Выбрать»(2). \n\nЕсли панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу. </string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_EN.png</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_EN.png</string>
         <string name="msgs_main_external_sdcard_select_required_title">Разрешить запись на SDCARD</string>
@@ -164,9 +160,7 @@
         <string name="msgs_main_external_usb_drive_not_found_msg">USB-носитель не подключен. Закройте окно, а затем подключите USB-носитель для выполнения операции.</string>
         <string name="msgs_main_external_usb_select_path_not_available_msg">Точка монтирования /storage/% s не найдена. SMBSync2 не может использовать этот USB-носитель.</string>
         <string name="msgs_main_external_usb_select_required_cancel_msg">%s. Вы не сможете выполнить синхронизацию, пока не получите разрешение записи на USB-носитель.</string>
-        <string name="msgs_main_external_usb_select_required_select_msg_api23">Для доступа к USB-носителю: нажмите«USB»(1), затем нажмите «Выбрать»(2). \n
-\n
-Если панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу.</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_api23">Для доступа к USB-носителю: нажмите«USB»(1), затем нажмите «Выбрать»(2). \n\nЕсли панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу.</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_EN.png</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_EN.png</string>
         <string name="msgs_main_external_usb_select_required_title">Разрешить запись на USB-носитель</string>
@@ -415,6 +409,7 @@
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">Выберите смещение летнего времени (минуты)</string>
         <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">Не устанавливайте время обновления файла назначения в соответствии с исходным файлом</string>
         <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">Перезаписать целевой файл (файлы)</string>
+        <string name="msgs_profile_sync_task_sync_option_network_adv_options">Расширенные возможности сети:</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Повторите попытку при сетевой ошибке</string>
         <string name="msgs_profile_sync_task_sync_option_show_special_option">Показать расширенные опции</string>
         <string name="msgs_profile_sync_task_sync_option_sub_dir">Включить подкаталоги</string>
@@ -447,9 +442,7 @@
         <string name="msgs_select_usb_dir">Выберите каталог USB Media</string>
         <string name="msgs_select_remote_dir">Выберите каталог SMB</string>
         <string name="msgs_select_remote_share">Выберите общий ресурс SMB</string>
-        <string name="msgs_share_list_not_obtained">Could not get the list of SMB shares. Please check below.\n
--Shared on the SMB server side\n
--Specify account/password if you do not specify an account/password</string>
+        <string name="msgs_share_list_not_obtained">Could not get the list of SMB shares. Please check below.\n-Shared on the SMB server side\n-Specify account/password if you do not specify an account/password</string>
         <string name="msgs_smbsync_main_private_key_corrupted_title">Внутренняя ошибка ключа шифрования</string>
         <string name="msgs_smbsync_main_private_key_corrupted_msg">Невозможно сохранить список задач синхронизации, поскольку внутренний ключ шифрования недействителен. \n Создать внутренний ключ шифрования?</string>
         <string name="msgs_smbsync_main_no_external_storage">Внешнее хранилище не было установлено. Некоторые функции недоступны.</string>
@@ -639,8 +632,7 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Укажите профиль для синхронизации, нажав кнопку «Редактировать список синхронизации».</string>
         <string name="msgs_scheduler_info_next_schedule_time">Время следующей синхронизации %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Следующая синхронизация: время = %s, имя = (%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error">Задача, указанная в расписании, не найдена.
-Расписание: %s, задача: %s </string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">Задача, указанная в расписании, не найдена.\nРасписание: %s, задача: %s </string>
         <string name="msgs_scheduler_info_schedule_disabled">Расписание синхронизации отключено</string>
         <string name="msgs_scheduler_info_schedule_enabled">Расписание синхронизации включено</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">Выполнить все задачи автосинхронизации</string>
@@ -685,9 +677,7 @@
         <string name="msgs_send_logcat_btn_preview_logcat">Предварительный LogCat</string>
         <string name="msgs_send_logcat_btn_preview_applog">Предварительный просмотр AppLog</string>
         <string name="msgs_send_logcat_title">Отправить LogCat и AppLog</string>
-        <string name="msgs_send_logcat_message">Отправьте LogCat и AppLog разработчикам электронным-mail\n 
-1. Проверьте содержание путем нажатия кнопки отображения LogCat, и кнопка отображения AppLog (выберите приложение, когда экран выбора приложения отображен).\n 2. После подтверждения содержания, которое будет отправлено, нажмите отправить кнопку и выберите электронную почту в почтовом диалоговом окне выбора  \n
-3. Введите, сообщение в теле электронного письма при необходимости прикрепите электронное письмо (журнал сжат до zip и присоединен к электронной почте).</string>
+        <string name="msgs_send_logcat_message">Отправьте LogCat и AppLog разработчикам электронным-mail\n1. Проверьте содержание путем нажатия кнопки отображения LogCat, и кнопка отображения AppLog (выберите приложение, когда экран выбора приложения отображен).\n 2. После подтверждения содержания, которое будет отправлено, нажмите отправить кнопку и выберите электронную почту в почтовом диалоговом окне выбора  \n3. Введите, сообщение в теле электронного письма при необходимости прикрепите электронное письмо (журнал сжат до zip и присоединен к электронной почте).</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">Поскольку задача синхронизации отключена, она не смогла запустить задачу синхронизации.</string>
         <string name="msgs_svc_received_start_request_from_scheduler">Запрос синхронизации получен от планировщика SMBSync2.</string>

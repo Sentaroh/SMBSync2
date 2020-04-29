@@ -266,7 +266,7 @@ public final class CommonUtilities {
         out.add("  Vibrate when sync ended="+gp.settingVibrateWhenSyncEnded);
         out.add("  Fix device oprientation portrait="+gp.settingFixDeviceOrientationToPortrait);
         out.add("  Screen theme="+gp.settingScreenTheme);
-        out.add("  Screen on if screen on at start of the sync="+gp.settingScreenOnIfScreenOnAtStartOfSync);
+        out.add("  Force Screen on at start of the sync="+gp.settingForceScreenOnAtStartOfSync);
 
         out.add("");
         out.add("  Security use app startup="+gp.settingSecurityApplicationPasswordUseAppStartup);
