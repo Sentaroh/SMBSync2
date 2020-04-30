@@ -2063,7 +2063,7 @@ public class ActivityMain extends AppCompatActivity {
                 ", settingRingtoneWhenSyncEnded=" + mGp.settingRingtoneWhenSyncEnded +
                 ", settingNotificationVolume="+mGp.settingNotificationVolume +
                 ", settingPreventSyncStartDelay="+mGp.settingPreventSyncStartDelay +
-                ", settingScreenOnIfScreenOnAtStartOfSync="+mGp.settingScreenOnIfScreenOnAtStartOfSync +
+                ", Force Screen on at start of the sync="+mGp.settingScreenOnIfScreenOnAtStartOfSync +
                 ", settingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired +
 
                 ", settingSupressAppSpecifiDirWarning=" + mGp.settingSupressAppSpecifiDirWarning +

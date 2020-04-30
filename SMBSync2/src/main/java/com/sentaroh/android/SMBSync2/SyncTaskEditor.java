@@ -2837,7 +2837,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         mGp.safMgr.loadSafFile();
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
+        spinner.setPrompt(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_local_mount_point ));
         spinner.setAdapter(adapter);
 
         int sel_no = 0;
@@ -3315,14 +3315,11 @@ public class SyncTaskEditor extends DialogFragment {
         ctv_edit_sync_task_option_ignore_unusable_character_used_directory_file_name.setChecked(n_sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters());
         setCtvListenerForEditSyncTask(ctv_edit_sync_task_option_ignore_unusable_character_used_directory_file_name, type, n_sti, dlg_msg);
 
-        final CheckedTextView ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_do_mot_use_rename_when_smb_file_write);
-        ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write.setChecked(n_sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite());
-        setCtvListenerForEditSyncTask(ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write, type, n_sti, dlg_msg);
-
         final CheckedTextView ctv_sync_remove_master_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
         ctv_sync_remove_master_if_empty.setChecked(n_sti.isSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty());
         setCtvListenerForEditSyncTask(ctv_sync_remove_master_if_empty, type, n_sti, dlg_msg);
 
+        final LinearLayout ll_advanced_network_option_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_advanced_network_option_view);
         final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
         CommonUtilities.setCheckedTextView(ctvRetry);
         if (n_sti.getSyncOptionRetryCount().equals("0")) ctvRetry.setChecked(false);
@@ -3334,10 +3331,15 @@ public class SyncTaskEditor extends DialogFragment {
         ctvSyncUseRemoteSmallIoArea.setChecked(n_sti.isSyncOptionUseSmallIoBuffer());
         setCtvListenerForEditSyncTask(ctvSyncUseRemoteSmallIoArea, type, n_sti, dlg_msg);
 
+        final CheckedTextView ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_do_mot_use_rename_when_smb_file_write);
+        ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write.setChecked(n_sti.isSyncOptionDoNotUseRenameWhenSmbFileWrite());
+        setCtvListenerForEditSyncTask(ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write, type, n_sti, dlg_msg);
+
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
         setSpinnerSyncTaskWifiOption(spinnerSyncWifiStatus, n_sti.getSyncOptionWifiStatusOption());
         if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) || n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-            ll_wifi_condition_view.setVisibility(Button.VISIBLE);
+            ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
+            ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
             if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
                 ll_wifi_wl_view.setVisibility(Button.VISIBLE);
                 ll_wifi_wl_ap_view.setVisibility(Button.VISIBLE);
@@ -3346,7 +3348,8 @@ public class SyncTaskEditor extends DialogFragment {
                 ll_wifi_wl_ap_view.setVisibility(Button.GONE);
             }
         } else {
-            ll_wifi_condition_view.setVisibility(Button.GONE);
+            ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
+            ll_advanced_network_option_view.setVisibility(LinearLayout.GONE);
         }
 
         spinnerSyncWifiStatus.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -3763,9 +3766,11 @@ public class SyncTaskEditor extends DialogFragment {
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                         if (!prev_master_folder_type.equals(n_sti.getMasterFolderType())) {
                             ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
+                            ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
                             if ((!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                                     !n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB))) {
                                 ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
+                                ll_advanced_network_option_view.setVisibility(LinearLayout.GONE);
                             } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
                                     n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
@@ -3922,9 +3927,11 @@ public class SyncTaskEditor extends DialogFragment {
 
                         if (!prev_target_folder_type.equals(n_sti.getTargetFolderType())) {
                             ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
+                            ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
                             if (!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                                     !n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
+                                ll_advanced_network_option_view.setVisibility(LinearLayout.GONE);
                             } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
                                     n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
@@ -4567,6 +4574,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvDiffUseFileSize = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_file_size);
 
         final CheckedTextView ctv_sync_remove_master_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
+        final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
 
         final LinearLayout ll_edit_sync_tak_option_keep_conflict_file=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file_view);
         final LinearLayout ll_spinnerTwoWaySyncConflictRule=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_view);
@@ -4586,6 +4594,9 @@ public class SyncTaskEditor extends DialogFragment {
             ll_sync_remove_master_if_empty.setVisibility(CheckedTextView.GONE);
             ctv_sync_remove_master_if_empty.setChecked(false);
         }
+
+        if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) ctvDeleteFirst.setVisibility(CheckedTextView.VISIBLE);
+        else ctvDeleteFirst.setVisibility(CheckedTextView.GONE);
 
         if (!n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             ll_ctvUseSmbsyncLastMod.setVisibility(LinearLayout.GONE);

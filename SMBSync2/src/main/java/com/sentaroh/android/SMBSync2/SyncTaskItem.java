@@ -185,12 +185,16 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private boolean syncOptionDeterminChangedFileBySize = true;
     private boolean syncOptionDeterminChangedFileByTime = true;
-    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_0=1;
-    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_1=3;
-    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_2=10;
-    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT=SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_0;
-    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_LIST_DEFAULT_ITEM_INDEX = 0;
-    public final static int[] SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_LIST =new int[]{SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_0, SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_1, SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_2};
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_0=0;
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_1=1;
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_2=3;//For FAY32/VFAT/FAT
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_3=5;
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_4=10;//For compatibility
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT=SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_2;//For compatibility
+    public final static int SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_LIST_DEFAULT_ITEM_INDEX = 2;//For compatibility
+    public final static int[] SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_LIST =new int[]{
+            SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_0, SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_1, SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_2,
+            SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_3, SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_4};
     private int syncOptionDeterminChangedFileByTimeValue = SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT;//Seconds
 
     private boolean syncOptionDoNotUseRenameWhenSmbFileWrite = false;
