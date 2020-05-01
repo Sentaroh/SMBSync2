@@ -160,7 +160,7 @@ public class SyncThreadCopyFile {
         try {
             if (!sti.isSyncDoNotResetFileLastModified()) temp_file.setLastModified(mf.lastModified());
         } catch(Exception e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
@@ -228,7 +228,7 @@ public class SyncThreadCopyFile {
             try {
                 if (!sti.isSyncDoNotResetFileLastModified()) out_file.setLastModified(mf.lastModified());
             } catch(Exception e) {
-                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                         stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
                 stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
             }
@@ -302,7 +302,7 @@ public class SyncThreadCopyFile {
         try {
             if (!sti.isSyncDoNotResetFileLastModified()) out_file.setLastModified(mf.lastModified());
         } catch(JcifsException e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
@@ -357,7 +357,7 @@ public class SyncThreadCopyFile {
         try {
             if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.lastModified());
         } catch(JcifsException e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
@@ -397,7 +397,7 @@ public class SyncThreadCopyFile {
             try {
                 if (!sti.isSyncDoNotResetFileLastModified()) temp_file.setLastModified(mf.lastModified());
             } catch(Exception e) {
-                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                         stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
                 stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
             }
@@ -489,7 +489,7 @@ public class SyncThreadCopyFile {
         try {
             if (!sti.isSyncDoNotResetFileLastModified()) temp_file.setLastModified(mf.lastModified());
         } catch(Exception e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
@@ -550,7 +550,7 @@ public class SyncThreadCopyFile {
         try {
             if (!sti.isSyncDoNotResetFileLastModified()) out_file.setLastModified(mf.lastModified());
         } catch(JcifsException e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
@@ -590,7 +590,7 @@ public class SyncThreadCopyFile {
         try {
             if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.lastModified());
         } catch(JcifsException e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
@@ -639,7 +639,7 @@ public class SyncThreadCopyFile {
         try {
             if (!sti.isSyncDoNotResetFileLastModified()) out_file.setLastModified(mf.getLastModified());
         } catch(JcifsException e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
@@ -674,7 +674,7 @@ public class SyncThreadCopyFile {
         try {
             if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.getLastModified());
         } catch(JcifsException e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
@@ -714,7 +714,7 @@ public class SyncThreadCopyFile {
             try {
                 if (!sti.isSyncDoNotResetFileLastModified()) out_file.setLastModified(mf.getLastModified());
             } catch(Exception e) {
-                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+                SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                         stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
                 stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
             }
@@ -728,7 +728,7 @@ public class SyncThreadCopyFile {
 //        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " rename result="+rc+", dest path lenth="+file_name.length()+", temp path length="+out_file.getPath().length());
 //        stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " rename result="+rc+", dest path lenth="+file_name.getBytes().length+", temp path length="+out_file.getPath().getBytes().length);
         if (!rc) {
-            stwa.util.addLogMsg("E", sti.getSyncTaskName(), " ", "renae error detected, from="+out_file.getPath()+", to="+out_dest.getPath());
+            stwa.util.addLogMsg("E", sti.getSyncTaskName(), " ", "rename error detected, from="+out_file.getPath()+", to="+out_dest.getPath());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
 
@@ -808,7 +808,7 @@ public class SyncThreadCopyFile {
         try {
             if (!sti.isSyncDoNotResetFileLastModified()) temp_file.setLastModified(mf.getLastModified());
         } catch(Exception e) {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", to_file_dest, mf.getName(),
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
                     stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
@@ -837,10 +837,10 @@ public class SyncThreadCopyFile {
                 in.putParcelable(EXTRA_URI, to_sf.getUri());
                 client.call(METHOD_DELETE_DOCUMENT, null, in);
             } catch (Exception e) {
-                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", "", "",
                         CommonUtilities.getExecutedMethodName() + " From=" + from_dir+"/"+file_name + ", To=" + to_file_dest);
-                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
-                if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", "", "", e.getMessage());
+                if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", "", "", e.getCause().toString());
 
                 SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             }
@@ -872,7 +872,7 @@ public class SyncThreadCopyFile {
             ofs.write(buffer, 0, buffer_read_bytes);
             file_read_bytes += buffer_read_bytes;
             if (show_prog && file_size > file_read_bytes) {
-                SyncThread.showProgressMsg(stwa, sti.getSyncTaskName(), file_name + " " +
+                SyncThread.showProgressMsg(stwa, sti.getSyncTaskName()+":", file_name + " " +
                         String.format(stwa.msgs_mirror_task_file_copying, (file_read_bytes * 100) / file_size));
             }
             if (!stwa.gp.syncThreadCtrl.isEnabled()) {

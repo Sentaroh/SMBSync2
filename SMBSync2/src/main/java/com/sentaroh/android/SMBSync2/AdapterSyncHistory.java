@@ -214,7 +214,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
                 holder.tv_time.setText(o.sync_time);
                 holder.tv_prof.setText(o.sync_prof);
 
-                holder.tv_req.setText(o.sync_req);
+                holder.tv_req.setText(o.sync_req); //the translated sync_rec
 
                 String st_text = "";
                 if (o.sync_status == SyncHistoryItem.SYNC_STATUS_SUCCESS) {
@@ -238,15 +238,15 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
 
                 holder.tv_status.setText(st_text);
 
-                holder.tv_mode.setText(o.sync_test_mode ? mModeTest : mModeNormal);
+                holder.tv_mode.setText(o.sync_test_mode ? mModeTest+"  - " : mModeNormal+"  - ");
                 if (o.sync_test_mode)
                     holder.tv_mode.setTextColor(mThemeColorList.text_color_warning);
                 else holder.tv_mode.setTextColor(mTextColor);
 
-                holder.tv_cnt_copied.setText(Integer.toString(o.sync_result_no_of_copied));
-                holder.tv_cnt_deleted.setText(Integer.toString(o.sync_result_no_of_deleted));
-//            	holder.tv_cnt_ignored.setText(Integer.toString(o.sync_result_no_of_ignored));
-//            	holder.tv_cnt_retry.setText(Integer.toString(o.sync_result_no_of_retry));
+                holder.tv_cnt_copied.setText(" "+Integer.toString(o.sync_result_no_of_copied)+"  - ");
+                holder.tv_cnt_deleted.setText(" "+Integer.toString(o.sync_result_no_of_deleted));
+//            	holder.tv_cnt_ignored.setText(" "+Integer.toString(o.sync_result_no_of_ignored));
+//            	holder.tv_cnt_retry.setText(" "+Integer.toString(o.sync_result_no_of_retry));
 
                 if (o.sync_error_text != null && !o.sync_error_text.equals("")) {
                     holder.tv_error.setVisibility(TextView.VISIBLE);

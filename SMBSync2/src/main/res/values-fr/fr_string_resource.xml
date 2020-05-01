@@ -26,6 +26,7 @@
         <string name="msgs_import_autosave_dlg_manual_save_list">Sauvegardes par l\'utilisateur</string>
         <string name="msgs_import_autosave_dlg_autosave_failed">L\'autosauvegarde des paramètres de synchronisation a échoué</string>
         <string name="msgs_import_autosave_dlg_autosave_completed">Les paramètres de synchronisation ont été autosauvegardés</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed_path">emplacement</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (dernier fichier sauvegardé)</string>
         <string name="msgs_export_import_profile_smb_account_name_password_not_restored">Le nom d\'utilisateur, mot de passe du compte ainsi que le mot de passe des archives (ZIP) n\'ont pas pu être importé. Si vous désinstallez l\'application et essayez de restaurer une sauvegarde, ces données d\'identification ne pourront plus être décryptées. Editez la tâche de synchronisation et saisissez à nouveau les données d\'identification.</string>
@@ -183,7 +184,7 @@
         <string name="msgs_main_sync_history_count_retry">Tentatives:</string>
         <string name="msgs_main_sync_history_del_conf_all_history">Voulez-vous supprimer tout l\'historique?</string>
         <string name="msgs_main_sync_history_del_conf_selected_history">Voulez-vous supprimer ces éléments de l\'historique?</string>
-        <string name="msgs_main_sync_history_elapsed_time">Temps écoulé:</string>
+        <string name="msgs_main_sync_history_elapsed_time">Durée:</string>
         <string name="msgs_main_sync_history_transfer_speed">Vitesse de transfert:</string>
         <string name="msgs_main_sync_history_mode">Mode:</string>
         <string name="msgs_main_sync_history_mode_normal">Normal</string>
@@ -484,15 +485,15 @@
         <string name="msgs_menu_list_storage_info">Infos système</string>
         <string name="msgs_menu_show_battery_optimization_screen">Optimisation de la batterie</string>
     <!-- Mirror -->
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">Archivage annulé par l\'utilisateur.</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">La date de capture de l\'image ne peut pas être obtenue depuis l\'entête EXIF. Utiliser la date de mise à jour du fichier image? (Désactiver l\'option \"Confirmer\" de la tâche pour ne plus afficher ce message)</string>
-        <string name="msgs_mirror_confirm_copy_cancel">Copie annulée par l\'utilisateur.</string>
-        <string name="msgs_mirror_confirm_copy_confirm">Confirmer le remplacement du fichier \n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" de la tâche pour pour ne plus afficher ce message)</string>
-        <string name="msgs_mirror_confirm_delete_cancel">Suppression annulée par l\'utilisateur.</string>
-        <string name="msgs_mirror_confirm_delete_dir_confirm">Confirmer la suppression du dossier\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" de la tâche pour ne plus afficher ce message)</string>
-        <string name="msgs_mirror_confirm_delete_file_confirm">Confirmer la suppression du fichier\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" de la tâche pour ne plus afficher ce message)</string>
-        <string name="msgs_mirror_confirm_move_cancel">Déplacement annulé par l\'utilisateur</string>
-        <string name="msgs_mirror_confirm_move_confirm">Confirmer le déplacement du fichier\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" de la tâche pour ne plus afficher ce message)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archivage annulé par l\'utilisateur]</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">La date de capture de l\'image ne peut pas être obtenue depuis l\'entête EXIF. Utiliser la date de mise à jour du fichier image? (Désactiver l\'option \"Confirmer\" pour ne plus afficher ce message)</string>
+        <string name="msgs_mirror_confirm_copy_cancel">[Copie annulée par l\'utilisateur]</string>
+        <string name="msgs_mirror_confirm_copy_confirm">Confirmer le remplacement du fichier \n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" pour ne plus afficher ce message)</string>
+        <string name="msgs_mirror_confirm_delete_cancel">[Suppression annulée par l\'utilisateur]</string>
+        <string name="msgs_mirror_confirm_delete_dir_confirm">Confirmer la suppression du dossier\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" pour ne plus afficher ce message)</string>
+        <string name="msgs_mirror_confirm_delete_file_confirm">Confirmer la suppression du fichier\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" pour ne plus afficher ce message)</string>
+        <string name="msgs_mirror_confirm_move_cancel">[Déplacement annulé par l\'utilisateur]</string>
+        <string name="msgs_mirror_confirm_move_confirm">Confirmer le déplacement du fichier\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" pour ne plus afficher ce message)</string>
         <string name="msgs_mirror_confirm_no_btn">Non</string>
         <string name="msgs_mirror_confirm_noall_btn">Non à tous</string>
         <string name="msgs_mirror_confirm_please_check_confirm_msg_archive">Confirmer l\'archivage du fichier.</string>
@@ -539,18 +540,18 @@
         <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">Synchronisation annulée. Le nom du réseau Wifi ne correspond pas au point d\'accès spécifié.</string>
         <string name="msgs_mirror_sync_start_was_delayed">La connexion wifi a été activée pour démarrer les tâches planifiées. La synchronisation est configurée pour démarrer dans %s sec…</string>
         <string name="msgs_mirror_sync_wifi_can_not_enabled">Le Wifi n\'a pas pu être activé.</string>
-        <string name="msgs_mirror_task_avg_rate">Vitesse de transfert %s</string>
-        <string name="msgs_mirror_task_dir_create">dossier créé</string>
+        <string name="msgs_mirror_task_avg_rate">Vitesse de transfert = %s</string>
+        <string name="msgs_mirror_task_dir_create">[Dossier créé]</string>
         <string name="msgs_mirror_task_dir_create_failed">échec de création du dossier.</string>
-        <string name="msgs_mirror_task_dir_deleted">dossier supprimé.</string>
-        <string name="msgs_mirror_task_file_archived" formatted="false">%s archivé vers %s</string>
-        <string name="msgs_mirror_task_file_copied">Fichier copié</string>
-        <string name="msgs_mirror_task_file_copying">Copie de fichier… %s %% terminé.</string>
-        <string name="msgs_mirror_task_file_deleted">Fichier supprimé.</string>
-        <string name="msgs_mirror_task_file_moved">Fichier déplacé.</string>
-        <string name="msgs_mirror_task_file_replaced">Fichier remplacé.</string>
+        <string name="msgs_mirror_task_dir_deleted">[Dossier supprimé]</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">%s [archivé vers] %s</string>
+        <string name="msgs_mirror_task_file_copied">[Fichier copié]</string>
+        <string name="msgs_mirror_task_file_copying">Copie de fichier… %s %% [terminé].</string>
+        <string name="msgs_mirror_task_file_deleted">[Fichier supprimé]</string>
+        <string name="msgs_mirror_task_file_moved">[Fichier déplacé]</string>
+        <string name="msgs_mirror_task_file_replaced">[Fichier remplacé]</string>
         <string name="msgs_mirror_task_master_not_found">Fichier ou dossier source non trouvé.</string>
-        <string name="msgs_mirror_task_no_of_copy" formatted="false"># copié=%s, # supprimé=%s, # ignoré=%s, Temps écoulé=%s</string>
+        <string name="msgs_mirror_task_no_of_copy" formatted="false"># copié=%s, # supprimé=%s, # ignoré=%s, Durée=%s</string>
         <string name="msgs_mirror_task_result_cancel">Tâche de sync annulée.</string>
         <string name="msgs_mirror_task_result_error_ended">Tâche de sync terminée avec des erreurs.</string>
         <string name="msgs_mirror_task_result_error_skipped">Erreur ignorée</string>
@@ -680,8 +681,8 @@
         <string name="msgs_send_logcat_message">Envoyer les fichiers LogCat et AppLog au développeur par courriel\n1. Merci de vérifier le contenu de chaque fichier en appuyant sur le bouton afficher (choisir une application dans la fenêtre de sélection qui apparait).\n2. Après avoir validé les données à envoyer, appuyer sur le bouton envoyer et choisir E-Mail dans la boite de dialogue.\n3. Merci d\'écrire un message dans le texte de l\'email si besoin puis envoyer le courriel (le fichier journal est compressé au format zip et envoyé en pièce jointe avec le courriel).</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">La tâche de synchronisation n\'a pas été exécutée, car elle est désactivée.</string>
-        <string name="msgs_svc_received_start_request_from_scheduler">Demande de sync reçue depuis le planificateur de SMBSync2.</string>
-        <string name="msgs_svc_received_start_request_from_scheduler_task_not_found">Demande de sync reçue depuis le planificateur de SMBSync2, mais elle a été ignorée, car la tâche n\'existe pas.</string>
+        <string name="msgs_svc_received_start_request_from_scheduler">Demande de sync reçue depuis la planification SMBSync2.</string>
+        <string name="msgs_svc_received_start_request_from_scheduler_task_not_found">Demande de sync reçue depuis la planification SMBSync2, mais elle a été ignorée, car la tâche n\'existe pas.</string>
         <string name="msgs_svc_received_start_request_from_scheduler_no_task_list">Exécution interrompue, car la tâche de synchronisation n\'existe pas.</string>
         <string name="msgs_svc_received_start_request_from_external">Demande de sync reçue depuis une application externe.</string>
         <string name="msgs_svc_received_start_request_from_external_task_not_found">Demande de sync reçue depuis une application externe, mais elle a été ignorée, car cette tâche n\'existe pas.</string>
@@ -695,7 +696,13 @@
         <string name="msgs_svc_received_start_request_ignored_already_task_queued_schedule" formatted="false">La tâche de synchronisation a été ignorée, car elle était déjà en fil d\'attente. Planification=%s, Tâche=%s, Demandeur=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Demande de démarrer la tâche de synchronisation acceptée. Tâche=%s, Demandeur=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">Demande de démarrer la tâche de synchronisation acceptée. Planification=%s, Tâche=%s, Demandeur=%s</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed" formatted="false">La tâche de sync suivante a été ignorée, car la dernière synchronisation a terminé avec des erreurs ou a été annulée.</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_title" formatted="false">Les tâches de sync suivantes ont été ignorées, car la dernière synchronisation a terminé avec des erreurs ou a été annulée.</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg">Tâche=%s, Demandeur=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule">Planification=%s, Tâche=%s, Demandeur=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_activity">UTILISATEUR</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_external">EXTERNE</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_shortcut">RACCOURCI</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_schedule">PLANIFICATION</string>
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">Options d\'Archivage</string>
         <string name="msgs_sync_folder_archive_file_type">Seuls les fichiers avec les extensions suivantes seront archivés:</string>
@@ -709,6 +716,7 @@
         <string name="msgs_sync_folder_archive_btn_title_original_name">Nom d\'origine</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">Si la date et l\'heure ne peuvent pas être déterminées depuis l\'entête EXIF, afficher un message de confirmation.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Le format ZIP ne peut pas être spécifié comme destination pour les tâches de sync de type Archive. Le stockage interne sera utilisé à sa place.</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">La requête a été ignorée car les fichiers ZIP ne peuvent pas être utilisés comme destination pour une synchronisation de type Archive.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Année</string>
         <string name="msgs_sync_folder_archive_btn_title_month">Mois</string>
         <string name="msgs_sync_folder_archive_btn_title_day">Jour</string>

@@ -33,6 +33,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class SyncRequestItem {
 
     public String request_id = "";
+    public String request_id_display = "";
     public String schedule_name = "";
     public boolean wifi_off_after_sync_ended = false;
     public boolean wifi_on_before_sync_start = false;

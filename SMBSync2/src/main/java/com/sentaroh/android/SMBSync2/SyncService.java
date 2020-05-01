@@ -529,11 +529,18 @@ public class SyncService extends Service {
     private void queueSpecificSyncTask(String job_name[], String req_id, ScheduleItem si) {
         SyncRequestItem sri = new SyncRequestItem();
         sri.schedule_name=si.scheduleName;
-        sri.request_id = req_id;
         sri.wifi_off_after_sync_ended = si.syncWifiOffAfterEnd;
         sri.wifi_on_before_sync_start = si.syncWifiOnBeforeStart;
         sri.start_delay_time_after_wifi_on = si.syncDelayAfterWifiOn;
         sri.overrideSyncOptionCharge=si.syncOverrideOptionCharge;
+
+        sri.request_id = req_id;
+        if (sri.request_id.equals(SMBSYNC2_SYNC_REQUEST_ACTIVITY)) sri.request_id_display=mContext.getString(R.string.msgs_svc_received_start_sync_task_request_intent_activity);
+        else if (sri.request_id.equals(SMBSYNC2_SYNC_REQUEST_EXTERNAL)) sri.request_id_display=mContext.getString(R.string.msgs_svc_received_start_sync_task_request_intent_external);
+        else if (sri.request_id.equals(SMBSYNC2_SYNC_REQUEST_SHORTCUT)) sri.request_id_display=mContext.getString(R.string.msgs_svc_received_start_sync_task_request_intent_shortcut);
+        else if (sri.request_id.equals(SMBSYNC2_SYNC_REQUEST_SCHEDULE)) sri.request_id_display=mContext.getString(R.string.msgs_svc_received_start_sync_task_request_intent_schedule);
+        else sri.request_id_display="";
+
         if (job_name != null && job_name.length > 0) {
             for (int i = 0; i < job_name.length; i++) {
                 if (getSyncTask(job_name[i]) != null) {
@@ -541,25 +548,25 @@ public class SyncService extends Service {
                         if (isSyncTaskAlreadyScheduled(mGp.syncRequestQueue, job_name[i])) {
                             if (si.scheduleName.equals("")) {
                                 mUtil.addLogMsg("W", String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_already_task_queued),
-                                        job_name[i], req_id));
+                                        job_name[i], sri.request_id_display));
                             } else {
                                 mUtil.addLogMsg("W", String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_already_task_queued_schedule),
-                                        sri.schedule_name, job_name[i], req_id));
+                                        sri.schedule_name, job_name[i], sri.request_id_display));
                             }
                         } else {
                             sri.sync_task_list.add(getSyncTask(job_name[i]).clone());
                             if (si.scheduleName.equals("")) {
                                 mUtil.addLogMsg("I", String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted),
-                                        job_name[i], req_id));
+                                        job_name[i], sri.request_id_display));
                             } else {
                                 mUtil.addLogMsg("I", String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted_schedule),
-                                        sri.schedule_name, job_name[i], req_id));
+                                        sri.schedule_name, job_name[i], sri.request_id_display));
                             }
                         }
                     } else {
                         mUtil.addLogMsg("W",
                                 String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_task_is_error),
-                                        job_name[0], req_id));
+                                        job_name[0], sri.request_id_display));
                     }
                 } else {
                     mUtil.addLogMsg("W", mContext.getString(R.string.msgs_main_sync_selected_task_not_found) + job_name[i]);
@@ -592,12 +599,19 @@ public class SyncService extends Service {
     private void queueAutoSyncTask(String req_id, ScheduleItem si) {
         int cnt = 0;
         SyncRequestItem sri = new SyncRequestItem();
-        sri.request_id = req_id;
         sri.schedule_name=si.scheduleName;
         sri.wifi_off_after_sync_ended = si.syncWifiOffAfterEnd;
         sri.wifi_on_before_sync_start = si.syncWifiOnBeforeStart;
         sri.start_delay_time_after_wifi_on = si.syncDelayAfterWifiOn;
         sri.overrideSyncOptionCharge=si.syncOverrideOptionCharge;
+
+        sri.request_id = req_id;
+        if (sri.request_id.equals(SMBSYNC2_SYNC_REQUEST_ACTIVITY)) sri.request_id_display=mContext.getString(R.string.msgs_svc_received_start_sync_task_request_intent_activity);
+        else if (sri.request_id.equals(SMBSYNC2_SYNC_REQUEST_EXTERNAL)) sri.request_id_display=mContext.getString(R.string.msgs_svc_received_start_sync_task_request_intent_external);
+        else if (sri.request_id.equals(SMBSYNC2_SYNC_REQUEST_SHORTCUT)) sri.request_id_display=mContext.getString(R.string.msgs_svc_received_start_sync_task_request_intent_shortcut);
+        else if (sri.request_id.equals(SMBSYNC2_SYNC_REQUEST_SCHEDULE)) sri.request_id_display=mContext.getString(R.string.msgs_svc_received_start_sync_task_request_intent_schedule);
+        else sri.request_id_display="";
+
         synchronized (mGp.syncRequestQueue) {
             for (SyncTaskItem sji : mGp.syncTaskList) {
                 if (sji.isSyncTaskAuto() && !sji.isSyncTestMode()) {
@@ -606,18 +620,18 @@ public class SyncService extends Service {
                         if (isSyncTaskAlreadyScheduled(mGp.syncRequestQueue, job_name[0])) {
                             mUtil.addLogMsg("W",
                                     String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_already_task_queued_schedule),
-                                            sri.schedule_name, job_name[0], req_id));
+                                            sri.schedule_name, job_name[0], sri.request_id_display));
                         } else {
                             cnt++;
                             mUtil.addLogMsg("I",
                                     String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted_schedule),
-                                            sri.schedule_name, job_name[0], req_id));
+                                            sri.schedule_name, job_name[0], sri.request_id_display));
                             sri.sync_task_list.add(sji.clone());
                         }
                     } else {
                         mUtil.addLogMsg("W",
                                 String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_task_is_error),
-                                        job_name[0], req_id));
+                                        job_name[0], sri.request_id_display));
                     }
                 }
             }

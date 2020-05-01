@@ -26,6 +26,7 @@
         <string name="msgs_import_autosave_dlg_manual_save_list">Список задач сохраненный вручную</string>
         <string name="msgs_import_autosave_dlg_autosave_failed">Автосохранение задачи синхронизации не удалось</string>
         <string name="msgs_import_autosave_dlg_autosave_completed">Задача синхронизации цспешно сохранилась</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed_path">Путь</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (последний сохраненный файл)</string>
         <string name="msgs_export_import_profile_smb_account_name_password_not_restored">Не удалось импортировать имя учетной записи, пароль учетной записи или пароль ZIP, использованные в следующих задачах. Если вы автоматически сохраните задачу синхронизации, а затем переустановите приложение, вы не сможете расшифровать имя своей учетной записи, пароль учетной записи и пароль ZIP. Отредактируйте задачу синхронизации, чтобы исправить ее на правильное значение.</string>
@@ -484,14 +485,14 @@
         <string name="msgs_menu_list_storage_info">Системная информация</string>
         <string name="msgs_menu_show_battery_optimization_screen">Показать экран оптимизации батареи</string>
     <!-- Mirror -->
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">Архив отменен по запросу пользователя</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Архив отменен по запросу пользователя]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">Время и дата изображения не могут быть получены из данных EXIF. Вместо этого использовать время и дату обновления файла? (Отключите параметр архивации \ "Подтвердить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
-        <string name="msgs_mirror_confirm_copy_cancel">Копирование отменено по запросу пользователя.</string>
+        <string name="msgs_mirror_confirm_copy_cancel">[Копирование отменено по запросу пользователя]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Подтвердить перезапись файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
-        <string name="msgs_mirror_confirm_delete_cancel">Удаление отменено по запросу пользователя.</string>
+        <string name="msgs_mirror_confirm_delete_cancel">[Удаление отменено по запросу пользователя]</string>
         <string name="msgs_mirror_confirm_delete_dir_confirm">Подтвердите удаление каталога \n %s \n (отключите параметр \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_delete_file_confirm">Подтвердите удаление файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
-        <string name="msgs_mirror_confirm_move_cancel">Перемещение отменено по запросу пользователя.</string>
+        <string name="msgs_mirror_confirm_move_cancel">[Перемещение отменено по запросу пользователя]</string>
         <string name="msgs_mirror_confirm_move_confirm">Подтвердить перемещение файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_no_btn">Нет</string>
         <string name="msgs_mirror_confirm_noall_btn">Нет для всех</string>
@@ -539,16 +540,16 @@
         <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">Задача синхронизации пропущена, поскольку беспроводная локальная сеть не подключена к указанной точке доступа WiFi</string>
         <string name="msgs_mirror_sync_start_was_delayed">Чтобы у беспроводной сети было время задержки после того, как было указано ВКЛ, оно задерживает начало синхронизации %s секунд.</string>
         <string name="msgs_mirror_sync_wifi_can_not_enabled">Не удалось включить WiFi.</string>
-        <string name="msgs_mirror_task_avg_rate">Средняя скорость передачи %s</string>
-        <string name="msgs_mirror_task_dir_create">Каталог создан.</string>
+        <string name="msgs_mirror_task_avg_rate">Средняя скорость передачи = %s</string>
+        <string name="msgs_mirror_task_dir_create">[Каталог создан]</string>
         <string name="msgs_mirror_task_dir_create_failed">Не удалось создать каталог.</string>
-        <string name="msgs_mirror_task_dir_deleted">Каталог удален.</string>
-        <string name="msgs_mirror_task_file_archived" formatted="false">%s заархивировано в %s</string>
-        <string name="msgs_mirror_task_file_copied">Файл скопирован.</string>
-        <string name="msgs_mirror_task_file_copying">Копирование файла … %s %% завершено.</string>
-        <string name="msgs_mirror_task_file_deleted">Файл удален.</string>
-        <string name="msgs_mirror_task_file_moved">Файл перемещен.</string>
-        <string name="msgs_mirror_task_file_replaced">Файл перезаписан.</string>
+        <string name="msgs_mirror_task_dir_deleted">[Каталог удален]</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">%s [заархивировано в] %s</string>
+        <string name="msgs_mirror_task_file_copied">[Файл скопирован]</string>
+        <string name="msgs_mirror_task_file_copying">Копирование файла … %s %% [завершено]</string>
+        <string name="msgs_mirror_task_file_deleted">[Файл удален]</string>
+        <string name="msgs_mirror_task_file_moved">[Файл перемещен]</string>
+        <string name="msgs_mirror_task_file_replaced">[Файл перезаписан]</string>
         <string name="msgs_mirror_task_master_not_found">Исходный файл или каталог не найден.</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false">Количество копий = %s, количество удалений = %s, количество игнорирований = %s, истекшее время = %s</string>
         <string name="msgs_mirror_task_result_cancel">Задача синхронизации отменена.</string>
@@ -695,7 +696,13 @@
         <string name="msgs_svc_received_start_request_ignored_already_task_queued_schedule" formatted="false">Задача синхронизации была проигнорирована, поскольку задача синхронизации уже была поставлена ​​в очередь. Расписание = %s, Задача = %s, Запросчик = %s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Запрос на запуск задачи синхронизации принят. Задача = %s, Запросчик = %s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">Запрос на запуск задачи синхронизации принят. Расписание = %s, Задача = %s, Запросчик = %s</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed" formatted="false">Следующий запрос синхронизации был проигнорирован, поскольку предыдущая синхронизация была ошибкой или отменена.</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_title" formatted="false">Следующий запрос синхронизации был проигнорирован, поскольку предыдущая синхронизация была ошибкой или отменена.</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg">Задача = %s, Запросчик = %s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule">Расписание = %s, Задача = %s, Запросчик = %s</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_activity">ДЕЯТЕЛЬНОСТЬ</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_external">ВНЕШНИЙ</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_shortcut">быстрый запуск</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_schedule">расписание</string>
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">Вариант архива</string>
         <string name="msgs_sync_folder_archive_file_type">Расширение файла архива:</string>
@@ -709,6 +716,7 @@
         <string name="msgs_sync_folder_archive_btn_title_original_name">Оригинальное имя</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">Если дата и время не могут быть определены по данным EXIF, появится сообщение с подтверждением.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Файлы ZIP не могут использоваться в качестве адресатов для типа синхронизации архива. Вместо этого будет использовано внутреннее хранилище.</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">Запрошенная операция была проигнорированна. Файлы ZIP не могут использоваться в качестве адресатов для типа синхронизации архива.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Год</string>
         <string name="msgs_sync_folder_archive_btn_title_month">Месяц</string>
         <string name="msgs_sync_folder_archive_btn_title_day">День</string>
