@@ -81,7 +81,13 @@
 	            android:gravity="right"
 	            android:text="Normal"
 	            tools:ignore="HardcodedText" />
-	        
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=","
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                tools:ignore="HardcodedText" />
+
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -97,7 +103,13 @@
 	            android:maxLines="1"
 	            android:text="100"
 	            tools:ignore="HardcodedText" />
-	
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=","
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                tools:ignore="HardcodedText" />
+
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -113,6 +125,12 @@
 	            android:maxLines="1"
 	            android:text="900"
 	            tools:ignore="HardcodedText" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=","
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                tools:ignore="HardcodedText" />
 
 	        <TextView
 	            android:layout_width="wrap_content"

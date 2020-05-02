@@ -110,6 +110,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean syncThreadActive = false;
     public boolean syncThreadConfirmWait = false;
     public String syncThreadRequestID = "";
+    public String syncThreadRequestIDdisplay = "";
 
     public ISvcCallback callbackStub = null;
 

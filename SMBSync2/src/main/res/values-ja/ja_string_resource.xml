@@ -26,6 +26,7 @@
         <string name="msgs_import_autosave_dlg_manual_save_list">手動保存したファイル</string>
         <string name="msgs_import_autosave_dlg_autosave_failed">同期タスクリストの自動保存に失敗しました。</string>
         <string name="msgs_import_autosave_dlg_autosave_completed">同期タスクリストを自動保存しました。</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed_path">パス</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (最後に保存されたファイル)</string>
         <string name="msgs_export_import_profile_smb_account_name_password_not_restored">下記のタスクで使用されているアカウント名、アカウントパスワードまたはZIPパスワードが取込みに失敗しました。同期タスクを自動保存した後にアプリの初期化やアプリを再インストールするとアカウント名、アカウントパスワードおよびZIPパスワードは復号できなくなります。同期タスクを編集して正しい値に修正してください。</string>
@@ -484,14 +485,14 @@
         <string name="msgs_menu_list_storage_info">システム情報</string>
         <string name="msgs_menu_show_battery_optimization_screen">バッテリー最適化の表示</string>
     <!-- Mirror -->
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">アーカイブがユーザーによりキャンセルされました。</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[アーカイブがユーザーによりキャンセルされました]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">ファイルの撮影日時がExif情報から取得できませんでした。ファイルの最終更新時刻(%s)を撮影日時として処理を継続してよろしいでしょうか？ ファイル=%s\n(確認が不要な場合は同期タスクのアーカイブオプションで「確認」のチェックを外してください)</string>
-        <string name="msgs_mirror_confirm_copy_cancel">コピーがユーザーによりキャンセルされました。</string>
+        <string name="msgs_mirror_confirm_copy_cancel">[コピーがユーザーによりキャンセルされました]</string>
         <string name="msgs_mirror_confirm_copy_confirm">ファイルを上書きしますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
-        <string name="msgs_mirror_confirm_delete_cancel">削除がユーザーによりキャンセルされました。</string>
+        <string name="msgs_mirror_confirm_delete_cancel">[削除がユーザーによりキャンセルされました]</string>
         <string name="msgs_mirror_confirm_delete_dir_confirm">ディレクトリを削除しますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
         <string name="msgs_mirror_confirm_delete_file_confirm">ファイルを削除しますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
-        <string name="msgs_mirror_confirm_move_cancel">移動がユーザーによりキャンセルされました。</string>
+        <string name="msgs_mirror_confirm_move_cancel">[移動がユーザーによりキャンセルされました]</string>
         <string name="msgs_mirror_confirm_move_confirm">ファイルを移動しますか？（ファイルのコピー完了後にコピー元のファイルが削除されます）\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
         <string name="msgs_mirror_confirm_no_btn">取消</string>
         <string name="msgs_mirror_confirm_noall_btn">以後全て取消</string>
@@ -520,7 +521,8 @@
         <string name="msgs_mirror_remote_addr_not_connected">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s, ポート=%s</string>
         <string name="msgs_mirror_remote_name_not_found">SMBホスト名が発見できませんでした、IPアドレスで試してください。 ホスト名=</string>
-        <string name="msgs_mirror_same_directory_ignored">マスターとターゲットで同じディレクトリを同期できないため、ディレクトリを無視しました。ディレクトリ=%s</string>
+        <string name="msgs_mirror_same_directory_ignored">マスターとターゲットで同じディレクトリを同期できないため、ディレクトリを無視しました。ファイル=%s</string>
+        <string name="msgs_mirror_same_file_ignored">マスターとターゲットで同じファイルを同期できないため、ファイルを無視しました。ファイル=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected_with_port" formatted="false">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s, ポート=%s</string>
         <string name="msgs_mirror_smb_invalid_port_specified">無効なポート番号が指定されています。 ポート番号=%s</string>
@@ -539,16 +541,16 @@
         <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">無線LANが指定されたアクセスポイントに接続されていないためタスクをスキップします。</string>
         <string name="msgs_mirror_sync_start_was_delayed">無線LANをオン後の遅延時間が指定されているために、同期の開始を%s秒遅らせます。</string>
         <string name="msgs_mirror_sync_wifi_can_not_enabled">無線LANをオンにできませんでした。</string>
-        <string name="msgs_mirror_task_avg_rate">平均転送率 %s</string>
-        <string name="msgs_mirror_task_dir_create">ディレクトリーを作成しました。</string>
+        <string name="msgs_mirror_task_avg_rate">平均転送率 = %s</string>
+        <string name="msgs_mirror_task_dir_create">[ディレクトリーを作成しました]</string>
         <string name="msgs_mirror_task_dir_create_failed">ディレクトリー作成に失敗しました。</string>
-        <string name="msgs_mirror_task_dir_deleted">ディレクトリーを削除しました。</string>
+        <string name="msgs_mirror_task_dir_deleted">[ディレクトリーを削除しました]</string>
         <string name="msgs_mirror_task_file_archived" formatted="false">%sを%sにアーカイブしました。</string>
-        <string name="msgs_mirror_task_file_copied">ファイルをコピーしました。</string>
-        <string name="msgs_mirror_task_file_copying">ファイル コピー中、 %s%%終了。</string>
-        <string name="msgs_mirror_task_file_deleted">ファイルを削除しました。</string>
-        <string name="msgs_mirror_task_file_moved">ファイルを移動しました。</string>
-        <string name="msgs_mirror_task_file_replaced">ファイルを上書きコピーしました。</string>
+        <string name="msgs_mirror_task_file_copied">[ファイルをコピーしました]</string>
+        <string name="msgs_mirror_task_file_copying">ファイル コピー中、 %s%% [終了]。</string>
+        <string name="msgs_mirror_task_file_deleted">[ファイルを削除しました]</string>
+        <string name="msgs_mirror_task_file_moved">[ファイルを移動しました]</string>
+        <string name="msgs_mirror_task_file_replaced">[ファイルを上書きコピーしました]</string>
         <string name="msgs_mirror_task_master_not_found">マスターのファイルまたはディレクトリーが見つかりません。</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false">コピー=%s, 削除=%s, 無視=%s, 経過時間=%s</string>
         <string name="msgs_mirror_task_result_cancel">同期タスクがキャンセルされました。</string>
@@ -695,7 +697,13 @@
         <string name="msgs_svc_received_start_request_ignored_already_task_queued_schedule" formatted="false">同期タスクの開始要求を同期タスクが既に開始済みのため無視しました。スケジュール=%s, タスク=%s, リクエスター=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">同期タスクの開始要求を受け付けました。タスク=%s, リクエスター=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">同期タスクの開始要求を受け付けました。スケジュール=%s, タスク=%s, リクエスター=%s</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed" formatted="false">下記の同期要求は直前の同期がエラーまたはキャンセルされたため無視しました。</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_title" formatted="false">下記の同期要求は直前の同期がエラーまたはキャンセルされたため無視しました。</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg">タスク=%s, リクエスター=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule">スケジュール=%s, タスク=%s, リクエスター=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_activity">アクティビティ</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_external">外部</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_shortcut">ショートカット</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_schedule">スケジュール</string>
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">アーカイブオプション</string>
         <string name="msgs_sync_folder_archive_file_type">アーカイブするファイル拡張子:</string>
@@ -709,6 +717,7 @@
         <string name="msgs_sync_folder_archive_btn_title_original_name">元の名前</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">撮影日時がExifから取得できない時に確認メッセージを表示する</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">同期方式がアーカイブの時はZIPを使用できないため内部ストレージに変更しました。</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">要求された操作は無視されました。同期方法がアーカイブの場合、ZIPは使用できません。</string>
         <string name="msgs_sync_folder_archive_btn_title_year">西暦</string>
         <string name="msgs_sync_folder_archive_btn_title_month">月</string>
         <string name="msgs_sync_folder_archive_btn_title_day">日</string>

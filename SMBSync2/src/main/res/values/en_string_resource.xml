@@ -26,6 +26,7 @@
         <string name="msgs_import_autosave_dlg_manual_save_list">User backed-up settings files</string>
         <string name="msgs_import_autosave_dlg_autosave_failed">An attempt to auto-save the synchronization settings has failed</string>
         <string name="msgs_import_autosave_dlg_autosave_completed">The synchronization settings were automatically saved</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed_path">path</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (Last saved file)</string>
         <string name="msgs_export_import_profile_smb_account_name_password_not_restored">The account name, account password or ZIP password used in the following tasks failed to import. If you auto-save the sync task and then reinstall the app, you will not be able to decrypt your account name, account password, and ZIP password. Edit the sync task and retype the user login settings.</string>
@@ -484,14 +485,14 @@
         <string name="msgs_menu_list_storage_info">System info</string>
         <string name="msgs_menu_show_battery_optimization_screen">Show battery optimization screen</string>
     <!-- Mirror -->
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">Archive operation cancelled by user.</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archive operation cancelled by user]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">The image capture time and date cannot be obtained from EXIF data.  Use file update time and date instead?  (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
-        <string name="msgs_mirror_confirm_copy_cancel">Copy operation cancelled by user.</string>
+        <string name="msgs_mirror_confirm_copy_cancel">[Copy operation cancelled by user]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Confirm overwrite of file \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
-        <string name="msgs_mirror_confirm_delete_cancel">Delete operation cancelled by user.</string>
+        <string name="msgs_mirror_confirm_delete_cancel">[Delete operation cancelled by user]</string>
         <string name="msgs_mirror_confirm_delete_dir_confirm">Confirm delete directory \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_delete_file_confirm">Confirm deletion of file \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
-        <string name="msgs_mirror_confirm_move_cancel">Move operation cancelled by user.</string>
+        <string name="msgs_mirror_confirm_move_cancel">[Move operation cancelled by user]</string>
         <string name="msgs_mirror_confirm_move_confirm">Confirm moving of file \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_no_btn">No</string>
         <string name="msgs_mirror_confirm_noall_btn">No to all</string>
@@ -521,6 +522,7 @@
         <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Unable to connect to SMB host %s on port %s</string>
         <string name="msgs_mirror_remote_name_not_found">The SMB host name could not be found. Try to use its IP address. Host Name=</string>
         <string name="msgs_mirror_same_directory_ignored">Directory ignored because target and destination are the same. Directory=%s</string>
+        <string name="msgs_mirror_same_file_ignored">The file was ignored because the same file could not be synchronized in the master and target. File=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected">Unable to connect to the specified SMB server. IP address=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected_with_port" formatted="false">Unable to connect to the specified SMB server. IP address=%s, port=%s</string>
         <string name="msgs_mirror_smb_invalid_port_specified">Invalid port number: %s</string>
@@ -539,16 +541,16 @@
         <string name="msgs_mirror_sync_skipped_wifi_ap_conn_other">Sync task skipped because wireless LAN is not connected to the specified WiFi access point.</string>
         <string name="msgs_mirror_sync_start_was_delayed">Wireless LAN was turned on to start the planned tasks. The synchronization is set to start after %s seconds...</string>
         <string name="msgs_mirror_sync_wifi_can_not_enabled">Could not turn on WiFi.</string>
-        <string name="msgs_mirror_task_avg_rate">Average transfer rate %s</string>
-        <string name="msgs_mirror_task_dir_create">directory created.</string>
+        <string name="msgs_mirror_task_avg_rate">Average transfer rate = %s</string>
+        <string name="msgs_mirror_task_dir_create">[Directory created]</string>
         <string name="msgs_mirror_task_dir_create_failed">failed to create directory.</string>
-        <string name="msgs_mirror_task_dir_deleted">directory deleted.</string>
-        <string name="msgs_mirror_task_file_archived" formatted="false">%s archived to %s</string>
-        <string name="msgs_mirror_task_file_copied">File copied.</string>
-        <string name="msgs_mirror_task_file_copying">Copying file… %s %% complete.</string>
-        <string name="msgs_mirror_task_file_deleted">File deleted.</string>
-        <string name="msgs_mirror_task_file_moved">File moved.</string>
-        <string name="msgs_mirror_task_file_replaced">File overwritten.</string>
+        <string name="msgs_mirror_task_dir_deleted">[Directory deleted]</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">%s [archived to] %s</string>
+        <string name="msgs_mirror_task_file_copied">[File copied]</string>
+        <string name="msgs_mirror_task_file_copying">Copying file… %s %% [complete]</string>
+        <string name="msgs_mirror_task_file_deleted">[File deleted]</string>
+        <string name="msgs_mirror_task_file_moved">[File moved]</string>
+        <string name="msgs_mirror_task_file_replaced">[File overwritten]</string>
         <string name="msgs_mirror_task_master_not_found">Source file or directory not found.</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false"># of copies=%s, # of deletes=%s, # of ignores=%s, Elapsed time=%s</string>
         <string name="msgs_mirror_task_result_cancel">Sync task cancelled.</string>
@@ -695,7 +697,13 @@
         <string name="msgs_svc_received_start_request_ignored_already_task_queued_schedule" formatted="false">Sync task was ignored because it was already queued. Schedule=%s, Task=%s, Requestor=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Start sync task request accepted. Task=%s, Requestor=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">Start sync task request accepted. Schedule=%s, Task=%s, Requestor=%s</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed" formatted="false">The following sync request was ignored because the previous sync ended with errors or was cancelled.</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_title" formatted="false">The following sync requests were ignored because the previous sync ended with errors or was cancelled.</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg">Task=%s, Requestor=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule">Schedule=%s, Task=%s, Requestor=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_activity">ACTIVITY</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_external">EXTERNAL</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_shortcut">SHORTCUT</string>
+        <string name="msgs_svc_received_start_sync_task_request_intent_schedule">SCHEDULE</string>
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">Archive Options</string>
         <string name="msgs_sync_folder_archive_file_type">Only files with following extensions will be archived:</string>
@@ -709,6 +717,7 @@
         <string name="msgs_sync_folder_archive_btn_title_original_name">Original Name</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">If the date and time cannot be determined by EXIF data, display a confirmation message.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">ZIP files cannot be used as destinations for Archive sync type.  Internal storage will be used instead.</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">The request was ignored because Zip files cannot be used as destinations for Archive sync type.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Year</string>
         <string name="msgs_sync_folder_archive_btn_title_month">Month</string>
         <string name="msgs_sync_folder_archive_btn_title_day">Day</string>

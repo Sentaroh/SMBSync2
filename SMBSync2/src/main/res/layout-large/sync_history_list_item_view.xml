@@ -87,7 +87,13 @@
 	            android:text="Normal"
                 android:textAppearance="?android:attr/textAppearanceSmall"
 	            tools:ignore="HardcodedText" />
-	        	        	
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=","
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                tools:ignore="HardcodedText" />
+
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -105,7 +111,13 @@
 	            android:text="100"
                 android:textAppearance="?android:attr/textAppearanceSmall"
 	            tools:ignore="HardcodedText" />
-	
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=","
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                tools:ignore="HardcodedText" />
+
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -122,6 +134,13 @@
 	            android:text="900"
                 android:textAppearance="?android:attr/textAppearanceSmall"
 	            tools:ignore="HardcodedText" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=","
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                tools:ignore="HardcodedText" />
+
 	        <TextView
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"

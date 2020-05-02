@@ -6687,7 +6687,8 @@ public class SyncTaskUtil {
                 File out_file=new File(fd+"/"+fp);
                 tmp_file.renameTo(out_file);
                 String msg=c.getString(R.string.msgs_import_autosave_dlg_autosave_completed);
-                util.addLogMsg("I",msg+". Path="+fd+"/"+fp);
+                String path_str=c.getString(R.string.msgs_import_autosave_dlg_autosave_completed_path);
+                util.addLogMsg("I",msg+". "+path_str+"="+fd+"/"+fp);
                 for(SyncTaskItem sti:pfl) util.addDebugMsg(1,"I","  Task="+sti.getSyncTaskName());
                 Toast.makeText(mGp.appContext, msg, Toast.LENGTH_LONG).show();
             } else {
