@@ -3387,9 +3387,9 @@ public class SyncThread extends Thread {
         BigDecimal bd_tr;
 //		Log.v("","byte="+tb+", time="+tt);
 
-        if (tb == 0) return " 0 Bytes/sec";
+        if (tb == 0) return "0 Bytes/sec";
 
-        if (tt == 0) return " N/A"; // elapsed time 0 msec
+        if (tt == 0) return "N/A"; // elapsed time 0 msec
 
         BigDecimal dfs = new BigDecimal(tb * 1.000000);
         BigDecimal dft1 = new BigDecimal(tt * 1.000);
