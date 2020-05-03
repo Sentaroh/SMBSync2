@@ -521,8 +521,8 @@
         <string name="msgs_mirror_remote_addr_not_connected">Unable to connect to SMB host address %s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Unable to connect to SMB host %s on port %s</string>
         <string name="msgs_mirror_remote_name_not_found">The SMB host name could not be found. Try to use its IP address. Host Name=</string>
-        <string name="msgs_mirror_same_directory_ignored">Directory ignored because target and destination are the same. Directory=%s</string>
-        <string name="msgs_mirror_same_file_ignored">The file was ignored because the same file could not be synchronized in the master and target. File=%s</string>
+        <string name="msgs_mirror_same_directory_ignored">Directory ignored because it points to the same folder on both master and destination. Directory=%s</string>
+        <string name="msgs_mirror_same_file_ignored">File ignored because it points to the same file on both master and destination. File=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected">Unable to connect to the specified SMB server. IP address=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected_with_port" formatted="false">Unable to connect to the specified SMB server. IP address=%s, port=%s</string>
         <string name="msgs_mirror_smb_invalid_port_specified">Invalid port number: %s</string>
