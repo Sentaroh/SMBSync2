@@ -159,7 +159,7 @@
         <string name="msgs_main_external_usb_mp_changed_title">USB Media</string>
         <string name="msgs_main_external_usb_select_activity_not_found_msg">Не удалось получить разрешение на запись USB-носитель.</string>
         <string name="msgs_main_external_usb_drive_not_found_msg">USB-носитель не подключен. Закройте окно, а затем подключите USB-носитель для выполнения операции.</string>
-        <string name="msgs_main_external_usb_select_path_not_available_msg">Точка монтирования /storage/% s не найдена. SMBSync2 не может использовать этот USB-носитель.</string>
+        <string name="msgs_main_external_usb_select_path_not_available_msg">Точка монтирования /storage/%s не найдена. SMBSync2 не может использовать этот USB-носитель.</string>
         <string name="msgs_main_external_usb_select_required_cancel_msg">%s. Вы не сможете выполнить синхронизацию, пока не получите разрешение записи на USB-носитель.</string>
         <string name="msgs_main_external_usb_select_required_select_msg_api23">Для доступа к USB-носителю: нажмите«USB»(1), затем нажмите «Выбрать»(2). \n\nЕсли панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу.</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_EN.png</string>
@@ -512,8 +512,8 @@
         <string name="msgs_mirror_external_sdcard_select_required">Синхронизация отменена, поскольку разрешение на запись SDCARD не предоставлено.</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">Кажется, что содержимое SDCARD не отражается в хранилище мультимедиа. Выполните сканирование носителя для обновления содержимого SDCARD.</string>
         <string name="msgs_mirror_file_set_last_modified_failed">setLastModified () не удалось. Включите \ "Не устанавливайте время обновления целевого файла в соответствии с исходным файлом \" для задачи синхронизации.</string>
-        <string name="msgs_mirror_file_zip_copy_back_from_work">Копирование файла ZIP в целевой файл ...%s %% завершено.</string>
-        <string name="msgs_mirror_file_zip_copy_to_work">Копирование файла ZIP в рабочий файл ...%s %% завершено.</string>
+        <string name="msgs_mirror_file_zip_copy_back_from_work">Копирование файла ZIP в целевой файл ...%s%% завершено.</string>
+        <string name="msgs_mirror_file_zip_copy_to_work">Копирование файла ZIP в рабочий файл ...%s%% завершено.</string>
         <string name="msgs_mirror_ignore_override_copy_file">Копирование файла игнорируется, поскольку для этой задачи отключена опция \ "Перезаписать файл (ы) назначения \".</string>
         <string name="msgs_mirror_ignore_override_move_file">Перемещение файла игнорируется, поскольку для этой задачи отключена опция \ "Перезаписать файл (ы) назначения \".</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">Исходный файл или имя каталога содержит символы, которые недопустимы для места назначения. Измените имя, чтобы разрешить синхронизацию. Персонаж:%s, Путь:%s</string>
@@ -547,7 +547,7 @@
         <string name="msgs_mirror_task_dir_deleted">[Каталог удален]</string>
         <string name="msgs_mirror_task_file_archived" formatted="false">%s [заархивировано в] %s</string>
         <string name="msgs_mirror_task_file_copied">[Файл скопирован]</string>
-        <string name="msgs_mirror_task_file_copying">Копирование файла … %s %% [завершено]</string>
+        <string name="msgs_mirror_task_file_copying">Копирование файла … %s%% [завершено]</string>
         <string name="msgs_mirror_task_file_deleted">[Файл удален]</string>
         <string name="msgs_mirror_task_file_moved">[Файл перемещен]</string>
         <string name="msgs_mirror_task_file_replaced">[Файл перезаписан]</string>
@@ -571,7 +571,7 @@
         <string name="msgs_scan_ip_address_not_detected">Сервер SMB не найден.</string>
         <string name="msgs_scan_ip_address_select_detected_host">Выберите имя хоста или IP-адрес из результатов поиска</string>
         <string name="msgs_scan_ip_address_scan_result_title">результаты поиска</string>
-        <string name="msgs_ip_address_scan_progress">Поиск хоста SMB…% s %% завершен.</string>
+        <string name="msgs_ip_address_scan_progress">Поиск хоста SMB…%s%% завершен.</string>
         <string name="msgs_ip_address_range_dlg_begin">Начать</string>
         <string name="msgs_ip_address_range_dlg_end">Конец</string>
         <string name="msgs_ip_address_range_dlg_begin_notspecified">Укажите начало диапазона адресов.</string>
@@ -856,7 +856,7 @@
         <string name="settings_other_title">Другое</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">Звук уведомления по умолчанию не был установлен.</string>
-        <string name="settings_playback_ringtone_volume_summary">%s %% системного тома</string>
+        <string name="settings_playback_ringtone_volume_summary">%s%% системного тома</string>
         <string name="settings_playback_ringtone_volume_title">Громкость звука уведомлений</string>
         <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Выберите условия воспроизведения звука</string>
