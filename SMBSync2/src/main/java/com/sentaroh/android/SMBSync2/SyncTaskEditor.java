@@ -3305,8 +3305,20 @@ public class SyncTaskEditor extends DialogFragment {
         setCtvListenerForEditSyncTask(ctv_task_sync_when_cahrging, type, n_sti, dlg_msg);
 
         final CheckedTextView ctv_never_overwrite_target_file_newer_than_the_master_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file);
+        ctv_never_overwrite_target_file_newer_than_the_master_file.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !ctv_never_overwrite_target_file_newer_than_the_master_file.isChecked();
+                ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(isChecked);
+                if (isChecked) {
+                    mUtil.showCommonDialog(false, "W",
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning), "", null );
+                }
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+        });
         ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(n_sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile());
-        setCtvListenerForEditSyncTask(ctv_never_overwrite_target_file_newer_than_the_master_file, type, n_sti, dlg_msg);
+        //setCtvListenerForEditSyncTask(ctv_never_overwrite_target_file_newer_than_the_master_file, type, n_sti, dlg_msg);
 
         final CheckedTextView ctv_ignore_dst_difference = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_ignore_dst_difference);
         ctv_ignore_dst_difference.setChecked(n_sti.isSyncOptionIgnoreDstDifference());
