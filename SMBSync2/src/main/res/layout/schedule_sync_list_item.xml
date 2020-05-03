@@ -45,7 +45,8 @@
                 android:id="@+id/schedule_sync_list_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="1"
+                android:layout_marginLeft="20dp"
+                android:maxLines="2"
                 android:ellipsize="end"
                 android:text="TextView" />
 
@@ -53,6 +54,7 @@
                 android:id="@+id/schedule_sync_list_time_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:text="TextView" />
@@ -61,6 +63,7 @@
                 android:id="@+id/schedule_sync_list_error_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:text="error" />
