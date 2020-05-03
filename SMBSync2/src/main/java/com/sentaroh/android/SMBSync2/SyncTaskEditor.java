@@ -4603,6 +4603,8 @@ public class SyncTaskEditor extends DialogFragment {
             ctvUseSmbsyncLastMod.setChecked(false);
         } else ll_ctvUseSmbsyncLastMod.setVisibility(LinearLayout.VISIBLE);
 
+        if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) ll_ctvDoNotResetFileLastMod.setVisibility(CheckedTextView.GONE);
+
         if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
             ll_file_filter.setVisibility(LinearLayout.GONE);
 
@@ -4622,7 +4624,7 @@ public class SyncTaskEditor extends DialogFragment {
             ll_ctvProcessOverride.setVisibility(CheckedTextView.VISIBLE);
 //            ll_ctvConfirmOverride.setVisibility(CheckedTextView.VISIBLE);
 
-            ll_ctvDoNotResetFileLastMod.setVisibility(CheckedTextView.VISIBLE);
+            if (!n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) ll_ctvDoNotResetFileLastMod.setVisibility(CheckedTextView.VISIBLE);
 
             ll_ctvDiffUseFileSize.setVisibility(CheckedTextView.VISIBLE);
 
