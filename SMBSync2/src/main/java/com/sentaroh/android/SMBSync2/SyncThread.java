@@ -2410,7 +2410,7 @@ public class SyncThread extends Thread {
         if (tf_exists != lf_exists) exists_diff = true;
         if (exists_diff || (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) || ac) {
             if (sti.isSyncDifferentFileSizeGreaterThanTagetFile()) {
-                if (tf_length>lf_length) {
+                if (lf_length>tf_length) {
                     diff = true;
                 }
             } else {
