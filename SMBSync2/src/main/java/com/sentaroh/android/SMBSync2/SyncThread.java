@@ -2402,13 +2402,17 @@ public class SyncThread extends Thread {
                                                             boolean lf_exists, long lf_time, long lf_length, String lf_path,//Target
                                                             boolean tf_exists, long tf_time, long tf_length, boolean ac) {//Master
         boolean diff = false;
-        boolean exists_diff = false;
+        boolean orphan_file = false;
 
         long time_diff = Math.abs((tf_time - lf_time));
         long length_diff = Math.abs((tf_length - lf_length));
-
-        if (tf_exists != lf_exists) exists_diff = true;
-        if (exists_diff || (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) || ac) {
+        //String str=Long.toString(length_diff); showMsg(stwa, false, "length_diff=", "I", "", "", str);
+        if (ac) { // boolean ALL_COPY
+            diff = true;
+        } else if (tf_exists != lf_exists) {
+            orphan_file = true;
+            diff = true;
+        } else if (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) {
             if (sti.isSyncDifferentFileSizeGreaterThanTagetFile()) {
                 if (lf_length>tf_length) {
                     diff = true;
@@ -2416,7 +2420,7 @@ public class SyncThread extends Thread {
             } else {
                 diff = true;
             }
-            if (diff && !stwa.lastModifiedIsFunctional) {//Use lastModified
+            if (diff && !stwa.lastModifiedIsFunctional) {//Update SMBSync2 Filelist
                 if (lf_exists) {
                     updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path, lf_time, tf_time);
                 } else {
@@ -2424,8 +2428,7 @@ public class SyncThread extends Thread {
                     if (!updated) addLastModifiedItem(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path, lf_time, tf_time);
                 }
             }
-        } else {//Check lastModified()
-            if (sti.isSyncOptionDifferentFileByTime()) {
+        } else if (sti.isSyncOptionDifferentFileByTime()) {//Check lastModified(). Compare by size_diff is disabled or length_diff == 0 --> compare same size files by time
                 if (stwa.lastModifiedIsFunctional) {//Use lastModified
                     if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
                         if (sti.isSyncOptionIgnoreDstDifference()) {
@@ -2440,7 +2443,7 @@ public class SyncThread extends Thread {
                     } else {
                         diff = false;
                     }
-                } else {//Use Filelist
+                } else {//Use SMBSync2 Filelist
                     boolean found=isLocalFileLastModifiedFileItemExists(stwa, sti, stwa.currLastModifiedList, stwa.newLastModifiedList, lf_path);
                     if (!found) {
                         if (time_diff > stwa.syncDifferentFileAllowableTime) {
@@ -2465,7 +2468,8 @@ public class SyncThread extends Thread {
                     }
                     stwa.util.addDebugMsg(3, "I", "isFileChangedDetailCompare FilItem Exists="+found);
                 }
-            }
+        } else if (!(sti.isSyncOptionDifferentFileBySize() && length_diff == 0)) { //length_diff == 0 or both compare by time_diff and size_diff are disabled --> if files are same size and compare by size was enabled, they are same, else:
+            diff = true; //neither "compare by time" nor "compare by size" are enabled: always overwrite traget, do not update or use SMBSync2 List
         }
         if (stwa.gp.settingDebugLevel >= 3) {
             stwa.util.addDebugMsg(3, "I", "isFileChangedDetailCompare");
@@ -2477,10 +2481,10 @@ public class SyncThread extends Thread {
                     ", last modified(ms)=" + tf_time +
                     ", date=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec((tf_time / 1000) * 1000));
             else stwa.util.addDebugMsg(3, "I", "Target file was not exists");
-            stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",exists_diff=" + exists_diff +
+            stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",orphan_file=" + orphan_file +
                     ",time_diff=" + time_diff + ",length_diff=" + length_diff + ", diff=" + diff);
         } else {
-            stwa.util.addDebugMsg(1, "I", "isFileChanged fp="+fp+ ", exists_diff=" + exists_diff +
+            stwa.util.addDebugMsg(1, "I", "isFileChanged fp="+fp+ ", orphan_file=" + orphan_file +
                     ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+lf_time+", master_time="+tf_time);
         }
         if (stwa.gp.settingDebugLevel >= 1) {
@@ -2506,7 +2510,7 @@ public class SyncThread extends Thread {
         }
         long lf_time = 0, lf_length = 0;
         boolean lf_exists = lf.exists();//Master
-        boolean exists_diff = false;
+        boolean orphan_file = false;
 
         if (lf_exists) {
             lf_time = lf.lastModified();
@@ -2515,25 +2519,35 @@ public class SyncThread extends Thread {
         long time_diff = Math.abs((hf_time - lf_time));
         long length_diff = Math.abs((hf_length - lf_length));
 
-        if (hf_exists != lf_exists) exists_diff = true;
-        if (exists_diff || (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) || ac) {
+        if (ac) { // boolean ALL_COPY
             diff = true;
-        } else {//Check lastModified()
-            if (sti.isSyncOptionDifferentFileByTime()) {
-                if ((time_diff > stwa.syncDifferentFileAllowableTime)) { //LastModified was changed
-                    if (sti.isSyncOptionIgnoreDstDifference()) {
-                        if (Math.abs(time_diff-stwa.offsetOfDaylightSavingTime)<=stwa.syncDifferentFileAllowableTime) {
-                            diff=false;
-                        } else {
-                            diff=true;
-                        }
+        } else if (hf_exists != lf_exists) {
+            orphan_file = true;
+            diff = true;
+        } else if (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) {
+            if (sti.isSyncDifferentFileSizeGreaterThanTagetFile()) {
+                if (lf_length>hf_length) {
+                    diff = true;
+                }
+            } else {
+                diff = true;
+            }
+        } else if (sti.isSyncOptionDifferentFileByTime()) {//Check lastModified()
+            if ((time_diff > stwa.syncDifferentFileAllowableTime)) { //LastModified was changed
+                if (sti.isSyncOptionIgnoreDstDifference()) {
+                    if (Math.abs(time_diff-stwa.offsetOfDaylightSavingTime)<=stwa.syncDifferentFileAllowableTime) { //difference is exactly dst_offset +/- user set tolerance (msec)
+                        diff=false;
                     } else {
-                        diff = true;
+                        diff=true;
                     }
                 } else {
-                    diff = false;
+                    diff = true;
                 }
+            } else {
+                diff = false;
             }
+        } else if (!(sti.isSyncOptionDifferentFileBySize() && length_diff == 0)) { //length_diff == 0 or both compare by time_diff and size_diff are disabled --> if files are same size and compare by size was enabled, they are same, else:
+            diff = true; //neither "compare by time" nor "compare by size" are enabled: always overwrite traget
         }
         if (stwa.gp.settingDebugLevel >= 3) {
             stwa.util.addDebugMsg(3, "I", "isFileChangedForLocalToRemote");
@@ -2545,11 +2559,11 @@ public class SyncThread extends Thread {
                     ", last modified(ms)=" + lf_time +
                     ", date=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec((lf_time / 1000) * 1000));
             else stwa.util.addDebugMsg(3, "I", "Local  file was not exists");
-            stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",exists_diff=" + exists_diff +
+            stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",orphan_file=" + orphan_file +
                     ",time_diff=" + time_diff +//", time_zone_diff="+time_diff_tz1+
                     ",length_diff=" + length_diff + ", diff=" + diff);
         } else {
-            stwa.util.addDebugMsg(1, "I", "isFileChangedForLocalToRemote fp="+fp+ ", exists_diff=" + exists_diff +
+            stwa.util.addDebugMsg(1, "I", "isFileChangedForLocalToRemote fp="+fp+ ", orphan_file=" + orphan_file +
                     ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+hf_time+", master_time="+lf_time);
         }
         if (stwa.gp.settingDebugLevel >= 1) {

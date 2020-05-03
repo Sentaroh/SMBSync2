@@ -3617,6 +3617,8 @@ public class SyncTaskEditor extends DialogFragment {
             ctv_auto.setEnabled(true);
         }
 
+        final CheckedTextView ctDeterminChangedFileByTime = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_last_mod_time);
+        ctDeterminChangedFileByTime.setChecked(n_sti.isSyncOptionDifferentFileByTime());
         final CheckedTextView ctvDeterminChangedFileSizeGtTarget = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_file_size_greater_than_target);
         ctvDeterminChangedFileSizeGtTarget.setChecked(n_sti.isSyncDifferentFileSizeGreaterThanTagetFile());
         final CheckedTextView ctvDiffUseFileSize = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_file_size);
@@ -3631,6 +3633,10 @@ public class SyncTaskEditor extends DialogFragment {
                     ctvDeterminChangedFileSizeGtTarget.setEnabled(true);
                 } else {
                     ctvDeterminChangedFileSizeGtTarget.setEnabled(false);
+                    if (!ctDeterminChangedFileByTime.isChecked()) {
+                        mUtil.showCommonDialog(false, "W",
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_warning), "", null );
+                    }
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -3655,9 +3661,6 @@ public class SyncTaskEditor extends DialogFragment {
             ll_offset_dst_view.setVisibility(LinearLayout.GONE);
         }
 
-        final CheckedTextView ctDeterminChangedFileByTime = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_last_mod_time);
-//        CommonUtilities.setCheckedTextView(ctDeterminChangedFileByTime);
-        ctDeterminChangedFileByTime.setChecked(n_sti.isSyncOptionDifferentFileByTime());
         if (n_sti.isSyncOptionDifferentFileByTime()) {
             ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.VISIBLE);
             if (n_sti.isSyncOptionIgnoreDstDifference()) {
@@ -3669,6 +3672,7 @@ public class SyncTaskEditor extends DialogFragment {
             ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
             ll_offset_dst_view.setVisibility(LinearLayout.GONE);
         }
+
         ctDeterminChangedFileByTime.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3683,6 +3687,10 @@ public class SyncTaskEditor extends DialogFragment {
                     }
                 } else {
                     ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
+                    if (!ctvDiffUseFileSize.isChecked()) {
+                        mUtil.showCommonDialog(false, "W",
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_warning), "", null );
+                    }
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
