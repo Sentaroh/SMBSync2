@@ -2414,7 +2414,7 @@ public class SyncThread extends Thread {
             diff = true;
         } else if (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) {
             if (sti.isSyncDifferentFileSizeGreaterThanTagetFile()) {
-                if (lf_length>tf_length) {
+                if (tf_length>lf_length) {
                     diff = true;
                 }
             } else {
