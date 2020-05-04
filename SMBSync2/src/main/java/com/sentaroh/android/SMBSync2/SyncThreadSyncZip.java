@@ -412,8 +412,8 @@ public class SyncThreadSyncZip {
         return zfli;
     }
 
-    static private boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                         File mf, boolean ac) { // stwa: target_zip. from_path and mf: file to be copied to zip (master)
+    static private boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti,// stwa: target_zip. 
+                                         String from_path, File mf, boolean ac) { //from_path and mf: file to be copied to zip (master)
         boolean result = false;
         ZipFileListItem zfli = getZipFileListItem(stwa, from_path);
         if (zfli != null) {
@@ -428,9 +428,9 @@ public class SyncThreadSyncZip {
     }
 
     static final private boolean isFileChangedDetailCompare(SyncThreadWorkArea stwa, SyncTaskItem sti,
-                                                            String lf_path, boolean tf_exists, long tf_time, long tf_length,
-                                                            boolean mf_exists, long mf_time, long mf_length,
-                                                            boolean ac) { // stwa: target_zip. from_path and mf: file to be copied to zip (master)
+                                                            String lf_path, boolean tf_exists, long tf_time, long tf_length, //stwa: zip, target ZIP
+                                                            boolean mf_exists, long mf_time, long mf_length, //from_path and mf: file to be copied to zip (master)
+                                                            boolean ac) {
         boolean diff = false;
         boolean orphan_file = false;
 
