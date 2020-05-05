@@ -3823,6 +3823,14 @@ public class SyncTaskEditor extends DialogFragment {
                         } else {
                             confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                         }
+                        if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
+                            if (!nsfev.folder_type.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal))) {
+                                mCommonDlg.showCommonDialog(false, "W",
+                                        mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal), "", null);
+                                n_sti.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_DEFAULT);
+                                target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                            }
+                        }
                     }
 
                     @Override

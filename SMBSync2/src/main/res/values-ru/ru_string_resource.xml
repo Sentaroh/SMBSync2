@@ -281,6 +281,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">Если источник или место назначения расположены на сервере SMB. Установите Беспроводное Условие LAN на \"Подключаться к любой точке доступа \"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">Если источник или место назначения расположены на сервере SMB. Установите Беспроводное Условие LAN на \, "Имеет частный адрес \"?</string>
         <string name="deleted_msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">Если источник и место назначения не расположены на сервере SMB. Установить Беспроводное Условие LAN на \"Другое \"?</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">Нельзя использовать ZIP для целевой папки, если главная папка не является внутренним хранилищем. Изменил целевую папку на внутреннее хранилище.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_directory">Каталог</string>
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">Список каталогов</string>
         <string name="msgs_profile_edit_sync_folder_dlg_folder_type">Тип папки</string>
