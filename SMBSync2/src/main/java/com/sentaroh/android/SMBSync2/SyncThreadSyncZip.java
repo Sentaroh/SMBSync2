@@ -412,12 +412,12 @@ public class SyncThreadSyncZip {
         return zfli;
     }
 
-    static private boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti, String to_path,
-                                         File mf, boolean ac) {
+    static private boolean isFileChanged(SyncThreadWorkArea stwa, SyncTaskItem sti,// stwa: target_zip.
+                                         String from_path, File mf, boolean ac) { //from_path and mf: file to be copied to zip (master)
         boolean result = false;
-        ZipFileListItem zfli = getZipFileListItem(stwa, to_path);
+        ZipFileListItem zfli = getZipFileListItem(stwa, from_path);
         if (zfli != null) {
-            result = isFileChangedDetailCompare(stwa, sti, to_path,
+            result = isFileChangedDetailCompare(stwa, sti, from_path,
                     true, zfli.getLastModifiedTime(), zfli.getFileLength(),
                     mf.exists(), mf.lastModified(), mf.length(),
                     ac);
@@ -428,40 +428,60 @@ public class SyncThreadSyncZip {
     }
 
     static final private boolean isFileChangedDetailCompare(SyncThreadWorkArea stwa, SyncTaskItem sti,
-                                                            String lf_path, boolean lf_exists, long lf_time, long lf_length,
-                                                            boolean mf_exists, long mf_time, long mf_length,
+                                                            String lf_path, boolean tf_exists, long tf_time, long tf_length, //stwa: zip, target ZIP
+                                                            boolean mf_exists, long mf_time, long mf_length, //from_path and mf: file to be copied to zip (master)
                                                             boolean ac) {
         boolean diff = false;
-        boolean exists_diff = false;
+        boolean orphan_file = false;
 
-        long time_diff = Math.abs((mf_time - lf_time));
-        long length_diff = Math.abs((mf_length - lf_length));
+        long time_diff = Math.abs((mf_time - tf_time));
+        long length_diff = Math.abs((mf_length - tf_length));
 
-        if (mf_exists != lf_exists) exists_diff = true;
-        if (exists_diff || (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) || ac) {
+        if (ac) { // boolean ALL_COPY
             diff = true;
-        } else {//Check lastModified()
-            if (sti.isSyncOptionDifferentFileByTime()) {
-                if (time_diff > stwa.syncDifferentFileAllowableTime) { //LastModified was changed
+        } else if (mf_exists != tf_exists) {
+            orphan_file = true;
+            diff = true;
+        } else if (sti.isSyncOptionDifferentFileBySize() && length_diff > 0) {
+            if (sti.isSyncDifferentFileSizeGreaterThanTagetFile()) {
+                if (mf_length>tf_length) {
                     diff = true;
-                } else diff = false;
+                }
+            } else {
+                diff = true;
             }
+        } else if (sti.isSyncOptionDifferentFileByTime()) {//Check lastModified(). Compare by size_diff is disabled or length_diff == 0 --> compare same size files by time
+            if (time_diff > stwa.syncDifferentFileAllowableTime) {
+                if (sti.isSyncOptionIgnoreDstDifference()) {
+                    if (Math.abs(time_diff-stwa.offsetOfDaylightSavingTime)<=stwa.syncDifferentFileAllowableTime) { //difference is exactly dst_offset +/- user set tolerance (msec)
+                        diff=false;
+                    } else {
+                        diff=true;
+                    }
+                } else {
+                    diff = true;
+                }
+            } else { //time_diff is <= syncDifferentFileAllowableTime
+                diff = false;
+            }
+        }  else if (!(sti.isSyncOptionDifferentFileBySize() && length_diff == 0)) { //length_diff == 0 or both compare by time_diff and size_diff are disabled --> if files are same size and compare by size was enabled, they are same, else:
+            diff = true; //neither "compare by time" nor "compare by size" are enabled: always overwrite traget, do not update or use SMBSync2 List
         }
         if (stwa.gp.settingDebugLevel >= 3) {
             stwa.util.addDebugMsg(3, "I", "isFileChangedDetailCompare");
             if (mf_exists) stwa.util.addDebugMsg(3, "I", "Master file length=" + mf_length +
                     ", last modified(ms)=" + mf_time +
                     ", date=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec((mf_time / 1000) * 1000));
-            else stwa.util.addDebugMsg(3, "I", "Master file was not exists");
-            if (lf_exists) stwa.util.addDebugMsg(3, "I", "Target file length=" + lf_length +
-                    ", last modified(ms)=" + lf_time +
-                    ", date=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec((lf_time / 1000) * 1000));
-            else stwa.util.addDebugMsg(3, "I", "Target file was not exists");
-            stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",exists_diff=" + exists_diff +
+            else stwa.util.addDebugMsg(3, "I", "Master file does not exists");
+            if (tf_exists) stwa.util.addDebugMsg(3, "I", "Target file length=" + tf_length +
+                    ", last modified(ms)=" + tf_time +
+                    ", date=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec((tf_time / 1000) * 1000));
+            else stwa.util.addDebugMsg(3, "I", "Target file does not exists");
+            stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",orphan_file=" + orphan_file +
                     ",time_diff=" + time_diff + ",length_diff=" + length_diff + ", diff=" + diff);
         } else {
-            stwa.util.addDebugMsg(1, "I", "isFileChangedDetailCompare(ZIP) fp="+lf_path+ ", exists_diff=" + exists_diff +
-                    ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+lf_time+", master_time="+mf_time);
+            stwa.util.addDebugMsg(1, "I", "isFileChangedDetailCompare(ZIP) fp="+lf_path+ ", orphan_file=" + orphan_file +
+                    ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+tf_time+", master_time="+mf_time);
         }
         return diff;
     }
