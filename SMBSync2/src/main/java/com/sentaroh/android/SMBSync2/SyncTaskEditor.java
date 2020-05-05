@@ -3824,11 +3824,11 @@ public class SyncTaskEditor extends DialogFragment {
                             confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                         }
                         if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
-                            if (!nsfev.folder_type.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal))) {
+                            if (!nsfev.folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                                 mCommonDlg.showCommonDialog(false, "W",
-                                        mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal), "", null);
-                                n_sti.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_DEFAULT);
-                                target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                                        mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal), "", null);
+                                n_sti.setMasterFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL);
+                                master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                             }
                         }
                     }
@@ -3991,6 +3991,14 @@ public class SyncTaskEditor extends DialogFragment {
                             }
                         } else {
                             confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
+                        }
+                        if (nsfev.folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
+                            if (!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
+                                mCommonDlg.showCommonDialog(false, "W",
+                                        mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal), "", null);
+                                n_sti.setTargetFolderType(prev_target_folder_type);
+                                target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                            }
                         }
                     }
 

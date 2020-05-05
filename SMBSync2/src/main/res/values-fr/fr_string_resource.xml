@@ -281,7 +281,8 @@
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">Si la source ou la destination sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Tous les réseaux\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">Si la source ou la destination sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Wifi avec IP privée\"?</string>
         <string name="deleted_msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">Si ni la source ni la destination ne sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Même si Wifi éteint\"?</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">Vous ne pouvez pas utiliser le ZIP pour le dossier cible, sauf si le dossier principal est un stockage interne. Le dossier cible a été remplacé par le stockage interne.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">Lorsque ZIP est sélectionné comme destination, la source doit être située sur le stockage interne. La sélection de la source a donc été changée en stockage interne.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">La destination ZIP ne peut être spécifiée que pour synchroniser des fichiers situés sur le stockage interne. Votre sélection de la destination a été annulée.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_directory">Dossier</string>
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">Afficher les dossiers</string>
         <string name="msgs_profile_edit_sync_folder_dlg_folder_type">Type de stockage</string>

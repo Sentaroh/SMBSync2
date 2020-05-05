@@ -281,7 +281,8 @@
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">If source or destination are located on SMB server: set Start sync only in specified Wifi condition to \"Conn any AP\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">If source or destination are located on SMB server: set Start sync only in specified Wifi condition to \"Has private address\"?</string>
         <string name="deleted_msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">If source and destination are not located on SMB server: set Start sync only in specified Wifi condition to \"Run even when off\"?</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">You can\'t use ZIP for the target folder unless the master folder is internal storage. Changed the target folder to internal storage.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">When target folder is set to ZIP, the master folder must be internal storage. Master folder was reverted to internal storage.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">You can\'t use ZIP as a target unless the master folder is on internal storage. Target folder was reverted back.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_directory">Directory</string>
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">List Directories</string>
         <string name="msgs_profile_edit_sync_folder_dlg_folder_type">Storage type</string>
