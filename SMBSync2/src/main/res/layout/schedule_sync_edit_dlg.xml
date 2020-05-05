@@ -153,74 +153,80 @@
                     android:text=""
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
-            
-		    <CheckedTextView
-		        android:id="@+id/scheduler_main_dlg_ctv_wifi_on"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="5dp"
-		        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-		        android:gravity="center_vertical"
-		        android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on" 
-		        android:textAppearance="?android:attr/textAppearanceMedium"/>
-		    
+
             <LinearLayout
-                android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_view"
+                android:id="@+id/scheduler_main_dlg_wifi_on_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
                 android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_time"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <RadioGroup
-                    android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <RadioButton
-                        android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:checked="true"
-                        android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_1" />
-
-                    <RadioButton
-                        android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_2" />
-
-                    <RadioButton
-                        android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3" />
-                </RadioGroup>
-
                 <CheckedTextView
-                    android:id="@+id/scheduler_main_dlg_ctv_wifi_off"
+                    android:id="@+id/scheduler_main_dlg_ctv_wifi_on"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
-                    android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_off"
+                    android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
+                <LinearLayout
+                    android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:orientation="vertical" >
 
-			</LinearLayout>
+                    <TextView
+                        android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_time"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <RadioGroup
+                        android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_1" />
+
+                        <RadioButton
+                            android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_2" />
+
+                        <RadioButton
+                            android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3" />
+                    </RadioGroup>
+
+                    <CheckedTextView
+                        android:id="@+id/scheduler_main_dlg_ctv_wifi_off"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                        android:gravity="center_vertical"
+                        android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_off"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/scheduler_main_dlg_override_sync_option_view"
                 android:layout_width="match_parent"

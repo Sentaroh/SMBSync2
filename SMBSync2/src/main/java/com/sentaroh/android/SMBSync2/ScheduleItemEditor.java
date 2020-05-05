@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -161,6 +162,8 @@ public class ScheduleItemEditor {
         final CheckedTextView ctv_sched_enabled = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_enabled);
 //        ctv_sched_enabled.setTextColor(mGp.themeColorList.text_color_primary);
         CommonUtilities.setCheckedTextView(ctv_sched_enabled);
+        final LinearLayout ll_wifi_on_view=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_wifi_on_view);
+        if (Build.VERSION.SDK_INT>=29) ll_wifi_on_view.setVisibility(LinearLayout.GONE);
         final Spinner sp_sched_type = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_date_time_type);
         final Spinner sp_sched_day = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_day);
         final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_hours);

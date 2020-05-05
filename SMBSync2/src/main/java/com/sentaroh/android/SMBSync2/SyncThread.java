@@ -405,19 +405,23 @@ public class SyncThread extends Thread {
 
     private boolean performWiFiOnIfRequired(SyncRequestItem sri) {
         boolean wifi_on_issued=false;
-        if (sri.wifi_on_before_sync_start) {
-            if (!isWifiOn()) {
-                wifi_on_issued=true;
-                setWifiOn();
-                if (sri.start_delay_time_after_wifi_on > 0) {
-                    mStwa.util.addLogMsg("I", String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_start_was_delayed), sri.start_delay_time_after_wifi_on));
-                    SystemClock.sleep(1000 * sri.start_delay_time_after_wifi_on);
-                    if (!isWifiOn()) {
-                        mStwa.util.addLogMsg("E",mGp.appContext.getString(R.string.msgs_mirror_sync_wifi_can_not_enabled));
+        if (Build.VERSION.SDK_INT<=28) {//Android 5/6/7/8/9
+            if (sri.wifi_on_before_sync_start) {
+                if (!isWifiOn()) {
+                    wifi_on_issued=true;
+                    setWifiOn();
+                    if (sri.start_delay_time_after_wifi_on > 0) {
+                        mStwa.util.addLogMsg("I", String.format(mGp.appContext.getString(R.string.msgs_mirror_sync_start_was_delayed), sri.start_delay_time_after_wifi_on));
+                        SystemClock.sleep(1000 * sri.start_delay_time_after_wifi_on);
+                        if (!isWifiOn()) {
+                            mStwa.util.addLogMsg("E",mGp.appContext.getString(R.string.msgs_mirror_sync_wifi_can_not_enabled));
+                        }
                     }
+                    mStwa.util.addDebugMsg(1, "I", "WiFi IP Addr="+CommonUtilities.getIfIpAddress("wlan0"));
                 }
-                mStwa.util.addDebugMsg(1, "I", "WiFi IP Addr="+CommonUtilities.getIfIpAddress("wlan0"));
             }
+        } else {
+            mStwa.util.addDebugMsg(1, "I", "WiFi On ignored");
         }
         return wifi_on_issued;
     }

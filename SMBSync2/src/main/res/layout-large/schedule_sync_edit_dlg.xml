@@ -154,17 +154,21 @@
                     android:text=""
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
-            
-		    <CheckedTextView
-		        android:id="@+id/scheduler_main_dlg_ctv_wifi_on"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="5dp"
-		        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-		        android:gravity="center_vertical"
-		        android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on" 
-		        android:textAppearance="?android:attr/textAppearanceMedium"/>
-		    
+
+        <LinearLayout
+            android:id="@+id/scheduler_main_dlg_wifi_on_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <CheckedTextView
+                android:id="@+id/scheduler_main_dlg_ctv_wifi_on"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:gravity="center_vertical"
+                android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
             <LinearLayout
                 android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_view"
                 android:layout_width="match_parent"
@@ -221,7 +225,8 @@
                     android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_off"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-			</LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
             <LinearLayout
                 android:id="@+id/scheduler_main_dlg_override_sync_option_view"
                 android:layout_width="match_parent"
