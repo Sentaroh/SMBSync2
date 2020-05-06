@@ -281,6 +281,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">ターゲットとマスターのいずれかがSMBのため無線LANの条件を「APに接続されている時」に変更しますか？</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">ターゲットとマスターのいずれかがSMBのため無線LANの条件を「プライベートアドレス」に変更しますか？</string>
         <string name="deleted_msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">ターゲットとマスターが両方ともSMB以外のため無線LANの条件を「オフ」に変更しますか？</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">対象フォルダがZIPに設定されている場合、マスターフォルダは内部ストレージである必要があります。マスターフォルダを内部ストレージに変更しました。</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">マスターフォルダーが内部ストレージ以外ではターゲットフォルダーはZIPを使用できません。ターゲットフォルダーを内部ストレージに変更しました。</string>
         <string name="msgs_profile_edit_sync_folder_dlg_directory">ディレクトリ</string>
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">ディレクトリ一覧</string>
