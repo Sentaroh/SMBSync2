@@ -3998,6 +3998,7 @@ public class SyncTaskEditor extends DialogFragment {
                                         mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal), "", null);
                                 n_sti.setTargetFolderType(prev_target_folder_type);
                                 target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                                if (!n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) CommonDialog.setViewEnabled(getActivity(), swap_master_target, true);// if () check for the rare case target_folder_info equals ZIP because of an old version allowing ZIP when source is External
                             }
                         }
                     }
