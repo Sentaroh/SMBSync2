@@ -2936,12 +2936,12 @@ public class SyncTaskEditor extends DialogFragment {
                 }
             } else {
                 adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal));
-                adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
-                adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard));
+                //adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
+                //adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard));
 
                 if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) sel = 0;
-                else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
-                else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) sel = 2;
+                //else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
+                //else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) sel = 2;
             }
         } else {
             if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
@@ -2955,13 +2955,14 @@ public class SyncTaskEditor extends DialogFragment {
                 adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal));
                 adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
                 adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard));
-                if (!sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE))
+                if (!sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE) && sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL))
                     adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip));
                 if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) sel = 0;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) sel = 2;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
-                    if (!sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) sel = 3;
+                    if (!sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE) &&
+                            sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) sel = 3;
                 }
             }
         }
@@ -3001,14 +3002,14 @@ public class SyncTaskEditor extends DialogFragment {
                     else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) sel = 2;
                     else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) sel = 3;
                 }
-            } else {
+            } else {// Target is ZIP
                 adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal));
-                adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
-                adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard));
+                //adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
+                //adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard));
 
                 if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) sel = 0;
-                else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
-                else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) sel = 2;
+                //else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
+                //else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) sel = 2;
             }
         } else {
             if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
@@ -3034,14 +3035,15 @@ public class SyncTaskEditor extends DialogFragment {
                 adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
                 adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard));
                 adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_usb));
-                if (!sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE))
+                if (!sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE) && sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL))
                     adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip));
                 if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) sel = 0;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) sel = 2;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) sel=3;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
-                    if (!sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) sel = 4;
+                    if (!sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE) &&
+                            sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) sel = 4;
                 }
             }
         }
@@ -3824,11 +3826,11 @@ public class SyncTaskEditor extends DialogFragment {
                             confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                         }
                         if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
-                            if (!nsfev.folder_type.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal))) {
+                            if (!nsfev.folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                                 mCommonDlg.showCommonDialog(false, "W",
-                                        mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal), "", null);
-                                n_sti.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_DEFAULT);
-                                target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                                        mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal), "", null);
+                                n_sti.setMasterFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL);
+                                master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                             }
                         }
                     }
@@ -3991,6 +3993,15 @@ public class SyncTaskEditor extends DialogFragment {
                             }
                         } else {
                             confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
+                        }
+                        if (nsfev.folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
+                            if (!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
+                                mCommonDlg.showCommonDialog(false, "W",
+                                        mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal), "", null);
+                                n_sti.setTargetFolderType(prev_target_folder_type);
+                                target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                                if (!n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) CommonDialog.setViewEnabled(getActivity(), swap_master_target, true);// if () check for the rare case target_folder_info equals ZIP because of an old version allowing ZIP when source is External
+                            }
                         }
                     }
 
