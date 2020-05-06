@@ -293,7 +293,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_logon_success">Logon successful</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_password">Password</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_port">Port number</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_server">Server host name/IP adress</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_server">Server host name/IP address</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share">Share name</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">List Shares</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">Specify port number</string>
@@ -306,10 +306,10 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_use_smb2_negotiation">Use SMB2 negotiation</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMB protocol</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">Use SMB V1</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">Use SMB V2(2.01)</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Use SMB V2(2.11)</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Use SMB V2/3(2.12)</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">Use SMB V2/3(2.14)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">Use SMB V2 (2.01)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Use SMB V2 (2.11)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Use SMB V2/3 (2.12)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">Use SMB V2/3 (2.14)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Determined by system</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">An error exists in the master folder. Please fix it.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_target_folder">An error exists in the target folder. Please fix it.</string>
@@ -355,7 +355,7 @@
         <string name="msgs_profile_sync_task_dlg_sync_type_mirror">Mirror</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_move">Move</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_prompt">Select sync type</string>
-        <string name="msgs_profile_sync_task_dlg_target">Target folder(Destination)</string>
+        <string name="msgs_profile_sync_task_dlg_target">Target folder (Destination)</string>
         <string name="msgs_profile_sync_task_dlg_task_name">Sync task name</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">Add current IP address</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_edit_title">Edit IP Address</string>
@@ -413,7 +413,7 @@
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value">Time difference between daylight saving time and standard time (minutes)</string>
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">Select Daylight Saving Time offset (minutes)</string>
         <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">Do not set last modified time of destination file to match source file</string>
-        <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">Overwrite destination file(s)</string>
+        <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">Overwrite destination files</string>
         <string name="msgs_profile_sync_task_sync_option_network_adv_options">Network advanced options:</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Retry on network error</string>
         <string name="msgs_profile_sync_task_sync_option_show_special_option">Show advanced options</string>
@@ -483,11 +483,11 @@
         <string name="msgs_menu_log_management">Manage log files</string>
         <string name="msgs_menu_about">About SMBSync2</string>
         <string name="msgs_menu_settings">Settings</string>
-        <string name="msgs_menu_housekeep">Maintenance of data files</string>
+        <string name="msgs_menu_housekeep">Database maintenance</string>
         <string name="msgs_menu_kill">Kill the application</string>
         <string name="msgs_menu_add_shortcut">Add shortcut</string>
         <string name="msgs_menu_list_storage_info">System info</string>
-        <string name="msgs_menu_show_battery_optimization_screen">Show battery optimization screen</string>
+        <string name="msgs_menu_show_battery_optimization_screen">Battery optimization</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archive operation cancelled by user]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">The image capture time and date cannot be obtained from EXIF data.  Use file update time and date instead?  (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
@@ -715,7 +715,7 @@
         <string name="msgs_sync_folder_archive_output_image">Preview sample of file and directory names based on your selection:</string>
         <string name="msgs_sync_folder_archive_rename_rule">Change the name of the file before archiving it in the target folder.</string>
         <string name="msgs_sync_folder_archive_seq_number_title">Increment file names by appending</string>
-        <string name="msgs_sync_folder_archive_create_directory">Create a directory based on the archiving date to store the files.</string>
+        <string name="msgs_sync_folder_archive_create_directory">Create a directory based on the shooting date to store the files.</string>
         <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Time</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">Original Name</string>
