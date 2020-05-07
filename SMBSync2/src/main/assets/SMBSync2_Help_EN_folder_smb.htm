@@ -11,12 +11,6 @@
 	{font-family:Wingdings;
 	panose-1:5 0 0 0 0 0 0 0 0 0;}
 @font-face
-	{font-family:"ÇlÇr ñæí©";
-	panose-1:2 2 6 9 4 2 5 8 3 4;}
-@font-face
-	{font-family:"ÇlÇr ÉSÉVÉbÉN";
-	panose-1:2 11 6 9 7 2 5 8 2 4;}
-@font-face
 	{font-family:Century;
 	panose-1:2 4 6 4 5 5 5 2 3 4;}
 @font-face
@@ -26,11 +20,11 @@
 	{font-family:"MS UI Gothic";
 	panose-1:2 11 6 0 7 2 5 8 2 4;}
 @font-face
-	{font-family:"\@ÇlÇr ñæí©";
-	panose-1:2 2 6 9 4 2 5 8 3 4;}
+	{font-family:"MS Mincho";
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
 @font-face
-	{font-family:"\@ÇlÇr ÉSÉVÉbÉN";
-	panose-1:2 11 6 9 7 2 5 8 2 4;}
+	{font-family:"MS Gothic";
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
 @font-face
 	{font-family:"\@MS UI Gothic";
 	panose-1:2 11 6 0 7 2 5 8 2 4;}
@@ -265,8 +259,8 @@ src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Search SMB server</p>
 
-<p class=MsoBodyText style='text-indent:21.0pt'>To scan the network for find
-the SMB server</p>
+<p class=MsoBodyText style='text-indent:21.0pt'>Scans the network to find available
+SMB server</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -274,9 +268,9 @@ the SMB server</p>
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Server name/Address</p>
+</span></span>Server host name/IP address</p>
 
-<p class=MsoBodyText style='text-indent:21.0pt'>To specify SMB server name or
+<p class=MsoBodyText style='text-indent:21.0pt'>Specify the SMB server name or the
 IP address</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
@@ -288,22 +282,64 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
 </span></span>SMB Protocol</p>
 
 <p class=MsoNormal style='text-indent:21.0pt'><span style='font-size:10.5pt'>You
-can specify SMB protocol.</span></p>
+can specify the SMB protocol.</span></p>
 
-<p class=MsoNormal style='margin-left:1.0cm'><span style='font-size:10.5pt'>-Uses
-SMB V1</span></p>
+<p class=MsoListParagraph style='margin-left:64.35pt;text-indent:-18.0pt'><span
+style='font-family:Wingdings'>&Oslash;<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span>Use SMB V1</p>
 
-<p class=MsoNormal style='margin-left:1.0cm'><span style='font-size:10.5pt'>-Uses
-SMB V2(2.01)</span></p>
+<p class=MsoListParagraph style='margin-left:64.35pt;text-indent:-18.0pt'><span
+style='font-family:Wingdings'>&Oslash;<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span>Use SMB V2 (2.01)</p>
 
-<p class=MsoNormal style='margin-left:1.0cm'><span style='font-size:10.5pt'>-Uses
-SMB V2(2.11)</span></p>
+<p class=MsoListParagraph style='margin-left:64.35pt'>SMB min v2.1, max v2.1</p>
 
-<p class=MsoNormal style='margin-left:1.0cm'><span style='font-size:10.5pt'>-Uses
-SMB V2/3(2.12)(Support SMB V2 or V3 protocol)</span></p>
+<p class=MsoListParagraph style='margin-left:64.35pt;text-indent:-18.0pt'><span
+style='font-family:Wingdings'>&Oslash;<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span>Use SMB V2 (2.11)</p>
 
-<p class=MsoNormal style='margin-left:1.0cm'><span style='font-size:10.5pt'>-Uses
-SMB V2/3(2.14)(Support SMB V2 or V3 protocol)</span></p>
+<p class=MsoListParagraph style='margin-left:64.35pt'>SMB min v2.1, max v2.1</p>
+
+<p class=MsoListParagraph style='margin-left:64.35pt;text-indent:-18.0pt'><span
+style='font-family:Wingdings'>&Oslash;<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span>Use SMB V2/3 (2.12)</p>
+
+<p class=MsoListParagraph style='margin-left:64.35pt'>Support SMB V2 or V3
+protocol</p>
+
+<p class=MsoListParagraph style='margin-left:64.35pt'>SMB min v2.0.2, max v3.0</p>
+
+<p class=MsoListParagraph style='margin-left:64.35pt;text-indent:-18.0pt'><span
+style='font-family:Wingdings'>&Oslash;<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span>Use SMB V2/3 (2.14)</p>
+
+<p class=MsoListParagraph style='margin-left:64.35pt'>SMB min v2.0.2, max v3.0</p>
+
+<p class=MsoNormal style='word-break:break-all'><span style='font-size:10.5pt'>&nbsp;</span></p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
+word-break:break-all'><span style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Use SMB2 negotiation</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;word-break:break-all'>When
+checked, it will force setProperty(&quot;jcifs.smb.client.useSMB2Negotiation&quot;,
+&quot;true&quot;) in the JcifsAuth() function. This ensures the use of SMB2 non-backward
+compatible negotiation style, incompatible with versions prior to SMB 2.0.2</p>
+
+<p class=MsoNormal style='word-break:break-all'><span style='font-size:10.5pt'>&nbsp;</span></p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
+word-break:break-all'><span style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>SMB IPC Signing Enforced</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-align:justify;
+text-justify:inter-ideograph;word-break:break-all'>When checked, the client is required
+to use SMB signing for IPC$ connections as DCERPC transport. Else it is
+allowed, but not required.</p>
 
 <p class=MsoNormal style='word-break:break-all'><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -311,10 +347,11 @@ SMB V2/3(2.14)(Support SMB V2 or V3 protocol)</span></p>
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Use port number</p>
+</span></span>Specify port number</p>
 
-<p class=MsoBodyText style='margin-left:21.0pt'>Specify if the port number of
-the standard is not available. The standard port number is 139 or 445.</p>
+<p class=MsoBodyText style='margin-left:21.0pt'>Specify the port number if
+different from default. If left empty, SMBSync2 will try to connect to the
+default standard port numbers 139 and 445.</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -322,10 +359,10 @@ the standard is not available. The standard port number is 139 or 445.</p>
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Use SMB host account and password</p>
+</span></span>Use Account name and password</p>
 
-<p class=MsoBodyText style='text-indent:21.0pt'>It specifies whether to use the
-account/password.</p>
+<p class=MsoBodyText style='text-indent:21.0pt'>Must be completed if required
+by the server.</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -335,7 +372,8 @@ src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>User name</p>
 
-<p class=MsoBodyText style='text-indent:21.0pt'>To specify userid for host.</p>
+<p class=MsoBodyText style='text-indent:21.0pt'>User account name to connect to
+the host.</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -345,7 +383,8 @@ src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Password</p>
 
-<p class=MsoBodyText style='text-indent:21.0pt'>To specify password for host.</p>
+<p class=MsoBodyText style='text-indent:21.0pt'>Account password to connect to
+the host.</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -353,13 +392,14 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>List Share</p>
+</span></span>List Shares</p>
 
-<p class=MsoBodyText style='text-indent:21.0pt'>Show share name for host. </p>
+<p class=MsoBodyText style='text-indent:21.0pt'>Connects to the specified host
+and list all available shares for the account. </p>
 
-<p class=MsoBodyText style='margin-left:21.0pt'>(Selectable share name will be
-displayed when you press the listing button, click the share name, and then
-press the OK)</p>
+<p class=MsoBodyText style='margin-left:21.0pt'>(Shares names will be displayed
+when you press the ÅgList Shares Åg button. Click the desired share name, and
+then press OK to validate)</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -367,14 +407,21 @@ press the OK)</p>
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>List Directory</p>
+</span></span>List Directories</p>
 
-<p class=MsoBodyText style='text-indent:21.0pt'>Show directory list for SMB
-host. </p>
+<p class=MsoBodyText style='text-indent:21.3pt'>Show directories list on the selected
+Share. </p>
 
-<p class=MsoBodyText style='margin-left:21.0pt'>When you press the list directory
-button, the selectable directory is displayed, so tap the right end radio
-button and select it. To open a subdirectory, tap the directory name.</p>
+<p class=MsoBodyText style='text-indent:21.3pt'>When you press the list directory
+button, the selectable directories are displayed. </p>
+
+<p class=MsoBodyText style='text-indent:21.3pt'>Tap on the directory you want
+to choose and then on the ÅgSelectÅh button. To recurse </p>
+
+<p class=MsoBodyText style='text-indent:21.3pt'>through subdirectories, tap the
+directory name.</p>
+
+<p class=MsoBodyText style='margin-left:21.0pt'>&nbsp;</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -396,44 +443,43 @@ src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Add keywords</p>
 
-<p class=MsoBodyText style='margin-left:21.0pt'>%YEAR%,%MONTH%,%DAY% and %DAY-OF-YEAR%
+<p class=MsoBodyText style='margin-left:21.0pt'>%YEAR%, %MONTH%, %DAY% and %DAY-OF-YEAR%
 can be used as target directory names. The keywords are converted into the
-year, month, and day at the time of start sync.</p>
+year, month, and day on which the sync started.</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
 <p class=MsoNormal style='word-break:break-all'><b><u><span style='font-size:
-10.5pt'>This options are displayed only when the sync type is Copy/Move.</span></u></b></p>
+10.5pt'>These options are displayed only when the sync type is Copy/Move.</span></u></b></p>
 
 <p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Use the photo/video shooting date and time for keyword
-conversions attached to the target folder directory</p>
+</span></span>Append the photo/video shooting time/date to the directory name</p>
 
-<p class=MsoBodyText style='margin-left:21.0pt'>If checked, the EXIF takes the
-shooting date and time and uses it instead of the sync start date. When the app
-is unable to get the time taken from the EXIF, it uses the last modified time
-of the file.</p>
+<p class=MsoBodyText style='margin-left:21.0pt'>If checked, the EXIF data of
+the backed up media is used to get the shooting date and time. The shooting
+timestamp is used and appended to the target folder. When the app is unable to
+get the shooting time from the EXIF, it uses the last modified time of the
+file.</p>
 
 <p class=MsoBodyText style='margin-left:21.0pt;text-indent:-21.0pt'>&nbsp;</p>
 
 <p class=MsoNormal style='word-break:break-all'><b><u><span style='font-size:
-10.5pt'>The following options are displayed only when the sync type is archive.</span></u></b></p>
+10.5pt'>The following options are displayed only when the sync type is Archive.</span></u></b></p>
 
 <p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>When the shooting date and time can not be acquired from Exif, a
-confirmation message is displayed</p>
+</span></span>If the date and time cannot be determined by EXIF data, display a
+confirmation message.</p>
 
-<p class=MsoBodyText style='margin-left:21.0pt'>If checked, when the shooting
-date and time can not be acquired from Exif, a confirmation message is
-displayed to the user as to whether or not to use the last update time of the
-file. If you select Cancel as a confirmation message, the file will not be
-archived.</p>
+<p class=MsoBodyText style='margin-left:21.0pt'>If checked, when the shooting date
+and time cannot be acquired from EXIF , a confirmation message is displayed as
+to whether or not use the last modified time of the file instead. If you select
+Cancel in the confirmation dialog, the file will not be archived.</p>
 
 <p class=MsoBodyText style='margin-left:21.0pt'>&nbsp;</p>
 
@@ -441,87 +487,74 @@ archived.</p>
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>To archive the</p>
+</span></span>Archive files ifÅc</p>
 
-<p class=MsoBodyText style='margin-left:21.0pt'>Choose the criteria for
-determining by shooting date the photos you want to archive.</p>
-
-<p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
-style='font-family:Symbol'><img width=11 height=11
-src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Immediate all</p>
-
-<p class=MsoBodyText style='margin-left:42.0pt'>To archive all pictures</p>
+<p class=MsoBodyText style='margin-left:21.0pt'>Choose the time criteria to
+determine which files to archive. Time selection is based on the photo/video
+shooting date, or the last modified time if it is not possible to acquire the
+timestamp from the EXIF header.</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Any date (all)</p>
+
+<p class=MsoBodyText style='margin-left:42.0pt'>Archive all pictures/videos</p>
+
+<p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Older than 7 days</p>
 
-<p class=MsoBodyText style='margin-left:42.0pt'>The shooting date is older than
-the current time by 7 days or more</p>
+<p class=MsoBodyText style='margin-left:42.0pt'>Archive only files with a shooting
+date older than the current time by 7 days or more</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Older than 30 days</p>
 
-<p class=MsoBodyText style='margin-left:42.0pt'>The shooting date is older than
-the current time by 30 days or more</p>
+<p class=MsoBodyText style='margin-left:42.0pt'>Archive only files with a shooting
+date older than the current time by 30 days or more</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Older than 60 days</p>
 
-<p class=MsoBodyText style='margin-left:42.0pt'>The shooting date is older than
-the current time by 60 days or more</p>
+<p class=MsoBodyText style='margin-left:42.0pt'>Archive only files with a shooting
+date older than the current time by 60 days or more</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Older than 90 days</p>
 
-<p class=MsoBodyText style='margin-left:42.0pt'>The shooting date is older than
-the current time by 90 days or more</p>
+<p class=MsoBodyText style='margin-left:42.0pt'>Archive only files with a shooting
+date older than the current time by 90 days or more</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Older than 180 days</p>
 
-<p class=MsoBodyText style='margin-left:42.0pt'>The shooting date is older than
-the current time by 180 days or more</p>
+<p class=MsoBodyText style='margin-left:42.0pt'>Archive only files with a shooting
+date older than the current time by 180 days or more</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span>Older than 1 year</p>
 
-<p class=MsoBodyText style='margin-left:42.0pt'>The shooting date is older than
-the current time by 1 year or more</p>
-
-<p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
-
-<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
-style='font-family:Symbol'><img width=11 height=11
-src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Change the file name and store it in the specified directory when
-archive</p>
-
-<p class=MsoBodyText style='margin-left:21.0pt'>If checked, change the file
-name when archiving. You can attach the date and time and the time in the file
-name &quot;File name template&quot;. You can also create directories and store
-files. Please enable &quot;Save to directory when archiving&quot; in order to
-store in the directory.</p>
+<p class=MsoBodyText style='margin-left:42.0pt'>Archive only files with a shooting
+date older than the current time by 1 year or more</p>
 
 <p class=MsoBodyText>&nbsp;</p>
 
@@ -529,50 +562,63 @@ store in the directory.</p>
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Sequence number</p>
+</span></span>Increment file names by appending [sequence number]</p>
 
-<p class=MsoBodyText style='margin-left:21.0pt'>Add the sequence number to the
-file name when archiving.</p>
-
-<p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
-style='font-family:Symbol'><img width=11 height=11
-src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Do not used</p>
-
-<p class=MsoBodyText style='margin-left:42.0pt'>Do not append sequence number</p>
+<p class=MsoBodyText style='margin-left:21.0pt'>Append the incremental sequence
+number to the file name when archiving.</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Append 3 digits sequence number</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Do not change</p>
+
+<p class=MsoBodyText style='margin-left:42.0pt'>Do not append a sequence number</p>
+
+<p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>3 digits sequence</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt'>Append 001-999</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Append 3 digits sequence number</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>4 digits sequence</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt'>Append 0001-9999</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Append 3 digits sequence number</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>5 digits sequence</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt'>Append 00001-99999</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Append 3 digits sequence number</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>6 digits sequence number</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt'>Append 000001-999999</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Change the name of the file before archiving it in the target
+folder. </p>
+
+<p class=MsoBodyText style='margin-left:21.0pt'>If checked, the file name of
+the archived file will be changed based on your selected criteria. You can append
+the date and time in the file name &quot;File name template&quot;.</p>
 
 <p class=MsoBodyText>&nbsp;</p>
 
@@ -580,52 +626,57 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 page-break-after:avoid'><span style='font-family:Symbol'><img width=11
 height=11 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>File rename template</p>
+</span></span>File name template</p>
 
 <p class=MsoBodyText style='margin-left:21.0pt;page-break-after:avoid'>Enter
-the model of the file to be renamed. Default value is DSC_%DATE%_%TIME%</p>
+the patterns to use to rename the archived files. Default value is DSC_%DATE%_%TIME%</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Original name</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>%Original name%</p>
 
-<p class=MsoBodyText style='margin-left:42.0pt'>To replace original file
-name.(Ex. DSC_0001)</p>
-
-<p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
-style='font-family:Symbol'><img width=11 height=11
-src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Date</p>
-
-<p class=MsoBodyText style='margin-left:42.0pt'>To replace shoot date.(Ex.
-2018-01-01)</p>
+<p class=MsoBodyText style='margin-left:42.0pt'>Will be replaced by original
+file name during archive archiving (Ex. DSC_0001)</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
 style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Time</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>%Date%</p>
 
-<p class=MsoBodyText style='margin-left:42.0pt'>To replace shoot time.(Ex.
-13:01:10)</p>
+<p class=MsoBodyText style='margin-left:42.0pt'>Will be replaced by the shooting
+date.(Ex. 2018-01-01)</p>
+
+<p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>%Time%</p>
+
+<p class=MsoBodyText style='margin-left:42.0pt'>Will be replaced by the
+shooting time.(Ex. 13:01:10)</p>
+
+<p class=MsoBodyText>&nbsp;</p>
 
 <p class=MsoBodyText style='margin-left:21.0pt;page-break-after:avoid'>The last
-line shows the directory and filename actually saved.</p>
+line in the screen displays how your target folder and file name will look like
+once archived.</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
-<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
-page-break-after:avoid'><span style='font-family:Symbol'><img width=11
-height=11 src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_folder_smb.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Store the file in the directory</p>
+</span></span>Create a directory based on the shooting date to store the files.</p>
 
-<p class=MsoBodyText style='margin-left:21.0pt;page-break-after:avoid'>You can
-create and store a directory when archiving. When checked, &quot;Directory name
-template&quot; is displayed.</p>
+<p class=MsoBodyText style='margin-left:21.3pt'>Creates a time stamped directory
+where to store the archived files.</p>
+
+<p class=MsoBodyText style='margin-left:21.0pt;page-break-after:avoid'>When
+checked, the &quot;Directory name template&quot; is displayed.</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -636,38 +687,44 @@ style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
 </span></span>Directory template</p>
 
 <p class=MsoBodyText style='margin-left:21.0pt;page-break-after:avoid'>Enter
-the model of the directory to be created. DIR-% YEAR% -% MONTH% and so on. By
-pressing the button you can enter keywords behind the cursor.</p>
+the patterns to use to rename the directory to be created (exp. DIR-% YEAR% -%
+MONTH% and so on). By pressing the patterns buttons, you can enter keywords
+behind the cursor.</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt;page-break-after:
 avoid'><span style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Year</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>%Year%</p>
 
-<p class=MsoBodyText style='margin-left:42.0pt;page-break-after:avoid'>To
-replace shoot Year.(Ex. 2018)</p>
-
-<p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt;page-break-after:
-avoid'><span style='font-family:Symbol'><img width=11 height=11
-src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Month</p>
-
-<p class=MsoBodyText style='margin-left:42.0pt;page-break-after:avoid'>To
-replace shoot Month(Ex. 01)</p>
+<p class=MsoBodyText style='margin-left:42.0pt;page-break-after:avoid'>Will be
+replaced by the shooting Year. (Ex. 2018)</p>
 
 <p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt;page-break-after:
 avoid'><span style='font-family:Symbol'><img width=11 height=11
 src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Day</p>
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>%Month%</p>
 
-<p class=MsoBodyText style='margin-left:42.0pt;page-break-after:avoid'>To
-replace shoot Day(Ex. 29)</p>
+<p class=MsoBodyText style='margin-left:42.0pt;page-break-after:avoid'>Will be
+replaced by the shooting Month (Ex. 01)</p>
+
+<p class=MsoBodyText style='margin-left:42.0pt;text-indent:-21.0pt;page-break-after:
+avoid'><span style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_EN_folder_smb.files/image002.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>%Day%</p>
+
+<p class=MsoBodyText style='margin-left:42.0pt;page-break-after:avoid'>Will be
+replaced by the shooting Day (Ex. 29)</p>
+
+<p class=MsoNormal style='word-break:break-all'>&nbsp;</p>
 
 <p class=MsoBodyText style='margin-left:21.0pt;page-break-after:avoid'>The last
-line shows the directory and filename actually saved.</p>
+line in the screen displays how your target folder and file name will look like
+once archived.</p>
+
+<p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal>&nbsp;</p>
 

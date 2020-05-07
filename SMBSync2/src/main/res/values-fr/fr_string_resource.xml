@@ -281,8 +281,8 @@
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">Si la source ou la destination sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Tous les réseaux\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">Si la source ou la destination sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Wifi avec IP privée\"?</string>
         <string name="deleted_msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">Si ni la source ni la destination ne sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Même si Wifi éteint\"?</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">Lorsque ZIP est s?lectionn? comme destination, la source doit ?tre situ?e sur le stockage interne. La s?lection de la source a donc ?t? chang?e en stockage interne.</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">La destination ZIP ne peut ?tre sp?cifi?e que pour synchroniser des fichiers situ?s sur le stockage interne. Votre s?lection de la destination a ?t? annul?e.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">Lorsque ZIP est sélectionné comme destination, la source doit être située sur le stockage interne. La sélection de la source a donc été changée en stockage interne.</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">La destination ZIP ne peut être spécifiée que pour synchroniser des fichiers situés sur le stockage interne. Votre sélection de la destination a été annulée.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_directory">Dossier</string>
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">Afficher les dossiers</string>
         <string name="msgs_profile_edit_sync_folder_dlg_folder_type">Type de stockage</string>
@@ -306,10 +306,10 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_use_smb2_negotiation">Utiliser le protocole SMB2</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">Protocole SMB</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">Utiliser SMB V1</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">Utiliser SMB V2(2.01)</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Utiliser SMB V2(2.11)</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Utiliser SMB V2/3(2.12)</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">Utiliser SMB V2/3(2.14)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">Utiliser SMB V2 (2.01)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Utiliser SMB V2 (2.11)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Utiliser SMB V2/3 (2.12)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">Utiliser SMB V2/3 (2.14)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Detection Auto</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">Erreur dans le dossier source. Merci de la corriger.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_target_folder">Erreur dans le dossier destination. Merci de la corriger.</string>
@@ -480,14 +480,14 @@
         <string name="msgs_menu_browse_logfile">Montrer le journal</string>
         <string name="msgs_menu_export">Exporter la configuration</string>
         <string name="msgs_menu_import">Importer la configuration</string>
-        <string name="msgs_menu_log_management">Gestion des fichiers journaux</string>
+        <string name="msgs_menu_log_management">Journalisation</string>
         <string name="msgs_menu_about">A propos</string>
         <string name="msgs_menu_settings">Paramètres</string>
         <string name="msgs_menu_housekeep">Maintenance</string>
         <string name="msgs_menu_kill">Arrêt forcé</string>
         <string name="msgs_menu_add_shortcut">Ajouter un raccourci</string>
         <string name="msgs_menu_list_storage_info">Infos système</string>
-        <string name="msgs_menu_show_battery_optimization_screen">Optimisation de la batterie</string>
+        <string name="msgs_menu_show_battery_optimization_screen">Optimiser la batterie</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archivage annulé par l\'utilisateur]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">La date de capture de l\'image ne peut pas être obtenue depuis l\'entête EXIF. Utiliser la date de mise à jour du fichier image? (Désactiver l\'option \"Confirmer\" pour ne plus afficher ce message)</string>
@@ -715,7 +715,7 @@
         <string name="msgs_sync_folder_archive_output_image">Aperçu du nom des fichiers et dossiers selon votre sélection:</string>
         <string name="msgs_sync_folder_archive_rename_rule">Changer le nom du fichier avant de l\'archiver dans le dossier cible.</string>
         <string name="msgs_sync_folder_archive_seq_number_title">Incrémenter les noms de fichiers</string>
-        <string name="msgs_sync_folder_archive_create_directory">Créer un dossier avec la date d\'archivage pour stocker les fichiers.</string>
+        <string name="msgs_sync_folder_archive_create_directory">Créer un dossier dont le nom comprend la date de capture des photos et y stocker les fichiers archivés.</string>
         <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Heure</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">Nom d\'origine</string>
