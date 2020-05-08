@@ -238,7 +238,7 @@
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">Write to USB Media is not allowed. Press "Allow write to USB Media" to allow writing to USB Media.</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">USB Media is not mounted.</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">UBS media is not available because there is no USB media mount point.</string>
-        <string name="msgs_main_sync_profile_dlg_syncopt_prompt">Select sync option</string>
+        <string name="msgs_main_sync_profile_dlg_syncopt_prompt">Select sync mode</string>
         <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">Warning: A target directory was not specified for this task. Unpredictable deletes or overwrites may occur. Continue?</string>
         <string name="msgs_main_sync_profile_dlg_title_master">Edit master folder</string>
         <string name="msgs_main_sync_profile_dlg_title_target">Edit target folder</string>

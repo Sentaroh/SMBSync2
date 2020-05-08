@@ -238,14 +238,14 @@
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">Accès en écriture au stockage USB non autorisé. Pressez "Autoriser l\'accès au stockage USB".</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">Stockage USB non disponible.</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">Aucun point de montage du stockage USB n\'a été trouvé.</string>
-        <string name="msgs_main_sync_profile_dlg_syncopt_prompt">Choisir une option de synchronisation</string>
+        <string name="msgs_main_sync_profile_dlg_syncopt_prompt">Mode de de synchronisation</string>
         <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">Avertissement: Aucun dossier n\'a été spécifié comme destination. Des suppressions et pertes de données inattendues peuvent survenir. Continuer ?</string>
         <string name="msgs_main_sync_profile_dlg_title_master">Modifier le dossier source</string>
         <string name="msgs_main_sync_profile_dlg_title_target">Modifier le dossier destination</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">Démarrer la synchro selon la connexion Wifi</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Tous les réseaux</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Wifi avec IP privée</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Liste d\'adresse IP</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Liste d\'adresses IP</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">Wifi Sélectionnés</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Même si Wifi éteint</string>
         <string name="msgs_main_sync_select_prof_no_active_profile">Tache de synchronisation non sélectionnée</string>
@@ -295,8 +295,8 @@
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_port">Numéro de port</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_server">Nom du serveur/Adresse IP</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share">Nom du dossier partagé</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">Afficher les dossiers partagés</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">Saisir numéro de port</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">Liste des partages</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">Saisir num. de port</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">Nom d\'utilisateur</string>
         <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">Rechercher les serveurs SMB</string>
         <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">Accès à la carte SD</string>
@@ -315,7 +315,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_target_folder">Erreur dans le dossier destination. Merci de la corriger.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_import_failed_account_name">Le nom d\'utilisateur n\'a pas pu être décrypté lors de l\'importation de la tâche. Vous devez le saisir à nouveau.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_import_failed_account_password">Le mot de passe de l\'utilisateur n\'a pas pu être décrypté lors de l\'importation de la tâche. Vous devez le saisir à nouveau.</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">Utiliser un compte d\'authentification</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_use_user_pass">Saisir un compte utilisateur</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fast">Rapide</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest">Très rapide</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_comp_level_maximum">Maximal</string>
@@ -340,7 +340,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_zip_use_sdcard">Enregistrer le fichier ZIP sur la carte SD.</string>
         <string name="msgs_profile_sync_folder_dlg_confirm_msg_nosave">Avertissement: La configuration de la tâche de synchronisation a été modifiée. Quitter sans sauvegarder ?</string>
         <string name="msgs_profile_sync_task_dlg_active">Synchronisation Auto</string>
-        <string name="msgs_profile_sync_task_dlg_change_master_and_target">Inverser les dossiers source et destination</string>
+        <string name="msgs_profile_sync_task_dlg_change_master_and_target">Inverser la source et destination</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Filtre de dossier non spécifié</string>
         <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">Des caractères invalides ont été supprimés du nom de dossier spécifié (\", :, \\, *, &lt;, &gt; \|)</string>
         <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">Filtre de fichier non spécifié</string>
@@ -360,7 +360,7 @@
         <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">Ajouter l\'adresse IP actuelle</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_edit_title">Modifier l\'adresse IP</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_hint">Adresse IP</string>
-        <string name="msgs_profile_sync_task_dlg_wifi_addr_list">Liste des adresses IP du réseau sans fil</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_list">Liste des Adresses IP</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_title">Modifier l\'adresse IP du réseau sans fil</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_list">Liste des adresses IP du réseau sans fil</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">Adresse IP du réseau sans fil non spécifiée</string>
