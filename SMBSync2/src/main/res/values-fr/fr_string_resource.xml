@@ -299,7 +299,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">Saisir numéro de port</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">Nom d\'utilisateur</string>
         <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">Rechercher les serveurs SMB</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">Autoriser l\'accès à la carte SD</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_select_sdcard">Accès à la carte SD</string>
         <string name="msgs_profile_edit_sync_folder_dlg_select_usb">Autoriser l\'accès au stockage USB</string>
         <string name="msgs_profile_edit_sync_folder_dlg_show_password">Montrer le mot de passe</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">Exiger l\'authentification SMB IPC</string>
@@ -795,11 +795,11 @@
         <string name="settings_security_title">Sécurité</string>
         <string name="settings_security_application_password_title">Mot de Passe de l\'Application</string>
         <string name="settings_security_application_password">settings_application_password</string>
-        <string name="settings_security_application_password_setting_title">Spécifier le niveau de sécurité</string>
+        <string name="settings_security_application_password_setting_title">Niveau de Sécurité</string>
         <string name="settings_security_application_password_created">Mot de passe de l\'application créé</string>
         <string name="settings_security_application_password_not_created">Aucun mot de passe de l\'application défini</string>
         <string name="settings_security_application_password_label_create">Créer un mot de passe</string>
-        <string name="settings_security_application_password_label_remove">Supprimer le mot de passe</string>
+        <string name="settings_security_application_password_label_remove">Effacer le mot de passe</string>
         <string name="settings_security_application_password_label_change">Changer le mot de passe</string>
         <string name="settings_security_application_password_desc_create">Créer un mot de passe pour accéder à l\'application</string>
         <string name="settings_security_application_password_desc_change">Changer le mot de passe de l\'application</string>
@@ -822,7 +822,7 @@
         <string name="settings_device_orientation_portrait_title">Forcer le Mode Portrait</string>
         <string name="settings_dim_screen_on_while_sync">settings_dim_screen_on_while_sync</string>
         <string name="settings_dim_screen_on_while_sync_summary_ena">Maintenir l\'écran allumé si la synchronisation a débuté alors qu\'il  était déjà allumé.</string>
-        <string name="settings_dim_screen_on_while_sync_title">Eviter les Délais de Synchronisation</string>
+        <string name="settings_dim_screen_on_while_sync_title">Eviter le Délai de Synchronisation</string>
         <string name="settings_error_option">settings_error_option</string>
         <string name="settings_error_option_summary_ena">Poursuivre en cas d\'erreur</string>
         <string name="settings_error_option_title">Gestion des Erreurs</string>
@@ -831,13 +831,13 @@
         <string name="settings_exit_clean_title">Quitter Proprement</string>
         <string name="settings_exported_profile_encryption">settings_exported_profile_encryption</string>
         <string name="settings_force_screen_on_while_sync">settings_force_screen_on_while_sync</string>
-        <string name="settings_force_screen_on_while_sync_summary_ena">Quitter la mise en veille et maintenir l\'écran allumé au démarrage de la synchronisation (activer si la sync ne démarre pas ou qu\'elle est interrompue par la mise en veille)</string>
-        <string name="settings_force_screen_on_while_sync_title">Prévention du retard de démarrage de la synchronisation pendant le sommeil</string>
+        <string name="settings_force_screen_on_while_sync_summary_ena">Sortir du mode veille et maintenir l\'écran allumé au démarrage de la synchronisation (activer si la sync ne démarre pas ou qu\'elle est interrompue par la mise en veille)</string>
+        <string name="settings_force_screen_on_while_sync_title">Délai de Sync en Mode Veille</string>
         <string name="settings_main_title">Paramètres</string>
         <string name="settings_media_scanner_option_title">Actualiser la Galerie</string>
         <string name="settings_misc_title">Divers</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
-        <string name="settings_no_compress_file_type_title">Ne pas Compresser ces Types de Fichiers</string>
+        <string name="settings_no_compress_file_type_title">Ne pas Compresser ces Fichiers</string>
         <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
         <string name="settings_notification_message_when_sync_ended_dialog_title">Sélectionner les notifications à afficher</string>
         <string-array name="settings_notification_message_when_sync_ended_list_entries">
@@ -860,10 +860,10 @@
         <string name="settings_other_title">Autre</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">Aucun son de notification par défaut défini.</string>
-        <string name="settings_playback_ringtone_volume_summary">%s%% du volume</string>
-        <string name="settings_playback_ringtone_volume_title">Volume du Son des Notifications</string>
+        <string name="settings_playback_ringtone_volume_summary">%s%% du volume de son</string>
+        <string name="settings_playback_ringtone_volume_title">Volume des Notifications</string>
         <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
-        <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Sélectionner quand le son par défaut des notifications est activé</string>
+        <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Choisir quand le son des notifications est activé</string>
         <string-array name="settings_playback_ringtone_when_sync_ended_list_entries">
             <item>Désactiver le son des notifications</item>
             <item>Pour toutes les tâches terminées</item>
@@ -896,7 +896,7 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Délai de réponse</string>
-        <string name="settings_smb_client_response_timeout_title">Délai de Réponse du Client</string>
+        <string name="settings_smb_client_response_timeout_title">Délai de Réponse du Serveur</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Toujours Crypter les Mots de passe</string>
         <string name="settings_smb_disable_plain_text_passwords_title">Crypter les Mots de passe</string>
@@ -924,16 +924,16 @@
         <string name="settings_smb_use_extended_security_title">Utiliser la Sécurité Etendue</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">Désactiver l\'avertissement indiquant que le dossier de configuration de l\'application est inclus dans la tâche de synchronisation</string>
-        <string name="settings_suppress_warning_app_specific_dir_title">Dossier de Configuration Synchronisé</string>
+        <string name="settings_suppress_warning_app_specific_dir_title">Sync du Dossier de Configuration</string>
         <string name="settings_suppress_warning_location_service_disabled">settings_suppress_warning_location_service_disabled</string>
         <string name="settings_suppress_warning_location_service_enabled_summary_ena">Ne pas afficher un avertissement demandant l\'activation du service de localisation.</string>
-        <string name="settings_suppress_warning_location_service_enabled_title">Avertissement du Service de Localisation</string>
+        <string name="settings_suppress_warning_location_service_enabled_title">Service de Localisation Requis</string>
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">Journal de synchronisation détaillé</string>
         <string name="settings_sync_history_log_title">Historique des Synchronisations</string>
         <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
         <string name="settings_sync_message_use_standard_text_view_summary_ena">Utiliser le processus standard Android</string>
-        <string name="settings_sync_message_use_standard_text_view_title">Traitement du Texte des Messages</string>
+        <string name="settings_sync_message_use_standard_text_view_title">Rendu des Messages de Sync</string>
         <string name="settings_sync_title">Synchronisation</string>
         <string name="settings_ui_title">Interface Utilisateur</string>
         <string name="settings_screen_theme">settings_screen_theme</string>
@@ -950,7 +950,7 @@
             <item>2</item>
         </string-array >
         <string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
-        <string name="settings_vibrate_when_sync_ended_dialog_title">Sélectionner quand la vibration est activée lors des notifications</string>
+        <string name="settings_vibrate_when_sync_ended_dialog_title">Choisir quand la vibration des notification est active</string>
         <string-array name="settings_vibrate_when_sync_ended_list_entries">
             <item>Désactiver la vibration</item>
             <item>Pour toutes les tâches terminées</item>

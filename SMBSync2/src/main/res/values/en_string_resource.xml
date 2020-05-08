@@ -441,7 +441,7 @@
         <string name="msgs_rename_profile">Rename task</string>
         <string name="msgs_save_to_profile_error">Failed to save the sync settings file: %s</string>
         <string name="msgs_select_export_file">Select export destination</string>
-        <string name="msgs_select_import_file">Select import file</string>
+        <string name="msgs_select_import_file">Select file to import</string>
         <string name="msgs_select_local_dir">Select local directory</string>
         <string name="msgs_select_sdcard_dir">Select SDCARD directory</string>
         <string name="msgs_select_usb_dir">Select USB Media directory</string>
@@ -478,7 +478,7 @@
     <!-- Menu -->
         <string name="msgs_menu_sync">Sync</string>
         <string name="msgs_menu_browse_logfile">Show log</string>
-        <string name="msgs_menu_export">Exporter settings</string>
+        <string name="msgs_menu_export">Export settings</string>
         <string name="msgs_menu_import">Import settings</string>
         <string name="msgs_menu_log_management">Manage log files</string>
         <string name="msgs_menu_about">About SMBSync2</string>
@@ -795,7 +795,7 @@
         <string name="settings_security_title">Security</string>
         <string name="settings_security_application_password_title">Application Password</string>
         <string name="settings_security_application_password">settings_application_password</string>
-        <string name="settings_security_application_password_setting_title">Set security level</string>
+        <string name="settings_security_application_password_setting_title">Set Security Level</string>
         <string name="settings_security_application_password_created">Application password has been created.</string>
         <string name="settings_security_application_password_not_created">Application password has not been created yet.</string>
         <string name="settings_security_application_password_label_create">Create Password</string>
@@ -832,12 +832,12 @@
         <string name="settings_exported_profile_encryption">settings_exported_profile_encryption</string>
         <string name="settings_force_screen_on_while_sync">settings_force_screen_on_while_sync</string>
         <string name="settings_force_screen_on_while_sync_summary_ena">Wake up device and keep display on when sync starts (enable if sync doesn\'t start or complete during sleep)</string>
-        <string name="settings_force_screen_on_while_sync_title">Prevention of synchronization start delay during sleep</string>
+        <string name="settings_force_screen_on_while_sync_title">Prevent Sleep Sync Start Delay</string>
         <string name="settings_main_title">Settings</string>
         <string name="settings_media_scanner_option_title">MediaScanner</string>
         <string name="settings_misc_title">Miscellaneous</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
-        <string name="settings_no_compress_file_type_title">Do Not Compress These File Types</string>
+        <string name="settings_no_compress_file_type_title">Don\'t Compress these File Types</string>
         <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
         <string name="settings_notification_message_when_sync_ended_dialog_title">Select notifications to display</string>
         <string-array name="settings_notification_message_when_sync_ended_list_entries">
@@ -882,7 +882,7 @@
         <string name="settings_playback_ringtone_when_sync_ended_summary_success">Play default notification sound for tasks that complete successfully</string>
         <string name="settings_playback_ringtone_when_sync_ended_title">Notifications Sound</string>
         <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
-        <string name="settings_smb_client_response_timeout_dialog_title">Choose response timeout delay (in milliseconds)</string>
+        <string name="settings_smb_client_response_timeout_dialog_title">Choose server connection timeout (in milliseconds)</string>
         <string-array name="settings_smb_client_response_timeout_list_entries">
             <item>30000</item>
             <item>45000</item>
@@ -896,7 +896,7 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Response timeout</string>
-        <string name="settings_smb_client_response_timeout_title">Client Response Timeout</string>
+        <string name="settings_smb_client_response_timeout_title">Server Connection Timeout</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Always Encrypt Passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_title">Encrypt Passwords</string>
@@ -924,20 +924,20 @@
         <string name="settings_smb_use_extended_security_title">Use Extended Security</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">Disable warning when the app settings folder is included in the sync task</string>
-        <string name="settings_suppress_warning_app_specific_dir_title">Settings Directory Synchronization</string>
+        <string name="settings_suppress_warning_app_specific_dir_title">Settings Folder Synchronization</string>
         <string name="settings_suppress_warning_location_service_disabled">settings_suppress_warning_location_service_disabled</string>
         <string name="settings_suppress_warning_location_service_enabled_summary_ena">Disable warning for location service enabling.</string>
         <string name="settings_suppress_warning_location_service_enabled_title">Location Service Warning</string>
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">Keep detailed sync history log</string>
-        <string name="settings_sync_history_log_title">Sync history</string>
+        <string name="settings_sync_history_log_title">Sync History</string>
         <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
         <string name="settings_sync_message_use_standard_text_view_summary_ena">Perform standard Android processing</string>
-        <string name="settings_sync_message_use_standard_text_view_title">Text Processing of Sync Messages</string>
+        <string name="settings_sync_message_use_standard_text_view_title">Rendering of Sync Messages</string>
         <string name="settings_sync_title">Synchronization</string>
         <string name="settings_ui_title">User Interface</string>
         <string name="settings_screen_theme">settings_screen_theme</string>
-        <string name="settings_screen_theme_title">Screen theme</string>
+        <string name="settings_screen_theme_title">Screen Theme</string>
         <string name="settings_screen_theme_dialog_title">Screen theme</string>
         <string-array name="settings_screen_theme_list_entries">
             <item>Standard</item>

@@ -1868,7 +1868,7 @@ public class ActivityMain extends AppCompatActivity {
         final TextView title = (TextView) dialog.findViewById(R.id.about_dialog_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
-        title.setText(getString(R.string.msgs_dlg_title_about) + "(Ver " + SystemInfo.getApplVersionName(mContext) + ")");
+        title.setText(getString(R.string.msgs_dlg_title_about) + " (Ver " + SystemInfo.getApplVersionName(mContext) + ")");
 
         // get our tabHost from the xml
         final TabHost tab_host = (TabHost) dialog.findViewById(R.id.about_tab_host);

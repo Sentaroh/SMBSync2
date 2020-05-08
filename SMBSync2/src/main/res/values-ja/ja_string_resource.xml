@@ -896,7 +896,7 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Response timeout</string>
-        <string name="settings_smb_client_response_timeout_title">Client Response Timeout</string>
+        <string name="settings_smb_client_response_timeout_title">Server Connection Timeout</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Disable Plain Text Passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_title">Disable Plain Text Passwords</string>
