@@ -42,19 +42,19 @@
         <string name="msgs_export_import_pswd_hint_confirm">Confirmer mot de passe</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Les mots de passe saisis ne sont pas identiques.</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync2_Help_EN_task.htm</string>
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_FR_task.htm</string>
         <string name="msgs_help_sync_task_title">Aide de Configuration de Tâche</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_EN_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_FR_folder_internal.htm</string>
         <string name="msgs_help_sync_folder_internal_title">Aide sur le Stockage Interne</string>
-        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_EN_folder_sdcard.htm</string>
+        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_FR_folder_sdcard.htm</string>
         <string name="msgs_help_sync_folder_sdcard_title">Aide sur le Stockage Externe (carte SD)</string>
-        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_EN_folder_usb.htm</string>
+        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_FR_folder_usb.htm</string>
         <string name="msgs_help_sync_folder_usb_title">Aide sur Stockage USB</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_EN_folder_smb.htm</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_FR_folder_smb.htm</string>
         <string name="msgs_help_sync_folder_smb_title">Aide sur Serveur SMB</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_EN_folder_zip.htm</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_FR_folder_zip.htm</string>
         <string name="msgs_help_sync_folder_zip_title">Aide sur Fichier ZIP</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_EN_task_picture.htm</string>
+        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_FR_task_picture.htm</string>
         <string name="msgs_help_sync_task_picture_title">Aide sur Synchronisation de Photos</string>
     <!-- Log management -->
         <string name="msgs_log_management_title">Gestion des fichiers journaux</string>
@@ -832,7 +832,7 @@
         <string name="settings_exported_profile_encryption">settings_exported_profile_encryption</string>
         <string name="settings_force_screen_on_while_sync">settings_force_screen_on_while_sync</string>
         <string name="settings_force_screen_on_while_sync_summary_ena">Quitter la mise en veille et maintenir l\'écran allumé au démarrage de la synchronisation (activer si la sync ne démarre pas ou qu\'elle est interrompue par la mise en veille)</string>
-        <string name="settings_force_screen_on_while_sync_title">Allumer l\'Ecran</string>
+        <string name="settings_force_screen_on_while_sync_title">Prévention du retard de démarrage de la synchronisation pendant le sommeil</string>
         <string name="settings_main_title">Paramètres</string>
         <string name="settings_media_scanner_option_title">Actualiser la Galerie</string>
         <string name="settings_misc_title">Divers</string>

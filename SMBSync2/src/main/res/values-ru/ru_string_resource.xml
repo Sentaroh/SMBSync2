@@ -832,7 +832,7 @@
         <string name="settings_exported_profile_encryption">settings_exported_profile_encryption</string>
         <string name="settings_force_screen_on_while_sync">settings_force_screen_on_while_sync</string>
         <string name="settings_force_screen_on_while_sync_summary_ena">The screen lights up when the sync starts and wakes up</string>
-        <string name="settings_force_screen_on_while_sync_title">Предотвратить задержку начала синхронизации во время сна</string>
+        <string name="settings_force_screen_on_while_sync_title">Предотвращение задержки начала синхронизации во время сна</string>
         <string name="settings_main_title">Настройки</string>
         <string name="settings_media_scanner_option_title">MediaScanner</string>
         <string name="settings_misc_title">Разное</string>
