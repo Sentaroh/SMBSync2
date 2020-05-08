@@ -138,7 +138,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/msgs_sync_folder_archive_seq_number_title"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
                 <Spinner
                     android:id="@+id/edit_sync_folder_dlg_archive_suffix_option"
                     style="?android:attr/spinnerStyle"
@@ -149,7 +155,6 @@
                     android:layout_weight="1"
                     android:minHeight="36dp"
                     android:paddingLeft="5dp" />
-
             </LinearLayout>
 
             <LinearLayout
