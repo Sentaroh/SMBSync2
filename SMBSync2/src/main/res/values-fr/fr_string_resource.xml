@@ -881,6 +881,7 @@
         <string name="settings_playback_ringtone_when_sync_ended_summary_no">Désactiver le son des notifications</string>
         <string name="settings_playback_ringtone_when_sync_ended_summary_success">Son de notification par défaut pour les tâches réussies</string>
         <string name="settings_playback_ringtone_when_sync_ended_title">Son des Notifications</string>
+        <string name="settings_smb_set_default_value_text">Restaurer les valeurs par défaut</string>
         <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
         <string name="settings_smb_client_response_timeout_dialog_title">Sélectionner le délai de réponse (millisecondes)</string>
         <string-array name="settings_smb_client_response_timeout_list_entries">

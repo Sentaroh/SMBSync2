@@ -881,6 +881,7 @@
         <string name="settings_playback_ringtone_when_sync_ended_summary_no">通知音を鳴らさない</string>
         <string name="settings_playback_ringtone_when_sync_ended_summary_success">同期が正常終了した時に通知音を鳴らす</string>
         <string name="settings_playback_ringtone_when_sync_ended_title">通知音</string>
+        <string name="settings_smb_set_default_value_text">デフォルト値に戻す</string>
         <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
         <string name="settings_smb_client_response_timeout_dialog_title">Choose response timeout value(in milliseconds)</string>
         <string-array name="settings_smb_client_response_timeout_list_entries">

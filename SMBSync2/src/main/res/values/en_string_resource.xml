@@ -881,6 +881,7 @@
         <string name="settings_playback_ringtone_when_sync_ended_summary_no">Disable notification sound</string>
         <string name="settings_playback_ringtone_when_sync_ended_summary_success">Play default notification sound for tasks that complete successfully</string>
         <string name="settings_playback_ringtone_when_sync_ended_title">Notifications Sound</string>
+        <string name="settings_smb_set_default_value_text">Restore default values</string>
         <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
         <string name="settings_smb_client_response_timeout_dialog_title">Choose server connection timeout (in milliseconds)</string>
         <string-array name="settings_smb_client_response_timeout_list_entries">
