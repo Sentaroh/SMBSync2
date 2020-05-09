@@ -14,14 +14,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="%YEAR%" />
+            android:text="@string/msg_edit_sync_folder_keyword_insert_year" />
 
         <Button
             android:id="@+id/edit_sync_folder_keyword_insert_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="%MONTH%"
+            android:text="@string/msg_edit_sync_folder_keyword_insert_month"
             android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
         <Button
@@ -29,14 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="%DAY%" />
+            android:text="@string/msg_edit_sync_folder_keyword_insert_day"/>
 
         <Button
             android:id="@+id/edit_sync_folder_keyword_insert_day_of_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="%DAY-OF-YEAR%" />
+            android:text="@string/msg_edit_sync_folder_keyword_insert_day_of_year" />
 
     </LinearLayout>
 

@@ -348,6 +348,10 @@
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">ディレクトリに下記のキーワードを追加する（キーワードは同期実行時に変換されます）</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">ファイル名に下記のキーワードを追加する（キーワードは同期実行時に変換されます）</string>
         <string name="msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword">ターゲットフォルダーのディレクトリーに付加されたキーワード変換に写真/ビデオの撮影日時を使用する</string>
+        <string name="msg_edit_sync_folder_keyword_insert_year">年</string>
+        <string name="msg_edit_sync_folder_keyword_insert_month">月</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day">日</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day_of_year">今年の日</string>
         <string name="msgs_profile_sync_task_dlg_master">マスター フォルダー(同期元)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">同期方式</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">アーカイブ</string>
@@ -881,6 +885,7 @@
         <string name="settings_playback_ringtone_when_sync_ended_summary_no">通知音を鳴らさない</string>
         <string name="settings_playback_ringtone_when_sync_ended_summary_success">同期が正常終了した時に通知音を鳴らす</string>
         <string name="settings_playback_ringtone_when_sync_ended_title">通知音</string>
+        <string name="settings_smb_set_default_value_text">デフォルト値に戻す</string>
         <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
         <string name="settings_smb_client_response_timeout_dialog_title">Choose response timeout value(in milliseconds)</string>
         <string-array name="settings_smb_client_response_timeout_list_entries">
@@ -896,7 +901,7 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Response timeout</string>
-        <string name="settings_smb_client_response_timeout_title">Client Response Timeout</string>
+        <string name="settings_smb_client_response_timeout_title">Server Connection Timeout</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Disable Plain Text Passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_title">Disable Plain Text Passwords</string>

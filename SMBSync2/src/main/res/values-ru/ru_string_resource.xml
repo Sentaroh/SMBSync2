@@ -348,6 +348,10 @@
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Add the following keyword to directory names (The keyword is converted to the date and time that the sync was performed)</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">Add the following keyword to file names (The keyword is converted to the date and time that the sync was performed)</string>
         <string name="msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword">Use the photo/video shooting date and time for keyword conversions attached to the target folder directory.</string>
+        <string name="msg_edit_sync_folder_keyword_insert_year">ГОД</string>
+        <string name="msg_edit_sync_folder_keyword_insert_month">МЕСЯЦ</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day">ДЕНЬ</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day_of_year">ДЕНЬ ГОДА</string>
         <string name="msgs_profile_sync_task_dlg_master">Основная папка (Источник)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">Тип синхронизации</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Архив</string>
@@ -881,6 +885,7 @@
         <string name="settings_playback_ringtone_when_sync_ended_summary_no">Отключить звук уведомления</string>
         <string name="settings_playback_ringtone_when_sync_ended_summary_success">Воспроизвести звук уведомления по умолчанию для задач, которые успешно завершены</string>
         <string name="settings_playback_ringtone_when_sync_ended_title">Звуки уведомлений</string>
+        <string name="settings_smb_set_default_value_text">Восстановление значений по умолчанию</string>
         <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
         <string name="settings_smb_client_response_timeout_dialog_title">Выберите значение времени ожидания ответа (в миллисекундах)</string>
         <string-array name="settings_smb_client_response_timeout_list_entries">

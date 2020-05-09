@@ -3,7 +3,7 @@
     <PreferenceCategory android:title="@string/settings_smb_title">
         <PreferenceScreen
             android:key="settings_smb_set_default_value"
-            android:title="Restore default value"/>
+            android:title="@string/settings_smb_set_default_value_text"/>
         <ListPreference
                 android:key="@string/settings_smb_lm_compatibility"
                 android:title="@string/settings_smb_lm_compatibility_title"
