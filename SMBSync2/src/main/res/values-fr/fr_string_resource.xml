@@ -348,6 +348,10 @@
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Ajouter la date/heure de synchronisation au nom du dossier (le mot-clé sera remplacé par la date et l\'heure de la synchronisation)</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">Ajouter la date/heure de synchronisation au nom du fichier (le mot-clé sera remplacé par la date et l\'heure de la synchronisation))</string>
         <string name="msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword">Ajouter au nom du dossier la date/heure à laquelle la photo/vidéo a été prise (le mot-clé sera remplacé par la date et l\'heure à laquelle la photo/vidéo a été prise)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_year">ANNEE</string>
+        <string name="msg_edit_sync_folder_keyword_insert_month">MOIS</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day">JOUR</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day_of_year">JOUR DE L\'ANNEE</string>
         <string name="msgs_profile_sync_task_dlg_master">Dossier Maitre (Source)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">Mode de sync</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Archiver</string>
@@ -718,7 +722,7 @@
         <string name="msgs_sync_folder_archive_create_directory">Créer un dossier dont le nom comprend la date de capture des photos et y stocker les fichiers archivés.</string>
         <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Heure</string>
-        <string name="msgs_sync_folder_archive_btn_title_original_name">Nom d\'origine</string>
+        <string name="msgs_sync_folder_archive_btn_title_original_name">Nom</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">Si la date et l\'heure ne peuvent pas être déterminées depuis l\'entête EXIF, afficher un message de confirmation.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Le format ZIP ne peut pas être spécifié comme destination pour les tâches de sync de type Archive. Le stockage interne sera utilisé à sa place.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">La requête a été ignorée car les fichiers ZIP ne peuvent pas être utilisés comme destination pour une synchronisation de type Archive.</string>

@@ -348,6 +348,10 @@
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">ディレクトリに下記のキーワードを追加する（キーワードは同期実行時に変換されます）</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">ファイル名に下記のキーワードを追加する（キーワードは同期実行時に変換されます）</string>
         <string name="msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword">ターゲットフォルダーのディレクトリーに付加されたキーワード変換に写真/ビデオの撮影日時を使用する</string>
+        <string name="msg_edit_sync_folder_keyword_insert_year">年</string>
+        <string name="msg_edit_sync_folder_keyword_insert_month">月</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day">日</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day_of_year">今年の日</string>
         <string name="msgs_profile_sync_task_dlg_master">マスター フォルダー(同期元)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">同期方式</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">アーカイブ</string>

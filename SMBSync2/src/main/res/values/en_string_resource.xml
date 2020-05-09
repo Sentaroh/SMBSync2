@@ -348,6 +348,10 @@
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Append the sync time/date to the directory name (the keyword will be replaced by the date and time in which the sync was performed)</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">Append the sync time/date to the file name (the keyword will be replaced by the date and time in which the sync was performed)</string>
         <string name="msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword">Append the photo/video shooting time/date to the directory name (the keyword will be replaced by the date and time in which the photo/video was shot)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_year">YEAR</string>
+        <string name="msg_edit_sync_folder_keyword_insert_month">MONTH</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day">DAY</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day_of_year">DAY OF YEAR</string>
         <string name="msgs_profile_sync_task_dlg_master">Master folder (Source)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">Sync type</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Archive</string>
@@ -718,7 +722,7 @@
         <string name="msgs_sync_folder_archive_create_directory">Create a directory based on the shooting date to store the files.</string>
         <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Time</string>
-        <string name="msgs_sync_folder_archive_btn_title_original_name">Original Name</string>
+        <string name="msgs_sync_folder_archive_btn_title_original_name">Name</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">If the date and time cannot be determined by EXIF data, display a confirmation message.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">ZIP files cannot be used as destinations for Archive sync type.  Internal storage will be used instead.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">The request was ignored because Zip files cannot be used as destinations for Archive sync type.</string>
