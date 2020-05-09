@@ -134,8 +134,9 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="2"
                     android:text="@string/msgs_sync_folder_archive_seq_number_title"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 

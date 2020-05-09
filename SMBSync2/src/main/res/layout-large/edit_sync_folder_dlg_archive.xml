@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <CheckedTextView
                 android:id="@+id/edit_sync_folder_dlg_archive_use_archive"
                 android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
             <!--android:checkMark="?android:attr/listChoiceIndicatorMultiple"-->
             <TextView
                 android:id="@+id/edit_sync_folder_dlg_archive_file_type"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:text="*.gif, *.jpg, *.png, *.mp4, *.mov"

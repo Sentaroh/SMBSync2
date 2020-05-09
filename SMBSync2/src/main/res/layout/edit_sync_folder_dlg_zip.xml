@@ -164,13 +164,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_title_zip_password"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_password"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -178,19 +177,18 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_title_zip_confirm_password"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
             <EditText
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_confirm"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:ems="10"
                 android:inputType="textPassword" />
         </LinearLayout>

@@ -135,7 +135,7 @@
 
             <RadioButton
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_none"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
@@ -143,7 +143,7 @@
 
             <RadioButton
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_standard"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
@@ -151,14 +151,14 @@
 
             <RadioButton
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_aes128"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128" />
 
             <RadioButton
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_aes256"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256" />
