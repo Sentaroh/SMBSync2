@@ -715,10 +715,10 @@
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">Options d\'Archivage</string>
         <string name="msgs_sync_folder_archive_file_type">Seuls les fichiers avec les extensions suivantes seront archivés:</string>
-        <string name="msgs_sync_folder_archive_retention_period">Archiver les fichiers si:</string>
+        <string name="msgs_sync_folder_archive_retention_period">Archiver les fichiers s\'ils sont plus ancien que:</string>
         <string name="msgs_sync_folder_archive_output_image">Aperçu du nom des fichiers et dossiers selon votre sélection:</string>
         <string name="msgs_sync_folder_archive_rename_rule">Changer le nom du fichier avant de l\'archiver dans le dossier cible.</string>
-        <string name="msgs_sync_folder_archive_seq_number_title">Incrémenter les noms de fichiers</string>
+        <string name="msgs_sync_folder_archive_seq_number_title">Incrémenter les noms de fichiers par une séquence de</string>
         <string name="msgs_sync_folder_archive_create_directory">Créer un dossier dont le nom comprend la date de capture des photos et y stocker les fichiers archivés.</string>
         <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Heure</string>
@@ -737,12 +737,12 @@
         <string name="msgs_sync_folder_archive_suffix_seq_digit_6">6 chiffres (000001-999999)</string>
         <string name="msgs_sync_folder_archive_period_prompt_title">Sélectionner les photos à archiver</string>
         <string name="msgs_sync_folder_archive_period_0_days">Toutes les dates</string>
-        <string name="msgs_sync_folder_archive_period_7_days">Plus ancien que 7 jours</string>
-        <string name="msgs_sync_folder_archive_period_30_days">Plus ancien que 30 jours</string>
-        <string name="msgs_sync_folder_archive_period_60_days">Plus ancien que 60 jours</string>
-        <string name="msgs_sync_folder_archive_period_90_days">Plus ancien que 90 jours</string>
-        <string name="msgs_sync_folder_archive_period_180_days">Plus ancien que 180 jours</string>
-        <string name="msgs_sync_folder_archive_period_1_years">Plus ancien que 1 année</string>
+        <string name="msgs_sync_folder_archive_period_7_days">7 jours</string>
+        <string name="msgs_sync_folder_archive_period_30_days">30 jours</string>
+        <string name="msgs_sync_folder_archive_period_60_days">60 jours</string>
+        <string name="msgs_sync_folder_archive_period_90_days">90 jours</string>
+        <string name="msgs_sync_folder_archive_period_180_days">180 jours</string>
+        <string name="msgs_sync_folder_archive_period_1_years">1 année</string>
     <!-- string -->
         <string name="app_name">SMBSync2</string>
         <string name="smbsync_main_title">SMBSync2</string>

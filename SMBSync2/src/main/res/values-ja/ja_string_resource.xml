@@ -715,7 +715,7 @@
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">アーカイブオプション</string>
         <string name="msgs_sync_folder_archive_file_type">アーカイブするファイル拡張子:</string>
-        <string name="msgs_sync_folder_archive_retention_period">アーカイブする対象</string>
+        <string name="msgs_sync_folder_archive_retention_period">ファイルが古い場合はアーカイブする</string>
         <string name="msgs_sync_folder_archive_output_image">下記は保存されるディレクトリーとファイル名(日時は撮影時のものではありまん)</string>
         <string name="msgs_sync_folder_archive_rename_rule">アーカイブする際にファイル名の変更および格納するディレクトリーを作成する</string>
         <string name="msgs_sync_folder_archive_seq_number_title">ファイル名の順序番号</string>
@@ -737,12 +737,12 @@
         <string name="msgs_sync_folder_archive_suffix_seq_digit_6">6桁の番号を追加(000001-999999)</string>
         <string name="msgs_sync_folder_archive_period_prompt_title">写真のアーカイブ対象日時の選択</string>
         <string name="msgs_sync_folder_archive_period_0_days">撮影日に関係なく</string>
-        <string name="msgs_sync_folder_archive_period_7_days">撮影日が7日以上古い</string>
-        <string name="msgs_sync_folder_archive_period_30_days">撮影日が30日以上古い</string>
-        <string name="msgs_sync_folder_archive_period_60_days">撮影日が60日以上古い</string>
-        <string name="msgs_sync_folder_archive_period_90_days">撮影日が90日以上古い</string>
-        <string name="msgs_sync_folder_archive_period_180_days">撮影日が180日以上古い</string>
-        <string name="msgs_sync_folder_archive_period_1_years">撮影日が1年以上古い</string>
+        <string name="msgs_sync_folder_archive_period_7_days">7日</string>
+        <string name="msgs_sync_folder_archive_period_30_days">30日</string>
+        <string name="msgs_sync_folder_archive_period_60_days">60日</string>
+        <string name="msgs_sync_folder_archive_period_90_days">90日</string>
+        <string name="msgs_sync_folder_archive_period_180_days">180日</string>
+        <string name="msgs_sync_folder_archive_period_1_years">1年</string>
     <!-- string -->
         <string name="app_name">SMBSync2</string>
         <string name="smbsync_main_title">SMBSync2</string>

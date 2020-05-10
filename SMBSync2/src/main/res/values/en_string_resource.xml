@@ -715,10 +715,10 @@
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">Archive Options</string>
         <string name="msgs_sync_folder_archive_file_type">Only files with following extensions will be archived:</string>
-        <string name="msgs_sync_folder_archive_retention_period">Archive files if:</string>
+        <string name="msgs_sync_folder_archive_retention_period">Archive files if they are older than:</string>
         <string name="msgs_sync_folder_archive_output_image">Preview sample of file and directory names based on your selection:</string>
         <string name="msgs_sync_folder_archive_rename_rule">Change the name of the file before archiving it in the target folder.</string>
-        <string name="msgs_sync_folder_archive_seq_number_title">Increment file names by appending</string>
+        <string name="msgs_sync_folder_archive_seq_number_title">Increment file names by adding a sequence of</string>
         <string name="msgs_sync_folder_archive_create_directory">Create a directory based on the shooting date to store the files.</string>
         <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Time</string>
@@ -731,18 +731,18 @@
         <string name="msgs_sync_folder_archive_btn_title_day">Day</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_prompt_title">Select seq number to append</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_0">Do not change</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">3 digit sequence (001-999)</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_4">4 digit sequence (0001-9999)</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_5">5 digit sequence (00001-99999)</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_6">6 digit sequence (000001-999999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">3 digits (001-999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_4">4 digits (0001-9999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_5">5 digits (00001-99999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_6">6 digits (000001-999999)</string>
         <string name="msgs_sync_folder_archive_period_prompt_title">Select photos to archive</string>
         <string name="msgs_sync_folder_archive_period_0_days">Any date (All)</string>
-        <string name="msgs_sync_folder_archive_period_7_days">Older than 7 days</string>
-        <string name="msgs_sync_folder_archive_period_30_days">Older than 30 days</string>
-        <string name="msgs_sync_folder_archive_period_60_days">Older than 60 days</string>
-        <string name="msgs_sync_folder_archive_period_90_days">Older than 90 days</string>
-        <string name="msgs_sync_folder_archive_period_180_days">Older than 180 days</string>
-        <string name="msgs_sync_folder_archive_period_1_years">Older than 1 year</string>
+        <string name="msgs_sync_folder_archive_period_7_days">7 days</string>
+        <string name="msgs_sync_folder_archive_period_30_days">30 days</string>
+        <string name="msgs_sync_folder_archive_period_60_days">60 days</string>
+        <string name="msgs_sync_folder_archive_period_90_days">90 days</string>
+        <string name="msgs_sync_folder_archive_period_180_days">180 days</string>
+        <string name="msgs_sync_folder_archive_period_1_years">1 year</string>
     <!-- string -->
         <string name="app_name">SMBSync2</string>
         <string name="smbsync_main_title">SMBSync2</string>

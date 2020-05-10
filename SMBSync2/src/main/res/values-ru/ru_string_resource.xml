@@ -715,10 +715,10 @@
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">Вариант архива</string>
         <string name="msgs_sync_folder_archive_file_type">Расширение файла архива:</string>
-        <string name="msgs_sync_folder_archive_retention_period">Архивировать</string>
+        <string name="msgs_sync_folder_archive_retention_period">Архивные файлы, если они старше чем:</string>
         <string name="msgs_sync_folder_archive_output_image">Сохраненные файлы и каталоги (указанная дата / время не являются датой / временем захвата изображения)</string>
         <string name="msgs_sync_folder_archive_rename_rule">Измените имя файла и сохраните его в указанном каталоге при архивировании</string>
-        <string name="msgs_sync_folder_archive_seq_number_title">Порядковый номер</string>
+        <string name="msgs_sync_folder_archive_seq_number_title">Увеличьте имена файлов, добавив последовательность</string>
         <string name="msgs_sync_folder_archive_create_directory">Создайте каталог на основе даты, взятой при архивировании, и сохраните файл.</string>
         <string name="msgs_sync_folder_archive_btn_title_date">Дата</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Время</string>
@@ -731,18 +731,18 @@
         <string name="msgs_sync_folder_archive_btn_title_day">День</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_prompt_title">Выберите суффикс следующий диапазон номеров</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_0">Не использовать</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">Добавить трехзначный порядковый номер (001-999)</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_4">Добавить 4-значный порядковый номер (0001-9999)</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_5">Добавить 5-значный порядковый номер (00001-99999)</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_6">Добавить 6-значный порядковый номер (000001-999999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">3 цифры (001-999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_4">4 цифры (0001-9999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_5">5 цифры (00001-99999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_6">6 цифры (000001-999999)</string>
         <string name="msgs_sync_folder_archive_period_prompt_title">Выберите фотографии для архивирования</string>
         <string name="msgs_sync_folder_archive_period_0_days">Сразу все</string>
-        <string name="msgs_sync_folder_archive_period_7_days">Старше 7 дней</string>
-        <string name="msgs_sync_folder_archive_period_30_days">Старше 30 дней</string>
-        <string name="msgs_sync_folder_archive_period_60_days">Старше 60 дней</string>
-        <string name="msgs_sync_folder_archive_period_90_days">Старше 90 дней</string>
-        <string name="msgs_sync_folder_archive_period_180_days">Старше 180 дней</string>
-        <string name="msgs_sync_folder_archive_period_1_years">Старше 1 года</string>
+        <string name="msgs_sync_folder_archive_period_7_days">7 дней</string>
+        <string name="msgs_sync_folder_archive_period_30_days">30 дней</string>
+        <string name="msgs_sync_folder_archive_period_60_days">60 дней</string>
+        <string name="msgs_sync_folder_archive_period_90_days">90 дней</string>
+        <string name="msgs_sync_folder_archive_period_180_days">180 дней</string>
+        <string name="msgs_sync_folder_archive_period_1_years">1 года</string>
     <!-- string -->
         <string name="app_name">SMBSync2</string>
         <string name="smbsync_main_title">SMBSync2</string>
