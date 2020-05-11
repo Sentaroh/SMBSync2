@@ -89,6 +89,7 @@
                         style="?android:attr/spinnerStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:minHeight="40dp"
                         android:paddingLeft="5dp"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -128,6 +129,7 @@
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
 		        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
 		        android:gravity="center_vertical"
 		        android:text="@string/msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile" 
@@ -186,6 +188,7 @@
                         android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:orientation="horizontal" >
 
                         <RadioButton

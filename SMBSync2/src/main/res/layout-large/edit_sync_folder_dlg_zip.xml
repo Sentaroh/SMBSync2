@@ -96,8 +96,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_gravity="center"
-            android:gravity="center"
             android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_comp_level_title"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -105,10 +105,11 @@
             android:id="@+id/edit_sync_folder_dlg_zip_comp_level"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:minHeight="36dp"
             android:paddingLeft="5dp"
             android:layout_weight="1"
-            android:layout_gravity="clip_vertical"
+            android:layout_gravity="center"
             android:layout_marginLeft="5dp"
              />
 
@@ -141,6 +142,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="top"
                 android:checked="true"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_none" />
 
@@ -149,6 +151,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginBottom="10dp"
+                android:gravity="top"
                 android:checked="true"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto" />
 
@@ -157,6 +161,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="top"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128" />
 
             <RadioButton
@@ -164,6 +169,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="top"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256" />
         </RadioGroup>
 
@@ -172,14 +178,15 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.8"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_title_zip_password"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_password"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -187,21 +194,24 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0.8"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_title_zip_confirm_password"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
             <EditText
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_confirm"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPassword" />
         </LinearLayout>
+
     </LinearLayout>
     
 </LinearLayout>

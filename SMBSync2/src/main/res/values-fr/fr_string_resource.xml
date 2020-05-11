@@ -330,7 +330,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256">AES 256 Bit</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_none">Aucune</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_title">Méthode de cryptage</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto">ZipCrypto (compatible zip)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto">Zip Compatible</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_filelist">Afficher les fichiers</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_filename">Fichier Zip</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_select_file_title">Sélectionner le fichier ZIP</string>

@@ -83,6 +83,7 @@
         android:id="@+id/scheduler_main_dlg_ll_exec_last_day_of_the_month"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="center_vertical"
         android:text="@string/msgs_scheduler_main_last_day_of_the_month"
@@ -91,6 +92,7 @@
         android:id="@+id/scheduler_main_dlg_exec_day_waring"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="@string/msgs_scheduler_main_last_day_of_the_month_warning"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
