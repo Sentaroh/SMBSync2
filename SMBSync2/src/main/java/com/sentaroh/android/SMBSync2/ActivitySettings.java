@@ -149,8 +149,8 @@ public class ActivitySettings extends PreferenceActivity {
 
     public static boolean isTablet(Context context, CommonUtilities cu) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        final int pixels = Math.min(metrics.heightPixels, metrics.widthPixels);
-        boolean sz_mp=pixels >= 1600;
+        final float x_px = (float) Math.min(metrics.heightPixels, metrics.widthPixels);
+        boolean sz_mp = (x_px/metrics.density) >= 540;
         int orientation = context.getResources().getConfiguration().orientation;
         boolean sc_or= orientation == Configuration.ORIENTATION_LANDSCAPE;
 //        cu.addDebugMsg(1, "I", "orientation="+orientation+", density="+metrics.density+", x_dpi="+metrics.xdpi+", y_dpi="+metrics.ydpi+
