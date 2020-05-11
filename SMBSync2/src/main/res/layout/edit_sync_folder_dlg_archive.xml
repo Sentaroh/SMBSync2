@@ -52,10 +52,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/msgs_sync_folder_archive_retention_period"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -63,11 +63,10 @@
             <Spinner
                 android:id="@+id/edit_sync_folder_dlg_archive_retention_period"
                 style="?android:attr/spinnerStyle"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
                 android:minHeight="36dp"
                 android:paddingLeft="5dp" />
 
@@ -131,23 +130,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
                     android:text="@string/msgs_sync_folder_archive_seq_number_title"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <Spinner
                     android:id="@+id/edit_sync_folder_dlg_archive_suffix_option"
                     style="?android:attr/spinnerStyle"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
                     android:minHeight="36dp"
                     android:paddingLeft="5dp" />
 
