@@ -143,17 +143,18 @@ public class ActivitySettings extends PreferenceActivity {
         mUtil = new CommonUtilities(mPrefActivity, "SettingsActivity", mGp, null);
         if (mGp.settingDebugLevel > 0)
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-        return isTablet(mContext);
+        return isTablet(mContext, mUtil);
 
     }
 
-    public static boolean isTablet(Context context) {
+    public static boolean isTablet(Context context, CommonUtilities cu) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         final int pixels = Math.min(metrics.heightPixels, metrics.widthPixels);
-        boolean sz_mp=pixels >= 1200;
+        boolean sz_mp=pixels >= 1600;
         int orientation = context.getResources().getConfiguration().orientation;
         boolean sc_or= orientation == Configuration.ORIENTATION_LANDSCAPE;
-
+//        cu.addDebugMsg(1, "I", "orientation="+orientation+", density="+metrics.density+", x_dpi="+metrics.xdpi+", y_dpi="+metrics.ydpi+
+//                ", densityDpi="+metrics.densityDpi+", heightPixels="+metrics.heightPixels+", widthPixels="+metrics.widthPixels+", sz_mp="+sz_mp+", sc_or="+sc_or);
         return sz_mp||sc_or;
     }
 
