@@ -482,6 +482,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
                         android:text="@string/msgs_profile_sync_task_sync_option_allowance_last_mod_time"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -535,6 +536,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginLeft="5dp"
                             android:layout_gravity="center_vertical"
                             android:text="@string/msgs_profile_sync_task_sync_option_offset_of_dst_time_value"
                             android:textAppearance="?android:attr/textAppearanceMedium" />

@@ -72,12 +72,12 @@
                 android:layout_marginTop="5dp" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="5dp"
-                    android:gravity="center"
+                    android:layout_weight="0.4"
                     android:text="@string/msgs_profile_edit_sync_folder_dlg_folder_type"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     tools:ignore="HardcodedText,RtlHardcoded" />

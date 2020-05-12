@@ -636,7 +636,7 @@
         <string name="msgs_scheduler_main_spinner_sched_minutes_prompt">分の選択</string>
         <string name="msgs_scheduler_info_last_day_of_the_month">月末日</string>
         <string name="msgs_scheduler_main_last_day_of_the_month">毎月最後の日に同期する</string>
-        <string name="msgs_scheduler_main_last_day_of_the_month_warning">29日から31日を指定すると実行する月によりスケジュールされない場合があります。必ず月末日に輔中るするには「毎月最後の日にスケジュールする」にチェックしてください。</string>
+        <string name="msgs_scheduler_main_last_day_of_the_month_warning">29日から31日を指定すると実行する月によりスケジュールされない場合があります。必ず月末日に実行するには「毎月最後の日にスケジュールする」にチェックしてください。</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">同期タスクリスト</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">自動同期タスクだけを同期する</string>
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">同期リストの編集ボタンを押して、同期するプロファイルを指定してください。</string>
