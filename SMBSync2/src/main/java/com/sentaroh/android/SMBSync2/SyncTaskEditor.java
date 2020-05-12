@@ -467,7 +467,7 @@ public class SyncTaskEditor extends DialogFragment {
                         CommonDialog.setViewEnabled(getActivity(), spinnerSyncOption, true);
                         CommonDialog.setViewEnabled(getActivity(), spinnerSyncWifiStatus, true);
                         CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, true);
-                        mDisableSpinnerSelected=true;
+                        mDisableSpinnerSelected=false;
                     }
                 }, 500);
             }
