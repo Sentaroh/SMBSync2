@@ -158,7 +158,7 @@ public class ActivitySettings extends PreferenceActivity {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         final float x_px = (float) Math.min(metrics.heightPixels, metrics.widthPixels);
         boolean sz_mp = (x_px/metrics.density) >= multiPaneDP;
-//        int orientation = context.getResources().getConfiguration().orientation;
+        int orientation = context.getResources().getConfiguration().orientation;
 //        boolean sc_or= orientation == Configuration.ORIENTATION_LANDSCAPE;
 //        cu.addDebugMsg(1, "I", "orientation="+orientation+", density="+metrics.density+", x_dpi="+metrics.xdpi+", y_dpi="+metrics.ydpi+
 //                ", densityDpi="+metrics.densityDpi+", heightPixels="+metrics.heightPixels+", widthPixels="+metrics.widthPixels+", sz_mp="+sz_mp+", sc_or="+sc_or);
