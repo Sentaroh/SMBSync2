@@ -119,6 +119,8 @@ public class SyncTaskEditor extends DialogFragment {
 
     private FragmentManager mFragMgr = null;
 
+    private boolean mDisableSpinnerSelected=false;
+
     public static SyncTaskEditor newInstance() {
         SyncTaskEditor frag = new SyncTaskEditor();
         Bundle bundle = new Bundle();
@@ -410,6 +412,8 @@ public class SyncTaskEditor extends DialogFragment {
         hndl1.postDelayed(new Runnable() {
             @Override
             public void run() {
+                mDisableSpinnerSelected=true;
+
                 et_sync_main_task_name.setText(sv.prof_name_et);
                 ctv_auto.setChecked(sv.cb_active);
                 CommonDialog.setViewEnabled(getActivity(), spinnerSyncOption, false);
@@ -463,8 +467,9 @@ public class SyncTaskEditor extends DialogFragment {
                         CommonDialog.setViewEnabled(getActivity(), spinnerSyncOption, true);
                         CommonDialog.setViewEnabled(getActivity(), spinnerSyncWifiStatus, true);
                         CommonDialog.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, true);
+                        mDisableSpinnerSelected=true;
                     }
-                }, 50);
+                }, 500);
             }
         }, 50);
     }
@@ -3255,7 +3260,7 @@ public class SyncTaskEditor extends DialogFragment {
         spinnerTwoWaySyncConflictRule.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                if (!mDisableSpinnerSelected) checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
 
             @Override
@@ -3278,7 +3283,7 @@ public class SyncTaskEditor extends DialogFragment {
                     }
 
                 }
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                if (!mDisableSpinnerSelected) checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
 
             @Override
@@ -3384,7 +3389,7 @@ public class SyncTaskEditor extends DialogFragment {
                     ll_wifi_wl_ap_view.setVisibility(Button.GONE);
                     ll_wifi_wl_address_view.setVisibility(Button.VISIBLE);
                 }
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                if (!mDisableSpinnerSelected) checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
 
             @Override
@@ -3715,7 +3720,7 @@ public class SyncTaskEditor extends DialogFragment {
         spinnerSyncDstOffsetValue.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                if (!mDisableSpinnerSelected) checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
 
             @Override
@@ -3725,7 +3730,7 @@ public class SyncTaskEditor extends DialogFragment {
         spinnerSyncDiffTimeValue.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                if (!mDisableSpinnerSelected) checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
 
             @Override
