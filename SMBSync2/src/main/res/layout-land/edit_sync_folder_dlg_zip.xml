@@ -112,57 +112,39 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_title"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-	
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_title"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/edit_sync_folder_dlg_zip_enc_method"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:minHeight="36dp"
+            android:paddingLeft="5dp"
+            android:layout_gravity="clip_vertical"
+            />
+
+    </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/edit_sync_folder_dlg_zip_enc_password_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="5dp"
         android:orientation="vertical" >
-
-        <RadioGroup
-            android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_none"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_none" />
-
-            <RadioButton
-                android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_standard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto" />
-
-            <RadioButton
-                android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_aes128"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128" />
-
-            <RadioButton
-                android:id="@+id/edit_sync_folder_dlg_zip_enc_type_rb_aes256"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256" />
-        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"

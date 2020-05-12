@@ -329,6 +329,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128">AES128ビット</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256">AES256ビット</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_none">無し</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_select_msg">暗号化方式の選択</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_title">暗号化</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto">ZIP2.0互換</string>
         <string name="msgs_profile_edit_sync_folder_dlg_zip_filelist">ファイル一覧</string>

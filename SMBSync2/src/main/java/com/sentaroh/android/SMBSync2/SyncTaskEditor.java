@@ -29,6 +29,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -90,6 +91,8 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import it.sephiroth.android.library.easing.Linear;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
@@ -1669,44 +1672,35 @@ public class SyncTaskEditor extends DialogFragment {
 
         final Spinner sp_comp_level = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_comp_level);
         setSpinnerSyncFolderZipCompressionLevel(sp_comp_level, sfev.zip_comp_level);
-        final RadioGroup rg_zip_enc_type = (RadioGroup) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rg);
-        final RadioButton rb_zip_enc_none = (RadioButton) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_none);
-        final RadioButton rb_zip_enc_standard = (RadioButton) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_standard);
-        final RadioButton rb_zip_enc_aes128 = (RadioButton) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_aes128);
-        final RadioButton rb_zip_enc_aes256 = (RadioButton) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_aes256);
+
+        final Spinner sp_zip_enc_method=(Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_method);
+        setSpinnerSyncFolderZipEncryptMethod(sp_zip_enc_method, sfev.zip_enc_method);
+        final LinearLayout ll_zip_password_view=(LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password_view);
         final EditText et_zip_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
 //        final Button btn_zip_select_sdcard = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_select_document_tree);
 
 
         if (sfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
-            rb_zip_enc_none.setChecked(true);
-            et_zip_pswd.setVisibility(EditText.GONE);
-            et_zip_conf_pswd.setVisibility(EditText.GONE);
+            ll_zip_password_view.setVisibility(LinearLayout.GONE);
         } else {
-            if (sfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD))
-                rb_zip_enc_standard.setChecked(true);
-            else if (sfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128))
-                rb_zip_enc_aes128.setChecked(true);
-            else if (sfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256))
-                rb_zip_enc_aes256.setChecked(true);
-            et_zip_pswd.setVisibility(EditText.VISIBLE);
-            et_zip_conf_pswd.setVisibility(EditText.VISIBLE);
+            ll_zip_password_view.setVisibility(LinearLayout.VISIBLE);
         }
         et_zip_pswd.setText(sfev.zip_file_password);
         et_zip_conf_pswd.setText(sfev.zip_file_password);
-        rg_zip_enc_type.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        sp_zip_enc_method.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == rb_zip_enc_none.getId()) {
-                    et_zip_pswd.setVisibility(EditText.GONE);
-                    et_zip_conf_pswd.setVisibility(EditText.GONE);
-                } else {
-                    et_zip_pswd.setVisibility(EditText.VISIBLE);
-                    et_zip_conf_pswd.setVisibility(EditText.VISIBLE);
-                }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String zip_enc_method=(String)sp_zip_enc_method.getSelectedItem();
+                if (!zip_enc_method.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_none)))
+                    ll_zip_password_view.setVisibility(LinearLayout.VISIBLE);
+                else ll_zip_password_view.setVisibility(LinearLayout.GONE);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
                 checkSyncFolderValidation(dialog, sfev);
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         btn_sdcard_select_sdcard.setOnClickListener(new OnClickListener() {
@@ -1854,6 +1848,17 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
 
+    private void fixScreenOrientation() {
+        int orientation = mContext.getResources().getConfiguration().orientation;
+        if (!mGp.settingFixDeviceOrientationToPortrait)
+            getActivity().setRequestedOrientation(orientation);
+    }
+
+    private void unfixScreenOrientation() {
+        if (!mGp.settingFixDeviceOrientationToPortrait)
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+
     private void editSyncFolder(SyncTaskItem sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
         // カスタムダイアログの生成
         final Dialog dialog = new Dialog(this.getActivity(), mGp.applicationTheme);
@@ -1946,6 +1951,7 @@ public class SyncTaskEditor extends DialogFragment {
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
+                            unfixScreenOrientation();
                             dialog.dismiss();
                         }
                         @Override
@@ -1955,6 +1961,7 @@ public class SyncTaskEditor extends DialogFragment {
                             mContext.getString(R.string.msgs_schedule_confirm_title_nosave),
                             mContext.getString(R.string.msgs_profile_sync_folder_dlg_confirm_msg_nosave), ntfy);
                 } else {
+                    unfixScreenOrientation();
                     ntfy.notifyToListener(false, null);
                     dialog.dismiss();
                 }
@@ -2031,11 +2038,7 @@ public class SyncTaskEditor extends DialogFragment {
         final TextView tv_zip_dir = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_dir_name);
         final EditText et_zip_file = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_name);
         final Spinner sp_comp_level = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_comp_level);
-        final RadioGroup rg_zip_enc_type = (RadioGroup) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rg);
-        final RadioButton rb_zip_enc_none = (RadioButton) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_none);
-        final RadioButton rb_zip_enc_standard = (RadioButton) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_standard);
-        final RadioButton rb_zip_enc_aes128 = (RadioButton) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_aes128);
-        final RadioButton rb_zip_enc_aes256 = (RadioButton) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_aes256);
+        final Spinner sp_zip_enc_method=(Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_method);
         final EditText et_zip_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
 
@@ -2071,14 +2074,15 @@ public class SyncTaskEditor extends DialogFragment {
             else if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_maximum))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_MAXIMUM;
             else if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_ultra))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_ULTRA;
 
-            if (rb_zip_enc_none.isChecked()) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE;
-            else if (rb_zip_enc_standard.isChecked()) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD;
-            else if (rb_zip_enc_aes128.isChecked()) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128;
-            else if (rb_zip_enc_aes256.isChecked()) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256;
+            String zip_enc_method = sp_zip_enc_method.getSelectedItem().toString();
+            if (zip_enc_method.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_none))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE;
+            else if (zip_enc_method.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD;
+            else if (zip_enc_method.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128;
+            else if (zip_enc_method.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256;
 
             if (tv_zip_dir.getText().toString().trim().equals("/")) nsfev.zip_file_name="/"+et_zip_file.getText().toString().trim();
             else nsfev.zip_file_name=tv_zip_dir.getText().toString().trim()+"/"+et_zip_file.getText().toString().trim();
-            if (!rb_zip_enc_none.isChecked()) {
+            if (!nsfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
                 nsfev.zip_file_password = et_zip_pswd.getText().toString();
             } else {
                 nsfev.zip_file_password = "";
@@ -2470,10 +2474,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctv_zip_file_save_sdcard = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_use_sdcard);
 //		final Button btn_zip_select_sdcard = (Button)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_select_document_tree);
 //		final RadioGroup rg_zip_enc_type = (RadioGroup)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rg);
-        final RadioButton rb_zip_enc_none = (RadioButton) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_none);
-//		final RadioButton rb_zip_enc_standard = (RadioButton)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_standard);
-//		final RadioButton rb_zip_enc_aes128 = (RadioButton)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_aes128);
-//		final RadioButton rb_zip_enc_aes256 = (RadioButton)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_type_rb_aes256);
+        final Spinner sp_zip_enc_method=(Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_method);
         final EditText et_zip_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
 
@@ -2571,7 +2572,8 @@ public class SyncTaskEditor extends DialogFragment {
             }
 
             if (et_sync_folder_zip_file_name.getText().length() > 0) {
-                if (rb_zip_enc_none.isChecked()) {
+                String zip_enc_method=(String)sp_zip_enc_method.getSelectedItem();
+                if (zip_enc_method.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_none))) {
                     result = true;
                 } else {
                     if (et_zip_pswd.getText().length() > 0) {
@@ -2930,6 +2932,28 @@ public class SyncTaskEditor extends DialogFragment {
         else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMP_LEVEL_NORMAL)) sel = 2;
         else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMP_LEVEL_MAXIMUM)) sel = 3;
         else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMP_LEVEL_ULTRA)) sel = 4;
+
+        spinner.setSelection(sel);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setSpinnerSyncFolderZipEncryptMethod(Spinner spinner, String cv) {
+        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
+        final CustomSpinnerAdapter adapter =
+                new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        spinner.setPrompt(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_select_msg));
+        spinner.setAdapter(adapter);
+        adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_none));
+        adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_zip_crypto));
+        adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128));
+        adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256));
+
+        int sel = 0;
+        if (cv.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) sel = 0;
+        else if (cv.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD)) sel = 1;
+        else if (cv.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128)) sel = 2;
+        else if (cv.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256)) sel = 3;
 
         spinner.setSelection(sel);
         adapter.notifyDataSetChanged();
@@ -3864,6 +3888,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
+                        unfixScreenOrientation();
                         SyncFolderEditValue nsfev = (SyncFolderEditValue) o[0];
                         nsfev.folder_master = true;
                         String prev_master_folder_type = n_sti.getMasterFolderType();
@@ -3932,6 +3957,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
+                        unfixScreenOrientation();
                         mGp.safMgr.loadSafFile();
                         master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                     }
@@ -3960,6 +3986,7 @@ public class SyncTaskEditor extends DialogFragment {
                     sfev.folder_remote_use_pswd=false;
                 }
                 sfev.folder_error_code=n_sti.getMasterFolderError();
+                fixScreenOrientation();
                 editSyncFolder(n_sti, sfev, ntfy);
             }
         });
@@ -4015,6 +4042,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
+                        unfixScreenOrientation();
                         String prev_target_folder_type = n_sti.getTargetFolderType();
                         SyncFolderEditValue nsfev = (SyncFolderEditValue) o[0];
                         nsfev.folder_master = false;
@@ -4093,6 +4121,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
+                        unfixScreenOrientation();
                         mGp.safMgr.loadSafFile();
                         target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
                         confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
@@ -4132,6 +4161,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                 sfev.folder_error_code=n_sti.getTargetFolderError();
 
+                fixScreenOrientation();
                 editSyncFolder(n_sti, sfev, ntfy);
             }
         });

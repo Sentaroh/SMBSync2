@@ -146,7 +146,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String ZIP_OPTION_ENCRYPT_STANDARD = "STANDARD";
     public final static String ZIP_OPTION_ENCRYPT_AES128 = "AES128";
     public final static String ZIP_OPTION_ENCRYPT_AES256 = "AES256";
-    public final static String ZIP_OPTION_ENCRYPT_DEFAULT = ZIP_OPTION_ENCRYPT_STANDARD ;
+    public final static String ZIP_OPTION_ENCRYPT_DEFAULT = ZIP_OPTION_ENCRYPT_NONE ;
     public final static String[] ZIP_OPTION_ENCRYPT_LIST=new String[]{ZIP_OPTION_ENCRYPT_NONE, ZIP_OPTION_ENCRYPT_STANDARD, ZIP_OPTION_ENCRYPT_AES128, ZIP_OPTION_ENCRYPT_AES256};
     private String syncTaskTargetZipCompOptionCompLevel = ZIP_OPTION_COMP_LEVEL_DEFAULT;
     private String syncTaskTargetZipCompOptionCompMethod = ZIP_OPTION_COMP_METHOD_DEFAULT;
