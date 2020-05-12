@@ -37,6 +37,7 @@
             android:gravity="center_vertical"
             android:text="@string/msgs_profile_sync_task_sync_option_sync_when_charging"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+        <include layout="@layout/divider_line1" />
         <LinearLayout
             android:id="@+id/edit_sync_task_option_ll_sync_master_root_dir_file"
             android:layout_width="match_parent"
@@ -123,6 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
                 android:minHeight="36dp"
                 android:paddingLeft="5dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -358,6 +360,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/msgs_profile_sync_task_sync_option_retry_if_error_occured"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <include layout="@layout/divider_line1" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/edit_sync_task_option_ll_sync_use_remote_small_io_area"
@@ -373,6 +376,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/msgs_profile_sync_task_sync_use_small_ioarea"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <include layout="@layout/divider_line1" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/edit_sync_task_option_do_mot_use_rename_when_smb_file_write_view"
@@ -482,7 +486,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
                         android:text="@string/msgs_profile_sync_task_sync_option_allowance_last_mod_time"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -491,6 +495,7 @@
                         style="?android:attr/spinnerStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
                         android:layout_weight="0.4"
                         android:minHeight="36dp"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -537,6 +542,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
                             android:layout_gravity="center_vertical"
                             android:text="@string/msgs_profile_sync_task_sync_option_offset_of_dst_time_value"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -546,6 +552,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.4"
+                            android:layout_marginRight="5dp"
                             android:minHeight="36dp"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
                     </LinearLayout>
