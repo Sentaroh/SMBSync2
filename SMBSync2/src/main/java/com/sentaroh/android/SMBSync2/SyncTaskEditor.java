@@ -2926,7 +2926,7 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_ultra));
 //		adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_saf_usb));
 
-        int sel = 2;
+        int sel = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_DEFAULT_ITEM_INDEX;
         if (cv.equals(SyncTaskItem.ZIP_OPTION_COMP_LEVEL_FASTEST)) sel = 0;
         else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMP_LEVEL_FAST)) sel = 1;
         else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMP_LEVEL_NORMAL)) sel = 2;
@@ -2949,7 +2949,7 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes128));
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_encrypt_aes256));
 
-        int sel = 0;
+        int sel = SyncTaskItem.ZIP_OPTION_ENCRYPT_DEFAULT_ITEM_INDEX;
         if (cv.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) sel = 0;
         else if (cv.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD)) sel = 1;
         else if (cv.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128)) sel = 2;
