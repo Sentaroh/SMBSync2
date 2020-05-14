@@ -1876,7 +1876,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
     }
 
-
+/*
     private void fixScreenOrientation() {
         int orientation = mContext.getResources().getConfiguration().orientation;
         mUtil.addDebugMsg(1, "I", "fixScreenOrientation entered, orientation="+orientation+", settingFixDeviceOrientationToPortrait="+mGp.settingFixDeviceOrientationToPortrait);
@@ -1890,6 +1890,7 @@ public class SyncTaskEditor extends DialogFragment {
         if (!mGp.settingFixDeviceOrientationToPortrait)
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
+*/
 
     private void editSyncFolder(SyncTaskItem sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
         // カスタムダイアログの生成
@@ -1983,7 +1984,7 @@ public class SyncTaskEditor extends DialogFragment {
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
-                            unfixScreenOrientation();
+                            //unfixScreenOrientation();
                             dialog.dismiss();
                         }
                         @Override
@@ -1993,7 +1994,7 @@ public class SyncTaskEditor extends DialogFragment {
                             mContext.getString(R.string.msgs_schedule_confirm_title_nosave),
                             mContext.getString(R.string.msgs_profile_sync_folder_dlg_confirm_msg_nosave), ntfy);
                 } else {
-                    unfixScreenOrientation();
+                    //unfixScreenOrientation();
                     ntfy.notifyToListener(false, null);
                     dialog.dismiss();
                 }
@@ -3920,7 +3921,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        unfixScreenOrientation();
+                        //unfixScreenOrientation();
                         SyncFolderEditValue nsfev = (SyncFolderEditValue) o[0];
                         nsfev.folder_master = true;
                         String prev_master_folder_type = n_sti.getMasterFolderType();
@@ -3989,7 +3990,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
-                        unfixScreenOrientation();
+                        //unfixScreenOrientation();
                         mGp.safMgr.loadSafFile();
                         master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                     }
@@ -4018,7 +4019,7 @@ public class SyncTaskEditor extends DialogFragment {
                     sfev.folder_remote_use_pswd=false;
                 }
                 sfev.folder_error_code=n_sti.getMasterFolderError();
-                fixScreenOrientation();
+                //fixScreenOrientation();
                 editSyncFolder(n_sti, sfev, ntfy);
             }
         });
@@ -4074,7 +4075,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        unfixScreenOrientation();
+                        //unfixScreenOrientation();
                         String prev_target_folder_type = n_sti.getTargetFolderType();
                         SyncFolderEditValue nsfev = (SyncFolderEditValue) o[0];
                         nsfev.folder_master = false;
@@ -4153,7 +4154,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
-                        unfixScreenOrientation();
+                        //unfixScreenOrientation();
                         mGp.safMgr.loadSafFile();
                         target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
                         confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
@@ -4193,7 +4194,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                 sfev.folder_error_code=n_sti.getTargetFolderError();
 
-                fixScreenOrientation();
+                //fixScreenOrientation();
                 editSyncFolder(n_sti, sfev, ntfy);
             }
         });
