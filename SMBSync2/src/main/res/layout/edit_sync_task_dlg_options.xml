@@ -466,7 +466,6 @@
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                <include layout="@layout/divider_line1" />
             </LinearLayout>
 
             <LinearLayout
