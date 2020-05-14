@@ -1879,11 +1879,14 @@ public class SyncTaskEditor extends DialogFragment {
 
     private void fixScreenOrientation() {
         int orientation = mContext.getResources().getConfiguration().orientation;
-        if (!mGp.settingFixDeviceOrientationToPortrait)
-            getActivity().setRequestedOrientation(orientation);
+        mUtil.addDebugMsg(1, "I", "fixScreenOrientation entered, orientation="+orientation+", settingFixDeviceOrientationToPortrait="+mGp.settingFixDeviceOrientationToPortrait);
+        if (!mGp.settingFixDeviceOrientationToPortrait){
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        }
     }
 
     private void unfixScreenOrientation() {
+        mUtil.addDebugMsg(1, "I", "unfixScreenOrientation entered");
         if (!mGp.settingFixDeviceOrientationToPortrait)
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
