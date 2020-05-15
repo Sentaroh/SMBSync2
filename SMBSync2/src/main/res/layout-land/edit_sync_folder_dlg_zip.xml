@@ -71,16 +71,14 @@
                 android:layout_marginTop="1dp"
                 android:hint="Directory"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <EditText
-                android:id="@+id/edit_sync_folder_dlg_zip_file_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/msgs_profile_edit_sync_folder_dlg_zip_filename"
-                android:inputType="text|textMultiLine"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
+        <EditText
+            android:id="@+id/edit_sync_folder_dlg_zip_file_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/msgs_profile_edit_sync_folder_dlg_zip_filename"
+            android:inputType="text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>
 
