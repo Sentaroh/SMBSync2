@@ -1961,7 +1961,7 @@ public class SyncTaskUtil {
                     @Override
                     public void positiveResponse(Context context, Object[] o) {
                         String sel = (String)o[0];
-                        editdir.setText(sel);
+                        editdir.setText(sel.startsWith("/")?sel.substring(1):sel);
                     }
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {
