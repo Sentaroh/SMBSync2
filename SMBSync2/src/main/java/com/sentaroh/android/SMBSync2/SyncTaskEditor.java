@@ -29,7 +29,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -74,8 +73,6 @@ import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
-
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -1063,6 +1060,7 @@ public class SyncTaskEditor extends DialogFragment {
                     String new_name = removeInvalidCharForFileDirName(editable.toString());
                     if (editable.length() != new_name.length()) {
                         //remove invalid char
+                        final EditText et_sync_folder_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_directory_name);
                         et_sync_folder_dir_name.setText(new_name);
                         if (new_name.length() > 0)
                             et_sync_folder_dir_name.setSelection(new_name.length());
@@ -1100,6 +1098,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
+                        final EditText et_sync_folder_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_directory_name);
                         String dir_tmp=(String)arg1[1]+"/"+(String)arg1[2];
                         String dir = "";
                         if (dir_tmp.equals("/")) dir="";
@@ -1211,6 +1210,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
+                        final EditText et_sync_folder_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_sdcard_directory_name);
                         if (((String)arg1[1]).length()>0) {
                             String dir_tmp=(String)arg1[1]+"/"+(String)arg1[2];
                             String dir = "";
@@ -1358,6 +1358,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
+                        final EditText et_sync_folder_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_usb_directory_name);
                         if (((String)arg1[1]).length()>0) {
                             String dir_tmp=(String)arg1[1]+"/"+(String)arg1[2];
                             String dir = "";
@@ -1441,8 +1442,8 @@ public class SyncTaskEditor extends DialogFragment {
 
         final Spinner sp_sync_retain_period = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_retention_period);
         final Spinner sp_sync_suffix_option = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_suffix_option);
-        setSpinnerSyncTaskArchiveSuffixSeq(sp_sync_suffix_option, n_sti.getArchiveSuffixOption());
-        setSpinnerSyncTaskPictureRetainPeriod(sp_sync_retain_period, n_sti.getArchiveRetentionPeriod());
+        setSpinnerSyncTaskArchiveSuffixSeq(sp_sync_suffix_option, sfev.archive_append_seq_number);
+        setSpinnerSyncTaskPictureRetainPeriod(sp_sync_retain_period, sfev.archive_retention_period);
 
         final CheckedTextView ctvConfirmExifDate = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_confirm_exif_date);
         final CheckedTextView ctvRenameWhenArchive = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_rename_when_archive);
@@ -1452,7 +1453,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_original_name = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_btn_file_original_name);
         final LinearLayout template_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_template_view);
         final EditText et_file_template = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_file_name_template);
-        et_file_template.setText(n_sti.getArchiveRenameFileTemplate());
+        et_file_template.setText(sfev.archive_file_name_template);
         final TextView tv_template = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_new_name);
 //        tv_template.setTextColor(mGp.themeColorList.text_color_primary);
 
@@ -1462,9 +1463,9 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_dir_month = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_btn_directory_month);
         final Button btn_dir_day = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_btn_directory_day);
         final EditText et_dir_template = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_directory_name_template);
-        et_dir_template.setText(n_sti.getArchiveCreateDirectoryTemplate());
+        et_dir_template.setText(sfev.archive_directory_name_template);
 
-        ctvConfirmExifDate.setChecked(n_sti.isSyncOptionConfirmNotExistsExifDate());
+        ctvConfirmExifDate.setChecked(sfev.archive_confirm_exif_date);
         ctvConfirmExifDate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1474,9 +1475,9 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
-        ctvRenameWhenArchive.setChecked(n_sti.isArchiveUseRename());
+        ctvRenameWhenArchive.setChecked(sfev.archive_rename_when_archive);
 
-        if (!n_sti.isArchiveUseRename()) template_view.setVisibility(LinearLayout.GONE);
+        if (!sfev.archive_rename_when_archive) template_view.setVisibility(LinearLayout.GONE);
         else template_view.setVisibility(LinearLayout.VISIBLE);
         ctvRenameWhenArchive.setOnClickListener(new OnClickListener() {
             @Override
@@ -1491,7 +1492,7 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
 
-        ctvCreateDircetory.setChecked(n_sti.isArchiveCreateDirectory());
+        ctvCreateDircetory.setChecked(sfev.archive_create_directory);
         if (ctvCreateDircetory.isChecked()) dirTemplateView.setVisibility(LinearLayout.VISIBLE);
         else dirTemplateView.setVisibility(LinearLayout.GONE);
         ctvCreateDircetory.setOnClickListener(new OnClickListener() {
@@ -1743,7 +1744,7 @@ public class SyncTaskEditor extends DialogFragment {
             ll_zip_password_view.setVisibility(LinearLayout.VISIBLE);
         }
         et_zip_pswd.setText(sfev.zip_file_password);
-        et_zip_conf_pswd.setText(sfev.zip_file_password);
+        et_zip_conf_pswd.setText(sfev.zip_file_confirm_password);
         sp_zip_enc_method.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1818,19 +1819,11 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-//                        String zip_path = (String) o[1]+"/"+(String) o[2];
+                        final CheckedTextView ctv_zip_file_save_sdcard = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_use_sdcard);
+                        final EditText et_zip_file = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_name);
+                        final TextView tv_zip_dir = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_dir_name);
                         String zip_dir=((String)o[1]).equals("")?"/":((String)o[1]);
                         String zip_file=(String) o[2];
-//                        if (zip_path.lastIndexOf("/")>1) {
-//                            //Directory付
-//                            zip_dir=zip_path.substring(0,zip_path.lastIndexOf("/")+1);
-//                            zip_file=zip_path.substring(zip_path.lastIndexOf("/")+1);
-//                        } else {
-//                            zip_dir="/";
-//                            if (zip_path.length()!=0) {
-//                                zip_file=zip_path.startsWith(("/"))?zip_path.substring(1):zip_path;
-//                            }
-//                        }
                         if (!ctv_zip_file_save_sdcard.isChecked()) {
                             tv_zip_dir.setText(zip_dir.replace(mGp.internalRootDirectory, ""));
                             et_zip_file.setText(zip_file);
@@ -1981,24 +1974,7 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void onClick(View v) {
                 SyncFolderEditValue nsfev = buildSyncFolderEditValue(dialog, sfev);
-
-                final Spinner sp_sync_retain_period = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_retention_period);
-                final Spinner sp_sync_suffix_option = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_suffix_option);
-                final CheckedTextView ctvConfirmExifDate = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_confirm_exif_date);
-                final CheckedTextView ctvRenameWhenArchive = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_rename_when_archive);
-                final EditText et_file_template = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_file_name_template);
-                final TextView tv_template = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_new_name);
-                final CheckedTextView ctvCreateDircetory = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_use_archive_directory);
-                final EditText et_dir_template = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_directory_name_template);
-
                 nsfev.folder_error_code=SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
-                sti.setSyncOptionConfirmNotExistsExifDate(ctvConfirmExifDate.isChecked());
-                sti.setArchiveCreateDirectory(ctvCreateDircetory.isChecked());
-                sti.setArchiveCreateDirectoryTemplate(et_dir_template.getText().toString());
-                sti.setArchiveUseRename(ctvRenameWhenArchive.isChecked());
-                sti.setArchiveRenameFileTemplate(et_file_template.getText().toString());
-                sti.setArchiveRetentionPeriod(sp_sync_retain_period.getSelectedItemPosition());
-                sti.setArchiveSuffixOption(getArchiveSuffixOptionFromSpinner(sp_sync_suffix_option));
                 ntfy.notifyToListener(true, new Object[]{nsfev});
                 dialog.dismiss();
                 mEditFolderDialog=null;
@@ -2117,17 +2093,18 @@ public class SyncTaskEditor extends DialogFragment {
             else nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
             nsfev.folder_use_taken_date_time_for_directory_keyword=ctv_internal_use_taken_date_time_for_directory_keyword.isChecked();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL;
+            buildSyncFolderEditValueForArchive(dialog, nsfev);
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard))) {//sdcard
             nsfev.folder_directory = et_sync_folder_sdcard_dir_name.getText().toString().trim();
             nsfev.folder_use_taken_date_time_for_directory_keyword=ctv_sdcard_use_taken_date_time_for_directory_keyword.isChecked();
-//            nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD;
+            buildSyncFolderEditValueForArchive(dialog, nsfev);
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_usb))) {//USB Storage
             nsfev.folder_use_taken_date_time_for_directory_keyword=ctv_usb_use_taken_date_time_for_directory_keyword.isChecked();
             nsfev.folder_directory = et_sync_folder_usb_dir_name.getText().toString().trim();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_USB;
+            buildSyncFolderEditValueForArchive(dialog, nsfev);
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {//ZIP
-//            nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
             nsfev.zip_file_use_sdcard = ctv_zip_file_save_sdcard.isChecked();
             String cl = sp_comp_level.getSelectedItem().toString();
             if (cl.equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_zip_comp_level_fastest))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMP_LEVEL_FASTEST;
@@ -2146,6 +2123,7 @@ public class SyncTaskEditor extends DialogFragment {
             else nsfev.zip_file_name=tv_zip_dir.getText().toString().trim()+"/"+et_zip_file.getText().toString().trim();
             if (!nsfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
                 nsfev.zip_file_password = et_zip_pswd.getText().toString();
+                nsfev.zip_file_confirm_password=et_zip_conf_pswd.getText().toString();
             } else {
                 nsfev.zip_file_password = "";
             }
@@ -2154,6 +2132,7 @@ public class SyncTaskEditor extends DialogFragment {
             nsfev.folder_use_taken_date_time_for_directory_keyword=ctv_smb_use_taken_date_time_for_directory_keyword.isChecked();
             nsfev.folder_directory = et_sync_folder_smb_dir_name.getText().toString().trim();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SMB;
+            buildSyncFolderEditValueForArchive(dialog, nsfev);
             String host=et_remote_host.getText().toString();
             if (CommonUtilities.isIpAddressV6(host) || CommonUtilities.isIpAddressV4(host)) {
                 nsfev.folder_remote_addr = host;
@@ -2182,6 +2161,23 @@ public class SyncTaskEditor extends DialogFragment {
             nsfev.folder_smb_use_smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
         }
         return nsfev;
+    }
+
+    private void buildSyncFolderEditValueForArchive(Dialog dialog, SyncFolderEditValue nsfev) {
+        final Spinner sp_sync_retain_period = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_retention_period);
+        final Spinner sp_sync_suffix_option = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_suffix_option);
+        final CheckedTextView ctvConfirmExifDate = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_confirm_exif_date);
+        final CheckedTextView ctvRenameWhenArchive = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_rename_when_archive);
+        final EditText et_file_template = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_file_name_template);
+        final CheckedTextView ctvCreateDircetory = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_use_archive_directory);
+        final EditText et_dir_template = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_directory_name_template);
+        nsfev.archive_retention_period = sp_sync_retain_period.getSelectedItemPosition();
+        nsfev.archive_append_seq_number = getArchiveSuffixOptionFromSpinner(sp_sync_suffix_option);
+        nsfev.archive_file_name_template = et_file_template.getText().toString();
+        nsfev.archive_directory_name_template = et_dir_template.getText().toString();
+        nsfev.archive_create_directory = ctvCreateDircetory.isChecked();
+        nsfev.archive_confirm_exif_date = ctvConfirmExifDate.isChecked();
+        nsfev.archive_rename_when_archive = ctvRenameWhenArchive.isChecked();
     }
 
     private void setSyncFolderOkButtonEnabled(Button ok_btn, boolean enabled) {
@@ -3952,6 +3948,8 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
+                        final TextView dlg_title = (TextView) mDialog.findViewById(R.id.edit_profile_sync_title);
+                        final TextView dlg_title_sub = (TextView) mDialog.findViewById(R.id.edit_profile_sync_title_sub);
                         dlg_title.requestLayout();
                         dlg_title_sub.requestLayout();
                         SyncFolderEditValue nsfev = (SyncFolderEditValue) o[0];
@@ -4105,6 +4103,8 @@ public class SyncTaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
+                        final TextView dlg_title = (TextView) mDialog.findViewById(R.id.edit_profile_sync_title);
+                        final TextView dlg_title_sub = (TextView) mDialog.findViewById(R.id.edit_profile_sync_title_sub);
                         dlg_title.requestLayout();
                         dlg_title_sub.requestLayout();
                         String prev_target_folder_type = n_sti.getTargetFolderType();
@@ -4125,6 +4125,14 @@ public class SyncTaskEditor extends DialogFragment {
                         n_sti.setTargetSmbIpcSigningEnforced(nsfev.folder_smb_ipc_enforced);
                         n_sti.setTargetSmbUseSmb2Negotiation(nsfev.folder_smb_use_smb2_negotiation);
                         n_sti.setTargetRemovableStorageID(nsfev.folder_removable_uuid);
+
+                        n_sti.setArchiveCreateDirectory(nsfev.archive_create_directory);
+                        n_sti.setArchiveUseRename(nsfev.archive_rename_when_archive);
+                        n_sti.setSyncOptionConfirmNotExistsExifDate(nsfev.archive_confirm_exif_date);
+                        n_sti.setArchiveCreateDirectoryTemplate(nsfev.archive_directory_name_template);
+                        n_sti.setArchiveSuffixOption(nsfev.archive_append_seq_number);
+                        n_sti.setArchiveRenameFileTemplate(nsfev.archive_file_name_template);
+                        n_sti.setArchiveRetentionPeriod(nsfev.archive_retention_period);
 
                         n_sti.setTargetZipUseExternalSdcard(nsfev.zip_file_use_sdcard);
                         n_sti.setTargetZipCompressionLevel(nsfev.zip_comp_level);
@@ -4221,6 +4229,15 @@ public class SyncTaskEditor extends DialogFragment {
                 sfev.zip_enc_method = n_sti.getTargetZipEncryptMethod();
                 sfev.zip_file_name = n_sti.getTargetZipOutputFileName();
                 sfev.zip_file_password = n_sti.getTargetZipPassword();
+                sfev.zip_file_confirm_password = n_sti.getTargetZipPassword();
+
+                sfev.archive_create_directory=n_sti.isArchiveCreateDirectory();
+                sfev.archive_rename_when_archive=n_sti.isArchiveUseRename();
+                sfev.archive_confirm_exif_date=n_sti.isSyncOptionConfirmNotExistsExifDate();
+                sfev.archive_directory_name_template=n_sti.getArchiveCreateDirectoryTemplate();
+                sfev.archive_append_seq_number=n_sti.getArchiveSuffixOption();
+                sfev.archive_file_name_template=n_sti.getArchiveRenameFileTemplate();
+                sfev.archive_retention_period = n_sti.getArchiveRetentionPeriod();
 
                 sfev.folder_error_code=n_sti.getTargetFolderError();
 
@@ -4500,11 +4517,11 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_6));
 
         int sel=SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT;
-        if (cv.equals(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_NOT_USED)) sel=0;
-        else if (cv.equals(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_3_DIGIT)) sel=1;
-        else if (cv.equals(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT)) sel=2;
-        else if (cv.equals(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_5_DIGIT)) sel=3;
-        else if (cv.equals(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_6_DIGIT)) sel=4;
+        if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_NOT_USED))) sel=0;
+        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_3_DIGIT))) sel=1;
+        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT))) sel=2;
+        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_5_DIGIT))) sel=3;
+        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_6_DIGIT))) sel=4;
         spinner.setSelection(sel);
 
     }
@@ -5062,6 +5079,15 @@ public class SyncTaskEditor extends DialogFragment {
         public String zip_enc_method = "";
         public String zip_file_name = "";
         public String zip_file_password = "";
+        public String zip_file_confirm_password = "";
+
+        public int archive_retention_period = 0;
+        public String archive_append_seq_number = "";
+        public String archive_file_name_template = "";
+        public String archive_directory_name_template = "";
+        public boolean archive_create_directory = false;
+        public boolean archive_confirm_exif_date = false;
+        public boolean archive_rename_when_archive = false;
 
         public int folder_error_code=SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
 
