@@ -318,13 +318,13 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvTestMode = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_test_mode);
 
         final CheckedTextView ct_specific_file_type = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_specific);
-        final LinearLayout ll_specific_file_type_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
+//        final LinearLayout ll_specific_file_type_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
         final CheckedTextView ct_specific_file_type_audio = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_audio);
         final CheckedTextView ct_specific_file_type_image = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_image);
         final CheckedTextView ct_specific_file_type_video = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_video);
 
         final CheckedTextView ct_specific_directory = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_sub_directory_specific);
-        final LinearLayout ll_specific_directory_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_sub_directory_detail_view);
+//        final LinearLayout ll_specific_directory_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_sub_directory_detail_view);
 
         final CheckedTextView ctv_task_sync_when_cahrging =
                 (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
@@ -1135,7 +1135,7 @@ public class SyncTaskEditor extends DialogFragment {
 
     private String formatSyncFolderDirectoryName(String in) {
         String out=in;
-        String remove_redundant_sep=removeRedundantSirectorySeparator(in);
+        String remove_redundant_sep= removeRedundantDirectorySeparator(in);
         if (remove_redundant_sep.equals("/")) out="";
         else {
             if (out.startsWith("/")) out=remove_redundant_sep.substring(1);
@@ -2063,7 +2063,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
     }
 
-    private String removeRedundantSirectorySeparator(String in) {
+    private String removeRedundantDirectorySeparator(String in) {
         String out=in;
         while(out.contains("//")) {
             out=in.replace("//", "/");
@@ -2118,7 +2118,7 @@ public class SyncTaskEditor extends DialogFragment {
         SyncFolderEditValue nsfev = org_sfev.clone();
         String sel = sp_sync_folder_type.getSelectedItem().toString();
         if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_internal))) {//Internal
-            String dir=removeRedundantSirectorySeparator(et_sync_folder_internal_dir_name.getText().toString().trim());
+            String dir= removeRedundantDirectorySeparator(et_sync_folder_internal_dir_name.getText().toString().trim());
             nsfev.folder_directory = dir.startsWith("/")?dir.substring(1):dir;
             if (sp_sync_folder_mp.getSelectedItem()==null) nsfev.folder_mountpoint = mGp.internalRootDirectory;
             else nsfev.folder_mountpoint = sp_sync_folder_mp.getSelectedItem().toString().trim();
@@ -2126,14 +2126,14 @@ public class SyncTaskEditor extends DialogFragment {
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL;
             buildSyncFolderEditValueForArchive(dialog, nsfev);
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_sdcard))) {//sdcard
-            String dir=removeRedundantSirectorySeparator(et_sync_folder_sdcard_dir_name.getText().toString().trim());
+            String dir= removeRedundantDirectorySeparator(et_sync_folder_sdcard_dir_name.getText().toString().trim());
             nsfev.folder_directory = dir.startsWith("/")?dir.substring(1):dir;
             nsfev.folder_use_taken_date_time_for_directory_keyword=ctv_sdcard_use_taken_date_time_for_directory_keyword.isChecked();
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD;
             buildSyncFolderEditValueForArchive(dialog, nsfev);
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_usb))) {//USB Storage
             nsfev.folder_use_taken_date_time_for_directory_keyword=ctv_usb_use_taken_date_time_for_directory_keyword.isChecked();
-            String dir=removeRedundantSirectorySeparator(et_sync_folder_usb_dir_name.getText().toString().trim());
+            String dir= removeRedundantDirectorySeparator(et_sync_folder_usb_dir_name.getText().toString().trim());
             nsfev.folder_directory = dir.startsWith("/")?dir.substring(1):dir;
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_USB;
             buildSyncFolderEditValueForArchive(dialog, nsfev);
@@ -2163,7 +2163,7 @@ public class SyncTaskEditor extends DialogFragment {
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_ZIP;
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {//smb
             nsfev.folder_use_taken_date_time_for_directory_keyword=ctv_smb_use_taken_date_time_for_directory_keyword.isChecked();
-            String dir=removeRedundantSirectorySeparator(et_sync_folder_smb_dir_name.getText().toString().trim());
+            String dir= removeRedundantDirectorySeparator(et_sync_folder_smb_dir_name.getText().toString().trim());
             nsfev.folder_directory = dir.startsWith("/")?dir.substring(1):dir;
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SMB;
             buildSyncFolderEditValueForArchive(dialog, nsfev);
