@@ -318,13 +318,13 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvTestMode = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_test_mode);
 
         final CheckedTextView ct_specific_file_type = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_specific);
-        final LinearLayout ll_specific_file_type_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
+//        final LinearLayout ll_specific_file_type_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
         final CheckedTextView ct_specific_file_type_audio = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_audio);
         final CheckedTextView ct_specific_file_type_image = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_image);
         final CheckedTextView ct_specific_file_type_video = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_video);
 
         final CheckedTextView ct_specific_directory = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_sub_directory_specific);
-        final LinearLayout ll_specific_directory_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_sub_directory_detail_view);
+//        final LinearLayout ll_specific_directory_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_sub_directory_detail_view);
 
         final CheckedTextView ctv_task_sync_when_cahrging =
                 (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
