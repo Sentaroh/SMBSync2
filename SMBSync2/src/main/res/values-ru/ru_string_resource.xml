@@ -111,8 +111,6 @@
         <string name="msgs_filter_list_dlg_not_specified">Не определен</string>
         <string name="msgs_filter_list_duplicate_filter_specified">%s уже существует.</string>
         <string name="msgs_filter_list_filter_deleted">Эта запись была удалена.</string>
-        <string name="msgs_filter_list_same_directory_access">Фильтр недействителен. Исходный и целевой каталоги одинаковы. Фильтр =%s</string>
-        <string name="msgs_filter_list_same_directory_access_not_excluded">Пожалуйста, исключите отредактируйте каталоги таким образом, чтобы имходный и целевой каталоги отличались. Каталог =%s</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
         <string name="msgs_hist_cont_label_move_bottom">Двигаться вниз</string>
@@ -211,10 +209,8 @@
         <string name="msgs_main_sync_profile_dlg_archive">Архив</string>
         <string name="msgs_main_sync_profile_dlg_copy">Копия</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Last time of tolerance(Sec)</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal">Повторяющиеся имена каталогов существуют как во внутреннем хранилище, так и в месте назначения. Имена каталогов источника и назначения должны быть разными.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir">Дублирующиеся имена каталогов существуют как в источнике, так и в месте назначения. Имена каталогов источника и назначения должны быть разными.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_sdcard">Повторяющиеся имена каталогов существуют как в источнике, так и в месте назначения SDCARD. Имена каталогов источника и назначения должны быть разными.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_smb">Повторяющиеся имена каталогов существуют как в SMB-источнике, так и в месте назначения. Имена каталогов источника и назначения должны быть разными.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Повторяющиеся имена каталогов существуют как во внутреннем хранилище, так и в месте назначения. Имена каталогов источника и назначения должны быть разными.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Получите доступ к одному и тому же каталогу в основной и целевой папке, либо измените каталог, либо укажите фильтр каталогов.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Зеркало</string>
         <string name="msgs_main_sync_profile_dlg_move">Переместить</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Укажите IP-адрес или имя хоста SMB-сервера.</string>
@@ -280,7 +276,6 @@
         <string name="msgs_prof_cont_to_inactivate_profile">Установить ручное следование</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">Если источник или место назначения расположены на сервере SMB. Установите Беспроводное Условие LAN на \"Подключаться к любой точке доступа \"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">Если источник или место назначения расположены на сервере SMB. Установите Беспроводное Условие LAN на \, "Имеет частный адрес \"?</string>
-        <string name="deleted_msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">Если источник и место назначения не расположены на сервере SMB. Установить Беспроводное Условие LAN на \"Другое \"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">Когда целевая папка установлена на ZIP, главная папка должна быть внутренним хранилищем. Главная папка была возвращена во внутреннее хранилище.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">Нельзя использовать ZIP для целевой папки, если главная папка не является внутренним хранилищем. Изменил целевую папку на внутреннее хранилище.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_directory">Каталог</string>

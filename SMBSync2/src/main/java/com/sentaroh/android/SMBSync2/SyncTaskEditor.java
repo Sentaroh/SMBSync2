@@ -68,6 +68,7 @@ import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities.LocalMountPoint;
+import com.sentaroh.android.Utilities.MiscUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
@@ -87,6 +88,8 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
@@ -4847,6 +4850,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         final CheckedTextView ctv_sync_remove_master_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
+        final LinearLayout ll_sync_delete_first_when_mirror=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_delete_first_when_mirror);
 
         final LinearLayout ll_edit_sync_tak_option_keep_conflict_file=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file_view);
         final LinearLayout ll_spinnerTwoWaySyncConflictRule=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_view);
@@ -4867,8 +4871,8 @@ public class SyncTaskEditor extends DialogFragment {
             ctv_sync_remove_master_if_empty.setChecked(false);
         }
 
-        if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) ctvDeleteFirst.setVisibility(CheckedTextView.VISIBLE);
-        else ctvDeleteFirst.setVisibility(CheckedTextView.GONE);
+        if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) ll_sync_delete_first_when_mirror.setVisibility(CheckedTextView.VISIBLE);
+        else ll_sync_delete_first_when_mirror.setVisibility(CheckedTextView.GONE);
 
         if (!n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             ll_ctvUseSmbsyncLastMod.setVisibility(LinearLayout.GONE);
@@ -5042,47 +5046,96 @@ public class SyncTaskEditor extends DialogFragment {
         }
     }
 
+    static public String checkDirectoryFilterForSameDirectoryAccess(Context c, SyncTaskItem sti) {
+        String msg="";
+        String master_dir=sti.getMasterDirectoryName().equals("")?"":sti.getMasterDirectoryName().toLowerCase();
+        boolean select_found=false;
+        boolean select_specified=false;
+        boolean exclude_found=false;
+        boolean exclude_specified=false;
+        for(String item:sti.getDirFilter()) {
+            String inc_exc=item.substring(0,1);
+            String filter=master_dir.equals("")?item.substring(1):master_dir+"/"+item.substring(1);
+            Pattern pattern=Pattern.compile(MiscUtil.convertRegExp(filter.toLowerCase()));
+            if (inc_exc.equals("I")) {
+                select_specified=true;
+                Matcher mt=pattern.matcher(sti.getTargetDirectoryName().toLowerCase());
+                if (mt.find()) {
+                    select_found=true;
+                    break;
+                }
+            }
+        }
+        for(String item:sti.getDirFilter()) {
+            String inc_exc=item.substring(0,1);
+            String filter=master_dir.equals("")?item.substring(1):master_dir+"/"+item.substring(1);
+            Pattern pattern=Pattern.compile(MiscUtil.convertRegExp(filter.toLowerCase()));
+            if (inc_exc.equals("E")) {
+                exclude_specified=true;
+                Matcher mt=pattern.matcher(sti.getTargetDirectoryName().toLowerCase());
+                if (mt.find()) {
+                    exclude_found=true;
+                    break;
+                }
+            }
+        }
+        if (!select_specified && !exclude_specified) {
+            msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
+        } else if (select_specified && !exclude_specified) {
+            if (select_found) msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
+        } else if (!select_specified && exclude_specified) {
+            if (!exclude_found) msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
+        } else if (select_specified && exclude_specified) {
+            if (select_found && !exclude_found) msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
+        }
+        return msg;
+    }
+
+    static public String isSameDirectoryAccess(Context c, SyncTaskItem sti, boolean directory_filter_specified) {
+        String msg="";
+        if (sti.getMasterDirectoryName().toLowerCase().equals(sti.getTargetDirectoryName().toLowerCase()) ||
+                (sti.getMasterDirectoryName().equals("") && sti.getTargetDirectoryName().equals(""))) {
+            msg=c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_internal);
+        } else {
+            if (sti.getMasterDirectoryName().equals("") && !sti.getTargetDirectoryName().equals("")) {
+                //マスターが上位ディレクトリー
+                msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
+            } else if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
+                //マスターが上位ディレクトリー
+                if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
+                    if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
+                        msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
+                    }
+                } else {
+                    msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
+                }
+            }
+        }
+        return msg;
+    }
+
     private String checkMasterTargetCombination(Dialog dialog, SyncTaskItem sti) {
         String result = "";
         final CheckedTextView ctvSyncSpecificSubDir = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_sub_directory_specific);
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
-                if (sti.getMasterDirectoryName().toLowerCase().equals(sti.getTargetDirectoryName().toLowerCase()) &&
-                        sti.getMasterLocalMountPoint().toLowerCase().equals(sti.getTargetLocalMountPoint().toLowerCase())) {
-                    result = mContext.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal);
-//                } else {
-//                    if (sti.getMasterDirectoryName().equals("") || sti.getTargetDirectoryName().equals("")) {
-//                        if (sti.getDirFilter().size() == 0 || !ctvSyncSpecificSubDir.isChecked()) {
-//                            if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase()) &&
-//                                    sti.getMasterLocalMountPoint().toLowerCase().equals(sti.getTargetLocalMountPoint().toLowerCase())) {
-//                                result = mContext.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir);
-//                            }
-//                        }
-//                    }
-                }
+                result= isSameDirectoryAccess(mContext, sti, ctvSyncSpecificSubDir.isChecked());
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
-                if (sti.getMasterDirectoryName().toLowerCase().equals(sti.getTargetDirectoryName().toLowerCase())) {
-                    result = mContext.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal);
-                } else {
-                    if (sti.getMasterDirectoryName().equals("") || sti.getTargetDirectoryName().equals("")) {
-                        if (sti.getDirFilter().size() == 0 || !ctvSyncSpecificSubDir.isChecked()) {
-                            if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
-                                result = mContext.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir);
-                            }
-                        }
-                    }
-                }
+                result= isSameDirectoryAccess(mContext, sti, ctvSyncSpecificSubDir.isChecked());
+            }
+        } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
+            if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
+                result= isSameDirectoryAccess(mContext, sti, ctvSyncSpecificSubDir.isChecked());
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                 if (sti.getMasterSmbAddr().equalsIgnoreCase(sti.getTargetSmbAddr()) &&
                         sti.getMasterSmbDomain().equalsIgnoreCase(sti.getTargetSmbDomain()) &&
                         sti.getMasterSmbHostName().equalsIgnoreCase(sti.getTargetSmbHostName()) &&
-                        sti.getMasterSmbShareName().equalsIgnoreCase(sti.getTargetSmbShareName()) &&
-                        sti.getMasterDirectoryName().equalsIgnoreCase(sti.getTargetDirectoryName())) {
-                    result = mContext.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir);
+                        sti.getMasterSmbShareName().equalsIgnoreCase(sti.getTargetSmbShareName())) {
+                    result= isSameDirectoryAccess(mContext, sti, ctvSyncSpecificSubDir.isChecked());
                 }
             }
         }

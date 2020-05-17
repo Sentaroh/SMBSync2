@@ -3110,11 +3110,11 @@ public class SyncTaskUtil {
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
-                if (!e_msg.equals("")) {
-                    dlg_msg.setText(e_msg);
-                    return;
-                }
+//                String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
+//                if (!e_msg.equals("")) {
+//                    dlg_msg.setText(e_msg);
+//                    return;
+//                }
                 CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
@@ -3127,11 +3127,11 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
-                if (!e_msg.equals("")) {
-                    dlg_msg.setText(e_msg);
-                    return;
-                }
+//                String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
+//                if (!e_msg.equals("")) {
+//                    dlg_msg.setText(e_msg);
+//                    return;
+//                }
                 CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
@@ -3202,11 +3202,11 @@ public class SyncTaskUtil {
                 filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
-                if (!e_msg.equals("")) {
-                    dlg_msg.setText(e_msg);
-                    return;
-                }
+//                String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
+//                if (!e_msg.equals("")) {
+//                    dlg_msg.setText(e_msg);
+//                    return;
+//                }
                 CommonDialog.setViewEnabled(mActivity, dirbtn, true);
                 CommonDialog.setViewEnabled(mActivity, btn_ok, true);
             }
@@ -3219,11 +3219,11 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
-                        if (!e_msg.equals("")) {
-                            dlg_msg.setText(e_msg);
-                            return;
-                        }
+//                        String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
+//                        if (!e_msg.equals("")) {
+//                            dlg_msg.setText(e_msg);
+//                            return;
+//                        }
                         CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                         dlg_msg.setText("");
                     }
@@ -3258,12 +3258,12 @@ public class SyncTaskUtil {
         // OKボタンの指定
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
-                if (!e_msg.equals("")) {
-                    dlg_msg.setText(e_msg);
-                    return;
-                }
-
+//                String e_msg = isFilterSameDirectoryAccess(sti, filterAdapter);
+//                if (!e_msg.equals("")) {
+//                    dlg_msg.setText(e_msg);
+//                    return;
+//                }
+//
                 dialog.dismiss();
                 sti.getDirFilter().clear();
                 if (filterAdapter.getCount() > 0) {
@@ -3747,50 +3747,29 @@ public class SyncTaskUtil {
         createRemoteFileList(host_name, host_addr, host_share, host_port, remdir, ipc_enforced, smb2_negotiation, smb_proto, ntfy, true);
     }
 
-    @SuppressLint("DefaultLocale")
-    private String isFilterSameDirectoryAccess(SyncTaskItem sti, AdapterFilterList filterAdapter) {
-        if ((sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
-                sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) ||
-                (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
-                        sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD))) {
-            if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
-                for (int i = 0; i < filterAdapter.getCount(); i++) {
-                    AdapterFilterList.FilterListItem fli = filterAdapter.getItem(i);
-                    if (fli.isInclude() && !fli.isDeleted()) {
-                        String filter = fli.getFilter();
-                        if (fli.getFilter().indexOf("/") > 0)
-                            filter = fli.getFilter().substring(0, fli.getFilter().indexOf("/"));
-                        String dir = sti.getTargetDirectoryName();
-                        if (sti.getTargetDirectoryName().indexOf("/") > 0)
-                            dir = sti.getTargetDirectoryName().substring(0, sti.getTargetDirectoryName().indexOf("/"));
-                        if (dir.toLowerCase().equals(filter.toLowerCase())) {
-                            String mtxt = String.format(mContext.getString(R.string.msgs_filter_list_same_directory_access), fli.getFilter());
-                            return mtxt;
-                        }
-                    }
-                }
-                boolean excluded = true;
-                for (int i = 0; i < filterAdapter.getCount(); i++) {
-                    AdapterFilterList.FilterListItem fli = filterAdapter.getItem(i);
-                    if (!fli.isInclude() && !fli.isDeleted()) {
-                        String dir = sti.getTargetDirectoryName();
-                        if (sti.getTargetDirectoryName().indexOf("/") > 0)
-                            dir = sti.getTargetDirectoryName().substring(0, sti.getTargetDirectoryName().indexOf("/"));
-                        String filter = fli.getFilter();
-                        if (dir.toLowerCase().equals(filter.toLowerCase())) {
-                            excluded = true;
-                            break;
-                        } else excluded = false;
-                    }
-                }
-                if (!excluded) {
-                    String mtxt = String.format(mContext.getString(R.string.msgs_filter_list_same_directory_access_not_excluded), sti.getTargetDirectoryName());
-                    return mtxt;
-                }
-            }
-        }
-        return "";
-    }
+//    @SuppressLint("DefaultLocale")
+//    private String isFilterSameDirectoryAccess(SyncTaskItem sti, AdapterFilterList filterAdapter) {
+//        if ((sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) && sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) ||
+//                (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) && sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) ||
+//                (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB) && sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB))) {
+//            SyncTaskItem new_sti=sti.clone();
+//            ArrayList<String>dir_filter=new ArrayList<String>();
+//
+//            for(int i=0;i<filterAdapter.getCount();i++) {
+//                AdapterFilterList.FilterListItem fli=filterAdapter.getItem(i);
+//                String item="";
+//                if (!fli.isDeleted()) {
+//                    if (fli.isInclude()) item="I"+fli.getFilter();
+//                    else item="E"+fli.getFilter();
+//                    dir_filter.add(item);
+//                }
+//            }
+//            new_sti.setDirFilter(dir_filter);
+//            String msg=SyncTaskEditor.checkDirectoryFilterForSameDirectoryAccess(mContext, new_sti);
+//            return msg;
+//        }
+//        return "";
+//    }
 
     private boolean addDirFilter(boolean check_only, TreeFilelistAdapter tfa,
                                  AdapterFilterList fla, String cdir, TextView dlg_msg, SyncTaskItem sti, boolean smb_filter) {

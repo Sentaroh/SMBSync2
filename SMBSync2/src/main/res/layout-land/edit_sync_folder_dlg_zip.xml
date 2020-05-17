@@ -65,8 +65,10 @@
 
             <TextView
                 android:id="@+id/edit_sync_folder_dlg_zip_dir_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="start"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="1dp"
                 android:hint="Directory"

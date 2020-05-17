@@ -111,8 +111,6 @@
         <string name="msgs_filter_list_dlg_not_specified">Non spécifié</string>
         <string name="msgs_filter_list_duplicate_filter_specified">% existe déjà.</string>
         <string name="msgs_filter_list_filter_deleted">Cette entrée a été supprimée.</string>
-        <string name="msgs_filter_list_same_directory_access">Le filtre n\'est pas valable. Les dossiers source et destination sont identiques. Filtre=%s</string>
-        <string name="msgs_filter_list_same_directory_access_not_excluded">Le dossier de destination ne peut pas être exclu de la tâche de synchronisation (dossier de destination: %s)</string>
         <string name="msgs_hist_cont_label_copy">Copier dans le presse-papier</string>
         <string name="msgs_hist_cont_label_delete">Supprimer l\'entrée de l\'historique</string>
         <string name="msgs_hist_cont_label_move_bottom">Aller en bas</string>
@@ -211,10 +209,8 @@
         <string name="msgs_main_sync_profile_dlg_archive">Archiver</string>
         <string name="msgs_main_sync_profile_dlg_copy">Copier</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Différence de temps tolérée (sec)</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal">Les dossiers source et destination sur le stockage interne sont identiques. Vous devez choisir des dossiers différents comme source et destination</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir">Les dossiers source et destination sont identiques. Vous devez choisir des dossiers différents comme source et destination</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_sdcard">Les dossiers source et destination sur la carte SD sont identiques. Vous devez choisir des dossiers différents comme source et destination</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_smb">Les dossiers SMB source et destination sont identiques. Vous devez choisir des dossiers différents comme source et destination</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Les dossiers source et destination sur le stockage interne sont identiques. Vous devez choisir des dossiers différents comme source et destination</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Accéder au même répertoire dans le dossier principal et le dossier cible, soit changer le répertoire, soit spécifier un filtre de répertoire.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Miroir</string>
         <string name="msgs_main_sync_profile_dlg_move">Déplacer</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Indiquer l\'adresse IP ou le nom d\'hôte du serveur SMB.</string>
@@ -280,7 +276,6 @@
         <string name="msgs_prof_cont_to_inactivate_profile">Démarrer les tâches suivantes sur demande</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">Si la source ou la destination sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Tous les réseaux\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">Si la source ou la destination sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Wifi avec IP privée\"?</string>
-        <string name="deleted_msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">Si ni la source ni la destination ne sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Même si Wifi éteint\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">Lorsque ZIP est sélectionné comme destination, la source doit être située sur le stockage interne. La sélection de la source a donc été changée en stockage interne.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">La destination ZIP ne peut être spécifiée que pour synchroniser des fichiers situés sur le stockage interne. Votre sélection de la destination a été annulée.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_directory">Dossier</string>

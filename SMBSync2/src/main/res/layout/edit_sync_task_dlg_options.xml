@@ -224,6 +224,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:orientation="vertical">
+            <include layout="@layout/divider_line1" />
             <LinearLayout
                 android:id="@+id/edit_sync_task_option_ll_sync_sub_dir"
                 android:layout_width="match_parent"
@@ -352,6 +353,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:orientation="vertical">
+                    <include layout="@layout/divider_line1" />
                     <CheckedTextView
                         android:id="@+id/edit_sync_task_option_ctv_retry_if_error_occured"
                         android:layout_width="fill_parent"
@@ -440,17 +442,22 @@
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_diff_file_use_file_size"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_ctv_sync_diff_file_size_greater_than_target"
-                    android:layout_width="fill_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:gravity="center_vertical"
-                    android:text="@string/msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <include layout="@layout/divider_line1" />
+                    android:orientation="vertical">
+                    <include layout="@layout/divider_line1"/>
+                    <CheckedTextView
+                        android:id="@+id/edit_sync_task_option_ctv_sync_diff_file_size_greater_than_target"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                        android:gravity="center_vertical"
+                        android:text="@string/msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <include layout="@layout/divider_line1" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -466,7 +473,6 @@
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                <include layout="@layout/divider_line1" />
             </LinearLayout>
 
             <LinearLayout
@@ -475,7 +481,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:orientation="vertical">
-
+                <include layout="@layout/divider_line1" />
                 <LinearLayout
                     android:id="@+id/edit_sync_task_option_diff_file_determin_time_value_view"
                     android:layout_width="match_parent"
@@ -501,13 +507,13 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 </LinearLayout>
-                <include layout="@layout/divider_line1" />
 
                 <LinearLayout
                     android:id="@+id/edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+                    <include layout="@layout/divider_line1" />
                     <CheckedTextView
                         android:id="@+id/edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file"
                         android:layout_width="fill_parent"
@@ -536,27 +542,33 @@
                         android:id="@+id/edit_sync_task_option_spinner_offset_daylight_saving_time_value_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/msgs_profile_sync_task_sync_option_offset_of_dst_time_value"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-                        <Spinner
-                            android:id="@+id/edit_sync_task_option_spinner_offset_daylight_saving_time_value"
-                            style="?android:attr/spinnerStyle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.4"
-                            android:layout_marginRight="5dp"
-                            android:minHeight="36dp"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+                        <include layout="@layout/divider_line1" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/msgs_profile_sync_task_sync_option_offset_of_dst_time_value"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                            <Spinner
+                                android:id="@+id/edit_sync_task_option_spinner_offset_daylight_saving_time_value"
+                                style="?android:attr/spinnerStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.4"
+                                android:layout_marginRight="5dp"
+                                android:minHeight="36dp"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </LinearLayout>
+
                     </LinearLayout>
-                    <include layout="@layout/divider_line1" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -566,6 +578,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <include layout="@layout/divider_line1" />
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ignore_unusable_character_used_directory_file_name"
                     android:layout_width="fill_parent"
@@ -590,7 +603,6 @@
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_option_remove_directory_if_empty_when_move"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                <include layout="@layout/divider_line1" />
             </LinearLayout>
 
             <LinearLayout

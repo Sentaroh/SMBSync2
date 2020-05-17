@@ -111,8 +111,6 @@
         <string name="msgs_filter_list_dlg_not_specified">Not specified</string>
         <string name="msgs_filter_list_duplicate_filter_specified">%s already exists.</string>
         <string name="msgs_filter_list_filter_deleted">This entry was deleted.</string>
-        <string name="msgs_filter_list_same_directory_access">Filter is invalid.  Source and destination directories are the same.  Filter=%s</string>
-        <string name="msgs_filter_list_same_directory_access_not_excluded">The target directory cannot be excluded from the sync task (target folder: %s)</string>
         <string name="msgs_hist_cont_label_copy">Copy to clipboard</string>
         <string name="msgs_hist_cont_label_delete">Delete history item</string>
         <string name="msgs_hist_cont_label_move_bottom">Move to bottom</string>
@@ -211,10 +209,8 @@
         <string name="msgs_main_sync_profile_dlg_archive">Archive</string>
         <string name="msgs_main_sync_profile_dlg_copy">Copy</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Time difference tolerance (sec)</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_internal">Master and target folders on the internal storage are identical. You must select different source and destination directory names.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_same_dir">Master and target folders are identical. You must select different source and destination directory names.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_sdcard">Master and target folders on the SDCARD are identical. You must select different source and destination directory names.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_cobination_smb">Master and target SMB folders are identical. You must select different source and destination directory names.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Master and target folders on the internal storage are identical. You must select different source and destination directory names.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Access the same directory in the master and target folder, either change the directory or specify a directory filter.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Mirror</string>
         <string name="msgs_main_sync_profile_dlg_move">Move</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Specify the IP address or host name of the SMB server.</string>
@@ -280,7 +276,6 @@
         <string name="msgs_prof_cont_to_inactivate_profile">Set the following tasks to start on-demand</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">If source or destination are located on SMB server: set Start sync only in specified Wifi condition to \"Conn any AP\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">If source or destination are located on SMB server: set Start sync only in specified Wifi condition to \"Has private address\"?</string>
-        <string name="deleted_msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_off">If source and destination are not located on SMB server: set Start sync only in specified Wifi condition to \"Run even when off\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">When target folder is set to ZIP, the master folder must be internal storage. Master folder was reverted to internal storage.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_target_folder_to_internal">You can\'t use ZIP as a target unless the master folder is on internal storage. Target folder was reverted back.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_directory">Directory</string>
