@@ -5097,10 +5097,8 @@ public class SyncTaskEditor extends DialogFragment {
                 (sti.getMasterDirectoryName().equals("") && sti.getTargetDirectoryName().equals(""))) {
             msg=c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_internal);
         } else {
-            if (sti.getMasterDirectoryName().equals("") && !sti.getTargetDirectoryName().equals("")) {
-                //マスターが上位ディレクトリー
-                msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
-            } else if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
+            if ((sti.getMasterDirectoryName().equals("") && !sti.getTargetDirectoryName().equals("")) ||
+                    (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase()))) {
                 //マスターが上位ディレクトリー
                 if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
                     if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
@@ -5120,6 +5118,8 @@ public class SyncTaskEditor extends DialogFragment {
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                 result= isSameDirectoryAccess(mContext, sti, ctvSyncSpecificSubDir.isChecked());
+            } if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
+                if (!sti.isTargetZipUseExternalSdcard()) result= isSameDirectoryAccess(mContext, sti, ctvSyncSpecificSubDir.isChecked());
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
