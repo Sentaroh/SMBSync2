@@ -210,7 +210,7 @@
         <string name="msgs_main_sync_profile_dlg_copy">Copy</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Time difference tolerance (sec)</string>
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Master and target folders on the internal storage are identical. You must select different source and destination directory names.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Access the same directory in the master and target folder, either change the directory or specify a directory filter.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Master and target folder paths are identical. You must select different source and destination directory names or define proper folder filters.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Mirror</string>
         <string name="msgs_main_sync_profile_dlg_move">Move</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Specify the IP address or host name of the SMB server.</string>
