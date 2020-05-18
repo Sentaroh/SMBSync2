@@ -3391,8 +3391,8 @@ public class SyncTaskEditor extends DialogFragment {
             for (int i = 0; i < filter_list.size(); i++) {
                 String inc = filter_list.get(i).substring(0, 1);
                 String filter = filter_list.get(i).substring(1, filter_list.get(i).length());
-                if (inc.equals(SMBSYNC2_PROF_FILTER_INCLUDE)) cn = "(+)";
-                else cn = "(-)";
+                if (inc.equals(SMBSYNC2_PROF_FILTER_INCLUDE)) cn = "\u2295"; //(+) ASCII
+                else cn = "\u2296"; //(-) ASCII
                 t_info += cn + filter_list.get(i).substring(1, filter_list.get(i).length()) + ";";
             }
             if (!t_info.equals("")) info = t_info;
