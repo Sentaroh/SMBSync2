@@ -97,6 +97,7 @@ import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
 import static com.sentaroh.android.SMBSync2.Constants.ARCHIVE_FILE_TYPE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_DECRYPT_FAILED;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_ENCRYPT_FAILED;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_INCLUDE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_MONTH;
@@ -3388,8 +3389,11 @@ public class SyncTaskEditor extends DialogFragment {
         if (filter_list != null && filter_list.size() > 0) {
             String t_info = "", cn = "";
             for (int i = 0; i < filter_list.size(); i++) {
-                t_info += cn + filter_list.get(i).substring(1, filter_list.get(i).length());
-                cn = ",";
+                String inc = filter_list.get(i).substring(0, 1);
+                String filter = filter_list.get(i).substring(1, filter_list.get(i).length());
+                if (inc.equals(SMBSYNC2_PROF_FILTER_INCLUDE)) cn = "(+)";
+                else cn = "(-)";
+                t_info += cn + filter_list.get(i).substring(1, filter_list.get(i).length()) + ";";
             }
             if (!t_info.equals("")) info = t_info;
 //				info=mContext.getString(R.string.msgs_filter_list_dlg_filter_hint)+" : "+t_info;
