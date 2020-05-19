@@ -3324,6 +3324,12 @@ public class SyncTaskUtil {
                 TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_edit_dlg_msg);
 
                 String newfilter = et_filter.getText().toString();
+                if (newfilter.length() == 0) {
+                    //String mtxt = mContext.getString(R.string.msgs_filter_list_invalid_filter_specified);
+                    String mtxt = "Specified filter is invalid"; // to translate entry fr_msg: "Le filtre spécifié n\'est pas valide"
+                    dlg_msg.setText(String.format(mtxt, newfilter));
+                    return;
+                }
                 if (!filter.equalsIgnoreCase(newfilter)) {
                     if (isFilterExists(newfilter, fa)) {
                         String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
