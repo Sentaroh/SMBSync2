@@ -209,8 +209,8 @@
         <string name="msgs_main_sync_profile_dlg_archive">Archive</string>
         <string name="msgs_main_sync_profile_dlg_copy">Copy</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Time difference tolerance (sec)</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Master and target folders on the internal storage are identical. You must select different source and destination directory names.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Access the same directory in the master and target folder, either change the directory or specify a directory filter.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Master and target folders are identical. You must select different source and destination directory names.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Master and target folder paths are identical. You must select different source and destination directory names or define proper folder filters.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Mirror</string>
         <string name="msgs_main_sync_profile_dlg_move">Move</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Specify the IP address or host name of the SMB server.</string>
@@ -671,7 +671,7 @@
         <string name="msgs_schedule_confirm_msg_nosave">The schedule has changed. Exit without saving?</string>
         <string name="msgs_schedule_rename_schedule">Rename schedule</string>
         <string name="msgs_schedule_list_edit_no_schedule">Press add button to create new schedule.</string>
-        <string name="msgs_schedule_list_edit_scheduler_disabled">Scheduled sync was not performed because the schedule is disabled. To enable a scheduled sync, tap the toggle switch in front of the scheduled item.</string>
+        <string name="msgs_schedule_list_edit_scheduler_disabled">Scheduled tasks will not be executed because the scheduling service is disabled. To enable the scheduling service, tap the calendar icon in the top right corner of this window. You must  also enable the toggle switch in front of each sync plan to execute.</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Do you want to enable the schedule?</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Do you want to disable the schedule?</string>
         <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">Toggle Enable or Disable the schedule.</string>

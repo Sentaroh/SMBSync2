@@ -209,8 +209,8 @@
         <string name="msgs_main_sync_profile_dlg_archive">Архив</string>
         <string name="msgs_main_sync_profile_dlg_copy">Копия</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Last time of tolerance(Sec)</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Повторяющиеся имена каталогов существуют как во внутреннем хранилище, так и в месте назначения. Имена каталогов источника и назначения должны быть разными.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Получите доступ к одному и тому же каталогу в основной и целевой папке, либо измените каталог, либо укажите фильтр каталогов.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Главная и целевая папки идентичны. Вы должны выбрать разные имена исходного и целевого каталогов.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Главный путь и путь к целевой папке идентичны. Вы должны выбрать разные имена исходного и целевого каталогов или определить соответствующие фильтры папок.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Зеркало</string>
         <string name="msgs_main_sync_profile_dlg_move">Переместить</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Укажите IP-адрес или имя хоста SMB-сервера.</string>
@@ -671,7 +671,7 @@
         <string name="msgs_schedule_confirm_msg_nosave">Расписание изменилось. Выход без сохранения?</string>
         <string name="msgs_schedule_rename_schedule">Переименовать расписание</string>
         <string name="msgs_schedule_list_edit_no_schedule">Нажмите кнопку Добавить, чтобы создать новое расписание.</string>
-        <string name="msgs_schedule_list_edit_scheduler_disabled">Синхронизация расписания не выполненна, поскольку расписание отключено. Чтобы выполнить синхронизацию по расписанию, коснитесь значка расписания в верхней части экрана, чтобы включить его.</string>
+        <string name="msgs_schedule_list_edit_scheduler_disabled">Запланированные задачи не будут выполняться, так как служба планирования отключена. Чтобы включить службу планирования, нажмите значок календаря в правом верхнем углу этого окна. Также необходимо включить тумблер перед каждым планом синхронизации для его выполнения.</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Вы хотите включить расписание?</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Вы хотите отключить расписание?</string>
         <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">Включить или отключить расписание.</string>
