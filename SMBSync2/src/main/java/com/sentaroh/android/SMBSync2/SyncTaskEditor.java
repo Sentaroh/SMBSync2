@@ -5060,7 +5060,7 @@ public class SyncTaskEditor extends DialogFragment {
         for(String item:sti.getDirFilter()) {
             String inc_exc=item.substring(0,1);
             String filter=master_dir.equals("")?item.substring(1):master_dir+"/"+item.substring(1);
-            Pattern pattern=Pattern.compile(MiscUtil.convertRegExp(filter.toLowerCase()));
+            Pattern pattern=Pattern.compile("^"+MiscUtil.convertRegExp(filter.toLowerCase())+"$");
             if (inc_exc.equals("I")) {
                 select_specified=true;
                 Matcher mt=pattern.matcher(sti.getTargetDirectoryName().toLowerCase());
@@ -5073,7 +5073,7 @@ public class SyncTaskEditor extends DialogFragment {
         for(String item:sti.getDirFilter()) {
             String inc_exc=item.substring(0,1);
             String filter=master_dir.equals("")?item.substring(1):master_dir+"/"+item.substring(1);
-            Pattern pattern=Pattern.compile(MiscUtil.convertRegExp(filter.toLowerCase()));
+            Pattern pattern=Pattern.compile("^"+MiscUtil.convertRegExp(filter.toLowerCase())+"$");
             if (inc_exc.equals("E")) {
                 exclude_specified=true;
                 Matcher mt=pattern.matcher(sti.getTargetDirectoryName().toLowerCase());
@@ -5101,17 +5101,59 @@ public class SyncTaskEditor extends DialogFragment {
                 (sti.getMasterDirectoryName().equals("") && sti.getTargetDirectoryName().equals(""))) {
             msg=c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_internal);
         } else {
-            if ((sti.getMasterDirectoryName().equals("") && !sti.getTargetDirectoryName().equals("")) ||
-                    (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase()))) {
-                //マスターが上位ディレクトリー
-                if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
-                    if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
+            if (sti.getMasterDirectoryName().equals("")) {
+                if (sti.getTargetDirectoryName().equals("")) {
+                    if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
                         msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
+                    } else {
+                        msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
                     }
                 } else {
-                    msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
+                    //マスターが上位ディレクトリー
+                    if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
+                        if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
+                            msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
+                        }
+                    } else {
+                        msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
+                    }
+                }
+            } else {
+                if (sti.getTargetDirectoryName().equals("")) {
+                    //ターゲットが上位ディレクトリー
+                    //NOP
+                } else {
+                    if (sti.getTargetDirectoryName().toLowerCase().equals(sti.getMasterDirectoryName().toLowerCase())) {
+                        if ((sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase()))) {
+                            //マスターが上位ディレクトリー
+                            if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
+                                if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
+                                    msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
+                                }
+                            } else {
+                                msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
+                            }
+                        } else {
+                            //Master not equals Target directory
+                            //NOP
+                        }
+                    }
                 }
             }
+//            if ((sti.getMasterDirectoryName().equals("") && !sti.getTargetDirectoryName().equals("")) ||
+//                    (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase()))) {
+//                //マスターが上位ディレクトリー
+//                if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
+//                    if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
+//
+//                    }
+//                    if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
+//                        msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
+//                    }
+//                } else {
+//                    msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
+//                }
+//            }
         }
         return msg;
     }
