@@ -3299,12 +3299,49 @@ public class SyncTaskUtil {
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
         if (!title_text.equals("")) title.setText(title_text);
+        TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_edit_dlg_msg);
+
+        final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_edit_dlg_cancel_btn);
+        final Button btn_ok = (Button) dialog.findViewById(R.id.filter_edit_dlg_ok_btn);
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_edit_dlg_filter);
         et_filter.setText(filter);
+
+        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified, filter));
+        et_filter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                dlg_msg.setText("");
+                if (s.length() == 0) {
+                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_dlg_not_specified));
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    return;
+                } else {
+                    if (!filter.equalsIgnoreCase(s.toString())) {
+                        if (isFilterExists(s.toString(), fa)) {
+                            dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified, s.toString()));
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            return;
+                        } else {
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        }
+                    } else {
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                    }
+                }
+            }
+        });
+
         // CANCELボタンの指定
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_edit_dlg_cancel_btn);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
@@ -3318,21 +3355,10 @@ public class SyncTaskUtil {
             }
         });
         // OKボタンの指定
-        Button btn_ok = (Button) dialog.findViewById(R.id.filter_edit_dlg_ok_btn);
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_edit_dlg_msg);
-
-                String newfilter = et_filter.getText().toString();
-                if (!filter.equalsIgnoreCase(newfilter)) {
-                    if (isFilterExists(newfilter, fa)) {
-                        String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
-                        dlg_msg.setText(String.format(mtxt, newfilter));
-                        return;
-                    }
-                }
                 dialog.dismiss();
-                fli.setFilter(newfilter);
+                fli.setFilter(et_filter.getText().toString());
 
                 fa.sort();
 
