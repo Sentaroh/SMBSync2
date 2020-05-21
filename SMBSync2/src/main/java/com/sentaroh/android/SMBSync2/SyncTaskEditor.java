@@ -5100,60 +5100,14 @@ public class SyncTaskEditor extends DialogFragment {
         if (sti.getMasterDirectoryName().toLowerCase().equals(sti.getTargetDirectoryName().toLowerCase()) ||
                 (sti.getMasterDirectoryName().equals("") && sti.getTargetDirectoryName().equals(""))) {
             msg=c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_internal);
-        } else {
-            if (sti.getMasterDirectoryName().equals("")) {
-                if (sti.getTargetDirectoryName().equals("")) {
-                    if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
-                        msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
-                    } else {
-                        msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
-                    }
-                } else {
-                    //マスターが上位ディレクトリー
-                    if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
-                        if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
-                            msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
-                        }
-                    } else {
-                        msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
-                    }
-                }
-            } else {
-                if (sti.getTargetDirectoryName().equals("")) {
-                    //ターゲットが上位ディレクトリー
-                    //NOP
-                } else {
-                    if (sti.getTargetDirectoryName().toLowerCase().equals(sti.getMasterDirectoryName().toLowerCase())) {
-                        if ((sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase()))) {
-                            //マスターが上位ディレクトリー
-                            if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
-                                if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
-                                    msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
-                                }
-                            } else {
-                                msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
-                            }
-                        } else {
-                            //Master not equals Target directory
-                            //NOP
-                        }
-                    }
-                }
-            }
-//            if ((sti.getMasterDirectoryName().equals("") && !sti.getTargetDirectoryName().equals("")) ||
-//                    (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase()))) {
-//                //マスターが上位ディレクトリー
-//                if (sti.getDirFilter().size() == 0 || !directory_filter_specified) {
-//                    if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
-//
-//                    }
-//                    if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
-//                        msg = c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir);
-//                    }
-//                } else {
-//                    msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
-//                }
-//            }
+        } else if (sti.getMasterDirectoryName().equals("") && !sti.getTargetDirectoryName().equals("")) {
+            //Filter check required
+            msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
+        } else if (!sti.getMasterDirectoryName().equals("") && sti.getTargetDirectoryName().equals("")) {
+            //Valid combination
+        } else if ((!sti.getMasterDirectoryName().equals("") && !sti.getTargetDirectoryName().equals("")) &&
+                (!sti.getMasterDirectoryName().equals(sti.getTargetDirectoryName().equals("")))) {
+            //Valid combination
         }
         return msg;
     }
