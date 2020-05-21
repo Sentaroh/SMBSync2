@@ -109,7 +109,7 @@
         <string name="msgs_filter_list_dlg_filter_added">Le filtre %s a été ajouté.</string>
         <string name="msgs_filter_list_dlg_filter_hint">Filtre</string>
         <string name="msgs_filter_list_dlg_not_specified">Non spécifié</string>
-        <string name="msgs_filter_list_duplicate_filter_specified">% existe déjà.</string>
+        <string name="msgs_filter_list_duplicate_filter_specified">%s existe déjà.</string>
         <string name="msgs_filter_list_filter_deleted">Cette entrée a été supprimée.</string>
         <string name="msgs_hist_cont_label_copy">Copier dans le presse-papier</string>
         <string name="msgs_hist_cont_label_delete">Supprimer l\'entrée de l\'historique</string>
