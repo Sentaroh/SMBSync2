@@ -123,7 +123,7 @@ public class SyncThreadCopyFile {
 
         if (to_dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) to_file_dir_tmp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
         else to_file_dir_tmp = stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
-        to_file_temp=to_file_dir_tmp+file_name;
+        to_file_temp=to_file_dir_tmp+System.currentTimeMillis();//file_name;
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
@@ -470,7 +470,7 @@ public class SyncThreadCopyFile {
 
         if (to_dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) to_file_dir_tmp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
         else to_file_dir_tmp = stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
-        to_file_temp=to_file_dir_tmp+file_name;
+        to_file_temp=to_file_dir_tmp+System.currentTimeMillis();//file_name;
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
@@ -791,7 +791,7 @@ public class SyncThreadCopyFile {
 
         if (to_dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) to_file_dir_tmp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
         else to_file_dir_tmp = stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
-        to_file_temp=to_file_dir_tmp+file_name;
+        to_file_temp=to_file_dir_tmp+System.currentTimeMillis();//file_name;
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
 
