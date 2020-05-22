@@ -158,7 +158,7 @@
         <string name="msgs_main_external_usb_select_activity_not_found_msg">Echec d\'affichage du menu autorisant l\'accès en écriture au Stockage USB.</string>
         <string name="msgs_main_external_usb_drive_not_found_msg">Le stockage USB n\'est pas monté. Fermer cet écran et monter le stockage USB avant de refaire l\'opération.</string>
         <string name="msgs_main_external_usb_select_path_not_available_msg">Le point de montage /storage/%s n\'a pas pu être trouvé. SMBSync2 ne peut pas utiliser ce dispositif de stockage USB.</string>
-        <string name="msgs_main_external_usb_select_required_cancel_msg">% synchronisation impossible sans autoriser l\'accès en écriture au stockage USB</string>
+        <string name="msgs_main_external_usb_select_required_cancel_msg">%s synchronisation impossible sans autoriser l\'accès en écriture au stockage USB</string>
         <string name="msgs_main_external_usb_select_required_select_msg_api23">Pour accéder au stockage USB, appuyer sur le bouton \"USB\" (1), puis sur \"Sélectionner\" (2).\n\nSi le menu "Ouvrir depuis" n\'apparait pas, appuyer le bouton menu dans le coin gauche en haut. </string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_FR.png</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_FR.png</string>
