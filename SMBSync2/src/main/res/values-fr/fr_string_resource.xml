@@ -110,7 +110,7 @@
         <string name="msgs_filter_list_dlg_filter_hint">Filtre</string>
         <string name="msgs_filter_list_dlg_not_specified">Non spécifié</string>
         <string name="msgs_filter_list_duplicate_filter_specified">%s existe déjà.</string>
-        <string name="msgs_filter_list_invaiid_filter_specified_wildcard_only_disallowed">Il est impossible d\'utiliser des filtres réservés à la faune. Veuillez le préciser comme \"NAME*\".</string>
+        <string name="msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed">Le filtre ne peut pas contenir uniquement des caractères génériques. Spécifier un format du type  \"DOSSIER*\".</string>
         <string name="msgs_filter_list_filter_deleted">Cette entrée a été supprimée.</string>
         <string name="msgs_hist_cont_label_copy">Copier dans le presse-papier</string>
         <string name="msgs_hist_cont_label_delete">Supprimer l\'entrée de l\'historique</string>
@@ -146,7 +146,7 @@
         <string name="msgs_main_location_service_warning_title">Avertissement concernant le service de localisation</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">Carte SD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">Echec d\'affichage du menu autorisant l\'accès en écriture à la carte SD.</string>
-        <string name="msgs_main_external_sdcard_select_required_cancel_msg">Synchronisation impossible sans autoriser l\'accès en écriture à la carte SD</string>
+        <string name="msgs_main_external_sdcard_select_required_cancel_msg">Synchronisation impossible sans autoriser l\'accès en écriture à la carte SD. Tâche=%s</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_api21">Pour accéder à la carte SD, appuyer sur le bouton \"Carte SD\" (1), puis sur \"Sélectionner\" (2).\n\nSi le menu "Ouvrir depuis" n\'apparait pas, appuyer le bouton menu dans le coin gauche en haut.</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_api23">Pour accéder à la carte SD, appuyer sur le bouton \"Carte SD\" (1), puis sur \"Sélectionner\" (2).\n\nSi le menu "Ouvrir depuis" n\'apparait pas, appuyer le bouton menu dans le coin gauche en haut.</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_FR.png</string>

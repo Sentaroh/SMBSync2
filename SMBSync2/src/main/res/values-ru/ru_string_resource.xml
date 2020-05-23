@@ -110,7 +110,7 @@
         <string name="msgs_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_filter_list_dlg_not_specified">Не определен</string>
         <string name="msgs_filter_list_duplicate_filter_specified">%s уже существует.</string>
-        <string name="msgs_filter_list_invaiid_filter_specified_wildcard_only_disallowed">Фильтры только для дикой природы не могут быть использованы. Пожалуйста, укажите это как \"NAME*\".</string>
+        <string name="msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed">Фильтры только для дикой природы не могут быть использованы. Пожалуйста, укажите это как \"NAME*\".</string>
         <string name="msgs_filter_list_filter_deleted">Эта запись была удалена.</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
@@ -146,7 +146,7 @@
         <string name="msgs_main_location_service_warning_title">Предупреждение службы определения местоположения</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">Карта SD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">Не удалось получить разрешение на запись SD карты.</string>
-        <string name="msgs_main_external_sdcard_select_required_cancel_msg">Вы не можите синхронизироваться, пока не будет предоставлено разрешение на запись в SD карту.</string>
+        <string name="msgs_main_external_sdcard_select_required_cancel_msg">Вы не можите синхронизироваться, пока не будет предоставлено разрешение на запись в SD карту. Задача=%s</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_api21">Для доступа к SDCARD: нажмите  SDCARD »(1), затем нажмите «Выбрать»(2). \n\nЕсли панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу. </string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_api23">Для доступа к SDCARD: нажмите  SDCARD »(1), затем нажмите «Выбрать»(2). \n\nЕсли панель «Открыть из» не отображается, нажмите кнопку меню в верхнем левом углу. </string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_EN.png</string>
@@ -527,8 +527,8 @@
         <string name="msgs_mirror_remote_addr_not_connected">Невозможно подключиться к адресу хоста SMB %s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Невозможно подключиться к узлу SMB %s через порт %s</string>
         <string name="msgs_mirror_remote_name_not_found">Не удалось найти имя хоста SMB, попробуйте его с IP-адресом. Имя хоста =</string>
-        <string name="msgs_mirror_same_directory_ignored">Файл был проигнорирован, потому что один и тот же файл не мог быть синхронизирован в ведущем и целевом. Файл=%</string>
-        <string name="msgs_mirror_same_file_ignored">Файл был проигнорирован, потому что один и тот же файл не мог быть синхронизирован в ведущем и целевом. Файл=%</string>
+        <string name="msgs_mirror_same_directory_ignored">Файл был проигнорирован, потому что один и тот же файл не мог быть синхронизирован в ведущем и целевом. Файл=%s</string>
+        <string name="msgs_mirror_same_file_ignored">Файл был проигнорирован, потому что один и тот же файл не мог быть синхронизирован в ведущем и целевом. Файл=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected">Невозможно подключиться к указанному серверу SMB. IP-адрес = %s</string>
         <string name="msgs_mirror_smb_addr_not_connected_with_port" formatted="false">Невозможно подключиться к указанному серверу SMB. IP-адрес = %s, порт = %s</string>
         <string name="msgs_mirror_smb_invalid_port_specified">Неверный номер порта: %s</string>

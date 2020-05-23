@@ -110,7 +110,7 @@
         <string name="msgs_filter_list_dlg_filter_hint">フィルター</string>
         <string name="msgs_filter_list_dlg_not_specified">無指定</string>
         <string name="msgs_filter_list_duplicate_filter_specified">%s は既に登録されています。</string>
-        <string name="msgs_filter_list_invaiid_filter_specified_wildcard_only_disallowed">ワイルドカードのみのフィルターは使用できません。\”NAME*\”のように指定してください。</string>
+        <string name="msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed">ワイルドカードのみのフィルターは使用できません。\”NAME*\”のように指定してください。</string>
         <string name="msgs_filter_list_filter_deleted">削除済み</string>
         <string name="msgs_hist_cont_label_copy">クリップボードにコピー</string>
         <string name="msgs_hist_cont_label_delete">履歴を削除する</string>

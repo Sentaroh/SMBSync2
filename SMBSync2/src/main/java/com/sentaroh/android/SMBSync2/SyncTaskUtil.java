@@ -3193,7 +3193,7 @@ public class SyncTaskUtil {
                 dlg_msg.setText("");
                 String newfilter = et_filter.getText().toString();
                 if (newfilter.equals("*")) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invaiid_filter_specified_wildcard_only_disallowed));
+                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
                     return;
                 }
                 if (isFilterExists(newfilter, filterAdapter)) {
@@ -3362,7 +3362,7 @@ public class SyncTaskUtil {
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (et_filter.getText().toString().equals("*")) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invaiid_filter_specified_wildcard_only_disallowed));
+                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 }
