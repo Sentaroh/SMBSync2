@@ -3727,7 +3727,11 @@ public class SyncTaskEditor extends DialogFragment {
                 boolean isChecked = !ctvSyncSpecificSubDir.isChecked();
                 ctvSyncSpecificSubDir.setChecked(isChecked);
                 if (isChecked) ll_dir_filter_detail.setVisibility(Button.VISIBLE);
-                else ll_dir_filter_detail.setVisibility(Button.GONE);
+                else {
+                    ll_dir_filter_detail.setVisibility(Button.GONE);
+                    n_sti.getDirFilter().clear();
+                    dir_filter_btn.setText(buildFilterInfo(n_sti.getDirFilter()));
+                }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
         });
@@ -5097,17 +5101,26 @@ public class SyncTaskEditor extends DialogFragment {
 
     static public String isSameDirectoryAccess(Context c, SyncTaskItem sti, boolean directory_filter_specified) {
         String msg="";
-        if (sti.getMasterDirectoryName().toLowerCase().equals(sti.getTargetDirectoryName().toLowerCase()) ||
-                (sti.getMasterDirectoryName().equals("") && sti.getTargetDirectoryName().equals(""))) {
-            msg=c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_internal);
-        } else if (sti.getMasterDirectoryName().equals("") && !sti.getTargetDirectoryName().equals("")) {
-            //Filter check required
-            msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
-        } else if (!sti.getMasterDirectoryName().equals("") && sti.getTargetDirectoryName().equals("")) {
-            //Valid combination
-        } else if ((!sti.getMasterDirectoryName().equals("") && !sti.getTargetDirectoryName().equals("")) &&
-                (!sti.getMasterDirectoryName().equals(sti.getTargetDirectoryName().equals("")))) {
-            //Valid combination
+        if (sti.getMasterDirectoryName().equals("")) {
+            if (sti.getTargetDirectoryName().equals("")) {
+                msg=c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_internal);
+            } else {
+                //Masterが上位
+                msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
+            }
+        } else {
+            if (sti.getTargetDirectoryName().equals("")) {
+                //Valid combination
+            } else {
+                if (sti.getMasterDirectoryName().toLowerCase().equals(sti.getTargetDirectoryName().toLowerCase())) {
+                    msg=c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_internal);
+                } else {
+                    if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
+                        //Masterが上位
+                        msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
+                    }
+                }
+            }
         }
         return msg;
     }

@@ -3192,6 +3192,10 @@ public class SyncTaskUtil {
             public void onClick(View v) {
                 dlg_msg.setText("");
                 String newfilter = et_filter.getText().toString();
+                if (newfilter.equals("*")) {
+                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invaiid_filter_specified_wildcard_only_disallowed));
+                    return;
+                }
                 if (isFilterExists(newfilter, filterAdapter)) {
                     String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                     dlg_msg.setText(String.format(mtxt, newfilter));
@@ -3357,6 +3361,11 @@ public class SyncTaskUtil {
         // OKボタンの指定
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (et_filter.getText().toString().equals("*")) {
+                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invaiid_filter_specified_wildcard_only_disallowed));
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    return;
+                }
                 dialog.dismiss();
                 fli.setFilter(et_filter.getText().toString());
 

@@ -110,6 +110,7 @@
         <string name="msgs_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_filter_list_dlg_not_specified">Не определен</string>
         <string name="msgs_filter_list_duplicate_filter_specified">%s уже существует.</string>
+        <string name="msgs_filter_list_invaiid_filter_specified_wildcard_only_disallowed">Фильтры только для дикой природы не могут быть использованы. Пожалуйста, укажите это как \"NAME*\".</string>
         <string name="msgs_filter_list_filter_deleted">Эта запись была удалена.</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
