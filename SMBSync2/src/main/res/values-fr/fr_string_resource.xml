@@ -111,6 +111,7 @@
         <string name="msgs_filter_list_dlg_not_specified">Non spécifié</string>
         <string name="msgs_filter_list_duplicate_filter_specified">%s existe déjà.</string>
         <string name="msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed">Le filtre ne peut pas contenir uniquement des caractères génériques. Spécifier un format du type  \"DOSSIER*\".</string>
+        <string name="msgs_filter_list_invalid_filter_specified_redundant_wildcard">Un joker (\"*\") est specifie a la suite. Veuillez supprimer tout double de joker. Exemple : \"**\"->\"*\"</string>
         <string name="msgs_filter_list_filter_deleted">Cette entrée a été supprimée.</string>
         <string name="msgs_hist_cont_label_copy">Copier dans le presse-papier</string>
         <string name="msgs_hist_cont_label_delete">Supprimer l\'entrée de l\'historique</string>

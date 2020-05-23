@@ -103,6 +103,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.regex.Pattern;
 
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_ACCESS_DENIED;
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_INVALID_LOGON_TYPE;
@@ -3163,17 +3164,26 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
-                    if (isFilterExists(s.toString().trim(), filterAdapter)) {
-                        String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
-                        dlg_msg.setText(String.format(mtxt, s.toString().trim()));
+                    String new_filter=removeRedundantWildcard(s.toString());
+                    if (s.length()!=new_filter.length()) {
+                        dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_redundant_wildcard));
+                        dlg_msg.setVisibility(TextView.VISIBLE);
                         CommonDialog.setViewEnabled(mActivity, addbtn, false);
                         CommonDialog.setViewEnabled(mActivity, dirbtn, true);
                         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     } else {
-                        dlg_msg.setText("");
-                        CommonDialog.setViewEnabled(mActivity, addbtn, true);
-                        CommonDialog.setViewEnabled(mActivity, dirbtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        if (isFilterExists(s.toString().trim(), filterAdapter)) {
+                            String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                            dlg_msg.setText(String.format(mtxt, s.toString().trim()));
+                            CommonDialog.setViewEnabled(mActivity, addbtn, false);
+                            CommonDialog.setViewEnabled(mActivity, dirbtn, true);
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        } else {
+                            dlg_msg.setText("");
+                            CommonDialog.setViewEnabled(mActivity, addbtn, true);
+                            CommonDialog.setViewEnabled(mActivity, dirbtn, false);
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        }
                     }
                 } else {
                     CommonDialog.setViewEnabled(mActivity, addbtn, false);
@@ -3192,7 +3202,7 @@ public class SyncTaskUtil {
             public void onClick(View v) {
                 dlg_msg.setText("");
                 String newfilter = et_filter.getText().toString();
-                if (newfilter.equals("*")) {
+                if (isFilterIsWildcardOnly(newfilter)) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
                     return;
                 }
@@ -3285,6 +3295,22 @@ public class SyncTaskUtil {
 
     }
 
+    private String removeRedundantWildcard(String filter) {
+        String reformat_filter=filter;
+        String wc_dup="**";
+        while(reformat_filter.contains(wc_dup)) {
+            reformat_filter=reformat_filter.replace(wc_dup,"*");
+        }
+        return reformat_filter;
+    }
+
+    private boolean isFilterIsWildcardOnly(String filter) {
+        boolean result=false;
+        String reformat_filter=removeRedundantWildcard(filter);
+        if (reformat_filter.equals("*") || reformat_filter.equals("*.*")) return true;
+        else return false;
+    }
+
     private void editFilter(final int edit_idx, final AdapterFilterList fa,
                             final AdapterFilterList.FilterListItem fli, final String filter, String title_text, final NotifyEvent p_ntfy) {
 
@@ -3330,16 +3356,22 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 } else {
-                    if (!filter.equalsIgnoreCase(s.toString())) {
-                        if (isFilterExists(s.toString(), fa)) {
-                            dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified, s.toString()));
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                            return;
+                    String new_filter=removeRedundantWildcard(s.toString());
+                    if (s.length()!=new_filter.length()) {
+                        dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_redundant_wildcard));
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    } else {
+                        if (!filter.equalsIgnoreCase(s.toString())) {
+                            if (isFilterExists(s.toString(), fa)) {
+                                dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified, s.toString()));
+                                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                                return;
+                            } else {
+                                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                            }
                         } else {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                         }
-                    } else {
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
                 }
             }
@@ -3361,7 +3393,7 @@ public class SyncTaskUtil {
         // OKボタンの指定
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (et_filter.getText().toString().equals("*")) {
+                if (isFilterIsWildcardOnly(et_filter.getText().toString())) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
