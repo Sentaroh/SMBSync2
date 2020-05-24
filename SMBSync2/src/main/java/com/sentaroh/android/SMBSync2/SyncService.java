@@ -312,25 +312,25 @@ public class SyncService extends Service {
         if (mGp.syncTaskList.size()>0) {
             for(int i=0;i<mGp.syncTaskList.size();i++) {
                 SyncTaskItem sti=mGp.syncTaskList.get(i);
-                if (task_type.equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST)) {
+                if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST.toLowerCase())) {
                     if (sti.isSyncTestMode()) {
                         reply_list+=sep+sti.getSyncTaskName();
                         sep=",";
                         reply_count++;
                     }
-                } else if (task_type.equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO)) {
+                } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO.toLowerCase())) {
                     if (sti.isSyncTaskAuto()) {
                         reply_list+=sep+sti.getSyncTaskName();
                         sep=",";
                         reply_count++;
                     }
-                } else if (task_type.equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL)) {
+                } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL.toLowerCase())) {
                     if (!sti.isSyncTaskAuto()) {
                         reply_list+=sep+sti.getSyncTaskName();
                         sep=",";
                         reply_count++;
                     }
-                } else if (task_type.equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL)) {
+                } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL.toLowerCase())) {
                     reply_list+=sep+sti.getSyncTaskName();
                     sep=",";
                     reply_count++;
