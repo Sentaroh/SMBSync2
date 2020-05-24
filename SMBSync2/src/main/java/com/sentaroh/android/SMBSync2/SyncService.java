@@ -50,6 +50,15 @@ import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE;
+import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL;
+import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO;
+import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL;
+import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST;
+import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_INTENT;
+import static com.sentaroh.android.SMBSync2.Constants.REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY;
+import static com.sentaroh.android.SMBSync2.Constants.REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT;
+import static com.sentaroh.android.SMBSync2.Constants.REPLY_SYNC_TASK_INTENT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_AUTO_SYNC_INTENT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_EXTRA_PARM_SYNC_PROFILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
@@ -196,6 +205,9 @@ public class SyncService extends Service {
         } else if (action.equals(SMBSYNC2_AUTO_SYNC_INTENT)) {
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             startSyncByShortcut(intent);
+        } else if (action.equals(QUERY_SYNC_TASK_INTENT)) {
+            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
+            processQuerySyncTask(intent);
         } else if (action.equals(SMBSYNC2_SERVICE_HEART_BEAT)) {
 //			mUtil.addDebugMsg(0,"I","onStartCommand entered, action="+action);
             if (mHeartBeatActive) setHeartBeat();
@@ -289,6 +301,46 @@ public class SyncService extends Service {
                 return si;
         }
         return null;
+    }
+
+    private void processQuerySyncTask(Intent in) {
+        String reply_list="", sep="";
+        String task_type=QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO;
+        if (in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE)!=null) task_type=in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE);
+        mUtil.addDebugMsg(1,"I","extra="+in.getExtras()+", str="+in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE));
+        int reply_count=0;
+        if (mGp.syncTaskList.size()>0) {
+            for(int i=0;i<mGp.syncTaskList.size();i++) {
+                SyncTaskItem sti=mGp.syncTaskList.get(i);
+                if (task_type.equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST)) {
+                    if (sti.isSyncTestMode()) {
+                        reply_list+=sep+sti.getSyncTaskName();
+                        sep=",";
+                        reply_count++;
+                    }
+                } else if (task_type.equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO)) {
+                    if (sti.isSyncTaskAuto()) {
+                        reply_list+=sep+sti.getSyncTaskName();
+                        sep=",";
+                        reply_count++;
+                    }
+                } else if (task_type.equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL)) {
+                    if (!sti.isSyncTaskAuto()) {
+                        reply_list+=sep+sti.getSyncTaskName();
+                        sep=",";
+                        reply_count++;
+                    }
+                } else if (task_type.equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL)) {
+                    reply_list+=sep+sti.getSyncTaskName();
+                    sep=",";
+                    reply_count++;
+                }
+            }
+        }
+        Intent reply=new Intent(REPLY_SYNC_TASK_INTENT);
+        reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT, reply_count);
+        reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY, reply_list);
+        mContext.sendBroadcast(reply);
     }
 
     private void startSyncByScheduler(Intent in) {

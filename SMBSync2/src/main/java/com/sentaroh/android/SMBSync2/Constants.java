@@ -93,7 +93,17 @@ public class Constants {
 	public final static String SMBSYNC2_START_SYNC_INTENT="com.sentaroh.android."+APPLICATION_TAG+".ACTION_START_SYNC";
 	public final static String SMBSYNC2_EXTRA_PARM_SYNC_PROFILE="SyncProfile";
 	public final static String SMBSYNC2_AUTO_SYNC_INTENT="com.sentaroh.android."+APPLICATION_TAG+".ACTION_AUTO_SYNC";
-	
+
+    public final static String QUERY_SYNC_TASK_INTENT ="com.sentaroh.android."+APPLICATION_TAG+".ACTION_QUERY_SYNC_TASK";
+    public final static String QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE ="TaskType";
+    public final static String QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL ="All";
+    public final static String QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO ="Auto";
+    public final static String QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL ="Manual";
+    public final static String QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST ="Test";
+    public final static String REPLY_SYNC_TASK_INTENT ="com.sentaroh.android."+APPLICATION_TAG+".ACTION_REPLY_SYNC_TASK";
+    public final static String REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT ="SyncCount";
+    public final static String REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY ="SyncList";
+
 	public final static String SMBSYNC2_SERVICE_HEART_BEAT="com.sentaroh.android."+APPLICATION_TAG+".ACTION_SERVICE_HEART_BEAT";
 
 	public final static String SMBSYNC2_SYNC_STARTED="com.sentaroh.android."+APPLICATION_TAG+".ACTION_SYNC_STARTED";

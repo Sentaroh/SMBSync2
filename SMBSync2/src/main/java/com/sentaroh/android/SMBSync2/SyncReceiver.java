@@ -45,6 +45,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_INTENT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_AUTO_SYNC_INTENT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SERVICE_HEART_BEAT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_START_SYNC_INTENT;
@@ -155,6 +156,17 @@ public class SyncReceiver extends BroadcastReceiver {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
                 Intent in = new Intent(mContext, SyncService.class);
                 in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
+                if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
+                try {
+                    mContext.startService(in);
+                } catch(Exception e) {
+                    mLog.addDebugMsg(1,"E", "Start intent error=" + e.getMessage());
+                    mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
+                }
+            } else if (action.equals(QUERY_SYNC_TASK_INTENT)) {
+                mLog.addDebugMsg(1, "I", "Receiver action=" + action);
+                Intent in = new Intent(mContext, SyncService.class);
+                in.setAction(QUERY_SYNC_TASK_INTENT);
                 if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
                 try {
                     mContext.startService(in);

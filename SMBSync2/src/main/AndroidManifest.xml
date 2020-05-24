@@ -46,6 +46,7 @@
 				<action android:name="com.sentaroh.android.SMBSync2.ACTION_SET_TIMER_IF_NOT_SET" />
 				<action android:name="com.sentaroh.android.SMBSync2.ACTION_START_SYNC"/>
 				<action android:name="com.sentaroh.android.SMBSync2.ACTION_AUTO_SYNC"/>
+                <action android:name="com.sentaroh.android.SMBSync2.ACTION_QUERY_SYNC_TASK"/>
 				<action android:name="com.sentaroh.android.SMBSync2.ACTION_SERVICE_HEART_BEAT"/>
  												
 			</intent-filter>
@@ -116,6 +117,7 @@
             <intent-filter >
                 <action android:name="com.sentaroh.android.SMBSync2.ACTION_START_SYNC"/>
                 <action android:name="com.sentaroh.android.SMBSync2.ACTION_AUTO_SYNC"/>
+                <action android:name="com.sentaroh.android.SMBSync2.ACTION_QUERY_SYNC_TASK"/>
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
