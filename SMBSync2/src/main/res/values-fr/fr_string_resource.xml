@@ -169,7 +169,7 @@
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">L\'emplacement "carte SD" a été sélectionné. Voulez-vous resélectionner le stockage USB?</string>
         <string name="msgs_main_permission_coarse_location_denied_msg">Si vous choisissez \"Liste SSID\" ou \"Wifi Sélectionnés\" dans les paramètres de la tâche, la synchronisation échouera si vous n\'accordez pas la permission d\'accès au service de localisation. Merci d\'autoriser "Permission d\'accès au service de localisation" dans le menu.</string>
         <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 nécessite la permission d\'accès au service de localisation pour pouvoir identifier le SSID du réseau Wifi.\nSi vous spécifiez \"Wifi Sélectionnés\", la synchronisation échouera tant que cette permission n\'est pas accordée.\nVoulez vous demander l\'accès à la localisation?</string>
-        <string name="msgs_main_permission_coarse_location_title">Permission d\'Accès à la Localisation</string>
+        <string name="msgs_main_permission_coarse_location_title">Permission pour la Localisation</string>
         <string name="msgs_main_permission_external_storage_denied_msg">L\'application ne peut pas démarrer, car elle ne dispose pas de l\'autorisation d\'accès au stockage interne.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Autorisez l\'accès au stockage interne pour permettre la lecture et l\'écriture des données synchronisées ainsi que pour la gestion des paramètres de l\'application. </string>
         <string name="msgs_main_permission_external_storage_title">Permission d\'Accès au Stockage Interne</string>
