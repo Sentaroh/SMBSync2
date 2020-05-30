@@ -823,6 +823,9 @@
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Показать приложение в портретной ориентации</string>
         <string name="settings_device_orientation_portrait_title">Разрешить портретную ориентацию</string>
+        <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
+        <string name="settings_device_orientation_landscape_tablet_summary_ena">Всегда отображать многопанельное представление в альбомной ориентации, даже на экране с низкой плотностью</string>
+        <string name="settings_device_orientation_landscape_tablet_title">Вид планшета в ландшафтном режиме</string>
         <string name="settings_dim_screen_on_while_sync">settings_dim_screen_on_while_sync</string>
         <string name="settings_dim_screen_on_while_sync_summary_ena">Если вы начнете синхронизацию, когда экран горит, экран будет гореть до конца синхронизации.</string>
         <string name="settings_dim_screen_on_while_sync_title">Активировать отображение во время выполнения задачи</string>

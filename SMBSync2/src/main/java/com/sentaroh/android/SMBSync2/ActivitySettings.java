@@ -162,7 +162,7 @@ public class ActivitySettings extends PreferenceActivity {
         boolean land_mp = (y_px/metrics.density) >= multiPaneDP;
 
         int orientation = context.getResources().getConfiguration().orientation;
-        boolean sc_land_mp = land_mp && orientation == Configuration.ORIENTATION_LANDSCAPE; //screen is in landscape orientation and width size >= multiPaneDP
+        boolean sc_land_mp = (land_mp || mGp.settingForceDeviceTabletViewInLandscape) && orientation == Configuration.ORIENTATION_LANDSCAPE; //screen is in landscape orientation and either width size >= multiPaneDP or user forced MultiPanel view in landscape
 //        cu.addDebugMsg(1, "I", "orientation="+orientation+", density="+metrics.density+", x_dpi="+metrics.xdpi+", y_dpi="+metrics.ydpi+
 //                ", densityDpi="+metrics.densityDpi+", heightPixels="+metrics.heightPixels+", widthPixels="+metrics.widthPixels+", sz_mp="+sz_mp+", sc_or="+sc_or);
         return portrait_mp||sc_land_mp; //use MultiPane display in portrait if width >= multiPaneDP or in landscape if largest screen side >= multiPaneDP
@@ -295,9 +295,14 @@ public class ActivitySettings extends PreferenceActivity {
             }
         } else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
             isChecked = true;
-//			boolean orientation=shared_pref.getBoolean(key_string,false);
-//            if (orientation) mPrefActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            boolean forcePortrait=shared_pref.getBoolean(key_string,false);
+//            if (forcePortrait) mPrefActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //            else mPrefActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+            Preference tabletLand = mPrefFrag.findPreference(c.getString(R.string.settings_device_orientation_landscape_tablet));
+            if (forcePortrait) tabletLand.setEnabled(false);
+            else tabletLand.setEnabled(true);
+        } else if (key_string.equals(c.getString(R.string.settings_device_orientation_landscape_tablet))) {
+            isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_dim_screen_on_while_sync))) {
             isChecked = true;
         }
@@ -687,6 +692,7 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_vibrate_when_sync_ended), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_portrait), getFragmentManager());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_landscape_tablet), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_dim_screen_on_while_sync), getFragmentManager());
 
         }

@@ -823,6 +823,9 @@
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">端末の向きをポートレイトに固定する</string>
         <string name="settings_device_orientation_portrait_title">端末の向き</string>
+        <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
+        <string name="settings_device_orientation_landscape_tablet_summary_ena">低密度の画面でも、常にマルチペインビューを横向きで表示する</string>
+        <string name="settings_device_orientation_landscape_tablet_title">横向きモードのタブレットビュー</string>
         <string name="settings_dim_screen_on_while_sync">settings_dim_screen_on_while_sync</string>
         <string name="settings_dim_screen_on_while_sync_summary_ena">画面点灯時に同期を開始した場合は同期終了まで画面を点灯させる</string>
         <string name="settings_dim_screen_on_while_sync_title">同期中の画面点灯</string>

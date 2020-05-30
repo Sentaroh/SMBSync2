@@ -153,6 +153,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean settingSupressLocationServiceWarning =false;
     public boolean settingSuppressShortcutWarning = true;
     public boolean settingFixDeviceOrientationToPortrait = false;
+    public boolean settingForceDeviceTabletViewInLandscape = false;
 
     public String settingSecurityApplicationPasswordHashValue = "";
 //    public boolean settingSecurityApplicationPassword = false;
@@ -464,6 +465,8 @@ public class GlobalParameters extends CommonGlobalParms {
 
         if (!prefs.contains(appContext.getString(R.string.settings_dim_screen_on_while_sync)))
             prefs.edit().putBoolean(appContext.getString(R.string.settings_dim_screen_on_while_sync), true).commit();
+        if (!prefs.contains(appContext.getString(R.string.settings_device_orientation_landscape_tablet)))
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_device_orientation_landscape_tablet), false).commit();
         if (!prefs.contains(appContext.getString(R.string.settings_notification_message_when_sync_ended)))
             prefs.edit().putString(appContext.getString(R.string.settings_notification_message_when_sync_ended),
                     SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS).commit();
@@ -567,6 +570,9 @@ public class GlobalParameters extends CommonGlobalParms {
 //        } else {
 //            applicationTheme = R.style.MainBlack;
 //        }
+
+        settingForceDeviceTabletViewInLandscape = prefs.getBoolean(appContext.getString(R.string.settings_device_orientation_landscape_tablet), false);
+
         settingFixDeviceOrientationToPortrait = prefs.getBoolean(appContext.getString(R.string.settings_device_orientation_portrait), false);
 
         settingPreventSyncStartDelay = prefs.getBoolean(appContext.getString(R.string.settings_dim_screen_on_while_sync), true);

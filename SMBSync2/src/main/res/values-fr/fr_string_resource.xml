@@ -823,6 +823,9 @@
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Afficher l\'application en mode portrait</string>
         <string name="settings_device_orientation_portrait_title">Forcer le Mode Portrait</string>
+        <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
+        <string name="settings_device_orientation_landscape_tablet_summary_ena">Toujours afficher la vue multi-volets quand le téléphone est orienté en mode paysage, même sur les écrans de basse résolution</string>
+        <string name="settings_device_orientation_landscape_tablet_title">Vue Tablette en Mode Paysage</string>
         <string name="settings_dim_screen_on_while_sync">settings_dim_screen_on_while_sync</string>
         <string name="settings_dim_screen_on_while_sync_summary_ena">Maintenir l\'écran allumé si la synchronisation a débuté alors qu\'il  était déjà allumé.</string>
         <string name="settings_dim_screen_on_while_sync_title">Eviter le Délai de Synchronisation</string>
