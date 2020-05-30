@@ -187,6 +187,10 @@ public class ActivitySettings extends PreferenceActivity {
         super.onDestroy();
         if (mGp.settingDebugLevel > 0)
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+        mGp=null;// properly destroy all static references to Context to avoid memory leak
+        mContext=null;
+        mPrefActivity=null;
+        mPrefFrag=null;
     }
 
     private static void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, FragmentManager fm) {
