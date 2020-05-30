@@ -266,6 +266,8 @@ public final class CommonUtilities {
         out.add("  Vibrate when sync ended="+gp.settingVibrateWhenSyncEnded);
         out.add("  Fix device oprientation portrait="+gp.settingFixDeviceOrientationToPortrait);
         out.add("  Force tablet view in landscape="+gp.settingForceDeviceTabletViewInLandscape);
+        out.add("  Screen theme language="+gp.settingScreenThemeLanguage);
+        out.add("  Screen theme language value="+gp.settingScreenThemeLanguageValue);
         out.add("  Screen theme="+gp.settingScreenTheme);
         out.add("  Screen on if screen on at start of the sync="+gp.settingScreenOnIfScreenOnAtStartOfSync);
 

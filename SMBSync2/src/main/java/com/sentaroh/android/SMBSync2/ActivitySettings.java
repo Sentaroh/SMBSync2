@@ -60,6 +60,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICA
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_BLACK;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LIGHT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_STANDARD;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_NO;
@@ -86,6 +87,11 @@ public class ActivitySettings extends PreferenceActivity {
         // 使用できる Fragment か確認する
 
         return true;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(new GlobalParameters().setNewLocale(base, false));
     }
 
     @Override
@@ -191,6 +197,15 @@ public class ActivitySettings extends PreferenceActivity {
         mContext=null;
         mPrefActivity=null;
         mPrefFrag=null;
+        
+    }
+
+    @Override
+    public void onConfigurationChanged(final Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        mGp.setNewLocale(this, false);
+        //this.recreate();//needed only in Legacy mode if language is different from System Default
     }
 
     private static void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, FragmentManager fm) {
@@ -292,6 +307,15 @@ public class ActivitySettings extends PreferenceActivity {
                 Intent intent = new Intent(mPrefActivity, ActivitySettings.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 mPrefActivity.startActivity(intent);
+            }
+        } else if (key_string.equals(c.getString(R.string.settings_screen_theme_language))) {
+            isChecked = true;
+            String lang_value=shared_pref.getString(key_string, SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM);
+            String[] lang_msgs = c.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
+            String sum_msg = lang_msgs[Integer.parseInt(lang_value)];
+            pref_key.setSummary(sum_msg);
+            if (!lang_value.equals(mGp.onStartSettingScreenThemeLanguageValue)) {//OnSharedPreferenceChangeListener() from preference fragment: language value was changed by user
+                mPrefActivity.finish();//finish current preferences activity. Will trigger checkThemeLanguageChanged() to force restart app from main activity
             }
         } else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
             isChecked = true;
@@ -693,6 +717,7 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_portrait), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_landscape_tablet), getFragmentManager());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme_language), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_dim_screen_on_while_sync), getFragmentManager());
 
         }

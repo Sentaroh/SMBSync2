@@ -15,6 +15,10 @@ import android.view.Window;
 public class ActivityNotification extends Activity {
     private ActivityNotification mActivity=null;
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(new GlobalParameters().setNewLocale(base, false));
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);

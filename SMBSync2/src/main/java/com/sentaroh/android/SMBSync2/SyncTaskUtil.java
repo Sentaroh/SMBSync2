@@ -7180,6 +7180,7 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_vibrate_when_sync_ended));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_device_orientation_portrait));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_device_orientation_landscape_tablet));
+        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_screen_theme_language));
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_screen_theme));
         saveSettingsParmsToFileBoolean(c, pw, true,     encrypt_required, cp, c.getString(R.string.settings_dim_screen_on_while_sync));
 

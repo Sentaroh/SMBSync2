@@ -187,6 +187,11 @@ public class ActivityMain extends AppCompatActivity {
      * Called when the activity is first created.
      */
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(new GlobalParameters().setNewLocale(base, true));
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -2048,7 +2053,7 @@ public class ActivityMain extends AppCompatActivity {
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         checkJcifsOptionChanged();
-
+        checkThemeLanguageChanged();
     }
 
     private void listSettingsOption() {
@@ -2070,6 +2075,7 @@ public class ActivityMain extends AppCompatActivity {
                 ", settingSupressLocationServiceWarning=" + mGp.settingSupressLocationServiceWarning +
                 ", settingFixDeviceOrientationToPortrait=" + mGp.settingFixDeviceOrientationToPortrait +
                 ", settingForceDeviceTabletViewInLandscape=" + mGp.settingForceDeviceTabletViewInLandscape +
+                ", settingScreenThemeLanguage=" + mGp.settingScreenThemeLanguage + " (value=" + mGp.settingScreenThemeLanguageValue + ")" +
                 ", settingExportedProfileEncryptRequired=" + mGp.settingExportedProfileEncryptRequired +
                 ", settingScreenTheme=" + mGp.applicationTheme+//.settingScreenTheme +
 
@@ -4900,6 +4906,32 @@ public class ActivityMain extends AppCompatActivity {
                     mContext.getString(R.string.msgs_smbsync_main_settings_jcifs_changed_restart), "", ntfy);
         }
 
+        return changed;
+    }
+    //restart app when language is changed
+    final private boolean checkThemeLanguageChanged() {// when language is changed, Preferences activity is terminated -> ActivityMain onActivityResult() calls checkThemeLanguageChanged()
+        boolean changed = false;
+
+        mGp.loadLanguagePreference();// load language value preference and refresh settingScreenThemeLanguage
+
+        if (!mGp.settingScreenThemeLanguageValue.equals(mGp.onStartSettingScreenThemeLanguageValue)) changed = true;
+
+        if (changed) {
+            listSettingsOption();
+            NotifyEvent ntfy=new NotifyEvent(mContext);
+            ntfy.setListener(new NotifyEventListener() {
+                @Override
+                public void positiveResponse(Context context, Object[] objects) {
+                    mUtil.flushLog();
+                    mGp.settingExitClean=true;
+                    finish();
+                }
+                @Override
+                public void negativeResponse(Context context, Object[] objects) {}
+            });
+            mUtil.showCommonDialog(false, "W",
+                    mContext.getString(R.string.msgs_smbsync_ui_settings_language_changed_restart), "", ntfy);
+        }
         return changed;
     }
 

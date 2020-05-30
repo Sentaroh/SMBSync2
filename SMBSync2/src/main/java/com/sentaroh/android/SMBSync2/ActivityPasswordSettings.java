@@ -3,6 +3,7 @@ package com.sentaroh.android.SMBSync2;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
@@ -40,6 +41,11 @@ public class ActivityPasswordSettings extends AppCompatActivity {
     private CheckedTextView mCtvSettingUseEditTask=null;
     private CheckedTextView mCtvSettingUseExportTask=null;
     private CheckedTextView mCtvSettingInitSmbAccount=null;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(new GlobalParameters().setNewLocale(base, false));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

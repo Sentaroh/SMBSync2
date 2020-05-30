@@ -38,6 +38,11 @@ public class ShortcutMakeAutoSync extends Activity {
     @TargetApi(25)
     @SuppressLint("NewApi")
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(new GlobalParameters().setNewLocale(base, true));
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.main);

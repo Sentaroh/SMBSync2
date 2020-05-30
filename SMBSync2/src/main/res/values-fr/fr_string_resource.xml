@@ -457,6 +457,7 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">L\'application a été redémarrée après avoir un arrêt forcé. Pour empêcher le redémarrage, activer l\'option \"Ne pas garder activités\" dans paramètres > Options de développement</string>
         <string name="msgs_smbsync_main_restart_by_killed">L\'application a été redémarrée après un arrêt forcé lors de son passage en arrière-plan.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">La configuration SMBv1 a été modifiée. Ce changement ne sera pas effectif avant le redémarrage de l\'application. Redémarrer l\'application maintenant ?</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">Après le changement de langue, l\'application doit redémarrer. Appuyer sur OK pour redémarrer maintenant.</string>
         <string name="msgs_smbsync_main_start">Application démarrée.</string>
         <string name="msgs_smnsync_main_kill_application">Forcer l\'arrêt de l\'application?</string>
         <string name="msgs_specify_task_name">Choisir un nom pour la nouvelle tâche</string>
@@ -943,6 +944,23 @@
         <string name="settings_sync_message_use_standard_text_view_title">Rendu des Messages de Sync</string>
         <string name="settings_sync_title">Synchronisation</string>
         <string name="settings_ui_title">Interface Utilisateur</string>
+        <string name="settings_screen_theme_language">settings_screen_theme_language</string>
+        <string name="settings_screen_theme_language_title">Langue</string>
+        <string name="settings_screen_theme_language_dialog_title">Changer la Langue\nEntrainera un redémarrage!!</string>
+        <string-array name="settings_screen_theme_language_list_entries">
+            <item>Langue par défaut</item>
+            <item>English (en)</item>
+            <item>Français (fr)</item>
+            <item>日本語 (ja)</item>
+            <item>русский (ru)</item>
+        </string-array >
+        <string-array name="settings_screen_theme_language_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+        </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Thème d\'Affichage</string>
         <string name="settings_screen_theme_dialog_title">Thème d\'affichage</string>
