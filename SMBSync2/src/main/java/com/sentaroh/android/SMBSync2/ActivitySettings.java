@@ -90,7 +90,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mContext = getApplicationContext();
+        mContext = this;
 //        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -135,7 +135,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     @Override
     public boolean onIsMultiPane() {
-        mContext =getApplicationContext();
+//        mContext =this;//we're in GUI, we have a context already, if needed, use "this" and not getApplicationContext() for GUI
 //        mGp = (GlobalParameters) getApplication();
 //        mGp = (GlobalParameters) getApplicationContext();//getApplication();
         mGp= GlobalWorkArea.getGlobalParameters(mContext);

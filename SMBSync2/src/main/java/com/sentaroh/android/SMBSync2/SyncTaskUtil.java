@@ -159,9 +159,9 @@ public class SyncTaskUtil {
     private GlobalParameters mGp = null;
     private FragmentManager mFragMgr = null;
 
-    SyncTaskUtil(CommonUtilities mu, Activity a,
+    SyncTaskUtil(CommonUtilities mu, Activity a, Context c,//we need a proper Activity context for GUI messages referenced by Context
                  CommonDialog cd, CustomContextMenu ccm, GlobalParameters gp, FragmentManager fm) {
-        mContext = a.getApplicationContext();
+        mContext = c;
         mGp = gp;
         mUtil = mu;
         mCommonDlg = cd;
