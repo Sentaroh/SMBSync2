@@ -3,8 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_sync_task_dlg_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:ignore="SpUsage,HardcodedText,RtlSymmetry,RtlHardcoded,ObsoleteLayoutParam,InefficientWeight,NestedWeights,ContentDescription" >
 
@@ -14,34 +14,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-	    <LinearLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-	        <LinearLayout
+	        <TextView
+	            android:id="@+id/edit_profile_sync_title"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"
+	            android:layout_marginLeft="5dp"
+	            android:layout_marginRight="5dp"
 	            android:layout_weight="1"
-	            android:gravity="center_horizontal"
-	            android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/edit_profile_sync_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="aa"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                <TextView
-                    android:id="@+id/edit_profile_sync_title_sub"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="bb"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-	        </LinearLayout>
+	            android:gravity="center"
+	            android:textAppearance="?android:attr/textAppearanceLarge" />
 
 	        <ImageButton
 	            android:id="@+id/edit_profile_sync_help"
@@ -50,12 +36,23 @@
 	            android:layout_gravity="right"
 	            android:scaleType="centerCrop"
 	            android:src="@drawable/ic_128_help" />
-	    </LinearLayout>
+	        	        
+        </LinearLayout>
 
-        <include layout="@layout/divider_line1_turquoise" />
+        <TextView
+            android:id="@+id/edit_profile_sync_title_sub"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
     </LinearLayout>
-    
-   <LinearLayout
+    <include layout="@layout/divider_line1_turquoise" />
+
+
+    <LinearLayout
        android:id="@+id/edit_profile_sync_content_view"
        android:layout_width="match_parent"
        android:layout_height="0dp"
