@@ -91,8 +91,6 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_ENABLED_KEY;
 
 public class GlobalParameters extends CommonGlobalParms {
-    public Context appContext = null;
-
     public boolean debuggable = false;
 
     public boolean activityIsFinished = true;
@@ -306,15 +304,15 @@ public class GlobalParameters extends CommonGlobalParms {
 //    public void onCreate() {
 //        super.onCreate();
 ////		Log.v("","onCreate dir="+getFilesDir().toString());
-//        appContext = this.getApplicationContext();
+//        c = this.getApplicationContext();
 //        uiHandler = new Handler();
 //        debuggable = isDebuggable();
 //
-//        mDimWakeLock = ((PowerManager) appContext.getSystemService(Context.POWER_SERVICE))
+//        mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE))
 //                .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-thread-dim");
-//        mPartialWakeLock = ((PowerManager) appContext.getSystemService(Context.POWER_SERVICE))
+//        mPartialWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE))
 //                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-thread-partial");
-//        WifiManager wm = (WifiManager) appContext.getSystemService(Context.WIFI_SERVICE);
+//        WifiManager wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
 //        mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "SMBSync2-thread");
 //
 //        internalRootDirectory = Environment.getExternalStorageDirectory().toString();//getInternalStorageRootDirectory();
@@ -331,17 +329,16 @@ public class GlobalParameters extends CommonGlobalParms {
 
     synchronized public void initGlobalParamter(Context c) {
 //		Log.v("","onCreate dir="+getFilesDir().toString());
-        appContext = c;
         uiHandler = new Handler();
-        debuggable = isDebuggable();
+        debuggable = isDebuggable(c);
 
-        mDimWakeLock = ((PowerManager) appContext.getSystemService(Context.POWER_SERVICE))
+        mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-thread-dim");
-        forceDimScreenWakelock = ((PowerManager) appContext.getSystemService(Context.POWER_SERVICE))
+        forceDimScreenWakelock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-thread-force-dim");
-        mPartialWakeLock = ((PowerManager) appContext.getSystemService(Context.POWER_SERVICE))
+        mPartialWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-thread-partial");
-        WifiManager wm = (WifiManager) appContext.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
         mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "SMBSync2-thread");
 
         try {
@@ -350,10 +347,10 @@ public class GlobalParameters extends CommonGlobalParms {
         } catch(Exception ex) {
             internalRootDirectory = Environment.getExternalStorageDirectory().toString();
         }
-        applicationRootDirectory = appContext.getFilesDir().toString();
+        applicationRootDirectory = c.getFilesDir().toString();
 
-        final LogUtil jcifs_ng_lu = new LogUtil(appContext, "SLF4J", this);
-        final LogUtil jcifs_old_lu = new LogUtil(appContext, "JCIFS-V1", this);
+        final LogUtil jcifs_ng_lu = new LogUtil(c, "SLF4J", this);
+        final LogUtil jcifs_old_lu = new LogUtil(c, "JCIFS-V1", this);
 
         PrintStream ps= null;
         OutputStream os=new OutputStream() {
@@ -390,11 +387,11 @@ public class GlobalParameters extends CommonGlobalParms {
         JcifsNgLogWriter jcifs_ng_lw=new JcifsNgLogWriter(jcifs_ng_lu);
         slf4jLog.setWriter(jcifs_ng_lw);
 
-        initStorageStatus();
+        initStorageStatus(c);
 
-        initSettingsParms();
-        loadSettingsParms();
-        setLogParms(this);
+        initSettingsParms(c);
+        loadSettingsParms(c);
+        setLogParms(c, this);
 
         if (msgList == null) {
             msgList=CommonUtilities.loadMsgList(this);
@@ -411,7 +408,7 @@ public class GlobalParameters extends CommonGlobalParms {
     }
 
     @SuppressLint("NewApi")
-    public void initStorageStatus() {
+    public void initStorageStatus(Context c) {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             externalStorageIsMounted = false;
         } else {
@@ -420,119 +417,119 @@ public class GlobalParameters extends CommonGlobalParms {
 
         if (Build.VERSION.SDK_INT >= 23) {
             externalStorageAccessIsPermitted =
-                    (appContext.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+                    (c.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
         } else {
             externalStorageAccessIsPermitted = true;
         }
 
-        refreshMediaDir();
+        refreshMediaDir(c);
     }
 
-    public void refreshMediaDir() {
+    public void refreshMediaDir(Context c) {
         if (safMgr == null) {
-            safMgr = new SafManager(appContext, settingDebugLevel > 1);
+            safMgr = new SafManager(c, settingDebugLevel > 1);
         } else {
             safMgr.setDebugEnabled(settingDebugLevel > 1);
             safMgr.loadSafFile();
         }
     }
 
-    public void setLogParms(GlobalParameters gp) {
+    public void setLogParms(Context c, GlobalParameters gp) {
         setDebugLevel(gp.settingDebugLevel);
         setLogcatEnabled(gp.settingPutLogcatOption);
         setLogLimitSize(10 * 1024 * 1024);
         setLogMaxFileCount(gp.settingLogMaxFileCount);
         setLogEnabled(gp.settingLogOption);
 
-        setLogDirName(gp.appContext.getExternalFilesDir(null)+"/log/");//gp.settingMgtFileDir);
+        setLogDirName(c.getExternalFilesDir(null)+"/log/");//gp.settingMgtFileDir);
 //        setLogDirName(gp.settingMgtFileDir);
         setLogFileName(gp.settingLogMsgFilename);
         setApplicationTag(APPLICATION_TAG);
     }
 
-    public void initSettingsParms() {
+    public void initSettingsParms(Context c) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 
-        if (prefs.getString(appContext.getString(R.string.settings_mgt_dir), "-1").equals("-1")) {
+        if (prefs.getString(c.getString(R.string.settings_mgt_dir), "-1").equals("-1")) {
             Editor pe = prefs.edit();
 
             sampleProfileCreateRequired = true;
 
-            pe.putString(appContext.getString(R.string.settings_mgt_dir), internalRootDirectory + "/" + APPLICATION_TAG);
+            pe.putString(c.getString(R.string.settings_mgt_dir), internalRootDirectory + "/" + APPLICATION_TAG);
 
-            pe.putBoolean(appContext.getString(R.string.settings_exit_clean), true);
+            pe.putBoolean(c.getString(R.string.settings_exit_clean), true);
 
-            pe.putString(appContext.getString(R.string.settings_smb_lm_compatibility), "3");
-            pe.putBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true);
-            pe.putString(appContext.getString(R.string.settings_smb_client_response_timeout), "30000");
-            pe.putBoolean(appContext.getString(R.string.settings_smb_disable_plain_text_passwords),false);
+            pe.putString(c.getString(R.string.settings_smb_lm_compatibility), "3");
+            pe.putBoolean(c.getString(R.string.settings_smb_use_extended_security), true);
+            pe.putString(c.getString(R.string.settings_smb_client_response_timeout), "30000");
+            pe.putBoolean(c.getString(R.string.settings_smb_disable_plain_text_passwords),false);
 
-///*For debug*/pe.putString(appContext.getString(R.string.settings_log_level), "1").commit();
-///*For debug*/pe.putBoolean(appContext.getString(R.string.settings_log_option), true).commit();
+///*For debug*/pe.putString(c.getString(R.string.settings_log_level), "1").commit();
+///*For debug*/pe.putBoolean(c.getString(R.string.settings_log_option), true).commit();
 
             pe.commit();
         }
 
-        if (!prefs.contains(appContext.getString(R.string.settings_screen_theme)))
-            prefs.edit().putString(appContext.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD).commit();
+        if (!prefs.contains(c.getString(R.string.settings_screen_theme)))
+            prefs.edit().putString(c.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD).commit();
 
-        if (!prefs.contains(appContext.getString(R.string.settings_screen_theme_language)))
-            prefs.edit().putString(appContext.getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM).commit();
+        if (!prefs.contains(c.getString(R.string.settings_screen_theme_language)))
+            prefs.edit().putString(c.getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM).commit();
 
-        if (!prefs.contains(appContext.getString(R.string.settings_dim_screen_on_while_sync)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_dim_screen_on_while_sync), true).commit();
-        if (!prefs.contains(appContext.getString(R.string.settings_device_orientation_landscape_tablet)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_device_orientation_landscape_tablet), false).commit();
-        if (!prefs.contains(appContext.getString(R.string.settings_notification_message_when_sync_ended)))
-            prefs.edit().putString(appContext.getString(R.string.settings_notification_message_when_sync_ended),
+        if (!prefs.contains(c.getString(R.string.settings_dim_screen_on_while_sync)))
+            prefs.edit().putBoolean(c.getString(R.string.settings_dim_screen_on_while_sync), true).commit();
+        if (!prefs.contains(c.getString(R.string.settings_device_orientation_landscape_tablet)))
+            prefs.edit().putBoolean(c.getString(R.string.settings_device_orientation_landscape_tablet), false).commit();
+        if (!prefs.contains(c.getString(R.string.settings_notification_message_when_sync_ended)))
+            prefs.edit().putString(c.getString(R.string.settings_notification_message_when_sync_ended),
                     SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS).commit();
-        if (!prefs.contains(appContext.getString(R.string.settings_playback_ringtone_volume)))
-            prefs.edit().putInt(appContext.getString(R.string.settings_playback_ringtone_volume), 100).commit();
+        if (!prefs.contains(c.getString(R.string.settings_playback_ringtone_volume)))
+            prefs.edit().putInt(c.getString(R.string.settings_playback_ringtone_volume), 100).commit();
 
-        if (!prefs.contains(appContext.getString(R.string.settings_sync_history_log)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_sync_history_log), true).commit();
+        if (!prefs.contains(c.getString(R.string.settings_sync_history_log)))
+            prefs.edit().putBoolean(c.getString(R.string.settings_sync_history_log), true).commit();
 
         if (!prefs.contains(GRANT_COARSE_LOCATION_REQUIRED_KEY))
             prefs.edit().putBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, true).commit();
 
-        if (!prefs.contains(appContext.getString(R.string.settings_security_application_password)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password), false).commit();
+        if (!prefs.contains(c.getString(R.string.settings_security_application_password)))
+            prefs.edit().putBoolean(c.getString(R.string.settings_security_application_password), false).commit();
 
-        if (!prefs.contains(appContext.getString(R.string.settings_security_application_password_use_app_startup)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_app_startup), false).commit();
+        if (!prefs.contains(c.getString(R.string.settings_security_application_password_use_app_startup)))
+            prefs.edit().putBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), false).commit();
 
-        if (!prefs.contains(appContext.getString(R.string.settings_security_application_password_use_edit_task)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_edit_task), false).commit();
+        if (!prefs.contains(c.getString(R.string.settings_security_application_password_use_edit_task)))
+            prefs.edit().putBoolean(c.getString(R.string.settings_security_application_password_use_edit_task), false).commit();
 
-        if (!prefs.contains(appContext.getString(R.string.settings_security_application_password_use_export_task)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_application_password_use_export_task), false).commit();
+        if (!prefs.contains(c.getString(R.string.settings_security_application_password_use_export_task)))
+            prefs.edit().putBoolean(c.getString(R.string.settings_security_application_password_use_export_task), false).commit();
 
-        if (!prefs.contains(appContext.getString(R.string.settings_security_init_smb_account_password)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_security_init_smb_account_password), false).commit();
+        if (!prefs.contains(c.getString(R.string.settings_security_init_smb_account_password)))
+            prefs.edit().putBoolean(c.getString(R.string.settings_security_init_smb_account_password), false).commit();
 
-        if (!prefs.contains(appContext.getString(R.string.settings_wifi_lock)))
-            prefs.edit().putBoolean(appContext.getString(R.string.settings_wifi_lock), true).commit();
+        if (!prefs.contains(c.getString(R.string.settings_wifi_lock)))
+            prefs.edit().putBoolean(c.getString(R.string.settings_wifi_lock), true).commit();
     }
 
-    public void setSettingOptionLogEnabled(boolean enabled) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
-        prefs.edit().putBoolean(appContext.getString(R.string.settings_log_option), enabled).commit();
+    public void setSettingOptionLogEnabled(Context c, boolean enabled) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        prefs.edit().putBoolean(c.getString(R.string.settings_log_option), enabled).commit();
         if (settingDebugLevel == 0 && enabled) {
-            prefs.edit().putString(appContext.getString(R.string.settings_log_level), "1").commit();
+            prefs.edit().putString(c.getString(R.string.settings_log_level), "1").commit();
         }
     }
 
-    public void setSettingGrantCoarseLocationRequired(boolean enabled) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+    public void setSettingGrantCoarseLocationRequired(Context c, boolean enabled) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         prefs.edit().putBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, enabled).commit();
         settingGrantCoarseLocationRequired=enabled;
     }
 
-    public void loadSettingsParms() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+    public void loadSettingsParms(Context c) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 
-        settingDebugLevel = Integer.parseInt(prefs.getString(appContext.getString(R.string.settings_log_level), "0"));
+        settingDebugLevel = Integer.parseInt(prefs.getString(c.getString(R.string.settings_log_level), "0"));
         slf4jLog.setAppendTime(false);
         if (settingDebugLevel==0) {
             LogStream.setLevel(1);
@@ -547,36 +544,36 @@ public class GlobalParameters extends CommonGlobalParms {
             LogStream.setLevel(5);
             slf4jLog.setLogOption(true, true, true, true, true);
         }
-        settingExitClean=prefs.getBoolean(appContext.getString(R.string.settings_exit_clean), true);
+        settingExitClean=prefs.getBoolean(c.getString(R.string.settings_exit_clean), true);
 
-        settingLogMaxFileCount = Integer.valueOf(prefs.getString(appContext.getString(R.string.settings_log_file_max_count), "5"));
-        settingMgtFileDir = prefs.getString(appContext.getString(R.string.settings_mgt_dir), internalRootDirectory + "/" + APPLICATION_TAG);
-        settingLogOption = prefs.getBoolean(appContext.getString(R.string.settings_log_option), false);
-        settingPutLogcatOption = prefs.getBoolean(appContext.getString(R.string.settings_put_logcat_option), false);
-        settingErrorOption = prefs.getBoolean(appContext.getString(R.string.settings_error_option), false);
-        settingWifiLockRequired = prefs.getBoolean(appContext.getString(R.string.settings_wifi_lock), true);
+        settingLogMaxFileCount = Integer.valueOf(prefs.getString(c.getString(R.string.settings_log_file_max_count), "5"));
+        settingMgtFileDir = prefs.getString(c.getString(R.string.settings_mgt_dir), internalRootDirectory + "/" + APPLICATION_TAG);
+        settingLogOption = prefs.getBoolean(c.getString(R.string.settings_log_option), false);
+        settingPutLogcatOption = prefs.getBoolean(c.getString(R.string.settings_put_logcat_option), false);
+        settingErrorOption = prefs.getBoolean(c.getString(R.string.settings_error_option), false);
+        settingWifiLockRequired = prefs.getBoolean(c.getString(R.string.settings_wifi_lock), true);
 
-        if (prefs.getString(appContext.getString(R.string.settings_no_compress_file_type), "").equals("")) {
+        if (prefs.getString(c.getString(R.string.settings_no_compress_file_type), "").equals("")) {
             Editor ed = prefs.edit();
-            ed.putString(appContext.getString(R.string.settings_no_compress_file_type), DEFAULT_NOCOMPRESS_FILE_TYPE);
+            ed.putString(c.getString(R.string.settings_no_compress_file_type), DEFAULT_NOCOMPRESS_FILE_TYPE);
             ed.commit();
         }
-        settingNoCompressFileType = prefs.getString(appContext.getString(R.string.settings_no_compress_file_type), DEFAULT_NOCOMPRESS_FILE_TYPE);
+        settingNoCompressFileType = prefs.getString(c.getString(R.string.settings_no_compress_file_type), DEFAULT_NOCOMPRESS_FILE_TYPE);
 
-        settingNotificationMessageWhenSyncEnded = prefs.getString(appContext.getString(R.string.settings_notification_message_when_sync_ended), "1");
-        settingRingtoneWhenSyncEnded = prefs.getString(appContext.getString(R.string.settings_playback_ringtone_when_sync_ended), "0");
-        settingVibrateWhenSyncEnded = prefs.getString(appContext.getString(R.string.settings_vibrate_when_sync_ended), "0");
-        settingExportedProfileEncryptRequired = prefs.getBoolean(appContext.getString(R.string.settings_exported_profile_encryption), true);
-        settingSupressAppSpecifiDirWarning = prefs.getBoolean(appContext.getString(R.string.settings_suppress_warning_app_specific_dir), false);
-        settingSupressLocationServiceWarning = prefs.getBoolean(appContext.getString(R.string.settings_suppress_warning_location_service_disabled), false);
+        settingNotificationMessageWhenSyncEnded = prefs.getString(c.getString(R.string.settings_notification_message_when_sync_ended), "1");
+        settingRingtoneWhenSyncEnded = prefs.getString(c.getString(R.string.settings_playback_ringtone_when_sync_ended), "0");
+        settingVibrateWhenSyncEnded = prefs.getString(c.getString(R.string.settings_vibrate_when_sync_ended), "0");
+        settingExportedProfileEncryptRequired = prefs.getBoolean(c.getString(R.string.settings_exported_profile_encryption), true);
+        settingSupressAppSpecifiDirWarning = prefs.getBoolean(c.getString(R.string.settings_suppress_warning_app_specific_dir), false);
+        settingSupressLocationServiceWarning = prefs.getBoolean(c.getString(R.string.settings_suppress_warning_location_service_disabled), false);
 
-        settingScreenTheme =prefs.getString(appContext.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD);
+        settingScreenTheme =prefs.getString(c.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD);
         if (prefs.contains("settings_use_light_theme")) {
             boolean themeIsLight = prefs.getBoolean("settings_use_light_theme", false);
             if (themeIsLight) {
                 prefs.edit().remove("settings_use_light_theme").commit();
                 settingScreenTheme=SMBSYNC2_SCREEN_THEME_LIGHT;
-                prefs.edit().putString(appContext.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_LIGHT).commit();
+                prefs.edit().putString(c.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_LIGHT).commit();
             }
         }
         if (settingScreenTheme.equals(SMBSYNC2_SCREEN_THEME_LIGHT)) applicationTheme = R.style.MainLight;
@@ -587,36 +584,36 @@ public class GlobalParameters extends CommonGlobalParms {
 //        } else {
 //            applicationTheme = R.style.MainBlack;
 //        }
-        loadLanguagePreference();
+        loadLanguagePreference(c);
 
-        settingForceDeviceTabletViewInLandscape = prefs.getBoolean(appContext.getString(R.string.settings_device_orientation_landscape_tablet), false);
+        settingForceDeviceTabletViewInLandscape = prefs.getBoolean(c.getString(R.string.settings_device_orientation_landscape_tablet), false);
 
-        settingFixDeviceOrientationToPortrait = prefs.getBoolean(appContext.getString(R.string.settings_device_orientation_portrait), false);
+        settingFixDeviceOrientationToPortrait = prefs.getBoolean(c.getString(R.string.settings_device_orientation_portrait), false);
 
-        settingPreventSyncStartDelay = prefs.getBoolean(appContext.getString(R.string.settings_dim_screen_on_while_sync), true);
+        settingPreventSyncStartDelay = prefs.getBoolean(c.getString(R.string.settings_dim_screen_on_while_sync), true);
 
-        settingNotificationVolume = prefs.getInt(appContext.getString(R.string.settings_playback_ringtone_volume), 100);
+        settingNotificationVolume = prefs.getInt(c.getString(R.string.settings_playback_ringtone_volume), 100);
 
-        settingWriteSyncResultLog = prefs.getBoolean(appContext.getString(R.string.settings_sync_history_log), true);
+        settingWriteSyncResultLog = prefs.getBoolean(c.getString(R.string.settings_sync_history_log), true);
 
         settingGrantCoarseLocationRequired = prefs.getBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, true);
 
-        settingScreenOnIfScreenOnAtStartOfSync =prefs.getBoolean(appContext.getString(R.string.settings_force_screen_on_while_sync), false);
+        settingScreenOnIfScreenOnAtStartOfSync =prefs.getBoolean(c.getString(R.string.settings_force_screen_on_while_sync), false);
 
-        settingSyncMessageUseStandardTextView =prefs.getBoolean(appContext.getString(R.string.settings_sync_message_use_standard_text_view), false);
+        settingSyncMessageUseStandardTextView =prefs.getBoolean(c.getString(R.string.settings_sync_message_use_standard_text_view), false);
 
         settingSecurityApplicationPasswordHashValue =ApplicationPasswordUtil.getApplicationPasswordHashValue(prefs);
-        settingSecurityApplicationPasswordUseAppStartup = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_app_startup), false);
-        settingSecurityApplicationPasswordUseEditTask = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_edit_task), false);
-        settingSecurityApplicationPasswordUseExport = prefs.getBoolean(appContext.getString(R.string.settings_security_application_password_use_export_task), false);
-        settingSecurityReinitSmbAccountPasswordValue = prefs.getBoolean(appContext.getString(R.string.settings_security_init_smb_account_password), false);
+        settingSecurityApplicationPasswordUseAppStartup = prefs.getBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), false);
+        settingSecurityApplicationPasswordUseEditTask = prefs.getBoolean(c.getString(R.string.settings_security_application_password_use_edit_task), false);
+        settingSecurityApplicationPasswordUseExport = prefs.getBoolean(c.getString(R.string.settings_security_application_password_use_export_task), false);
+        settingSecurityReinitSmbAccountPasswordValue = prefs.getBoolean(c.getString(R.string.settings_security_init_smb_account_password), false);
 
         settingScheduleSyncEnabled=prefs.getBoolean(SCHEDULER_ENABLED_KEY, true);
 
     }
 
-    public void setScheduleEnabled(boolean enabled) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+    public void setScheduleEnabled(Context c, boolean enabled) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         settingScheduleSyncEnabled=enabled;
         prefs.edit().putBoolean(SCHEDULER_ENABLED_KEY, enabled).commit();
     }
@@ -695,10 +692,10 @@ public class GlobalParameters extends CommonGlobalParms {
     //onStartSettingScreenThemeLanguageValue() is assigned only once at app start the value of current active language (settingScreenThemeLanguage)
     //on language change by user or through import settings, settingScreenThemeLanguage no longer equals onStartSettingScreenThemeLanguageValue ->
     //it will cause Pref activitiy to finish() and mainActivity to end with a Warning Dialog in checkThemeLanguageChanged()
-    public void loadLanguagePreference() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
-        settingScreenThemeLanguageValue = prefs.getString(appContext.getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM);
-        String[] lang_entries = appContext.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
+    public void loadLanguagePreference(Context c) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        settingScreenThemeLanguageValue = prefs.getString(c.getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM);
+        String[] lang_entries = c.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
         if (settingScreenThemeLanguageValue.equals(SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM)) {
             settingScreenThemeLanguage = SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;
         } else {
@@ -731,18 +728,18 @@ public class GlobalParameters extends CommonGlobalParms {
     public String settingsSmbLmCompatibility = "3", settingsSmbUseExtendedSecurity = "true", settingsSmbClientResponseTimeout = "30000";
     public String settingsSmbDisablePlainTextPasswords="false";
 
-    final public void initJcifsOption() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+    final public void initJcifsOption(Context c) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 
-        settingsSmbLmCompatibility = prefs.getString(appContext.getString(R.string.settings_smb_lm_compatibility), "3");
-        boolean ues = prefs.getBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true);
-        boolean dpp=prefs.getBoolean(appContext.getString(R.string.settings_smb_disable_plain_text_passwords),false);
-        settingsSmbClientResponseTimeout = prefs.getString(appContext.getString(R.string.settings_smb_client_response_timeout), "30000");
+        settingsSmbLmCompatibility = prefs.getString(c.getString(R.string.settings_smb_lm_compatibility), "3");
+        boolean ues = prefs.getBoolean(c.getString(R.string.settings_smb_use_extended_security), true);
+        boolean dpp=prefs.getBoolean(c.getString(R.string.settings_smb_disable_plain_text_passwords),false);
+        settingsSmbClientResponseTimeout = prefs.getString(c.getString(R.string.settings_smb_client_response_timeout), "30000");
 
         if (settingsSmbLmCompatibility.equals("3") || settingsSmbLmCompatibility.equals("4")) {
             if (!ues) {
                 ues = true;
-//                prefs.edit().putBoolean(appContext.getString(R.string.settings_smb_use_extended_security), true).commit();
+//                prefs.edit().putBoolean(c.getString(R.string.settings_smb_use_extended_security), true).commit();
             }
         }
 
@@ -762,12 +759,12 @@ public class GlobalParameters extends CommonGlobalParms {
 //        System.setProperty("jcifs.smb.maxBuffers","100");
     }
 
-    private boolean isDebuggable() {
+    private boolean isDebuggable(Context c) {
         boolean result = false;
-        PackageManager manager = appContext.getPackageManager();
+        PackageManager manager = c.getPackageManager();
         ApplicationInfo appInfo = null;
         try {
-            appInfo = manager.getApplicationInfo(appContext.getPackageName(), 0);
+            appInfo = manager.getApplicationInfo(c.getPackageName(), 0);
         } catch (NameNotFoundException e) {
             result = false;
         }
@@ -803,7 +800,7 @@ public class GlobalParameters extends CommonGlobalParms {
         }
     }
 
-    public void acquireWakeLock(CommonUtilities util) {
+    public void acquireWakeLock(Context c, CommonUtilities util) {
         if (settingWifiLockRequired) {
             if (!mWifiLock.isHeld()) {
                 mWifiLock.acquire();
@@ -811,7 +808,7 @@ public class GlobalParameters extends CommonGlobalParms {
             }
         }
 
-        if (settingScreenOnIfScreenOnAtStartOfSync || (settingPreventSyncStartDelay && isScreenOn(appContext, util))) {// && !activityIsBackground) {
+        if (settingScreenOnIfScreenOnAtStartOfSync || (settingPreventSyncStartDelay && isScreenOn(c, util))) {// && !activityIsBackground) {
             if (!mDimWakeLock.isHeld()) {
                 mDimWakeLock.acquire();
                 util.addDebugMsg(1, "I", "Dim wakelock acquired");

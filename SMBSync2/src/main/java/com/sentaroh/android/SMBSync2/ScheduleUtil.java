@@ -59,8 +59,8 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_WIF
 public class ScheduleUtil {
     private static Logger slf4jLog = LoggerFactory.getLogger(ScheduleUtil.class);
 
-    final static public ArrayList<ScheduleItem> loadScheduleData(GlobalParameters gp) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(gp.appContext);
+    final static public ArrayList<ScheduleItem> loadScheduleData(Context c, GlobalParameters gp) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
         ScheduleItem sp = new ScheduleItem();
         String v2_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V2, "-1");
@@ -76,7 +76,7 @@ public class ScheduleUtil {
             sl = buildScheduleListV3(gp, v3_data);
         } else if (!v2_data.equals("-1")) {
             sl = buildScheduleListV2(gp, v2_data);
-            saveScheduleData(gp, sl);
+            saveScheduleData(c, gp, sl);
         } else {
             if (!prefs.getString(SCHEDULER_SCHEDULE_HOURS_KEY, "-1").equals("-1")) {
                 sp.scheduleName = "NO NAME";
@@ -100,7 +100,7 @@ public class ScheduleUtil {
                         prefs.getString(SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_KEY,
                                 SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_DEFAULT_VALUE));
                 sl.add(sp);
-                saveScheduleData(gp, sl);
+                saveScheduleData(c, gp, sl);
             } else {
                 //empty
             }
@@ -412,12 +412,12 @@ public class ScheduleUtil {
     }
 
 
-    final static public void saveScheduleData(GlobalParameters gp, ArrayList<ScheduleItem> sl) {
-        saveScheduleData(gp,sl,false);
+    final static public void saveScheduleData(Context c, GlobalParameters gp, ArrayList<ScheduleItem> sl) {
+        saveScheduleData(c, gp,sl,false);
     }
 
-    final static public void saveScheduleData(GlobalParameters gp, ArrayList<ScheduleItem> sl, boolean use_apply) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(gp.appContext);
+    final static public void saveScheduleData(Context c, GlobalParameters gp, ArrayList<ScheduleItem> sl, boolean use_apply) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         String data = "";
         for (ScheduleItem si : sl) {
 //                Log.v("","name="+si.scheduleName);
@@ -668,9 +668,9 @@ public class ScheduleUtil {
         return prefs.getLong(SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY, 0L);
     }
 
-    public static void setSchedulerInfo(GlobalParameters gp, CommonUtilities cu) {
+    public static void setSchedulerInfo(Context c, GlobalParameters gp, CommonUtilities cu) {
 //        gp.scheduleInfoList =loadScheduleData(gp);
-        ArrayList<ScheduleItem> sl = loadScheduleData(gp);
+        ArrayList<ScheduleItem> sl = loadScheduleData(c, gp);
         String sched_list="", sep="", first="";
         long latest_sched_time = -1;
         ArrayList<String>sched_array=new ArrayList<String>();
@@ -740,7 +740,7 @@ public class ScheduleUtil {
             }
             String sched_info ="";
             if (schedule_error) {
-                gp.scheduleErrorText = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_main_error), error_sched_name, error_task_name);
+                gp.scheduleErrorText = String.format(c.getString(R.string.msgs_scheduler_info_next_schedule_main_error), error_sched_name, error_task_name);
                 gp.scheduleErrorView.setText(gp.scheduleErrorText);
                 gp.scheduleErrorView.setTextColor(gp.themeColorList.text_color_warning);
                 gp.scheduleErrorView.setVisibility(TextView.VISIBLE);
@@ -748,11 +748,11 @@ public class ScheduleUtil {
                 gp.scheduleErrorText="";
                 gp.scheduleErrorView.setVisibility(TextView.GONE);
             }
-            sched_info = String.format(gp.appContext.getString(R.string.msgs_scheduler_info_next_schedule_main_info), key[0], sched_list);
+            sched_info = String.format(c.getString(R.string.msgs_scheduler_info_next_schedule_main_info), key[0], sched_list);
             gp.scheduleInfoText = sched_info;
             gp.scheduleInfoView.setText(gp.scheduleInfoText);
         } else {
-            gp.scheduleInfoText = gp.appContext.getString(R.string.msgs_scheduler_info_schedule_disabled);
+            gp.scheduleInfoText = c.getString(R.string.msgs_scheduler_info_schedule_disabled);
             gp.scheduleInfoView.setText(gp.scheduleInfoText);
         }
     }

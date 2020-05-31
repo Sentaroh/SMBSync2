@@ -79,12 +79,12 @@ public class SyncReceiver extends BroadcastReceiver {
             mGp =new GlobalParameters();
             mGp.initGlobalParamter(c);
         }
-        mGp.loadSettingsParms();
-        mGp.setLogParms(mGp);
+        mGp.loadSettingsParms(c);
+        mGp.setLogParms(c, mGp);
 
         if (mLog == null) mLog = new LogUtil(c, "Receiver", mGp);
 
-        loadScheduleData();
+        loadScheduleData(c);
 
         String action = received_intent.getAction();
         if (action != null) {
@@ -95,7 +95,7 @@ public class SyncReceiver extends BroadcastReceiver {
                     action.equals(Intent.ACTION_PACKAGE_REPLACED)) {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
                 for (ScheduleItem si : mSchedList) si.scheduleLastExecTime = System.currentTimeMillis();
-                ScheduleUtil.saveScheduleData(mGp, mSchedList, true);//Use apply by shared preference edit
+                ScheduleUtil.saveScheduleData(c, mGp, mSchedList, true);//Use apply by shared preference edit
                 setTimer();
             } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) ||
                     action.equals(Intent.ACTION_MEDIA_EJECT) ||
@@ -138,7 +138,7 @@ public class SyncReceiver extends BroadcastReceiver {
                             ScheduleUtil.getScheduleInformation(mSchedList, sched_name).scheduleLastExecTime = System.currentTimeMillis();
                         }
                     }
-                    ScheduleUtil.saveScheduleData(mGp, mSchedList);
+                    ScheduleUtil.saveScheduleData(c, mGp, mSchedList);
                     setTimer();
                 }
             } else if (action.equals(SMBSYNC2_START_SYNC_INTENT)) {
@@ -186,8 +186,8 @@ public class SyncReceiver extends BroadcastReceiver {
         }
     }
 
-    static private void loadScheduleData() {
-        mSchedList = ScheduleUtil.loadScheduleData(mGp);
+    static private void loadScheduleData(Context c) {
+        mSchedList = ScheduleUtil.loadScheduleData(c, mGp);
         if (mGp.settingDebugLevel >= 2)
             for (ScheduleItem si : mSchedList) {
                 mLog.addDebugMsg(2, "I", "loadScheduleData " +

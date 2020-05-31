@@ -150,8 +150,8 @@ public class LogCatUtil {
                 String zip_file_name=mGp.getLogDirName()+"/log.zip";
                 File lf=new File(zip_file_name);
                 lf.delete();
-                String[] lmp= LocalMountPoint.convertFilePathToMountpointFormat(mGp.appContext, log_cat_dir+"/"+log_cat_name);
-                ZipUtil.createZipFile(mGp.appContext, null, null, zip_file_name, lmp[0], log_cat_dir+"/"+log_cat_name, mGp.getLogDirName()+"/"+mGp.getLogFileName()+".txt");
+                String[] lmp= LocalMountPoint.convertFilePathToMountpointFormat(mActivity, log_cat_dir+"/"+log_cat_name);
+                ZipUtil.createZipFile(mActivity, null, null, zip_file_name, lmp[0], log_cat_dir+"/"+log_cat_name, mGp.getLogDirName()+"/"+mGp.getLogFileName()+".txt");
 
                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"gm.developer.fhoshino@gmail.com"});
 //                intent.putExtra(Intent.EXTRA_CC, new String[]{"cc@example.com"});
@@ -159,7 +159,7 @@ public class LogCatUtil {
                 intent.putExtra(Intent.EXTRA_SUBJECT, "SMBSync2 LogCat");
 //                intent.putExtra(Intent.EXTRA_TEXT, tv_msg_old.getText().toString());
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
-                mGp.appContext.startActivity(intent);
+                mActivity.startActivity(intent);
             }
         });
 

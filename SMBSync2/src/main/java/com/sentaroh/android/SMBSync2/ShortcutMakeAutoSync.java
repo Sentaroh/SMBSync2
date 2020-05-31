@@ -47,7 +47,7 @@ public class ShortcutMakeAutoSync extends Activity {
 //        setContentView(R.layout.main);
 
         mActivity=ShortcutMakeAutoSync.this;
-        mContext=mActivity.getApplicationContext();
+        mContext=mActivity;
         Intent shortcutIntent = new Intent(Intent.ACTION_VIEW);
         shortcutIntent.setClassName(mActivity, ShortcutAutoSync.class.getName());
         String shortcutName = getString(R.string.app_name_auto_sync);

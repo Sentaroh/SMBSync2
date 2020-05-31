@@ -2,6 +2,7 @@ package com.sentaroh.android.SMBSync2;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -105,9 +106,9 @@ public class ApplicationPasswordUtil {
 
         final TextView tv_title=(TextView)dialog.findViewById(R.id.password_input_title);
         tv_title.setTextColor(gp.themeColorList.title_text_color);
-        tv_title.setText(gp.appContext.getString(R.string.msgs_security_application_password_auth_title));
+        tv_title.setText(mActivity.getString(R.string.msgs_security_application_password_auth_title));
         final TextView tv_msg=(TextView)dialog.findViewById(R.id.password_input_msg);
-        tv_msg.setText(gp.appContext.getString(R.string.msgs_security_application_password_auth_specify_password));
+        tv_msg.setText(mActivity.getString(R.string.msgs_security_application_password_auth_specify_password));
         final CheckedTextView ctv_prot=(CheckedTextView)dialog.findViewById(R.id.password_input_ctv_protect);
         ctv_prot.setVisibility(CheckedTextView.GONE);
         final EditText et_pswd1=(EditText)dialog.findViewById(R.id.password_input_password);
@@ -116,7 +117,7 @@ public class ApplicationPasswordUtil {
 
         final TextView tv_warn=(TextView)dialog.findViewById(R.id.password_input_warning_msg);
         tv_warn.setVisibility(TextView.VISIBLE);
-        tv_warn.setText(gp.appContext.getString(R.string.msgs_security_application_password_create_forget_recovery));
+        tv_warn.setText(mActivity.getString(R.string.msgs_security_application_password_create_forget_recovery));
 
         final Button btn_ok=(Button)dialog.findViewById(R.id.password_input_ok_btn);
         final Button btn_cancel=(Button)dialog.findViewById(R.id.password_input_cancel_btn);
@@ -154,8 +155,8 @@ public class ApplicationPasswordUtil {
                 try {
                     input_hv=EncryptUtil.makeSHA1Hash(et_pswd1.getText().toString());
                     String enc_password=null;
-                    if ( Build.VERSION.SDK_INT>=28) enc_password=KeyStoreUtil.getGeneratedPasswordNewVersion(gp.appContext, SMBSYNC2_KEY_STORE_ALIAS);
-                    else enc_password=KeyStoreUtil.getGeneratedPasswordOldVersion(gp.appContext, SMBSYNC2_KEY_STORE_ALIAS);
+                    if ( Build.VERSION.SDK_INT>=28) enc_password=KeyStoreUtil.getGeneratedPasswordNewVersion(mActivity, SMBSYNC2_KEY_STORE_ALIAS);
+                    else enc_password=KeyStoreUtil.getGeneratedPasswordOldVersion(mActivity, SMBSYNC2_KEY_STORE_ALIAS);
 
                     EncryptUtil.CipherParms cp_int = EncryptUtil.initDecryptEnv(enc_password);
                     byte[] encrypted_hv=Base64Compat.decode(gp.settingSecurityApplicationPasswordHashValue, Base64Compat.NO_WRAP);
@@ -178,7 +179,7 @@ public class ApplicationPasswordUtil {
                     dialog.dismiss();
                     if (notify_check!=null) notify_check.notifyToListener(true,null);
                 } else {
-                    tv_msg.setText(gp.appContext.getString(R.string.msgs_security_application_password_auth_wrong_password_specified));
+                    tv_msg.setText(mActivity.getString(R.string.msgs_security_application_password_auth_wrong_password_specified));
                     hndl.postDelayed(new Runnable(){
                         @Override
                         public void run() {
@@ -216,7 +217,7 @@ public class ApplicationPasswordUtil {
         tv_title.setTextColor(gp.themeColorList.title_text_color);
         tv_title.setText(title);
         final TextView tv_msg=(TextView)dialog.findViewById(R.id.password_input_msg);
-        tv_msg.setText(gp.appContext.getString(R.string.msgs_security_application_password_auth_specify_password));
+        tv_msg.setText(mActivity.getString(R.string.msgs_security_application_password_auth_specify_password));
         final CheckedTextView ctv_prot=(CheckedTextView)dialog.findViewById(R.id.password_input_ctv_protect);
         ctv_prot.setVisibility(CheckedTextView.GONE);
         final EditText et_pswd1=(EditText)dialog.findViewById(R.id.password_input_password);
@@ -224,7 +225,7 @@ public class ApplicationPasswordUtil {
 
         final TextView tv_warn=(TextView)dialog.findViewById(R.id.password_input_warning_msg);
         tv_warn.setVisibility(TextView.VISIBLE);
-        tv_warn.setText(gp.appContext.getString(R.string.msgs_security_application_password_create_forget_warning));
+        tv_warn.setText(mActivity.getString(R.string.msgs_security_application_password_create_forget_warning));
 
         final Button btn_ok=(Button)dialog.findViewById(R.id.password_input_ok_btn);
         final Button btn_cancel=(Button)dialog.findViewById(R.id.password_input_cancel_btn);
@@ -240,7 +241,7 @@ public class ApplicationPasswordUtil {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                validateNewPasswordSpec(gp, btn_ok, et_pswd1, et_pswd2, tv_msg);
+                validateNewPasswordSpec(mActivity, gp, btn_ok, et_pswd1, et_pswd2, tv_msg);
             }
         });
         et_pswd2.addTextChangedListener(new TextWatcher(){
@@ -250,7 +251,7 @@ public class ApplicationPasswordUtil {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                validateNewPasswordSpec(gp, btn_ok, et_pswd1, et_pswd2, tv_msg);
+                validateNewPasswordSpec(mActivity, gp, btn_ok, et_pswd1, et_pswd2, tv_msg);
             }
         });
 
@@ -269,8 +270,8 @@ public class ApplicationPasswordUtil {
                 try {
                     String user_pw_hv=EncryptUtil.makeSHA1Hash(et_pswd1.getText().toString());
                     String enc_password=null;
-                    if ( Build.VERSION.SDK_INT>=28) enc_password=KeyStoreUtil.getGeneratedPasswordNewVersion(gp.appContext, SMBSYNC2_KEY_STORE_ALIAS);
-                    else enc_password=KeyStoreUtil.getGeneratedPasswordOldVersion(gp.appContext, SMBSYNC2_KEY_STORE_ALIAS);
+                    if ( Build.VERSION.SDK_INT>=28) enc_password=KeyStoreUtil.getGeneratedPasswordNewVersion(mActivity, SMBSYNC2_KEY_STORE_ALIAS);
+                    else enc_password=KeyStoreUtil.getGeneratedPasswordOldVersion(mActivity, SMBSYNC2_KEY_STORE_ALIAS);
 
                     EncryptUtil.CipherParms cp_int = EncryptUtil.initDecryptEnv(enc_password);
                     encrypted_hv=Base64Compat.encodeToString(EncryptUtil.encrypt(user_pw_hv, cp_int), Base64Compat.NO_WRAP);
@@ -304,25 +305,25 @@ public class ApplicationPasswordUtil {
 
     }
 
-    static private void validateNewPasswordSpec(GlobalParameters gp, Button btn_ok, EditText et_pswd1, EditText et_pswd2, TextView msg) {
+    static private void validateNewPasswordSpec(Activity mActivity, GlobalParameters gp, Button btn_ok, EditText et_pswd1, EditText et_pswd2, TextView msg) {
         btn_ok.setEnabled(false);
         if (et_pswd1.getText().length()>=4) {
             if (et_pswd1.getText().length()>0 && et_pswd2.getText().length()>0) {
                 if (et_pswd1.getText().toString().equals(et_pswd2.getText().toString())) {
                     btn_ok.setEnabled(true);
-                    msg.setText(gp.appContext.getString(R.string.msgs_password_input_preference_match));
+                    msg.setText(mActivity.getString(R.string.msgs_password_input_preference_match));
                 } else {
-                    msg.setText(gp.appContext.getString(R.string.msgs_password_input_preference_unmatch));
+                    msg.setText(mActivity.getString(R.string.msgs_password_input_preference_unmatch));
                 }
             } else {
                 if (et_pswd1.getText().length()==0) {
-                    msg.setText(gp.appContext.getString(R.string.msgs_password_input_preference_new_not_specified));
+                    msg.setText(mActivity.getString(R.string.msgs_password_input_preference_new_not_specified));
                 } else {
-                    msg.setText(gp.appContext.getString(R.string.msgs_password_input_preference_conf_not_specified));
+                    msg.setText(mActivity.getString(R.string.msgs_password_input_preference_conf_not_specified));
                 }
             }
         } else {
-            msg.setText(gp.appContext.getString(R.string.msgs_security_application_password_create_min_length_is_4_digit));
+            msg.setText(mActivity.getString(R.string.msgs_security_application_password_create_min_length_is_4_digit));
         }
     }
 
