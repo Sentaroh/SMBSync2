@@ -197,7 +197,7 @@ public class ActivityMain extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-        mContext = getApplicationContext();
+        mContext = this;//use AppActivity context
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mGp.loadSettingsParms();
         mActivity = ActivityMain.this;
@@ -218,7 +218,7 @@ public class ActivityMain extends AppCompatActivity {
 
         ccMenu = new CustomContextMenu(getResources(), getSupportFragmentManager());
         mCommonDlg = new CommonDialog(mActivity, getSupportFragmentManager());
-        mTaskUtil = new SyncTaskUtil(mUtil, mActivity, mCommonDlg, ccMenu, mGp, getSupportFragmentManager());
+        mTaskUtil = new SyncTaskUtil(mUtil, mActivity, mContext, mCommonDlg, ccMenu, mGp, getSupportFragmentManager());//provide context for UI in SyncTaskUtil
         mGp.msgListAdapter = new AdapterSyncMessage(mActivity, R.layout.msg_list_item_view, mGp.msgList, mGp);
 
         mGp.syncTabScheduleList = ScheduleUtil.loadScheduleData(mGp);

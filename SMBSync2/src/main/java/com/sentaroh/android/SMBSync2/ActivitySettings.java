@@ -89,7 +89,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Context c = getApplicationContext();
+        Context c = this;
         mGp= GlobalWorkArea.getGlobalParameters(c);
         SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(c);
         mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD);

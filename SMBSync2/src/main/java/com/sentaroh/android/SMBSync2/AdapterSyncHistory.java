@@ -58,7 +58,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
     public AdapterSyncHistory(Activity a, int textViewResourceId,
                               ArrayList<SyncHistoryItem> objects) {
         super(a, textViewResourceId, objects);
-        mContext = a.getApplicationContext();
+        mContext = getContext();//do not use getApplicationContext() to display UI stuff
         mActivity = a;
         id = textViewResourceId;
         items = objects;

@@ -103,7 +103,7 @@ public class SyncService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = getApplicationContext();
+        mContext = this;
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mGp.safMgr.loadSafFile();
         mUtil = new CommonUtilities(mContext, "Service", mGp, null);

@@ -50,7 +50,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mContext = getApplicationContext();
+        mContext = this;
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mActivity = ActivityPasswordSettings.this;
         setTheme(mGp.applicationTheme);
@@ -65,7 +65,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        mUtil = new CommonUtilities(mActivity.getApplicationContext(), "AppPswd", mGp, getSupportFragmentManager());
+        mUtil = new CommonUtilities(mContext, "AppPswd", mGp, getSupportFragmentManager());//use current activity context for short living stuff and UI
 
         commonDlg = new CommonDialog(mActivity, getSupportFragmentManager());
         setResult(RESULT_OK);
