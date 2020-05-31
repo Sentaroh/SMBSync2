@@ -631,7 +631,7 @@ public class GlobalParameters extends CommonGlobalParms {
     //  - SyncTaskEditor.java onCreate() and onConfigurationChanged() must be also edited
     //  - all activities and App in AndroidManifest must have: android:configChanges="locale|orientation|screenSize|keyboardHidden|layoutDirection"
     public Context setNewLocale(Context c, boolean init) {
-        if (init) initLanguagePreference(c);
+        if (init) loadLanguagePreference(c);
         return updateLanguageResources(c, settingScreenThemeLanguage);
     }
 
@@ -696,20 +696,6 @@ public class GlobalParameters extends CommonGlobalParms {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         settingScreenThemeLanguageValue = prefs.getString(c.getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM);
         String[] lang_entries = c.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
-        if (settingScreenThemeLanguageValue.equals(SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM)) {
-            settingScreenThemeLanguage = SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;
-        } else {
-            settingScreenThemeLanguage = lang_entries[Integer.parseInt(settingScreenThemeLanguageValue)].split("[\\(\\)]")[1]; // language entries are in the format "description (languageCode)"
-        }
-        if (onStartSettingScreenThemeLanguageValue.equals(SMBSYNC2_SCREEN_THEME_LANGUAGE_INIT))
-            onStartSettingScreenThemeLanguageValue=settingScreenThemeLanguageValue;
-    }
-
-    // load app language preference with provided context on early calls from attachBaseContext
-    public void initLanguagePreference(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        settingScreenThemeLanguageValue = prefs.getString(context.getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM);
-        String[] lang_entries = context.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
         if (settingScreenThemeLanguageValue.equals(SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM)) {
             settingScreenThemeLanguage = SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;
         } else {
