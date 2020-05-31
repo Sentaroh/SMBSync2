@@ -58,7 +58,7 @@ public class ShortcutAutoSync extends FragmentActivity {
     @Override
     final protected void onRestoreInstanceState(Bundle savedState) {
         super.onRestoreInstanceState(savedState);
-        displayDialogRequired = savedState.getBoolean("displayDialogRequired", false);
+        displayDialogRequired = savedState.getBoolean("displayDialogRequired", true);
         restartStatus = 2;
     }
 

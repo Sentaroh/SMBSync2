@@ -186,7 +186,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(new GlobalParameters().setNewLocale(base, false));
+        super.attachBaseContext(new GlobalParameters().setNewLocale(base, true));
     }
 
     /**
@@ -2033,7 +2033,7 @@ public class ActivityMain extends AppCompatActivity {
             LogUtil.closeLog(mContext, mGp);
         }
 
-        if (!p_theme.equals(mGp.settingScreenTheme)) {
+        if (!p_theme.equals(mGp.settingScreenTheme) || checkThemeLanguageChanged()) {
 //            setTheme(mGp.applicationTheme);
 //            mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
 //            reloadScreen(false);
@@ -2055,7 +2055,7 @@ public class ActivityMain extends AppCompatActivity {
 
         checkJcifsOptionChanged();
 
-        checkThemeLanguageChanged();
+//        checkThemeLanguageChanged();
     }
 
     private void listSettingsOption() {
@@ -4919,22 +4919,22 @@ public class ActivityMain extends AppCompatActivity {
 
         if (!mGp.settingScreenThemeLanguageValue.equals(mGp.onStartSettingScreenThemeLanguageValue)) changed = true;
 
-        if (changed) {
-            listSettingsOption();
-            NotifyEvent ntfy=new NotifyEvent(mContext);
-            ntfy.setListener(new NotifyEventListener() {
-                @Override
-                public void positiveResponse(Context context, Object[] objects) {
-                    mUtil.flushLog();
-                    mGp.settingExitClean=true;
-                    finish();
-                }
-                @Override
-                public void negativeResponse(Context context, Object[] objects) {}
-            });
-            mUtil.showCommonDialog(false, "W",
-                    mContext.getString(R.string.msgs_smbsync_ui_settings_language_changed_restart), "", ntfy);
-        }
+//        if (changed) {
+//            listSettingsOption();
+//            NotifyEvent ntfy=new NotifyEvent(mContext);
+//            ntfy.setListener(new NotifyEventListener() {
+//                @Override
+//                public void positiveResponse(Context context, Object[] objects) {
+//                    mUtil.flushLog();
+//                    mGp.settingExitClean=true;
+//                    finish();
+//                }
+//                @Override
+//                public void negativeResponse(Context context, Object[] objects) {}
+//            });
+//            mUtil.showCommonDialog(false, "W",
+//                    mContext.getString(R.string.msgs_smbsync_ui_settings_language_changed_restart), "", ntfy);
+//        }
         return changed;
     }
 
