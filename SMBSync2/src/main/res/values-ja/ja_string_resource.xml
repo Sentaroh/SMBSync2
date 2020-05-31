@@ -457,6 +457,7 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">アプリケーションはアクティビティの破棄により終了しました。 設定->開発者向オプションで「アクティビティを保持しない」を有効にしているのであれば無効にしてください。</string>
         <string name="msgs_smbsync_main_restart_by_killed">アプリケーションがバックグラウンドに遷移後、強制終了しました。</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">SMB1パラメーターが変更されましたがアプリケーションを再起動するまで有効になりません。アプリケーションを終了しますか?</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">言語を変更した後、アプリケーションを再起動する必要があります。 了解 をクリックして再起動します。</string>
         <string name="msgs_smbsync_main_start">アプリケーションが起動しました。</string>
         <string name="msgs_smnsync_main_kill_application">SMBSync2を強制終了しますか？</string>
         <string name="msgs_specify_task_name">タスク名を指定してください</string>
@@ -823,6 +824,9 @@
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">端末の向きをポートレイトに固定する</string>
         <string name="settings_device_orientation_portrait_title">端末の向き</string>
+        <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
+        <string name="settings_device_orientation_landscape_tablet_summary_ena">低密度の画面でも、常にマルチペインビューを横向きで表示する</string>
+        <string name="settings_device_orientation_landscape_tablet_title">横向きモードのタブレットビュー</string>
         <string name="settings_dim_screen_on_while_sync">settings_dim_screen_on_while_sync</string>
         <string name="settings_dim_screen_on_while_sync_summary_ena">画面点灯時に同期を開始した場合は同期終了まで画面を点灯させる</string>
         <string name="settings_dim_screen_on_while_sync_title">同期中の画面点灯</string>
@@ -940,6 +944,23 @@
         <string name="settings_sync_message_use_standard_text_view_title">同期メッセージのテキスト処理</string>
         <string name="settings_sync_title">同期</string>
         <string name="settings_ui_title">ユーザーインターフェース</string>
+        <string name="settings_screen_theme_language">settings_screen_theme_language</string>
+        <string name="settings_screen_theme_language_title">言語</string>
+        <string name="settings_screen_theme_language_dialog_title">言語を変更\nアプリを強制的に再起動します!!</string>
+        <string-array name="settings_screen_theme_language_list_entries">
+            <item>システムのデフォルト</item>
+            <item>English (en)</item>
+            <item>Français (fr)</item>
+            <item>日本語 (ja)</item>
+            <item>русский (ru)</item>
+        </string-array >
+        <string-array name="settings_screen_theme_language_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+        </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">画面テーマ</string>
         <string name="settings_screen_theme_dialog_title">画面テーマ</string>

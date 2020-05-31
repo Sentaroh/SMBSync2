@@ -42,6 +42,11 @@ public class ActivityPasswordSettings extends AppCompatActivity {
     private CheckedTextView mCtvSettingInitSmbAccount=null;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(new GlobalParameters().setNewLocale(base, false));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);

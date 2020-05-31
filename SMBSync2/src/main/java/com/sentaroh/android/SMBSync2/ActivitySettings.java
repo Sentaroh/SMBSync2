@@ -58,6 +58,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICA
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_NO;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_SUCCESS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_BLACK;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LIGHT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_STANDARD;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
@@ -86,6 +87,11 @@ public class ActivitySettings extends PreferenceActivity {
         // 使用できる Fragment か確認する
 
         return true;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(new GlobalParameters().setNewLocale(base, false));
     }
 
     @Override
@@ -162,7 +168,8 @@ public class ActivitySettings extends PreferenceActivity {
         boolean land_mp = (y_px/metrics.density) >= multiPaneDP;
 
         int orientation = context.getResources().getConfiguration().orientation;
-        boolean sc_land_mp = land_mp && orientation == Configuration.ORIENTATION_LANDSCAPE; //screen is in landscape orientation and width size >= multiPaneDP
+        boolean sc_land_mp = (land_mp || mGp.settingForceDeviceTabletViewInLandscape) && orientation == Configuration.ORIENTATION_LANDSCAPE; //screen is in landscape orientation and either width size >= multiPaneDP or user forced MultiPanel view in landscape
+
 //        cu.addDebugMsg(1, "I", "orientation="+orientation+", density="+metrics.density+", x_dpi="+metrics.xdpi+", y_dpi="+metrics.ydpi+
 //                ", densityDpi="+metrics.densityDpi+", heightPixels="+metrics.heightPixels+", widthPixels="+metrics.widthPixels+", sz_mp="+sz_mp+", sc_or="+sc_or);
         return portrait_mp||sc_land_mp; //use MultiPane display in portrait if width >= multiPaneDP or in landscape if largest screen side >= multiPaneDP
@@ -187,6 +194,19 @@ public class ActivitySettings extends PreferenceActivity {
         super.onDestroy();
         if (mGp.settingDebugLevel > 0)
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+        mGp=null;// properly destroy all static references to Context to avoid memory leak
+        mContext=null;
+        mPrefActivity=null;
+        mPrefFrag=null;
+
+    }
+
+    @Override
+    public void onConfigurationChanged(final Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        mGp.setNewLocale(this, false);
+        //this.recreate();//needed only in Legacy mode if language is different from System Default
     }
 
     private static void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, FragmentManager fm) {
@@ -289,11 +309,25 @@ public class ActivitySettings extends PreferenceActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 mPrefActivity.startActivity(intent);
             }
+        } else if (key_string.equals(c.getString(R.string.settings_screen_theme_language))) {
+            isChecked = true;
+            String lang_value=shared_pref.getString(key_string, SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM);
+            String[] lang_msgs = c.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
+            String sum_msg = lang_msgs[Integer.parseInt(lang_value)];
+            pref_key.setSummary(sum_msg);
+            if (!lang_value.equals(mGp.onStartSettingScreenThemeLanguageValue)) {//OnSharedPreferenceChangeListener() from preference fragment: language value was changed by user
+                mPrefActivity.finish();//finish current preferences activity. Will trigger checkThemeLanguageChanged() to force restart app from main activity
+            }
         } else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
             isChecked = true;
-//			boolean orientation=shared_pref.getBoolean(key_string,false);
-//            if (orientation) mPrefActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            boolean forcePortrait=shared_pref.getBoolean(key_string,false);
+//            if (forcePortrait) mPrefActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 //            else mPrefActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+            Preference tabletLand = mPrefFrag.findPreference(c.getString(R.string.settings_device_orientation_landscape_tablet));
+            if (forcePortrait) tabletLand.setEnabled(false);
+            else tabletLand.setEnabled(true);
+        } else if (key_string.equals(c.getString(R.string.settings_device_orientation_landscape_tablet))) {
+            isChecked = true;
         } else if (key_string.equals(c.getString(R.string.settings_dim_screen_on_while_sync))) {
             isChecked = true;
         }
@@ -683,6 +717,8 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_vibrate_when_sync_ended), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_portrait), getFragmentManager());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_landscape_tablet), getFragmentManager());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme_language), getFragmentManager());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_dim_screen_on_while_sync), getFragmentManager());
 
         }

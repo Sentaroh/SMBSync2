@@ -457,6 +457,7 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">Application was restarted after being killed. To disable restart, enable \"Don\'t keep activities\" in Settings > Developer Options.</string>
         <string name="msgs_smbsync_main_restart_by_killed">Application was restarted because it was killed when it moved to the background.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">The settings of SMBv1 have been changed.  This change will not be effective until the application is restarted.  Exit this application now?</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">After changing the language, application must be restarted. Press OK to restart now.</string>
         <string name="msgs_smbsync_main_start">Application started.</string>
         <string name="msgs_smnsync_main_kill_application">Kill application?</string>
         <string name="msgs_specify_task_name">Please specify a name for the task</string>
@@ -823,6 +824,9 @@
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Display app in portrait mode</string>
         <string name="settings_device_orientation_portrait_title">Force Portrait Mode</string>
+        <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
+        <string name="settings_device_orientation_landscape_tablet_summary_ena">Always display the multi-pane view in landscape orientation even on a low density screen</string>
+        <string name="settings_device_orientation_landscape_tablet_title">Tablet View in Landscape Mode</string>
         <string name="settings_dim_screen_on_while_sync">settings_dim_screen_on_while_sync</string>
         <string name="settings_dim_screen_on_while_sync_summary_ena">Keep the screen on if synchronization is started while the display was turned on.</string>
         <string name="settings_dim_screen_on_while_sync_title">Prevent Sync Start Delay</string>
@@ -940,6 +944,23 @@
         <string name="settings_sync_message_use_standard_text_view_title">Rendering of Sync Messages</string>
         <string name="settings_sync_title">Synchronization</string>
         <string name="settings_ui_title">User Interface</string>
+        <string name="settings_screen_theme_language">settings_screen_theme_language</string>
+        <string name="settings_screen_theme_language_title">Language</string>
+        <string name="settings_screen_theme_language_dialog_title">Change Language\nWill force app restart!!</string>
+        <string-array name="settings_screen_theme_language_list_entries">
+            <item>System default</item>
+            <item>English (en)</item>
+            <item>Français (fr)</item>
+            <item>日本語 (ja)</item>
+            <item>русский (ru)</item>
+        </string-array >
+        <string-array name="settings_screen_theme_language_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+        </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Screen Theme</string>
         <string name="settings_screen_theme_dialog_title">Screen theme</string>

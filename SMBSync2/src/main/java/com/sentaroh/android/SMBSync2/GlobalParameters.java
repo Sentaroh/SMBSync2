@@ -35,14 +35,18 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.WifiLock;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.LocaleList;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat.BigTextStyle;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.view.View.OnClickListener;
@@ -67,6 +71,9 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import jcifs.util.LogStream;
@@ -76,6 +83,8 @@ import static com.sentaroh.android.SMBSync2.Constants.LOG_FILE_NAME;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_BLACK;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LANGUAGE_INIT;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LIGHT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_STANDARD;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
@@ -126,6 +135,11 @@ public class GlobalParameters extends CommonGlobalParms {
     public int applicationTheme = -1;
     public ThemeColorList themeColorList = null;
 
+    public static String settingScreenThemeLanguage = SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;//holds language code (fr, en... or "0" for system default)
+    public static String settingScreenThemeLanguageValue = SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;//language value (array index) in listPreferences: "0" for system default, "1" for english...
+    public static String onStartSettingScreenThemeLanguageValue = SMBSYNC2_SCREEN_THEME_LANGUAGE_INIT;//on first App start, it will be assigned the active language value
+    private static final boolean LANGUAGE_LOCALE_USE_NEW_API = true;//set false to force using deprecated setLocale() and not createConfigurationContext() in attachBaseContext
+
 //	public boolean scheduleSyncEnabled=false;
 //	public ArrayList<ScheduleItem> scheduleInfoList =new ArrayList<ScheduleItem>();
 
@@ -153,6 +167,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean settingSupressLocationServiceWarning =false;
     public boolean settingSuppressShortcutWarning = true;
     public boolean settingFixDeviceOrientationToPortrait = false;
+    public boolean settingForceDeviceTabletViewInLandscape = false;
 
     public String settingSecurityApplicationPasswordHashValue = "";
 //    public boolean settingSecurityApplicationPassword = false;
@@ -462,8 +477,13 @@ public class GlobalParameters extends CommonGlobalParms {
         if (!prefs.contains(appContext.getString(R.string.settings_screen_theme)))
             prefs.edit().putString(appContext.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD).commit();
 
+        if (!prefs.contains(appContext.getString(R.string.settings_screen_theme_language)))
+            prefs.edit().putString(appContext.getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM).commit();
+
         if (!prefs.contains(appContext.getString(R.string.settings_dim_screen_on_while_sync)))
             prefs.edit().putBoolean(appContext.getString(R.string.settings_dim_screen_on_while_sync), true).commit();
+        if (!prefs.contains(appContext.getString(R.string.settings_device_orientation_landscape_tablet)))
+            prefs.edit().putBoolean(appContext.getString(R.string.settings_device_orientation_landscape_tablet), false).commit();
         if (!prefs.contains(appContext.getString(R.string.settings_notification_message_when_sync_ended)))
             prefs.edit().putString(appContext.getString(R.string.settings_notification_message_when_sync_ended),
                     SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS).commit();
@@ -567,6 +587,10 @@ public class GlobalParameters extends CommonGlobalParms {
 //        } else {
 //            applicationTheme = R.style.MainBlack;
 //        }
+        loadLanguagePreference();
+
+        settingForceDeviceTabletViewInLandscape = prefs.getBoolean(appContext.getString(R.string.settings_device_orientation_landscape_tablet), false);
+
         settingFixDeviceOrientationToPortrait = prefs.getBoolean(appContext.getString(R.string.settings_device_orientation_portrait), false);
 
         settingPreventSyncStartDelay = prefs.getBoolean(appContext.getString(R.string.settings_dim_screen_on_while_sync), true);
@@ -597,6 +621,106 @@ public class GlobalParameters extends CommonGlobalParms {
         prefs.edit().putBoolean(SCHEDULER_ENABLED_KEY, enabled).commit();
     }
 
+    //+ To use createConfigurationContext() non deprecated method:
+    //  - set LANGUAGE_LOCALE_USE_NEW_API to true
+    //  - use as wrapper in attachBaseContext() for all activities and App or extend all App/Activities from a base Activity Class with attachBaseContext()
+    //  - for App: implement also in onConfigurationChanged(), not needed in AppCompatActivity class
+    //  - in ActivityMain, when wrapping language in attachBaseContext(), we must int language by calling initLanguagePreference(context)
+    //    because preferences manager is init later in onCreate()
+    //+ To use updateConfiguration() deprecated method on new API:
+    //  - set LANGUAGE_LOCALE_USE_NEW_API to false
+    //  - no need to use wrapper in attachBaseContext()
+    //  - call "mGp.setNewLocale(this, false)" in onCreate() and onConfigurationChanged() of all activities and App, not needed in Activity fragments
+    //  - SyncTaskEditor.java onCreate() and onConfigurationChanged() must be also edited
+    //  - all activities and App in AndroidManifest must have: android:configChanges="locale|orientation|screenSize|keyboardHidden|layoutDirection"
+    public Context setNewLocale(Context c, boolean init) {
+        if (init) initLanguagePreference(c);
+        return updateLanguageResources(c, settingScreenThemeLanguage);
+    }
+
+    // wrap language layout in the base context for all activities
+    private Context updateLanguageResources(Context context, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+
+        Resources res = context.getResources();
+        Configuration config = new Configuration(res.getConfiguration());
+        if (LANGUAGE_LOCALE_USE_NEW_API) {// use createConfigurationContext() when updateConfiguration() is deprecated
+            if (Build.VERSION.SDK_INT >= 24) {//we can ignore and use "config.setLocale(locale)" like Build.VERSION.SDK_INT >= 21 if we target above API 24 (API 24 only bug)
+                setLocaleForApi24(config, locale);
+                context = context.createConfigurationContext(config);
+            } else if (Build.VERSION.SDK_INT >= 21) {
+                config.setLocale(locale);
+                context = context.createConfigurationContext(config);
+            } else {
+                config.locale = locale;
+                res.updateConfiguration(config, res.getDisplayMetrics());
+            }
+        } else {// ignore deprecation and always use updateConfiguration()
+            if (Build.VERSION.SDK_INT >= 24) {
+                setLocaleForApi24(config, locale);
+            } else if (Build.VERSION.SDK_INT >= 21) {
+                config.setLocale(locale);
+            } else {
+                config.locale = locale;
+            }
+            res.updateConfiguration(config, res.getDisplayMetrics());
+        }
+
+        return context;
+    }
+
+    //workaround a bug issue in Android N, but not needed after N
+    @RequiresApi(api = 24)
+    private void setLocaleForApi24(Configuration config, Locale target) {
+        Set<Locale> set = new LinkedHashSet<>();
+        // bring the target locale to the front of the list
+        set.add(target);
+
+        LocaleList all = LocaleList.getDefault();
+        for (int i = 0; i < all.size(); i++) {
+            // append other locales supported by the user
+            set.add(all.get(i));
+        }
+
+        Locale[] locales = set.toArray(new Locale[0]);
+        config.setLocales(new LocaleList(locales));
+    }
+
+    //load language list value from listPreferences. New languages can be added with Excel template without any change in code.
+    //Language list entries must contain "(language_code)" string, exp "English (en)"
+    //"English" will be the preferences menu description and "en" the language code
+    //settingScreenThemeLanguageValue and settingScreenThemeLanguage are updated only here by loadLanguagePreference()
+    //loadLanguagePreference() is called on mainActivity start, any mainActivity result, SyncReceiver, and any early init to GlobalParameters
+    //onStartSettingScreenThemeLanguageValue() is assigned only once at app start the value of current active language (settingScreenThemeLanguage)
+    //on language change by user or through import settings, settingScreenThemeLanguage no longer equals onStartSettingScreenThemeLanguageValue ->
+    //it will cause Pref activitiy to finish() and mainActivity to end with a Warning Dialog in checkThemeLanguageChanged()
+    public void loadLanguagePreference() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        settingScreenThemeLanguageValue = prefs.getString(appContext.getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM);
+        String[] lang_entries = appContext.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
+        if (settingScreenThemeLanguageValue.equals(SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM)) {
+            settingScreenThemeLanguage = SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;
+        } else {
+            settingScreenThemeLanguage = lang_entries[Integer.parseInt(settingScreenThemeLanguageValue)].split("[\\(\\)]")[1]; // language entries are in the format "description (languageCode)"
+        }
+        if (onStartSettingScreenThemeLanguageValue.equals(SMBSYNC2_SCREEN_THEME_LANGUAGE_INIT))
+            onStartSettingScreenThemeLanguageValue=settingScreenThemeLanguageValue;
+    }
+
+    // load app language preference with provided context on early calls from attachBaseContext
+    public void initLanguagePreference(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        settingScreenThemeLanguageValue = prefs.getString(context.getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM);
+        String[] lang_entries = context.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
+        if (settingScreenThemeLanguageValue.equals(SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM)) {
+            settingScreenThemeLanguage = SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;
+        } else {
+            settingScreenThemeLanguage = lang_entries[Integer.parseInt(settingScreenThemeLanguageValue)].split("[\\(\\)]")[1]; // language entries are in the format "description (languageCode)"
+        }
+        if (onStartSettingScreenThemeLanguageValue.equals(SMBSYNC2_SCREEN_THEME_LANGUAGE_INIT))
+            onStartSettingScreenThemeLanguageValue=settingScreenThemeLanguageValue;
+    }
 
     public boolean isScreenThemeIsLight() {
         boolean result=false;

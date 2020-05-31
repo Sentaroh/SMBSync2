@@ -457,6 +457,7 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">Приложение было перезапущено после KillProcess. Чтобы отключить перезапуск, включите \ "Не сохранять действия \" в Настройках> Параметры разработчика.</string>
         <string name="msgs_smbsync_main_restart_by_killed">Приложение было перезапущено, потому что оно было отключено при перемещении в фоновый режим.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Параметры SMBv1 были изменены. Это изменение не вступит в силу, пока приложение не будет перезапущено. Выход из этого приложения сейчас?</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">После смены языка приложение необходимо перезапустить. Нажмите Ок чтобы перезапустить.</string>
         <string name="msgs_smbsync_main_start">Приложение запущено.</string>
         <string name="msgs_smnsync_main_kill_application">Убить приложение?</string>
         <string name="msgs_specify_task_name">Пожалуйста, укажите название для задачи</string>
@@ -823,6 +824,9 @@
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Показать приложение в портретной ориентации</string>
         <string name="settings_device_orientation_portrait_title">Разрешить портретную ориентацию</string>
+        <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
+        <string name="settings_device_orientation_landscape_tablet_summary_ena">Всегда отображать многопанельное представление в альбомной ориентации, даже на экране с низкой плотностью</string>
+        <string name="settings_device_orientation_landscape_tablet_title">Вид планшета в ландшафтном режиме</string>
         <string name="settings_dim_screen_on_while_sync">settings_dim_screen_on_while_sync</string>
         <string name="settings_dim_screen_on_while_sync_summary_ena">Если вы начнете синхронизацию, когда экран горит, экран будет гореть до конца синхронизации.</string>
         <string name="settings_dim_screen_on_while_sync_title">Активировать отображение во время выполнения задачи</string>
@@ -940,6 +944,23 @@
         <string name="settings_sync_message_use_standard_text_view_title">Обработка текста синхронизированных сообщений</string>
         <string name="settings_sync_title">Синхронизация</string>
         <string name="settings_ui_title">Пользовательский интерфейс</string>
+        <string name="settings_screen_theme_language">settings_screen_theme_language</string>
+        <string name="settings_screen_theme_language_title">Language</string>
+        <string name="settings_screen_theme_language_dialog_title">Изменить язык\nпринудительно перезапустить!!</string>
+        <string-array name="settings_screen_theme_language_list_entries">
+            <item>Системные установки по умолчанию</item>
+            <item>English (en)</item>
+            <item>Français (fr)</item>
+            <item>日本語 (ja)</item>
+            <item>русский (ru)</item>
+        </string-array >
+        <string-array name="settings_screen_theme_language_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+        </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Тема экрана</string>
         <string name="settings_screen_theme_dialog_title">Тема экрана</string>

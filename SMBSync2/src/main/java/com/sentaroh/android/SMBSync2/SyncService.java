@@ -96,6 +96,11 @@ public class SyncService extends Service {
     private SleepReceiver mSleepReceiver = new SleepReceiver();
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(new GlobalParameters().setNewLocale(base, true));
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
