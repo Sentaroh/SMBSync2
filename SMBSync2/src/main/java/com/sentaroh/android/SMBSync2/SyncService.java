@@ -34,6 +34,8 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,12 +44,14 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
+import android.util.Log;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE;
@@ -103,12 +107,11 @@ public class SyncService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = getApplicationContext();
+        mContext = SyncService.this;
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mGp.safMgr.loadSafFile();
         mUtil = new CommonUtilities(mContext, "Service", mGp, null);
-
-        mUtil.addDebugMsg(1, "I", "onCreate entered");
+        mUtil.addDebugMsg(1, "I", "onCreate entered"+", settingScreenThemeLanguage="+mGp.settingScreenThemeLanguage);
 
         NotificationUtil.initNotification(mGp, mUtil, mContext);
         NotificationUtil.clearNotification(mGp, mUtil);
@@ -225,7 +228,7 @@ public class SyncService extends Service {
             Thread th = new Thread() {
                 @Override
                 public void run() {
-                    mGp.refreshMediaDir();
+                    mGp.refreshMediaDir(mContext);
                     mUtil.addDebugMsg(1, "I", "Media directory, SDCARD=" + mGp.safMgr.getSdcardRootPath() );
                     mUtil.addDebugMsg(1, "I", "Media directory, USB=" + mGp.safMgr.getUsbRootPath());
                     if (mGp.callbackStub != null && (!sdcard.equals(mGp.safMgr.getSdcardRootPath()) || !usb_flash.equals(mGp.safMgr.getUsbRootPath()))) {
@@ -353,7 +356,7 @@ public class SyncService extends Service {
 
         mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler));
 
-        ArrayList<ScheduleItem> scheduleInfoList = ScheduleUtil.loadScheduleData(mGp);
+        ArrayList<ScheduleItem> scheduleInfoList = ScheduleUtil.loadScheduleData(mContext, mGp);
         if (in.getExtras().containsKey(SCHEDULER_SCHEDULE_NAME_KEY)) {
             String schedule_name_list = in.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY);
 
@@ -740,7 +743,7 @@ public class SyncService extends Service {
         if (mGp.syncRequestQueue.size() > 0) {
             if (NotificationUtil.isNotificationEnabled(mGp))
                 startForeground(R.string.app_name, mGp.notification);
-            mGp.acquireWakeLock(mUtil);
+            mGp.acquireWakeLock(mContext, mUtil);
             NotifyEvent ntfy = new NotifyEvent(mContext);
             ntfy.setListener(new NotifyEventListener() {
                 @Override
@@ -788,7 +791,7 @@ public class SyncService extends Service {
 
             showDialogWindow();
 
-            Thread tm = new SyncThread(mGp, ntfy);
+            Thread tm = new SyncThread(mContext, mGp, ntfy);
             tm.setName("SyncThread");
             tm.setPriority(Thread.MIN_PRIORITY);
             tm.start();

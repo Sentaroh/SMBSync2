@@ -142,7 +142,7 @@ public class SyncThreadSyncZip {
                 fos.write(buff, 0, rc);
                 read_byte+=rc;
                 SyncThread.showProgressMsg(stwa, stwa.currentSTI.getSyncTaskName()+":",
-                        String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_zip_copy_to_work),(read_byte*100/tot_byte)));
+                        String.format(stwa.context.getString(R.string.msgs_mirror_file_zip_copy_to_work),(read_byte*100/tot_byte)));
                 rc = fis.read(buff);
             }
             fis.close();
@@ -186,7 +186,7 @@ public class SyncThreadSyncZip {
             try {
                 long tot_byte=in.length();
                 FileInputStream fis = new FileInputStream(in);
-                OutputStream fos = stwa.gp.appContext.getContentResolver().openOutputStream(out.getUri());
+                OutputStream fos = stwa.context.getContentResolver().openOutputStream(out.getUri());
                 byte[] buff = new byte[1024 * 1024 * 8];
                 int rc = fis.read(buff);
                 long read_byte=0;
@@ -196,7 +196,7 @@ public class SyncThreadSyncZip {
                     fos.write(buff, 0, rc);
                     rc = fis.read(buff);
                     SyncThread.showProgressMsg(stwa, stwa.currentSTI.getSyncTaskName()+":",
-                            String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_file_zip_copy_back_from_work),(read_byte*100/tot_byte)));
+                            String.format(stwa.context.getString(R.string.msgs_mirror_file_zip_copy_back_from_work),(read_byte*100/tot_byte)));
                 }
                 fis.close();
                 fos.flush();
@@ -604,9 +604,9 @@ public class SyncThreadSyncZip {
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
                             if (move_file)
-                                stwa.util.addLogMsg("W", from_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_move_file));
+                                stwa.util.addLogMsg("W", from_path, stwa.context.getString(R.string.msgs_mirror_ignore_override_move_file));
                             else
-                                stwa.util.addLogMsg("W", from_path, stwa.gp.appContext.getString(R.string.msgs_mirror_ignore_override_copy_file));
+                                stwa.util.addLogMsg("W", from_path, stwa.context.getString(R.string.msgs_mirror_ignore_override_copy_file));
                         } else {
                             if (move_file) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, t_from_path)) {
@@ -625,7 +625,7 @@ public class SyncThreadSyncZip {
                                                 stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", t_from_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    stwa.util.addLogMsg("W", t_from_path, stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (isFileChanged(stwa, sti, from_path.replace(stwa.gp.internalRootDirectory + "/", ""), mf, stwa.ALL_COPY)) {
@@ -638,7 +638,7 @@ public class SyncThreadSyncZip {
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", t_from_path, stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        stwa.util.addLogMsg("W", t_from_path, stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }
@@ -648,7 +648,7 @@ public class SyncThreadSyncZip {
                     }
                 }
             } else {
-                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.context.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
                 SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
@@ -691,15 +691,15 @@ public class SyncThreadSyncZip {
 //									if (!sti.isSyncTestMode()) zf.removeFile(dfh);
                                     if (zfli.isDirectory())
                                         SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", zfli.getPath(), zfli.getFileName(),
-                                                stwa.gp.appContext.getString(R.string.msgs_mirror_task_dir_deleted));
+                                                stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
                                     else
                                         SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", zfli.getPath(), zfli.getFileName(),
-                                                stwa.gp.appContext.getString(R.string.msgs_mirror_task_file_deleted));
+                                                stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
                                     stwa.totalDeleteCount++;
                                     break;
                                 } else {
                                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", zfli.getPath(), zfli.getFileName(),
-                                            stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                            stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
                                 }
                             }
                         }

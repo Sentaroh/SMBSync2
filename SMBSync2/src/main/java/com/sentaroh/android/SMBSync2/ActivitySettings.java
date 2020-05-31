@@ -89,7 +89,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Context c = getApplicationContext();
+        Context c = getActivityContext();
         mGp= GlobalWorkArea.getGlobalParameters(c);
         SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(c);
         mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD);
@@ -160,6 +160,9 @@ public class ActivitySettings extends PreferenceActivity {
         return portrait_mp||sc_land_mp; //use MultiPane display in portrait if width >= multiPaneDP or in landscape if largest screen side >= multiPaneDP
     }
 
+    private Context getActivityContext() {
+        return ActivitySettings.this;
+    }
     @Override
     protected void onPause() {
         super.onPause();
@@ -195,7 +198,7 @@ public class ActivitySettings extends PreferenceActivity {
         float volume = (float) vol / 100.0f;
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         if (uri != null) {
-            final MediaPlayer player = MediaPlayer.create(mGp.appContext, uri);
+            final MediaPlayer player = MediaPlayer.create(c, uri);
             if (player != null) {
                 player.setVolume(volume, volume);
                 if (player != null) {
@@ -234,23 +237,23 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mUtil = new CommonUtilities(getContext(), "SettingsSync", mGp, null);
+            mUtil = new CommonUtilities(getActivity(), "SettingsSync", mGp, null);
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_sync);
 
-            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
             if (!LocalMountPoint.isExternalStorageAvailable()) {
                 if (findPreference(getString(R.string.settings_mgt_dir))!=null) findPreference(getString(R.string.settings_mgt_dir)).setEnabled(false);
             }
 
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_error_option), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_wifi_lock), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_history_log), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_no_compress_file_type), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_mgt_dir), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_force_screen_on_while_sync), getContext());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_error_option), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_wifi_lock), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_history_log), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_no_compress_file_type), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_mgt_dir), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_force_screen_on_while_sync), getActivity());
         }
 
         private boolean checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
@@ -301,7 +304,7 @@ public class ActivitySettings extends PreferenceActivity {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     public void onSharedPreferenceChanged(SharedPreferences shared_pref, String key_string) {
-                        checkSettingValue(mUtil, shared_pref, key_string, getContext());
+                        checkSettingValue(mUtil, shared_pref, key_string, getActivity());
                     }
                 };
         private CommonUtilities mUtil = null;
@@ -309,18 +312,18 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mUtil = new CommonUtilities(getContext(), "SettingsLog", mGp, null);
+            mUtil = new CommonUtilities(getActivity(), "SettingsLog", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_log);
 
-            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_log_option), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_put_logcat_option), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_log_file_max_count), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_log_level), getContext());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_log_option), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_put_logcat_option), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_log_file_max_count), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_log_level), getActivity());
         }
 
         private boolean checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
@@ -367,7 +370,7 @@ public class ActivitySettings extends PreferenceActivity {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     public void onSharedPreferenceChanged(SharedPreferences shared_pref, String key_string) {
-                        checkSettingValue(mUtil, shared_pref, key_string, getContext());
+                        checkSettingValue(mUtil, shared_pref, key_string, getActivity());
                     }
                 };
         private CommonUtilities mUtil = null;
@@ -375,18 +378,18 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mUtil = new CommonUtilities(getContext(), "SettingsMisc", mGp, null);
+            mUtil = new CommonUtilities(getActivity(), "SettingsMisc", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_misc);
 
-            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
 //            shared_pref.edit().putBoolean(getString(R.string.settings_exit_clean), true).commit();
 //            findPreference(getString(R.string.settings_exit_clean).toString()).setEnabled(false);
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_exit_clean), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_message_use_standard_text_view), getContext());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_exit_clean), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_message_use_standard_text_view), getActivity());
         }
 
         private boolean checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
@@ -424,7 +427,7 @@ public class ActivitySettings extends PreferenceActivity {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     public void onSharedPreferenceChanged(SharedPreferences shared_pref, String key_string) {
-                        checkSettingValue(mUtil, shared_pref, key_string, getContext());
+                        checkSettingValue(mUtil, shared_pref, key_string, getActivity());
                     }
                 };
         private CommonUtilities mUtil = null;
@@ -432,28 +435,28 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mUtil = new CommonUtilities(getContext(), "SettingsSmb", mGp, null);
+            mUtil = new CommonUtilities(getActivity(), "SettingsSmb", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_smb);
 
 
-            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_use_extended_security), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_lm_compatibility), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_client_response_timeout), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_disable_plain_text_passwords), getContext());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_use_extended_security), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_lm_compatibility), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_client_response_timeout), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_disable_plain_text_passwords), getActivity());
 
             Preference button = (Preference)getPreferenceManager().findPreference("settings_smb_set_default_value");
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    shared_pref.edit().putBoolean(getContext().getString(R.string.settings_smb_use_extended_security),true).commit();
-                    shared_pref.edit().putBoolean(getContext().getString(R.string.settings_smb_disable_plain_text_passwords),false).commit();
-                    shared_pref.edit().putString(getContext().getString(R.string.settings_smb_lm_compatibility),"3").commit();
-                    shared_pref.edit().putString(getContext().getString(R.string.settings_smb_client_response_timeout),"30000").commit();
+                    shared_pref.edit().putBoolean(getActivity().getString(R.string.settings_smb_use_extended_security),true).commit();
+                    shared_pref.edit().putBoolean(getActivity().getString(R.string.settings_smb_disable_plain_text_passwords),false).commit();
+                    shared_pref.edit().putString(getActivity().getString(R.string.settings_smb_lm_compatibility),"3").commit();
+                    shared_pref.edit().putString(getActivity().getString(R.string.settings_smb_client_response_timeout),"30000").commit();
                     return false;
                 }
             });
@@ -510,7 +513,7 @@ public class ActivitySettings extends PreferenceActivity {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     public void onSharedPreferenceChanged(SharedPreferences shared_pref, String key_string) {
-                        checkSettingValue(mUtil, shared_pref, key_string, getContext());
+                        checkSettingValue(mUtil, shared_pref, key_string, getActivity());
                     }
                 };
         private CommonUtilities mUtil = null;
@@ -518,28 +521,28 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mUtil = new CommonUtilities(getContext(), "SettingsUi", mGp, null);
+            mUtil = new CommonUtilities(getActivity(), "SettingsUi", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_ui);
 
-            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
             mInitVolume = shared_pref.getInt(getString(R.string.settings_playback_ringtone_volume), 100);
 
             mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD);
             mCurrentThemeLangaue=shared_pref.getString(getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM);
 
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_notification_message_when_sync_ended), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_playback_ringtone_when_sync_ended), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_playback_ringtone_volume), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_vibrate_when_sync_ended), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_portrait), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_landscape_tablet), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme_language), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_dim_screen_on_while_sync), getContext());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_notification_message_when_sync_ended), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_playback_ringtone_when_sync_ended), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_playback_ringtone_volume), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_vibrate_when_sync_ended), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_portrait), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_landscape_tablet), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme_language), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_dim_screen_on_while_sync), getActivity());
 
         }
 
@@ -665,7 +668,7 @@ public class ActivitySettings extends PreferenceActivity {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     public void onSharedPreferenceChanged(SharedPreferences shared_pref, String key_string) {
-                        checkSettingValue(mUtil, shared_pref, key_string, getContext());
+                        checkSettingValue(mUtil, shared_pref, key_string, getActivity());
                     }
                 };
         private CommonUtilities mUtil = null;
@@ -674,8 +677,8 @@ public class ActivitySettings extends PreferenceActivity {
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             if (requestCode == 0) {
                 if (resultCode == RESULT_OK) {
-                    SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-                    checkSettingValue(mUtil, shared_pref, getString(R.string.settings_security_application_password), getContext());
+                    SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    checkSettingValue(mUtil, shared_pref, getString(R.string.settings_security_application_password), getActivity());
                 }
             }
         }
@@ -683,23 +686,23 @@ public class ActivitySettings extends PreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            mUtil = new CommonUtilities(getContext(), "SettingsSecurity", mGp, null);
+            mUtil = new CommonUtilities(getActivity(), "SettingsSecurity", mGp, null);
             if (mGp.settingDebugLevel > 0)
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
             addPreferencesFromResource(R.xml.settings_frag_security);
 
-            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
             mInitVolume = shared_pref.getInt(getString(R.string.settings_playback_ringtone_volume), 100);
 
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_security_application_password), getContext());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_security_application_password), getActivity());
 
             Preference button = (Preference)getPreferenceManager().findPreference(getString(R.string.settings_security_application_password));
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Intent in=new Intent(getContext(), ActivityPasswordSettings.class);
+                    Intent in=new Intent(getActivity(), ActivityPasswordSettings.class);
                     startActivityForResult(in, 0);
                     return false;
                 }

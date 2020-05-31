@@ -76,10 +76,10 @@ public class SyncThreadCopyFile {
                 is=new FileInputStream(mf);
             } else {
                 m_saf_length=m_saf.length();
-                if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+                if (m_saf.length()==mf.length()) is = stwa.context.getContentResolver().openInputStream(m_saf.getUri());
                 else {
                     is=new FileInputStream(mf);
-                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.context.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
                 }
             }
         }
@@ -89,7 +89,7 @@ public class SyncThreadCopyFile {
         SafFile t_df=null;
         t_df = SyncThread.createSafFile(stwa, sti, to_file_temp);
         if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-        os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+        os = stwa.context.getContentResolver().openOutputStream(t_df.getUri());
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
@@ -138,10 +138,10 @@ public class SyncThreadCopyFile {
 //            return SyncTaskItem.SYNC_STATUS_ERROR;
             } else {
                 m_saf_length=m_saf.length();
-                if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+                if (m_saf.length()==mf.length()) is = stwa.context.getContentResolver().openInputStream(m_saf.getUri());
                 else {
                     is=new FileInputStream(mf);
-                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.context.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
                 }
             }
         }
@@ -149,7 +149,7 @@ public class SyncThreadCopyFile {
         OutputStream os =null;
         File temp_file=new File(to_file_temp);
         SafFile temp_sf=SyncThread.createSafFile(stwa, sti, temp_file.getPath());
-        os=new FileOutputStream(temp_file);//stwa.gp.appContext.getContentResolver().openOutputStream(temp_sf.getUri());
+        os=new FileOutputStream(temp_file);//stwa.context.getContentResolver().openOutputStream(temp_sf.getUri());
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
@@ -161,7 +161,7 @@ public class SyncThreadCopyFile {
             if (!sti.isSyncDoNotResetFileLastModified()) temp_file.setLastModified(mf.lastModified());
         } catch(Exception e) {
             SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                    stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_temp+
@@ -208,10 +208,10 @@ public class SyncThreadCopyFile {
                 is=new FileInputStream(mf);
             } else {
                 m_saf_length=-m_saf.length();
-                if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+                if (m_saf.length()==mf.length()) is = stwa.context.getContentResolver().openInputStream(m_saf.getUri());
                 else {
                     is=new FileInputStream(mf);
-                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.context.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
                 }
             }
         }
@@ -229,7 +229,7 @@ public class SyncThreadCopyFile {
                 if (!sti.isSyncDoNotResetFileLastModified()) out_file.setLastModified(mf.lastModified());
             } catch(Exception e) {
                 SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                        stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                        stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
                 stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
             }
         }
@@ -283,10 +283,10 @@ public class SyncThreadCopyFile {
                 is=new FileInputStream(mf);
             } else {
                 m_saf_length=m_saf.length();
-                if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+                if (m_saf.length()==mf.length()) is = stwa.context.getContentResolver().openInputStream(m_saf.getUri());
                 else {
                     is=new FileInputStream(mf);
-                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.context.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
                 }
             }
         }
@@ -303,7 +303,7 @@ public class SyncThreadCopyFile {
             if (!sti.isSyncDoNotResetFileLastModified()) out_file.setLastModified(mf.lastModified());
         } catch(JcifsException e) {
             SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                    stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp=",to_file_dest,
@@ -338,10 +338,10 @@ public class SyncThreadCopyFile {
                 is=new FileInputStream(mf);
             } else {
                 m_saf_length=m_saf.length();
-                if (m_saf.length()==mf.length()) is = stwa.gp.appContext.getContentResolver().openInputStream(m_saf.getUri());
+                if (m_saf.length()==mf.length()) is = stwa.context.getContentResolver().openInputStream(m_saf.getUri());
                 else {
                     is=new FileInputStream(mf);
-                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.gp.appContext.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
+                    stwa.util.addLogMsg("W", CommonUtilities.getExecutedMethodName()+" " +stwa.context.getString(R.string.msgs_mirror_file_sdcard_info_not_reflect_media_store));
                 }
             }
         }
@@ -358,7 +358,7 @@ public class SyncThreadCopyFile {
             if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.lastModified());
         } catch(JcifsException e) {
             SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                    stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp=",to_file_dest,
@@ -398,7 +398,7 @@ public class SyncThreadCopyFile {
                 if (!sti.isSyncDoNotResetFileLastModified()) temp_file.setLastModified(mf.lastModified());
             } catch(Exception e) {
                 SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                        stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                        stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
                 stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
             }
         }
@@ -437,7 +437,7 @@ public class SyncThreadCopyFile {
         SafFile t_df=null;
         t_df = SyncThread.createSafFile(stwa, sti, to_file_temp);
         if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-        os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+        os = stwa.context.getContentResolver().openOutputStream(t_df.getUri());
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
@@ -479,7 +479,7 @@ public class SyncThreadCopyFile {
 
         File temp_file=new File(to_file_temp);
         SafFile from_sf=SyncThread.createSafFile(stwa, sti, to_file_temp);
-        os=new FileOutputStream(temp_file);//stwa.gp.appContext.getContentResolver().openOutputStream(from_sf.getUri());
+        os=new FileOutputStream(temp_file);//stwa.context.getContentResolver().openOutputStream(from_sf.getUri());
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
             temp_file.delete();
@@ -490,7 +490,7 @@ public class SyncThreadCopyFile {
             if (!sti.isSyncDoNotResetFileLastModified()) temp_file.setLastModified(mf.lastModified());
         } catch(Exception e) {
             SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                    stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_temp+
@@ -551,7 +551,7 @@ public class SyncThreadCopyFile {
             if (!sti.isSyncDoNotResetFileLastModified()) out_file.setLastModified(mf.lastModified());
         } catch(JcifsException e) {
             SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                    stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_dest+
@@ -591,7 +591,7 @@ public class SyncThreadCopyFile {
             if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.lastModified());
         } catch(JcifsException e) {
             SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                    stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_dest+
@@ -640,7 +640,7 @@ public class SyncThreadCopyFile {
             if (!sti.isSyncDoNotResetFileLastModified()) out_file.setLastModified(mf.getLastModified());
         } catch(JcifsException e) {
             SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                    stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_dest+
@@ -675,7 +675,7 @@ public class SyncThreadCopyFile {
             if (!sti.isSyncDoNotResetFileLastModified()) out_dest.setLastModified(mf.getLastModified());
         } catch(JcifsException e) {
             SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                    stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_dest+
@@ -715,7 +715,7 @@ public class SyncThreadCopyFile {
                 if (!sti.isSyncDoNotResetFileLastModified()) out_file.setLastModified(mf.getLastModified());
             } catch(Exception e) {
                 SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                        stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                        stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
                 stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
             }
         }
@@ -756,7 +756,7 @@ public class SyncThreadCopyFile {
         OutputStream os =null;
         SafFile t_df = SyncThread.createSafFile(stwa, sti, to_file_temp);
         if (t_df == null) return SyncTaskItem.SYNC_STATUS_ERROR;
-        os = stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri());
+        os = stwa.context.getContentResolver().openOutputStream(t_df.getUri());
 
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
@@ -799,7 +799,7 @@ public class SyncThreadCopyFile {
         OutputStream os =null;
         File temp_file=new File(to_file_temp);
         SafFile from_sf=SyncThread.createSafFile(stwa, sti, temp_file.getPath());
-        os =new FileOutputStream(temp_file);//stwa.gp.appContext.getContentResolver().openOutputStream(from_sf.getUri());
+        os =new FileOutputStream(temp_file);//stwa.context.getContentResolver().openOutputStream(from_sf.getUri());
         int result=copyFile(stwa, sti, from_dir, to_dir, file_name, mf.length(), is, os);
         if (result==SyncTaskItem.SYNC_STATUS_CANCEL) {
             temp_file.delete();
@@ -809,7 +809,7 @@ public class SyncThreadCopyFile {
             if (!sti.isSyncDoNotResetFileLastModified()) temp_file.setLastModified(mf.getLastModified());
         } catch(Exception e) {
             SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "W", to_file_dest, mf.getName(),
-                    stwa.gp.appContext.getString(R.string.msgs_mirror_file_set_last_modified_failed));
+                    stwa.context.getString(R.string.msgs_mirror_file_set_last_modified_failed));
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "Error="+e.getMessage());
         }
         stwa.util.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName(), " After copy fp="+to_file_temp+
@@ -832,7 +832,7 @@ public class SyncThreadCopyFile {
             try {
                 final String EXTRA_URI = "uri";
                 final String METHOD_DELETE_DOCUMENT = "android:deleteDocument";
-                ContentProviderClient client=stwa.gp.appContext.getContentResolver().acquireContentProviderClient(to_sf.getUri().getAuthority());
+                ContentProviderClient client=stwa.context.getContentResolver().acquireContentProviderClient(to_sf.getUri().getAuthority());
                 final Bundle in = new Bundle();
                 in.putParcelable(EXTRA_URI, to_sf.getUri());
                 client.call(METHOD_DELETE_DOCUMENT, null, in);

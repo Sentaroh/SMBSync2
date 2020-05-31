@@ -57,19 +57,19 @@ public class NotificationUtil {
     static final public void initNotification(GlobalParameters gwa, CommonUtilities util, Context c) {
         gwa.notificationManager = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
         gwa.notification = new Notification(R.drawable.ic_48_smbsync_wait,
-                gwa.appContext.getString(R.string.app_name), 0);
+                c.getString(R.string.app_name), 0);
 
-        gwa.notificationAppName = gwa.appContext.getString(R.string.app_name);
+        gwa.notificationAppName = c.getString(R.string.app_name);
 
-        gwa.notificationIntent = new Intent(gwa.appContext, ActivityMain.class);
+        gwa.notificationIntent = new Intent(c, ActivityMain.class);
         gwa.notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         gwa.notificationIntent.setAction(Intent.ACTION_MAIN);
         gwa.notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        gwa.notificationPendingIntent = PendingIntent.getActivity(gwa.appContext, 0, gwa.notificationIntent,
+        gwa.notificationPendingIntent = PendingIntent.getActivity(c, 0, gwa.notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
-//        gwa.notificationLargeIcon = BitmapFactory.decodeResource(gwa.appContext.getResources(), gwa.notificationSmallIcon);
-        gwa.notificationBuilder = new NotificationCompat.Builder(gwa.appContext);
+//        gwa.notificationLargeIcon = BitmapFactory.decodeResource(c.getResources(), gwa.notificationSmallIcon);
+        gwa.notificationBuilder = new NotificationCompat.Builder(c);
         gwa.notificationBuilder.setContentIntent(gwa.notificationPendingIntent)
                 .setOngoing(true)
                 .setAutoCancel(false)
@@ -145,7 +145,7 @@ public class NotificationUtil {
                                                  int small_icon, int large_icon) {
         gwa.notificationSmallIcon = small_icon;
 //        if (gwa.notificationLargeIcon != null) gwa.notificationLargeIcon.recycle();
-//        gwa.notificationLargeIcon = BitmapFactory.decodeResource(gwa.appContext.getResources(), large_icon);
+//        gwa.notificationLargeIcon = BitmapFactory.decodeResource(c.getResources(), large_icon);
         gwa.notificationBuilder.setContentIntent(gwa.notificationPendingIntent)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
                 ;//.setLargeIcon(gwa.notificationLargeIcon);
@@ -235,13 +235,13 @@ public class NotificationUtil {
         return gwa.notification;
     }
 
-    final static public void showNoticeMsg(Context context, GlobalParameters gwa, CommonUtilities util, String msg) {
+    final static public void showNoticeMsg(Context c, GlobalParameters gwa, CommonUtilities util, String msg) {
         clearNotification(gwa, util);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(c);
         builder.setOngoing(false)
                 .setAutoCancel(true)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-                .setContentTitle(context.getString(R.string.app_name))
+                .setContentTitle(c.getString(R.string.app_name))
                 .setContentText(msg)
                 .setWhen(System.currentTimeMillis())
         ;
@@ -251,8 +251,8 @@ public class NotificationUtil {
             builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         }
         if (gwa.callbackStub != null || (gwa.msgList != null && gwa.msgList.size() > 0)) {
-            Intent activity_intent = new Intent(gwa.appContext, ActivityMain.class);
-            PendingIntent activity_pi = PendingIntent.getActivity(context, 0, activity_intent,
+            Intent activity_intent = new Intent(c, ActivityMain.class);
+            PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
         } else {
@@ -261,12 +261,12 @@ public class NotificationUtil {
                 if (lf.exists()) {
                     Intent br_log_intent = new Intent(android.content.Intent.ACTION_VIEW);
                     br_log_intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(gwa)), "text/plain");
-                    PendingIntent br_log_pi = PendingIntent.getActivity(context, 0, br_log_intent,
+                    PendingIntent br_log_pi = PendingIntent.getActivity(c, 0, br_log_intent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(br_log_pi);
                 } else {
-                    Intent dummy_intent = new Intent(context, ActivityMain.class);
-                    PendingIntent dummy_pi = PendingIntent.getActivity(context, 0, dummy_intent,
+                    Intent dummy_intent = new Intent(c, ActivityMain.class);
+                    PendingIntent dummy_pi = PendingIntent.getActivity(c, 0, dummy_intent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
                     dummy_pi.cancel();
                     builder.setContentIntent(dummy_pi);
@@ -277,15 +277,15 @@ public class NotificationUtil {
             gwa.notificationManager.notify(R.string.app_name, builder.build());
     }
 
-    final static public void showNoticeMsg(Context context, GlobalParameters gwa, CommonUtilities util, String msg, boolean playback_sound, boolean vibration) {
+    final static public void showNoticeMsg(Context c, GlobalParameters gwa, CommonUtilities util, String msg, boolean playback_sound, boolean vibration) {
         clearNotification(gwa, util);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-//        Bitmap bm=BitmapFactory.decodeResource(gwa.appContext.getResources(), R.drawable.ic_48_smbsync_err);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(c);
+//        Bitmap bm=BitmapFactory.decodeResource(c.getResources(), R.drawable.ic_48_smbsync_err);
         builder.setOngoing(false)
                 .setAutoCancel(true)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
 //                .setLargeIcon(bm)//smbsync_animation)
-                .setContentTitle(context.getString(R.string.app_name))
+                .setContentTitle(c.getString(R.string.app_name))
                 .setContentText(msg)
                 .setWhen(System.currentTimeMillis())
         ;
@@ -299,8 +299,8 @@ public class NotificationUtil {
             else builder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
         }
         if (gwa.callbackStub != null || (gwa.msgList != null && gwa.msgList.size() > 0)) {
-            Intent activity_intent = new Intent(gwa.appContext, ActivityMain.class);
-            PendingIntent activity_pi = PendingIntent.getActivity(context, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent activity_intent = new Intent(c, ActivityMain.class);
+            PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
         } else {
             if (!LogUtil.getLogFilePath(gwa).equals("") && gwa.settingLogOption) {
@@ -308,12 +308,12 @@ public class NotificationUtil {
                 if (lf.exists()) {
                     Intent br_log_intent = new Intent(android.content.Intent.ACTION_VIEW);
                     br_log_intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(gwa)), "text/plain");
-                    PendingIntent br_log_pi = PendingIntent.getActivity(context, 0, br_log_intent,
+                    PendingIntent br_log_pi = PendingIntent.getActivity(c, 0, br_log_intent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(br_log_pi);
                 } else {
-                    Intent dummy_intent = new Intent(context, ActivityMain.class);
-                    PendingIntent dummy_pi = PendingIntent.getActivity(context, 0, dummy_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    Intent dummy_intent = new Intent(c, ActivityMain.class);
+                    PendingIntent dummy_pi = PendingIntent.getActivity(c, 0, dummy_intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     dummy_pi.cancel();
                     builder.setContentIntent(dummy_pi);
                 }

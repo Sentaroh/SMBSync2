@@ -2763,7 +2763,7 @@ public class SyncTaskEditor extends DialogFragment {
         if (Build.VERSION.SDK_INT<=26) return;
         boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED);
         if (gp.settingSupressLocationServiceWarning ||
-                (CommonUtilities.isLocationServiceEnabled(gp) && coarse_granted)) return;
+                (CommonUtilities.isLocationServiceEnabled(activity, gp) && coarse_granted)) return;
         boolean waring_required=false;
         String used_st="", sep="-";
         for(SyncTaskItem st_item:gp.syncTaskList) {
@@ -2779,9 +2779,9 @@ public class SyncTaskEditor extends DialogFragment {
         showLocationServiceWarning(activity, gp, cu, used_st);
     }
 
-    static public void showLocationServiceWarning(Activity activity, GlobalParameters gp, CommonUtilities cu, String used_st) {
+    static public void showLocationServiceWarning(final Activity activity, final GlobalParameters gp, final CommonUtilities cu, final String used_st) {
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(gp.appContext);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 
         final Dialog dialog = new Dialog(activity, gp.applicationTheme);//, android.R.style.Theme_Black);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -2790,15 +2790,15 @@ public class SyncTaskEditor extends DialogFragment {
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.show_warning_message_dlg_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.show_warning_message_dlg_title);
         title_view.setBackgroundColor(gp.themeColorList.title_background_color);
-        title.setText(gp.appContext.getString(R.string.msgs_main_app_specific_dir_used_title));
+        title.setText(activity.getString(R.string.msgs_main_app_specific_dir_used_title));
         title.setTextColor(gp.themeColorList.title_text_color);
-        title.setText(gp.appContext.getString(R.string.msgs_main_location_service_warning_title));
+        title.setText(activity.getString(R.string.msgs_main_location_service_warning_title));
 
         String msg_text="";
         boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED);
-        if (!CommonUtilities.isLocationServiceEnabled(gp) && !coarse_granted) msg_text=gp.appContext.getString(R.string.msgs_main_location_service_warning_msg_both);
-        else if (!CommonUtilities.isLocationServiceEnabled(gp)) msg_text=gp.appContext.getString(R.string.msgs_main_location_service_warning_msg_location);
-        else if (!coarse_granted) msg_text=gp.appContext.getString(R.string.msgs_main_location_service_warning_msg_coarse);
+        if (!CommonUtilities.isLocationServiceEnabled(activity, gp) && !coarse_granted) msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_both);
+        else if (!CommonUtilities.isLocationServiceEnabled(activity, gp)) msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_location);
+        else if (!coarse_granted) msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_coarse);
 
         if (!used_st.equals("")) msg_text+="\n\n"+used_st;
         ((TextView) dialog.findViewById(R.id.show_warning_message_dlg_msg)).setText(msg_text);
@@ -2815,7 +2815,7 @@ public class SyncTaskEditor extends DialogFragment {
             public void onClick(View v) {
                 dialog.dismiss();
                 if (ctvSuppr.isChecked()) {
-                    prefs.edit().putBoolean(gp.appContext.getString(R.string.settings_suppress_warning_location_service_disabled), true).commit();
+                    prefs.edit().putBoolean(activity.getString(R.string.settings_suppress_warning_location_service_disabled), true).commit();
                     gp.settingSupressLocationServiceWarning =true;
                 }
             }
@@ -4034,7 +4034,7 @@ public class SyncTaskEditor extends DialogFragment {
                                         n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                     if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
                                         String msg="", opt_temp="";
-                                        if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mGp)) || Build.VERSION.SDK_INT<=26) {
+                                        if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) || Build.VERSION.SDK_INT<=26) {
                                             opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
                                             msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
                                         } else {
@@ -4209,7 +4209,7 @@ public class SyncTaskEditor extends DialogFragment {
                                         n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                     if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
                                         String msg="", opt_temp="";
-                                        if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mGp)) || Build.VERSION.SDK_INT<=26) {
+                                        if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) || Build.VERSION.SDK_INT<=26) {
                                             opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
                                             msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
                                         } else {

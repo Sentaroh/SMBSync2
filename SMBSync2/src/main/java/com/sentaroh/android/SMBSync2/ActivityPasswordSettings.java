@@ -50,9 +50,9 @@ public class ActivityPasswordSettings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mContext = getApplicationContext();
-        mGp= GlobalWorkArea.getGlobalParameters(mContext);
         mActivity = ActivityPasswordSettings.this;
+        mContext = mActivity;
+        mGp= GlobalWorkArea.getGlobalParameters(mContext);
         setTheme(mGp.applicationTheme);
         if (mGp.themeColorList == null) {
             mGp.themeColorList = CommonUtilities.getThemeColorList(mActivity);

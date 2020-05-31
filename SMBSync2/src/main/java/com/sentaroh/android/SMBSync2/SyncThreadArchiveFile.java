@@ -95,7 +95,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -113,7 +113,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -200,7 +200,7 @@ public class SyncThreadArchiveFile {
                                             }
                                         } else {
                                             stwa.util.addDebugMsg(1, "W",
-                                                    String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_same_directory_ignored),
+                                                    String.format(stwa.context.getString(R.string.msgs_mirror_same_directory_ignored),
                                                             from_path, "/", element.getName()));
                                         }
                                     }
@@ -221,7 +221,7 @@ public class SyncThreadArchiveFile {
                     }
                 }
             } else {
-                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.context.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
                 SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
@@ -259,7 +259,7 @@ public class SyncThreadArchiveFile {
                     return SyncTaskItem.SYNC_STATUS_ERROR;
                 }
                 sync_result= copyFile(stwa, sti, new FileInputStream(mf),
-                        stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
+                        stwa.context.getContentResolver().openOutputStream(t_df.getUri()), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
@@ -273,7 +273,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -299,7 +299,7 @@ public class SyncThreadArchiveFile {
                     os=new FileOutputStream(temp_file);
                 } catch (Exception e) {
                     SafFile sf=SyncThread.createSafFile(stwa, sti, temp_file.getPath(), false);
-                    os=stwa.gp.appContext.getContentResolver().openOutputStream(sf.getUri());
+                    os=stwa.context.getContentResolver().openOutputStream(sf.getUri());
                 }
 
                 SafFile to_saf=SyncThread.createSafFile(stwa, sti, tf.getPath());
@@ -329,7 +329,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -346,7 +346,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -455,7 +455,7 @@ public class SyncThreadArchiveFile {
                     }
                 }
             } else {
-                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.context.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
                 SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
@@ -485,7 +485,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;//Archive cancelled
                 }
             }
@@ -599,7 +599,7 @@ public class SyncThreadArchiveFile {
                     }
                 }
             } else {
-                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.context.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
                 SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
@@ -697,7 +697,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -719,7 +719,7 @@ public class SyncThreadArchiveFile {
                         stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp":
                         stwa.gp.safMgr.getUsbRootPath()+   "/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
                 File temp_file=new File(temp_path);
-                sync_result= copyFile(stwa, sti,  stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
+                sync_result= copyFile(stwa, sti,  stwa.context.getContentResolver().openInputStream(m_df.getUri()),
                         new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
                 if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                     temp_file.setLastModified(mf.lastModified());
@@ -738,7 +738,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -755,7 +755,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -857,7 +857,7 @@ public class SyncThreadArchiveFile {
                     }
                 }
             } else {
-                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.context.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
                 SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
@@ -895,8 +895,8 @@ public class SyncThreadArchiveFile {
                 if (t_df == null) {
                     return SyncTaskItem.SYNC_STATUS_ERROR;
                 }
-                sync_result= copyFile(stwa, sti, stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
-                        stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
+                sync_result= copyFile(stwa, sti, stwa.context.getContentResolver().openInputStream(m_df.getUri()),
+                        stwa.context.getContentResolver().openOutputStream(t_df.getUri()), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
             }
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
@@ -910,7 +910,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -932,10 +932,10 @@ public class SyncThreadArchiveFile {
                     os=new FileOutputStream(temp_file);
                 } catch (Exception e) {
                     SafFile sf=SyncThread.createSafFile(stwa, sti, temp_file.getPath(), false);
-                    os=stwa.gp.appContext.getContentResolver().openOutputStream(sf.getUri());
+                    os=stwa.context.getContentResolver().openOutputStream(sf.getUri());
                 }
 
-                sync_result= copyFile(stwa, sti, stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
+                sync_result= copyFile(stwa, sti, stwa.context.getContentResolver().openInputStream(m_df.getUri()),
                         os, from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
 
                 temp_file.setLastModified(mf.lastModified());
@@ -962,7 +962,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -979,7 +979,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -1066,7 +1066,7 @@ public class SyncThreadArchiveFile {
                                             }
                                         } else {
                                             stwa.util.addDebugMsg(1, "W",
-                                                    String.format(stwa.gp.appContext.getString(R.string.msgs_mirror_same_directory_ignored),
+                                                    String.format(stwa.context.getString(R.string.msgs_mirror_same_directory_ignored),
                                                             from_path + "/" + element.getName()));
                                         }
                                     }
@@ -1087,7 +1087,7 @@ public class SyncThreadArchiveFile {
                     }
                 }
             } else {
-                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.context.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
                 SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
@@ -1119,7 +1119,7 @@ public class SyncThreadArchiveFile {
 //                }
                 if (!jf_dir.exists()) jf_dir.mkdirs();
                 while (stwa.syncTaskRetryCount > 0) {
-                    sync_result= copyFile(stwa, sti, stwa.gp.appContext.getContentResolver().openInputStream(m_df.getUri()),
+                    sync_result= copyFile(stwa, sti, stwa.context.getContentResolver().openInputStream(m_df.getUri()),
                             tf.getOutputStream(), from_path, to_path,
                             tf.getName(), sti.isSyncOptionUseSmallIoBuffer());
                     if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
@@ -1152,7 +1152,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -1170,7 +1170,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -1287,7 +1287,7 @@ public class SyncThreadArchiveFile {
                     }
                 }
             } else {
-                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.context.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
                 SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
@@ -1367,7 +1367,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -1385,7 +1385,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -1502,7 +1502,7 @@ public class SyncThreadArchiveFile {
                     }
                 }
             } else {
-                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.context.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
                 SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
@@ -1558,7 +1558,7 @@ public class SyncThreadArchiveFile {
                     return SyncTaskItem.SYNC_STATUS_ERROR;
                 }
                 while (stwa.syncTaskRetryCount > 0) {
-                    sync_result= copyFile(stwa, sti, mf.getInputStream(), stwa.gp.appContext.getContentResolver().openOutputStream(t_df.getUri()),
+                    sync_result= copyFile(stwa, sti, mf.getInputStream(), stwa.context.getContentResolver().openOutputStream(t_df.getUri()),
                             from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
                     if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
                         stwa.syncTaskRetryCount--;
@@ -1588,7 +1588,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -1611,7 +1611,7 @@ public class SyncThreadArchiveFile {
                     os=new FileOutputStream(temp_file);
                 } catch (Exception e) {
                     SafFile sf=SyncThread.createSafFile(stwa, sti, temp_file.getPath(), false);
-                    os=stwa.gp.appContext.getContentResolver().openOutputStream(sf.getUri());
+                    os=stwa.context.getContentResolver().openOutputStream(sf.getUri());
                 }
 
                 while (stwa.syncTaskRetryCount > 0) {
@@ -1656,7 +1656,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -1674,7 +1674,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -1788,7 +1788,7 @@ public class SyncThreadArchiveFile {
                     }
                 }
             } else {
-                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.context.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
                 SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
@@ -1863,7 +1863,7 @@ public class SyncThreadArchiveFile {
                 }
             }
         } else {
-            stwa.util.addLogMsg("W", to_path, " ", stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_move_cancel));
+            stwa.util.addLogMsg("W", to_path, " ", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
 
         return sync_result;
@@ -1881,7 +1881,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.gp.appContext.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -1998,7 +1998,7 @@ public class SyncThreadArchiveFile {
                     }
                 }
             } else {
-                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.gp.appContext.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
+                stwa.gp.syncThreadCtrl.setThreadMessage(stwa.context.getString(R.string.msgs_mirror_task_master_not_found) + "," + from_path);
                 SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "E", "", "", stwa.gp.syncThreadCtrl.getThreadMessage());
                 return SyncTaskItem.SYNC_STATUS_ERROR;
             }
@@ -2294,8 +2294,8 @@ public class SyncThreadArchiveFile {
     static final public String[] getFileExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, SafFile sf) {
         String[] date_time=null;
         try {
-            InputStream fis=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
-            InputStream fis_retry=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
+            InputStream fis=stwa.context.getContentResolver().openInputStream(sf.getUri());
+            InputStream fis_retry=stwa.context.getContentResolver().openInputStream(sf.getUri());
             date_time=getFileExifDateTime(stwa, sti, fis, fis_retry, sf.lastModified(), sf.getName());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -2445,7 +2445,7 @@ public class SyncThreadArchiveFile {
         String[] result=null;
         InputStream fis=null;
         try {
-            fis=stwa.gp.appContext.getContentResolver().openInputStream(sf.getUri());
+            fis=stwa.context.getContentResolver().openInputStream(sf.getUri());
             result=getMp4ExifDateTime(stwa, fis);
         } catch (IOException e) {
             e.printStackTrace();

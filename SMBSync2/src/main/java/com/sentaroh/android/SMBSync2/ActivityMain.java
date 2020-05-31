@@ -197,10 +197,10 @@ public class ActivityMain extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-        mContext = getApplicationContext();
-        mGp= GlobalWorkArea.getGlobalParameters(mContext);
-        mGp.loadSettingsParms();
         mActivity = ActivityMain.this;
+        mContext = mActivity;
+        mGp= GlobalWorkArea.getGlobalParameters(mContext);
+        mGp.loadSettingsParms(mContext);
         setTheme(mGp.applicationTheme);
         mGp.themeColorList = CommonUtilities.getThemeColorList(mActivity);
 //        getWindow().setNavigationBarColor(mGp.themeColorList.window_background_color_content);
@@ -208,7 +208,7 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(R.layout.main_screen);
 
         mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType+", settingScreenThemeLanguage="+mGp.settingScreenThemeLanguage);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setHomeButtonEnabled(false);
@@ -221,7 +221,7 @@ public class ActivityMain extends AppCompatActivity {
         mTaskUtil = new SyncTaskUtil(mUtil, mActivity, mCommonDlg, ccMenu, mGp, getSupportFragmentManager());
         mGp.msgListAdapter = new AdapterSyncMessage(mActivity, R.layout.msg_list_item_view, mGp.msgList, mGp);
 
-        mGp.syncTabScheduleList = ScheduleUtil.loadScheduleData(mGp);
+        mGp.syncTabScheduleList = ScheduleUtil.loadScheduleData(mActivity, mGp);
 
         if (mGp.syncTaskList == null) {
             mSyncTaskListCreateRequired=true;
@@ -239,7 +239,7 @@ public class ActivityMain extends AppCompatActivity {
 
         createTabView();
         initAdapterAndView();
-        mGp.initJcifsOption();
+        mGp.initJcifsOption(mContext);
         listSettingsOption();
 
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET);
@@ -262,7 +262,7 @@ public class ActivityMain extends AppCompatActivity {
         if (restartType == RESTART_WITH_OUT_INITIALYZE) {
             mGp.safMgr.loadSafFile();
             setActivityForeground(true);
-            ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+            ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
@@ -420,7 +420,7 @@ public class ActivityMain extends AppCompatActivity {
         setScheduleContextButtonNormalMode();
 
         mGp.syncTaskAdapter.notifyDataSetChanged();
-        ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+        ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
         setScheduleTabMessage();
 
         deleteTaskData();
@@ -558,7 +558,7 @@ public class ActivityMain extends AppCompatActivity {
         btn_close.setText(mContext.getString(R.string.msgs_common_dialog_close));
         btn_copy.setText(mContext.getString(R.string.msgs_info_storage_copy_clipboard));
 
-        ArrayList<String>sil= CommonUtilities.listSystemInfo(mGp);
+        ArrayList<String>sil= CommonUtilities.listSystemInfo(mContext, mGp);
         String si_text="";
         for(String si_item:sil) si_text+=si_item+"\n";
 
@@ -1395,7 +1395,7 @@ public class ActivityMain extends AppCompatActivity {
                 reselectSdcard("", "");
                 return true;
             case R.id.menu_top_request_grant_coarse_location:
-                mGp.setSettingGrantCoarseLocationRequired(true);
+                mGp.setSettingGrantCoarseLocationRequired(mContext, true);
                 checkLocationPermission(false);
                 return true;
 //            case R.id.menu_top_start_logcat:
@@ -1418,11 +1418,11 @@ public class ActivityMain extends AppCompatActivity {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
-                mGp.setScheduleEnabled(!mGp.settingScheduleSyncEnabled);
+                mGp.setScheduleEnabled(mContext, !mGp.settingScheduleSyncEnabled);
                 invalidateOptionsMenu();
                 setScheduleTabMessage();
                 ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
-                ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+                ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
             }
             @Override
             public void negativeResponse(Context context, Object[] objects) {}
@@ -1647,7 +1647,7 @@ public class ActivityMain extends AppCompatActivity {
         ArrayList<FileLastModifiedTimeEntry> mCurrLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
         ArrayList<FileLastModifiedTimeEntry> mNewLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
         ArrayList<FileLastModifiedTimeEntry> del_list = new ArrayList<FileLastModifiedTimeEntry>();
-        NotifyEvent ntfy = new NotifyEvent(mGp.appContext);
+        NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -1790,7 +1790,7 @@ public class ActivityMain extends AppCompatActivity {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                mGp.setSettingOptionLogEnabled((boolean) o[0]);
+                mGp.setSettingOptionLogEnabled(mContext, (boolean) o[0]);
                 reloadSettingParms();
             }
 
@@ -1816,11 +1816,11 @@ public class ActivityMain extends AppCompatActivity {
                 else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
                 reloadSettingParms();
                 ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
-                ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+                ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
                 setSyncTaskContextButtonNormalMode();
                 mGp.syncTaskAdapter.setShowCheckBox(false);
 
-                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mGp);
+                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mActivity, mGp);
                 mGp.syncTabScheduleList.clear();
                 mGp.syncTabScheduleList.addAll(sl);
 
@@ -2024,8 +2024,8 @@ public class ActivityMain extends AppCompatActivity {
         String p_theme = mGp.settingScreenTheme;
         boolean p_log_option = mGp.settingLogOption;
 
-        mGp.loadSettingsParms();
-        mGp.setLogParms(mGp);
+        mGp.loadSettingsParms(mContext);
+        mGp.setLogParms(mContext, mGp);
         if ((p_log_option && !mGp.settingLogOption) || (!p_log_option && mGp.settingLogOption))
             mUtil.resetLogReceiver();
 
@@ -2037,6 +2037,11 @@ public class ActivityMain extends AppCompatActivity {
 //            setTheme(mGp.applicationTheme);
 //            mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
 //            reloadScreen(false);
+//            try {
+//                mSvcClient.aidlReloadLocale();
+//            } catch(Exception e) {
+//                e.printStackTrace();
+//            }
             mGp.settingExitClean=false;
             finish();
             mUiHandler.postDelayed(new Runnable(){
@@ -2239,7 +2244,7 @@ public class ActivityMain extends AppCompatActivity {
 //                        mUtil.showCommonDialog(true, "W",
 //                                mContext.getString(R.string.msgs_main_permission_coarse_location_title),
 //                                mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
-                        mGp.setSettingGrantCoarseLocationRequired(false);
+                        mGp.setSettingGrantCoarseLocationRequired(mContext, false);
                         SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
                     }
                 });
@@ -2257,7 +2262,7 @@ public class ActivityMain extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mGp.initStorageStatus();
+                mGp.initStorageStatus(mContext);
                 mUiHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -2290,7 +2295,7 @@ public class ActivityMain extends AppCompatActivity {
                 ntfy_deny.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        mGp.setSettingGrantCoarseLocationRequired(false);
+                        mGp.setSettingGrantCoarseLocationRequired(mContext, false);
                         SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
                     }
                     @Override
@@ -3229,9 +3234,9 @@ public class ActivityMain extends AppCompatActivity {
 
     private void saveScheduleList() {
         mGp.syncTabScheduleAdapter.sort();
-        ScheduleUtil.saveScheduleData(mGp, mGp.syncTabScheduleList);
+        ScheduleUtil.saveScheduleData(mActivity, mGp, mGp.syncTabScheduleList);
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
-        ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+        ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
         SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
     }
 
@@ -3897,7 +3902,7 @@ public class ActivityMain extends AppCompatActivity {
                 if (mGp.syncTaskAdapter.isShowCheckBox()) setSyncTaskContextButtonSelectMode();
                 else setSyncTaskContextButtonNormalMode();
 //				checkSafExternalSdcardTreeUri(null);
-                ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+                ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
                 SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
                 if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
                 else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
@@ -4578,7 +4583,7 @@ public class ActivityMain extends AppCompatActivity {
 
         mGp.msgListView.setFastScrollEnabled(false);
 
-        ScheduleUtil.setSchedulerInfo(mGp, mUtil);
+        ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
 
         LogUtil.flushLog(mContext, mGp);
     }
@@ -4876,7 +4881,7 @@ public class ActivityMain extends AppCompatActivity {
         String p_response_timeout=mGp.settingsSmbClientResponseTimeout;
         String p_disable_plain_text_passwords=mGp.settingsSmbDisablePlainTextPasswords;
 
-        mGp.initJcifsOption();
+        mGp.initJcifsOption(mContext);
 
         if (!mGp.settingsSmbLmCompatibility.equals(prevSmbLmCompatibility)) changed = true;
         else if (!mGp.settingsSmbUseExtendedSecurity.equals(prevSmbUseExtendedSecurity)) changed = true;
@@ -4915,7 +4920,7 @@ public class ActivityMain extends AppCompatActivity {
     final private boolean checkThemeLanguageChanged() {// when language is changed, Preferences activity is terminated -> ActivityMain onActivityResult() calls checkThemeLanguageChanged()
         boolean changed = false;
 
-        mGp.loadLanguagePreference();// load language value preference and refresh settingScreenThemeLanguage
+        mGp.loadLanguagePreference(mContext);// load language value preference and refresh settingScreenThemeLanguage
 
         if (!mGp.settingScreenThemeLanguageValue.equals(mGp.onStartSettingScreenThemeLanguageValue)) changed = true;
 

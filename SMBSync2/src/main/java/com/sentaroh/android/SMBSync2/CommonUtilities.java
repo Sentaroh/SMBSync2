@@ -180,27 +180,27 @@ public final class CommonUtilities {
         return wssid;
     }
 
-    static public ArrayList<String> listSystemInfo(GlobalParameters gp) {
+    static public ArrayList<String> listSystemInfo(Context c, GlobalParameters gp) {
 
-        ArrayList<String> out=SystemInfo.listSystemInfo(gp.appContext, gp.safMgr);
+        ArrayList<String> out=SystemInfo.listSystemInfo(c, gp.safMgr);
 
         if (Build.VERSION.SDK_INT>=27) {
             out.add("setSettingGrantCoarseLocationRequired="+gp.settingGrantCoarseLocationRequired);
-            out.add("ACCESS_COARSE_LOCATION Permission="+gp.appContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
+            out.add("ACCESS_COARSE_LOCATION Permission="+c.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
         }
 
         if (Build.VERSION.SDK_INT>=29) {
             boolean backgroundLocationPermissionApproved =
-                    gp.appContext.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)== PackageManager.PERMISSION_GRANTED;
+                    c.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)== PackageManager.PERMISSION_GRANTED;
             out.add("ACCESS_BACKGROUND_LOCATION="+backgroundLocationPermissionApproved);
         }
 
         if (Build.VERSION.SDK_INT>=27) {
-            out.add("LocationService enabled="+isLocationServiceEnabled(gp)+", warning="+gp.settingSupressLocationServiceWarning);
+            out.add("LocationService enabled="+isLocationServiceEnabled(c, gp)+", warning="+gp.settingSupressLocationServiceWarning);
         }
 
         if (Build.VERSION.SDK_INT >= 28) {
-            UsageStatsManager usageStatsManager = (UsageStatsManager) gp.appContext.getSystemService(USAGE_STATS_SERVICE);
+            UsageStatsManager usageStatsManager = (UsageStatsManager) c.getSystemService(USAGE_STATS_SERVICE);
             if (usageStatsManager != null) {
                 out.add("AppStnadbyBuket="+usageStatsManager.getAppStandbyBucket());
             }
@@ -209,7 +209,7 @@ public final class CommonUtilities {
         try {
             out.add("Network information:");
 
-            WifiManager wm=(WifiManager)gp.appContext.getSystemService(Context.WIFI_SERVICE);
+            WifiManager wm=(WifiManager)c.getSystemService(Context.WIFI_SERVICE);
             try {
                 String ssid="";
                 if (wm.isWifiEnabled() && wm.getConnectionInfo()!=null) ssid=wm.getConnectionInfo().getSSID();
@@ -218,7 +218,7 @@ public final class CommonUtilities {
                 out.add("   WiFi status obtain error, error="+e.getMessage());
             }
 
-            ConnectivityManager cm =(ConnectivityManager)gp.appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm =(ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
             if (activeNetwork!=null) {
                 String network=activeNetwork.getExtraInfo();
@@ -284,9 +284,9 @@ public final class CommonUtilities {
         return out;
     }
 
-    final public static boolean isLocationServiceEnabled(GlobalParameters mGp) {
+    final public static boolean isLocationServiceEnabled(Context c, GlobalParameters mGp) {
         if (Build.VERSION.SDK_INT>=27) {
-            LocationManager lm= (LocationManager)mGp.appContext.getSystemService(Context.LOCATION_SERVICE);
+            LocationManager lm= (LocationManager)c.getSystemService(Context.LOCATION_SERVICE);
             if (Build.VERSION.SDK_INT==27) {
                 boolean gps=lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
                 boolean nw=lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -352,7 +352,7 @@ public final class CommonUtilities {
         try {
             String dir = gp.settingMgtFileDir;
             File mf = new File(dir + "/.messages");
-//            File mf=new File(gp.appContext.getFilesDir().getPath()+"/"+"message_list.txt");
+//            File mf=new File(c.getFilesDir().getPath()+"/"+"message_list.txt");
             if (mf.exists()) {
                 FileReader fr=new FileReader(mf);
                 BufferedReader bis=new BufferedReader(fr, 1024*1024*2);

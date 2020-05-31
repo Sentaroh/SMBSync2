@@ -105,6 +105,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
+import javax.xml.XMLConstants;
+
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_ACCESS_DENIED;
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_INVALID_LOGON_TYPE;
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_UNKNOWN_ACCOUNT;
@@ -161,7 +163,7 @@ public class SyncTaskUtil {
 
     SyncTaskUtil(CommonUtilities mu, Activity a,
                  CommonDialog cd, CustomContextMenu ccm, GlobalParameters gp, FragmentManager fm) {
-        mContext = a.getApplicationContext();
+        mContext = a;
         mGp = gp;
         mUtil = mu;
         mCommonDlg = cd;
@@ -1385,7 +1387,7 @@ public class SyncTaskUtil {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 ArrayList<SyncTaskItem> dpItemList = new ArrayList<SyncTaskItem>();
-                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mGp);
+                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(c, mGp);
                 int pos = mGp.syncTaskListView.getFirstVisiblePosition();
                 for (int i = 0; i < dpnum.length; i++) {
                     if (dpnum[i] != -1)
@@ -1396,7 +1398,7 @@ public class SyncTaskUtil {
                     mUtil.addDebugMsg(1,"I","Sync task deleted, name="+dpItemList.get(i).getSyncTaskName());
                     ScheduleUtil.removeSyncTaskFromSchedule(mGp, mUtil, sl, dpItemList.get(i).getSyncTaskName());
                 }
-                ScheduleUtil.saveScheduleData(mGp, sl);
+                ScheduleUtil.saveScheduleData(c, mGp, sl);
                 saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
 
                 mGp.syncTaskAdapter.setNotifyOnChange(true);
@@ -1784,14 +1786,14 @@ public class SyncTaskUtil {
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
-                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mGp);
+                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mActivity, mGp);
 
                 String new_name = etInput.getText().toString();
                 String prev_name=pli.getSyncTaskName();
                 pli.setSyncTaskName(new_name);
                 mUtil.addDebugMsg(1,"I","Sync task renamed, from="+prev_name+", new="+new_name);
                 ScheduleUtil.renameSyncTaskFromSchedule(mGp, mUtil, sl, prev_name, new_name);
-                ScheduleUtil.saveScheduleData(mGp, sl);
+                ScheduleUtil.saveScheduleData(mActivity, mGp, sl);
 
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskAdapter.notifyDataSetChanged();
@@ -2639,7 +2641,7 @@ public class SyncTaskUtil {
         add_current_ssid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WifiManager wm = (WifiManager) mGp.appContext.getSystemService(Context.WIFI_SERVICE);
+                WifiManager wm = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
                 String ssid = CommonUtilities.getWifiSsidName(wm);
                 if (!ssid.equals("")) {
                     if (isFilterExists(ssid, filterAdapter)) {
@@ -2836,7 +2838,7 @@ public class SyncTaskUtil {
         add_current_addr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WifiManager wm = (WifiManager) mGp.appContext.getSystemService(Context.WIFI_SERVICE);
+                WifiManager wm = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
                 String ip_addr = CommonUtilities.getIfIpAddress(mUtil);
                 if (!ip_addr.equals("")) {
                     if (isFilterExists(ip_addr, filterAdapter)) {
@@ -6736,7 +6738,7 @@ public class SyncTaskUtil {
                 String path_str=c.getString(R.string.msgs_import_autosave_dlg_autosave_completed_path);
                 util.addLogMsg("I",msg+". "+path_str+"="+fd+"/"+fp);
                 for(SyncTaskItem sti:pfl) util.addDebugMsg(1,"I","  Task="+sti.getSyncTaskName());
-                Toast.makeText(mGp.appContext, msg, Toast.LENGTH_LONG).show();
+                Toast.makeText(c, msg, Toast.LENGTH_LONG).show();
             } else {
                 File tmp_file=new File(fd+"/autosave_temp");
                 tmp_file.delete();
@@ -6776,10 +6778,10 @@ public class SyncTaskUtil {
                 OutputStream pos=null;
                 if (fd.startsWith(mGp.safMgr.getSdcardRootPath())) {
                     SafFile of=mGp.safMgr.createSdcardFile(fp);
-                    pos=mGp.appContext.getContentResolver().openOutputStream(of.getUri());
+                    pos=c.getContentResolver().openOutputStream(of.getUri());
                 } else if (fd.startsWith(mGp.safMgr.getUsbRootPath())) {
                     SafFile of=mGp.safMgr.createUsbFile(fp);
-                    pos=mGp.appContext.getContentResolver().openOutputStream(of.getUri());
+                    pos=c.getContentResolver().openOutputStream(of.getUri());
                 } else {
                     pos=new FileOutputStream(fp);
                 }
@@ -7123,7 +7125,7 @@ public class SyncTaskUtil {
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
-            util.addLogMsg("E", String.format(mGp.appContext.getString(R.string.msgs_save_to_profile_error), ofp));
+            util.addLogMsg("E", String.format(c.getString(R.string.msgs_save_to_profile_error), ofp));
             util.addLogMsg("E", e.toString());
             String stm= MiscUtil.getStackTraceString(e);
             util.addLogMsg("E", stm);

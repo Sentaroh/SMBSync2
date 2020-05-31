@@ -77,7 +77,7 @@ public class ShortcutAutoSync extends FragmentActivity {
 //        mUtil=new CommonUtilities(context, "ShortCutSleep", envParms);
 //        mGp = (GlobalParameters) getApplication();
 //        mGp = (GlobalParameters) getApplicationContext();
-        mContext = getApplicationContext();
+        mContext = mActivity;
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         if (mGp.themeColorList == null) {
             mGp.themeColorList = CommonUtilities.getThemeColorList(mActivity);
