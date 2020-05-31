@@ -2037,16 +2037,28 @@ public class ActivityMain extends AppCompatActivity {
 //            setTheme(mGp.applicationTheme);
 //            mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
 //            reloadScreen(false);
-            mGp.settingExitClean=false;
-            finish();
-            mUiHandler.postDelayed(new Runnable(){
+//            listSettingsOption();
+            NotifyEvent ntfy=new NotifyEvent(mContext);
+            ntfy.setListener(new NotifyEventListener() {
                 @Override
-                public void run() {
-                    Intent intent = new Intent(mContext, ActivityMain.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                public void positiveResponse(Context context, Object[] objects) {
+//                     mUtil.flushLog();
+                    mGp.settingExitClean=false;
+                    finish();
+                    mUiHandler.postDelayed(new Runnable(){
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(mContext, ActivityMain.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    }, 500);
                 }
-            }, 500);
+                @Override
+                public void negativeResponse(Context context, Object[] objects) {}
+            });
+            mUtil.showCommonDialog(false, "W",
+                    mContext.getString(R.string.msgs_smbsync_ui_settings_language_changed_restart), "", ntfy);
         }
 
         if (mGp.settingFixDeviceOrientationToPortrait)
@@ -4917,24 +4929,11 @@ public class ActivityMain extends AppCompatActivity {
 
         mGp.loadLanguagePreference();// load language value preference and refresh settingScreenThemeLanguage
 
-        if (!mGp.settingScreenThemeLanguageValue.equals(mGp.onStartSettingScreenThemeLanguageValue)) changed = true;
+        if (!mGp.settingScreenThemeLanguageValue.equals(mGp.onStartSettingScreenThemeLanguageValue)) {
+            changed = true;
+            mGp.onStartSettingScreenThemeLanguageValue = mGp.settingScreenThemeLanguageValue;//App will be restarted after this without being killed, avoid a new app restart on next app load
+        }
 
-//        if (changed) {
-//            listSettingsOption();
-//            NotifyEvent ntfy=new NotifyEvent(mContext);
-//            ntfy.setListener(new NotifyEventListener() {
-//                @Override
-//                public void positiveResponse(Context context, Object[] objects) {
-//                    mUtil.flushLog();
-//                    mGp.settingExitClean=true;
-//                    finish();
-//                }
-//                @Override
-//                public void negativeResponse(Context context, Object[] objects) {}
-//            });
-//            mUtil.showCommonDialog(false, "W",
-//                    mContext.getString(R.string.msgs_smbsync_ui_settings_language_changed_restart), "", ntfy);
-//        }
         return changed;
     }
 

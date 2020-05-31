@@ -605,9 +605,9 @@ public class ActivitySettings extends PreferenceActivity {
                     else if (tid.equals(SMBSYNC2_SCREEN_THEME_BLACK)) getActivity().setTheme(R.style.MainBlack);
                     mCurrentScreenTheme=tid;
                     getActivity().finish();
-                    Intent intent = new Intent(getActivity(), ActivitySettings.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getActivity().startActivity(intent);
+//                    Intent intent = new Intent(getActivity(), ActivitySettings.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    getActivity().startActivity(intent);
                 }
             } else if (key_string.equals(c.getString(R.string.settings_screen_theme_language))) {
                 isChecked = true;
@@ -617,12 +617,12 @@ public class ActivitySettings extends PreferenceActivity {
                 pref_key.setSummary(sum_msg);
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " lang_val="+lang_value+", settings="+mGp.onStartSettingScreenThemeLanguageValue);
 //                if (!lang_value.equals(mGp.onStartSettingScreenThemeLanguageValue)) {//OnSharedPreferenceChangeListener() from preference fragment: language value was changed by user
-                if (!lang_value.equals(mCurrentThemeLangaue)) {
-                    getActivity().finish();//finish current preferences activity. Will trigger checkThemeLanguageChanged() to force restart app from main activity
-                    mGp.setNewLocale(getActivity(), true);
-                    Intent intent = new Intent(getActivity(), ActivitySettings.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getActivity().startActivity(intent);
+                if (!lang_value.equals(mGp.onStartSettingScreenThemeLanguageValue)) {//screen theme was changed, ignore if user selected same language
+                    getActivity().finish();//finish current preferences activity AND force app restart. Will trigger checkThemeLanguageChanged() to force restart app from main activity
+//                    mGp.setNewLocale(getActivity(), true);
+//                    Intent intent = new Intent(getActivity(), ActivitySettings.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    getActivity().startActivity(intent);
                 }
             } else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
                 isChecked = true;
