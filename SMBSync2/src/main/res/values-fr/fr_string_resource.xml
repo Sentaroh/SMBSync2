@@ -457,7 +457,7 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">L\'application a été redémarrée après avoir un arrêt forcé. Pour empêcher le redémarrage, activer l\'option \"Ne pas garder activités\" dans paramètres > Options de développement</string>
         <string name="msgs_smbsync_main_restart_by_killed">L\'application a été redémarrée après un arrêt forcé lors de son passage en arrière-plan.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">La configuration SMBv1 a été modifiée. Ce changement ne sera pas effectif avant le redémarrage de l\'application. Redémarrer l\'application maintenant ?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">Après le changement de langue, l\'application doit redémarrer. Appuyer sur OK pour redémarrer maintenant.</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">Vous devrez redémarrer l\'application après avoir changé de thème ou de langue. Cliquez sur \"OK\" pour redémarrer le système. Si vous souhaitez le redémarrer plus tard, cliquez sur \"Annuler\".</string>
         <string name="msgs_smbsync_main_start">Application démarrée.</string>
         <string name="msgs_smnsync_main_kill_application">Forcer l\'arrêt de l\'application?</string>
         <string name="msgs_specify_task_name">Choisir un nom pour la nouvelle tâche</string>
@@ -946,7 +946,7 @@
         <string name="settings_ui_title">Interface Utilisateur</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">Langue</string>
-        <string name="settings_screen_theme_language_dialog_title">Changer la Langue\nEntrainera un redémarrage!!</string>
+        <string name="settings_screen_theme_language_dialog_title">Changer la Langue</string>
         <string-array name="settings_screen_theme_language_list_entries">
             <item>Langue par défaut</item>
             <item>English (en)</item>

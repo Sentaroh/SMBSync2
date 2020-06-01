@@ -618,8 +618,6 @@ public class ActivitySettings extends PreferenceActivity {
                 String[] lang_msgs = c.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
                 String sum_msg = lang_msgs[Integer.parseInt(lang_value)];
                 pref_key.setSummary(sum_msg);
-                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " lang_val="+lang_value+", settings="+mGp.onStartSettingScreenThemeLanguageValue);
-//                if (!lang_value.equals(mGp.onStartSettingScreenThemeLanguageValue)) {//OnSharedPreferenceChangeListener() from preference fragment: language value was changed by user
                 if (!lang_value.equals(mCurrentThemeLangaue)) {
                     getActivity().finish();//finish current preferences activity. Will trigger checkThemeLanguageChanged() to force restart app from main activity
                     mGp.setNewLocale(getActivity(), true);

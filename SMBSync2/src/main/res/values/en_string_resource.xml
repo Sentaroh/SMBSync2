@@ -457,7 +457,7 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">Application was restarted after being killed. To disable restart, enable \"Don\'t keep activities\" in Settings > Developer Options.</string>
         <string name="msgs_smbsync_main_restart_by_killed">Application was restarted because it was killed when it moved to the background.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">The settings of SMBv1 have been changed.  This change will not be effective until the application is restarted.  Exit this application now?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">After changing the language, application must be restarted. Press OK to restart now.</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">You will need to restart the app after changing the theme or language. Click \"OK\" to restart the system. If you want to restart it later, click \"Cancel\".</string>
         <string name="msgs_smbsync_main_start">Application started.</string>
         <string name="msgs_smnsync_main_kill_application">Kill application?</string>
         <string name="msgs_specify_task_name">Please specify a name for the task</string>
@@ -946,7 +946,7 @@
         <string name="settings_ui_title">User Interface</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">Language</string>
-        <string name="settings_screen_theme_language_dialog_title">Change Language\nWill force app restart!!</string>
+        <string name="settings_screen_theme_language_dialog_title">Change Language</string>
         <string-array name="settings_screen_theme_language_list_entries">
             <item>System default</item>
             <item>English (en)</item>

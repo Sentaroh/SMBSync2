@@ -457,7 +457,7 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">アプリケーションはアクティビティの破棄により終了しました。 設定->開発者向オプションで「アクティビティを保持しない」を有効にしているのであれば無効にしてください。</string>
         <string name="msgs_smbsync_main_restart_by_killed">アプリケーションがバックグラウンドに遷移後、強制終了しました。</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">SMB1パラメーターが変更されましたがアプリケーションを再起動するまで有効になりません。アプリケーションを終了しますか?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">言語を変更した後、アプリケーションを再起動する必要があります。 了解 をクリックして再起動します。</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">テーマまたは言語を変更した後、アプリケーションを再起動する必要があります。 「了解」 をクリックすると再起動します。後で再起動する場合は「キャンセル」をクリックしてください。</string>
         <string name="msgs_smbsync_main_start">アプリケーションが起動しました。</string>
         <string name="msgs_smnsync_main_kill_application">SMBSync2を強制終了しますか？</string>
         <string name="msgs_specify_task_name">タスク名を指定してください</string>
@@ -946,7 +946,7 @@
         <string name="settings_ui_title">ユーザーインターフェース</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">言語</string>
-        <string name="settings_screen_theme_language_dialog_title">言語を変更\nアプリを強制的に再起動します!!</string>
+        <string name="settings_screen_theme_language_dialog_title">言語を変更</string>
         <string-array name="settings_screen_theme_language_list_entries">
             <item>システムのデフォルト</item>
             <item>English (en)</item>

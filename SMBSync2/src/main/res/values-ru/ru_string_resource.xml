@@ -457,7 +457,7 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">Приложение было перезапущено после KillProcess. Чтобы отключить перезапуск, включите \ "Не сохранять действия \" в Настройках> Параметры разработчика.</string>
         <string name="msgs_smbsync_main_restart_by_killed">Приложение было перезапущено, потому что оно было отключено при перемещении в фоновый режим.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Параметры SMBv1 были изменены. Это изменение не вступит в силу, пока приложение не будет перезапущено. Выход из этого приложения сейчас?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">После смены языка приложение необходимо перезапустить. Нажмите Ок чтобы перезапустить.</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">Вам нужно будет перезапустить приложение после изменения темы или языка. Нажмите \"ОК\", чтобы перезагрузить систему. Если вы хотите перезапустить его позже, нажмите \"Отмена\".</string>
         <string name="msgs_smbsync_main_start">Приложение запущено.</string>
         <string name="msgs_smnsync_main_kill_application">Убить приложение?</string>
         <string name="msgs_specify_task_name">Пожалуйста, укажите название для задачи</string>
@@ -946,7 +946,7 @@
         <string name="settings_ui_title">Пользовательский интерфейс</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">Language</string>
-        <string name="settings_screen_theme_language_dialog_title">Изменить язык\nпринудительно перезапустить!!</string>
+        <string name="settings_screen_theme_language_dialog_title">Изменить язык</string>
         <string-array name="settings_screen_theme_language_list_entries">
             <item>Системные установки по умолчанию</item>
             <item>English (en)</item>
