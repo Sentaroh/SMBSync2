@@ -148,7 +148,7 @@ public class Constants {
     public static final String SMBSYNC2_SCREEN_THEME_BLACK = String.valueOf(ThemeUtil.THEME_BLACK);
 
     public static final String SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM = "0";
-    public static final String SMBSYNC2_SCREEN_THEME_LANGUAGE_INIT = "-99";//ensure onStartSettingScreenThemeLanguageValue is assigned language value only once on app start
+    public static final String SMBSYNC2_SCREEN_THEME_LANGUAGE_INIT = "-99";//ensure onStartSettingScreenThemeLanguageValue is assigned language value only at first app start and when language change by user
 
     public static final String SMBSYNC2_PROFILE_RETRY_COUNT="3";
 	

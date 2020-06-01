@@ -619,7 +619,7 @@ public class ActivitySettings extends PreferenceActivity {
                 String sum_msg = lang_msgs[Integer.parseInt(lang_value)];
                 pref_key.setSummary(sum_msg);
                 if (!lang_value.equals(mCurrentThemeLangaue)) {
-                    getActivity().finish();//finish current preferences activity. Will trigger checkThemeLanguageChanged() to force restart app from main activity
+                    getActivity().finish();//relaunch current preferences activity. Will trigger to prompt for restart app when back to main activity
                     mGp.setNewLocale(getActivity(), true);
                     Intent intent = new Intent(getActivity(), ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

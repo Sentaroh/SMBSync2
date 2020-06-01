@@ -622,7 +622,7 @@ public class GlobalParameters extends CommonGlobalParms {
     //  - set LANGUAGE_LOCALE_USE_NEW_API to true
     //  - use as wrapper in attachBaseContext() for all activities and App or extend all App/Activities from a base Activity Class with attachBaseContext()
     //  - for App: implement also in onConfigurationChanged(), not needed in AppCompatActivity class
-    //  - in ActivityMain, when wrapping language in attachBaseContext(), we must int language by calling initLanguagePreference(context)
+    //  - in ActivityMain, when wrapping language in attachBaseContext(), we must first load language value by calling loadLanguagePreference(context)
     //    because preferences manager is init later in onCreate()
     //+ To use updateConfiguration() deprecated method on new API:
     //  - set LANGUAGE_LOCALE_USE_NEW_API to false
@@ -688,10 +688,13 @@ public class GlobalParameters extends CommonGlobalParms {
     //Language list entries must contain "(language_code)" string, exp "English (en)"
     //"English" will be the preferences menu description and "en" the language code
     //settingScreenThemeLanguageValue and settingScreenThemeLanguage are updated only here by loadLanguagePreference()
-    //loadLanguagePreference() is called on mainActivity start, any mainActivity result, SyncReceiver, and any early init to GlobalParameters
-    //onStartSettingScreenThemeLanguageValue() is assigned only once at app start the value of current active language (settingScreenThemeLanguage)
-    //on language change by user or through import settings, settingScreenThemeLanguage no longer equals onStartSettingScreenThemeLanguageValue ->
-    //it will cause Pref activitiy to finish() and mainActivity to end with a Warning Dialog in checkThemeLanguageChanged()
+    //loadLanguagePreference() is called on mainActivity start, any mainActivity result, SyncReceiver, and any init to GlobalParameters (onCreate of most activities)
+    //onStartSettingScreenThemeLanguageValue: is the currently selected language by user that will be applied on next app launch
+    //it is assigned the value of current active language (settingScreenThemeLanguage) at first app start
+    //if user changes language or when import config file with new language, settingScreenThemeLanguage is immeadiately assigned the new language
+    //when back to MainActivity, if settingScreenThemeLanguage != onStartSettingScreenThemeLanguageValue, prompted to restart
+    //onStartSettingScreenThemeLanguageValue is assigned the new selected language even if user doesn't restart app
+    //it reflects current user selected language that will be effective on next app start
     public void loadLanguagePreference(Context c) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         settingScreenThemeLanguageValue = prefs.getString(c.getString(R.string.settings_screen_theme_language), SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM);

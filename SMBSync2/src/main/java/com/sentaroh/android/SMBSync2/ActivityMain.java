@@ -2066,8 +2066,6 @@ public class ActivityMain extends AppCompatActivity {
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         checkJcifsOptionChanged();
-
-//        checkThemeLanguageChanged();
     }
 
     private void listSettingsOption() {
@@ -4923,15 +4921,15 @@ public class ActivityMain extends AppCompatActivity {
         return changed;
     }
 
-    //restart app when language is changed
-    final private boolean checkThemeLanguageChanged() {// when language is changed, Preferences activity is terminated -> ActivityMain onActivityResult() calls checkThemeLanguageChanged()
+    //will trigger prompt to restart app if language changed by user or when import settings with a new language
+    //when language is changed by user or import settings, ActivityMain onActivityResult() -> reloadSettingParms() -> mGp.loadSettingsParms() refreshes settingScreenThemeLanguageValue
+    //reloadSettingParms() -> checkThemeLanguageChanged() triggers prompt to restart if language changed
+    final private boolean checkThemeLanguageChanged() {
         boolean changed = false;
-
-        mGp.loadLanguagePreference(mContext);// load language value preference and refresh settingScreenThemeLanguage
 
         if (!mGp.settingScreenThemeLanguageValue.equals(mGp.onStartSettingScreenThemeLanguageValue)) {
             changed = true;
-            mGp.onStartSettingScreenThemeLanguageValue = mGp.settingScreenThemeLanguageValue;//App will be restarted after this without being killed, avoid a new app restart on next app load
+            mGp.onStartSettingScreenThemeLanguageValue = mGp.settingScreenThemeLanguageValue;//do not prompt again to restart if it is cancelled, apply language on next restart
         }
         return changed;
     }
