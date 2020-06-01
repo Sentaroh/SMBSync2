@@ -457,7 +457,9 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">Приложение было перезапущено после KillProcess. Чтобы отключить перезапуск, включите \ "Не сохранять действия \" в Настройках> Параметры разработчика.</string>
         <string name="msgs_smbsync_main_restart_by_killed">Приложение было перезапущено, потому что оно было отключено при перемещении в фоновый режим.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Параметры SMBv1 были изменены. Это изменение не вступит в силу, пока приложение не будет перезапущено. Выход из этого приложения сейчас?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">Вам нужно будет перезапустить приложение после изменения темы или языка. Нажмите \"ОК\", чтобы перезагрузить систему. Если вы хотите перезапустить его позже, нажмите \"Отмена\".</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">После изменения темы или языка необходимо перезапустить приложение. Нажмите \"Начни заново\", чтобы перезагрузить систему. Если вы хотите перезапустить его позже, нажмите \"Потом\".</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Потом</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">Начни заново</string>
         <string name="msgs_smbsync_main_start">Приложение запущено.</string>
         <string name="msgs_smnsync_main_kill_application">Убить приложение?</string>
         <string name="msgs_specify_task_name">Пожалуйста, укажите название для задачи</string>

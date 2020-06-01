@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
@@ -33,6 +34,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -87,6 +89,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import it.sephiroth.android.library.easing.Linear;
@@ -133,6 +136,20 @@ public final class CommonUtilities {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
         cdf.showDialog(mFragMgr,cdf,ntfy);
     };
+
+    public void showCommonDialog(final boolean negative, String type, String title, String msgtext,
+                                 String button_text_ok, String button_text_cancel, NotifyEvent ntfy) {
+        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext, button_text_ok, button_text_cancel);
+        cdf.showDialog(mFragMgr,cdf,ntfy);
+    };
+
+    public String getStringWithLocale(Activity c, String lang_code, int res_id) {
+
+        Configuration config = new Configuration(c.getResources().getConfiguration());
+        config.setLocale(new Locale(lang_code));
+        String result = c.createConfigurationContext(config).getText(res_id).toString();
+        return result;
+    }
 
     final public void setLogId(String li) {
         mLog.setLogId(li);

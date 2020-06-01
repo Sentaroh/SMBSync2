@@ -2055,7 +2055,10 @@ public class ActivityMain extends AppCompatActivity {
                 public void negativeResponse(Context context, Object[] objects) {}
             });
             mUtil.showCommonDialog(true, "W",
-                    mContext.getString(R.string.msgs_smbsync_ui_settings_language_changed_restart), "", ntfy);
+                    mUtil.getStringWithLocale(mActivity, mGp.settingScreenThemeLanguage, R.string.msgs_smbsync_ui_settings_language_changed_restart), "",
+                    mUtil.getStringWithLocale(mActivity, mGp.settingScreenThemeLanguage, R.string.msgs_smbsync_ui_settings_language_changed_restart_immediate),
+                    mUtil.getStringWithLocale(mActivity, mGp.settingScreenThemeLanguage, R.string.msgs_smbsync_ui_settings_language_changed_restart_later),
+                    ntfy);
         }
 
         if (mGp.settingFixDeviceOrientationToPortrait)
