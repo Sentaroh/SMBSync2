@@ -457,7 +457,7 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">Application was restarted after being killed. To disable restart, enable \"Don\'t keep activities\" in Settings > Developer Options.</string>
         <string name="msgs_smbsync_main_restart_by_killed">Application was restarted because it was killed when it moved to the background.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">The settings of SMBv1 have been changed.  This change will not be effective until the application is restarted.  Exit this application now?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">After changing the theme or language, you will need to restart the application. Click \"Restart\" to restart app. If you want to restart it later, click \"Later\".</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">It is recommended to restart the application after changing the theme or language. Click \"Restart\" to restart now. If you want to restart it later, click \"Later\"</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Later</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">Restart</string>
         <string name="msgs_smbsync_main_start">Application started.</string>

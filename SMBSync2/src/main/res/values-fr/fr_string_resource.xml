@@ -457,7 +457,7 @@
         <string name="msgs_smbsync_main_restart_by_destroyed">L\'application a été redémarrée après avoir un arrêt forcé. Pour empêcher le redémarrage, activer l\'option \"Ne pas garder activités\" dans paramètres > Options de développement</string>
         <string name="msgs_smbsync_main_restart_by_killed">L\'application a été redémarrée après un arrêt forcé lors de son passage en arrière-plan.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">La configuration SMBv1 a été modifiée. Ce changement ne sera pas effectif avant le redémarrage de l\'application. Redémarrer l\'application maintenant ?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">Après avoir changé de thème ou de langue, vous devrez redémarrer l\'application. Cliquez sur \"Redémarrer\" pour redémarrer l\'application. Si vous voulez le redémarrer plus tard, cliquez sur \"plus tard\"</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">Il est recommandé de redémarrer l\'application après avoir changé de thème ou de langue. Appuyer sur \"Redémarrer\" pour la relancer maintenant. Dans le cas contraire, appuyer sur   \"Plus tard\".</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Plus tard</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">Redémarrer</string>
         <string name="msgs_smbsync_main_start">Application démarrée.</string>
