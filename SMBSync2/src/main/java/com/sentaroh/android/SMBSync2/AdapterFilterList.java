@@ -39,6 +39,8 @@ import com.sentaroh.android.Utilities.NotifyEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import static com.sentaroh.android.SMBSync2.Constants.WHOLE_DIRECTORY_FILTER_PREFIX;
+
 @SuppressWarnings("ALL")
 public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterListItem> {
     private Context c;
@@ -156,10 +158,14 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
             } else {
                 holder.tv_row_filter.setEnabled(true);
                 holder.btn_row_delbtn.setEnabled(true);
-                holder.rb_inc.setEnabled(true);
-                holder.rb_exc.setEnabled(true);
+                if (o.isBugFixed() && o.getFilter().startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                    holder.rb_inc.setEnabled(false);
+                    holder.rb_exc.setEnabled(true);
+                } else {
+                    holder.rb_inc.setEnabled(true);
+                    holder.rb_exc.setEnabled(true);
+                }
             }
-//       		Log.v("","filter="+o.getFilter()+",incexc="+o.isInclude());
 
             final int p = position;
             // 必ずsetChecked前にリスナを登録(convertView != null の場合は既に別行用のリスナが登録されている！)
@@ -228,10 +234,19 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
         private boolean regExp=false;
         private boolean deleted = false;
 
+        private boolean bugFixed = false;
+
         public FilterListItem(String filter, boolean include) {
             this.filter = filter;
             this.includeFilter = include;
             this.deleted = false;
+        }
+
+        public boolean isBugFixed() {
+            return bugFixed;
+        }
+        public void setBugFixed(boolean fixed) {
+            bugFixed=fixed;
         }
 
         public String getFilter() {

@@ -424,6 +424,10 @@
         <string name="msgs_profile_sync_task_sync_option_sync_when_charging">充電中の時だけ同期を開始する</string>
         <string name="msgs_profile_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">拡張されたディレクトリ選択/除外フィルタを使用する</string>
+        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_title">ディレクトリーフィルターのバグ対応</string>
+        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_warning">変更するとディレクトリーフィルターの指定によっては同期するファイルが変わり予期せぬファイルの削除や上書きが発生する可能性があります。テストモードで実行して確認するか、テストフォルダーを作成して同期結果を確認することを強くお勧めします。</string>
+        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_error">ディレクトリーフィルター %s を「除外」に変更してください。</string>
+        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_change_exclude">下記のディレクトリフィルターを「除外」に変更してください。\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">ネットワークオプション:</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">ワイヤレスAPオプション:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">SMBフォルダーへのファイル書き込みで一時ファイルを使用せず直接書き込む</string>
@@ -516,6 +520,7 @@
         <string name="msgs_mirror_confirm_yesall_btn">以後全て了解</string>
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">ファイルのEXIF/MetaDataから撮影日時が取得できないためファイルの最終更新時刻を使用しました。ファイル=</string>
         <string name="msgs_mirror_taken_date_convert_error">撮影日時の変換でエラーが発生したためファイルの最終更新時刻を使用しました。ファイル=</string>
+        <string name="msgs_mirror_whole_directory_filter_error">ディレクトリーフィルター %s は使用できません。同期タスクを編集して「除外」に変更してください。</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">ターゲットにファイルと同名のディレクトリーが存在するため同期を中止しました。ファイル=</string>
         <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">ファイル名の長さが255バイトを超えているため同期を中止しました。ファイル名のバイト数=%s, ファイル名=%s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">SDCARDがマウントされていないため同期を中止します。</string>

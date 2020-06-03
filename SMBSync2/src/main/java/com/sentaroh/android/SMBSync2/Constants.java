@@ -127,8 +127,9 @@ public class Constants {
 	
 	public final static String SMBSYNC2_PROF_FILTER_INCLUDE="I";
 	public final static String SMBSYNC2_PROF_FILTER_EXCLUDE="E";
+    final public static String WHOLE_DIRECTORY_FILTER_PREFIX="\\\\";
 
-	public static final String SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_NO = "0";
+    public static final String SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_NO = "0";
 	public static final String SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS = "1";
 	public static final String SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS = "2";
 	public static final String SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR = "3";
