@@ -94,6 +94,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean debuggable = false;
 
     public boolean activityIsFinished = true;
+    public boolean activityRestartRequired=false;
     public boolean logCatActive=false;
 
     public boolean externalStorageIsMounted = false;

@@ -279,17 +279,33 @@ public class SyncService extends Service {
         LogUtil.closeLog(mContext, mGp);
         NotificationUtil.setNotificationEnabled(mGp, true);
         CommonUtilities.saveMsgList(mGp);
-        if (mGp.settingExitClean) {
+        if (mGp.activityRestartRequired) {
+            mGp.activityRestartRequired = false;
+            mGp.clearParms();
+            System.gc();
+
             Handler hndl = new Handler();
             hndl.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    android.os.Process.killProcess(android.os.Process.myPid());
+                    Intent intent = new Intent(mContext, ActivityMain.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
-            }, 100);
+            }, 200);
         } else {
-            mGp.clearParms();
-            System.gc();
+            if (mGp.settingExitClean) {
+                Handler hndl = new Handler();
+                hndl.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                    }
+                }, 100);
+            } else {
+                mGp.clearParms();
+                System.gc();
+            }
         }
     }
 

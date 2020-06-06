@@ -2040,16 +2040,17 @@ public class ActivityMain extends AppCompatActivity {
                 @Override
                 public void positiveResponse(Context context, Object[] objects) {
                     mUtil.flushLog();
+                    mGp.activityRestartRequired=true;
                     mGp.settingExitClean=false;
                     finish();
-                    mUiHandler.postDelayed(new Runnable(){
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(mContext, ActivityMain.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        }
-                    }, 500);
+//                    mUiHandler.postDelayed(new Runnable(){
+//                        @Override
+//                        public void run() {
+//                            Intent intent = new Intent(mContext, ActivityMain.class);
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            startActivity(intent);
+//                        }
+//                    }, 500);
                 }
                 @Override
                 public void negativeResponse(Context context, Object[] objects) {}
