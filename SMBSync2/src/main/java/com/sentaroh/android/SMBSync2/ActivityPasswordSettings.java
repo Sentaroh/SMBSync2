@@ -271,26 +271,26 @@ public class ActivityPasswordSettings extends AppCompatActivity {
 
         if (hv.equals("")) {
             mAppPswdMsg.setText(mContext.getString(R.string.settings_security_application_password_not_created));
-            mButtonCreate.setEnabled(true);
-            mButtonChange.setEnabled(false);
-            mButtonRemove.setEnabled(false);
+            CommonDialog.setViewEnabled(mActivity, mButtonCreate, true);
+            CommonDialog.setViewEnabled(mActivity, mButtonChange, false);
+            CommonDialog.setViewEnabled(mActivity, mButtonRemove, false);
 
-            mCtvSettingTimeOut.setEnabled(false);
-            mCtvSettingAppStartup.setEnabled(false);
-            mCtvSettingUseEditTask.setEnabled(false);
-            mCtvSettingUseExportTask.setEnabled(false);
-            mCtvSettingInitSmbAccount.setEnabled(false);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingTimeOut, false);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingAppStartup, false);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingUseEditTask, false);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingUseExportTask, false);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingInitSmbAccount, false);
         } else {
             mAppPswdMsg.setText(mContext.getString(R.string.settings_security_application_password_created));
-            mButtonCreate.setEnabled(false);
-            mButtonChange.setEnabled(true);
-            mButtonRemove.setEnabled(true);
+            CommonDialog.setViewEnabled(mActivity, mButtonCreate, false);
+            CommonDialog.setViewEnabled(mActivity, mButtonChange, true);
+            CommonDialog.setViewEnabled(mActivity, mButtonRemove, true);
 
-            mCtvSettingTimeOut.setEnabled(true);
-            mCtvSettingAppStartup.setEnabled(true);
-            mCtvSettingUseEditTask.setEnabled(true);
-            mCtvSettingUseExportTask.setEnabled(true);
-            mCtvSettingInitSmbAccount.setEnabled(true);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingTimeOut, true);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingAppStartup, true);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingUseEditTask, true);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingUseExportTask, true);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingInitSmbAccount, true);
         }
     }
 
