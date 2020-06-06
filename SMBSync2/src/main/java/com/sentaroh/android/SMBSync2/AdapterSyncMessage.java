@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThemeUtil;
+import com.sentaroh.android.Utilities.Widget.NonWordwrapTextView;
 
 import java.util.ArrayList;
 import java.util.List;
