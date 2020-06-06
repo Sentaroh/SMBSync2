@@ -3862,6 +3862,11 @@ public class SyncTaskEditor extends DialogFragment {
                         ntfy);
             }
         });
+        //Hide option for release APK
+        if (!mGp.debuggable) {
+            ctFixDirectoryFilterBug.setVisibility(CheckedTextView.GONE);
+            ctFixDirectoryFilterBug.setChecked(false);
+        }
 
         final LinearLayout ll_special_option_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_special_option_view);
         final CheckedTextView ctvShowSpecialOption = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
