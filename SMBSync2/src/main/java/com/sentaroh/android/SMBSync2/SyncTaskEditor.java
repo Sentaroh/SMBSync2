@@ -1475,6 +1475,8 @@ public class SyncTaskEditor extends DialogFragment {
 
         final Button btn_date = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_btn_file_date);
         final Button btn_time = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_btn_file_time);
+        final Button btn_yyyymmdd = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_btn_file_yyyymmdd);
+        final Button btn_hhmmss = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_btn_file_hhmmss);
         final Button btn_original_name = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_btn_file_original_name);
         final LinearLayout template_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_template_view);
         final EditText et_file_template = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_file_name_template);
@@ -1571,6 +1573,30 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void onClick(View view) {
                 String kw_text=SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_TIME;
+                if (et_file_template.getSelectionStart() == et_file_template.getSelectionEnd()) et_file_template.getText().insert(et_file_template.getSelectionStart(), kw_text);
+                else et_file_template.getText().replace(et_file_template.getSelectionStart(), et_file_template.getSelectionEnd(), kw_text);
+                tv_template.setText(getSyncTaskArchiveTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), sfev.folder_directory, n_sti));
+                checkArchiveOkButtonEnabled(n_sti, dialog);
+            }
+        });
+
+        btn_yyyymmdd.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String kw_text=SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_YYYYMMDD;
+                if (et_file_template.getSelectionStart() == et_file_template.getSelectionEnd()) et_file_template.getText().insert(et_file_template.getSelectionStart(), kw_text);
+                else et_file_template.getText().replace(et_file_template.getSelectionStart(), et_file_template.getSelectionEnd(), kw_text);
+                tv_template.setText(getSyncTaskArchiveTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
+                        et_file_template.getText().toString(), et_dir_template.getText().toString(), sfev.folder_directory, n_sti));
+                checkArchiveOkButtonEnabled(n_sti, dialog);
+            }
+        });
+
+        btn_hhmmss.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String kw_text=SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_HHMMSS;
                 if (et_file_template.getSelectionStart() == et_file_template.getSelectionEnd()) et_file_template.getText().insert(et_file_template.getSelectionStart(), kw_text);
                 else et_file_template.getText().replace(et_file_template.getSelectionStart(), et_file_template.getSelectionEnd(), kw_text);
                 tv_template.setText(getSyncTaskArchiveTemplateNewName(ctvCreateDircetory.isChecked(), sp_sync_suffix_option.getSelectedItemPosition(),
@@ -4513,10 +4539,11 @@ public class SyncTaskEditor extends DialogFragment {
         else {
             String seqopt="0";
             if (sp_sync_suffix_option.getSelectedItemPosition()==0) seqopt="0";
-            else if (sp_sync_suffix_option.getSelectedItemPosition()==1) seqopt="3";
-            else if (sp_sync_suffix_option.getSelectedItemPosition()==2) seqopt="4";
-            else if (sp_sync_suffix_option.getSelectedItemPosition()==3) seqopt="5";
-            else if (sp_sync_suffix_option.getSelectedItemPosition()==4) seqopt="6";
+            else if (sp_sync_suffix_option.getSelectedItemPosition()==1) seqopt="2";
+            else if (sp_sync_suffix_option.getSelectedItemPosition()==2) seqopt="3";
+            else if (sp_sync_suffix_option.getSelectedItemPosition()==3) seqopt="4";
+            else if (sp_sync_suffix_option.getSelectedItemPosition()==4) seqopt="5";
+            else if (sp_sync_suffix_option.getSelectedItemPosition()==5) seqopt="6";
             if (!seqopt.equals(n_sti.getArchiveSuffixOption())) changed=true;
             else {
                 if (ctvRenameWhenArchive.isChecked()!=n_sti.isArchiveUseRename()) changed=true;
@@ -4536,6 +4563,7 @@ public class SyncTaskEditor extends DialogFragment {
         String sel=spinner.getSelectedItem().toString();
 
         if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_0))) result="0";
+        else if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_2))) result="2";
         else if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_3))) result="3";
         else if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_4))) result="4";
         else if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_5))) result="5";
@@ -4559,13 +4587,16 @@ public class SyncTaskEditor extends DialogFragment {
         seconds=date_time.substring(17,19);
 
         String suffix="";
-        if (suffix_option==1) suffix="_001";
-        else if (suffix_option==2) suffix="_0001";
-        else if (suffix_option==3) suffix="_00001";
-        else if (suffix_option==4) suffix="_000001";
+        if (suffix_option==1) suffix="_01";
+        else if (suffix_option==2) suffix="_001";
+        else if (suffix_option==3) suffix="_0001";
+        else if (suffix_option==4) suffix="_00001";
+        else if (suffix_option==5) suffix="_000001";
 
         String new_name=file_template.replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_DATE, year+"-"+month+"-"+day).
-                replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_TIME, hours+"-"+minutes+"-"+seconds)
+                replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_TIME, hours+"-"+minutes+"-"+seconds).
+                replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_YYYYMMDD, year+month+day).
+                replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_HHMMSS, hours+minutes+seconds)
                 .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_ORIGINAL_NAME, "DSC_0001")+suffix+".jpg";
         String temp_dir="";
         if (create_directory_option) {
@@ -4591,6 +4622,7 @@ public class SyncTaskEditor extends DialogFragment {
         spinner.setPrompt(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_prompt_title));
         spinner.setAdapter(adapter);
         adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_0));
+        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_2));
         adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_3));
         adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_4));
         adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_5));
@@ -4598,10 +4630,11 @@ public class SyncTaskEditor extends DialogFragment {
 
         int sel=SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT;
         if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_NOT_USED))) sel=0;
-        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_3_DIGIT))) sel=1;
-        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT))) sel=2;
-        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_5_DIGIT))) sel=3;
-        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_6_DIGIT))) sel=4;
+        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_2_DIGIT))) sel=1;
+        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_3_DIGIT))) sel=2;
+        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT))) sel=3;
+        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_5_DIGIT))) sel=4;
+        else if (cv.equals(String.valueOf(SyncTaskItem.PICTURE_ARCHIVE_SUFFIX_DIGIT_6_DIGIT))) sel=5;
         spinner.setSelection(sel);
 
     }

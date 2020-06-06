@@ -727,8 +727,10 @@
         <string name="msgs_sync_folder_archive_rename_rule">アーカイブする際にファイル名の変更および格納するディレクトリーを作成する</string>
         <string name="msgs_sync_folder_archive_seq_number_title">ファイル名の順序番号</string>
         <string name="msgs_sync_folder_archive_create_directory">アーカイブする時に撮影日に基づくディレクトリーを作成しファイルを格納する</string>
-        <string name="msgs_sync_folder_archive_btn_title_date">年月日</string>
-        <string name="msgs_sync_folder_archive_btn_title_time">時刻</string>
+        <string name="msgs_sync_folder_archive_btn_title_date">年月日 (YYYY-MM-DD)</string>
+        <string name="msgs_sync_folder_archive_btn_title_yyyymmdd">年月日 (YYYYMMDD)</string>
+        <string name="msgs_sync_folder_archive_btn_title_time">時刻 (HH-MM-SS)</string>
+        <string name="msgs_sync_folder_archive_btn_title_hhmmss">時刻 (HHMMSS)</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">元の名前</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">撮影日時がExifから取得できない時に確認メッセージを表示する</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">同期方式がアーカイブの時はZIPを使用できないため内部ストレージに変更しました。</string>
@@ -738,6 +740,7 @@
         <string name="msgs_sync_folder_archive_btn_title_day">日</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_prompt_title">順序番号の選択</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_0">使用しない</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_2">2桁の番号を追加(01-99)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_3">3桁の番号を追加(001-999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_4">4桁の番号を追加(0001-9999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_5">5桁の番号を追加(00001-99999)</string>

@@ -727,8 +727,10 @@
         <string name="msgs_sync_folder_archive_rename_rule">Измените имя файла и сохраните его в указанном каталоге при архивировании</string>
         <string name="msgs_sync_folder_archive_seq_number_title">Порядковый номер</string>
         <string name="msgs_sync_folder_archive_create_directory">Создайте каталог на основе даты, взятой при архивировании, и сохраните файл.</string>
-        <string name="msgs_sync_folder_archive_btn_title_date">Дата</string>
-        <string name="msgs_sync_folder_archive_btn_title_time">Время</string>
+        <string name="msgs_sync_folder_archive_btn_title_date">Дата (YYYY-MM-DD)</string>
+        <string name="msgs_sync_folder_archive_btn_title_yyyymmdd">Дата (YYYYMMDD)</string>
+        <string name="msgs_sync_folder_archive_btn_title_time">Время (HH-MM-SS)</string>
+        <string name="msgs_sync_folder_archive_btn_title_hhmmss">Время (HHMMSS)</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">Оригинальное имя</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">Если дата и время не могут быть определены по данным EXIF, появится сообщение с подтверждением.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Файлы ZIP не могут использоваться в качестве адресатов для типа синхронизации архива. Вместо этого будет использовано внутреннее хранилище.</string>
@@ -738,7 +740,8 @@
         <string name="msgs_sync_folder_archive_btn_title_day">День</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_prompt_title">Выберите суффикс следующий диапазон номеров</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_0">Не использовать</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">Добавить трехзначный порядковый номер (001-999)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_2">Добавьте 2-значный порядковый номер (01-99).</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">Добавьте 3-значный порядковый номер (001-999).</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_4">Добавить 4-значный порядковый номер (0001-9999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_5">Добавить 5-значный порядковый номер (00001-99999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_6">Добавить 6-значный порядковый номер (000001-999999)</string>

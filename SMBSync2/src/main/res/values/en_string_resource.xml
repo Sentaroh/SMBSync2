@@ -727,8 +727,10 @@
         <string name="msgs_sync_folder_archive_rename_rule">Change the name of the file before archiving it in the target folder.</string>
         <string name="msgs_sync_folder_archive_seq_number_title">Increment file names by appending</string>
         <string name="msgs_sync_folder_archive_create_directory">Create a directory based on the shooting date to store the files.</string>
-        <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
-        <string name="msgs_sync_folder_archive_btn_title_time">Time</string>
+        <string name="msgs_sync_folder_archive_btn_title_date">Date (YYYY-MM-DD)</string>
+        <string name="msgs_sync_folder_archive_btn_title_yyyymmdd">Date (YYYYMMDD)</string>
+        <string name="msgs_sync_folder_archive_btn_title_time">Time (HH-MM-SS)</string>
+        <string name="msgs_sync_folder_archive_btn_title_hhmmss">Time (HH-MM-SS)</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">Name</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">If the date and time cannot be determined by EXIF data, display a confirmation message.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">ZIP files cannot be used as destinations for Archive sync type.  Internal storage will be used instead.</string>
@@ -738,6 +740,7 @@
         <string name="msgs_sync_folder_archive_btn_title_day">Day</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_prompt_title">Select seq number to append</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_0">Do not change</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_2">2 digit sequence (01-99)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_3">3 digit sequence (001-999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_4">4 digit sequence (0001-9999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_5">5 digit sequence (00001-99999)</string>

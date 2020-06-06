@@ -2265,14 +2265,18 @@ public class SyncThreadArchiveFile {
             to_file_name=sti.getArchiveRenameFileTemplate()
                     .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_ORIGINAL_NAME, original_name)
                     .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_DATE, afli.shoot_date)
-                    .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_TIME, afli.shoot_time);
+                    .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_TIME, afli.shoot_time)
+                    .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_YYYYMMDD, afli.shoot_date.replaceAll("-",""))
+                    .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_HHMMSS, afli.shoot_time.replaceAll("-",""))
+            ;
         }
         return to_file_name;
     }
 
     static private String getFileSeqNumber(SyncThreadWorkArea stwa, SyncTaskItem sti, int seq_no) {
         String seqno="";
-        if (sti.getArchiveSuffixOption().equals("3")) seqno=String.format("_%03d", seq_no);
+        if (sti.getArchiveSuffixOption().equals("2")) seqno=String.format("_%02d", seq_no);
+        else if (sti.getArchiveSuffixOption().equals("3")) seqno=String.format("_%03d", seq_no);
         else if (sti.getArchiveSuffixOption().equals("4")) seqno=String.format("_%04d", seq_no);
         else if (sti.getArchiveSuffixOption().equals("5")) seqno=String.format("_%05d", seq_no);
         else if (sti.getArchiveSuffixOption().equals("6")) seqno=String.format("_%06d", seq_no);

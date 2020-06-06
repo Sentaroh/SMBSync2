@@ -360,6 +360,8 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_DATE = "%DATE%";
     public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_TIME = "%TIME%";
+    public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_YYYYMMDD = "%YYYYMMDD%";
+    public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_HHMMSS = "%HHMMSS%";
     public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_ORIGINAL_NAME = "%ORIGINAL-NAME%";
     public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_YEAR = "%YEAR%";
     public final static String PICTURE_ARCHIVE_RENAME_KEYWORD_MONTH = "%MONTH%";
@@ -391,12 +393,14 @@ class SyncTaskItem implements Serializable, Cloneable {
     private boolean syncTaskArchiveEnable = true;
 
     public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_NOT_USED = 0;
+    public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_2_DIGIT = 2;
     public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_3_DIGIT = 3;
     public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT = 4;
     public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_5_DIGIT = 5;
     public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_6_DIGIT = 6;
     public final static int PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT = PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT ;
-    public final static int[] PICTURE_ARCHIVE_SUFFIX_DIGIT_LIST = new int[]{PICTURE_ARCHIVE_SUFFIX_DIGIT_NOT_USED, PICTURE_ARCHIVE_SUFFIX_DIGIT_3_DIGIT,
+    public final static int[] PICTURE_ARCHIVE_SUFFIX_DIGIT_LIST = new int[]{PICTURE_ARCHIVE_SUFFIX_DIGIT_NOT_USED,
+            PICTURE_ARCHIVE_SUFFIX_DIGIT_2_DIGIT, PICTURE_ARCHIVE_SUFFIX_DIGIT_3_DIGIT,
             PICTURE_ARCHIVE_SUFFIX_DIGIT_4_DIGIT, PICTURE_ARCHIVE_SUFFIX_DIGIT_5_DIGIT, PICTURE_ARCHIVE_SUFFIX_DIGIT_6_DIGIT};
     private String syncTaskArchiveSuffixDigit = String.valueOf(PICTURE_ARCHIVE_SUFFIX_DIGIT_DEFAULT);
 

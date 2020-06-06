@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/msgs_sync_folder_archive_btn_title_original_name"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <Button
                     android:id="@+id/edit_sync_folder_dlg_archive_btn_file_date"
@@ -111,7 +111,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/msgs_sync_folder_archive_btn_title_date"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <Button
                     android:id="@+id/edit_sync_folder_dlg_archive_btn_file_time"
@@ -119,7 +119,23 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/msgs_sync_folder_archive_btn_title_time"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <Button
+                    android:id="@+id/edit_sync_folder_dlg_archive_btn_file_yyyymmdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/msgs_sync_folder_archive_btn_title_yyyymmdd"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <Button
+                    android:id="@+id/edit_sync_folder_dlg_archive_btn_file_hhmmss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/msgs_sync_folder_archive_btn_title_hhmmss"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
             </LinearLayout>
 

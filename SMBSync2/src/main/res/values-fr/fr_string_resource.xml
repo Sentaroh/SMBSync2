@@ -727,8 +727,10 @@
         <string name="msgs_sync_folder_archive_rename_rule">Changer le nom du fichier avant de l\'archiver dans le dossier cible.</string>
         <string name="msgs_sync_folder_archive_seq_number_title">Incrémenter les noms de fichiers</string>
         <string name="msgs_sync_folder_archive_create_directory">Créer un dossier dont le nom comprend la date de capture des photos et y stocker les fichiers archivés.</string>
-        <string name="msgs_sync_folder_archive_btn_title_date">Date</string>
-        <string name="msgs_sync_folder_archive_btn_title_time">Heure</string>
+        <string name="msgs_sync_folder_archive_btn_title_date">Date (YYYY-MM-DD)</string>
+        <string name="msgs_sync_folder_archive_btn_title_yyyymmdd">Date (YYYYMMDD)</string>
+        <string name="msgs_sync_folder_archive_btn_title_time">Heure (HH-MM-SS)</string>
+        <string name="msgs_sync_folder_archive_btn_title_hhmmss">Heure (HHMMSS)</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">Nom</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">Si la date et l\'heure ne peuvent pas être déterminées depuis l\'entête EXIF, afficher un message de confirmation.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Le format ZIP ne peut pas être spécifié comme destination pour les tâches de sync de type Archive. Le stockage interne sera utilisé à sa place.</string>
@@ -738,6 +740,7 @@
         <string name="msgs_sync_folder_archive_btn_title_day">Jour</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_prompt_title">Sélectionner l\'incrémentation à ajouter</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_0">Ne pas changer</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_2">2 chiffres (01-99)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_3">3 chiffres (001-999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_4">4 chiffres (0001-9999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_5">5 chiffres (00001-99999)</string>
