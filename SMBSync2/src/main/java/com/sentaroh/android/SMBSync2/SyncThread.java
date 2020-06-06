@@ -2746,11 +2746,12 @@ public class SyncThread extends Thread {
     }
 
     static final private boolean isDirectorySelectedByDirectoryNameVer2(SyncThreadWorkArea stwa, String f_dir) {
-        boolean include = false;
+        boolean include = false, sel_include=false, exclude_begin=false, exclude_any=false;
         Matcher mt;
 
         String t_dir = f_dir;
         String n_dir = removeRedundantSeparator(f_dir, "/", true, true);
+        String[] filter_dir_array=n_dir.split("/");
 
         if (n_dir.equals("")) {
             //not filtered
@@ -2760,32 +2761,41 @@ public class SyncThread extends Thread {
                 stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 dir=" + n_dir);
             }
 
-            Pattern[] inc_matched_pattern_array = new Pattern[0];
             if (stwa.matchFromBeginDirIncludeFilterList.size()==0) {
                 // nothing filter
                 include = true;
             } else {
                 for (int i = 0; i < stwa.matchFromBeginDirIncludeFilterList.size(); i++) {
-                    Pattern pattern=Pattern.compile("^"+MiscUtil.convertRegExp(stwa.matchFromBeginDirIncludeFilterList.get(i).getFilter())+"$");
-                    mt = pattern.matcher(n_dir);
+                    Pattern pattern=Pattern.compile("^"+MiscUtil.convertRegExp(stwa.matchFromBeginDirIncludeFilterList.get(i).getFilter()+"/"));
+                    mt = pattern.matcher(n_dir+"/");
                     if (mt.find()) {
                         include = true;
+                        sel_include=true;
                         break;
                     }
                 }
-                if (stwa.gp.settingDebugLevel >= 2)
-                    stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 Include result:" + include);
             }
             if (stwa.matchFromBeginDirExcludeFilterList.size()==0  && stwa.matchAnyDirExcludeFilterList.size()==0) {
-                //nop
+                //Nop
             } else {
                 if (stwa.matchFromBeginDirExcludeFilterList.size()!=0) {
-                    for (int i = 0; i < stwa.matchFromBeginDirExcludeFilterList.size(); i++) {
-                        Pattern pattern=Pattern.compile("^"+MiscUtil.convertRegExp(stwa.matchFromBeginDirExcludeFilterList.get(i).getFilter())+"$");
-                        mt = pattern.matcher(n_dir);
-                        if (mt.find()) {
-                            include = false;
-                            break;
+                    for (AdapterFilterList.FilterListItem fli:stwa.matchFromBeginDirExcludeFilterList) {
+                        String[] exc_filter_array=fli.getFilter().split("/");
+                        if (exc_filter_array.length<=filter_dir_array.length) {
+                            boolean matched=true;
+                            for(int i=0;i<exc_filter_array.length;i++) {
+                                Pattern exc_pattern=Pattern.compile("^"+MiscUtil.convertRegExp(exc_filter_array[i])+"$");
+                                Matcher exc_mt=exc_pattern.matcher(filter_dir_array[i]);
+                                if (!exc_mt.find()) {
+                                    matched=false;
+                                    break;
+                                }
+                            }
+                            if (matched) {
+                                exclude_begin=true;
+                                include = false;
+                                break;
+                            }
                         }
                     }
                 } else {
@@ -2805,17 +2815,18 @@ public class SyncThread extends Thread {
                             if (mt.find()) {
                                 include=false;
                                 excluded=true;
+                                exclude_any=true;
                                 break;
                             }
                             if (excluded) break;
                         }
                     }
                 }
-                if (stwa.gp.settingDebugLevel >= 2)
-                    stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 Exclude result:" + include);
             }
             if (stwa.gp.settingDebugLevel >= 2)
-                stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 result:" + include);
+                stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 "+
+                        "sel_include="+sel_include+", exclude_begin="+exclude_begin+", exclude_any="+exclude_any+
+                        ", result=" + include+", dir="+n_dir);
         }
         return include;
     }
@@ -2965,35 +2976,44 @@ public class SyncThread extends Thread {
                 if (stwa.matchFromBeginDirExcludeFilterList.size()!=0) {
                     exc_specified=true;
                     for(AdapterFilterList.FilterListItem fli:stwa.matchFromBeginDirExcludeFilterList) {
-                        Pattern exc_pattern=Pattern.compile("^"+MiscUtil.convertRegExp(fli.getFilter()+"/")+"$");
-                        Matcher exc_mt=exc_pattern.matcher(filter_dir+"/");
-                        if (exc_mt.find()) {
-                            if (stwa.matchFromBeginDirIncludeFilterList.size()>0) {
-                                String[] exc_filter_array=fli.getFilter().split("/");
-                                boolean found=false;
-                                for(AdapterFilterList.FilterListItem inc_filter:stwa.matchFromBeginDirIncludeFilterList) {
-                                    String[] inc_filter_array=inc_filter.getFilter().split("/");
-                                    for(int i=0;i<Math.min(filter_dir_array.length, exc_filter_array.length);i++) {
-                                        Pattern inc_pattern=Pattern.compile("^"+MiscUtil.convertRegExp(inc_filter_array[i])+"$");
-                                        Matcher inc_mt=inc_pattern.matcher(filter_dir_array[i]);
-                                        if (inc_mt.find()) {
-                                            if (exc_filter_array.length<inc_filter_array.length) {
-                                                found=true;
-                                                break;
+                        String[] exc_filter_array=fli.getFilter().split("/");
+                        if (exc_filter_array.length<=filter_dir_array.length) {
+                            boolean matched=true;
+                            for(int i=0;i<exc_filter_array.length;i++) {
+                                Pattern exc_pattern=Pattern.compile("^"+MiscUtil.convertRegExp(exc_filter_array[i])+"$");
+                                Matcher exc_mt=exc_pattern.matcher(filter_dir_array[i]);
+                                if (!exc_mt.find()) {
+                                    matched=false;
+                                    break;
+                                }
+                            }
+                            if (matched) {
+                                if (stwa.matchFromBeginDirIncludeFilterList.size()>0) {
+                                    boolean found=false;
+                                    for(AdapterFilterList.FilterListItem inc_filter:stwa.matchFromBeginDirIncludeFilterList) {
+                                        String[] inc_filter_array=inc_filter.getFilter().split("/");
+                                        for(int i=0;i<Math.min(filter_dir_array.length, exc_filter_array.length);i++) {
+                                            Pattern inc_pattern=Pattern.compile("^"+MiscUtil.convertRegExp(inc_filter_array[i])+"$");
+                                            Matcher inc_mt=inc_pattern.matcher(filter_dir_array[i]);
+                                            if (inc_mt.find()) {
+                                                if (exc_filter_array.length<inc_filter_array.length) {
+                                                    found=true;
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                if (found) {
-                                    exc=false;
-                                    break;
+                                    if (found) {
+                                        exc=false;
+                                        break;
+                                    } else {
+                                        exc=true;
+                                        break;
+                                    }
                                 } else {
                                     exc=true;
                                     break;
                                 }
-                            } else {
-                                exc=true;
-                                break;
                             }
                         }
                     }
