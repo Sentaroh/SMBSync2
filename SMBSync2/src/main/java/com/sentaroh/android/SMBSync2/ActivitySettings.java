@@ -277,6 +277,9 @@ public class ActivitySettings extends PreferenceActivity {
                     shared_pref.edit().putString(key_string, GlobalParameters.DEFAULT_NOCOMPRESS_FILE_TYPE).commit();
                 }
                 pref_key.setSummary(shared_pref.getString(key_string, GlobalParameters.DEFAULT_NOCOMPRESS_FILE_TYPE));
+            } else if (key_string.equals(c.getString(R.string.settings_mgt_dir))) {
+                isChecked = true;
+                pref_key.setSummary(shared_pref.getString(key_string, mGp.getManagementDirectory()));
             }
             return isChecked;
         }

@@ -456,7 +456,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
             sampleProfileCreateRequired = true;
 
-            pe.putString(c.getString(R.string.settings_mgt_dir), internalRootDirectory + "/" + APPLICATION_TAG);
+            pe.putString(c.getString(R.string.settings_mgt_dir), getManagementDirectory());
 
             pe.putBoolean(c.getString(R.string.settings_exit_clean), true);
 
@@ -547,7 +547,7 @@ public class GlobalParameters extends CommonGlobalParms {
         settingExitClean=prefs.getBoolean(c.getString(R.string.settings_exit_clean), true);
 
         settingLogMaxFileCount = Integer.valueOf(prefs.getString(c.getString(R.string.settings_log_file_max_count), "5"));
-        settingMgtFileDir = prefs.getString(c.getString(R.string.settings_mgt_dir), internalRootDirectory + "/" + APPLICATION_TAG);
+        settingMgtFileDir = prefs.getString(c.getString(R.string.settings_mgt_dir), getManagementDirectory());
         settingLogOption = prefs.getBoolean(c.getString(R.string.settings_log_option), false);
         settingPutLogcatOption = prefs.getBoolean(c.getString(R.string.settings_put_logcat_option), false);
         settingErrorOption = prefs.getBoolean(c.getString(R.string.settings_error_option), false);
@@ -610,6 +610,10 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingScheduleSyncEnabled=prefs.getBoolean(SCHEDULER_ENABLED_KEY, true);
 
+    }
+
+    public String getManagementDirectory() {
+        return internalRootDirectory + "/" + APPLICATION_TAG;
     }
 
     public void setScheduleEnabled(Context c, boolean enabled) {
