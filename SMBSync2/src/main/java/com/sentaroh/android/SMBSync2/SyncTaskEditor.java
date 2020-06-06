@@ -5202,7 +5202,9 @@ public class SyncTaskEditor extends DialogFragment {
                 if (sti.getMasterDirectoryName().toLowerCase().equals(sti.getTargetDirectoryName().toLowerCase())) {
                     msg=c.getString(R.string.msgs_main_sync_profile_dlg_invalid_master_target_combination_internal);
                 } else {
-                    if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
+                    if (!sti.getTargetDirectoryName().toLowerCase().equals(sti.getMasterDirectoryName().toLowerCase())) {
+                        //Valid combination
+                    } else if (sti.getTargetDirectoryName().toLowerCase().startsWith(sti.getMasterDirectoryName().toLowerCase())) {
                         //Masterが上位
                         msg= checkDirectoryFilterForSameDirectoryAccess(c, sti);
                     }
