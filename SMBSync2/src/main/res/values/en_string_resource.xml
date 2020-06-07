@@ -531,8 +531,8 @@
         <string name="msgs_mirror_file_zip_copy_to_work">Copying the ZIP file to the cache temp file... %s%% done.</string>
         <string name="msgs_mirror_ignore_override_copy_file">File copy ignored because the \"Overwrite destination file(s)\" option is disabled for this task.</string>
         <string name="msgs_mirror_ignore_override_move_file">File move ignored because the \"Overwrite destination file(s)\" option is disabled for this task.</string>
-        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">The source file or directory name contains invalid characters for the destination. Edit name to allow sync. Character: %s, Path: %s</string>
-        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">File or directory excluded from sync process because source name contains characters not valid for the destination. Character: %s, Path:  %s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">The source file or directory name contains invalid characters for the destination. Edit name to allow sync. Character=%s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">File or directory skipped because source name contains invalid characters. Character=%s</string>
         <string name="msgs_mirror_remote_addr_not_connected">Unable to connect to SMB host address %s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Unable to connect to SMB host %s on port %s</string>
         <string name="msgs_mirror_remote_name_not_found">The SMB host name could not be found. Try to use its IP address. Host Name=</string>
@@ -1006,4 +1006,6 @@
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">Keep the Wi-Fi radio awake until sync is completed</string>
         <string name="settings_wifi_lock_title">Wi-Fi Locking</string>
+        <string name="msgs_mirror_task_file_failed">[Sync Failed]</string>
+        <string name="msgs_mirror_task_file_ignored">[Skipped]</string>
 </resources>

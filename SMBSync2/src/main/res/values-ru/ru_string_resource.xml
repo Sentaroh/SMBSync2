@@ -531,8 +531,8 @@
         <string name="msgs_mirror_file_zip_copy_to_work">Копирование файла ZIP в рабочий файл ...%s%% завершено.</string>
         <string name="msgs_mirror_ignore_override_copy_file">Копирование файла игнорируется, поскольку для этой задачи отключена опция \ "Перезаписать файл (ы) назначения \".</string>
         <string name="msgs_mirror_ignore_override_move_file">Перемещение файла игнорируется, поскольку для этой задачи отключена опция \ "Перезаписать файл (ы) назначения \".</string>
-        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">Исходный файл или имя каталога содержит символы, которые недопустимы для места назначения. Измените имя, чтобы разрешить синхронизацию. Персонаж:%s, Путь:%s</string>
-        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">Файл или каталог исключены из процесса синхронизации, поскольку имя источника содержит символы, недопустимые для места назначения. Персонаж:%s, Путь:%s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">Исходный файл или имя каталога содержит символы, которые недопустимы для места назначения. Измените имя, чтобы разрешить синхронизацию. Персонаж=%s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">Файл или каталог исключены из процесса синхронизации, поскольку имя источника содержит символы, недопустимые для места назначения. Персонаж=%s</string>
         <string name="msgs_mirror_remote_addr_not_connected">Невозможно подключиться к адресу хоста SMB %s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Невозможно подключиться к узлу SMB %s через порт %s</string>
         <string name="msgs_mirror_remote_name_not_found">Не удалось найти имя хоста SMB, попробуйте его с IP-адресом. Имя хоста =</string>
@@ -1006,4 +1006,6 @@
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">Не давать уходить в сон Wi-Fi до завершенной синхронизации</string>
         <string name="settings_wifi_lock_title">Блокировка Wi-Fi</string>
+        <string name="msgs_mirror_task_file_failed">[Не смогли]</string>
+        <string name="msgs_mirror_task_file_ignored">[игнорируются]</string>
 </resources>

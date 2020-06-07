@@ -1390,15 +1390,17 @@ public class SyncThread extends Thread {
     }
 
     public static boolean isValidFileDirectoryName(SyncThreadWorkArea stwa, SyncTaskItem sti, String in_str) {
-        if (!hasInvalidCharForFileDirName(in_str).equals("")) {
+        String invalid_char = hasInvalidCharForFileDirName(in_str);
+        if (!invalid_char.equals("")) {
+            String basename = in_str.substring(in_str.lastIndexOf("/") + 1, in_str.length());
             if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) {
-                showMsg(stwa, false, stwa.currentSTI.getSyncTaskName()+":", "W", "", "",
-                        String.format(stwa.context.getString(R.string.msgs_mirror_invalid_file_directory_name_character_skipped),
-                                hasInvalidCharForFileDirName(in_str), in_str));
+                showMsg(stwa, false, stwa.currentSTI.getSyncTaskName()+":", "I", in_str, basename,
+                        String.format(stwa.context.getString(R.string.msgs_mirror_invalid_file_directory_name_character_skipped), invalid_char),
+                        stwa.context.getString(R.string.msgs_mirror_task_file_ignored));
             } else {
-                showMsg(stwa, false, stwa.currentSTI.getSyncTaskName()+":", "E", "", "",
-                        String.format(stwa.context.getString(R.string.msgs_mirror_invalid_file_directory_name_character_error),
-                                hasInvalidCharForFileDirName(in_str), in_str));
+                showMsg(stwa, false, stwa.currentSTI.getSyncTaskName()+":", "E", in_str, basename,
+                        String.format(stwa.context.getString(R.string.msgs_mirror_invalid_file_directory_name_character_error), invalid_char),
+                        stwa.context.getString(R.string.msgs_mirror_task_file_failed));
             }
             return false;
         }
@@ -1528,7 +1530,7 @@ public class SyncThread extends Thread {
 //						SafFile sf=SafUtil.getSafDocumentFileByPath(stwa.safCA, c_item.getPath(), true);
 //						if (!sti.isSyncTestMode()) sf.delete();
 //						showMsg(stwa,false, sti.getSyncTaskName()+":", "I", fp+"/"+c_item.getName(), c_item.getName(),
-//								stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
+//								"", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
                     } else {
                         stwa.totalDeleteCount++;
                         SafFile sf = null;
@@ -1539,7 +1541,7 @@ public class SyncThread extends Thread {
                             scanMediaFile(stwa, fp);
                         }
                         showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp + "/" + c_item.getName(), c_item.getName(),
-                                stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
+                                "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
                     }
                     if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                         break;
@@ -1554,7 +1556,7 @@ public class SyncThread extends Thread {
                     scanMediaFile(stwa, fp);
                 }
                 showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, df.getName(),
-                        stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
+                        "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             } else {
                 SafFile sf = null;
                 if (df.getPath().startsWith(stwa.gp.safMgr.getSdcardRootPath())) sf=stwa.gp.safMgr.createSdcardItem(df.getPath(), false);
@@ -1565,7 +1567,7 @@ public class SyncThread extends Thread {
                 }
                 stwa.totalDeleteCount++;
                 showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, df.getName(),
-                        stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
+                        "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             }
         } else {
             SafFile sf = null;
@@ -1574,7 +1576,7 @@ public class SyncThread extends Thread {
             if (!sti.isSyncTestMode()) sf.delete();
             stwa.totalDeleteCount++;
             showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, df.getName(),
-                    stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
+                    "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
 
         }
     }
@@ -1613,7 +1615,7 @@ public class SyncThread extends Thread {
                         stwa.totalDeleteCount++;
                         if (!sti.isSyncTestMode()) c_item.delete();
                         showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp + c_item.getName(), c_item.getName(),
-                                stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
+                                "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
                     }
                     if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                         break;
@@ -1622,18 +1624,18 @@ public class SyncThread extends Thread {
                 stwa.totalDeleteCount++;
                 if (!sti.isSyncTestMode()) hf.delete();
                 showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, hf.getName(),
-                        stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
+                        "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             } else {
                 if (!sti.isSyncTestMode()) hf.delete();
                 stwa.totalDeleteCount++;
                 showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, hf.getName(),
-                        stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
+                        "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             }
         } else {
             if (!sti.isSyncTestMode()) hf.delete();
             stwa.totalDeleteCount++;
             showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, hf.getName(),
-                    stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
+                    "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
 
         }
     }
@@ -1668,7 +1670,7 @@ public class SyncThread extends Thread {
                             scanMediaFile(stwa, fp);
                         }
                         showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp + "/" + c_item.getName(), c_item.getName(),
-                                stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
+                                "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
                     }
                     if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                         break;
@@ -1680,7 +1682,7 @@ public class SyncThread extends Thread {
                     scanMediaFile(stwa, fp);
                 }
                 showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, lf.getName(),
-                        stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
+                        "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             } else {
                 if (!sti.isSyncTestMode()) {
                     lf.delete();
@@ -1688,7 +1690,7 @@ public class SyncThread extends Thread {
                 }
                 stwa.totalDeleteCount++;
                 showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, lf.getName(),
-                        stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
+                        "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             }
         } else {
             if (!sti.isSyncTestMode()) {
@@ -1697,7 +1699,7 @@ public class SyncThread extends Thread {
             }
             stwa.totalDeleteCount++;
             showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, lf.getName(),
-                    stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
+                    "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
 
         }
     }
@@ -1997,12 +1999,36 @@ public class SyncThread extends Thread {
     static public void showMsg(final SyncThreadWorkArea stwa, boolean log_only,
                                final String task_name, final String cat,
                                final String full_path, final String file_name, final String msg) {
-        stwa.gp.progressSpinSyncprofText = task_name;
-        stwa.gp.progressSpinMsgText = file_name.concat(" ").concat(msg);
-        if (!log_only) {
-            NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, System.currentTimeMillis(), task_name, file_name, msg);
+        showMsg(stwa, log_only, task_name, cat, full_path, file_name, msg, "");
+   }
+
+    //file_name: used only for ongoing message (dialog progress in top of screen) to display filename and file operation during sync
+    //file_name: used for ongoing notification, extra trailing space added as separator from following message
+    //full_path: file/dir name + complete path, displayed in messages TAB
+    //msg: message, last element, do not end with new line
+    //type: displayed aligned at right edge in dedicated column, last element, do not end with new line
+    //msg or type shouldn't be both empty: no crash or error though, only adds extra trailing space
+    //showOngoingMsg(): System notification area progress message when app in background
+    static public void showMsg(final SyncThreadWorkArea stwa, boolean log_only,
+                               final String task_name, final String cat,
+                               final String full_path, final String file_name, final String msg, final String type) {
+        String notif_msg = "";
+        String[] notif_msg_list = {file_name, msg, type};
+        for (String msg_part : notif_msg_list) {
+            if (!msg_part.equals("")) {
+                if (notif_msg.equals("")) notif_msg = msg_part;
+                else notif_msg = notif_msg.concat(" ").concat(msg_part);
+            }
+        }
+
+        //ongoing progress message in top of screen during sync, not saved to Messages tab
+        stwa.gp.progressSpinSyncprofText = task_name;//title of in app progress notification
+        stwa.gp.progressSpinMsgText = notif_msg;//text of in app progress notification
+
+        if (!log_only) {//set onscreen notification progress
+            NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, System.currentTimeMillis(), task_name, file_name, msg, type);//system notification if app in background
             if (stwa.gp.dialogWindowShowed && stwa.gp.progressSpinSyncprof != null) {
-                stwa.gp.uiHandler.post(new Runnable() {
+                stwa.gp.uiHandler.post(new Runnable() {//in app progress notification
                     @Override
                     public void run() {
                         if (stwa.gp.progressSpinSyncprof != null && !stwa.gp.activityIsBackground) {
@@ -2013,19 +2039,33 @@ public class SyncThread extends Thread {
                 });
             }
         }
-        String lm = full_path.equals("") ? msg : full_path.concat(" ").concat(msg);
-        if (task_name.equals("")) {
-            stwa.util.addLogMsg(cat, lm);
+
+        //write to Messages tab: [cat + [space] + full_path + "space" + message] on left column, [type] on right column
+        //addLogMsg() displays message on the tabb with fields: cat, type, String... msg: separate different msg fields by " " or a separator for redability
+        //argument "type" in addLogMsg() is separate field, displayed in separate column on right of msg, aligned on right border, color themed (file operations...)
+        //print_msg: text file displayed when we click the sync event in History tab
+        //print_msg: remove trailing new line in full_path for readability of the text log file
+        //buildPrintMsg(): prints a text file with print_msg, not used for messages display on tab. Text file shown when we click History SyncTask event
+        //fields: cat, String... msg: separator " " added between msg fields for redability
+        String lm = "";
+        if (msg.equals("")) lm = full_path;//no message (we should have a type at least), currently full_path is never "" with type. Case lm == "" will also work
+        else lm = full_path.equals("") ? msg : full_path.concat(" ").concat(msg);
+        
+
+        if (task_name.equals("")) {//if also lm == "": we didn't provide any of task_name, message and full_path!
+            stwa.util.addLogMsg(false, true, true, false, cat, task_name, type, full_path, msg);//not currently used (type without task_name)
             if (stwa.gp.settingWriteSyncResultLog && stwa.syncHistoryWriter != null) {
                 String print_msg = "";
-                print_msg = stwa.util.buildPrintMsg(cat, lm);
+                if (type.equals("")) print_msg = stwa.util.buildPrintMsg(cat, lm);
+                else print_msg = stwa.util.buildPrintMsg(cat, lm, " ", type);
                 stwa.syncHistoryWriter.println(print_msg);
             }
         } else {
-            stwa.util.addLogMsg(cat, task_name, " ", lm);
+            stwa.util.addLogMsg(false, true, true, true, cat, task_name, type, full_path, msg);
             if (stwa.gp.settingWriteSyncResultLog && stwa.syncHistoryWriter != null) {
                 String print_msg = "";
-                print_msg = stwa.util.buildPrintMsg(cat, task_name, " ", lm);
+                if (type.equals("")) print_msg = stwa.util.buildPrintMsg(cat, task_name, " ", lm);
+                else print_msg = stwa.util.buildPrintMsg(cat, task_name, " ", lm, " ", type);
                 stwa.syncHistoryWriter.println(print_msg);
             }
         }
@@ -2348,7 +2388,9 @@ public class SyncThread extends Thread {
                     result=false;
                     stwa.totalIgnoreCount++;
                     String fn=fp.substring(fp.lastIndexOf("/"));
-                    showMsg(stwa, false, sti.getSyncTaskName()+":", "W", fp, fn, stwa.context.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled));
+                    showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, fn,
+                            stwa.context.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled),
+                            stwa.context.getString(R.string.msgs_mirror_task_file_ignored));
                 }
             } else {
                 FileLastModifiedTimeEntry flme=getLocalFileLastModifiedFileItemExists(stwa, sti, stwa.currLastModifiedList, stwa.newLastModifiedList, fp);
@@ -2362,7 +2404,9 @@ public class SyncThread extends Thread {
                             result=false;
                             stwa.totalIgnoreCount++;
                             String fn=fp.substring(fp.lastIndexOf("/"));
-                            showMsg(stwa, false, sti.getSyncTaskName()+":", "W", fp, fn, stwa.context.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled));
+                            showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, fn,
+                                    stwa.context.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled),
+                                    stwa.context.getString(R.string.msgs_mirror_task_file_ignored));
                         }
                     } else {
                         if (master_time>target_time) {
@@ -2371,7 +2415,9 @@ public class SyncThread extends Thread {
                             result=false;
                             stwa.totalIgnoreCount++;
                             String fn=fp.substring(fp.lastIndexOf("/"));
-                            showMsg(stwa, false, sti.getSyncTaskName()+":", "W", fp, fn, stwa.context.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled));
+                            showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, fn,
+                                    stwa.context.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled),
+                                    stwa.context.getString(R.string.msgs_mirror_task_file_ignored));
                         }
                     }
                 }

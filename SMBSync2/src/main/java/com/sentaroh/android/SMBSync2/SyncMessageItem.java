@@ -33,13 +33,16 @@ class SyncMessageItem implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
-    private String msgCat, msgBody, msgDate, msgTime;
+    private String msgCat, msgBody, msgDate, msgTime, msgTitle, msgPath, msgType;
 
-    public SyncMessageItem(String cat, String mdate, String mtime, String msg) {
+    public SyncMessageItem(String cat, String mdate, String mtime, String mtitle, String msg, String mpath, String mtype) {
         msgCat = cat;
         msgBody = msg;
         msgDate = mdate;
         msgTime = mtime;
+        msgTitle = mtitle;
+        msgType = mtype;
+        msgPath = mpath;
     }
 
     public String getCategory() {
@@ -58,7 +61,20 @@ class SyncMessageItem implements Serializable {
         return msgBody;
     }
 
-    public String toString() {
-        return msgCat + " " + msgDate + " " + msgTime + " " + msgBody;
+    public String getTitle() {
+        return msgTitle;
     }
+
+    public String getPath() {
+        return msgPath;
+    }
+
+    public String getType() {
+        return msgType;
+    }
+
+    public String toString() {
+        return msgCat + " " + msgDate + " " + msgTime + " " + msgTitle + " " + msgPath + " " + msgBody + " " + msgType;
+    }
+
 }

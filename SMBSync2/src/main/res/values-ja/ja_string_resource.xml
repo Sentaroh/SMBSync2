@@ -531,8 +531,8 @@
         <string name="msgs_mirror_file_zip_copy_to_work">ZIPファイルをワークファイルにコピーしています。%s%% 終了。</string>
         <string name="msgs_mirror_ignore_override_copy_file">同期オプションで上書きが無効になっているためファイルのコピーは無視されました。</string>
         <string name="msgs_mirror_ignore_override_move_file">同期オプションで上書きが無効になっているためファイルの移動は無視されました。</string>
-        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">マスターのファイル名またはディレクトリ名にターゲットでは使用できない文字が含まれています。マスターのファイル名またはディレクトリ名を変更してください。文字=%s, パス=%s</string>
-        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">マスターのファイル名またはディレクトリ名にターゲットでは使用できない文字が含まれているためディレクトリーまたはファイルの処理をスキップします。文字=%s, パス=%s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">マスターのファイル名またはディレクトリ名にターゲットでは使用できない文字が含まれています。マスターのファイル名またはディレクトリ名を変更してください。文字=%s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">マスターのファイル名またはディレクトリ名にターゲットでは使用できない文字が含まれているためディレクトリーまたはファイルの処理をスキップします。文字=%s</string>
         <string name="msgs_mirror_remote_addr_not_connected">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s, ポート=%s</string>
         <string name="msgs_mirror_remote_name_not_found">SMBホスト名が発見できませんでした、IPアドレスで試してください。 ホスト名=</string>
@@ -1006,4 +1006,6 @@
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">同期中はWi-Fiをスリープさせない</string>
         <string name="settings_wifi_lock_title">Wi-Fiロック</string>
+        <string name="msgs_mirror_task_file_failed">[失敗]</string>
+        <string name="msgs_mirror_task_file_ignored">[無視された]</string>
 </resources>

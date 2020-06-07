@@ -113,7 +113,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            "", stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -346,7 +346,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            "", stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -485,7 +485,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            "", stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;//Archive cancelled
                 }
             }
@@ -755,7 +755,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            "", stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -979,7 +979,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            "", stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -1170,7 +1170,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            "", stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -1385,7 +1385,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            "", stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -1674,7 +1674,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            "", stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }
@@ -1881,7 +1881,7 @@ public class SyncThreadArchiveFile {
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName()+":", "I", item.full_path, item.file_name,
-                            " "+stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
+                            "", stwa.context.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel));
                     continue;
                 }
             }

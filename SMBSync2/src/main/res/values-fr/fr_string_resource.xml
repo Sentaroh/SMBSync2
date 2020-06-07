@@ -531,8 +531,8 @@
         <string name="msgs_mirror_file_zip_copy_to_work">Copie du fichier ZIP vers le fichier temporaire... %s%% terminé.</string>
         <string name="msgs_mirror_ignore_override_copy_file">Copie du fichier ignorée, car l\'option \"Remplacer les fichiers destination\" est désactivée.</string>
         <string name="msgs_mirror_ignore_override_move_file">Déplacement du fichier ignoré, car l\'option \"Remplacer les fichiers destination\" est désactivée.</string>
-        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">Le dossier ou fichier source contient des caractères invalides. Modifier son nom pour poursuivre la synchronisation. Caractère: %s, Emplacement: %s</string>
-        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">Le dossier ou le fichier source contient des caractères invalides. Il a été exclu de la synchronisation. Caractère: %s, Emplacement: %s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">Le dossier ou fichier source contient des caractères invalides. Modifier son nom pour poursuivre la synchronisation. Caractère=%s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">Le dossier ou le fichier source a été ignoré car il contient des caractères invalides. Caractère=%s</string>
         <string name="msgs_mirror_remote_addr_not_connected">Impossible de se connecter à l\'adresse SMB %s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Impossible de se connecter à l\'adresse SMB %s sur le port %s</string>
         <string name="msgs_mirror_remote_name_not_found">Nom d\'hôte SMB introuvable. Essayer avec son adresse IP. Nom d\'hôte=</string>
@@ -1006,4 +1006,6 @@
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">Maintenir le Wi-Fi activé jusqu\'à la fin de la synchronisation</string>
         <string name="settings_wifi_lock_title">Verrouillage du Wi-Fi</string>
+        <string name="msgs_mirror_task_file_failed">[Echec]</string>
+        <string name="msgs_mirror_task_file_ignored">[Ignoré]</string>
 </resources>
