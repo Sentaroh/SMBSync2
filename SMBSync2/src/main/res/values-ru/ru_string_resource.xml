@@ -560,7 +560,7 @@
         <string name="msgs_mirror_task_dir_create">[Каталог создан]</string>
         <string name="msgs_mirror_task_dir_create_failed">Не удалось создать каталог.</string>
         <string name="msgs_mirror_task_dir_deleted">[Каталог удален]</string>
-        <string name="msgs_mirror_task_file_archived" formatted="false">%s [заархивировано в] %s</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">[Архивация]</string>
         <string name="msgs_mirror_task_file_copied">[Файл скопирован]</string>
         <string name="msgs_mirror_task_file_copying">Копирование файла … %s%% [завершено]</string>
         <string name="msgs_mirror_task_file_deleted">[Файл удален]</string>

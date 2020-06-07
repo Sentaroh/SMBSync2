@@ -560,7 +560,7 @@
         <string name="msgs_mirror_task_dir_create">[Folder created]</string>
         <string name="msgs_mirror_task_dir_create_failed">failed to create directory.</string>
         <string name="msgs_mirror_task_dir_deleted">[Folder deleted]</string>
-        <string name="msgs_mirror_task_file_archived" formatted="false">%s [archived to] %s</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">[archived]</string>
         <string name="msgs_mirror_task_file_copied">[File copied]</string>
         <string name="msgs_mirror_task_file_copying">Copying file… %s %% [complete]</string>
         <string name="msgs_mirror_task_file_deleted">[File deleted]</string>

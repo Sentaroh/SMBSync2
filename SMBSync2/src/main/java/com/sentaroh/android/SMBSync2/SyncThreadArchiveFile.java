@@ -85,7 +85,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     tf.setLastModified(mf.lastModified());
                     mf.delete();
@@ -264,7 +264,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     mf.delete();
                     stwa.totalDeleteCount++;
@@ -320,7 +320,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     mf.delete();
                     stwa.totalDeleteCount++;
@@ -684,7 +684,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     try {
                         tf.setLastModified(mf.lastModified());
@@ -729,7 +729,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     m_df.delete();
                     stwa.totalDeleteCount++;
@@ -901,7 +901,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     m_df.delete();
                     stwa.totalDeleteCount++;
@@ -953,7 +953,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     m_df.delete();
                     stwa.totalDeleteCount++;
@@ -1137,7 +1137,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     try {
                         tf.setLastModified(mf.lastModified());
@@ -1354,7 +1354,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     try {
                         tf.setLastModified(mf.getLastModified());
@@ -1575,7 +1575,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     try {
                         tf.setLastModified(mf.getLastModified());
@@ -1643,7 +1643,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     try {
                         tf.setLastModified(mf.getLastModified());
@@ -1851,7 +1851,7 @@ public class SyncThreadArchiveFile {
             if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
                 stwa.totalCopyCount++;
                 SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName()+":", "I", from_path, to_path, mf.getName(), tf.getName(),
-                        stwa.msgs_mirror_task_file_archived);
+                        "", stwa.msgs_mirror_task_file_archived);
                 if (!sti.isSyncTestMode()) {
                     try {
                         tf.setLastModified(mf.getLastModified());
