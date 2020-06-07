@@ -625,7 +625,8 @@ public class SyncThreadSyncZip {
                                                 "", stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.util.addLogMsg("W", t_from_path, stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                    SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", t_from_path, mf.getName(),
+                                            "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
                             } else {
                                 if (isFileChanged(stwa, sti, from_path.replace(stwa.gp.internalRootDirectory + "/", ""), mf, stwa.ALL_COPY)) {
@@ -638,7 +639,8 @@ public class SyncThreadSyncZip {
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", t_from_path, stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                        SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", t_from_path, mf.getName(),
+                                                "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
                                 }
                             }

@@ -687,7 +687,8 @@ public class SyncThreadSyncFile {
                                                         "", stwa.msgs_mirror_task_file_moved);
                                             }
                                         } else {
-                                            stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                                SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                         }
                                     } else {
                                         if (SyncThread.isFileChanged(stwa, sti, parsed_to_path, tf, mf, stwa.ALL_COPY) &&
@@ -709,7 +710,8 @@ public class SyncThreadSyncFile {
                                                     stwa.totalCopyCount++;
                                                 }
                                             } else {
-                                                stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                                SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                             }
                                         }
                                     }
@@ -968,7 +970,8 @@ public class SyncThreadSyncFile {
                                                     "", stwa.msgs_mirror_task_file_moved);
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                        SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                     }
                                 } else {
                                     if (SyncThread.isFileChanged(stwa, sti, parsed_to_path, tf, mf, stwa.ALL_COPY) &&
@@ -996,7 +999,8 @@ public class SyncThreadSyncFile {
                                                 stwa.totalCopyCount++;
                                             }
                                         } else {
-                                            stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                         }
                                     }
                                 }
@@ -1211,7 +1215,8 @@ public class SyncThreadSyncFile {
                                                     "", stwa.msgs_mirror_task_file_moved);
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                        SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                     }
                                 } else {
                                     if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY) &&
@@ -1240,7 +1245,8 @@ public class SyncThreadSyncFile {
                                                 stwa.totalCopyCount++;
                                             }
                                         } else {
-                                            stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                         }
                                     }
                                 }
@@ -1426,7 +1432,8 @@ public class SyncThreadSyncFile {
                                                     "", stwa.msgs_mirror_task_file_moved);
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                        SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                     }
                                 } else {
                                     if (SyncThread.isFileChanged(stwa, sti, parsed_to_path, tf, mf, stwa.ALL_COPY) &&
@@ -1448,7 +1455,8 @@ public class SyncThreadSyncFile {
                                                 stwa.totalCopyCount++;
                                             }
                                         } else {
-                                            stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                         }
                                     }
                                 }
@@ -1662,7 +1670,8 @@ public class SyncThreadSyncFile {
                                                         "", stwa.msgs_mirror_task_file_moved);
                                             }
                                         } else {
-                                            stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                         }
                                     } else {
                                         if (SyncThread.isFileChanged(stwa, sti, parsed_to_path, tf, mf, stwa.ALL_COPY) &&
@@ -1689,7 +1698,8 @@ public class SyncThreadSyncFile {
                                                     stwa.totalCopyCount++;
                                                 }
                                             } else {
-                                                stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                                SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                             }
                                         }
                                     }
@@ -1907,7 +1917,8 @@ public class SyncThreadSyncFile {
                                                     "", stwa.msgs_mirror_task_file_moved);
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                        SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                     }
                                 } else {
                                     if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY) &&
@@ -1936,7 +1947,8 @@ public class SyncThreadSyncFile {
                                                 stwa.totalCopyCount++;
                                             }
                                         } else {
-                                            stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                         }
                                     }
                                 }
@@ -2196,7 +2208,8 @@ public class SyncThreadSyncFile {
                                                     "", stwa.msgs_mirror_task_file_moved);
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                        SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                     }
                                 } else {
                                     if (SyncThread.isFileChanged(stwa, sti, parsed_to_path, tf, mf, stwa.ALL_COPY) &&
@@ -2229,7 +2242,8 @@ public class SyncThreadSyncFile {
                                                 stwa.totalCopyCount++;
                                             }
                                         } else {
-                                            stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                         }
                                     }
                                 }
@@ -2536,7 +2550,8 @@ public class SyncThreadSyncFile {
                                                     "", stwa.msgs_mirror_task_file_moved);
                                         }
                                     } else {
-                                        stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                        SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                     }
                                 } else {
                                     if (SyncThread.isFileChanged(stwa, sti, parsed_to_path, tf, mf, stwa.ALL_COPY) &&
@@ -2576,7 +2591,8 @@ public class SyncThreadSyncFile {
                                                 stwa.totalCopyCount++;
                                             }
                                         } else {
-                                            stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                         }
                                     }
                                 }
@@ -2839,7 +2855,8 @@ public class SyncThreadSyncFile {
                                                         "", stwa.msgs_mirror_task_file_moved);
                                             }
                                         } else {
-                                            stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                         }
                                     } else {
                                         if (SyncThread.isFileChanged(stwa, sti, parsed_to_path, tf, mf, stwa.ALL_COPY) &&
@@ -2865,7 +2882,8 @@ public class SyncThreadSyncFile {
                                                     stwa.totalCopyCount++;
                                                 }
                                             } else {
-                                                stwa.util.addLogMsg("W", parsed_to_path, " "+stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
+                                                SyncThread.showMsg(stwa, true, sti.getSyncTaskName()+":", "I", parsed_to_path, mf.getName(),
+                                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                             }
                                         }
                                     }
