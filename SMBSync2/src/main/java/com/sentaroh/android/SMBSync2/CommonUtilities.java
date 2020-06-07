@@ -379,14 +379,14 @@ public final class CommonUtilities {
                 String line=null;
                 while((line=bis.readLine())!=null) {
                     String[] msg_array=line.split("\u0000");
-                    if (msg_array.length>=7) {
+                    if (msg_array.length >= 4) {//require at least a title
                         SyncMessageItem smi=new SyncMessageItem(msg_array[0].replace("\u0001",""), //msgCat
                                 msg_array[1].replace("\u0001",""), //msgDate
                                 msg_array[2].replace("\u0001",""), //msgTime
                                 msg_array[3].replace("\u0001",""), //msgTitle
-                                msg_array[4].replace("\u0001",""), //msgBody
-                                msg_array[5].replace("\u0001",""), //msgPath
-                                msg_array[6].replace("\u0001","")); //msgType
+                                msg_array.length > 4 ? msg_array[4].replace("\u0001","") : "", //msgBody
+                                msg_array.length > 5 ? msg_array[5].replace("\u0001","") : "", //msgPath
+                                msg_array.length > 6 ? msg_array[6].replace("\u0001","") : ""); //msgType
                         result.add(smi);
                     }
                 }
