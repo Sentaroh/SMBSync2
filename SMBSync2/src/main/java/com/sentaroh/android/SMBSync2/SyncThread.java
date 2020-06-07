@@ -276,7 +276,7 @@ public class SyncThread extends Thread {
                     start_time = System.currentTimeMillis();
                     listSyncOption(mStwa.currentSTI);
                     setSyncTaskRunning(true);
-                    showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName()+":", "I", "", "", mStwa.context.getString(R.string.msgs_mirror_task_started));
+                    showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "I", "", "", mStwa.context.getString(R.string.msgs_mirror_task_started));
 
                     initSyncParms(mStwa.currentSTI);
 
@@ -312,14 +312,14 @@ public class SyncThread extends Thread {
                         } else {
                             sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                             String be = mStwa.context.getString(R.string.msgs_mirror_sync_cancelled_battery_option_not_satisfied);
-                            showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName()+":", "E", "", "", be);
+                            showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", be);
                             mGp.syncThreadCtrl.setThreadMessage(be);
                         }
                     } else {//Error
                         if (wifi_msg.equals(mStwa.context.getString(R.string.msgs_mirror_sync_skipped_wifi_ap_conn_other))) {
 //                                sync_result=SyncTaskItem.SYNC_STATUS_SUCCESS;
                             sync_result = SyncTaskItem.SYNC_STATUS_WARNING;
-                            showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName()+":", "W", "", "", wifi_msg);
+                            showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "W", "", "", wifi_msg);
                             mGp.syncThreadCtrl.setThreadMessage(wifi_msg);
                         } else {
                             sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
@@ -337,7 +337,7 @@ public class SyncThread extends Thread {
                     mStwa.currentSTI = sri.sync_task_list.poll();
                     if ((mStwa.currentSTI != null || mGp.syncRequestQueue.size() > 0) &&
                             mGp.settingErrorOption && sync_result == SyncHistoryItem.SYNC_STATUS_ERROR) {
-                        showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName()+":", "W", "", "",
+                        showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "W", "", "",
                                 mStwa.context.getString(R.string.msgs_mirror_task_result_error_skipped));
                         sync_error_detected = true;
                         sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -605,23 +605,23 @@ public class SyncThread extends Thread {
         addHistoryList(sti, sync_result,
                 mStwa.totalCopyCount, mStwa.totalDeleteCount, mStwa.totalIgnoreCount, mStwa.totalRetryCount,
                 error_msg, sync_et, transfer_rate);
-//		if (!error_msg.equals("")) showMsg(mStca, false,sti.getSyncTaskName()+":","E", "","",error_msg);
+//		if (!error_msg.equals("")) showMsg(mStca, false,sti.getSyncTaskName(),"E", "","",error_msg);
 
-        showMsg(mStwa, true, sti.getSyncTaskName()+":", "I", "", "",
+        showMsg(mStwa, true, sti.getSyncTaskName(), "I", "", "",
                 String.format(mStwa.context.getString(R.string.msgs_mirror_task_no_of_copy),
                         mStwa.totalCopyCount, mStwa.totalDeleteCount, mStwa.totalIgnoreCount, sync_et));
-        showMsg(mStwa, true, sti.getSyncTaskName()+":", "I", "", "",
+        showMsg(mStwa, true, sti.getSyncTaskName(), "I", "", "",
                 String.format(mStwa.context.getString(R.string.msgs_mirror_task_avg_rate),
                         transfer_rate));
 
         if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-            showMsg(mStwa, false, sti.getSyncTaskName()+":", "I", "", "", mStwa.context.getString(R.string.msgs_mirror_task_result_ok));
+            showMsg(mStwa, false, sti.getSyncTaskName(), "I", "", "", mStwa.context.getString(R.string.msgs_mirror_task_result_ok));
         } else if (sync_result == SyncTaskItem.SYNC_STATUS_WARNING) {
-            showMsg(mStwa, false, sti.getSyncTaskName()+":", "I", "", "", mStwa.context.getString(R.string.msgs_mirror_task_result_ok));
+            showMsg(mStwa, false, sti.getSyncTaskName(), "I", "", "", mStwa.context.getString(R.string.msgs_mirror_task_result_ok));
         } else if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL) {
-            showMsg(mStwa, false, sti.getSyncTaskName()+":", "I", "", "", mStwa.context.getString(R.string.msgs_mirror_task_result_cancel));
+            showMsg(mStwa, false, sti.getSyncTaskName(), "I", "", "", mStwa.context.getString(R.string.msgs_mirror_task_result_cancel));
         } else if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR) {
-            showMsg(mStwa, false, sti.getSyncTaskName()+":", "E", "", "",
+            showMsg(mStwa, false, sti.getSyncTaskName(), "E", "", "",
                     mStwa.context.getString(R.string.msgs_mirror_task_result_error_ended));
         }
 
@@ -668,12 +668,12 @@ public class SyncThread extends Thread {
                 } else {
                     e_msg = mStwa.context.getString(R.string.msgs_mirror_external_sdcard_not_mounted);
                 }
-                showMsg(mStwa, true, sti.getSyncTaskName()+":", "E", "", "", e_msg);
+                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
                 mGp.syncThreadCtrl.setThreadMessage(e_msg);
                 return sync_result;
             } else if (mGp.safMgr.getSdcardRootSafFile() == null) {
                 sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                showMsg(mStwa, true, sti.getSyncTaskName()+":", "E", "", "",
+                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
                         mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
                 mGp.syncThreadCtrl.setThreadMessage(
                         mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
@@ -686,12 +686,12 @@ public class SyncThread extends Thread {
                 sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                 String e_msg = "";
                 e_msg = mStwa.context.getString(R.string.msgs_mirror_usb_storage_not_mounted);
-                showMsg(mStwa, true, sti.getSyncTaskName()+":", "E", "", "", e_msg);
+                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
                 mGp.syncThreadCtrl.setThreadMessage(e_msg);
                 return sync_result;
             } else if (mGp.safMgr.getUsbRootSafFile() == null) {
                 sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                showMsg(mStwa, true, sti.getSyncTaskName()+":", "E", "", "",
+                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
                         mStwa.context.getString(R.string.msgs_mirror_usb_storage_not_mounted));
                 mGp.syncThreadCtrl.setThreadMessage(
                         mStwa.context.getString(R.string.msgs_mirror_usb_storage_not_mounted));
@@ -708,12 +708,12 @@ public class SyncThread extends Thread {
                 } else {
                     e_msg = mStwa.context.getString(R.string.msgs_mirror_external_sdcard_not_mounted);
                 }
-                showMsg(mStwa, true, sti.getSyncTaskName()+":", "E", "", "", e_msg);
+                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
                 mGp.syncThreadCtrl.setThreadMessage(e_msg);
                 return sync_result;
             } else if (mGp.safMgr.getSdcardRootSafFile() == null) {
                 sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                showMsg(mStwa, true, sti.getSyncTaskName()+":", "E", "", "",
+                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
                         mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
                 mGp.syncThreadCtrl.setThreadMessage(
                         mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
@@ -743,7 +743,7 @@ public class SyncThread extends Thread {
             if (sti.getMasterSmbPort().equals("")) {
                 if (!isIpaddressConnectable(addr, 445) && !isIpaddressConnectable(addr, 139)) {
                     sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                    showMsg(mStwa, true, sti.getSyncTaskName()+":", "E", "", "",
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
                             String.format(mStwa.context.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
                     mGp.syncThreadCtrl.setThreadMessage(
                             String.format(mStwa.context.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
@@ -753,7 +753,7 @@ public class SyncThread extends Thread {
                 int port = Integer.parseInt(sti.getMasterSmbPort());
                 if (!isIpaddressConnectable(addr, port)) {
                     sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                    showMsg(mStwa, true, sti.getSyncTaskName()+":", "E", "", "",
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
                             String.format(mStwa.context.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
                     mGp.syncThreadCtrl.setThreadMessage(
                             String.format(mStwa.context.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
@@ -780,7 +780,7 @@ public class SyncThread extends Thread {
             if (sti.getTargetSmbPort().equals("")) {
                 if (!isIpaddressConnectable(addr, 445) && !isIpaddressConnectable(addr, 139)) {
                     sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                    showMsg(mStwa, true, sti.getSyncTaskName()+":", "E", "", "",
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
                             String.format(mStwa.context.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
                     mGp.syncThreadCtrl.setThreadMessage(
                             String.format(mStwa.context.getString(R.string.msgs_mirror_remote_addr_not_connected), addr));
@@ -790,7 +790,7 @@ public class SyncThread extends Thread {
                 int port = Integer.parseInt(sti.getTargetSmbPort());
                 if (!isIpaddressConnectable(addr, port)) {
                     sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                    showMsg(mStwa, true, sti.getSyncTaskName()+":", "E", "", "",
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
                             String.format(mStwa.context.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
                     mGp.syncThreadCtrl.setThreadMessage(
                             String.format(mStwa.context.getString(R.string.msgs_mirror_remote_addr_not_connected_with_port), addr, port));
@@ -984,7 +984,7 @@ public class SyncThread extends Thread {
                 String to_fn=replaceKeywordValue(sti.getTargetZipOutputFileName(), time_millis);
                 sync_result = SyncThreadSyncZip.syncMirrorInternalToInternalZip(mStwa, sti, from, to_fn);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
-                showMsg(mStwa, false, sti.getSyncTaskName()+":", "W", "", "" ,mStwa.context.getString(R.string.msgs_sync_folder_archive_zip_folder_not_supported_error));
+                showMsg(mStwa, false, sti.getSyncTaskName(), "W", "", "" ,mStwa.context.getString(R.string.msgs_sync_folder_archive_zip_folder_not_supported_error));
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
@@ -1394,11 +1394,11 @@ public class SyncThread extends Thread {
         if (!invalid_char.equals("")) {
             String basename = in_str.substring(in_str.lastIndexOf("/") + 1, in_str.length());
             if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) {
-                showMsg(stwa, false, stwa.currentSTI.getSyncTaskName()+":", "I", in_str, basename,
+                showMsg(stwa, false, stwa.currentSTI.getSyncTaskName(), "I", in_str, basename,
                         String.format(stwa.context.getString(R.string.msgs_mirror_invalid_file_directory_name_character_skipped), invalid_char),
                         stwa.context.getString(R.string.msgs_mirror_task_file_ignored));
             } else {
-                showMsg(stwa, false, stwa.currentSTI.getSyncTaskName()+":", "E", in_str, basename,
+                showMsg(stwa, false, stwa.currentSTI.getSyncTaskName(), "E", in_str, basename,
                         String.format(stwa.context.getString(R.string.msgs_mirror_invalid_file_directory_name_character_error), invalid_char),
                         stwa.context.getString(R.string.msgs_mirror_task_file_failed));
             }
@@ -1474,7 +1474,7 @@ public class SyncThread extends Thread {
                 }
             }
         } catch(JcifsException e) {
-            showMsg(stwa, false, sti.getSyncTaskName()+":", "E", dir, "","SMB create error, "+e.getMessage());
+            showMsg(stwa, false, sti.getSyncTaskName(), "E", dir, "","SMB create error, "+e.getMessage());
             throw(e);
         }
     }
@@ -1529,7 +1529,7 @@ public class SyncThread extends Thread {
 //						stwa.totalDeleteCount++;
 //						SafFile sf=SafUtil.getSafDocumentFileByPath(stwa.safCA, c_item.getPath(), true);
 //						if (!sti.isSyncTestMode()) sf.delete();
-//						showMsg(stwa,false, sti.getSyncTaskName()+":", "I", fp+"/"+c_item.getName(), c_item.getName(),
+//						showMsg(stwa,false, sti.getSyncTaskName(), "I", fp+"/"+c_item.getName(), c_item.getName(),
 //								"", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
                     } else {
                         stwa.totalDeleteCount++;
@@ -1540,7 +1540,7 @@ public class SyncThread extends Thread {
                             sf.delete();
                             scanMediaFile(stwa, fp);
                         }
-                        showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp + "/" + c_item.getName(), c_item.getName(),
+                        showMsg(stwa, false, sti.getSyncTaskName(), "I", fp + "/" + c_item.getName(), c_item.getName(),
                                 "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
                     }
                     if (!stwa.gp.syncThreadCtrl.isEnabled()) {
@@ -1555,7 +1555,7 @@ public class SyncThread extends Thread {
                     sf.delete();
                     scanMediaFile(stwa, fp);
                 }
-                showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, df.getName(),
+                showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, df.getName(),
                         "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             } else {
                 SafFile sf = null;
@@ -1566,7 +1566,7 @@ public class SyncThread extends Thread {
                     scanMediaFile(stwa, fp);
                 }
                 stwa.totalDeleteCount++;
-                showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, df.getName(),
+                showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, df.getName(),
                         "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             }
         } else {
@@ -1575,7 +1575,7 @@ public class SyncThread extends Thread {
             else sf=stwa.gp.safMgr.createUsbItem(df.getPath(), false);
             if (!sti.isSyncTestMode()) sf.delete();
             stwa.totalDeleteCount++;
-            showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, df.getName(),
+            showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, df.getName(),
                     "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
 
         }
@@ -1592,10 +1592,10 @@ public class SyncThread extends Thread {
                     deleteSmbFile(stwa, sti, tmp_target, lf_tmp);
                 }
             } catch(JcifsException e) {
-                showMsg(stwa, false, sti.getSyncTaskName()+":", "E", tmp_target, "","SMB delete error, "+e.getMessage());
+                showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","SMB delete error, "+e.getMessage());
                 throw(e);
             } catch(IOException e) {
-                showMsg(stwa, false, sti.getSyncTaskName()+":", "E", tmp_target, "","SMB delete error, "+e.getMessage());
+                showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","SMB delete error, "+e.getMessage());
                 throw(e);
             }
         }
@@ -1614,7 +1614,7 @@ public class SyncThread extends Thread {
                     } else {
                         stwa.totalDeleteCount++;
                         if (!sti.isSyncTestMode()) c_item.delete();
-                        showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp + c_item.getName(), c_item.getName(),
+                        showMsg(stwa, false, sti.getSyncTaskName(), "I", fp + c_item.getName(), c_item.getName(),
                                 "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
                     }
                     if (!stwa.gp.syncThreadCtrl.isEnabled()) {
@@ -1623,18 +1623,18 @@ public class SyncThread extends Thread {
                 }
                 stwa.totalDeleteCount++;
                 if (!sti.isSyncTestMode()) hf.delete();
-                showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, hf.getName(),
+                showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, hf.getName(),
                         "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             } else {
                 if (!sti.isSyncTestMode()) hf.delete();
                 stwa.totalDeleteCount++;
-                showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, hf.getName(),
+                showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, hf.getName(),
                         "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             }
         } else {
             if (!sti.isSyncTestMode()) hf.delete();
             stwa.totalDeleteCount++;
-            showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, hf.getName(),
+            showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, hf.getName(),
                     "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
 
         }
@@ -1669,7 +1669,7 @@ public class SyncThread extends Thread {
                             c_item.delete();
                             scanMediaFile(stwa, fp);
                         }
-                        showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp + "/" + c_item.getName(), c_item.getName(),
+                        showMsg(stwa, false, sti.getSyncTaskName(), "I", fp + "/" + c_item.getName(), c_item.getName(),
                                 "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
                     }
                     if (!stwa.gp.syncThreadCtrl.isEnabled()) {
@@ -1681,7 +1681,7 @@ public class SyncThread extends Thread {
                     lf.delete();
                     scanMediaFile(stwa, fp);
                 }
-                showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, lf.getName(),
+                showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, lf.getName(),
                         "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             } else {
                 if (!sti.isSyncTestMode()) {
@@ -1689,7 +1689,7 @@ public class SyncThread extends Thread {
                     scanMediaFile(stwa, fp);
                 }
                 stwa.totalDeleteCount++;
-                showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, lf.getName(),
+                showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, lf.getName(),
                         "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
             }
         } else {
@@ -1698,7 +1698,7 @@ public class SyncThread extends Thread {
                 scanMediaFile(stwa, fp);
             }
             stwa.totalDeleteCount++;
-            showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, lf.getName(),
+            showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, lf.getName(),
                     "", stwa.context.getString(R.string.msgs_mirror_task_file_deleted));
 
         }
@@ -2052,7 +2052,7 @@ public class SyncThread extends Thread {
 
         //buildPrintMsg(): print the sync log text file, shown if we click the Sync event in History TAB
         String lm = "";
-        String[] print_msg_list = {task_name, full_path, msg, type};
+        String[] print_msg_list = {task_name+":", full_path, msg, type};
         for (String msg_part : print_msg_list) {
             if (!msg_part.equals("")) {
                 if (lm.equals("")) lm = msg_part;
@@ -2398,7 +2398,7 @@ public class SyncThread extends Thread {
                     result=false;
                     stwa.totalIgnoreCount++;
                     String fn=fp.substring(fp.lastIndexOf("/"));
-                    showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, fn,
+                    showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, fn,
                             stwa.context.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled),
                             stwa.context.getString(R.string.msgs_mirror_task_file_ignored));
                 }
@@ -2414,7 +2414,7 @@ public class SyncThread extends Thread {
                             result=false;
                             stwa.totalIgnoreCount++;
                             String fn=fp.substring(fp.lastIndexOf("/"));
-                            showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, fn,
+                            showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, fn,
                                     stwa.context.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled),
                                     stwa.context.getString(R.string.msgs_mirror_task_file_ignored));
                         }
@@ -2425,7 +2425,7 @@ public class SyncThread extends Thread {
                             result=false;
                             stwa.totalIgnoreCount++;
                             String fn=fp.substring(fp.lastIndexOf("/"));
-                            showMsg(stwa, false, sti.getSyncTaskName()+":", "I", fp, fn,
+                            showMsg(stwa, false, sti.getSyncTaskName(), "I", fp, fn,
                                     stwa.context.getString(R.string.msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled),
                                     stwa.context.getString(R.string.msgs_mirror_task_file_ignored));
                         }
@@ -3301,7 +3301,7 @@ public class SyncThread extends Thread {
                 if (fli.isInclude()) {
                     String be = mStwa.context.getString(R.string.msgs_mirror_whole_directory_filter_error,
                             WHOLE_DIRECTORY_FILTER_PREFIX+fli.getFilter());
-                    showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName()+":", "E", "", "", be);
+                    showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", be);
                     mGp.syncThreadCtrl.setThreadMessage(be);
                     return SyncTaskItem.SYNC_STATUS_ERROR;
                 }

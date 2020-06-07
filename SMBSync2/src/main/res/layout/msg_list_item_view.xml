@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:ignore="SpUsage" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
@@ -26,64 +26,58 @@
             android:text="HH:MM:SS"
             android:textAppearance="?android:attr/textAppearanceSmall"
              />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
         <TextView
             android:id="@+id/msg_list_view_item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-             />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <com.sentaroh.android.Utilities.Widget.NonWordwrapTextView
-            android:id="@+id/msg_list_view_item_path"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:gravity="left"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-        <TextView
-            android:id="@+id/msg_list_view_item_type"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_weight="0.4"
-            android:gravity="right"
+            android:ellipsize="end"
+            android:lines="1"
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall"
-             />
+            />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="5dp"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/msg_list_view_item_msg"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-             />
+            android:orientation="vertical">
+
+            <com.sentaroh.android.Utilities.Widget.NonWordwrapTextView
+                android:id="@+id/msg_list_view_item_path"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="path"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            <TextView
+                android:id="@+id/msg_list_view_item_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="item type"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/msg_list_view_item_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="item msg"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

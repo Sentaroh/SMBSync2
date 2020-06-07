@@ -499,14 +499,14 @@
         <string name="msgs_menu_list_storage_info">システム情報</string>
         <string name="msgs_menu_show_battery_optimization_screen">バッテリー最適化の表示</string>
     <!-- Mirror -->
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[キャンセルされたアーカイブ]</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[アーカイブがキャンセルされた]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">ファイルの撮影日時がExif情報から取得できませんでした。ファイルの最終更新時刻(%s)を撮影日時として処理を継続してよろしいでしょうか？ ファイル=%s\n(確認が不要な場合は同期タスクのアーカイブオプションで「確認」のチェックを外してください)</string>
-        <string name="msgs_mirror_confirm_copy_cancel">[コピーキャンセル]</string>
+        <string name="msgs_mirror_confirm_copy_cancel">[コピーがキャンセルされた]</string>
         <string name="msgs_mirror_confirm_copy_confirm">ファイルを上書きしますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
-        <string name="msgs_mirror_confirm_delete_cancel">[削除がキャンセルされました]</string>
+        <string name="msgs_mirror_confirm_delete_cancel">[削除がキャンセルされた]</string>
         <string name="msgs_mirror_confirm_delete_dir_confirm">ディレクトリを削除しますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
         <string name="msgs_mirror_confirm_delete_file_confirm">ファイルを削除しますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
-        <string name="msgs_mirror_confirm_move_cancel">[移動キャンセル]</string>
+        <string name="msgs_mirror_confirm_move_cancel">[移動がキャンセルされた]</string>
         <string name="msgs_mirror_confirm_move_confirm">ファイルを移動しますか？（ファイルのコピー完了後にコピー元のファイルが削除されます）\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
         <string name="msgs_mirror_confirm_no_btn">取消</string>
         <string name="msgs_mirror_confirm_noall_btn">以後全て取消</string>
@@ -560,7 +560,7 @@
         <string name="msgs_mirror_task_dir_create">[ディレクトリーを作成しました]</string>
         <string name="msgs_mirror_task_dir_create_failed">ディレクトリー作成に失敗しました。</string>
         <string name="msgs_mirror_task_dir_deleted">[ディレクトリーを削除しました]</string>
-        <string name="msgs_mirror_task_file_archived" formatted="false">[アーカイブ済み]</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">[アーカイブ済]</string>
         <string name="msgs_mirror_task_file_copied">[ファイルをコピーしました]</string>
         <string name="msgs_mirror_task_file_copying">ファイル コピー中、 %s%% [終了]。</string>
         <string name="msgs_mirror_task_file_deleted">[ファイルを削除しました]</string>
