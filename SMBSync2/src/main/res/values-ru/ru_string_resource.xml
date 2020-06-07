@@ -499,14 +499,14 @@
         <string name="msgs_menu_list_storage_info">Системная информация</string>
         <string name="msgs_menu_show_battery_optimization_screen">Показать экран оптимизации батареи</string>
     <!-- Mirror -->
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Архив отменен по запросу пользователя]</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Архив отменен]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">Время и дата изображения не могут быть получены из данных EXIF. Вместо этого использовать время и дату обновления файла? (Отключите параметр архивации \ "Подтвердить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
-        <string name="msgs_mirror_confirm_copy_cancel">[Копирование отменено по запросу пользователя]</string>
+        <string name="msgs_mirror_confirm_copy_cancel">[Копия отменена]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Подтвердить перезапись файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
-        <string name="msgs_mirror_confirm_delete_cancel">[Удаление отменено по запросу пользователя]</string>
+        <string name="msgs_mirror_confirm_delete_cancel">[удаление отменено]</string>
         <string name="msgs_mirror_confirm_delete_dir_confirm">Подтвердите удаление каталога \n %s \n (отключите параметр \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_delete_file_confirm">Подтвердите удаление файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
-        <string name="msgs_mirror_confirm_move_cancel">[Перемещение отменено по запросу пользователя]</string>
+        <string name="msgs_mirror_confirm_move_cancel">[Движение отменено]</string>
         <string name="msgs_mirror_confirm_move_confirm">Подтвердить перемещение файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_no_btn">Нет</string>
         <string name="msgs_mirror_confirm_noall_btn">Нет для всех</string>
@@ -740,8 +740,8 @@
         <string name="msgs_sync_folder_archive_btn_title_day">День</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_prompt_title">Выберите суффикс следующий диапазон номеров</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_0">Не использовать</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_2">Добавьте 2-значный порядковый номер (01-99).</string>
-        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">Добавьте 3-значный порядковый номер (001-999).</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_2">Добавьте 2-значный порядковый номер (01-99)</string>
+        <string name="msgs_sync_folder_archive_suffix_seq_digit_3">Добавьте 3-значный порядковый номер (001-999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_4">Добавить 4-значный порядковый номер (0001-9999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_5">Добавить 5-значный порядковый номер (00001-99999)</string>
         <string name="msgs_sync_folder_archive_suffix_seq_digit_6">Добавить 6-значный порядковый номер (000001-999999)</string>

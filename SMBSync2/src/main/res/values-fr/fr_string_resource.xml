@@ -424,10 +424,10 @@
         <string name="msgs_profile_sync_task_sync_option_sync_when_charging">Démarrer la synchronisation seulement si l\'appareil est en charge</string>
         <string name="msgs_profile_sync_task_sync_option_test_mode">Mode Test (aucune modification de fichier n\'aura lieu)</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Utiliser le filtre amélioré de sélection de dossiers</string>
-        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_title">Fix directory filter bug</string>
+        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_title">Nouveau filtre des dossiers (beta)</string>
         <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_warning">La modification du filtre de répertoire peut entraîner la suppression ou l\'écrasement inattendu de fichiers, ce qui peut modifier les fichiers synchronisés. Il est fortement recommandé de l\'exécuter en mode test pour le vérifier, ou de créer un dossier test pour vérifier les résultats de la synchronisation.</string>
         <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_error">Remplacez le filtre de répertoire %s par \"Exclure\".</string>
-        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_change_exclude">Veuillez changer le filtre de répertoire suivant pour \"Exclure\".\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_change_exclude">Veuillez changer le filtre de répertoire suivant par \"Exclure\".\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Options réseau</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Options Wifi AP :</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Ne pas créer de fichier temporaire avant l\'écriture dans le dossier SMB</string>
@@ -499,14 +499,14 @@
         <string name="msgs_menu_list_storage_info">Infos système</string>
         <string name="msgs_menu_show_battery_optimization_screen">Optimiser la batterie</string>
     <!-- Mirror -->
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archivage annulé par l\'utilisateur]</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archivage annulé]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">La date de capture de l\'image ne peut pas être obtenue depuis l\'entête EXIF. Utiliser la date de mise à jour du fichier image? (Désactiver l\'option \"Confirmer\" pour ne plus afficher ce message)</string>
-        <string name="msgs_mirror_confirm_copy_cancel">[Copie annulée par l\'utilisateur]</string>
+        <string name="msgs_mirror_confirm_copy_cancel">[Copie annulée]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Confirmer le remplacement du fichier \n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" pour ne plus afficher ce message)</string>
-        <string name="msgs_mirror_confirm_delete_cancel">[Suppression annulée par l\'utilisateur]</string>
+        <string name="msgs_mirror_confirm_delete_cancel">[Suppression annulée]</string>
         <string name="msgs_mirror_confirm_delete_dir_confirm">Confirmer la suppression du dossier\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" pour ne plus afficher ce message)</string>
         <string name="msgs_mirror_confirm_delete_file_confirm">Confirmer la suppression du fichier\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" pour ne plus afficher ce message)</string>
-        <string name="msgs_mirror_confirm_move_cancel">[Déplacement annulé par l\'utilisateur]</string>
+        <string name="msgs_mirror_confirm_move_cancel">[Déplacement annulé]</string>
         <string name="msgs_mirror_confirm_move_confirm">Confirmer le déplacement du fichier\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" pour ne plus afficher ce message)</string>
         <string name="msgs_mirror_confirm_no_btn">Non</string>
         <string name="msgs_mirror_confirm_noall_btn">Non à tous</string>
@@ -520,7 +520,7 @@
         <string name="msgs_mirror_confirm_yesall_btn">Oui pour tous</string>
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">La date de mise à jour du fichier a été utilisée, car la date de capture de l\'image ne peut pas être obtenue depuis l\'entête EXIF. Fichier=</string>
         <string name="msgs_mirror_taken_date_convert_error">La date de mise à jour du fichier a été utilisée, car la date de capture de l\'image n\'a pas pu être convertie. Fichier=</string>
-        <string name="msgs_mirror_whole_directory_filter_error">Le filtre de répertoire %s ne peut pas être utilisé. Modifiez la tâche de synchronisation et changez-la en \"Exclure\".</string>
+        <string name="msgs_mirror_whole_directory_filter_error">Le filtre de répertoire %s ne peut pas être utilisé. Modifiez la tâche de synchronisation et changez-le en \"Exclure\".</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Synchronisation interrompue. Le dossier de destination contient un dossier ayant le même nom que le fichier à copier. Fichier=</string>
         <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Synchronisation interrompue. Le nom de fichier dépasse 255 caractères. Nombre de caract=%s, Nom de fichier=%s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Synchronisation interrompue. La carte SD n\'est pas montée.</string>
@@ -559,11 +559,11 @@
         <string name="msgs_mirror_task_avg_rate">Vitesse de transfert = %s</string>
         <string name="msgs_mirror_task_dir_create">[Dossier créé]</string>
         <string name="msgs_mirror_task_dir_create_failed">échec de création du dossier.</string>
-        <string name="msgs_mirror_task_dir_deleted">[Dossier supprimé]</string>
+        <string name="msgs_mirror_task_dir_deleted">[Dossier effacé]</string>
         <string name="msgs_mirror_task_file_archived" formatted="false">%s [archivé vers] %s</string>
         <string name="msgs_mirror_task_file_copied">[Fichier copié]</string>
         <string name="msgs_mirror_task_file_copying">Copie de fichier… %s %% [terminé].</string>
-        <string name="msgs_mirror_task_file_deleted">[Fichier supprimé]</string>
+        <string name="msgs_mirror_task_file_deleted">[Fichier effacé]</string>
         <string name="msgs_mirror_task_file_moved">[Fichier déplacé]</string>
         <string name="msgs_mirror_task_file_replaced">[Fichier remplacé]</string>
         <string name="msgs_mirror_task_master_not_found">Fichier ou dossier source non trouvé.</string>
@@ -727,8 +727,8 @@
         <string name="msgs_sync_folder_archive_rename_rule">Changer le nom du fichier avant de l\'archiver dans le dossier cible.</string>
         <string name="msgs_sync_folder_archive_seq_number_title">Incrémenter les noms de fichiers</string>
         <string name="msgs_sync_folder_archive_create_directory">Créer un dossier dont le nom comprend la date de capture des photos et y stocker les fichiers archivés.</string>
-        <string name="msgs_sync_folder_archive_btn_title_date">Date (YYYY-MM-DD)</string>
-        <string name="msgs_sync_folder_archive_btn_title_yyyymmdd">Date (YYYYMMDD)</string>
+        <string name="msgs_sync_folder_archive_btn_title_date">Date (AAAA-MM-JJ)</string>
+        <string name="msgs_sync_folder_archive_btn_title_yyyymmdd">Date (AAAAMMJJ)</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Heure (HH-MM-SS)</string>
         <string name="msgs_sync_folder_archive_btn_title_hhmmss">Heure (HHMMSS)</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">Nom</string>
