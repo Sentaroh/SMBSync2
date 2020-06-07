@@ -2099,7 +2099,7 @@ public class SyncTaskEditor extends DialogFragment {
     private String removeRedundantDirectorySeparator(String in) {
         String out=in;
         while(out.contains("//")) {
-            out=in.replace("//", "/");
+            out=out.replace("//", "/");
         }
         return out;
     }
