@@ -39,7 +39,7 @@
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <com.sentaroh.android.SMBSync2.NonWordwrapTextView
+            <com.sentaroh.android.Utilities.Widget.NonWordwrapTextView
                 android:id="@+id/main_dialog_progress_spin_syncmsg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

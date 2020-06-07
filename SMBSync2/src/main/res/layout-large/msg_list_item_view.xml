@@ -29,7 +29,7 @@
     </LinearLayout>
 
 
-    <com.sentaroh.android.SMBSync2.NonWordwrapTextView
+    <com.sentaroh.android.Utilities.Widget.NonWordwrapTextView
         android:id="@+id/msg_list_view_item_msg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
