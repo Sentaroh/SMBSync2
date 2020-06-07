@@ -25,7 +25,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
@@ -43,7 +42,6 @@ import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.storage.StorageManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -92,8 +90,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import it.sephiroth.android.library.easing.Linear;
-
 import static android.content.Context.USAGE_STATS_SERVICE;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.DEFAULT_PREFS_FILENAME;
@@ -133,13 +129,13 @@ public final class CommonUtilities {
     }
 
     public void showCommonDialog(final boolean negative, String type, String title, String msgtext, NotifyEvent ntfy) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
+        MessageDialogFragment cdf = MessageDialogFragment.newInstance(negative, type, title, msgtext);
         cdf.showDialog(mFragMgr,cdf,ntfy);
     };
 
     public void showCommonDialog(final boolean negative, String type, String title, String msgtext,
                                  String button_text_ok, String button_text_cancel, NotifyEvent ntfy) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext, button_text_ok, button_text_cancel);
+        MessageDialogFragment cdf = MessageDialogFragment.newInstance(negative, type, title, msgtext, button_text_ok, button_text_cancel);
         cdf.showDialog(mFragMgr,cdf,ntfy);
     };
 
@@ -199,7 +195,7 @@ public final class CommonUtilities {
 
     static public ArrayList<String> listSystemInfo(Context c, GlobalParameters gp) {
 
-        ArrayList<String> out=SystemInfo.listSystemInfo(c, gp.safMgr);
+        ArrayList<String> out= SystemInfo.listSystemInfo(c, gp.safMgr);
 
         if (Build.VERSION.SDK_INT>=27) {
             out.add("setSettingGrantCoarseLocationRequired="+gp.settingGrantCoarseLocationRequired);
@@ -347,10 +343,13 @@ public final class CommonUtilities {
             synchronized (gp.msgList) {
                 for (SyncMessageItem smi:gp.msgList) {
                     sb.setLength(0);
-                    sb.append("\u0001").append(smi.getCategory()).append("\u0000");
-                    sb.append("\u0001").append(smi.getDate()).append("\u0000");
-                    sb.append("\u0001").append(smi.getTime()).append("\u0000");
-                    sb.append("\u0001").append(smi.getMessage()).append("\u0000");
+                    sb.append("\u0001").append(smi.getCategory()).append("\u0000"); //msgCat
+                    sb.append("\u0001").append(smi.getDate()).append("\u0000"); //msgDate
+                    sb.append("\u0001").append(smi.getTime()).append("\u0000"); //msgTime
+                    sb.append("\u0001").append(smi.getTitle()).append("\u0000"); //msgTitle
+                    sb.append("\u0001").append(smi.getMessage()).append("\u0000"); //msgBody
+                    sb.append("\u0001").append(smi.getPath()).append("\u0000"); //msgPath
+                    sb.append("\u0001").append(smi.getType()).append("\u0000"); //msgType
 //                String nl=sb.toString();
                     bos.println(sb.toString());
                 }
@@ -376,11 +375,14 @@ public final class CommonUtilities {
                 String line=null;
                 while((line=bis.readLine())!=null) {
                     String[] msg_array=line.split("\u0000");
-                    if (msg_array.length>=4) {
-                        SyncMessageItem smi=new SyncMessageItem(msg_array[0].replace("\u0001",""),
-                                msg_array[1].replace("\u0001",""),
-                                msg_array[2].replace("\u0001",""),
-                                msg_array[3].replace("\u0001",""));
+                    if (msg_array.length>=7) {
+                        SyncMessageItem smi=new SyncMessageItem(msg_array[0].replace("\u0001",""), //msgCat
+                                msg_array[1].replace("\u0001",""), //msgDate
+                                msg_array[2].replace("\u0001",""), //msgTime
+                                msg_array[3].replace("\u0001",""), //msgTitle
+                                msg_array[4].replace("\u0001",""), //msgBody
+                                msg_array[5].replace("\u0001",""), //msgPath
+                                msg_array[6].replace("\u0001","")); //msgType
                         result.add(smi);
                     }
                 }
@@ -396,21 +398,29 @@ public final class CommonUtilities {
     private final int MAX_MSG_COUNT = 5000;
 
     final public void addLogMsg(String cat, String... msg) {
-        addLogMsg(false, cat, msg);
+        addLogMsg(false, false, false, false, cat, "", "", "", msg);
+    }
+
+    final public void addLogMsg(boolean ui_thread, String cat, String... msg) {
+        addLogMsg(ui_thread, false, false, false, cat, "", "", "", msg);
     }
 
     final public void addLogMsgFromUI(String cat, String... msg) {
         addLogMsg(true, cat, msg);
     }
 
-    final public void addLogMsg(boolean ui_thread, String cat, String... msg) {
+    final public void addLogMsg(boolean ui_thread, boolean has_type, boolean has_path, boolean has_title, String cat, String title, String type, String path, String... msg) {
         mLog.addLogMsg(cat, msg);
-//		final SyncMessageItem mli=new SyncMessageItem(cat, "","",mLog.buildLogCatMsg("", cat, msg));
+//		final SyncMessageItem mli=new SyncMessageItem(cat, "","", title, mLog.buildLogCatMsg("", cat, msg), path, type);
+        String finalMsg = "";
         StringBuilder log_msg = new StringBuilder(512);
         for (int i = 0; i < msg.length; i++) log_msg.append(msg[i]);
+        if (!log_msg.toString().equals("")) finalMsg = log_msg.toString();
+        
         String[] dt = StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(System.currentTimeMillis()).split(" ");
 
-        final SyncMessageItem mli = new SyncMessageItem(cat, dt[0], dt[1], log_msg.toString());
+        //addDebugMsg(2, "I", "cat=" + cat," dt[0]=" + dt[0] + " dt[1]=" + dt[1] + " title=" + title + " finalMsg=" + finalMsg + " path=" + path + " type=" + type);
+        final SyncMessageItem mli = new SyncMessageItem(cat, dt[0], dt[1], title, finalMsg, path, type);
         if (ui_thread) {
             putMsgListArray(mli);
         } else {

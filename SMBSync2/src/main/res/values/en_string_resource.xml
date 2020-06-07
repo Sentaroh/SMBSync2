@@ -499,14 +499,14 @@
         <string name="msgs_menu_list_storage_info">System info</string>
         <string name="msgs_menu_show_battery_optimization_screen">Battery optimization</string>
     <!-- Mirror -->
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archive operation cancelled by user]</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archive cancelled]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">The image capture time and date cannot be obtained from EXIF data.  Use file update time and date instead?  (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
-        <string name="msgs_mirror_confirm_copy_cancel">[Copy operation cancelled by user]</string>
+        <string name="msgs_mirror_confirm_copy_cancel">[Copy cancelled]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Confirm overwrite of file \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
-        <string name="msgs_mirror_confirm_delete_cancel">[Delete operation cancelled by user]</string>
+        <string name="msgs_mirror_confirm_delete_cancel">[Delete cancelled]</string>
         <string name="msgs_mirror_confirm_delete_dir_confirm">Confirm delete directory \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_delete_file_confirm">Confirm deletion of file \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
-        <string name="msgs_mirror_confirm_move_cancel">[Move operation cancelled by user]</string>
+        <string name="msgs_mirror_confirm_move_cancel">[Move cancelled]</string>
         <string name="msgs_mirror_confirm_move_confirm">Confirm moving of file \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_no_btn">No</string>
         <string name="msgs_mirror_confirm_noall_btn">No to all</string>
@@ -520,7 +520,7 @@
         <string name="msgs_mirror_confirm_yesall_btn">Yes for all subsequent</string>
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">The last modified time of the file was used because the shooting date and time cannot be obtained from the EXIF/metadata of the file. File=</string>
         <string name="msgs_mirror_taken_date_convert_error">The last modified time of the file was used because an error occurred in the conversion of the shooting date. File=</string>
-        <string name="msgs_mirror_whole_directory_filter_error">Directory filter %s is can not be used. Edit the sync task and change it to "Exclude".</string>
+        <string name="msgs_mirror_whole_directory_filter_error">Directory filter %s cannot be used. Edit the sync task and change it to "Exclude".</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Sync aborted because the target path contains a directory with the same name as the file being copied. File=</string>
         <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Synchronization was cancelled because the length of the file name exceeds 255 characters. File name chars=%s, File name=%s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Sync cancelled because SDCARD is not mounted.</string>
@@ -531,8 +531,8 @@
         <string name="msgs_mirror_file_zip_copy_to_work">Copying the ZIP file to the cache temp file... %s%% done.</string>
         <string name="msgs_mirror_ignore_override_copy_file">File copy ignored because the \"Overwrite destination file(s)\" option is disabled for this task.</string>
         <string name="msgs_mirror_ignore_override_move_file">File move ignored because the \"Overwrite destination file(s)\" option is disabled for this task.</string>
-        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">The source file or directory name contains invalid characters for the destination. Edit name to allow sync. Character: %s, Path: %s</string>
-        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">File or directory excluded from sync process because source name contains characters not valid for the destination. Character: %s, Path:  %s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">The source file or directory name contains invalid characters for the destination. Edit name to allow sync. Character=%s</string>
+        <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">File or directory skipped because source name contains invalid characters. Character=%s</string>
         <string name="msgs_mirror_remote_addr_not_connected">Unable to connect to SMB host address %s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port" formatted="false">Unable to connect to SMB host %s on port %s</string>
         <string name="msgs_mirror_remote_name_not_found">The SMB host name could not be found. Try to use its IP address. Host Name=</string>
@@ -557,10 +557,10 @@
         <string name="msgs_mirror_sync_start_was_delayed">Wireless LAN was turned on to start the planned tasks. The synchronization is set to start after %s seconds...</string>
         <string name="msgs_mirror_sync_wifi_can_not_enabled">Could not turn on WiFi.</string>
         <string name="msgs_mirror_task_avg_rate">Average transfer rate = %s</string>
-        <string name="msgs_mirror_task_dir_create">[Directory created]</string>
+        <string name="msgs_mirror_task_dir_create">[Folder created]</string>
         <string name="msgs_mirror_task_dir_create_failed">failed to create directory.</string>
-        <string name="msgs_mirror_task_dir_deleted">[Directory deleted]</string>
-        <string name="msgs_mirror_task_file_archived" formatted="false">%s [archived to] %s</string>
+        <string name="msgs_mirror_task_dir_deleted">[Folder deleted]</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">[archived]</string>
         <string name="msgs_mirror_task_file_copied">[File copied]</string>
         <string name="msgs_mirror_task_file_copying">Copying file… %s %% [complete]</string>
         <string name="msgs_mirror_task_file_deleted">[File deleted]</string>
@@ -730,7 +730,7 @@
         <string name="msgs_sync_folder_archive_btn_title_date">Date (YYYY-MM-DD)</string>
         <string name="msgs_sync_folder_archive_btn_title_yyyymmdd">Date (YYYYMMDD)</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Time (HH-MM-SS)</string>
-        <string name="msgs_sync_folder_archive_btn_title_hhmmss">Time (HH-MM-SS)</string>
+        <string name="msgs_sync_folder_archive_btn_title_hhmmss">Time (HHMMSS)</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">Name</string>
         <string name="msgs_sync_folder_archive_confirm_exif_date">If the date and time cannot be determined by EXIF data, display a confirmation message.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">ZIP files cannot be used as destinations for Archive sync type.  Internal storage will be used instead.</string>
@@ -1006,4 +1006,6 @@
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">Keep the Wi-Fi radio awake until sync is completed</string>
         <string name="settings_wifi_lock_title">Wi-Fi Locking</string>
+        <string name="msgs_mirror_task_file_failed">[Sync Failed]</string>
+        <string name="msgs_mirror_task_file_ignored">[Skipped]</string>
 </resources>

@@ -165,30 +165,45 @@ public class NotificationUtil {
         return gwa.notification;
     }
 
+    //sets the text of the progress message in system notification area when app is in background
     final static public void setNotificationMessage(GlobalParameters gwa, CommonUtilities util, long when,
-                                                    String prof, String fp, String msg) {
+                                                    String prof, String fp, String msg, String type) {
         if (prof.equals("")) gwa.notificationLastShowedTitle = gwa.notificationAppName;
         else gwa.notificationLastShowedTitle = prof;//gwa.notificationAppName+"       "+prof;
 
-        if (fp.equals("")) gwa.notificationLastShowedMessage = msg;
-        else gwa.notificationLastShowedMessage = fp.concat("\n").concat(msg);
+        String[] msg_list = {fp, msg, type};
+        String final_msg = "";
+        for (String msg_part : msg_list) {//remove empty messages to avoid empty lines in the notification
+            if (!msg_part.equals("")) {
+                if (final_msg.equals("")) final_msg = msg_part;
+                else final_msg = final_msg.concat("\n").concat(msg_part);
+            }
+        }
+
+        gwa.notificationLastShowedMessage = final_msg;
 
         gwa.notificationLastShowedWhen = when;
     }
 
     final static public Notification showOngoingMsg(GlobalParameters gwa, CommonUtilities util, long when,
                                                     String msg) {
-        return showOngoingMsg(gwa, util, when, "", "", msg);
+        return showOngoingMsg(gwa, util, when, "", "", msg, "");
     }
 
     final static public Notification showOngoingMsg(GlobalParameters gwa, CommonUtilities util, long when,
                                                     String prof, String msg) {
-        return showOngoingMsg(gwa, util, when, prof, "", msg);
+        return showOngoingMsg(gwa, util, when, prof, "", msg, "");
     }
 
     final static public Notification showOngoingMsg(GlobalParameters gwa, CommonUtilities util, long when,
                                                     String prof, String fp, String msg) {
-        setNotificationMessage(gwa, util, when, prof, fp, msg);
+        return showOngoingMsg(gwa, util, when, prof, fp, msg, "");
+    }
+
+    //draw the system notification with sync progress when app in background
+    final static public Notification showOngoingMsg(GlobalParameters gwa, CommonUtilities util, long when,
+                                                    String prof, String fp, String msg, String type) {
+        setNotificationMessage(gwa, util, when, prof, fp, msg, type);
         gwa.notificationBuilder
                 .setContentIntent(gwa.notificationPendingIntent)
                 .setContentTitle(gwa.notificationLastShowedTitle)
@@ -259,7 +274,7 @@ public class NotificationUtil {
             if (!LogUtil.getLogFilePath(gwa).equals("") && gwa.settingLogOption) {
                 File lf = new File(LogUtil.getLogFilePath(gwa));
                 if (lf.exists()) {
-                    Intent br_log_intent = new Intent(android.content.Intent.ACTION_VIEW);
+                    Intent br_log_intent = new Intent(Intent.ACTION_VIEW);
                     br_log_intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(gwa)), "text/plain");
                     PendingIntent br_log_pi = PendingIntent.getActivity(c, 0, br_log_intent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
@@ -306,7 +321,7 @@ public class NotificationUtil {
             if (!LogUtil.getLogFilePath(gwa).equals("") && gwa.settingLogOption) {
                 File lf = new File(LogUtil.getLogFilePath(gwa));
                 if (lf.exists()) {
-                    Intent br_log_intent = new Intent(android.content.Intent.ACTION_VIEW);
+                    Intent br_log_intent = new Intent(Intent.ACTION_VIEW);
                     br_log_intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(gwa)), "text/plain");
                     PendingIntent br_log_pi = PendingIntent.getActivity(c, 0, br_log_intent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
