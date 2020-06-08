@@ -40,7 +40,18 @@ android {
                         def mod_name = "${rootProject.name}"
                         def fileExtension= outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".")+1)
                         def newName = "${mod_name}_debug.${fileExtension}"
-                        outputFileName = "../../../../../release/"+newName
+//                        outputFileName = "../../../../../release/"+newName
+                        outputFileName = newName
+
+                        task copyDebugApk1(type: Copy) {
+                            from 'build/outputs/apk/debug'
+                            into '../debug_apk/' // Into the project root, one level above the app folder
+                            include '**/*.apk'
+                        }
+
+                        afterEvaluate {
+                            packageDebug.finalizedBy(copyDebugApk1)
+                        }
                     }
                 }
             }
