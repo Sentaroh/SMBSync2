@@ -566,6 +566,8 @@
         <string name="msgs_mirror_task_file_deleted">[ファイルを削除しました]</string>
         <string name="msgs_mirror_task_file_moved">[ファイルを移動しました]</string>
         <string name="msgs_mirror_task_file_replaced">[ファイルを上書きコピーしました]</string>
+        <string name="msgs_mirror_task_file_failed">[失敗]</string>
+        <string name="msgs_mirror_task_file_ignored">[無視された]</string>
         <string name="msgs_mirror_task_master_not_found">マスターのファイルまたはディレクトリーが見つかりません。</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false">コピー=%s, 削除=%s, 無視=%s, 経過時間=%s</string>
         <string name="msgs_mirror_task_result_cancel">同期タスクがキャンセルされました。</string>
@@ -1006,6 +1008,4 @@
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">同期中はWi-Fiをスリープさせない</string>
         <string name="settings_wifi_lock_title">Wi-Fiロック</string>
-        <string name="msgs_mirror_task_file_failed">[失敗]</string>
-        <string name="msgs_mirror_task_file_ignored">[無視された]</string>
 </resources>
