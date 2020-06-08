@@ -372,11 +372,22 @@ public final class CommonUtilities {
             if (mf.exists()) {
                 FileReader fr=new FileReader(mf);
                 BufferedReader bis=new BufferedReader(fr, 1024*1024*2);
-                String line=null;
-                while((line=bis.readLine())!=null) {
-                    String[] msg_array=line.split("\u0000");
-                    if (msg_array.length>=7) {
-                        SyncMessageItem smi=new SyncMessageItem(msg_array[0].replace("\u0001",""), //msgCat
+                String line= null;
+                while((line= bis.readLine()) != null) {
+                    String[] msg_array= line.split("\u0000");
+                    if (msg_array.length == 4) {//Messages prior to v2.30, only cat, date, time and msg fields are used
+                        SyncMessageItem smi= new SyncMessageItem(
+                                msg_array[0].replace("\u0001",""), //msgCat
+                                msg_array[1].replace("\u0001",""), //msgDate
+                                msg_array[2].replace("\u0001",""), //msgTime
+                                "", //msgTitle (not implemented before v2.30)
+                                msg_array[3].replace("\u0001",""), //msgBody
+                                "", //msgPath (not implemented before v2.30)
+                                ""); //msgType (not implemented before v2.30)
+                        result.add(smi);
+                    } else if (msg_array.length >= 7) {
+                        SyncMessageItem smi= new SyncMessageItem(
+                                msg_array[0].replace("\u0001",""), //msgCat
                                 msg_array[1].replace("\u0001",""), //msgDate
                                 msg_array[2].replace("\u0001",""), //msgTime
                                 msg_array[3].replace("\u0001",""), //msgTitle

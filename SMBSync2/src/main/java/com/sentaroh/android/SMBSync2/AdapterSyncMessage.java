@@ -246,6 +246,14 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
             if (show_msg) holder.tv_row_msg.setText(o.getMessage());
             if (show_path) holder.tv_row_path.setText(o.getPath());
             if (show_type) holder.tv_row_type.setText(o.getType());
+/*
+            holder.tv_row_time.setText("Time= "+o.getTime());
+            holder.tv_row_date.setText("Date= "+o.getDate());
+            if (show_title) holder.tv_row_title.setText("Title= "+o.getTitle());
+            if (show_msg) holder.tv_row_msg.setText("Message= "+o.getMessage());
+            if (show_path) holder.tv_row_path.setText("Path= "+o.getPath());
+            if (show_type) holder.tv_row_type.setText("Type= "+o.getType());
+*/
         }
         return v;
     }
