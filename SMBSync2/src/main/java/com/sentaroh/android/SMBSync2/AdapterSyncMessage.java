@@ -188,27 +188,8 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
             String cat = o.getCategory();
             String message = o.getMessage();
 
-            boolean lightTheme = ThemeUtil.isLightThemeUsed(c);
             int col_header = 0;
             int col_type = 0;
-            //we will define below colors in Utilities.ThemeColorList:
-            int text_color_sync_started, text_color_sync_success, text_color_sync_cancel = -1;
-            int text_color_file_delete, text_color_file_replace = -1;
-            int FOREST_GREEN = 0xff228B22;
-            int DKCYAN = 0xff0088ff;
-            if (lightTheme) {
-                text_color_sync_started = DKCYAN;
-                text_color_sync_success = FOREST_GREEN;
-                text_color_sync_cancel = mThemeColorList.text_color_warning;
-                text_color_file_delete = mThemeColorList.text_color_error;
-                text_color_file_replace = mThemeColorList.text_color_warning;
-            } else {
-                text_color_sync_started = Color.WHITE;
-                text_color_sync_success = Color.GREEN;
-                text_color_sync_cancel = mThemeColorList.text_color_warning;
-                text_color_file_delete = mThemeColorList.text_color_error;
-                text_color_file_replace = mThemeColorList.text_color_warning;//mThemeColorList.text_color_warning;
-            }
 
             if (cat.equals("W")) {
                 col_header = mThemeColorList.text_color_warning;
@@ -217,41 +198,41 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
                 col_header = mThemeColorList.text_color_error;
                 col_type = col_header;
             } else if (message.endsWith(c.getString(R.string.msgs_mirror_task_started))) {
-                col_header = text_color_sync_started;
+                col_header = mThemeColorList.text_color_sync_started;
             } else if (message.endsWith(c.getString(R.string.msgs_mirror_task_result_ok))) {
-                col_header = text_color_sync_success;
+                col_header = mThemeColorList.text_color_sync_success;
             } else if (message.endsWith(c.getString(R.string.msgs_mirror_task_result_cancel))) {
-                col_header = text_color_sync_cancel;
+                col_header = mThemeColorList.text_color_sync_cancel;
             }
 
             if (show_type) {
                 if (o.getType().equals(c.getString(R.string.msgs_mirror_task_file_deleted))
                         || o.getType().equals(c.getString(R.string.msgs_mirror_task_dir_deleted))) {
-                    col_type = text_color_file_delete;
+                    col_type = mThemeColorList.text_color_file_delete;
                 } else if (o.getType().equals(c.getString(R.string.msgs_mirror_task_file_replaced))) {
-                    col_type = text_color_file_replace;
+                    col_type = mThemeColorList.text_color_file_replace;
                 } else if (o.getType().equals(c.getString(R.string.msgs_mirror_confirm_move_cancel)) ||
                             o.getType().equals(c.getString(R.string.msgs_mirror_confirm_copy_cancel)) ||
                             o.getType().equals(c.getString(R.string.msgs_mirror_confirm_delete_cancel)) ||
                             o.getType().equals(c.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel)) ||
                             o.getType().equals(c.getString(R.string.msgs_mirror_task_file_ignored))) {
-                    col_type = text_color_sync_cancel;
+                    col_type = mThemeColorList.text_color_sync_cancel;
                 }
             }
 
             //set messages color
-            if (col_header != 0) {
-                holder.tv_row_time.setTextColor(col_header);
-                holder.tv_row_date.setTextColor(col_header);
-                if (show_title) holder.tv_row_title.setTextColor(col_header);
-                if (show_msg) holder.tv_row_msg.setTextColor(col_header);
-                if (show_path) holder.tv_row_path.setTextColor(col_header);//boolean check needed ?
-            } else {
+            if (col_header == 0) {
                 holder.tv_row_time.setTextColor(mTextColor);
                 holder.tv_row_date.setTextColor(mTextColor);
                 if (show_title) holder.tv_row_title.setTextColor(mTextColor);
                 if (show_msg) holder.tv_row_msg.setTextColor(mTextColor);
-                if (show_path) holder.tv_row_path.setTextColor(mTextColor);//boolean check needed ?
+                if (show_path) holder.tv_row_path.setTextColor(mTextColor);
+            } else {
+                holder.tv_row_time.setTextColor(col_header);
+                holder.tv_row_date.setTextColor(col_header);
+                if (show_title) holder.tv_row_title.setTextColor(col_header);
+                if (show_msg) holder.tv_row_msg.setTextColor(col_header);
+                if (show_path) holder.tv_row_path.setTextColor(col_header);
             }
             if (show_type) {
                 if (col_type == 0) holder.tv_row_type.setTextColor(mTextColor);
@@ -265,6 +246,14 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
             if (show_msg) holder.tv_row_msg.setText(o.getMessage());
             if (show_path) holder.tv_row_path.setText(o.getPath());
             if (show_type) holder.tv_row_type.setText(o.getType());
+/*
+            holder.tv_row_time.setText("Time= "+o.getTime());
+            holder.tv_row_date.setText("Date= "+o.getDate());
+            if (show_title) holder.tv_row_title.setText("Title= "+o.getTitle());
+            if (show_msg) holder.tv_row_msg.setText("Message= "+o.getMessage());
+            if (show_path) holder.tv_row_path.setText("Path= "+o.getPath());
+            if (show_type) holder.tv_row_type.setText("Type= "+o.getType());
+*/
         }
         return v;
     }

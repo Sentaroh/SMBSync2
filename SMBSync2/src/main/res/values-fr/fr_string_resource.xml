@@ -560,12 +560,14 @@
         <string name="msgs_mirror_task_dir_create">[Dossier créé]</string>
         <string name="msgs_mirror_task_dir_create_failed">échec de création du dossier.</string>
         <string name="msgs_mirror_task_dir_deleted">[Dossier effacé]</string>
-        <string name="msgs_mirror_task_file_archived" formatted="false">[archivé]</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">[Archivé]</string>
         <string name="msgs_mirror_task_file_copied">[Fichier copié]</string>
         <string name="msgs_mirror_task_file_copying">Copie de fichier… %s %% [terminé].</string>
         <string name="msgs_mirror_task_file_deleted">[Fichier effacé]</string>
         <string name="msgs_mirror_task_file_moved">[Fichier déplacé]</string>
         <string name="msgs_mirror_task_file_replaced">[Fichier remplacé]</string>
+        <string name="msgs_mirror_task_file_failed">[Echec]</string>
+        <string name="msgs_mirror_task_file_ignored">[Ignoré]</string>
         <string name="msgs_mirror_task_master_not_found">Fichier ou dossier source non trouvé.</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false"># copié=%s, # supprimé=%s, # ignoré=%s, Durée=%s</string>
         <string name="msgs_mirror_task_result_cancel">Tâche de sync annulée.</string>
@@ -1006,6 +1008,4 @@
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">Maintenir le Wi-Fi activé jusqu\'à la fin de la synchronisation</string>
         <string name="settings_wifi_lock_title">Verrouillage du Wi-Fi</string>
-        <string name="msgs_mirror_task_file_failed">[Echec]</string>
-        <string name="msgs_mirror_task_file_ignored">[Ignoré]</string>
 </resources>

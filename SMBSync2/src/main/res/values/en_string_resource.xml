@@ -560,12 +560,14 @@
         <string name="msgs_mirror_task_dir_create">[Folder created]</string>
         <string name="msgs_mirror_task_dir_create_failed">failed to create directory.</string>
         <string name="msgs_mirror_task_dir_deleted">[Folder deleted]</string>
-        <string name="msgs_mirror_task_file_archived" formatted="false">[archived]</string>
+        <string name="msgs_mirror_task_file_archived" formatted="false">[Archived]</string>
         <string name="msgs_mirror_task_file_copied">[File copied]</string>
         <string name="msgs_mirror_task_file_copying">Copying file… %s %% [complete]</string>
         <string name="msgs_mirror_task_file_deleted">[File deleted]</string>
         <string name="msgs_mirror_task_file_moved">[File moved]</string>
         <string name="msgs_mirror_task_file_replaced">[File overwritten]</string>
+        <string name="msgs_mirror_task_file_failed">[Sync Failed]</string>
+        <string name="msgs_mirror_task_file_ignored">[Skipped]</string>
         <string name="msgs_mirror_task_master_not_found">Source file or directory not found.</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false"># of copies=%s, # of deletes=%s, # of ignores=%s, Elapsed time=%s</string>
         <string name="msgs_mirror_task_result_cancel">Sync task cancelled.</string>
@@ -1006,6 +1008,4 @@
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">Keep the Wi-Fi radio awake until sync is completed</string>
         <string name="settings_wifi_lock_title">Wi-Fi Locking</string>
-        <string name="msgs_mirror_task_file_failed">[Sync Failed]</string>
-        <string name="msgs_mirror_task_file_ignored">[Skipped]</string>
 </resources>

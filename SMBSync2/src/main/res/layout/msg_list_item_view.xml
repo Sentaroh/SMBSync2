@@ -26,18 +26,16 @@
             android:text="HH:MM:SS"
             android:textAppearance="?android:attr/textAppearanceSmall"
              />
-        <TextView
-            android:id="@+id/msg_list_view_item_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:ellipsize="end"
-            android:lines="1"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/msg_list_view_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
