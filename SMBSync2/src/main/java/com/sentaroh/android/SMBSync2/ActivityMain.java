@@ -39,6 +39,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,6 +59,8 @@ import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -71,9 +74,11 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -2901,7 +2906,7 @@ public class ActivityMain extends AppCompatActivity {
                         false, mGp.syncTabScheduleList, new ScheduleItem(), ntfy);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonAdd, mContext.getString(R.string.msgs_schedule_cont_label_add));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonAdd, mContext.getString(R.string.msgs_schedule_cont_label_add));
 
         mContextScheduleButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2940,7 +2945,7 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_schedule_confirm_msg_delete) + "\n" + del_list, ntfy);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonDelete, mContext.getString(R.string.msgs_schedule_cont_label_delete));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonDelete, mContext.getString(R.string.msgs_schedule_cont_label_delete));
 
         mContextScheduleButtonActivate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2977,7 +2982,7 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_schedule_confirm_msg_enable) + "\n" + del_list, ntfy);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonActivate, mContext.getString(R.string.msgs_schedule_cont_label_activate));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonActivate, mContext.getString(R.string.msgs_schedule_cont_label_activate));
 
         mContextScheduleButtonInactivate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -3013,7 +3018,7 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_schedule_confirm_msg_disable) + "\n" + del_list, ntfy);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonInactivate, mContext.getString(R.string.msgs_schedule_cont_label_inactivate));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonInactivate, mContext.getString(R.string.msgs_schedule_cont_label_inactivate));
 
         mContextScheduleButtonRename.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -3048,7 +3053,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonRename, mContext.getString(R.string.msgs_schedule_cont_label_rename));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonRename, mContext.getString(R.string.msgs_schedule_cont_label_rename));
 
         mContextScheduleButtonCopy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -3081,7 +3086,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonCopy, mContext.getString(R.string.msgs_schedule_cont_label_copy));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonCopy, mContext.getString(R.string.msgs_schedule_cont_label_copy));
 
         mContextScheduleButtonSelectAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -3091,7 +3096,7 @@ public class ActivityMain extends AppCompatActivity {
                 setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonSelectAll, mContext.getString(R.string.msgs_schedule_cont_label_select_all));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonSelectAll, mContext.getString(R.string.msgs_schedule_cont_label_select_all));
 
         mContextScheduleButtonUnselectAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -3101,7 +3106,7 @@ public class ActivityMain extends AppCompatActivity {
                 setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextScheduleButtonUnselectAll, mContext.getString(R.string.msgs_schedule_cont_label_unselect_all));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonUnselectAll, mContext.getString(R.string.msgs_schedule_cont_label_unselect_all));
 
     }
 
@@ -3343,7 +3348,7 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonEnabled(mContextHistoryButtonSendTo, true);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextHistoryButtonSendTo, mContext.getString(R.string.msgs_hist_cont_label_share));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonSendTo, mContext.getString(R.string.msgs_hist_cont_label_share));
 
         mContextHistoryButtonMoveTop.setOnClickListener(new OnClickListener() {
             @Override
@@ -3353,7 +3358,7 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonEnabled(mContextHistoryButtonMoveTop, true);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextHistoryButtonMoveTop, mContext.getString(R.string.msgs_hist_cont_label_move_top));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveTop, mContext.getString(R.string.msgs_hist_cont_label_move_top));
 
         mContextHistoryButtonMoveBottom.setOnClickListener(new OnClickListener() {
             @Override
@@ -3363,7 +3368,7 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonEnabled(mContextHistoryButtonMoveBottom, true);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextHistoryButtonMoveBottom, mContext.getString(R.string.msgs_hist_cont_label_move_bottom));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveBottom, mContext.getString(R.string.msgs_hist_cont_label_move_bottom));
         mContextHistoryButtonDeleteHistory.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3372,7 +3377,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextHistoryButtonDeleteHistory, mContext.getString(R.string.msgs_hist_cont_label_delete));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonDeleteHistory, mContext.getString(R.string.msgs_hist_cont_label_delete));
 
         final Toast toast = Toast.makeText(mContext, mContext.getString(R.string.msgs_main_sync_history_copy_completed),
                 Toast.LENGTH_SHORT);
@@ -3421,7 +3426,7 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonEnabled(mContextHistoryButtonHistiryCopyClipboard, true);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextHistoryButtonHistiryCopyClipboard, mContext.getString(R.string.msgs_hist_cont_label_copy));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonHistiryCopyClipboard, mContext.getString(R.string.msgs_hist_cont_label_copy));
 
         mContextHistiryButtonSelectAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -3435,7 +3440,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextHistiryButtonSelectAll, mContext.getString(R.string.msgs_hist_cont_label_select_all));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistiryButtonSelectAll, mContext.getString(R.string.msgs_hist_cont_label_select_all));
 
         mContextHistiryButtonUnselectAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -3449,7 +3454,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextHistiryButtonUnselectAll, mContext.getString(R.string.msgs_hist_cont_label_unselect_all));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistiryButtonUnselectAll, mContext.getString(R.string.msgs_hist_cont_label_unselect_all));
     }
 
     private void setHistoryContextButtonSelectMode() {
@@ -3880,12 +3885,12 @@ public class ActivityMain extends AppCompatActivity {
         mContextMessageButtonPinned = (ImageButton) mMessageView.findViewById(R.id.context_button_pinned);
         mContextMessageButtonMoveTop = (ImageButton) mMessageView.findViewById(R.id.context_button_move_to_top);
         mContextMessageButtonMoveBottom = (ImageButton) mMessageView.findViewById(R.id.context_button_move_to_bottom);
-        mContextMessageButtonClear = (ImageButton) mMessageView.findViewById(R.id.context_button_clear);
+        mContextMessageButtonClear = (ImageButton) mMessageView.findViewById(R.id.context_button_delete);
 
         mContextMessageViewPinned = (LinearLayout) mMessageView.findViewById(R.id.context_button_pinned_view);
         mContextMessageViewMoveTop = (LinearLayout) mMessageView.findViewById(R.id.context_button_move_to_top_view);
         mContextMessageViewMoveBottom = (LinearLayout) mMessageView.findViewById(R.id.context_button_move_to_bottom_view);
-        mContextMessageViewClear = (LinearLayout) mMessageView.findViewById(R.id.context_button_clear_view);
+        mContextMessageViewClear = (LinearLayout) mMessageView.findViewById(R.id.context_button_delete_view);
     }
 
     private void setContextButtonEnabled(final ImageButton btn, boolean enabled) {
@@ -3927,7 +3932,7 @@ public class ActivityMain extends AppCompatActivity {
                 if (isUiEnabled()) confirmActivate(mGp.syncTaskAdapter, ntfy);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextSyncTaskButtonActivete, mContext.getString(R.string.msgs_prof_cont_label_activate));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonActivete, mContext.getString(R.string.msgs_prof_cont_label_activate));
 
         mContextSyncTaskButtonInactivete.setOnClickListener(new OnClickListener() {
             @Override
@@ -3935,7 +3940,7 @@ public class ActivityMain extends AppCompatActivity {
                 if (isUiEnabled()) confirmInactivate(mGp.syncTaskAdapter, ntfy);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextSyncTaskButtonInactivete, mContext.getString(R.string.msgs_prof_cont_label_inactivate));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonInactivete, mContext.getString(R.string.msgs_prof_cont_label_inactivate));
 
         mContextSyncTaskButtonAddSync.setOnClickListener(new OnClickListener() {
             @Override
@@ -3956,7 +3961,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextSyncTaskButtonAddSync, mContext.getString(R.string.msgs_prof_cont_label_add_sync));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonAddSync, mContext.getString(R.string.msgs_prof_cont_label_add_sync));
 
         mContextSyncTaskButtonCopySyncTask.setOnClickListener(new OnClickListener() {
             @Override
@@ -3974,7 +3979,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextSyncTaskButtonCopySyncTask, mContext.getString(R.string.msgs_prof_cont_label_copy));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonCopySyncTask, mContext.getString(R.string.msgs_prof_cont_label_copy));
 
         mContextSyncTaskButtonDeleteSyncTask.setOnClickListener(new OnClickListener() {
             @Override
@@ -3986,7 +3991,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextSyncTaskButtonDeleteSyncTask, mContext.getString(R.string.msgs_prof_cont_label_delete));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonDeleteSyncTask, mContext.getString(R.string.msgs_prof_cont_label_delete));
 
         mContextSyncTaskButtonRenameSyncTask.setOnClickListener(new OnClickListener() {
             @Override
@@ -4004,7 +4009,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextSyncTaskButtonRenameSyncTask, mContext.getString(R.string.msgs_prof_cont_label_rename));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonRenameSyncTask, mContext.getString(R.string.msgs_prof_cont_label_rename));
 
         mContextSyncTaskButtonMoveToUp.setOnClickListener(new OnClickListener() {
             @Override
@@ -4040,7 +4045,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextSyncTaskButtonMoveToUp, mContext.getString(R.string.msgs_prof_cont_label_up));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonMoveToUp, mContext.getString(R.string.msgs_prof_cont_label_up));
 
         mContextSyncTaskButtonMoveToDown.setOnClickListener(new OnClickListener() {
             @Override
@@ -4077,7 +4082,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextSyncTaskButtonMoveToDown, mContext.getString(R.string.msgs_prof_cont_label_down));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonMoveToDown, mContext.getString(R.string.msgs_prof_cont_label_down));
 
         mContextSyncTaskButtonSelectAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -4094,7 +4099,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextSyncTaskButtonSelectAll, mContext.getString(R.string.msgs_prof_cont_label_select_all));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonSelectAll, mContext.getString(R.string.msgs_prof_cont_label_select_all));
 
         mContextSyncTaskButtonUnselectAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -4111,7 +4116,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextSyncTaskButtonUnselectAll, mContext.getString(R.string.msgs_prof_cont_label_unselect_all));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonUnselectAll, mContext.getString(R.string.msgs_prof_cont_label_unselect_all));
 
     }
 
@@ -4311,19 +4316,19 @@ public class ActivityMain extends AppCompatActivity {
                 if (mGp.freezeMessageViewScroll) {
                     mContextMessageButtonPinned.setImageResource(R.drawable.context_button_pinned_active);
                     toast_active.show();
-                    ContextButtonUtil.setButtonLabelListener(mContext, mContextMessageButtonPinned,
+                    ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonPinned,
                             mContext.getString(R.string.msgs_msg_cont_label_pinned_active));
                 } else {
                     mContextMessageButtonPinned.setImageResource(R.drawable.context_button_pinned_inactive);
                     mGp.msgListView.setSelection(mGp.msgListView.getCount() - 1);
                     toast_inactive.show();
-                    ContextButtonUtil.setButtonLabelListener(mContext, mContextMessageButtonPinned,
+                    ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonPinned,
                             mContext.getString(R.string.msgs_msg_cont_label_pinned_inactive));
                 }
                 setContextButtonEnabled(mContextMessageButtonPinned, true);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextMessageButtonPinned, mContext.getString(R.string.msgs_msg_cont_label_pinned_inactive));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonPinned, mContext.getString(R.string.msgs_msg_cont_label_pinned_inactive));
 
         mContextMessageButtonMoveTop.setOnClickListener(new OnClickListener() {
             @Override
@@ -4334,7 +4339,7 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonEnabled(mContextMessageButtonMoveTop, true);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextMessageButtonMoveTop, mContext.getString(R.string.msgs_msg_cont_label_move_top));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveTop, mContext.getString(R.string.msgs_msg_cont_label_move_top));
 
         mContextMessageButtonMoveBottom.setOnClickListener(new OnClickListener() {
             @Override
@@ -4345,7 +4350,7 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonEnabled(mContextMessageButtonMoveBottom, true);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextMessageButtonMoveBottom, mContext.getString(R.string.msgs_msg_cont_label_move_bottom));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveBottom, mContext.getString(R.string.msgs_msg_cont_label_move_bottom));
 
         mContextMessageButtonClear.setOnClickListener(new OnClickListener() {
             @Override
@@ -4367,7 +4372,7 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_log_confirm_clear_all_msg), "", ntfy);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mContext, mContextMessageButtonClear, mContext.getString(R.string.msgs_msg_cont_label_clear));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonClear, mContext.getString(R.string.msgs_msg_cont_label_clear));
     }
 
     private void setMessageContextButtonNormalMode() {
