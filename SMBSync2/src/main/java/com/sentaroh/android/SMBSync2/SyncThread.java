@@ -2948,11 +2948,7 @@ public class SyncThread extends Thread {
                         if (filter_pattern.toString().startsWith("(^/") || filter_pattern.toString().startsWith("(.*/")) {  // filter==*/cache/* -> excludes master_dir/cache and master_dir/subdir/cache
                             if (!n_dir.startsWith("/")) new_filter_dir = "/" + n_dir;                             // filter==/cache or filter==cache, only excludes master_dir/cache while master_dir/subdir/cache is included
                         }
-                        if (!filter_pattern.toString().endsWith("/)") && !filter_pattern.toString().endsWith(".*)")) {// fix above case: filter==/cache -> exclude master/cache/*
-                            String new_pattern_str = filter_pattern.toString();
-                            new_pattern_str = new_pattern_str.substring(0, new_pattern_str.length() - 1) + "/)";
-                            filter_pattern = Pattern.compile(new_pattern_str, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-                        }
+
                         if (stwa.gp.settingDebugLevel >= 2)
                             stwa.util.addDebugMsg(2, "I", "exclude dir by name filter_pattern=" + filter_pattern + " new_filter_dir=" + new_filter_dir);
                         mt = filter_pattern.matcher(new_filter_dir);
@@ -3239,14 +3235,10 @@ public class SyncThread extends Thread {
                         if (filter_pattern.toString().startsWith("(^/") || filter_pattern.toString().startsWith("(.*/")) {  // filter==*/cache/* -> excludes master_dir/cache/ and master_dir/subdir/cache/
                             if (!filter_dir.startsWith("/")) new_filter_dir = "/" + filter_dir;                             // filter==/cache/ or filter==cache/, only excludes master_dir/cache/ while master_dir/subdir/cache/
                         }                                                                                                   // filter==/cache equals /cache* !! and will match /cahemir for example
-                        if (!filter_pattern.toString().endsWith("/)") && !filter_pattern.toString().endsWith(".*)")) {     // fix above case: now filter==/cache -> exclude master/cache/*
-                            String new_pattern_str = filter_pattern.toString();
-                            stwa.util.addDebugMsg(2, "I", "old pattern= " + new_pattern_str);
-                            new_pattern_str = new_pattern_str.substring(0, new_pattern_str.length() - 1) + "/)";
-                            filter_pattern = Pattern.compile(new_pattern_str, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-                        }
+
                         if (stwa.gp.settingDebugLevel >= 2)
                             stwa.util.addDebugMsg(2, "I", "exclude dir filter_pattern=" + filter_pattern + " filter_dir=" + filter_dir + " new_filter_dir=" + new_filter_dir);
+
                         Matcher mt = filter_pattern.matcher(new_filter_dir);
                         if (mt.find()) {
                             if (stwa.currentSTI.isSyncOptionUseExtendedDirectoryFilter1()) {
@@ -3505,7 +3497,7 @@ public class SyncThread extends Thread {
                 prefix = discreet_df.get(j).substring(0, 1);
                 filter = discreet_df.get(j).substring(1, discreet_df.get(j).length());
                 createDirFilterArrayListVer1(prefix, filter);
-                String pre_str = "", suf_str = "/";
+                String pre_str = "", suf_str = "";
                 String rem_filter=filter;
                 while(rem_filter.indexOf(";;")>=0) rem_filter=rem_filter.replaceAll(";;",";");
                 if (rem_filter.endsWith(";")) rem_filter=rem_filter.substring(0,rem_filter.length()-1);
@@ -3514,8 +3506,10 @@ public class SyncThread extends Thread {
                     dfinc = pre_str + MiscUtil.convertRegExp(rem_filter);
                     mStwa.dirIncludeFilterPatternList.add(Pattern.compile("(" + dfinc + ")", flags));
                     all_inc += dfinc + ";";
-                } else {
-                    dfexc = pre_str + MiscUtil.convertRegExp(rem_filter);
+                } else {//exclude filter
+                    if (!rem_filter.endsWith("/") && !rem_filter.endsWith("*")) suf_str = "/";//match exact path name: filter==/cache -> exclude master/cache/*
+                    //stwa.util.addDebugMsg(2, "I", "rem_filter= " + rem_filter);
+                    dfexc = pre_str + MiscUtil.convertRegExp(rem_filter + suf_str);
                     mStwa.dirExcludeFilterPatternList.add(Pattern.compile("(" + dfexc + ")", flags));
                     all_exc += dfexc + ";";
                 }
