@@ -3080,43 +3080,75 @@ public class SyncThread extends Thread {
                     boolean found=false;
                     for(AdapterFilterList.FilterListItem fli:stwa.matchAnyDirExcludeFilterList) {
                         String[] exc_filter_array=fli.getFilter().split("/");
-                        for(String exc_dir:filter_dir_array) {
-                            for(String exc_filter:exc_filter_array) {
-                                Pattern exc_pattern=Pattern.compile("^"+ MiscUtil.convertRegExp(exc_filter)+"$");
-                                Matcher exc_mt=exc_pattern.matcher(exc_dir);
-                                if (exc_mt.find()) {
-                                    found=true;
-                                    if (stwa.matchFromBeginDirIncludeFilterList.size()>0) {
-                                        boolean found_inc=false;
-                                        for(AdapterFilterList.FilterListItem inc_filter:stwa.matchFromBeginDirIncludeFilterList) {
-                                            String[] inc_filter_array=inc_filter.getFilter().split("/");
-                                            for(int i=0;i<Math.min(filter_dir_array.length, exc_filter_array.length);i++) {
-                                                Pattern inc_pattern=Pattern.compile("^"+ MiscUtil.convertRegExp(inc_filter_array[i])+"$");
-                                                Matcher inc_mt=inc_pattern.matcher(filter_dir_array[i]);
-                                                if (inc_mt.find()) {
-                                                    if (exc_filter_array.length<inc_filter_array.length) {
-                                                        found_inc=true;
-                                                        break;
-                                                    }
-                                                }
+                        Pattern exc_pattern=Pattern.compile("/"+MiscUtil.convertRegExp(fli.getFilter())+"/");
+                        Matcher exc_mt=exc_pattern.matcher("/"+filter_dir+"/");
+                        if (exc_mt.find()) {
+                            found=true;
+                            if (stwa.matchFromBeginDirIncludeFilterList.size()>0) {
+                                boolean found_inc=false;
+                                for(AdapterFilterList.FilterListItem inc_filter:stwa.matchFromBeginDirIncludeFilterList) {
+                                    String[] inc_filter_array=inc_filter.getFilter().split("/");
+                                    for(int i=0;i<Math.min(filter_dir_array.length, exc_filter_array.length);i++) {
+                                        Pattern inc_pattern=Pattern.compile("^"+ MiscUtil.convertRegExp(inc_filter_array[i])+"$");
+                                        Matcher inc_mt=inc_pattern.matcher(filter_dir_array[i]);
+                                        if (inc_mt.find()) {
+                                            if (exc_filter_array.length<inc_filter_array.length) {
+                                                found_inc=true;
+                                                break;
                                             }
                                         }
-                                        if (found_inc) {
-                                            exc=false;
-                                            break;
-                                        } else {
-                                            exc=true;
-                                            break;
-                                        }
-                                    } else {
-                                        exc=true;
-                                        break;
                                     }
                                 }
+                                if (found_inc) {
+                                    exc=false;
+                                    break;
+                                } else {
+                                    exc=true;
+                                    break;
+                                }
+                            } else {
+                                exc=true;
+                                break;
                             }
-                            if (found) break;
                         }
-                        if (found) break;
+//                        String[] exc_filter_array=fli.getFilter().split("/");
+//                        for(String exc_dir:filter_dir_array) {
+//                            for(String exc_filter:exc_filter_array) {
+//                                Pattern exc_pattern=Pattern.compile("^"+ MiscUtil.convertRegExp(exc_filter)+"$");
+//                                Matcher exc_mt=exc_pattern.matcher(exc_dir);
+//                                if (exc_mt.find()) {
+//                                    found=true;
+//                                    if (stwa.matchFromBeginDirIncludeFilterList.size()>0) {
+//                                        boolean found_inc=false;
+//                                        for(AdapterFilterList.FilterListItem inc_filter:stwa.matchFromBeginDirIncludeFilterList) {
+//                                            String[] inc_filter_array=inc_filter.getFilter().split("/");
+//                                            for(int i=0;i<Math.min(filter_dir_array.length, exc_filter_array.length);i++) {
+//                                                Pattern inc_pattern=Pattern.compile("^"+ MiscUtil.convertRegExp(inc_filter_array[i])+"$");
+//                                                Matcher inc_mt=inc_pattern.matcher(filter_dir_array[i]);
+//                                                if (inc_mt.find()) {
+//                                                    if (exc_filter_array.length<inc_filter_array.length) {
+//                                                        found_inc=true;
+//                                                        break;
+//                                                    }
+//                                                }
+//                                            }
+//                                        }
+//                                        if (found_inc) {
+//                                            exc=false;
+//                                            break;
+//                                        } else {
+//                                            exc=true;
+//                                            break;
+//                                        }
+//                                    } else {
+//                                        exc=true;
+//                                        break;
+//                                    }
+//                                }
+//                            }
+//                            if (found) break;
+//                        }
+//                        if (found) break;
                     }
                 }
             }
