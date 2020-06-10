@@ -487,6 +487,8 @@ public class ActivityMain extends AppCompatActivity {
         setActivityForeground(false);
         unsetCallbackListener();
 
+        CommonUtilities.saveMsgList(mGp);
+
         if (isFinishing()) {
             deleteTaskData();
             mGp.logCatActive=false;
@@ -4362,6 +4364,7 @@ public class ActivityMain extends AppCompatActivity {
                         mGp.msgListView.setSelection(0);
                         if (mGp.msgListAdapter!=null) mGp.msgListAdapter.clear();
                         mUtil.addLogMsg("W", getString(R.string.msgs_log_msg_cleared));
+                        CommonUtilities.saveMsgList(mGp);
                     }
 
                     @Override
