@@ -2914,7 +2914,15 @@ public class SyncThread extends Thread {
                 filtered = true;
             } else {
                 for (int i = 0; i < stwa.dirIncludeFilterPatternList.size(); i++) {
-                    mt = stwa.dirIncludeFilterPatternList.get(i).matcher(n_dir);
+                    String new_filter_dir = n_dir;
+                    if (stwa.dirIncludeFilterPatternList.get(i).toString().startsWith("(^/") || stwa.dirIncludeFilterPatternList.get(i).toString().startsWith("(.*/")) {  // filter==*/cache/* -> excludes master_dir/cache and master_dir/subdir/cache
+                        if (!n_dir.startsWith("/")) new_filter_dir = "/" + n_dir;
+                    }
+                    mt = stwa.dirIncludeFilterPatternList.get(i).matcher(new_filter_dir);
+
+                    if (stwa.gp.settingDebugLevel >= 2)
+                        stwa.util.addDebugMsg(2, "I", "pattern_by_name["+i+"]="+stwa.dirIncludeFilterPatternList.get(i) + " filter_dir_by_name="+new_filter_dir);
+
                     if (mt.find()) {
                         inc_matched_pattern_array = stwa.dirIncludeFilterArrayList.get(i);
                         String filter = "";
@@ -3175,7 +3183,6 @@ public class SyncThread extends Thread {
         return result;
     }
 
-
     static final public boolean isDirectoryToBeProcessedVer1(SyncThreadWorkArea stwa, String abs_dir) {
         boolean inc = false, exc = false, result = false;
 
@@ -3198,6 +3205,10 @@ public class SyncThread extends Thread {
                     Pattern[] pattern_array = stwa.dirIncludeFilterArrayList.get(i);
                     boolean found = true;
                     for (int j = 0; j < Math.min(dir_array.length, pattern_array.length); j++) {
+
+                        if (stwa.gp.settingDebugLevel >= 2)
+                            stwa.util.addDebugMsg(2, "I", "pattern_array["+j+"]="+pattern_array[j] + " dir_array["+j+"]="+dir_array[j] + " filter_dir="+filter_dir);
+
                         Matcher mt = pattern_array[j].matcher(dir_array[j]);
                         matched_inc_dir+="/"+dir_array[j];
                         if (dir_array[j].length() != 0) {
@@ -3502,12 +3513,12 @@ public class SyncThread extends Thread {
                 while(rem_filter.indexOf(";;")>=0) rem_filter=rem_filter.replaceAll(";;",";");
                 if (rem_filter.endsWith(";")) rem_filter=rem_filter.substring(0,rem_filter.length()-1);
                 if (!rem_filter.startsWith("*")) pre_str = "^";
+                if (!rem_filter.endsWith("/") && !rem_filter.endsWith("*")) suf_str = "/";//match exact path name: filter==/cache -> exclude master/cache/*
                 if (prefix.equals("I")) {
-                    dfinc = pre_str + MiscUtil.convertRegExp(rem_filter);
+                    dfinc = pre_str + MiscUtil.convertRegExp(rem_filter + suf_str);
                     mStwa.dirIncludeFilterPatternList.add(Pattern.compile("(" + dfinc + ")", flags));
                     all_inc += dfinc + ";";
                 } else {//exclude filter
-                    if (!rem_filter.endsWith("/") && !rem_filter.endsWith("*")) suf_str = "/";//match exact path name: filter==/cache -> exclude master/cache/*
                     //stwa.util.addDebugMsg(2, "I", "rem_filter= " + rem_filter);
                     dfexc = pre_str + MiscUtil.convertRegExp(rem_filter + suf_str);
                     mStwa.dirExcludeFilterPatternList.add(Pattern.compile("(" + dfexc + ")", flags));
