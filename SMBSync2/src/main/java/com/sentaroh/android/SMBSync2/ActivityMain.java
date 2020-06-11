@@ -265,7 +265,7 @@ public class ActivityMain extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
-
+        CommonUtilities.saveMsgList(mGp);//always save immeadiatly on resuming from sync activity
         if (restartType == RESTART_WITH_OUT_INITIALYZE) {
             mGp.safMgr.loadSafFile();
             setActivityForeground(true);
@@ -450,12 +450,14 @@ public class ActivityMain extends AppCompatActivity {
                 ", getChangingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
         setActivityForeground(false);
         if (!isTaskTermination) saveTaskData();
+        CommonUtilities.saveMsgList(mGp);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+        CommonUtilities.saveMsgList(mGp);
     }
 
     @Override
