@@ -2799,7 +2799,7 @@ public class SyncThread extends Thread {
     }
 
     static final private boolean isDirectorySelectedByDirectoryName(SyncThreadWorkArea stwa, String f_dir) {
-        if (stwa.currentSTI.isSyncOptionFixDirectoryFilterBug()) return isDirectorySelectedByDirectoryNameVer2(stwa, f_dir);
+        if (stwa.currentSTI.isSyncOptionUseDirectoryFilterV2()) return isDirectorySelectedByDirectoryNameVer2(stwa, f_dir);
         else return isDirectorySelectedByDirectoryNameVer1(stwa, f_dir);
     }
 
@@ -3011,7 +3011,7 @@ public class SyncThread extends Thread {
     }
 
     static final public boolean isDirectoryToBeProcessed(SyncThreadWorkArea stwa, String abs_dir) {
-        if (stwa.currentSTI.isSyncOptionFixDirectoryFilterBug()) return isDirectoryToBeProcessedVer2(stwa, abs_dir);
+        if (stwa.currentSTI.isSyncOptionUseDirectoryFilterV2()) return isDirectoryToBeProcessedVer2(stwa, abs_dir);
         else return isDirectoryToBeProcessedVer1(stwa, abs_dir);
     }
 
@@ -3323,7 +3323,7 @@ public class SyncThread extends Thread {
     }
 
     final private int compileFilter(SyncTaskItem sti, ArrayList<String> s_ff, ArrayList<String> s_df) {
-        if (sti.isSyncOptionFixDirectoryFilterBug()) return compileFilterVer2(sti, s_ff, s_df);
+        if (sti.isSyncOptionUseDirectoryFilterV2()) return compileFilterVer2(sti, s_ff, s_df);
         else return compileFilterVer1(sti, s_ff, s_df);
     }
 

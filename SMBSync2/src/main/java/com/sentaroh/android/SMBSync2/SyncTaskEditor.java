@@ -347,7 +347,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvSyncHiddenFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_hidden_file);
         final CheckedTextView ctvProcessOverride = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_process_override_delete_file);
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
-        final CheckedTextView ctFixDirectoryFilterBug = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_fix_directory_filter_bug);
+        final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
         final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
@@ -486,7 +486,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvSyncHiddenFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_hidden_file);
         final CheckedTextView ctvProcessOverride = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_process_override_delete_file);
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
-        final CheckedTextView ctFixDirectoryFilterBug = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_fix_directory_filter_bug);
+        final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
         final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
@@ -2859,7 +2859,7 @@ public class SyncTaskEditor extends DialogFragment {
         dialog.show();
     }
 
-    private void invokeEditDirFilterDlg(final Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg, boolean fix_dir_filter_bug) {
+    private void invokeEditDirFilterDlg(final Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg, boolean use_dir_filter_v2) {
         final TextView dlg_dir_filter = (TextView) dialog.findViewById(R.id.sync_filter_edit_dir_filter_btn);
         NotifyEvent ntfy = new NotifyEvent(mContext);
         //Listen setRemoteShare response
@@ -2875,7 +2875,7 @@ public class SyncTaskEditor extends DialogFragment {
             }
 
         });
-        mTaskUtil.editDirFilterDlg(n_sti, ntfy, fix_dir_filter_bug);
+        mTaskUtil.editDirFilterDlg(n_sti, ntfy, use_dir_filter_v2);
 
     }
 
@@ -3835,18 +3835,18 @@ public class SyncTaskEditor extends DialogFragment {
         ctUseExtendedDirectoryFilter1.setChecked(n_sti.isSyncOptionUseExtendedDirectoryFilter1());
         setCtvListenerForEditSyncTask(ctUseExtendedDirectoryFilter1, type, n_sti, dlg_msg);
 
-        final CheckedTextView ctFixDirectoryFilterBug = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_fix_directory_filter_bug);
-        CommonUtilities.setCheckedTextView(ctFixDirectoryFilterBug);
-        ctFixDirectoryFilterBug.setChecked(n_sti.isSyncOptionFixDirectoryFilterBug());
-        ctFixDirectoryFilterBug.setOnClickListener(new OnClickListener() {
+        final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
+        CommonUtilities.setCheckedTextView(ctUseDirectoryFilterV2);
+        ctUseDirectoryFilterV2.setChecked(n_sti.isSyncOptionUseDirectoryFilterV2());
+        ctUseDirectoryFilterV2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isChecked = !ctFixDirectoryFilterBug.isChecked();
+                boolean isChecked = !ctUseDirectoryFilterV2.isChecked();
                 NotifyEvent ntfy=new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        ctFixDirectoryFilterBug.setChecked(isChecked);
+                        ctUseDirectoryFilterV2.setChecked(isChecked);
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                     }
                     @Override
@@ -3855,8 +3855,8 @@ public class SyncTaskEditor extends DialogFragment {
                     }
                 });
                 mUtil.showCommonDialog(true, "W",
-                        mContext.getString(R.string.msgs_profile_sync_task_sync_option_fix_directory_filter_bug_title),
-                        mContext.getString(R.string.msgs_profile_sync_task_sync_option_fix_directory_filter_bug_warning),
+                        mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_v2_title),
+                        mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning),
                         mContext.getString(R.string.msgs_common_dialog_save),
                         mContext.getString(R.string.msgs_common_dialog_cancel),
                         ntfy);
@@ -3864,8 +3864,8 @@ public class SyncTaskEditor extends DialogFragment {
         });
         //Hide option for release APK
         if (!mGp.debuggable) {
-            ctFixDirectoryFilterBug.setVisibility(CheckedTextView.GONE);
-            ctFixDirectoryFilterBug.setChecked(false);
+            ctUseDirectoryFilterV2.setVisibility(CheckedTextView.GONE);
+            ctUseDirectoryFilterV2.setChecked(false);
         }
 
         final LinearLayout ll_special_option_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_special_option_view);
@@ -4408,7 +4408,7 @@ public class SyncTaskEditor extends DialogFragment {
         // directory filterボタンの指定
         dir_filter_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                invokeEditDirFilterDlg(mDialog, n_sti, type, dlg_msg, ctFixDirectoryFilterBug.isChecked());
+                invokeEditDirFilterDlg(mDialog, n_sti, type, dlg_msg, ctUseDirectoryFilterV2.isChecked());
             }
         });
 
@@ -4703,7 +4703,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvConfirmOverride = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_confirm_override_delete_file);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
-        final CheckedTextView ctFixDirectoryFilterBug = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_fix_directory_filter_bug);
+        final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
         final CheckedTextView ctvShowSpecialOption = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
         final CheckedTextView ctvDoNotResetFileLasyMod = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time);
         final CheckedTextView ctvUseSmbsyncLastMod = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_use_smbsync_last_mod_time);
@@ -4741,7 +4741,7 @@ public class SyncTaskEditor extends DialogFragment {
         nstli.setSyncOptionDeleteFirstWhenMirror(ctvDeleteFirst.isChecked());
 
         nstli.setSyncOptionUseExtendedDirectoryFilter1(ctUseExtendedDirectoryFilter1.isChecked());
-        nstli.setSyncOptionFixDirectoryFilterBug(ctFixDirectoryFilterBug.isChecked());
+        nstli.setsyncOptionUseDirectoryFilterV2(ctUseDirectoryFilterV2.isChecked());
 
         String wifi_sel = Integer.toString(spinnerSyncWifiStatus.getSelectedItemPosition());
         nstli.setSyncOptionWifiStatusOption(wifi_sel);
@@ -4923,7 +4923,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         final LinearLayout ll_sync_remove_master_if_empty = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_remove_directory_if_empty_when_move_view);
 
-        final CheckedTextView ctFixDirectoryFilterBug = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_fix_directory_filter_bug);
+        final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
 
         final CheckedTextView ctvDeterminChangedFileSizeGtTarget = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_file_size_greater_than_target);
         final CheckedTextView ctvDiffUseFileSize = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_file_size);
@@ -5073,7 +5073,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvSyncFileTypeVideo = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_video);
         final CheckedTextView ctvSyncSpecificSubDir = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_sub_directory_specific);
 
-        final CheckedTextView ctFixDirectoryFilterBug = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_fix_directory_filter_bug);
+        final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
 
         boolean error_detected = false;
 
@@ -5092,24 +5092,40 @@ public class SyncTaskEditor extends DialogFragment {
             if (ctvSyncSpecificSubDir.isChecked()) {
                 if (n_sti.getDirFilter().size() == 0) {
                     result = mContext.getString(R.string.msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified);
+                    error_detected = true;//+++++++++++ added, to check if ok
                 }
             }
         }
 
         if (!error_detected) {
-            if (ctFixDirectoryFilterBug.isChecked()) {
-                if (n_sti.getDirFilter().size() > 0) {
-                    String error_filter_msg="";
-                    for(String item:n_sti.getDirFilter()) {
-                        String filter_inc_exc=item.substring(0,1);
-                        String filter_value=item.substring(1);
-                        if (filter_inc_exc.equals("I") && filter_value.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
-                            error_filter_msg+=filter_value+";";
+            if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
+                String error_filter="";
+                for(String item:n_sti.getDirFilter()) {
+                    String filter_inc_exc=item.substring(0,1);
+                    String filter_value=item.substring(1);
+                    if (filter_inc_exc.equals("I")) {
+                        if (filter_value.startsWith("*/") || filter_value.contains("/*/")) {//ends with /* ok to verify!!!!!!!!!!!!!!!!
+                            error_filter+=filter_value+";";
                             error_detected = true;
                         }
                     }
-                    if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_fix_directory_filter_bug_change_exclude, error_filter_msg);
                 }
+                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_asterisk_only_folder_name_error, error_filter);
+            }
+        }
+
+        if (!error_detected) {
+            if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
+                String error_filter="";
+                for(String item:n_sti.getDirFilter()) {
+                    String filter_inc_exc=item.substring(0,1);
+                    String filter_value=item.substring(1);
+                    if (filter_value.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                        error_filter+=filter_value+";";
+                        error_detected = true;
+                    }
+                }
+                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error, error_filter);
             }
         }
 

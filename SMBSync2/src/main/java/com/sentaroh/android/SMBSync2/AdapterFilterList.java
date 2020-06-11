@@ -158,9 +158,17 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
             } else {
                 holder.tv_row_filter.setEnabled(true);
                 holder.btn_row_delbtn.setEnabled(true);
-                if (o.isBugFixed() && o.getFilter().startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
-                    holder.rb_inc.setEnabled(false);
-                    holder.rb_exc.setEnabled(true);
+                if (o.isUseFilterV2()) {
+                    if (o.getFilter().startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                        holder.rb_inc.setEnabled(false);
+                        holder.rb_exc.setEnabled(false);
+                    } else if (o.getFilter().startsWith("*/") || o.getFilter().contains("/*/")) {
+                        holder.rb_inc.setEnabled(false);
+                        holder.rb_exc.setEnabled(true);
+                    } else {
+                        holder.rb_inc.setEnabled(true);
+                        holder.rb_exc.setEnabled(true);
+                    }
                 } else {
                     holder.rb_inc.setEnabled(true);
                     holder.rb_exc.setEnabled(true);
@@ -234,7 +242,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
         private boolean regExp=false;
         private boolean deleted = false;
 
-        private boolean bugFixed = false;
+        private boolean use_filter_v2 = false;
 
         public FilterListItem(String filter, boolean include) {
             this.filter = filter;
@@ -242,11 +250,11 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
             this.deleted = false;
         }
 
-        public boolean isBugFixed() {
-            return bugFixed;
+        public boolean isUseFilterV2() {
+            return use_filter_v2;
         }
-        public void setBugFixed(boolean fixed) {
-            bugFixed=fixed;
+        public void setUseFilterV2(boolean enable) {
+            use_filter_v2=enable;
         }
 
         public String getFilter() {

@@ -969,6 +969,22 @@ public final class CommonUtilities {
         return isCharging;
     }
 
+    public String removeRedundantWildcard(String str) {
+        String new_str=str;
+        String wc_dup="**";
+        while(new_str.contains(wc_dup)) {
+            new_str=new_str.replace(wc_dup,"*");
+        }
+        return new_str;
+    }
+
+    public boolean isStringWildcardOnly(String str) {
+        boolean result=false;
+        String new_str=removeRedundantWildcard(str);
+        if (new_str.equals("*") || new_str.equals("*.*")) return true;
+        else return false;
+    }
+
     public static String trimTrailingBlank(String s) {
         if (s == null) return null;
 

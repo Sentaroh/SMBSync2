@@ -3062,7 +3062,7 @@ public class SyncTaskUtil {
         dialog.show();
     }
 
-    public void editDirFilterDlg(final SyncTaskItem sti, final NotifyEvent p_ntfy, boolean fix_dir_filter_bug) {
+    public void editDirFilterDlg(final SyncTaskItem sti, final NotifyEvent p_ntfy, boolean use_dir_filter_v2) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
         final AdapterFilterList filterAdapter;
 
@@ -3097,20 +3097,21 @@ public class SyncTaskUtil {
             String inc = sti.getDirFilter().get(i).substring(0, 1);
             String filter = sti.getDirFilter().get(i).substring(1, sti.getDirFilter().get(i).length());
             AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(filter, inc.equals("I"));
-            fli.setBugFixed(fix_dir_filter_bug);
+            fli.setUseFilterV2(use_dir_filter_v2);
             filterAdapter.add(fli);
         }
         lv.setAdapter(filterAdapter);
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
 
-        isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg);
+        if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg))//display warning in main filter list view
+            isIncludeFilterRelativePath(filterAdapter, btn_ok, dlg_msg);
 
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg)) {
+                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && isIncludeFilterRelativePath(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -3124,7 +3125,7 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg)) {
+                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && isIncludeFilterRelativePath(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -3142,7 +3143,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg)) {
+                        if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && isIncludeFilterRelativePath(filterAdapter, btn_ok, dlg_msg)) {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                             dlg_msg.setText("");
                         }
@@ -3160,7 +3161,7 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
-                    String new_filter=removeRedundantWildcard(s.toString());
+                    String new_filter=mUtil.removeRedundantWildcard(s.toString());
                     if (s.length()!=new_filter.length()) {
                         dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_redundant_wildcard));
                         dlg_msg.setVisibility(TextView.VISIBLE);
@@ -3198,7 +3199,7 @@ public class SyncTaskUtil {
             public void onClick(View v) {
                 dlg_msg.setText("");
                 String newfilter = et_filter.getText().toString();
-                if (isFilterIsWildcardOnly(newfilter)) {
+                if (mUtil.isStringWildcardOnly(newfilter)) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
                     return;
                 }
@@ -3209,10 +3210,16 @@ public class SyncTaskUtil {
                 }
                 dlg_msg.setText("");
                 et_filter.setText("");
-                if (fix_dir_filter_bug) {
+                if (use_dir_filter_v2) {
+                    if (newfilter.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
+                        dlg_msg.setText(String.format(mtxt, newfilter));
+                        return;
+                    }
+
                     AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(newfilter, true);
-                    fli.setBugFixed(true);
-                    if (newfilter.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) fli.setInclude(false);
+                    fli.setUseFilterV2(true);
+                    if (newfilter.startsWith("*/") || newfilter.contains("/*/")) fli.setInclude(false);
                     filterAdapter.add(fli);
                 } else {
                     filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
@@ -3220,7 +3227,7 @@ public class SyncTaskUtil {
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
                 CommonDialog.setViewEnabled(mActivity, dirbtn, true);
-                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg)) {
+                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && isIncludeFilterRelativePath(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 }
             }
@@ -3233,7 +3240,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg)) {
+                        if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && isIncludeFilterRelativePath(filterAdapter, btn_ok, dlg_msg)) {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                             dlg_msg.setText("");
                         }
@@ -3290,33 +3297,37 @@ public class SyncTaskUtil {
         String error_filters="";
         for(int i=0;i<filter_adapter.getCount();i++) {
             AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
-            if (!fli.isDeleted() && fli.isBugFixed() && fli.isInclude() && fli.getFilter().startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
-                error_filters+=fli.getFilter();
+            if (!fli.isDeleted() && fli.isUseFilterV2() && fli.getFilter().startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                error_filters=fli.getFilter();
                 break;
             }
         }
         if (!error_filters.equals("")) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_fix_directory_filter_bug_error, error_filters));
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error, error_filters));
             CommonDialog.setViewEnabled(mActivity, ok_btn, false);
             result=false;
         }
         return result;
     }
 
-    private String removeRedundantWildcard(String filter) {
-        String reformat_filter=filter;
-        String wc_dup="**";
-        while(reformat_filter.contains(wc_dup)) {
-            reformat_filter=reformat_filter.replace(wc_dup,"*");
+    private boolean isIncludeFilterRelativePath(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
+        boolean result=true;
+        String error_filters="";
+        for(int i=0;i<filter_adapter.getCount();i++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
+            if (!fli.isDeleted() && fli.isUseFilterV2() && fli.isInclude()) {
+                if (fli.getFilter().startsWith("*/") || fli.getFilter().contains("/*/")) {//ends with /* ok to verify!!!!!!!!!!!!!!!!
+                    error_filters=fli.getFilter();
+                    break;
+                }
+            }
         }
-        return reformat_filter;
-    }
-
-    private boolean isFilterIsWildcardOnly(String filter) {
-        boolean result=false;
-        String reformat_filter=removeRedundantWildcard(filter);
-        if (reformat_filter.equals("*") || reformat_filter.equals("*.*")) return true;
-        else return false;
+        if (!error_filters.equals("")) {
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_asterisk_only_folder_name_edit_dlg_error, error_filters));
+            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+            result=false;
+        }
+        return result;
     }
 
     private void editFilter(final int edit_idx, final AdapterFilterList fa,
@@ -3364,7 +3375,7 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 } else {
-                    String new_filter=removeRedundantWildcard(s.toString());
+                    String new_filter=mUtil.removeRedundantWildcard(s.toString());
                     if (s.length()!=new_filter.length()) {
                         dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_redundant_wildcard));
                         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
@@ -3401,7 +3412,7 @@ public class SyncTaskUtil {
         // OKボタンの指定
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (isFilterIsWildcardOnly(et_filter.getText().toString())) {
+                if (mUtil.isStringWildcardOnly(et_filter.getText().toString())) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
@@ -6577,7 +6588,7 @@ public class SyncTaskUtil {
                 }
             }
 
-            if (!parm[93].equals("") && !parm[93].equals("end")) stli.setSyncOptionFixDirectoryFilterBug((parm[93].equals("1") ? true : false));
+            if (!parm[93].equals("") && !parm[93].equals("end")) stli.setsyncOptionUseDirectoryFilterV2((parm[93].equals("1") ? true : false));
 
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
@@ -7109,7 +7120,7 @@ public class SyncTaskUtil {
                             (item.isSyncOptionIgnoreDstDifference() ? "1" : "0") + "\t" +               //91
                             item.getSyncOptionOffsetOfDst()+ "\t" +                                     //92
 
-                            (item.isSyncOptionFixDirectoryFilterBug() ? "1" : "0") + "\t" +             //93
+                            (item.isSyncOptionUseDirectoryFilterV2() ? "1" : "0") + "\t" +             //93
 
                             "end"
                     ;

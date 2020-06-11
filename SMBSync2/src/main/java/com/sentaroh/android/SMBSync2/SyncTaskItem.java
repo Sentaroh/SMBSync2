@@ -543,9 +543,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionUseExtendedDirectoryFilter1() {return syncOptionUseExtendedDirectoryFilter1;}
     public void setSyncOptionUseExtendedDirectoryFilter1(boolean p) {syncOptionUseExtendedDirectoryFilter1 = p;}
 
-    private boolean syncOptionFixDirectoryFilterBug=false;
-    public boolean isSyncOptionFixDirectoryFilterBug() {return syncOptionFixDirectoryFilterBug;}
-    public void setSyncOptionFixDirectoryFilterBug(boolean p) {syncOptionFixDirectoryFilterBug = p;}
+    private boolean syncOptionUseDirectoryFilterV2=false;
+    public boolean isSyncOptionUseDirectoryFilterV2() {return syncOptionUseDirectoryFilterV2;}
+    public void setsyncOptionUseDirectoryFilterV2(boolean p) {syncOptionUseDirectoryFilterV2 = p;}
 
     public String getSyncOptionWifiStatusOption() {return syncOptionWifiStatus;}
     public void setSyncOptionWifiStatusOption(String p) {syncOptionWifiStatus = p;}
@@ -751,7 +751,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionConfirmNotExistsExifDate==sti.isSyncOptionConfirmNotExistsExifDate()) &&
 
                         (syncOptionUseExtendedDirectoryFilter1==sti.isSyncOptionUseExtendedDirectoryFilter1()) &&
-                        (syncOptionFixDirectoryFilterBug==sti.isSyncOptionFixDirectoryFilterBug()) &&
+                        (syncOptionUseDirectoryFilterV2==sti.isSyncOptionUseDirectoryFilterV2()) &&
 
                         (syncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile==sti.isSyncOptionNeverOverwriteTargetFileIfItIsNewerThanTheMasterFile()) &&
 
