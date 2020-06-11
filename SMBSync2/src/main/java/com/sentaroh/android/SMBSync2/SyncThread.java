@@ -408,6 +408,8 @@ public class SyncThread extends Thread {
 
 //            mStwa.mediaScanner.disconnect();
 
+            CommonUtilities.saveMsgList(mGp);//Save meesage tab list
+
             mNotifyToService.notifyToListener(true, new Object[]{sync_result});
         }
         System.gc();
