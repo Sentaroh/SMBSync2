@@ -347,7 +347,7 @@ public final class CommonUtilities {
                     sb.append("\u0001").append(smi.getDate()).append("\u0000"); //msgDate
                     sb.append("\u0001").append(smi.getTime()).append("\u0000"); //msgTime
                     sb.append("\u0001").append(smi.getTitle()).append("\u0000"); //msgTitle
-                    sb.append("\u0001").append(smi.getMessage()).append("\u0000"); //msgBody
+                    sb.append("\u0001").append(smi.getMessage().replaceAll("\n", "\u0003")).append("\u0000"); //msgBody
                     sb.append("\u0001").append(smi.getPath()).append("\u0000"); //msgPath
                     sb.append("\u0001").append(smi.getType()).append("\u0000"); //msgType
 //                String nl=sb.toString();
@@ -380,7 +380,7 @@ public final class CommonUtilities {
                                 msg_array[1].replace("\u0001",""), //msgDate
                                 msg_array[2].replace("\u0001",""), //msgTime
                                 msg_array[3].replace("\u0001",""), //msgTitle
-                                msg_array[4].replace("\u0001",""), //msgBody
+                                msg_array[4].replace("\u0001","").replaceAll("\u0003", "\n"), //msgBody
                                 msg_array[5].replace("\u0001",""), //msgPath
                                 msg_array[6].replace("\u0001","")); //msgType
                         result.add(smi);
