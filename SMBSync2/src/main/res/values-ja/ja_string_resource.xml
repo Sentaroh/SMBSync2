@@ -429,7 +429,7 @@
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_asterisk_only_folder_name_error">Include filter must have Master as root path and cannot have astrisk only parts. Either change the filters as \"Exlude\" or remove any leading \"*/\" and any \"/*/\" characters from the below filters:\n%s".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_asterisk_only_folder_name_edit_dlg_error">Filter %s cannot have astrisk only parts. Either change the filter to \"Exlude\" or remove leading \"*/\" and any \"/*/\" characters".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Following characters are no longer valid: \"\\\\\". Either remove the invalid characters or replace them by generic wildcards in the below filters:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Filter %s has old whole directory prefix \"\\\\\". Replace it by generic wildcards.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Filter %s has old whole directory prefix \"\\\\\". Replace it by generic wildcards like (exp. %s).</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">ネットワークオプション:</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">ワイヤレスAPオプション:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">SMBフォルダーへのファイル書き込みで一時ファイルを使用せず直接書き込む</string>

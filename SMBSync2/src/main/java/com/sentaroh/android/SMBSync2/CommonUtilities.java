@@ -969,20 +969,26 @@ public final class CommonUtilities {
         return isCharging;
     }
 
-    public String removeRedundantWildcard(String str) {
+    public String removeRedundantWildcard(String str, String wc) {
         String new_str=str;
-        String wc_dup="**";
-        while(new_str.contains(wc_dup)) {
-            new_str=new_str.replace(wc_dup,"*");
+        if (str != null && wc != null && wc.length() != 0) {
+            String wc_dup=wc + wc;
+            while(new_str.contains(wc_dup)) {
+                new_str=new_str.replace(wc_dup, wc);
+            }
         }
         return new_str;
     }
 
-    public boolean isStringWildcardOnly(String str) {
-        boolean result=false;
-        String new_str=removeRedundantWildcard(str);
-        if (new_str.equals("*") || new_str.equals("*.*")) return true;
-        else return false;
+    public boolean isPathWildcardOnly(String str) {
+        boolean isOnlyWildcard=false;
+        String new_str=removeRedundantWildcard(str, "*");
+        if (new_str.equals("*") || new_str.equals("*.*")) isOnlyWildcard=true;
+        if (!isOnlyWildcard) {
+            new_str=new_str.replace("/", "");
+            if (removeRedundantWildcard(new_str, "*").equals("*")) isOnlyWildcard=true;
+        }
+        return isOnlyWildcard;
     }
 
     public static String trimTrailingBlank(String s) {

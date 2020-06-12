@@ -3161,7 +3161,7 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
-                    String new_filter=mUtil.removeRedundantWildcard(s.toString());
+                    String new_filter=mUtil.removeRedundantWildcard(s.toString(), "*");
                     if (s.length()!=new_filter.length()) {
                         dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_redundant_wildcard));
                         dlg_msg.setVisibility(TextView.VISIBLE);
@@ -3199,7 +3199,7 @@ public class SyncTaskUtil {
             public void onClick(View v) {
                 dlg_msg.setText("");
                 String newfilter = et_filter.getText().toString();
-                if (mUtil.isStringWildcardOnly(newfilter)) {
+                if (mUtil.isPathWildcardOnly(newfilter)) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
                     return;
                 }
@@ -3212,8 +3212,9 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 if (use_dir_filter_v2) {
                     if (newfilter.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                        String suggest_filter = newfilter.replace(WHOLE_DIRECTORY_FILTER_PREFIX, "*/") + (newfilter.endsWith("/*") ? "":"/*");
                         String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
-                        dlg_msg.setText(String.format(mtxt, newfilter));
+                        dlg_msg.setText(String.format(mtxt, newfilter, suggest_filter));
                         return;
                     }
 
@@ -3303,7 +3304,8 @@ public class SyncTaskUtil {
             }
         }
         if (!error_filters.equals("")) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error, error_filters));
+            String suggest_filter = error_filters.replace(WHOLE_DIRECTORY_FILTER_PREFIX, "*/") + (error_filters.endsWith("/*") ? "":"/*");
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error, error_filters, suggest_filter));
             CommonDialog.setViewEnabled(mActivity, ok_btn, false);
             result=false;
         }
@@ -3375,7 +3377,7 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 } else {
-                    String new_filter=mUtil.removeRedundantWildcard(s.toString());
+                    String new_filter=mUtil.removeRedundantWildcard(s.toString(), "*");
                     if (s.length()!=new_filter.length()) {
                         dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_redundant_wildcard));
                         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
@@ -3412,7 +3414,7 @@ public class SyncTaskUtil {
         // OKボタンの指定
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (mUtil.isStringWildcardOnly(et_filter.getText().toString())) {
+                if (mUtil.isPathWildcardOnly(et_filter.getText().toString())) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
