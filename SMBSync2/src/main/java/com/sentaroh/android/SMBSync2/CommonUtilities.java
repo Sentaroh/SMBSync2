@@ -991,6 +991,21 @@ public final class CommonUtilities {
         return isOnlyWildcard;
     }
 
+    //no longer used
+    public static String removeRedundantSeparator(String input, String separator, boolean remove_start, boolean remove_end) {
+        String out=input;
+        while(out.indexOf(separator+separator)>=0) {
+            out=out.replaceAll(separator+separator, separator);
+        }
+        if (remove_start) {
+            out=out.startsWith(separator)?out.substring(1):out;
+        }
+        if (remove_end) {
+            out=out.endsWith(separator)?out.substring(0, out.length()-1):out;
+        }
+        return out;
+    }
+
     public static String trimTrailingBlank(String s) {
         if (s == null) return null;
 
