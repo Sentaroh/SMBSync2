@@ -3076,6 +3076,7 @@ public class SyncTaskUtil {
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
+        final LinearLayout ll_filter_v2_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_v2_guide_ll);
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
@@ -3090,6 +3091,9 @@ public class SyncTaskUtil {
         title.setText(mContext.getString(R.string.msgs_filter_list_dlg_dir_filter));
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_select_edit_msg);
         final Button dirbtn = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
+
+        if (use_dir_filter_v2) ll_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
+        else ll_filter_v2_guide.setVisibility(LinearLayout.GONE);
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
@@ -3212,7 +3216,7 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 if (use_dir_filter_v2) {
                     if (newfilter.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
-                        String suggest_filter = newfilter.replace(WHOLE_DIRECTORY_FILTER_PREFIX, "*/") + (newfilter.endsWith("/*") ? "":"/*");
+                        String suggest_filter = newfilter.replace(WHOLE_DIRECTORY_FILTER_PREFIX, "*/")+ (newfilter.endsWith("/*") || newfilter.endsWith("/") ? "":"/*");
                         String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
                         dlg_msg.setText(String.format(mtxt, newfilter, suggest_filter));
                         return;
@@ -3304,7 +3308,7 @@ public class SyncTaskUtil {
             }
         }
         if (!error_filters.equals("")) {
-            String suggest_filter = error_filters.replace(WHOLE_DIRECTORY_FILTER_PREFIX, "*/") + (error_filters.endsWith("/*") ? "":"/*");
+            String suggest_filter = error_filters.replace(WHOLE_DIRECTORY_FILTER_PREFIX, "*/")+ (error_filters.endsWith("/*") || error_filters.endsWith("/") ? "":"/*");
             dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error, error_filters, suggest_filter));
             CommonDialog.setViewEnabled(mActivity, ok_btn, false);
             result=false;

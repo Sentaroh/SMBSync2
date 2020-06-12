@@ -48,6 +48,31 @@
         </ListView>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/filter_select_edit_v2_guide_ll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        android:orientation="vertical" >
+
+        <include layout="@layout/divider_line1_turquoise" />
+        <TextView
+            android:id="@+id/filter_select_edit_v2_guide"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/msgs_profile_sync_task_filter_edit_dlg_v2_guide"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <include layout="@layout/divider_line1" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/filter_select_edit_list_dir_btn"
         android:layout_width="fill_parent"

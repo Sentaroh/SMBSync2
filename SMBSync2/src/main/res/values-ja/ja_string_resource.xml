@@ -377,6 +377,7 @@
         <string name="msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified">IPアドレスが重複しています。名前=%s</string>
         <string name="msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified">アクセスポイント名が重複しています。名前=%s</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_title">フィルター編集</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_add">追加</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">削除</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">ディレクトリ一覧</string>
@@ -427,9 +428,9 @@
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new directory filter v2</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">変更するとディレクトリーフィルターの指定によっては同期するファイルが変わり予期せぬファイルの削除や上書きが発生する可能性があります。テストモードで実行して確認するか、テストフォルダーを作成して同期結果を確認することを強くお勧めします。</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_asterisk_only_folder_name_error">Include filter must have Master as root path and cannot have astrisk only parts. Either change the filters as \"Exlude\" or remove any leading \"*/\" and any \"/*/\" characters from the below filters:\n%s".</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_asterisk_only_folder_name_edit_dlg_error">Filter %s cannot have astrisk only parts. Either change the filter to \"Exlude\" or remove leading \"*/\" and any \"/*/\" characters".</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Following characters are no longer valid: \"\\\\\". Either remove the invalid characters or replace them by generic wildcards in the below filters:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Filter %s has old whole directory prefix \"\\\\\". Replace it by generic wildcards like (exp. %s).</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_asterisk_only_folder_name_edit_dlg_error">Include filter %s cannot have astrisk only parts. Either change the filter to \"Exlude\" or remove leading \"*/\" and any \"/*/\" characters".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Whole directory prefix \"\\\\\" is no longer valid. Replace it by \"*/\" wildcard in the below filters:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Filter %s has old whole directory prefix \"\\\\\". Replace it by \"*/\" character (exp. %s).</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">ネットワークオプション:</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">ワイヤレスAPオプション:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">SMBフォルダーへのファイル書き込みで一時ファイルを使用せず直接書き込む</string>
