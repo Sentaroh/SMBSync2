@@ -2730,6 +2730,12 @@ public class SyncThread extends Thread {
     }
 
     static final public boolean isFileSelected(SyncThreadWorkArea stwa, SyncTaskItem sti, String url) {
+        if (stwa.currentSTI.isSyncOptionUseDirectoryFilterV2()) return isFileSelectedVer2(stwa, sti, url);
+        else return isFileSelectedVer1(stwa, sti, url);
+    }
+
+    //match files agains file filters, url=abs dir to file (master/path/to/filename)
+    static final public boolean isFileSelectedVer2(SyncThreadWorkArea stwa, SyncTaskItem sti, String url) {
         boolean filtered = false;
         Matcher mt;
 
@@ -2748,7 +2754,57 @@ public class SyncThread extends Thread {
             }
 
             if (tmp_d.indexOf("/") < 0) {
-                //root直下なので処理しない
+                //file is in root of master, ignore it
+                if (stwa.gp.settingDebugLevel >= 2)
+                    stwa.util.addDebugMsg(2, "I", "isFileSelected not filtered, " +
+                            "because Master Dir not processed was effective");
+                return false;
+            }
+        }
+
+        String temp_fid = url.substring(url.lastIndexOf("/") + 1, url.length());
+        if (stwa.fileFilterInclude == null) {
+            // nothing filter
+            filtered = true;
+        } else {
+            mt = stwa.fileFilterInclude.matcher(temp_fid);
+            if (mt.find()) filtered = true;
+            if (stwa.gp.settingDebugLevel >= 2)
+                stwa.util.addDebugMsg(2, "I", "isFileSelected Include result:" + filtered);
+        }
+        if (stwa.fileFilterExclude == null) {
+            //nop
+        } else {
+            mt = stwa.fileFilterExclude.matcher(temp_fid);
+            if (mt.find()) filtered = false;
+            if (stwa.gp.settingDebugLevel >= 2)
+                stwa.util.addDebugMsg(2, "I", "isFileSelected Exclude result:" + filtered);
+        }
+        if (stwa.gp.settingDebugLevel >= 2)
+            stwa.util.addDebugMsg(2, "I", "isFileSelected result:" + filtered);
+        return filtered;
+    }
+
+    static final public boolean isFileSelectedVer1(SyncThreadWorkArea stwa, SyncTaskItem sti, String url) {
+        boolean filtered = false;
+        Matcher mt;
+
+        if (!sti.isSyncProcessRootDirFile()) {//「root直下のファイルは処理するオプションが無効
+            String tmp_d = "", tmp_url = url;
+            if (url.startsWith("/")) tmp_url = url.substring(1);
+
+            if (sti.getMasterDirectoryName().equals("")) {
+                if (tmp_url.substring(tmp_url.length()).equals("/"))
+                    tmp_d = tmp_url.substring(0, tmp_url.length() - 1);
+                else tmp_d = tmp_url;
+            } else {
+                if (tmp_url.substring(tmp_url.length()).equals("/"))
+                    tmp_d = tmp_url.replace(sti.getMasterDirectoryName() + "/", "");
+                else tmp_d = tmp_url.replace(sti.getMasterDirectoryName(), "");
+            }
+
+            if (tmp_d.indexOf("/") < 0) {
+                //file is in root of master, ignore it
                 if (stwa.gp.settingDebugLevel >= 2)
                     stwa.util.addDebugMsg(2, "I", "isFileSelected not filtered, " +
                             "because Master Dir not processed was effective");
