@@ -377,7 +377,7 @@
         <string name="msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified">%s existe déjà.</string>
         <string name="msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified">%s existe déjà.</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_title">Modifier le filtre</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_add">Ajouter</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Supprimer</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Afficher les dossiers</string>
