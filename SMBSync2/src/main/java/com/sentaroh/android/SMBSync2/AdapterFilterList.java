@@ -162,7 +162,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
                     if (o.getFilter().startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(false);
-                    } else if (o.getFilter().startsWith("*/") || o.getFilter().contains("/*/")) {
+                    } else if (o.getFilter().startsWith("*/")) {
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(true);
                     } else {

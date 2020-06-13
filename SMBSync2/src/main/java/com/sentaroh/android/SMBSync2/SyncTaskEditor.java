@@ -5092,7 +5092,7 @@ public class SyncTaskEditor extends DialogFragment {
             if (ctvSyncSpecificSubDir.isChecked()) {
                 if (n_sti.getDirFilter().size() == 0) {
                     result = mContext.getString(R.string.msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified);
-                    error_detected = true;//+++++++++++ added, to check if ok
+                    error_detected = true;
                 }
             }
         }
@@ -5104,13 +5104,13 @@ public class SyncTaskEditor extends DialogFragment {
                     String filter_inc_exc=item.substring(0,1);
                     String filter_value=item.substring(1);
                     if (filter_inc_exc.equals("I")) {
-                        if (filter_value.startsWith("*/") || filter_value.contains("/*/")) {//ends with /* ok to verify!!!!!!!!!!!!!!!!
+                        if (filter_value.startsWith("*/")) {
                             error_filter+=filter_value+";";
                             error_detected = true;
                         }
                     }
                 }
-                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_asterisk_only_folder_name_error, error_filter);
+                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error, error_filter);
             }
         }
 

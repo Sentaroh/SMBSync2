@@ -3224,7 +3224,7 @@ public class SyncTaskUtil {
 
                     AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(newfilter, true);
                     fli.setUseFilterV2(true);
-                    if (newfilter.startsWith("*/") || newfilter.contains("/*/")) fli.setInclude(false);
+                    if (newfilter.startsWith("*/")) fli.setInclude(false);
                     filterAdapter.add(fli);
                 } else {
                     filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
@@ -3322,14 +3322,14 @@ public class SyncTaskUtil {
         for(int i=0;i<filter_adapter.getCount();i++) {
             AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
             if (!fli.isDeleted() && fli.isUseFilterV2() && fli.isInclude()) {
-                if (fli.getFilter().startsWith("*/") || fli.getFilter().contains("/*/")) {//ends with /* ok to verify!!!!!!!!!!!!!!!!
+                if (fli.getFilter().startsWith("*/")) {
                     error_filters=fli.getFilter();
                     break;
                 }
             }
         }
         if (!error_filters.equals("")) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_asterisk_only_folder_name_edit_dlg_error, error_filters));
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error, error_filters));
             CommonDialog.setViewEnabled(mActivity, ok_btn, false);
             result=false;
         }
