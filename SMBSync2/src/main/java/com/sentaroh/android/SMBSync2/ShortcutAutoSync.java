@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -32,6 +33,8 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 
+import com.sentaroh.android.Utilities.Dialog.MessageDialogAppFragment;
+import com.sentaroh.android.Utilities.Dialog.MessageDialogFragment;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 
@@ -131,7 +134,28 @@ public class ShortcutAutoSync extends FragmentActivity {
                     mUtil.addDebugMsg(1,"I","startService issued");
                     Intent in = new Intent(mContext, SyncService.class);
                     in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
-                    mContext.startService(in);
+                    try {
+                        mContext.startService(in);
+                        terminateShortcut();
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                        NotifyEvent ntfy=new NotifyEvent(c);
+                        ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                            @Override
+                            public void positiveResponse(Context context, Object[] objects) {
+                                terminateShortcut();
+                            }
+
+                            @Override
+                            public void negativeResponse(Context context, Object[] objects) {
+
+                            }
+                        });
+                        final FragmentManager fm=getFragmentManager();
+                        MessageDialogAppFragment mdf=MessageDialogAppFragment.newInstance(false, "E",
+                                "SMBSync2", "ShortcutAutoSync start service error\n"+e.getMessage());
+                        mdf.showDialog(fm, mdf, ntfy);
+                    }
 //                    if (Build.VERSION.SDK_INT<26) {//Android 5/6/7
 //                        mUtil.addDebugMsg(1,"I","startService issued");
 //                        Intent in = new Intent(mContext, SyncService.class);
@@ -144,7 +168,6 @@ public class ShortcutAutoSync extends FragmentActivity {
 //                        in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                        mContext.startActivity(in);
 //                    }
-                    terminateShortcut();
                 }
 
                 @Override
