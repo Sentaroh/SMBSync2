@@ -2905,7 +2905,7 @@ public class SyncTaskUtil {
 
     }
 
-    public void editFileFilterDlg(final ArrayList<String> file_filter, final NotifyEvent p_ntfy) {
+    public void editFileFilterDlg(final ArrayList<String> file_filter, final NotifyEvent p_ntfy, boolean use_dir_filter_v2) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
         final AdapterFilterList filterAdapter;
 
@@ -2919,6 +2919,7 @@ public class SyncTaskUtil {
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
+        final LinearLayout ll_file_filter_v2_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_file_v2_guide_ll);
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
@@ -2928,6 +2929,9 @@ public class SyncTaskUtil {
 
         filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList);
         ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
+
+        if (use_dir_filter_v2) ll_file_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
+        else ll_file_filter_v2_guide.setVisibility(LinearLayout.GONE);
 
         for (int i = 0; i < file_filter.size(); i++) {
             String inc = file_filter.get(i).substring(0, 1);
@@ -3076,7 +3080,7 @@ public class SyncTaskUtil {
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
-        final LinearLayout ll_filter_v2_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_v2_guide_ll);
+        final LinearLayout ll_dir_filter_v2_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_dir_v2_guide_ll);
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
@@ -3092,8 +3096,8 @@ public class SyncTaskUtil {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_select_edit_msg);
         final Button dirbtn = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
 
-        if (use_dir_filter_v2) ll_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
-        else ll_filter_v2_guide.setVisibility(LinearLayout.GONE);
+        if (use_dir_filter_v2) ll_dir_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
+        else ll_dir_filter_v2_guide.setVisibility(LinearLayout.GONE);
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 

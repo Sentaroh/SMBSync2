@@ -377,11 +377,12 @@
         <string name="msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified">IPアドレスが重複しています。名前=%s</string>
         <string name="msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified">アクセスポイント名が重複しています。名前=%s</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_title">フィルター編集</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_add">追加</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">削除</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">ディレクトリ一覧</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">除外</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all name files: file1;*.txt;*.jpg;file*\n- filter selected file: path/to/file;path/to/thumbnails*.jpg\n- file path filter is relative to Master\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">ファイル フィルター</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">フィルター</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">選択</string>
@@ -425,7 +426,7 @@
         <string name="msgs_profile_sync_task_sync_option_sync_when_charging">充電中の時だけ同期を開始する</string>
         <string name="msgs_profile_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">拡張されたディレクトリ選択/除外フィルタを使用する</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new directory filter v2</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new filter version 2</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">変更するとディレクトリーフィルターの指定によっては同期するファイルが変わり予期せぬファイルの削除や上書きが発生する可能性があります。テストモードで実行して確認するか、テストフォルダーを作成して同期結果を確認することを強くお勧めします。</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Include filter must have Master as root path. Either change the filters as \"Exlude\" or remove any leading \"*/\" characters from the below filters:\n%s".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Include filter %s must have Master as root path. Either change the filter to \"Exlude\" or remove leading \"*/\".</string>

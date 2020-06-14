@@ -377,11 +377,12 @@
         <string name="msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified">%s уже существует.</string>
         <string name="msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified">%s уже существует.</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_title">Изменить фильтр</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_add">Добавить</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Удалить</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Список каталога</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Исключить</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all name files: file1;*.txt;*.jpg;file*\n- filter selected file: path/to/file;path/to/thumbnails*.jpg\n- file path filter is relative to Master\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Фильтр файла</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Включать</string>
@@ -425,7 +426,7 @@
         <string name="msgs_profile_sync_task_sync_option_sync_when_charging">Выполнять синхронизирующие задачи только при зарядке</string>
         <string name="msgs_profile_sync_task_sync_option_test_mode">Тестовый режим (не копировать и не удалять файлы)</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Использовать расширенный фильтр выбора каталогов</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new directory filter v2</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new filter version 2</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Изменение фильтра каталогов может привести к неожиданному удалению или перезаписи файлов, что может изменить синхронизированные файлы. Настоятельно рекомендуется запустить его в тестовом режиме для проверки или создать тестовую папку для проверки результатов синхронизации.</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Include filter must have Master as root path. Either change the filters as \"Exlude\" or remove any leading \"*/\" characters from the below filters:\n%s".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Include filter %s must have Master as root path. Either change the filter to \"Exlude\" or remove leading \"*/\".</string>

@@ -2879,7 +2879,7 @@ public class SyncTaskEditor extends DialogFragment {
 
     }
 
-    private void invokeEditFileFilterDlg(Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg) {
+    private void invokeEditFileFilterDlg(Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg, boolean use_dir_filter_v2) {
         final TextView dlg_file_filter = (TextView) dialog.findViewById(R.id.sync_filter_edit_file_filter_btn);
         NotifyEvent ntfy = new NotifyEvent(mContext);
         //Listen setRemoteShare response
@@ -2896,7 +2896,7 @@ public class SyncTaskEditor extends DialogFragment {
             }
 
         });
-        mTaskUtil.editFileFilterDlg(n_sti.getFileFilter(), ntfy);
+        mTaskUtil.editFileFilterDlg(n_sti.getFileFilter(), ntfy, use_dir_filter_v2);
 
     }
 
@@ -4402,7 +4402,7 @@ public class SyncTaskEditor extends DialogFragment {
         // file filterボタンの指定
         file_filter_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                invokeEditFileFilterDlg(mDialog, n_sti, type, dlg_msg);
+                invokeEditFileFilterDlg(mDialog, n_sti, type, dlg_msg, ctUseDirectoryFilterV2.isChecked());
             }
         });
         // directory filterボタンの指定
