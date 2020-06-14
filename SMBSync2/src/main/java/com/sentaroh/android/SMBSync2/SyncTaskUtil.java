@@ -3000,7 +3000,7 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
-                    String invalid_char=isContainsInvalidCharacter(s.toString(), FILE_FILTER_INVALID_CHARACTER);
+                    String invalid_char= checkFilterInvalidCharacter(s.toString(), FILE_FILTER_INVALID_CHARACTER);
                     if (invalid_char!=null) {
                         String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
                         dlg_msg.setText(String.format(mtxt, invalid_char));
@@ -3076,7 +3076,7 @@ public class SyncTaskUtil {
 
     final private static String[] FILE_FILTER_INVALID_CHARACTER=new String[]{"/"};
     final private static String[] DIRECTORY_FILTER_INVALID_CHARACTER=new String[]{"\"", ":", "\\", "*", ">", "<", "|"};
-    private String isContainsInvalidCharacter(String in, String[] invalid_char) {
+    private String checkFilterInvalidCharacter(String in, String[] invalid_char) {
         if (in==null || invalid_char==null) return null;
         for(String item:invalid_char) {
             if (in.contains(item)) return item;
@@ -3404,7 +3404,7 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 } else {
-                    String invalid_char=isContainsInvalidCharacter(s.toString(), FILE_FILTER_INVALID_CHARACTER);
+                    String invalid_char= checkFilterInvalidCharacter(s.toString(), FILE_FILTER_INVALID_CHARACTER);
                     if (invalid_char!=null) {
                         String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
                         dlg_msg.setText(String.format(mtxt, invalid_char));
