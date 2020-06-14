@@ -2734,23 +2734,26 @@ public class SyncThread extends Thread {
         else return isFileSelectedVer1(stwa, sti, url);
     }
 
-    //match files agains file filters, url=abs dir to file (master/path/to/filename)
+    //match files against file filters, url= dir to file (master/path/to/filename)
+    //if file in root of master: url == file_name
     static final public boolean isFileSelectedVer2(SyncThreadWorkArea stwa, SyncTaskItem sti, String url) {
-        boolean filtered = false;
+        boolean result = false;
+        boolean inc = false;
+        boolean exc = false;
         Matcher mt;
+        String abs_url = url;
+        if (url.startsWith("/")) abs_url = url.substring(1);
 
         if (!sti.isSyncProcessRootDirFile()) {//「root直下のファイルは処理するオプションが無効
-            String tmp_d = "", tmp_url = url;
-            if (url.startsWith("/")) tmp_url = url.substring(1);
-
+            String tmp_d = "";
             if (sti.getMasterDirectoryName().equals("")) {
-                if (tmp_url.substring(tmp_url.length()).equals("/"))
-                    tmp_d = tmp_url.substring(0, tmp_url.length() - 1);
-                else tmp_d = tmp_url;
+                if (abs_url.substring(abs_url.length()).equals("/"))
+                    tmp_d = abs_url.substring(0, abs_url.length() - 1);
+                else tmp_d = abs_url;
             } else {
-                if (tmp_url.substring(tmp_url.length()).equals("/"))
-                    tmp_d = tmp_url.replace(sti.getMasterDirectoryName() + "/", "");
-                else tmp_d = tmp_url.replace(sti.getMasterDirectoryName(), "");
+                if (abs_url.substring(abs_url.length()).equals("/"))
+                    tmp_d = abs_url.replace(sti.getMasterDirectoryName() + "/", "");
+                else tmp_d = abs_url.replace(sti.getMasterDirectoryName(), "");
             }
 
             if (tmp_d.indexOf("/") < 0) {
@@ -2762,27 +2765,40 @@ public class SyncThread extends Thread {
             }
         }
 
-        String temp_fid = url.substring(url.lastIndexOf("/") + 1, url.length());
-        if (stwa.fileFilterInclude == null) {
-            // nothing filter
-            filtered = true;
-        } else {
-            mt = stwa.fileFilterInclude.matcher(temp_fid);
-            if (mt.find()) filtered = true;
+        String file_basename=abs_url.substring(abs_url.lastIndexOf("/") + 1, abs_url.length());
+        if (stwa.fileFilterExclude != null) {//exclude filter
+            mt = stwa.fileFilterExclude.matcher(file_basename);
+            exc = mt.find();
+            if (!exc && stwa.fileFilterExclude.toString().contains("/")) {//file filter contains a path (leading "/" is removed during compileFilter()
+                mt = stwa.fileFilterExclude.matcher(abs_url);
+                exc = mt.find();
+            }
             if (stwa.gp.settingDebugLevel >= 2)
-                stwa.util.addDebugMsg(2, "I", "isFileSelected Include result:" + filtered);
+                stwa.util.addDebugMsg(2, "I", "isFileSelected Exclude result:" + exc);
         }
-        if (stwa.fileFilterExclude == null) {
-            //nop
-        } else {
-            mt = stwa.fileFilterExclude.matcher(temp_fid);
-            if (mt.find()) filtered = false;
+
+        if (!exc) {
+            if (stwa.fileFilterInclude == null) inc = true;//no include filter
+            else {
+                mt = stwa.fileFilterInclude.matcher(file_basename);
+                inc = mt.find();
+                if (!inc && stwa.fileFilterInclude.toString().contains("/")) {//file filter contains a path (leading "/" is removed during compileFilter()
+                    mt = stwa.fileFilterInclude.matcher(abs_url);
+                    inc = mt.find();
+                }
+            }
             if (stwa.gp.settingDebugLevel >= 2)
-                stwa.util.addDebugMsg(2, "I", "isFileSelected Exclude result:" + filtered);
+                stwa.util.addDebugMsg(2, "I", "isFileSelected Include result:" + inc);
         }
+
+        if (exc) result = false;
+        else if (inc) result = true;
+        else result = false;
+
         if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", "isFileSelected result:" + filtered);
-        return filtered;
+            stwa.util.addDebugMsg(2, "I", "isFileSelected result:"+result + " url="+url + " file_basename="+file_basename);
+
+        return result;
     }
 
     static final public boolean isFileSelectedVer1(SyncThreadWorkArea stwa, SyncTaskItem sti, String url) {
@@ -3292,16 +3308,20 @@ public class SyncThread extends Thread {
                 String rem_filter=filter;
                 while(rem_filter.indexOf(";;")>=0) rem_filter=rem_filter.replaceAll(";;",";");
                 if (rem_filter.endsWith(";")) rem_filter=rem_filter.substring(0,rem_filter.length()-1);
-                if (rem_filter.startsWith(";")) rem_filter=rem_filter.replaceFirst(";","");
+                if (rem_filter.startsWith(";")) rem_filter=rem_filter.replaceFirst(";","");//do not use substring(), case rem_filter==";"
                 if (prefix.equals("I")) {//include filter, support ";" separator in same filter entry
                     String[] rem_filter_array = rem_filter.split(";");
                     for (String filter_item : rem_filter_array) {
+                        //if filter contains "/", it is a path, remove leading "/" because file filter is always relative to Master
+                        if (filter_item.startsWith("/")) filter_item = filter_item.replaceFirst("/","");//do not use substring(), case filter_item=="/"
                         ffinc = ffinc + cni + "^"+ MiscUtil.convertRegExp(filter_item)+"$";
                         cni = "|";
                     }
                 } else {//exclude filter, support ";" separator in same filter entry
                     String[] rem_filter_array = rem_filter.split(";");
                     for (String filter_item : rem_filter_array) {
+                        //if filter contains "/", it is a path, remove leading "/" because file filter is always relative to Master
+                        if (filter_item.startsWith("/")) filter_item = filter_item.replaceFirst("/","");//do not use substring(), case filter_item=="/"
                         ffexc = ffexc + cne + "^"+ MiscUtil.convertRegExp(filter_item)+"$";
                         cne = "|";
                     }
@@ -3354,7 +3374,9 @@ public class SyncThread extends Thread {
                         if (!filter_item.startsWith("*")) pre_str = "^";//force match from begining
                         else pre_str = "";
 
-                        if (!filter_item.endsWith("/") && !filter_item.endsWith("*")) suf_str = "/";//match exact path name: filter==/cache -> master/cache/*
+                        //match exact path name: filter==/cache -> master/cache/*
+                        //empty folders will be added in target. To not add them when /cache is specified instead of /cache/: add code to recompile pattern in isDirectorytoBeProcessed()
+                        if (!filter_item.endsWith("/") && !filter_item.endsWith("*")) suf_str = "/";
                         else suf_str = "";
 
                         dfexc = pre_str + MiscUtil.convertRegExp(filter_item + suf_str);
