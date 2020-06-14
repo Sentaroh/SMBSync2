@@ -2600,7 +2600,7 @@ public class SyncTaskUtil {
 
                 });
                 editFilter(idx, filterAdapter, fli, fli.getFilter(),
-                        mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_edit_title), ntfy);
+                        mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_edit_title), ntfy, null);
             }
         });
 
@@ -2797,7 +2797,7 @@ public class SyncTaskUtil {
 
                 });
                 editFilter(idx, filterAdapter, fli, fli.getFilter(),
-                        mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_edit_title), ntfy);
+                        mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_edit_title), ntfy, null);
             }
         });
 
@@ -2990,7 +2990,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context c, Object[] o) {}
 
                 });
-                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy);
+                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy, FILE_FILTER_INVALID_CHARACTER);
             }
         });
 
@@ -3000,6 +3000,14 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
+                    String invalid_char=isContainsInvalidCharacter(s.toString(), FILE_FILTER_INVALID_CHARACTER);
+                    if (invalid_char!=null) {
+                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
+                        dlg_msg.setText(String.format(mtxt, invalid_char));
+                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        return;
+                    }
                     if (isFilterExists(s.toString().trim(), filterAdapter)) {
                         String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                         dlg_msg.setText(String.format(mtxt, s.toString().trim()));
@@ -3064,6 +3072,16 @@ public class SyncTaskUtil {
             }
         });
         dialog.show();
+    }
+
+    final private static String[] FILE_FILTER_INVALID_CHARACTER=new String[]{"/"};
+    final private static String[] DIRECTORY_FILTER_INVALID_CHARACTER=new String[]{"\"", ":", "\\", "*", ">", "<", "|"};
+    private String isContainsInvalidCharacter(String in, String[] invalid_char) {
+        if (in==null || invalid_char==null) return null;
+        for(String item:invalid_char) {
+            if (in.contains(item)) return item;
+        }
+        return null;
     }
 
     public void editDirFilterDlg(final SyncTaskItem sti, final NotifyEvent p_ntfy, boolean use_dir_filter_v2) {
@@ -3160,7 +3178,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context c, Object[] o) {
                     }
                 });
-                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy);
+                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy, DIRECTORY_FILTER_INVALID_CHARACTER);
             }
         });
 
@@ -3341,7 +3359,8 @@ public class SyncTaskUtil {
     }
 
     private void editFilter(final int edit_idx, final AdapterFilterList fa,
-                            final AdapterFilterList.FilterListItem fli, final String filter, String title_text, final NotifyEvent p_ntfy) {
+                            final AdapterFilterList.FilterListItem fli, final String filter, String title_text, final NotifyEvent p_ntfy,
+                            final String[] invalid_char) {
 
         // カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
@@ -3385,6 +3404,13 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 } else {
+                    String invalid_char=isContainsInvalidCharacter(s.toString(), FILE_FILTER_INVALID_CHARACTER);
+                    if (invalid_char!=null) {
+                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
+                        dlg_msg.setText(String.format(mtxt, invalid_char));
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        return;
+                    }
                     String new_filter=mUtil.removeRedundantWildcard(s.toString(), "*");
                     if (s.length()!=new_filter.length()) {
                         dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_redundant_wildcard));

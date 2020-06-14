@@ -377,17 +377,17 @@
         <string name="msgs_profile_sync_task_dlg_wifi_duplicate_addr_specified">%s уже существует.</string>
         <string name="msgs_profile_sync_task_dlg_wifi_duplicate_ap_specified">%s уже существует.</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_title">Изменить фильтр</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_add">Добавить</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Удалить</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Список каталога</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Исключить</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all name files: file1;*.txt;*.jpg;file*\n- filter selected file: path/to/file;path/to/thumbnails*.jpg\n- file path filter is relative to Master\n- exclude filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all name files: file1;*.txt;*.jpg;file*\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Фильтр файла</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Включать</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Не определенный</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">File filter contains invalid character. Char=%s</string>
         <string name="msgs_profile_sync_task_filter_title">Фильтры файла:</string>
         <string name="msgs_profile_sync_task_sync_direction_two_way">Используйте двунаправленную синхронизацию</string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Включить следующие фильтры:</string>
