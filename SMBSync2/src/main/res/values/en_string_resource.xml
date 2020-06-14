@@ -387,7 +387,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filter</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Include</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Not specified</string>
-        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">File filter contains invalid character. Char=%s</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">The filter contains an invalid character. Char=%s</string>
         <string name="msgs_profile_sync_task_filter_title">File filters:</string>
         <string name="msgs_profile_sync_task_sync_direction_two_way">Use Two-Way sync</string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Include the following filters:</string>
@@ -428,7 +428,7 @@
         <string name="msgs_profile_sync_task_sync_option_test_mode">Test mode (do not copy or delete files)</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Use enhanced directory selection filter</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new filter version 2</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Changing the directory filter may result in unexpected file deletion or overwriting, which may change the synchronized files. It is highly recommended that you run it in test mode to check it, or create a test folder to check the synchronization results.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Changing the directory filter version may result in unexpected file deletion or overwriting, which may change the synchronized files. It is highly recommended that you run it in test mode to check it, or create a test folder to check the synchronization results.</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Include filter must have Master as root path. Either change the filters as \"Exlude\" or remove any leading \"*/\" characters from the below filters:\n%s".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Include filter %s must have Master as root path. Either change the filter to \"Exlude\" or remove leading \"*/\".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Whole directory prefix \"\\\\\" is no longer valid. Replace it by \"*/\" wildcard in the below filters:\n%s</string>
