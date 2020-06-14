@@ -322,17 +322,17 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/edit_sync_task_option_ll_sync_fix_directory_filter_bug"
+                android:id="@+id/edit_sync_task_option_ll_sync_use_directory_filter_v2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_ctv_sync_fix_directory_filter_bug"
+                    android:id="@+id/edit_sync_task_option_ctv_sync_use_directory_filter_v2"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
-                    android:text="@string/msgs_profile_sync_task_sync_option_fix_directory_filter_bug_title"
+                    android:text="@string/msgs_profile_sync_task_sync_option_use_directory_filter_v2_title"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
                 <include layout="@layout/divider_line1" />
             </LinearLayout>

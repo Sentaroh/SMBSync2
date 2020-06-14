@@ -381,10 +381,13 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Удалить</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Список каталога</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Исключить</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all name files: file1;*.txt;*.jpg;file*\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Фильтр файла</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Включать</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Не определенный</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">File filter contains invalid character. Char=%s</string>
         <string name="msgs_profile_sync_task_filter_title">Фильтры файла:</string>
         <string name="msgs_profile_sync_task_sync_direction_two_way">Используйте двунаправленную синхронизацию</string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Включить следующие фильтры:</string>
@@ -424,10 +427,12 @@
         <string name="msgs_profile_sync_task_sync_option_sync_when_charging">Выполнять синхронизирующие задачи только при зарядке</string>
         <string name="msgs_profile_sync_task_sync_option_test_mode">Тестовый режим (не копировать и не удалять файлы)</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Использовать расширенный фильтр выбора каталогов</string>
-        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_title">Fix directory filter bug</string>
-        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_warning">Изменение фильтра каталогов может привести к неожиданному удалению или перезаписи файлов, что может изменить синхронизированные файлы. Настоятельно рекомендуется запустить его в тестовом режиме для проверки или создать тестовую папку для проверки результатов синхронизации.</string>
-        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_error">Измените фильтр каталогов %s на \"Исключить\".</string>
-        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_change_exclude">Пожалуйста, измените следующий фильтр каталога на \"Исключить\".\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new filter version 2</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Изменение фильтра каталогов может привести к неожиданному удалению или перезаписи файлов, что может изменить синхронизированные файлы. Настоятельно рекомендуется запустить его в тестовом режиме для проверки или создать тестовую папку для проверки результатов синхронизации.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Include filter must have Master as root path. Either change the filters as \"Exlude\" or remove any leading \"*/\" characters from the below filters:\n%s".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Include filter %s must have Master as root path. Either change the filter to \"Exlude\" or remove leading \"*/\".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Whole directory prefix \"\\\\\" is no longer valid. Replace it by \"*/\" wildcard in the below filters:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Filter %s has old whole directory prefix \"\\\\\". Replace it by \"*/\" character (exp. %s).</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Сетевые настройки</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Опции Wifi AP:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Запись файлов непосредственно в папку SMB без использования временных файлов</string>
@@ -520,7 +525,7 @@
         <string name="msgs_mirror_confirm_yesall_btn">Да для всех последующих</string>
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">Время последнего изменения файла было использовано, поскольку дату и время съемки невозможно получить из EXIF ​​/ метаданных файла. Файл =</string>
         <string name="msgs_mirror_taken_date_convert_error">Время последнего изменения файла было использовано, поскольку произошла ошибка при преобразовании даты съемки. Файл =</string>
-        <string name="msgs_mirror_whole_directory_filter_error">Каталожный фильтр %s не может быть использован. Отредактируйте задание синхронизации и измените его на \"Исключить\".</string>
+        <string name="msgs_mirror_whole_directory_filter_error">Каталожный фильтр %s не может быть использован. Отредактируйте задание синхронизации и измените его на (and fix the invalid filter).</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Синхронизация прервана, поскольку в целевой папке существует каталог с тем же именем, что и у файла. Файл =</string>
         <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Синхронизация была отменена, поскольку длина имени файла превышает 255 байтов. Число байтов в имени файла = %s, Имя файла = %s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Синхронизация отменена, поскольку SDCARD не смонтирован.</string>

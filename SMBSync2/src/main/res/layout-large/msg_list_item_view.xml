@@ -65,7 +65,7 @@
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-        <TextView
+        <com.sentaroh.android.Utilities.Widget.NonWordwrapTextView
             android:id="@+id/msg_list_view_item_msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

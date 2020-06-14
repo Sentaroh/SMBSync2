@@ -127,7 +127,7 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
 //            holder.tv_row_msg.setBreakStrategy(Layout.BREAK_STRATEGY_SIMPLE);
             holder.tv_row_type = (TextView) v.findViewById(R.id.msg_list_view_item_type);
             holder.tv_row_title = (TextView) v.findViewById(R.id.msg_list_view_item_title);
-            holder.tv_row_msg = (TextView) v.findViewById(R.id.msg_list_view_item_msg);
+            holder.tv_row_msg = (NonWordwrapTextView) v.findViewById(R.id.msg_list_view_item_msg);
             holder.tv_row_time = (TextView) v.findViewById(R.id.msg_list_view_item_time);
             holder.tv_row_date = (TextView) v.findViewById(R.id.msg_list_view_item_date);
 //        	holder.tv_row_msg.setTypeface(msgTypeFace);
@@ -262,8 +262,8 @@ public class AdapterSyncMessage extends ArrayAdapter<SyncMessageItem> {
 
     private class ViewHolder {
         //		TextView tv_row_cat;
-        TextView tv_row_time, tv_row_date, tv_row_title, tv_row_msg, tv_row_type;
-        NonWordwrapTextView tv_row_path;
+        TextView tv_row_time, tv_row_date, tv_row_title, tv_row_type;
+        NonWordwrapTextView tv_row_msg, tv_row_path;
 //		Configuration config;
     }
 }

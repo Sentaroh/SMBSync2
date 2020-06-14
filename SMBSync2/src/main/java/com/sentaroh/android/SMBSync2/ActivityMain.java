@@ -450,6 +450,7 @@ public class ActivityMain extends AppCompatActivity {
                 ", getChangingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
         setActivityForeground(false);
         if (!isTaskTermination) saveTaskData();
+        CommonUtilities.saveMsgList(mGp);//Save last updated message tab list
     }
 
     @Override
@@ -486,6 +487,8 @@ public class ActivityMain extends AppCompatActivity {
                 ", changingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
         setActivityForeground(false);
         unsetCallbackListener();
+
+        CommonUtilities.saveMsgList(mGp);
 
         if (isFinishing()) {
             deleteTaskData();
@@ -4362,6 +4365,7 @@ public class ActivityMain extends AppCompatActivity {
                         mGp.msgListView.setSelection(0);
                         if (mGp.msgListAdapter!=null) mGp.msgListAdapter.clear();
                         mUtil.addLogMsg("W", getString(R.string.msgs_log_msg_cleared));
+                        CommonUtilities.saveMsgList(mGp);
                     }
 
                     @Override

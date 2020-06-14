@@ -381,10 +381,13 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Delete</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Directory list</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Exclude</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all name files: file1;*.txt;*.jpg;file*\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">File filter</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filter</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Include</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Not specified</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">File filter contains invalid character. Char=%s</string>
         <string name="msgs_profile_sync_task_filter_title">File filters:</string>
         <string name="msgs_profile_sync_task_sync_direction_two_way">Use Two-Way sync</string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Include the following filters:</string>
@@ -424,10 +427,12 @@
         <string name="msgs_profile_sync_task_sync_option_sync_when_charging">Execute sync tasks only when charging</string>
         <string name="msgs_profile_sync_task_sync_option_test_mode">Test mode (do not copy or delete files)</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Use enhanced directory selection filter</string>
-        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_title">Fix directory filter bug</string>
-        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_warning">Changing the directory filter may result in unexpected file deletion or overwriting, which may change the synchronized files. It is highly recommended that you run it in test mode to check it, or create a test folder to check the synchronization results.</string>
-        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_error">Change the directory filter %s to \"Exclude\".</string>
-        <string name="msgs_profile_sync_task_sync_option_fix_directory_filter_bug_change_exclude">Please change the following directory filter to \"Exclude\".\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new filter version 2</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Changing the directory filter may result in unexpected file deletion or overwriting, which may change the synchronized files. It is highly recommended that you run it in test mode to check it, or create a test folder to check the synchronization results.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Include filter must have Master as root path. Either change the filters as \"Exlude\" or remove any leading \"*/\" characters from the below filters:\n%s".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Include filter %s must have Master as root path. Either change the filter to \"Exlude\" or remove leading \"*/\".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Whole directory prefix \"\\\\\" is no longer valid. Replace it by \"*/\" wildcard in the below filters:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Filter %s has old whole directory prefix \"\\\\\". Replace it by \"*/\" character (exp. %s).</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Network Option:</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Wifi AP Options:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Write files directly to the SMB folder without using temporary files</string>
@@ -520,7 +525,7 @@
         <string name="msgs_mirror_confirm_yesall_btn">Yes for all subsequent</string>
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">The last modified time of the file was used because the shooting date and time cannot be obtained from the EXIF/metadata of the file. File=</string>
         <string name="msgs_mirror_taken_date_convert_error">The last modified time of the file was used because an error occurred in the conversion of the shooting date. File=</string>
-        <string name="msgs_mirror_whole_directory_filter_error">Directory filter %s cannot be used. Edit the sync task and change it to "Exclude".</string>
+        <string name="msgs_mirror_whole_directory_filter_error">Directory filter %s cannot be used. Edit the sync task and fix the invalid filter.</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Sync aborted because the target path contains a directory with the same name as the file being copied. File=</string>
         <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Synchronization was cancelled because the length of the file name exceeds 255 characters. File name chars=%s, File name=%s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Sync cancelled because SDCARD is not mounted.</string>

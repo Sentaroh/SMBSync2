@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
+            <com.sentaroh.android.Utilities.Widget.NonWordwrapTextView
                 android:id="@+id/msg_list_view_item_msg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

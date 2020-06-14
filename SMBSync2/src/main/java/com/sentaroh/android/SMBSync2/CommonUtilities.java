@@ -969,6 +969,43 @@ public final class CommonUtilities {
         return isCharging;
     }
 
+    public String removeRedundantWildcard(String str, String wc) {
+        String new_str=str;
+        if (str != null && wc != null && wc.length() != 0) {
+            String wc_dup=wc + wc;
+            while(new_str.contains(wc_dup)) {
+                new_str=new_str.replace(wc_dup, wc);
+            }
+        }
+        return new_str;
+    }
+
+    public boolean isPathWildcardOnly(String str) {
+        boolean isOnlyWildcard=false;
+        String new_str=removeRedundantWildcard(str, "*");
+        if (new_str.equals("*") || new_str.equals("*.*")) isOnlyWildcard=true;
+        if (!isOnlyWildcard) {
+            new_str=new_str.replace("/", "");
+            if (removeRedundantWildcard(new_str, "*").equals("*")) isOnlyWildcard=true;
+        }
+        return isOnlyWildcard;
+    }
+
+    //no longer used
+    public static String removeRedundantSeparator(String input, String separator, boolean remove_start, boolean remove_end) {
+        String out=input;
+        while(out.indexOf(separator+separator)>=0) {
+            out=out.replaceAll(separator+separator, separator);
+        }
+        if (remove_start) {
+            out=out.startsWith(separator)?out.substring(1):out;
+        }
+        if (remove_end) {
+            out=out.endsWith(separator)?out.substring(0, out.length()-1):out;
+        }
+        return out;
+    }
+
     public static String trimTrailingBlank(String s) {
         if (s == null) return null;
 
