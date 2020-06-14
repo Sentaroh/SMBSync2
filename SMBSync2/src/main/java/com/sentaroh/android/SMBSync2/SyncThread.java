@@ -2116,16 +2116,17 @@ public class SyncThread extends Thread {
     }
 
     public static void printStackTraceElement(SyncThreadWorkArea stwa, StackTraceElement[] ste) {
-        String print_msg = "";
+        String print_msg = "", ste_msg="", sep="";
         for (int i = 0; i < ste.length; i++) {
-            stwa.util.addLogMsg("E", "", ste[i].toString());
+            ste_msg+=sep+ste[i].toString();
+            sep="\n";
             if (stwa.syncHistoryWriter != null) {
                 print_msg = stwa.util.buildPrintMsg("E", ste[i].toString());
                 stwa.syncHistoryWriter.println(print_msg);
             }
         }
+        stwa.util.addLogMsg(false, false, false, false, "E", stwa.currentSTI.getSyncTaskName(), "", "", ste_msg);
     }
-
     static final public boolean sendConfirmRequest(SyncThreadWorkArea stwa, SyncTaskItem sti, String type, String url) {
         boolean result = true;
         int rc = 0;
