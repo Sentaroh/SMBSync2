@@ -382,7 +382,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Directory list</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Exclude</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all name files: file1;*.txt;*.jpg;file*\n- exclude filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all name files: file1;*.txt;*.jpg;file*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">File filter</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filter</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Include</string>
@@ -429,8 +429,8 @@
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Use enhanced directory selection filter</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new filter version 2</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Changing the directory filter version may result in unexpected file deletion or overwriting, which may change the synchronized files. It is highly recommended that you run it in test mode to check it, or create a test folder to check the synchronization results.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Include filter must have Master as root path. Either change the filters as \"Exlude\" or remove any leading \"*/\" characters from the below filters:\n%s".</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Include filter %s must have Master as root path. Either change the filter to \"Exlude\" or remove leading \"*/\".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Include filter must have Master as root path. Either change the filters as \"Exclude\" or remove any leading \"*/\" characters from the below filters:\n%s".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Include filter %s must have Master as root path. Either change the filter to \"Exclude\" or remove leading \"*/\".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Whole directory prefix \"\\\\\" is no longer valid. Replace it by \"*/\" wildcard in the below filters:\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Filter %s has old whole directory prefix \"\\\\\". Replace it by \"*/\" character (exp. %s).</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Network Option:</string>

@@ -382,7 +382,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Afficher les dossiers</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Exclure</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- exp. inclure: mon/dossier;/doss*/p?ivé*\n- exp. exclure: mon/dossier/exclut;*/dos*ier/pr?vé/*\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre exclut est prioritaire</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- exp. de filtre: fichier1;*.txt;*.jpg;fichier*\n- le filtre Exclure est prioritaire</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- exp. de filtre: fichier1;*.txt;*.jpg;fichier*\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Filtre de fichiers</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filtre</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Inclure</string>
@@ -429,8 +429,8 @@
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Utiliser le filtre amélioré de sélection de dossiers</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Utiliser la version 2 des filtres</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Le changement de version du filtre de répertoire peut entraîner la suppression ou l\'écrasement inattendu de fichiers, ce qui peut modifier les fichiers synchronisés. Il est fortement recommandé de l\'exécuter en mode test pour le vérifier, ou de créer un dossier test pour vérifier les résultats de la synchronisation.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Le filtre inclure doit avoir un chemin relatif au dossier Source. Changer le filtre en \"Exlure\" ou supprimer la séquence \"*/\" du début des filtres suivants:\n%s".</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Le filtre inclure %s doit avoir un chemin relatif au dossier Source. Changer le filtre en \"Exlure\" ou supprimer la séquence \"*/\" du début.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Le filtre inclure doit avoir un chemin relatif au dossier Source. Changer le filtre en \"Exclure\" ou supprimer la séquence \"*/\" du début des filtres suivants:\n%s".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Le filtre inclure %s doit avoir un chemin relatif au dossier Source. Changer le filtre en \"Ecxlure\" ou supprimer la séquence \"*/\" du début.</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Le préfixe \"\\\\\" n\'est plus supporté. Merci de le remplacer par \"*/\" dans les filtres suivants:\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Le filtre %s contient l\'ancien préfixe \"\\\\\". Merci de le remplacer par \"*/\" (exp. %s).</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Options réseau</string>

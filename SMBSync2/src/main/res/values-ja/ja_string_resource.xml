@@ -382,7 +382,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">ディレクトリ一覧</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">除外</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">-選択: path/to/folder;/fo*der/p?th*\n-除外: path/to/folder;*/p?th/to/*\n-フィルターは\";\"で区切ることで複数入力できます\n-除外フィルターが優先されます</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-ファイル名が対象です: file1;*.txt;*.jpg;file*\n-除外が優先されます</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-ファイル名が対象です: file1;*.txt;*.jpg;file*\n-フィルターは\";\"で区切ることで複数入力できます\n-除外が優先されます</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">ファイル フィルター</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">フィルター</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">選択</string>

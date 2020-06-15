@@ -382,7 +382,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Список каталога</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Исключить</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all name files: file1;*.txt;*.jpg;file*\n- exclude filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- отфильтровать все файлы с именами: file1;*.txt;*.jpg;file*.\n- фильтры можно также вводить в той же строке, разделенной \"; \"; \n- фильтры можно также вводить в той же строке, разделенной \"; \".\n - исключить выигрыши фильтров</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Фильтр файла</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Включать</string>
@@ -429,10 +429,10 @@
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Использовать расширенный фильтр выбора каталогов</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new filter version 2</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Изменение фильтра каталогов может привести к неожиданному удалению или перезаписи файлов, что может изменить синхронизированные файлы. Настоятельно рекомендуется запустить его в тестовом режиме для проверки или создать тестовую папку для проверки результатов синхронизации.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Include filter must have Master as root path. Either change the filters as \"Exlude\" or remove any leading \"*/\" characters from the below filters:\n%s".</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Include filter %s must have Master as root path. Either change the filter to \"Exlude\" or remove leading \"*/\".</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Whole directory prefix \"\\\\\" is no longer valid. Replace it by \"*/\" wildcard in the below filters:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Filter %s has old whole directory prefix \"\\\\\". Replace it by \"*/\" character (exp. %s).</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Включенный фильтр должен иметь в качестве корневого пути Master. Или измените фильтры на \ "Exlude\", или удалите ведущие символы \ "*/\" из нижеперечисленных фильтров:\n%s".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Включить фильтр %s должен иметь в качестве корневого пути Master.Или измените фильтр на \"Exclude\", или удалите ведущий \"*/\".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Префикс полного каталога \"\\\\\" больше не действует. Замените его символом \"*/\" в нижеследующих фильтрах:\n%s.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Фильтр %s имеет старый префикс всей директории \"\\\\\". Заменить на \"*/\" символом (exp. %s).</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Сетевые настройки</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Опции Wifi AP:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Запись файлов непосредственно в папку SMB без использования временных файлов</string>
