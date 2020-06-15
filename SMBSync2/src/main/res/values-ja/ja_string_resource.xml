@@ -112,6 +112,10 @@
         <string name="msgs_filter_list_duplicate_filter_specified">%s は既に登録されています。</string>
         <string name="msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed">ワイルドカードのみのフィルターは使用できません。\”NAME*\”のように指定してください。</string>
         <string name="msgs_filter_list_invalid_filter_specified_redundant_wildcard">ワイルドカード(\"*\")が連続して指定されています。重複したワイルドカードを削除してください。例：\"**\”->\"*\"</string>
+        <string name="msgs_filter_list_filter_invalid_include_include_filter" formatted="false">\"%s\"が選択に設定されているため\"%s\"は選択に設定できません。</string>
+        <string name="msgs_filter_list_filter_invalid_exclude_include_filter" formatted="false">\"%s\"が除外に設定されているため\"%s\"は選択に設定できません。</string>
+        <string name="msgs_filter_list_filter_invalid_exclude_exclude_filter" formatted="false">\"%s\"が除外に設定されているため\"%s\"は除外に設定できません。</string>
+        <string name="msgs_filter_list_filter_invalid_filter_duplicated" formatted="false">\"%s\"と\"%s\"は重複しています。</string>
         <string name="msgs_filter_list_filter_deleted">削除済み</string>
         <string name="msgs_hist_cont_label_copy">クリップボードにコピー</string>
         <string name="msgs_hist_cont_label_delete">履歴を削除する</string>
