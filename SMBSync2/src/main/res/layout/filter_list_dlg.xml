@@ -126,6 +126,36 @@
             android:inputType="text" 
             android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/filter_select_edit_add_include_exclude_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="horizontal" >
+
+        <RadioGroup
+            android:id="@+id/filter_select_edit_add_include_exclude_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/filter_select_edit_add_include_exclude_radio_button_include"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/msgs_profile_sync_task_filter_list_dlg_include"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <RadioButton
+                android:id="@+id/filter_select_edit_add_include_exclude_radio_button_exclude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/msgs_profile_sync_task_filter_list_dlg_exclude"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+        </RadioGroup>
+
+    </LinearLayout>
 
     <include layout="@layout/filter_list_dlg_ok_cancel"/>
 

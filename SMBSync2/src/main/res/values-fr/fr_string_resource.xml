@@ -112,9 +112,9 @@
         <string name="msgs_filter_list_duplicate_filter_specified">%s existe déjà.</string>
         <string name="msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed">Le filtre ne peut pas contenir uniquement des caractères génériques. Spécifier un format du type  \"DOSSIER*\".</string>
         <string name="msgs_filter_list_invalid_filter_specified_redundant_wildcard">Plusieurs caractères génériques (\"*\") sont spécifiés à la suite. Veuillez supprimer les caractères redondants. Exp: \"**\"->\"*\"</string>
-        <string name="msgs_filter_list_filter_invalid_include_include_filter" formatted="false">Ne peut pas mettre \"%s\" à la sélection parce qu\'il est réglé pour inclure \"%s\".</string>
-        <string name="msgs_filter_list_filter_invalid_exclude_include_filter" formatted="false">Ne peut pas inclure les \"%\" parce que les \"%\" ont été fixés comme une exclusion.</string>
-        <string name="msgs_filter_list_filter_invalid_exclude_exclude_filter" formatted="false">On ne peut pas fixer de \"%s\" comme exclusion car \"%s\" a été fixé comme une exclusion.</string>
+        <string name="msgs_filter_list_filter_invalid_include_include_filter" formatted="false">On ne peut pas mettre \"%s\" à Inclure parce que \"%s\" est mis à Inclure.</string>
+        <string name="msgs_filter_list_filter_invalid_exclude_include_filter" formatted="false">On ne peut pas mettre \"%s\" à Inclure parce que \"%s\" est mis à Exclure.</string>
+        <string name="msgs_filter_list_filter_invalid_exclude_exclude_filter" formatted="false">Il n\'est pas possible de définir les \"%s\" comme une exclusion car le \"%e\" a été défini comme une exclusion.</string>
         <string name="msgs_filter_list_filter_invalid_filter_duplicated" formatted="false">Les \"%\" et les \"%\" sont dupliqués.</string>
         <string name="msgs_filter_list_filter_deleted">Cette entrée a été supprimée.</string>
         <string name="msgs_hist_cont_label_copy">Copier dans le presse-papier</string>

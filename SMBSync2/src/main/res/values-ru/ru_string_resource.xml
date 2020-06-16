@@ -112,9 +112,9 @@
         <string name="msgs_filter_list_duplicate_filter_specified">%s уже существует.</string>
         <string name="msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed">Фильтры только для дикой природы не могут быть использованы. Пожалуйста, укажите это как \"NAME*\".</string>
         <string name="msgs_filter_list_invalid_filter_specified_redundant_wildcard">Символ подстановки (\"*\") указывается последовательно. Пожалуйста, удалите любые дубликаты подстановочных знаков. Пример: \"**\"->\"*\".</string>
-        <string name="msgs_filter_list_filter_invalid_include_include_filter" formatted="false">Невозможно установить \"%s\" для выбора, потому что он установлен для включения \"%s\".</string>
-        <string name="msgs_filter_list_filter_invalid_exclude_include_filter" formatted="false">Невозможно включить \"%s\", потому что \"%s\" было установлено как исключение.</string>
-        <string name="msgs_filter_list_filter_invalid_exclude_exclude_filter" formatted="false">Не может установить \"%s\" как исключение, потому что \"%s\" было установлено как исключение.</string>
+        <string name="msgs_filter_list_filter_invalid_include_include_filter" formatted="false">Невозможно установить значение \"%s\" в значение Include, так как \"%s\" установлено в значение Include.</string>
+        <string name="msgs_filter_list_filter_invalid_exclude_include_filter" formatted="false">Невозможно установить \"%s\" в значение Include, потому что \"%s\" установлено в значение Exclude.</string>
+        <string name="msgs_filter_list_filter_invalid_exclude_exclude_filter" formatted="false">Не может установить \"%s\" как исключение, потому что \"%e\" было установлено как исключение.</string>
         <string name="msgs_filter_list_filter_invalid_filter_duplicated" formatted="false">%s и \"%s\" дублируются.</string>
         <string name="msgs_filter_list_filter_deleted">Эта запись была удалена.</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
