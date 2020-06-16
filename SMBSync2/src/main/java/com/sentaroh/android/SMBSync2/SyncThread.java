@@ -1391,6 +1391,7 @@ public class SyncThread extends Thread {
         if (!invalid_char.equals("")) {
             String basename = in_str.substring(in_str.lastIndexOf("/") + 1, in_str.length());
             if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) {
+                stwa.totalIgnoreCount++;
                 showMsg(stwa, false, stwa.currentSTI.getSyncTaskName(), "I", in_str, basename,
                         String.format(stwa.context.getString(R.string.msgs_mirror_invalid_file_directory_name_character_skipped), invalid_char),
                         stwa.context.getString(R.string.msgs_mirror_task_file_ignored));
@@ -2127,6 +2128,7 @@ public class SyncThread extends Thread {
         }
         stwa.util.addLogMsg(false, false, false, false, "E", stwa.currentSTI.getSyncTaskName(), "", "", ste_msg);
     }
+
     static final public boolean sendConfirmRequest(SyncThreadWorkArea stwa, SyncTaskItem sti, String type, String url) {
         boolean result = true;
         int rc = 0;
