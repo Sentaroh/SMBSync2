@@ -3084,7 +3084,7 @@ public class SyncTaskUtil {
         dialog.show();
     }
 
-    final private static String[] FILE_FILTER_INVALID_CHARACTER=new String[]{"\"", ":", ">", "<", "|"};
+    final private static String[] FILE_FILTER_INVALID_CHARACTER=new String[]{"\"", ":", ">", "<", "|", "\\"};
     final private static String[] DIRECTORY_FILTER_INVALID_CHARACTER=new String[]{"\"", ":", ">", "<", "|"};
     private String checkFilterInvalidCharacter(String in, String[] invalid_char) {
         if (in==null || invalid_char==null) return null;
@@ -3201,10 +3201,12 @@ public class SyncTaskUtil {
         // Addボタンの指定
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s) {//main dialog to add filters, enable/disable bottom include/exclude buttons
                 if (s.length() != 0) {
                     String new_filter=mUtil.removeRedundantWildcard(s.toString(), "*");
-                    if (new_filter.contains(MATCH_ANY_WHERE_FILTER_PREFIX)) {
+                    String match_anywhere_filter=hasAnyWhereIncludeFilterItem(new_filter);
+                    String has_whole_dir_filter=hasWholeDirectoryFilterItem(new_filter);
+                    if (!match_anywhere_filter.equals("") || !has_whole_dir_filter.equals("")) {//leading "*/" and "\\" are invalid include filter for v1 and v2 filters, provide the hint on add for v2
                         add_exclude_btn.setChecked(true);
                         CommonDialog.setViewEnabled(mActivity, add_include_btn, false);
                     } else {
@@ -3247,38 +3249,36 @@ public class SyncTaskUtil {
         addbtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 dlg_msg.setText("");
-                String newfilter = et_filter.getText().toString();
-                if (mUtil.isPathWildcardOnly(newfilter)) {
+                String new_filter = et_filter.getText().toString();
+                if (mUtil.isPathWildcardOnly(new_filter)) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
                     return;
                 }
-                String dup_filter= getDuplicateFilter(newfilter, filterAdapter);
+                String dup_filter= getDuplicateFilter(new_filter, filterAdapter);
                 if (!dup_filter.equals("")) {
                     String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
-                    dlg_msg.setText(String.format(mtxt, newfilter));
+                    dlg_msg.setText(String.format(mtxt, new_filter));
                     return;
                 }
                 dlg_msg.setText("");
                 if (use_dir_filter_v2) {
-                    if (newfilter.contains(WHOLE_DIRECTORY_FILTER_PREFIX)) {
-                        String[] new_array=newfilter.split(";");
-                        for(String item:new_array) {
-                            if (item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
-                                String suggest_filter = item.replace(WHOLE_DIRECTORY_FILTER_PREFIX, MATCH_ANY_WHERE_FILTER_PREFIX)+ (item.endsWith(MATCH_ANY_WHERE_FILTER_SUFFIX) || item.endsWith("/") ? "":MATCH_ANY_WHERE_FILTER_SUFFIX);
-                                String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
-                                dlg_msg.setText(String.format(mtxt, item, suggest_filter));
-                                return;
-                            }
-                        }
+                    String error_filter=hasWholeDirectoryFilterItem(new_filter);
+                    if (!error_filter.equals("")) {
+                        String suggest_filter = error_filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX, MATCH_ANY_WHERE_FILTER_PREFIX)+ (error_filter.endsWith(MATCH_ANY_WHERE_FILTER_SUFFIX) || error_filter.endsWith("/") ? "":MATCH_ANY_WHERE_FILTER_SUFFIX);
+                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
+                        dlg_msg.setText(String.format(mtxt, error_filter, suggest_filter));
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        return;
                     }
 
-                    String new_filter_value=sortFilterSplitedItem(newfilter);
+                    String new_filter_value=sortFilterSplitedItem(new_filter);
                     AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(new_filter_value, add_include_btn.isChecked());
                     fli.setUseFilterV2(true);
-                    if (newfilter.startsWith(MATCH_ANY_WHERE_FILTER_PREFIX)) fli.setInclude(false);
+                    String match_anywhere_filter=hasAnyWhereIncludeFilterItem(new_filter);
+                    if (!match_anywhere_filter.equals("")) fli.setInclude(false);
                     filterAdapter.add(fli);
                 } else {
-                    filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, add_include_btn.isChecked()));
+                    filterAdapter.add(new AdapterFilterList.FilterListItem(new_filter, add_include_btn.isChecked()));
                 }
                 et_filter.setText("");
                 filterAdapter.setNotifyOnChange(true);
@@ -3352,11 +3352,15 @@ public class SyncTaskUtil {
     private String sortFilterSplitedItem(String filter) {
         String[]new_filter_array=filter.split(";");
         String new_filter_value="";
+        String separator="";
         ArrayList<String>new_filter_list=new ArrayList<String>();
         if (new_filter_array.length>1) {
             for(String item:new_filter_array) new_filter_list.add(item);
             Collections.sort(new_filter_list);
-            for(String item:new_filter_list) new_filter_value+=item+";";
+            for(String item:new_filter_list) {
+                new_filter_value+=separator+item;
+                separator=";";
+            }
         } else {
             new_filter_value=filter;
         }
@@ -3371,21 +3375,44 @@ public class SyncTaskUtil {
         return out;
     }
 
-    private boolean isValidWholeDirectoryFilter(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
-        boolean result=true;
-        String error_filters="";
-        for(int i=0;i<filter_adapter.getCount();i++) {
-            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
-            if (!fli.isDeleted() && fli.isUseFilterV2() && fli.getFilter().startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
-                error_filters=fli.getFilter();
+    public static String hasWholeDirectoryFilterItem(String filter) {
+        String whole_dir_filter="";
+        String[]filter_item_array=filter.split(";");
+        for(String filter_item:filter_item_array) {
+            if (filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                whole_dir_filter=filter_item;
                 break;
             }
         }
-        if (!error_filters.equals("")) {
-            String suggest_filter = error_filters.replace(WHOLE_DIRECTORY_FILTER_PREFIX, MATCH_ANY_WHERE_FILTER_PREFIX)+
-                    (error_filters.endsWith(MATCH_ANY_WHERE_FILTER_SUFFIX) || error_filters.endsWith("/") ? "":MATCH_ANY_WHERE_FILTER_SUFFIX);
+        return whole_dir_filter;
+    }
+
+    public static String hasAnyWhereIncludeFilterItem(String filter) {
+        String anywhere_dir_filter="";
+        String[]filter_item_array=filter.split(";");
+        for(String filter_item:filter_item_array) {
+            if (filter_item.startsWith(MATCH_ANY_WHERE_FILTER_PREFIX)) {
+                anywhere_dir_filter=filter_item;
+                break;
+            }
+        }
+        return anywhere_dir_filter;
+    }
+
+    private boolean isValidWholeDirectoryFilter(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
+        boolean result=true;
+        String error_filter="";
+        for(int i=0;i<filter_adapter.getCount();i++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
+            if (!fli.isDeleted() && fli.isUseFilterV2()) {
+                error_filter=hasWholeDirectoryFilterItem(fli.getFilter());
+                if (!error_filter.equals("")) break;
+            }
+        }
+        if (!error_filter.equals("")) {
+            String suggest_filter = error_filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX, MATCH_ANY_WHERE_FILTER_PREFIX) + (error_filter.endsWith(MATCH_ANY_WHERE_FILTER_SUFFIX) || error_filter.endsWith("/") ? "":MATCH_ANY_WHERE_FILTER_SUFFIX);
             dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error,
-                    error_filters, suggest_filter));
+                    error_filter, suggest_filter));
             CommonDialog.setViewEnabled(mActivity, ok_btn, false);
             result=false;
         }
@@ -3516,17 +3543,13 @@ public class SyncTaskUtil {
                     return;
                 }
                 if (fli.isUseFilterV2()) {
-                    if (new_filter.contains(WHOLE_DIRECTORY_FILTER_PREFIX)) {
-                        String[] new_array=new_filter.split(";");
-                        for(String item:new_array) {
-                            if (item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
-                                String suggest_filter = item.replace(WHOLE_DIRECTORY_FILTER_PREFIX, MATCH_ANY_WHERE_FILTER_PREFIX)+ (item.endsWith(MATCH_ANY_WHERE_FILTER_SUFFIX) || item.endsWith("/") ? "":MATCH_ANY_WHERE_FILTER_SUFFIX);
-                                String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
-                                dlg_msg.setText(String.format(mtxt, item, suggest_filter));
-                                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                                return;
-                            }
-                        }
+                    String error_filter=hasWholeDirectoryFilterItem(new_filter);
+                    if (!error_filter.equals("")) {
+                        String suggest_filter = error_filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX, MATCH_ANY_WHERE_FILTER_PREFIX)+ (error_filter.endsWith(MATCH_ANY_WHERE_FILTER_SUFFIX) || error_filter.endsWith("/") ? "":MATCH_ANY_WHERE_FILTER_SUFFIX);
+                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
+                        dlg_msg.setText(String.format(mtxt, error_filter, suggest_filter));
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        return;
                     }
                 }
 
@@ -3562,9 +3585,10 @@ public class SyncTaskUtil {
     private String getChangedFilter(String current_filter, String new_filter) {
         if (current_filter==null || new_filter==null) return "";
         String[] current_filter_array=current_filter.split(";");
-        String[] mew_filter_array=new_filter.split(";");
+        String[] new_filter_array=new_filter.split(";");
         String changed_filter="";
-        for (String new_item:mew_filter_array) {
+        String separator="";
+        for (String new_item:new_filter_array) {
             boolean found=false;
             for(String current_item:current_filter_array) {
                 if (new_item.equalsIgnoreCase(current_item)) {
@@ -3572,7 +3596,10 @@ public class SyncTaskUtil {
                     break;
                 }
             }
-            if (!found) changed_filter+=new_item+";";
+            if (!found) {
+                changed_filter+=separator+new_item;
+                separator=";";
+            }
         }
         return changed_filter;
     }

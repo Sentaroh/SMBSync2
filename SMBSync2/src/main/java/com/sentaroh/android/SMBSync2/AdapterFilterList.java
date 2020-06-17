@@ -39,8 +39,6 @@ import com.sentaroh.android.Utilities.NotifyEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import static com.sentaroh.android.SMBSync2.Constants.WHOLE_DIRECTORY_FILTER_PREFIX;
-
 @SuppressWarnings("ALL")
 public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterListItem> {
     private Context c;
@@ -159,10 +157,12 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
                 holder.tv_row_filter.setEnabled(true);
                 holder.btn_row_delbtn.setEnabled(true);
                 if (o.isUseFilterV2()) {
-                    if (o.getFilter().startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                    String whole_dir_filter=SyncTaskUtil.hasWholeDirectoryFilterItem(o.getFilter());
+                    String match_anywhere_filter=SyncTaskUtil.hasAnyWhereIncludeFilterItem(o.getFilter());
+                    if (!whole_dir_filter.equals("")) {
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(false);
-                    } else if (o.getFilter().startsWith("*/")) {
+                    } else if (!match_anywhere_filter.equals("")) {
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(true);
                     } else {

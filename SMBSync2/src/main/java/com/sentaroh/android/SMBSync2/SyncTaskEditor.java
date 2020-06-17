@@ -105,7 +105,6 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWO
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_AUDIO;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_IMAGE;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_VIDEO;
-import static com.sentaroh.android.SMBSync2.Constants.WHOLE_DIRECTORY_FILTER_PREFIX;
 
 public class SyncTaskEditor extends DialogFragment {
     private final static String SUB_APPLICATION_TAG = "SyncTask ";
@@ -5100,12 +5099,14 @@ public class SyncTaskEditor extends DialogFragment {
         if (!error_detected) {
             if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
                 String error_filter="";
+                String separator="";
                 for(String item:n_sti.getDirFilter()) {
                     String filter_inc_exc=item.substring(0,1);
                     String filter_value=item.substring(1);
                     if (filter_inc_exc.equals("I")) {
-                        if (filter_value.startsWith("*/")) {
-                            error_filter+=filter_value+";";
+                        if (!mTaskUtil.hasAnyWhereIncludeFilterItem(filter_value).equals("")) {
+                            error_filter+=separator+"["+filter_value+"]";
+                            separator=", ";
                             error_detected = true;
                         }
                     }
@@ -5120,7 +5121,7 @@ public class SyncTaskEditor extends DialogFragment {
                 for(String item:n_sti.getDirFilter()) {
                     String filter_inc_exc=item.substring(0,1);
                     String filter_value=item.substring(1);
-                    if (filter_value.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                    if (!mTaskUtil.hasWholeDirectoryFilterItem(filter_value).equals("")) {
                         error_filter+=filter_value+";";
                         error_detected = true;
                     }
