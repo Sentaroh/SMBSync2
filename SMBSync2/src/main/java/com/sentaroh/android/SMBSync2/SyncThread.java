@@ -2207,6 +2207,7 @@ public class SyncThread extends Thread {
         }
         stwa.util.addDebugMsg(2, "I", "sendConfirmRequest result=" + result, ", rc=" + rc);
 
+        if (!result) stwa.totalIgnoreCount++;//if delete/overwrite cancelled by user, increment ignore count displayed at end of sync messages
         return result;
     }
 
@@ -2259,6 +2260,7 @@ public class SyncThread extends Thread {
         }
         stwa.util.addDebugMsg(2, "I", "sendArchiveConfirmRequest result=" + result, ", rc=" + rc);
 
+        if (!result) stwa.totalIgnoreCount++;//if cancel archive cancelled by user, increment ignore count displayed at end of sync messages
         return result;
     }
 
