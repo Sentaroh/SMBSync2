@@ -112,10 +112,6 @@
         <string name="msgs_filter_list_duplicate_filter_specified">%s already exists.</string>
         <string name="msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed">Wildcard-only filters cannot be used. Please rename the filter with a format like \"NAME*\".</string>
         <string name="msgs_filter_list_invalid_filter_specified_redundant_wildcard">Multiple asterisk wildcards (\"*\") are specified consecutively. Please remove duplicate wildcards. Example: \"**\"->\"*\"</string>
-        <string name="msgs_filter_list_filter_invalid_include_include_filter" formatted="false">Cannot set \"%s\" to Include because \"%s\" is set to Include.</string>
-        <string name="msgs_filter_list_filter_invalid_exclude_include_filter" formatted="false">Cannot set \"%s\" to Include because \"%s\" is set to Exclude.</string>
-        <string name="msgs_filter_list_filter_invalid_exclude_exclude_filter" formatted="false">Cannot set \"%s\" as an exclusion because \"%e\" has been set as an exclusion.</string>
-        <string name="msgs_filter_list_filter_invalid_filter_duplicated" formatted="false">%s and \"%s\" are duplicated.</string>
         <string name="msgs_filter_list_filter_deleted">This entry was deleted.</string>
         <string name="msgs_hist_cont_label_copy">Copy to clipboard</string>
         <string name="msgs_hist_cont_label_delete">Delete history item</string>
