@@ -3203,6 +3203,15 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {//main dialog to add filters, enable/disable bottom include/exclude buttons
                 if (s.length() != 0) {
+                    String invalid_char= checkFilterInvalidCharacter(s.toString(), DIRECTORY_FILTER_INVALID_CHARACTER);
+                    if (invalid_char!=null) {
+                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
+                        dlg_msg.setText(String.format(mtxt, invalid_char));
+                        CommonDialog.setViewEnabled(mActivity, addbtn, false);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        return;
+                    }
+
                     String new_filter=mUtil.removeRedundantWildcard(s.toString(), "*");
                     String match_anywhere_filter=hasAnyWhereIncludeFilterItem(new_filter);
                     String has_whole_dir_filter=hasWholeDirectoryFilterItem(new_filter);
