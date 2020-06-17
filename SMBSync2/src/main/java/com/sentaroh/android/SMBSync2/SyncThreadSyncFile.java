@@ -687,8 +687,8 @@ public class SyncThreadSyncFile {
                                                         "", stwa.msgs_mirror_task_file_moved);
                                             }
                                         } else {
-                                                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", parsed_to_path, mf.getName(),
-                                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+                                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", parsed_to_path, mf.getName(),
+                                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                         }
                                     } else {
                                         if (SyncThread.isFileChanged(stwa, sti, parsed_to_path, tf, mf, stwa.ALL_COPY) &&

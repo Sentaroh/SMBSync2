@@ -625,7 +625,6 @@ public class SyncThreadSyncZip {
                                                 "", stwa.msgs_mirror_task_file_moved);
                                     }
                                 } else {
-                                    stwa.totalIgnoreCount++;
                                     SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", t_from_path, mf.getName(),
                                             "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
                                 }
@@ -640,7 +639,6 @@ public class SyncThreadSyncZip {
                                             stwa.totalCopyCount++;
                                         }
                                     } else {
-                                        stwa.totalIgnoreCount++;
                                         SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", t_from_path, mf.getName(),
                                                 "", stwa.context.getString(R.string.msgs_mirror_confirm_copy_cancel));
                                     }
@@ -702,7 +700,6 @@ public class SyncThreadSyncZip {
                                     stwa.totalDeleteCount++;
                                     break;
                                 } else {
-                                    stwa.totalIgnoreCount++;
                                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", zfli.getPath(), zfli.getFileName(),
                                             "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
                                 }
