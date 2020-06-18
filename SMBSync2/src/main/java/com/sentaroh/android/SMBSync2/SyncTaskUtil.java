@@ -3439,30 +3439,7 @@ public class SyncTaskUtil {
         return out;
     }
 
-    public static String hasWholeDirectoryFilterItem(String filter) {
-        String whole_dir_filter="";
-        String[]filter_item_array=filter.split(";");
-        for(String filter_item:filter_item_array) {
-            if (filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
-                whole_dir_filter=filter_item;
-                break;
-            }
-        }
-        return whole_dir_filter;
-    }
-
-    public static String hasAnyWhereFilterItem(String filter) {
-        String anywhere_dir_filter="";
-        String[]filter_item_array=filter.split(";");
-        for(String filter_item:filter_item_array) {
-            if (filter_item.startsWith(MATCH_ANY_WHERE_FILTER_PREFIX)) {
-                anywhere_dir_filter=filter_item;
-                break;
-            }
-        }
-        return anywhere_dir_filter;
-    }
-
+    //check if adapter filter list has invalid chars
     private boolean hasInvalidCharsFilterList(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg, String[] invalid_char) {
         boolean result=false;
         String error_filter="";
@@ -3483,6 +3460,20 @@ public class SyncTaskUtil {
         return result;
     }
 
+    //check filter string for leading `\\`
+    public static String hasWholeDirectoryFilterItem(String filter) {
+        String whole_dir_filter="";
+        String[]filter_item_array=filter.split(";");
+        for(String filter_item:filter_item_array) {
+            if (filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                whole_dir_filter=filter_item;
+                break;
+            }
+        }
+        return whole_dir_filter;
+    }
+
+    //check if filter is v2 and has items starting with `\\`: not allowed start in v2, file filters has \ char as invalid
     private boolean isValidWholeDirectoryFilter(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
         boolean result=true;
         String error_filter="";
@@ -3503,19 +3494,28 @@ public class SyncTaskUtil {
         return result;
     }
 
+    //check if filter string has filter items staring with */
+    public static String hasAnyWhereFilterItem(String filter) {
+        String anywhere_dir_filter="";
+        String[]filter_item_array=filter.split(";");
+        for(String filter_item:filter_item_array) {
+            if (filter_item.startsWith(MATCH_ANY_WHERE_FILTER_PREFIX)) {
+                anywhere_dir_filter=filter_item;
+                break;
+            }
+        }
+        return anywhere_dir_filter;
+    }
+
+    //check if filter adapter list has filter items starting with */ : include directory filters cannot start with */
     private boolean checkMatchAnyWhereIncludeFilter(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
         boolean result=true;
         String error_filters="";
         for(int i=0;i<filter_adapter.getCount();i++) {
             AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
             if (!fli.isDeleted() && fli.isUseFilterV2() && fli.isInclude()) {
-                String[]filter_item_array=fli.getFilter().split(";");
-                for(String filter_item:filter_item_array) {
-                    if (filter_item.startsWith(MATCH_ANY_WHERE_FILTER_PREFIX)) {
-                        error_filters=filter_item;
-                        break;
-                    }
-                }
+                error_filters=hasAnyWhereFilterItem(fli.getFilter());
+                if (!error_filters.equals("")) break;
             }
         }
         if (!error_filters.equals("")) {
@@ -3526,20 +3526,15 @@ public class SyncTaskUtil {
         return result;
     }
 
-    //check if filter adapter list has filter items starting with */
+    //check if filter adapter list has filter items starting with */: all file filters that cannot start with */
     private boolean hasNoAnyWhereFileFilter(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
         boolean result=true;
         String error_filters="";
         for(int i=0;i<filter_adapter.getCount();i++) {
             AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
             if (!fli.isDeleted()) {
-                String[]filter_item_array=fli.getFilter().split(";");
-                for(String filter_item:filter_item_array) {
-                    if (filter_item.startsWith(MATCH_ANY_WHERE_FILTER_PREFIX)) {
-                        error_filters=filter_item;
-                        break;
-                    }
-                }
+                error_filters=hasAnyWhereFilterItem(fli.getFilter());
+                if (!error_filters.equals("")) break;
             }
         }
         if (!error_filters.equals("")) {
