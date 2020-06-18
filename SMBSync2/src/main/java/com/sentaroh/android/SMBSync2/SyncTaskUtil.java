@@ -126,6 +126,10 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROFILE_FILE_NAME
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROFILE_FILE_NAME_V8;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_DEC;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_ENC;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_DIR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_FILE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_EXCLUDE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_INCLUDE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_TYPE_SETTINGS;
@@ -2936,7 +2940,7 @@ public class SyncTaskUtil {
         Button dirbtn = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
         dirbtn.setVisibility(Button.GONE);
 
-        filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList);
+        filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList, SMBSYNC2_PROF_FILTER_FILE);
         ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
 
         if (use_dir_filter_v2) ll_file_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
@@ -2945,9 +2949,9 @@ public class SyncTaskUtil {
         for (int i = 0; i < file_filter.size(); i++) {
             String inc = file_filter.get(i).substring(0, 1);
             String filter = file_filter.get(i).substring(1, file_filter.get(i).length());
-            boolean b_inc = false;
-            if (inc.equals(SMBSYNC2_PROF_FILTER_INCLUDE)) b_inc = true;
-            filterAdapter.add(new AdapterFilterList.FilterListItem(filter, b_inc));
+            AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(filter, inc.equals(SMBSYNC2_PROF_FILTER_INCLUDE));
+            fli.setUseFilterV2(use_dir_filter_v2);
+            filterAdapter.add(fli);
         }
         lv.setAdapter(filterAdapter);
         title.setText(mContext.getString(R.string.msgs_filter_list_dlg_file_filter));
@@ -2961,12 +2965,17 @@ public class SyncTaskUtil {
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_select_edit_ok_btn);
         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
 
+        if (hasNoAnyWhereFileFilter(filterAdapter, btn_ok, dlg_msg))
+            hasInvalidCharsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
+
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                dlg_msg.setText("");
+                if (hasNoAnyWhereFileFilter(filterAdapter, btn_ok, dlg_msg) && !hasInvalidCharsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                    dlg_msg.setText("");
+                }
             }
             @Override
             public void negativeResponse(Context c, Object[] o) {}
@@ -2977,8 +2986,10 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                dlg_msg.setText("");
+                if (hasNoAnyWhereFileFilter(filterAdapter, btn_ok, dlg_msg) && !hasInvalidCharsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                    dlg_msg.setText("");
+                }
             }
             @Override
             public void negativeResponse(Context c, Object[] o) {}
@@ -2993,23 +3004,26 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        if (hasNoAnyWhereFileFilter(filterAdapter, btn_ok, dlg_msg) && !hasInvalidCharsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                            dlg_msg.setText("");
+                        }
                     }
                     @Override
                     public void negativeResponse(Context c, Object[] o) {}
 
                 });
-                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy, FILE_FILTER_INVALID_CHARACTER);
+                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
             }
         });
 
-        // Addボタンの指定
+        //Add new filter Text and Button
         CommonDialog.setViewEnabled(mActivity, addBtn, false);
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
-                    String invalid_char= checkFilterInvalidCharacter(s.toString(), FILE_FILTER_INVALID_CHARACTER);
+                    String invalid_char= checkFilterInvalidCharacter(s.toString(), SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
                     if (invalid_char!=null) {
                         String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
                         dlg_msg.setText(String.format(mtxt, invalid_char));
@@ -3017,16 +3031,31 @@ public class SyncTaskUtil {
                         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
-                    String dup_filter= getDuplicateFilter(s.toString().trim(), filterAdapter);
-                    if (!dup_filter.equals("")) {
-                        String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
-                        dlg_msg.setText(String.format(mtxt, s.toString().trim()));
+
+                    String new_filter=mUtil.removeRedundantWildcard(s.toString(), "*");
+                    String match_anywhere_filter=hasAnyWhereFilterItem(new_filter);
+                    if (!match_anywhere_filter.equals("")) {
+                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_file_filter_edit_dlg_error);
+                        dlg_msg.setText(String.format(mtxt, match_anywhere_filter));
+                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    } else if (s.length()!=new_filter.length()) {
+                        dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_redundant_wildcard));
+                        dlg_msg.setVisibility(TextView.VISIBLE);//not needed!
                         CommonDialog.setViewEnabled(mActivity, addBtn, false);
                         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     } else {
-                        dlg_msg.setText("");
-                        CommonDialog.setViewEnabled(mActivity, addBtn, true);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        String dup_filter= getDuplicateFilter(s.toString().trim(), filterAdapter);
+                        if (!dup_filter.equals("")) {
+                            String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                            dlg_msg.setText(String.format(mtxt, s.toString().trim()));
+                            CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        } else {
+                            dlg_msg.setText("");
+                            CommonDialog.setViewEnabled(mActivity, addBtn, true);
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        }
                     }
                 } else {
                     CommonDialog.setViewEnabled(mActivity, addBtn, false);
@@ -3043,12 +3072,35 @@ public class SyncTaskUtil {
         addBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 dlg_msg.setText("");
-                String newfilter = et_filter.getText().toString().trim();
+                String new_filter = et_filter.getText().toString().trim();
+                if (mUtil.isPathWildcardOnly(new_filter)) {
+                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
+                    return;
+                }
+
+                String dup_filter= getDuplicateFilter(new_filter, filterAdapter);
+                if (!dup_filter.equals("")) {
+                    String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                    dlg_msg.setText(String.format(mtxt, new_filter));
+                    return;
+                }
+
+                String match_anywhere_filter=hasAnyWhereFilterItem(new_filter);
+                if (!match_anywhere_filter.equals("")) {
+                    String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_file_filter_edit_dlg_error);
+                    dlg_msg.setText(String.format(mtxt, match_anywhere_filter));
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    return;
+                }
+
                 et_filter.setText("");
-                filterAdapter.add(new AdapterFilterList.FilterListItem(newfilter, true));
+                filterAdapter.add(new AdapterFilterList.FilterListItem(new_filter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
                 CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                if (hasNoAnyWhereFileFilter(filterAdapter, btn_ok, dlg_msg) && !hasInvalidCharsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                }
             }
         });
 
@@ -3084,16 +3136,6 @@ public class SyncTaskUtil {
         dialog.show();
     }
 
-    final private static String[] FILE_FILTER_INVALID_CHARACTER=new String[]{"\"", ":", ">", "<", "|", "\\"};
-    final private static String[] DIRECTORY_FILTER_INVALID_CHARACTER=new String[]{"\"", ":", ">", "<", "|"};
-    private String checkFilterInvalidCharacter(String in, String[] invalid_char) {
-        if (in==null || invalid_char==null) return null;
-        for(String item:invalid_char) {
-            if (in.contains(item)) return item;
-        }
-        return null;
-    }
-
     public void editDirFilterDlg(final SyncTaskItem sti, final NotifyEvent p_ntfy, boolean use_dir_filter_v2) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
         final AdapterFilterList filterAdapter;
@@ -3113,7 +3155,7 @@ public class SyncTaskUtil {
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
 
-        filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList);
+        filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList, SMBSYNC2_PROF_FILTER_DIR);
         final ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
         final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_select_edit_new_filter);
         final Button addbtn = (Button) dialog.findViewById(R.id.filter_select_edit_add_btn);
@@ -3138,7 +3180,7 @@ public class SyncTaskUtil {
         for (int i = 0; i < sti.getDirFilter().size(); i++) {
             String inc = sti.getDirFilter().get(i).substring(0, 1);
             String filter = sti.getDirFilter().get(i).substring(1, sti.getDirFilter().get(i).length());
-            AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(filter, inc.equals("I"));
+            AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(filter, inc.equals(SMBSYNC2_PROF_FILTER_INCLUDE));
             fli.setUseFilterV2(use_dir_filter_v2);
             filterAdapter.add(fli);
         }
@@ -3147,13 +3189,15 @@ public class SyncTaskUtil {
         lv.setScrollbarFadingEnabled(false);
 
         if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg))//display warning in main filter list view
-            checkMatchAnyWhereIncludeFilter(filterAdapter, btn_ok, dlg_msg);
+            if (checkMatchAnyWhereIncludeFilter(filterAdapter, btn_ok, dlg_msg))
+                hasInvalidCharsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
 
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && checkMatchAnyWhereIncludeFilter(filterAdapter, btn_ok, dlg_msg)) {
+                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && checkMatchAnyWhereIncludeFilter(filterAdapter, btn_ok, dlg_msg) &&
+                        !hasInvalidCharsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -3167,7 +3211,8 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && checkMatchAnyWhereIncludeFilter(filterAdapter, btn_ok, dlg_msg)) {
+                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && checkMatchAnyWhereIncludeFilter(filterAdapter, btn_ok, dlg_msg) &&
+                        !hasInvalidCharsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -3185,7 +3230,8 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && checkMatchAnyWhereIncludeFilter(filterAdapter, btn_ok, dlg_msg)) {
+                        if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && checkMatchAnyWhereIncludeFilter(filterAdapter, btn_ok, dlg_msg) &&
+                                !hasInvalidCharsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS)) {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                             dlg_msg.setText("");
                         }
@@ -3194,7 +3240,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context c, Object[] o) {
                     }
                 });
-                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy, DIRECTORY_FILTER_INVALID_CHARACTER);
+                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
             }
         });
 
@@ -3203,7 +3249,7 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {//main dialog to add filters, enable/disable bottom include/exclude buttons
                 if (s.length() != 0) {
-                    String invalid_char= checkFilterInvalidCharacter(s.toString(), DIRECTORY_FILTER_INVALID_CHARACTER);
+                    String invalid_char= checkFilterInvalidCharacter(s.toString(), SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
                     if (invalid_char!=null) {
                         String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
                         dlg_msg.setText(String.format(mtxt, invalid_char));
@@ -3213,7 +3259,7 @@ public class SyncTaskUtil {
                     }
 
                     String new_filter=mUtil.removeRedundantWildcard(s.toString(), "*");
-                    String match_anywhere_filter=hasAnyWhereIncludeFilterItem(new_filter);
+                    String match_anywhere_filter=hasAnyWhereFilterItem(new_filter);
                     String has_whole_dir_filter=hasWholeDirectoryFilterItem(new_filter);
                     if (!match_anywhere_filter.equals("") || !has_whole_dir_filter.equals("")) {//leading "*/" and "\\" are invalid include filter for v1 and v2 filters, provide the hint on add for v2
                         add_exclude_btn.setChecked(true);
@@ -3269,7 +3315,7 @@ public class SyncTaskUtil {
                     dlg_msg.setText(String.format(mtxt, new_filter));
                     return;
                 }
-                dlg_msg.setText("");
+
                 if (use_dir_filter_v2) {
                     String error_filter=hasWholeDirectoryFilterItem(new_filter);
                     if (!error_filter.equals("")) {
@@ -3283,7 +3329,7 @@ public class SyncTaskUtil {
                     String new_filter_value=sortFilterSplitedItem(new_filter);
                     AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(new_filter_value, add_include_btn.isChecked());
                     fli.setUseFilterV2(true);
-                    String match_anywhere_filter=hasAnyWhereIncludeFilterItem(new_filter);
+                    String match_anywhere_filter=hasAnyWhereFilterItem(new_filter);
                     if (!match_anywhere_filter.equals("")) fli.setInclude(false);
                     filterAdapter.add(fli);
                 } else {
@@ -3293,7 +3339,8 @@ public class SyncTaskUtil {
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
                 CommonDialog.setViewEnabled(mActivity, dirbtn, true);
-                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && checkMatchAnyWhereIncludeFilter(filterAdapter, btn_ok, dlg_msg)) {
+                if (isValidWholeDirectoryFilter(filterAdapter, btn_ok, dlg_msg) && checkMatchAnyWhereIncludeFilter(filterAdapter, btn_ok, dlg_msg) &&
+                        !hasInvalidCharsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 }
             }
@@ -3376,6 +3423,14 @@ public class SyncTaskUtil {
         return new_filter_value;
     }
 
+    public static String checkFilterInvalidCharacter(String in, String[] invalid_char) {
+        if (in==null || invalid_char==null) return null;
+        for(String item:invalid_char) {
+            if (in.contains(item)) return item;
+        }
+        return null;
+    }
+
     static private String replaceAllCharacter(String in, String from_char, String to_char) {
         String out=in;
         while(out.contains(from_char)) {
@@ -3396,7 +3451,7 @@ public class SyncTaskUtil {
         return whole_dir_filter;
     }
 
-    public static String hasAnyWhereIncludeFilterItem(String filter) {
+    public static String hasAnyWhereFilterItem(String filter) {
         String anywhere_dir_filter="";
         String[]filter_item_array=filter.split(";");
         for(String filter_item:filter_item_array) {
@@ -3406,6 +3461,26 @@ public class SyncTaskUtil {
             }
         }
         return anywhere_dir_filter;
+    }
+
+    private boolean hasInvalidCharsFilterList(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg, String[] invalid_char) {
+        boolean result=false;
+        String error_filter="";
+        String char_seq=null;
+        for(int i=0;i<filter_adapter.getCount();i++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
+            if (!fli.isDeleted() && fli.isUseFilterV2()) {
+                error_filter=fli.getFilter();
+                char_seq=checkFilterInvalidCharacter(error_filter, invalid_char);
+                if (char_seq != null) break;
+            }
+        }
+        if (char_seq != null) {
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error, error_filter, char_seq));
+            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+            result=true;
+        }
+        return result;
     }
 
     private boolean isValidWholeDirectoryFilter(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
@@ -3445,6 +3520,30 @@ public class SyncTaskUtil {
         }
         if (!error_filters.equals("")) {
             dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error, error_filters));
+            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+            result=false;
+        }
+        return result;
+    }
+
+    //check if filter adapter list has filter items starting with */
+    private boolean hasNoAnyWhereFileFilter(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
+        boolean result=true;
+        String error_filters="";
+        for(int i=0;i<filter_adapter.getCount();i++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
+            if (!fli.isDeleted()) {
+                String[]filter_item_array=fli.getFilter().split(";");
+                for(String filter_item:filter_item_array) {
+                    if (filter_item.startsWith(MATCH_ANY_WHERE_FILTER_PREFIX)) {
+                        error_filters=filter_item;
+                        break;
+                    }
+                }
+            }
+        }
+        if (!error_filters.equals("")) {
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_file_filter_edit_dlg_error, error_filters));
             CommonDialog.setViewEnabled(mActivity, ok_btn, false);
             result=false;
         }
