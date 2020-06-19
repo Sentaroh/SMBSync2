@@ -512,6 +512,7 @@ public class ActivityMain extends AppCompatActivity {
                     "New orientation=" + newConfig.orientation +
                             ", New language=", newConfig.locale.getLanguage());
         }
+        if (Build.VERSION.SDK_INT<26) mActivity.getResources().updateConfiguration(newConfig, mActivity.getResources().getDisplayMetrics());
         reloadScreen(false);
     }
 
@@ -782,7 +783,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void reloadScreen(boolean force_reload) {
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Entered");
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Entered, orientation="+mActivity.getResources().getConfiguration().orientation);
         ViewSaveArea vsa = null;
         vsa = saveViewContent();
         releaseImageResource();

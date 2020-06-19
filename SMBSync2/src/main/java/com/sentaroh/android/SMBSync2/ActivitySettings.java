@@ -35,6 +35,7 @@ import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.Preference;
@@ -72,6 +73,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     private static String mCurrentScreenTheme=SMBSYNC2_SCREEN_THEME_STANDARD;
     private static String mCurrentThemeLangaue=SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;
+    private Activity mActivity=null;
 
     private CommonUtilities mUtil = null;
 
@@ -89,6 +91,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mActivity=ActivitySettings.this;
         Context c = getActivityContext();
         mGp= GlobalWorkArea.getGlobalParameters(c);
         SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(c);
@@ -185,13 +188,15 @@ public class ActivitySettings extends PreferenceActivity {
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
-    @Override
-    public void onConfigurationChanged(final Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        mGp.setNewLocale(this, false);
-        //this.recreate();//needed only in Legacy mode if language is different from System Default
-    }
+//    @Override
+//    public void onConfigurationChanged(final Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+//
+//        if (Build.VERSION.SDK_INT<=26) mActivity.getResources().updateConfiguration(newConfig, mActivity.getResources().getDisplayMetrics());
+//        mGp.setNewLocale(this, false);
+//        //this.recreate();//needed only in Legacy mode if language is different from System Default
+//    }
 
 
     private static void playBackDefaultNotification(Context c, FragmentManager fm, int vol) {
