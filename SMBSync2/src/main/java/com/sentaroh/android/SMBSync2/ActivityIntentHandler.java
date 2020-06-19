@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.view.Window;
 
 import com.sentaroh.android.Utilities.Dialog.MessageDialogAppFragment;
@@ -30,6 +32,11 @@ public class ActivityIntentHandler extends Activity {
             if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
             final FragmentManager fm=getFragmentManager();
             try {
+                if (Build.VERSION.SDK_INT>=26) {
+                    PowerManager.WakeLock wl = ((PowerManager) c.getSystemService(Context.POWER_SERVICE))
+                            .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-Activity-Intent-handler");
+                    wl.acquire(1000);
+                }
                 startService(in);
                 finish();
             }catch(Exception e){
