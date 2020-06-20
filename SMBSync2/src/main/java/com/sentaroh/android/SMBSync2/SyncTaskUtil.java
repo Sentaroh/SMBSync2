@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -4445,9 +4446,31 @@ public class SyncTaskUtil {
         String p_txt = String.format(scan_prog, 0);
         tvmsg.setText(p_txt);
 
+        mScanSmbErrorMessage="";
         Thread th=new Thread(new Runnable() {
+            private UncaughtExceptionHandler defaultUEH;
+            private UncaughtExceptionHandler unCaughtExceptionHandler=new UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
+                    Thread.currentThread().setUncaughtExceptionHandler(defaultUEH);
+                    tc.setDisabled();
+                    e.printStackTrace();
+                    mScanSmbErrorMessage=e.toString();
+                    handler.post(new Runnable() {// UI thread
+                        @Override
+                        public void run() {
+                            adap.sort();
+                            closeScanRemoteNetworkProgressDlg(dialog, p_ntfy, lv_ipaddr, adap, tvmsg);
+                        }
+                    });
+                }
+            };
             @Override
             public void run() {//non UI thread
+                defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
+                Thread.currentThread().setUncaughtExceptionHandler(unCaughtExceptionHandler);
+
+//                byte[] oo=new byte[Integer.MAX_VALUE];
                 mScanCompleteCount = 0;
                 mScanAddrCount = end_addr - begin_addr + 1;
                 int scan_thread = 100;
@@ -4457,6 +4480,7 @@ public class SyncTaskUtil {
                     if (!tc.isEnabled()) break;
                     boolean scan_end = false;
                     for (int j = i; j < (i + scan_thread); j++) {
+                        if (!tc.isEnabled()) break;
                         if (j <= end_addr) {
                             startRemoteNetworkScanThread(handler, tc, dialog, p_ntfy,
                                     lv_ipaddr, adap, tvmsg, subnet + "." + j,
@@ -4532,6 +4556,7 @@ public class SyncTaskUtil {
 
     }
 
+    private String mScanSmbErrorMessage="";
     private void startRemoteNetworkScanThread(final Handler handler,
                                               final ThreadCtrl tc,
                                               final Dialog dialog,
@@ -4544,58 +4569,82 @@ public class SyncTaskUtil {
                                               final String scan_port, final int smb_level) {
         final String scan_prog = mContext.getString(R.string.msgs_ip_address_scan_progress);
         Thread th = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (mScanRequestedAddrList) {
-                    mScanRequestedAddrList.add(addr);
-                }
-                if (isIpAddrSmbHost(addr, scan_port)) {
-                    final String srv_name = getSmbHostName(smb_level, addr);
-                    final AdapterNetworkScanResult.NetworkScanListItem smb_server_item = new AdapterNetworkScanResult.NetworkScanListItem();
-                    smb_server_item.server_address = addr;
-                    String r_addr=null;
-                    if (srv_name!=null) {
-                        smb_server_item.server_name = srv_name;
-                    }
-                    buildSmbServerList(smb_server_item, "", "", "", addr);
+            private UncaughtExceptionHandler defaultUEH;
+            private UncaughtExceptionHandler unCaughtExceptionHandler=new UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
+                    Thread.currentThread().setUncaughtExceptionHandler(defaultUEH);
+                    tc.setDisabled();
+                    e.printStackTrace();
+                    mScanSmbErrorMessage=e.toString();
                     handler.post(new Runnable() {// UI thread
                         @Override
                         public void run() {
-                            synchronized (mScanRequestedAddrList) {
-                                mScanRequestedAddrList.remove(addr);
-                                synchronized (adap) {
-                                    adap.add(smb_server_item);
-                                    adap.sort();
+                            adap.sort();
+                            closeScanRemoteNetworkProgressDlg(dialog, p_ntfy, lv_ipaddr, adap, tvmsg);
+                        }
+                    });
+                }
+            };
+            @Override
+            public void run() {//non UI thread
+                if (tc.isEnabled()) {
+                    defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
+                    Thread.currentThread().setUncaughtExceptionHandler(unCaughtExceptionHandler);
+
+//                    byte[] oo=new byte[Integer.MAX_VALUE];
+                    synchronized (mScanRequestedAddrList) {
+                        mScanRequestedAddrList.add(addr);
+                    }
+                    if (isIpAddrSmbHost(addr, scan_port)) {
+                        final String srv_name = getSmbHostName(smb_level, addr);
+                        final AdapterNetworkScanResult.NetworkScanListItem smb_server_item = new AdapterNetworkScanResult.NetworkScanListItem();
+                        smb_server_item.server_address = addr;
+                        String r_addr=null;
+                        if (srv_name!=null) {
+                            smb_server_item.server_name = srv_name;
+                        }
+                        buildSmbServerList(smb_server_item, "", "", "", addr);
+                        handler.post(new Runnable() {// UI thread
+                            @Override
+                            public void run() {
+                                synchronized (mScanRequestedAddrList) {
+                                    mScanRequestedAddrList.remove(addr);
+                                    synchronized (adap) {
+                                        adap.add(smb_server_item);
+                                        adap.sort();
+                                    }
+                                }
+                                synchronized (mLockScanCompleteCount) {
+                                    mScanCompleteCount++;
                                 }
                             }
+                        });
+                    } else {
+                        synchronized (mScanRequestedAddrList) {
+                            mScanRequestedAddrList.remove(addr);
+                        }
+                        synchronized (mLockScanCompleteCount) {
+                            mScanCompleteCount++;
+                        }
+                    }
+                    handler.post(new Runnable() {// UI thread
+                        @Override
+                        public void run() {
                             synchronized (mLockScanCompleteCount) {
-                                mScanCompleteCount++;
+                                lv_ipaddr.setSelection(lv_ipaddr.getCount());
+//                            adap.notifyDataSetChanged();
+                                String p_txt = String.format(scan_prog, (mScanCompleteCount * 100) / mScanAddrCount);
+                                tvmsg.setText(p_txt);
                             }
                         }
                     });
-                } else {
-                    synchronized (mScanRequestedAddrList) {
-                        mScanRequestedAddrList.remove(addr);
-                    }
-                    synchronized (mLockScanCompleteCount) {
-                        mScanCompleteCount++;
-                    }
                 }
-                handler.post(new Runnable() {// UI thread
-                    @Override
-                    public void run() {
-                        synchronized (mLockScanCompleteCount) {
-                            lv_ipaddr.setSelection(lv_ipaddr.getCount());
-//                            adap.notifyDataSetChanged();
-                            String p_txt = String.format(scan_prog, (mScanCompleteCount * 100) / mScanAddrCount);
-                            tvmsg.setText(p_txt);
-                        }
-                    }
-                });
             }
         });
         th.start();
     }
+
 
     final private void buildSmbServerList(AdapterNetworkScanResult.NetworkScanListItem li, String domain, String user, String pass, String address) {
         SmbServerStatusResult s_result1=createSmbServerVersionList(1, domain, user, pass, address, "SMB1", "SMB1");
