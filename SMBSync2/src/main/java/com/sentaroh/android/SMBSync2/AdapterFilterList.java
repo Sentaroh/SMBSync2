@@ -39,7 +39,10 @@ import com.sentaroh.android.Utilities.NotifyEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import static com.sentaroh.android.SMBSync2.Constants.WHOLE_DIRECTORY_FILTER_PREFIX;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_DIR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_FILE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS;
 
 @SuppressWarnings("ALL")
 public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterListItem> {
@@ -47,7 +50,9 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
     private int id;
     private ArrayList<FilterListItem> items;
 
-    private boolean mShowIncludeExclue = true;
+    private boolean mShowIncludeExclude = true;
+
+    private String mFileFolderFilter = "";
 
     public NotifyEvent mNotifyIncExcListener = null;
 
@@ -70,12 +75,13 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
     }
 
     public AdapterFilterList(Context context, int textViewResourceId,
-                             ArrayList<FilterListItem> objects) {
+                             ArrayList<FilterListItem> objects, String filter_type) {
         super(context, textViewResourceId, objects);
         c = context;
         id = textViewResourceId;
         items = objects;
-        mShowIncludeExclue = true;
+        mShowIncludeExclude = true;
+        mFileFolderFilter = filter_type;
     }
 
     public AdapterFilterList(Context context, int textViewResourceId,
@@ -84,7 +90,8 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
         c = context;
         id = textViewResourceId;
         items = objects;
-        mShowIncludeExclue = show_inc_exc;
+        mShowIncludeExclude = show_inc_exc;
+        mFileFolderFilter = "";
     }
 
     public FilterListItem getItem(int i) {
@@ -142,7 +149,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
             holder.btn_row_delbtn.setVisibility(View.VISIBLE);
             holder.rb_grp.setVisibility(View.VISIBLE);
 
-            if (mShowIncludeExclue) {
+            if (mShowIncludeExclude) {
                 holder.rb_grp.setVisibility(RadioGroup.VISIBLE);
             } else {
                 holder.rb_grp.setVisibility(RadioGroup.GONE);
@@ -159,12 +166,23 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
                 holder.tv_row_filter.setEnabled(true);
                 holder.btn_row_delbtn.setEnabled(true);
                 if (o.isUseFilterV2()) {
-                    if (o.getFilter().startsWith(WHOLE_DIRECTORY_FILTER_PREFIX)) {
+                    String whole_dir_filter=SyncTaskUtil.hasWholeDirectoryFilterItem(o.getFilter());
+                    String match_anywhere_filter=SyncTaskUtil.hasAnyWhereFilterItem(o.getFilter());
+                    String invalid_chars=null;
+                    if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
+                    else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
+
+                    if (invalid_chars!=null){
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(false);
-                    } else if (o.getFilter().startsWith("*/")) {
+                    } else if (!whole_dir_filter.equals("")) {
                         holder.rb_inc.setEnabled(false);
-                        holder.rb_exc.setEnabled(true);
+                        holder.rb_exc.setEnabled(false);
+                    } else if (!match_anywhere_filter.equals("")) {
+                        holder.rb_inc.setEnabled(false);
+                        if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) holder.rb_exc.setEnabled(true);
+                        else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) holder.rb_exc.setEnabled(false);
+                        else holder.rb_exc.setEnabled(true);//not used
                     } else {
                         holder.rb_inc.setEnabled(true);
                         holder.rb_exc.setEnabled(true);
