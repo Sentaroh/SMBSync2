@@ -3365,7 +3365,7 @@ public class SyncThread extends Thread {
                         else pre_str = "";
 
                         //include filter==dir -> only include dir/* but not dir2/*
-                        if (!filter_item.endsWith("/")) suf_str = "$";
+                        if (!filter_item.endsWith("/")) suf_str = "/";
                         else suf_str = "";
 
                         dfinc = pre_str + MiscUtil.convertRegExp(filter_item) + suf_str;
