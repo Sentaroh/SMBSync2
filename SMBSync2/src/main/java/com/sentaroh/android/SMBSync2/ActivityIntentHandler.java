@@ -33,11 +33,10 @@ public class ActivityIntentHandler extends Activity {
             final FragmentManager fm=getFragmentManager();
             try {
                 if (Build.VERSION.SDK_INT>=26) {
-                    PowerManager.WakeLock wl = ((PowerManager) c.getSystemService(Context.POWER_SERVICE))
-                            .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-Activity-Intent-handler");
-                    wl.acquire(1000);
+                    startForegroundService(in);
+                } else {
+                    startService(in);
                 }
-                startService(in);
                 finish();
             }catch(Exception e){
                 e.printStackTrace();

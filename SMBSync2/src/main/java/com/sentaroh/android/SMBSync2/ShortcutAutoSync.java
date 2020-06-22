@@ -76,10 +76,6 @@ public class ShortcutAutoSync extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_transrucent);
         mActivity=ShortcutAutoSync.this;
-//        envParms.loadSettingParms(context);
-//        mUtil=new CommonUtilities(context, "ShortCutSleep", envParms);
-//        mGp = (GlobalParameters) getApplication();
-//        mGp = (GlobalParameters) getApplicationContext();
         mContext = mActivity;
         mGp= GlobalWorkArea.getGlobalParameters(mContext);
         if (mGp.themeColorList == null) {
@@ -89,8 +85,6 @@ public class ShortcutAutoSync extends FragmentActivity {
         mUtil = new CommonUtilities(mActivity.getApplicationContext(), "Shortcuut", mGp, getSupportFragmentManager());
 
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
-        // Application process is follow
-
     }
 
     @Override
@@ -114,28 +108,15 @@ public class ShortcutAutoSync extends FragmentActivity {
             ntfy.setListener(new NotifyEventListener() {
                 @Override
                 public void positiveResponse(Context c, Object[] o) {
-//                    if (SyncService.isDuplicateRequest(mGp, SMBSYNC2_SYNC_REQUEST_SHORTCUT)) {
-//                        mUtil.addLogMsg("W",
-//                                String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
-//                                        SMBSYNC2_SYNC_REQUEST_SHORTCUT));
-//                        Toast.makeText(mContext,
-//                                String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_duplicate_request),
-//                                        SMBSYNC2_SYNC_REQUEST_SHORTCUT), Toast.LENGTH_LONG)
-//                                .show();
-//                    } else {
-////						Toast.makeText(mContext,
-////								mContext.getString(R.string.msgs_svc_received_start_request_from_shortcut),
-////							Toast.LENGTH_LONG)
-////							.show();
-//                        Intent in = new Intent(mContext, SyncService.class);
-//                        in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
-//                        mContext.startService(in);
-//                    }
                     mUtil.addDebugMsg(1,"I","startService issued");
                     Intent in = new Intent(mContext, SyncService.class);
                     in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
                     try {
-                        mContext.startService(in);
+                        if (Build.VERSION.SDK_INT>=26) {
+                            c.startForegroundService(in);
+                        } else {
+                            c.startService(in);
+                        }
                         terminateShortcut();
                     } catch(Exception e) {
                         e.printStackTrace();
@@ -156,18 +137,6 @@ public class ShortcutAutoSync extends FragmentActivity {
                                 "SMBSync2", "ShortcutAutoSync start service error\n"+e.getMessage());
                         mdf.showDialog(fm, mdf, ntfy);
                     }
-//                    if (Build.VERSION.SDK_INT<26) {//Android 5/6/7
-//                        mUtil.addDebugMsg(1,"I","startService issued");
-//                        Intent in = new Intent(mContext, SyncService.class);
-//                        in.setAction(SMBSYNC2_AUTO_SYNC_INTENT);
-//                        mContext.startService(in);
-//                    } else {//Android 8/9/10
-//                        mUtil.addDebugMsg(1,"I","startActivity issued");
-//                        Intent in = new Intent(SMBSYNC2_AUTO_SYNC_INTENT);
-//                        in.setClassName(PACKAGE_NAME, PACKAGE_NAME+".ActivityIntentHandler");
-//                        in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        mContext.startActivity(in);
-//                    }
                 }
 
                 @Override
@@ -182,8 +151,6 @@ public class ShortcutAutoSync extends FragmentActivity {
             }
         }
     }
-
-    ;
 
     private void terminateShortcut() {
         Handler hndl = new Handler();

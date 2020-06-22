@@ -756,9 +756,9 @@ public class SyncService extends Service {
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_svc_can_not_start_sync_task_disabled));
             return;
         }
+        if (NotificationUtil.isNotificationEnabled(mGp))
+            startForeground(R.string.app_name, mGp.notification);
         if (mGp.syncRequestQueue.size() > 0) {
-            if (NotificationUtil.isNotificationEnabled(mGp))
-                startForeground(R.string.app_name, mGp.notification);
             mGp.acquireWakeLock(mContext, mUtil);
             NotifyEvent ntfy = new NotifyEvent(mContext);
             ntfy.setListener(new NotifyEventListener() {
@@ -816,6 +816,7 @@ public class SyncService extends Service {
             setHeartBeat();
         } else {
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " task has not started, queued task does not exist");
+            stopForeground(true);
         }
     }
 
