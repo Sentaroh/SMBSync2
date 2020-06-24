@@ -4448,29 +4448,8 @@ public class SyncTaskUtil {
 
         mScanSmbErrorMessage="";
         Thread th=new Thread(new Runnable() {
-            private UncaughtExceptionHandler defaultUEH;
-            private UncaughtExceptionHandler unCaughtExceptionHandler=new UncaughtExceptionHandler() {
-                @Override
-                public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
-                    Thread.currentThread().setUncaughtExceptionHandler(defaultUEH);
-                    tc.setDisabled();
-                    e.printStackTrace();
-                    mScanSmbErrorMessage=e.toString();
-                    handler.post(new Runnable() {// UI thread
-                        @Override
-                        public void run() {
-                            adap.sort();
-                            closeScanRemoteNetworkProgressDlg(dialog, p_ntfy, lv_ipaddr, adap, tvmsg);
-                        }
-                    });
-                }
-            };
             @Override
             public void run() {//non UI thread
-                defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
-                Thread.currentThread().setUncaughtExceptionHandler(unCaughtExceptionHandler);
-
-//                byte[] oo=new byte[Integer.MAX_VALUE];
                 mScanCompleteCount = 0;
                 mScanAddrCount = end_addr - begin_addr + 1;
                 int scan_thread = 100;
@@ -4569,30 +4548,9 @@ public class SyncTaskUtil {
                                               final String scan_port, final int smb_level) {
         final String scan_prog = mContext.getString(R.string.msgs_ip_address_scan_progress);
         Thread th = new Thread(new Runnable() {
-            private UncaughtExceptionHandler defaultUEH;
-            private UncaughtExceptionHandler unCaughtExceptionHandler=new UncaughtExceptionHandler() {
-                @Override
-                public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
-                    Thread.currentThread().setUncaughtExceptionHandler(defaultUEH);
-                    tc.setDisabled();
-                    e.printStackTrace();
-                    mScanSmbErrorMessage=e.toString();
-                    handler.post(new Runnable() {// UI thread
-                        @Override
-                        public void run() {
-                            adap.sort();
-                            closeScanRemoteNetworkProgressDlg(dialog, p_ntfy, lv_ipaddr, adap, tvmsg);
-                        }
-                    });
-                }
-            };
             @Override
             public void run() {//non UI thread
                 if (tc.isEnabled()) {
-                    defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
-                    Thread.currentThread().setUncaughtExceptionHandler(unCaughtExceptionHandler);
-
-//                    byte[] oo=new byte[Integer.MAX_VALUE];
                     synchronized (mScanRequestedAddrList) {
                         mScanRequestedAddrList.add(addr);
                     }
@@ -4659,7 +4617,7 @@ public class SyncTaskUtil {
         if (li.server_smb_smb2_status.equals("")) li.server_smb_supported+="SMB2 ";
         else if (!li.server_smb_smb2_status.equals(SMB_STATUS_UNSUCCESSFULL)) li.server_smb_supported+="SMB2 ";
 
-        SmbServerStatusResult s_result3=createSmbServerVersionList(4, domain, user, pass, address, "SMB300", "SMB311");
+        SmbServerStatusResult s_result3=createSmbServerVersionList(4, domain, user, pass, address, "SMB300", "SMB300");
         li.server_smb_smb3_status=s_result3.server_status;
         li.server_smb_smb3_share_list=s_result3.share_lists;
         if (li.server_smb_smb3_status.equals("")) li.server_smb_supported+="SMB3";
@@ -4695,9 +4653,9 @@ public class SyncTaskUtil {
             else if (e.getNtStatus()==0xc0000022) server_status=SMB_STATUS_ACCESS_DENIED;  //
             else if (e.getNtStatus()==0xc000015b) server_status=SMB_STATUS_INVALID_LOGON_TYPE;  //
             else if (e.getNtStatus()==0xc000006d) server_status=SMB_STATUS_UNKNOWN_ACCOUNT;  //
+            String cause=e.getCause()==null?"":e.getCause().getMessage();
             mUtil.addDebugMsg(1,"I","createSmbServerVersionList level="+smb_level+", address="+address+", min="+min_ver+", max="+max_ver+
-                    ", result="+server_status+String.format(", status=0x%8h",e.getNtStatus()));
-
+                    ", result="+server_status+String.format(", status=0x%8h",e.getNtStatus())+", error="+e.getMessage()+", cause="+cause);
         } catch (MalformedURLException e) {
 //            log.info("Test logon failed." , e);
         }
