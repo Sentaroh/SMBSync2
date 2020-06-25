@@ -4617,7 +4617,7 @@ public class SyncTaskUtil {
         if (li.server_smb_smb2_status.equals("")) li.server_smb_supported+="SMB2 ";
         else if (!li.server_smb_smb2_status.equals(SMB_STATUS_UNSUCCESSFULL)) li.server_smb_supported+="SMB2 ";
 
-        SmbServerStatusResult s_result3=createSmbServerVersionList(4, domain, user, pass, address, "SMB300", "SMB300");
+        SmbServerStatusResult s_result3=createSmbServerVersionList(5, domain, user, pass, address, "SMB300", "SMB311");
         li.server_smb_smb3_status=s_result3.server_status;
         li.server_smb_smb3_share_list=s_result3.share_lists;
         if (li.server_smb_smb3_status.equals("")) li.server_smb_supported+="SMB3";
