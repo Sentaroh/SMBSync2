@@ -4901,7 +4901,12 @@ public class SyncTaskUtil {
                             p_event.notifyToListener(true, new Object[]{remoteFileList});
                         } else {
                             if (tc.isThreadResultError()) {
-                                err = mContext.getString(R.string.msgs_filelist_error) + "\n" + tc.getThreadMessage();
+                                String sugget_msg=getJcifsErrorSugestionMessage(mContext, tc.getThreadMessage());
+                                if (!sugget_msg.equals("")) {
+                                    err=mContext.getString(R.string.msgs_filelist_error) + "\n"+sugget_msg+"\n"+tc.getThreadMessage();
+                                } else {
+                                    err=mContext.getString(R.string.msgs_filelist_error) + "\n"+tc.getThreadMessage();
+                                }
                                 p_event.notifyToListener(false, new Object[]{err});
                             }
                         }
@@ -4925,6 +4930,26 @@ public class SyncTaskUtil {
         tf.start();
 
         dialog.show();
+    }
+
+    public static String getJcifsErrorSugestionMessage(Context c, String error_msg) {
+        String sugget_msg="";
+        if (isJcifsErrorChangeProtocolRequired(error_msg)) {
+            sugget_msg=c.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_suggestion_message);
+        }
+        return sugget_msg;
+    }
+
+    public static boolean isJcifsErrorChangeProtocolRequired(String msg_text) {
+        boolean result=false;
+        String[] change_required_msg=new String[]{"This client is not compatible with the server"};
+        for(String item:change_required_msg) {
+            if (msg_text.contains(item)) {
+                result=true;
+                break;
+            }
+        }
+        return result;
     }
 
     public Dialog showProgressSpinIndicator(Activity a) {

@@ -307,6 +307,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Используйте SMB V2 (2.11)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Используйте SMB V2/3 (2.12)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">Используйте SMB V2/3 (2.14)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_suggestion_message">Текущий протокол SMB не позволяет вам подключиться к SMB серверу. Переход на SMBv1, SMBv2/3(2.12) или SMBv2(2.14).</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Определенный системой</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">Ошибка в основной папке. Измените ее.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_target_folder">Ошибка в целевой папке. Измените ее.</string>

@@ -1472,7 +1472,8 @@ public class SyncThread extends Thread {
                 }
             }
         } catch(JcifsException e) {
-            showMsg(stwa, false, sti.getSyncTaskName(), "E", dir, "","SMB create error, "+e.getMessage());
+            String sugget_msg=SyncTaskUtil.getJcifsErrorSugestionMessage(stwa.context, MiscUtil.getStackTraceString(e));
+            showMsg(stwa, false, sti.getSyncTaskName(), "E", dir, "","SMB create error, "+e.getMessage()+"\n"+sugget_msg);
             throw(e);
         }
     }
@@ -1590,7 +1591,8 @@ public class SyncThread extends Thread {
                     deleteSmbFile(stwa, sti, tmp_target, lf_tmp);
                 }
             } catch(JcifsException e) {
-                showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","SMB delete error, "+e.getMessage());
+                String sugget_msg=SyncTaskUtil.getJcifsErrorSugestionMessage(stwa.context, MiscUtil.getStackTraceString(e));
+                showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","SMB delete error, "+e.getMessage()+"\n"+sugget_msg);
                 throw(e);
             } catch(IOException e) {
                 showMsg(stwa, false, sti.getSyncTaskName(), "E", tmp_target, "","SMB delete error, "+e.getMessage());

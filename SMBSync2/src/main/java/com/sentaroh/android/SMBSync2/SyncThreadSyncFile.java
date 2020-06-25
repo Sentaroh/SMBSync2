@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.SystemClock;
 
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
+import com.sentaroh.android.Utilities.MiscUtil;
 import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.jcifs.JcifsException;
 import com.sentaroh.jcifs.JcifsFile;
@@ -3056,22 +3057,24 @@ public class SyncThreadSyncFile {
     }
 
     static private void putErrorMessageIOE(SyncThreadWorkArea stwa, SyncTaskItem sti, IOException e, String from_path, String to_path) {
-        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "",
                 CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
-        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
-        if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", e.getMessage());
+        if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", e.getCause().toString());
 
         SyncThread.printStackTraceElement(stwa, e.getStackTrace());
         stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
     }
 
     static private void putErrorMessageJcifs(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsException e, String from_path, String to_path) {
-        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "",
                 CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
-        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
-        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", "NT Status="+String.format("0x%8x",e.getNtStatus()));
+        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", e.getMessage());
+        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", "NT Status="+String.format("0x%8x",e.getNtStatus()));
+        String sugget_msg=SyncTaskUtil.getJcifsErrorSugestionMessage(stwa.context, MiscUtil.getStackTraceString(e));
+        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", sugget_msg);
 
-        if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
+        if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", e.getCause().toString());
         stwa.jcifsNtStatusCode=e.getNtStatus();
         SyncThread.printStackTraceElement(stwa, e.getStackTrace());
         stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());

@@ -31,6 +31,7 @@ import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.mp4.Mp4Directory;
 import com.sentaroh.android.SMBSync2.SyncThread.SyncThreadWorkArea;
+import com.sentaroh.android.Utilities.MiscUtil;
 import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.jcifs.JcifsException;
@@ -624,9 +625,11 @@ public class SyncThreadArchiveFile {
     }
 
     static private void putExceptionMsg(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path, String to_path, Exception e) {
-        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "",
                 CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
-        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", e.getMessage());
+        String sugget_msg=SyncTaskUtil.getJcifsErrorSugestionMessage(stwa.context, MiscUtil.getStackTraceString(e));
+        if (!sugget_msg.equals("")) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "E", "", "", sugget_msg);
         if (e.getCause()!=null) SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getCause().toString());
         if (e instanceof JcifsException) stwa.jcifsNtStatusCode=((JcifsException)e).getNtStatus();
         SyncThread.printStackTraceElement(stwa, e.getStackTrace());
