@@ -515,6 +515,29 @@ style='font-size:10.5pt'>A relative path to specific files can also be entered
 <p class=MsoNormal style='margin-left:42.0pt;page-break-after:avoid'><span
 style='font-size:10.5pt'>&nbsp;</span></p>
 
+<p class=MsoNormal style='margin-left:42.0pt;page-break-after:avoid'><span
+style='font-size:10.5pt'>examples:</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt;page-break-after:avoid'><span
+style='font-size:10.5pt'>- match any file named my_file.txt: my_file.txt</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt;page-break-after:avoid'><span
+style='font-size:10.5pt'>- match a specific big file to exclude: path/to/bigfile.dat</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt;page-break-after:avoid'><span
+style='font-size:10.5pt'>- match all *tmp.log files in cache folder: cache/*tmp.log
+or /cache/*tmp.log</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt;page-break-after:avoid'><span
+style='font-size:10.5pt'>- match all pdf files: *.pdf</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt;page-break-after:avoid'><span
+style='font-size:10.5pt'>- exclude all hidden files: .*</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt;page-break-after:avoid'><span
+style='font-size:10.5pt'>- </span>specify quickly multiple files<span
+style='font-size:10.5pt'>: *.pdf;path/to/private.doc;file*_tmp.log</span></p>
+
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
 <p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
@@ -539,6 +562,36 @@ include from the synchronization process. Wildcards like /*cahe/ are supported.<
 always relative to Master. There is no such restriction for Exclude filter.
 This is mainly for speed processing reasons in addition that it is a rarely use
 case scenario.</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>&nbsp;</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>examples:</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>- exclude all cache/temp
+folders anywhere in Master: */cache/temp/* or */cache/temp/ or */cache/temp</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>- exclude master/cache folder:
+cache or /cache or /cache/*</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>- exclude all *.tmp folders:
+*/*.tmp/*</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>- exclude all hidden folders: */.*
+or */.*/</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>- filter dir?: will match
+dir1, dir2, dira, dirzÅc</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>- quickly specify multiple
+paths: path/to/dir1;path/to/dir2;path/to/dir3</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>- note 1: filter
+data/*/personal/* will include master/data/any_dir/personal/* folders</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>- note 2: filter /*/cache/*
+will exclude master/any_dir_name/cache/* but not master/cache and not master/any_dir_name/dir2/cache/</p>
+
+<p class=MsoBodyText style='margin-left:41.95pt'>&nbsp;</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
