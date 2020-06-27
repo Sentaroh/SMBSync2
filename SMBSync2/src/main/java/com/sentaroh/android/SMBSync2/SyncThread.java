@@ -650,7 +650,8 @@ public class SyncThread extends Thread {
             long b_time = System.currentTimeMillis();
             mStwa.localFileLastModListModified = false;
             FileLastModifiedTime.saveLastModifiedList(mGp.settingMgtFileDir, mStwa.currLastModifiedList, mStwa.newLastModifiedList);
-            mStwa.util.addDebugMsg(1, "I", "saveLastModifiedList elapsed time=" + (System.currentTimeMillis() - b_time));
+            if (mStwa.gp.settingDebugLevel >= 1)
+                mStwa.util.addDebugMsg(1, "I", "saveLastModifiedList elapsed time=" + (System.currentTimeMillis() - b_time));
         }
     }
 
@@ -1411,7 +1412,7 @@ public class SyncThread extends Thread {
         if (!lf.exists()) {
             if (!sti.isSyncTestMode()) {
                 result = lf.mkdirs();
-                if (result && stwa.gp.settingDebugLevel >= 1)
+                if (stwa.gp.settingDebugLevel >= 1 && result)
                     stwa.util.addDebugMsg(1, "I", "createDirectoryToInternalStorage directory created, dir=" + dir);
             } else {
                 if (stwa.gp.settingDebugLevel >= 1)
@@ -1436,7 +1437,8 @@ public class SyncThread extends Thread {
                     stwa.util.addDebugMsg(2, "I", "createDirectoryToExternalStorage result=" + result + ", exists=" + i_exists + ", new_saf=" + new_saf==null? "null":"new_saf");
                 }
             } else {
-                stwa.util.addDebugMsg(2, "I", "createDirectoryToExternalStorage directory exists, Directory=" + dir);
+                if (stwa.gp.settingDebugLevel >= 2)
+                    stwa.util.addDebugMsg(2, "I", "createDirectoryToExternalStorage directory exists, Directory=" + dir);
             }
         } else {
             if (stwa.gp.settingDebugLevel >= 1)
@@ -1480,8 +1482,8 @@ public class SyncThread extends Thread {
             dc_video=cr.delete(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, MediaStore.Video.Media.DATA + "=?", new String[]{tfp} );
             dc_files=cr.delete(MediaStore.Files.getContentUri("external"), MediaStore.Video.Media.DATA + "=?", new String[]{tfp} );
             temp_file_for_rename.renameTo(temp_file);
-            stwa.util.addDebugMsg(1,"I","deleTempMediaStoreItem Temp file name=",tfp,
-                    ", delete count image="+dc_image, ", audio="+dc_audio,", video="+dc_video,", files="+dc_files);
+            if (stwa.gp.settingDebugLevel >= 1)
+                stwa.util.addDebugMsg(1, "I", "deleTempMediaStoreItem Temp file name=", tfp, ", delete count image="+dc_image, ", audio="+dc_audio, ", video="+dc_video, ", files="+dc_files);
         }
     }
 
@@ -2124,9 +2126,9 @@ public class SyncThread extends Thread {
     static final public boolean sendConfirmRequest(SyncThreadWorkArea stwa, SyncTaskItem sti, String type, String url) {
         boolean result = true;
         int rc = 0;
-        stwa.util.addDebugMsg(2, "I", "sendConfirmRequest entered type=" , type ,
-                ", Override="+sti.isSyncOverrideCopyMoveFile(), ", Confirm=" + sti.isSyncConfirmOverrideOrDelete(),
-                ", fp=", url);
+        if (stwa.gp.settingDebugLevel >= 2)
+            stwa.util.addDebugMsg(2, "I", "sendConfirmRequest entered type=" , type ,
+                    ", Override="+sti.isSyncOverrideCopyMoveFile(), ", Confirm=" + sti.isSyncConfirmOverrideOrDelete(), ", fp=", url);
         if (sti.isSyncConfirmOverrideOrDelete()) {
             boolean ignore_confirm = true;
             if (type.equals(SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR) || type.equals(SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE)) {
@@ -2197,7 +2199,9 @@ public class SyncThread extends Thread {
                 }
             }
         }
-        stwa.util.addDebugMsg(2, "I", "sendConfirmRequest result=" + result, ", rc=" + rc);
+
+        if (stwa.gp.settingDebugLevel >= 2)
+            stwa.util.addDebugMsg(2, "I", "sendConfirmRequest result=" + result, ", rc=" + rc);
 
         return result;
     }
@@ -2205,8 +2209,8 @@ public class SyncThread extends Thread {
     static final public boolean sendArchiveConfirmRequest(SyncThreadWorkArea stwa, SyncTaskItem sti, String type, String url) {
         boolean result = true;
         int rc = 0;
-        stwa.util.addDebugMsg(2, "I", "sendArchiveConfirmRequest entered type=" , type ,
-                ", fp=", url);
+        if (stwa.gp.settingDebugLevel >= 2)
+            stwa.util.addDebugMsg(2, "I", "sendArchiveConfirmRequest entered type=" , type , ", fp=", url);
         boolean ignore_confirm = true;
         if (type.equals(SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE)) {
             if (stwa.confirmArchiveResult == SMBSYNC2_CONFIRM_RESP_YESALL) result = true;
@@ -2249,7 +2253,9 @@ public class SyncThread extends Thread {
                 printStackTraceElement(stwa, e.getStackTrace());
             }
         }
-        stwa.util.addDebugMsg(2, "I", "sendArchiveConfirmRequest result=" + result, ", rc=" + rc);
+
+        if (stwa.gp.settingDebugLevel >= 2)
+            stwa.util.addDebugMsg(2, "I", "sendArchiveConfirmRequest result=" + result, ", rc=" + rc);
 
         return result;
     }
@@ -2528,12 +2534,13 @@ public class SyncThread extends Thread {
                             stwa.newLastModifiedList,
                             tf_path, tf_time, mf_time);
                 }
-                stwa.util.addDebugMsg(3, "I", "isFileChangedDetailCompare FilItem Exists="+found);
+                if (stwa.gp.settingDebugLevel >= 3) stwa.util.addDebugMsg(3, "I", "isFileChangedDetailCompare FilItem Exists="+found);
             }
         } else if (!(sti.isSyncOptionDifferentFileBySize() && length_diff == 0)) { //length_diff == 0 or both compare by time_diff and size_diff are disabled --> if files are same size and compare by size was enabled, they are same, else:
             diff = true; //neither "compare by time" nor "compare by size" are enabled: always overwrite traget, do not update or use SMBSync2 List
         }
-        if (stwa.gp.settingDebugLevel >= 3) {
+        if (stwa.gp.settingDebugLevel >= 1) {
+            //if settingDebugLevel >= 3
             stwa.util.addDebugMsg(3, "I", "isFileChangedDetailCompare");
             if (tf_exists) stwa.util.addDebugMsg(3, "I", "Target file length=" + tf_length +
                     ", last modified(ms)=" + tf_time +
@@ -2545,11 +2552,11 @@ public class SyncThread extends Thread {
             else stwa.util.addDebugMsg(3, "I", "Master file was not exists");
             stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",orphan_file=" + orphan_file +
                     ",time_diff=" + time_diff + ",length_diff=" + length_diff + ", diff=" + diff);
-        } else {
+
+            //if settingDebugLevel >= 1
             stwa.util.addDebugMsg(1, "I", "isFileChanged fp="+fp+ ", orphan_file=" + orphan_file +
                     ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+tf_time+", master_time="+mf_time);
-        }
-        if (stwa.gp.settingDebugLevel >= 1) {
+
             String lt_target=stwa.sdfLocalTime.format(tf_time);
             String lt_master=stwa.sdfLocalTime.format(mf_time);
             String ut_target=stwa.sdfUTCTime.format(tf_time);
@@ -2611,7 +2618,8 @@ public class SyncThread extends Thread {
         } else if (!(sti.isSyncOptionDifferentFileBySize() && length_diff == 0)) { //length_diff == 0 or both compare by time_diff and size_diff are disabled --> if files are same size and compare by size was enabled, they are same, else:
             diff = true; //neither "compare by time" nor "compare by size" are enabled: always overwrite traget
         }
-        if (stwa.gp.settingDebugLevel >= 3) {
+        if (stwa.gp.settingDebugLevel >= 1) {
+            //if settingDebugLevel >= 3
             stwa.util.addDebugMsg(3, "I", "isFileChangedForLocalToRemote");
             if (hf_exists) stwa.util.addDebugMsg(3, "I", "Remote file length=" + hf_length +
                     ", last modified(ms)=" + hf_time +
@@ -2624,11 +2632,11 @@ public class SyncThread extends Thread {
             stwa.util.addDebugMsg(3, "I", "allcopy=" + ac + ",orphan_file=" + orphan_file +
                     ",time_diff=" + time_diff +//", time_zone_diff="+time_diff_tz1+
                     ",length_diff=" + length_diff + ", diff=" + diff);
-        } else {
+
+            //if settingDebugLevel >= 1
             stwa.util.addDebugMsg(1, "I", "isFileChangedForLocalToRemote fp="+fp+ ", orphan_file=" + orphan_file +
                     ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+hf_time+", master_time="+lf_time);
-        }
-        if (stwa.gp.settingDebugLevel >= 1) {
+
             String lt_target=stwa.sdfLocalTime.format(lf_time);
             String lt_master=stwa.sdfLocalTime.format(hf_time);
             String ut_target=stwa.sdfUTCTime.format(lf_time);
@@ -2707,9 +2715,9 @@ public class SyncThread extends Thread {
         else {
             if (lf.getName().substring(0, 1).equals(".")) result = true;
         }
-        if (stwa.gp.settingDebugLevel >= 2) {
+        if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "isHiddenFile(Local) result=" + result + ", Name=" + lf.getName());
-        }
+
         return result;
     }
 
@@ -2721,6 +2729,7 @@ public class SyncThread extends Thread {
         }
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "isHiddenFile(Remote) result=" + result + ", Name=" + hf.getName().replace("/", ""));
+
         return result;
     }
 
@@ -2754,8 +2763,8 @@ public class SyncThread extends Thread {
             if (tmp_d.indexOf("/") < 0) {
                 //file is in root of master, ignore it
                 if (stwa.gp.settingDebugLevel >= 2)
-                    stwa.util.addDebugMsg(2, "I", "isFileSelectedVer2 not filtered, " +
-                            "because Master Dir not processed was effective");
+                    stwa.util.addDebugMsg(2, "I", "isFileSelectedVer2: file excluded because Sync Files in Root of Master option is disabled");
+
                 return false;
             }
         }
@@ -2817,8 +2826,8 @@ public class SyncThread extends Thread {
             if (tmp_d.indexOf("/") < 0) {
                 //file is in root of master, ignore it
                 if (stwa.gp.settingDebugLevel >= 2)
-                    stwa.util.addDebugMsg(2, "I", "isFileSelectedVer1 not filtered, " +
-                            "because Master Dir not processed was effective");
+                    stwa.util.addDebugMsg(2, "I", "isFileSelectedVer1: file excluded because Sync Files in Root of Master option is disabled");
+
                 return false;
             }
         }
@@ -2843,6 +2852,7 @@ public class SyncThread extends Thread {
         }
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "isFileSelectedVer1 result:" + filtered);
+
         return filtered;
     }
 
@@ -2965,9 +2975,8 @@ public class SyncThread extends Thread {
             //not filtered
             filtered = true;
         } else {
-            if (stwa.gp.settingDebugLevel >= 2) {
+            if (stwa.gp.settingDebugLevel >= 2)
                 stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer1 dir=" + n_dir);
-            }
 
             Pattern[] inc_matched_pattern_array = new Pattern[0];
             String matched_inc_dir="";
@@ -3128,8 +3137,7 @@ public class SyncThread extends Thread {
             inc = exc = false;
         }
         if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2" +
-                    " include=" + inc + ", exclude=" + exc + ", result=" + result + ", dir=" + abs_dir);
+            stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2 include=" + inc + ", exclude=" + exc + ", result=" + result + ", dir=" + abs_dir);
 
         return result;
     }
@@ -3238,9 +3246,8 @@ public class SyncThread extends Thread {
             result = true;
             inc = exc = false;
         }
-        if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer1" +
-                    " include=" + inc + ", exclude=" + exc + ", result=" + result + ", dir=" + abs_dir);
+        if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer1 include=" + inc + ", exclude=" + exc + ", result=" + result + ", dir=" + abs_dir);
+
         return result;
     }
 
@@ -3254,8 +3261,7 @@ public class SyncThread extends Thread {
                 }
             }
             if (!found) ff.add("I" + add_str);
-            else if (mStwa.gp.settingDebugLevel >= 1)
-                mStwa.util.addDebugMsg(1, "I", "addPresetFileFilter" + " Duplicate file filter=" + add_str);
+            else if (mStwa.gp.settingDebugLevel >= 1) mStwa.util.addDebugMsg(1, "I", "addPresetFileFilter" + " Duplicate file filter=" + add_str);
         }
     }
 
@@ -3334,8 +3340,7 @@ public class SyncThread extends Thread {
         if (ffexc.length() != 0)
             mStwa.fileFilterExclude = Pattern.compile("(" + ffexc + ")", flags);
 
-        if (mStwa.gp.settingDebugLevel >= 1)
-            mStwa.util.addDebugMsg(1, "I", "compileFilterVer2" + " File include=" + ffinc + ", exclude=" + ffexc);
+        if (mStwa.gp.settingDebugLevel >= 1) mStwa.util.addDebugMsg(1, "I", "compileFilterVer2" + " File include=" + ffinc + ", exclude=" + ffexc);
 
         //compile dir filters
         mStwa.dirIncludeFilterArrayList.clear();
@@ -3502,8 +3507,11 @@ public class SyncThread extends Thread {
                     all_exc += dfexc + ";";
                 }
             }
-            mStwa.util.addDebugMsg(1, "I", "compileFilterVer1" + " Directory include=" + all_inc);
-            mStwa.util.addDebugMsg(1, "I", "compileFilterVer1" + " Directory exclude=" + all_exc);
+
+            if (mStwa.gp.settingDebugLevel >= 1) {
+                mStwa.util.addDebugMsg(1, "I", "compileFilterVer1" + " Directory include=" + all_inc);
+                mStwa.util.addDebugMsg(1, "I", "compileFilterVer1" + " Directory exclude=" + all_exc);
+            }
         }
 
         mStwa.wholeDirIncludeFilterPatternList.clear();
@@ -3533,8 +3541,10 @@ public class SyncThread extends Thread {
                     }
                 }
             }
-            mStwa.util.addDebugMsg(1, "I", "compileFilterVer1" + " Whole Directory include=" + all_inc);
-            mStwa.util.addDebugMsg(1, "I", "compileFilterVer1" + " Whole Directory exclude=" + all_exc);
+            if (mStwa.gp.settingDebugLevel >= 1) {
+                mStwa.util.addDebugMsg(1, "I", "compileFilterVer1" + " Whole Directory include=" + all_inc);
+                mStwa.util.addDebugMsg(1, "I", "compileFilterVer1" + " Whole Directory exclude=" + all_exc);
+            }
         }
 
         mStwa.fileFilterInclude = mStwa.fileFilterExclude = null;
@@ -3543,8 +3553,7 @@ public class SyncThread extends Thread {
         if (ffexc.length() != 0)
             mStwa.fileFilterExclude = Pattern.compile("(" + ffexc + ")", flags);
 
-        if (mStwa.gp.settingDebugLevel >= 1)
-            mStwa.util.addDebugMsg(1, "I", "compileFilterVer1" + " File include=" + ffinc + ", exclude=" + ffexc);
+        if (mStwa.gp.settingDebugLevel >= 1) mStwa.util.addDebugMsg(1, "I", "compileFilterVer1" + " File include=" + ffinc + ", exclude=" + ffexc);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
     }
