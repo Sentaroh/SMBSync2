@@ -3370,7 +3370,14 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-
+                        //recheck existing filters before enabling Ok Button and clearing warning dialog msg
+                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                                isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
+                            dlg_msg.setText("");
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        } else {
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        }
                     }
                     @Override
                     public void negativeResponse(Context arg0, Object[] arg1) {
