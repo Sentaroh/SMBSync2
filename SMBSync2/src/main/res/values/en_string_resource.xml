@@ -305,7 +305,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Use SMB V2 (2.11)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Use SMB V2/3 (2.12)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">Use SMB V2/3 (2.14)</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_suggestion_message">The current SMB protocol does not allow you to connect to the SMB server. Change to SMBv1, SMBv2/3(2.12) or SMBv2(2.14).</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_suggestion_message">The selected SMB protocol does not allow connection to the SMB server. Change the protocol to SMBv1, SMBv2/3(2.12) or SMBv2(2.14).</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Determined by system</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">An error exists in the master folder. Please fix it.</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_target_folder">An error exists in the target folder. Please fix it.</string>
