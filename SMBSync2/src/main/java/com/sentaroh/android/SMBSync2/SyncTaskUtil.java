@@ -39,6 +39,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -102,8 +103,11 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_ACCESS_DENIED;
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_INVALID_LOGON_TYPE;
@@ -2965,13 +2969,16 @@ public class SyncTaskUtil {
 
         //on main filters dialog, show warning if invalid filters exist + disable ok button
         //no check for whole dir prefix in file filters: they are always invalid chars not allowed in file filter
-        hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
+        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+                isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
+            //ok
+        }
 
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -2985,7 +2992,7 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -3003,7 +3010,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
+                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                             dlg_msg.setText("");
                         }
@@ -3059,7 +3066,7 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, addBtn, false);
 
                     //recheck existing filters before enabling Ok button and clearing warning dialog msg
-                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
+                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                         dlg_msg.setText("");
                         CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else {
@@ -3174,17 +3181,20 @@ public class SyncTaskUtil {
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
 
-        //check existing filters for errors and display warning dialog and enable/disable ok buton in main filter list view
-        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS))
-            if (isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg))
-                isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg);
+        //when entering main dir filters dialog, check existing filters for errors and display warning dialog and enable/disable ok buton in main filter list view
+        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) &&
+                isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) &&
+                isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
+            //ok
+        }
 
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) &&
-                        isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                        isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -3198,8 +3208,8 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) &&
-                        isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                        isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -3217,8 +3227,8 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) &&
-                                isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
+                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                                isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                             dlg_msg.setText("");
                         }
@@ -3304,8 +3314,8 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, add_exclude_btn, true);
 
                     //recheck existing filters before enabling Ok Button and clearing warning dialog msg
-                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) &&
-                            isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
+                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                            isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
                         dlg_msg.setText("");
                         CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else {
@@ -3343,10 +3353,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        if (isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                            dlg_msg.setText("");
-                        }
+
                     }
                     @Override
                     public void negativeResponse(Context arg0, Object[] arg1) {
@@ -3459,8 +3466,22 @@ public class SyncTaskUtil {
                         return;
                     }
 
-                    //check if edited filter has a duplicate in existing filters
+                    //check if edited filter has a duplicate in its self and in existing filters
                     if (!filter.equalsIgnoreCase(s.toString())) {
+
+                        //check if edited filter has duplicates inside its self
+                        String[] new_filter_array=s.toString().split(";");
+                        for(int i= 0; i < new_filter_array.length; i++) {
+                            for(int j= i+1; j < new_filter_array.length; j++) {
+                                if (!new_filter_array[i].equals("") && new_filter_array[i].equalsIgnoreCase(new_filter_array[j])) {
+                                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified, new_filter_array[i]));
+                                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                                    return;
+                                }
+                            }
+                        }
+
+                        //check if edited filter has duplicates in existing filters
                         String[]changed_filter_array=getChangedFilter(filter, s.toString()).split(";");
                         for(String changed_item:changed_filter_array) {
                             String dup_filter= getDuplicateFilter(changed_item, fa);
@@ -3499,6 +3520,7 @@ public class SyncTaskUtil {
                 String new_filter=et_filter.getText().toString().trim();
 
                 //check if added filter is v2 but has invalid whole dir prefix v1
+                //case it is a file filter: whole dir prefix is an invalid char detected by afterTextChanged()
                 if (fli.isUseFilterV2()) {
                     String error_filter=hasWholeDirectoryFilterItemV1(new_filter);
                     if (!error_filter.equals("")) {
@@ -3585,7 +3607,7 @@ public class SyncTaskUtil {
         String error_msg="";
         String error_filter="";
         String invalid_char_seq="";
-        for(int i=0;i<filter_adapter.getCount();i++) {
+        for(int i=0; i<filter_adapter.getCount(); i++) {
             AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
             if (!fli.isDeleted() && fli.isUseFilterV2()) {
                 error_filter=fli.getFilter();
@@ -3631,7 +3653,7 @@ public class SyncTaskUtil {
     private boolean isValidWholeDirectoryFilterV1(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
         boolean result=true;
         String error_filter="";
-        for(int i=0;i<filter_adapter.getCount();i++) {
+        for(int i=0; i<filter_adapter.getCount(); i++) {
             AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
             if (!fli.isDeleted() && fli.isUseFilterV2()) {
                 error_filter=hasWholeDirectoryFilterItemV1(fli.getFilter());
@@ -3665,7 +3687,7 @@ public class SyncTaskUtil {
     private boolean isValidWholeDirectoryFilterV2(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
         boolean result=true;
         String error_filters="";
-        for(int i=0;i<filter_adapter.getCount();i++) {
+        for(int i=0; i<filter_adapter.getCount(); i++) {
             AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
             if (!fli.isDeleted() && fli.isUseFilterV2() && fli.isInclude()) {
                 error_filters=hasWholeDirectoryFilterItemV2(fli.getFilter());
@@ -3702,58 +3724,92 @@ public class SyncTaskUtil {
     }
 */
 
-/*
     //Check if filter adapter list has duplicates
-    *************
-        if (fa.getCount() == 0) return "";
-        String[] mew_filter_array=nf.split(";");
-        for (int i = 0; i < fa.getCount(); i++) {
-            if (!fa.getItem(i).isDeleted()) {
-                String[] current_filter_array=fa.getItem(i).getFilter().split((";"));
-                for(String new_item:mew_filter_array) {
-                    for(String current_item:current_filter_array) {
-                        if (new_item.equalsIgnoreCase(current_item)) return new_item;
-                    }
-                }
-            }
-        }
-        return "";
-    ********************
-    private boolean hasDupFilterItems(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
-        boolean result=false;
+    private boolean isNoDuplicateFilters(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
+        boolean no_duplicates=true;
         String error_filters="";
-        for(int i=0;i<filter_adapter.getCount();i++) {
-            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
-            if (!fli.isDeleted() && fli.isUseFilterV2() && fli.isInclude()) {
-                error_filters=hasWholeDirectoryFilterItemV2(fli.getFilter());
-                if (!error_filters.equals("")) break;
-            }
-        }
-        if (!error_filters.equals("")) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error, error_filters));
-            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
-            result=true;
-        }
-        return result;
-    }
-*/
+        Set<String> unique_filters = new HashSet<String>();
 
-    private String getDuplicateFilter(String nf, AdapterFilterList fa) {
-        if (fa.getCount() == 0) return "";
-        String[] mew_filter_array=nf.split(";");
-        for (int i = 0; i < fa.getCount(); i++) {
-            if (!fa.getItem(i).isDeleted()) {
-                String[] current_filter_array=fa.getItem(i).getFilter().split((";"));
-                for(String new_item:mew_filter_array) {
-                    for(String current_item:current_filter_array) {
-                        if (new_item.equalsIgnoreCase(current_item)) return new_item;
-                    }
+        //filter adapter line to compare with next filter lines
+        for(int line = 0; line < filter_adapter.getCount(); line++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(line);
+            if (!fli.isDeleted()) {
+                //get each ";" separated filter item from the current filter "line"
+                String[] filter_items=fli.getFilter().split(";");
+                for (String filter : filter_items) {
+                    if (!filter.equals("") && !unique_filters.add(filter.toUpperCase())) error_filters+=filter + ";";
                 }
             }
         }
-        return "";
+
+        if (!error_filters.equals("")) {
+            no_duplicates = false;
+            String[] unique_duplicates = error_filters.split(";");
+            if (Build.VERSION.SDK_INT >= 24) unique_duplicates = Arrays.stream(unique_duplicates).distinct().toArray(String[]::new);
+            else unique_duplicates = new HashSet<String>(Arrays.asList(unique_duplicates)).toArray(new String[0]);
+
+            if (Build.VERSION.SDK_INT >= 26) error_filters = String.join("; ", unique_duplicates);
+            else error_filters = TextUtils.join(";", unique_duplicates);
+
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error, error_filters));
+            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+        }
+        return no_duplicates;
     }
 
+    //return duplicate filter entry if it exists in the filter array
+    //each array entry can hold multiple ";" separated filter items
+    //filter_list: item.substring(1) is the filter entry, item.substring(0,1) is "I" for include and any for exclude
+    public static String[] getDuplicateFilterList(ArrayList<String> filter_list) {
+        Set<String> unique_filters = new HashSet<String>();
+        String duplicate_entries="";
+
+        for(String filter_entry : filter_list) {
+            String[] filter_items = filter_entry.substring(1).split(";");
+            for (String filter : filter_items) {
+                if (!filter.equals("") && !unique_filters.add(filter.toUpperCase())) duplicate_entries+=filter + ";";
+            }
+        }
+
+        String[] unique_duplicates = duplicate_entries.split(";");
+        if (Build.VERSION.SDK_INT >= 24) unique_duplicates = Arrays.stream(unique_duplicates).distinct().toArray(String[]::new);
+        else unique_duplicates = new HashSet<String>(Arrays.asList(unique_duplicates)).toArray(new String[0]);
+
+        return unique_duplicates;
+    }
+
+
+    //check if currently entered/edited filter has duplicates inside its self + inside the existing filter entries in the adapter
+    private static String getDuplicateFilter(String filter, AdapterFilterList filter_adapter) {
+        if (filter_adapter.getCount() == 0) return "";
+
+        Set<String> unique_filters = new HashSet<String>();
+        String duplicate_entries="";
+        String sep="";
+
+        //add existing filters to new unique_filters array
+        for (int i = 0; i < filter_adapter.getCount(); i++) {
+            if (!filter_adapter.getItem(i).isDeleted()) {
+                String[] filter_entries=filter_adapter.getItem(i).getFilter().split(";");
+                for(String filter_item : filter_entries) {
+                    if (!filter_item.equals("")) unique_filters.add(filter_item.toUpperCase());
+                }
+            }
+        }
+
+        //check if input filter has duplicates inside its self or in existing filters
+        String[] filter_array=filter.split(";");
+        for (String filter_item : filter_array) {
+            if (!filter_item.equals("") && !unique_filters.add(filter_item.toUpperCase())) {
+                duplicate_entries+= sep + filter_item;
+                sep= ", ";
+            }
+        }
+
+        return duplicate_entries;
+    }
+
+    //do not compare filter being edited to its own filter adapter entry
     private String getChangedFilter(String current_filter, String new_filter) {
         if (current_filter==null || new_filter==null) return "";
         String[] current_filter_array=current_filter.split(";");
@@ -3763,7 +3819,7 @@ public class SyncTaskUtil {
         for (String new_item:new_filter_array) {
             boolean found=false;
             for(String current_item:current_filter_array) {
-                if (new_item.equalsIgnoreCase(current_item)) {
+                if (!new_item.equals("") && new_item.equalsIgnoreCase(current_item)) {
                     found=true;
                     break;
                 }
