@@ -991,6 +991,14 @@ public final class CommonUtilities {
         return isOnlyWildcard;
     }
 
+    public static String hasAsteriskOnlyPathPart(String path) {
+        String asterisk_only_path="";
+        if (path.startsWith("*/")) asterisk_only_path="*/";
+        else if (path.contains("/*/")) asterisk_only_path="/*/";
+        else if (path.endsWith("/*")) asterisk_only_path="/*";
+        return asterisk_only_path;
+    }
+
     public static String removeRedundantDirectorySeparator (String input) {
         return removeRedundantSeparator(input, "/");
     }

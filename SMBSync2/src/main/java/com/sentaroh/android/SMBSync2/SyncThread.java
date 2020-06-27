@@ -2899,18 +2899,18 @@ public class SyncThread extends Thread {
                 stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 dir=" + filtered_dir);
             }
 
-            //exclude rule wins: start with it to not waste time checking include filters if exclude is true
+            //exclude rule wins: start with it
             if (stwa.dirExcludeFilterPatternList.size() != 0) {
                 for (int i = 0; i < stwa.dirExcludeFilterPatternList.size(); i++) {
                     Pattern filter_pattern = stwa.dirExcludeFilterPatternList.get(i);
                     String new_filtered_dir = filtered_dir;
-                    //compiled filter==*/cache/* -> excludes master_dir/cache and master_dir/subdir/cache
+                    //compiled filter==*/cache -> excludes master_dir/cache and master_dir/subdir/cache
                     if (filter_pattern.toString().startsWith("(^/") || filter_pattern.toString().startsWith("(.*/")) {
                         if (!filtered_dir.startsWith("/")) new_filtered_dir = "/" + filtered_dir;
                     }
 
-//                  if (stwa.gp.settingDebugLevel >= 2)
-//                      stwa.util.addDebugMsg(2, "I", "exclude dir by name filter_pattern=" + filter_pattern + " new_filtered_dir=" + new_filtered_dir);
+                  if (stwa.gp.settingDebugLevel >= 2)
+                      stwa.util.addDebugMsg(2, "I", "exclude dir by name filter_pattern=" + filter_pattern + " new_filtered_dir=" + new_filtered_dir);
 
                     mt = filter_pattern.matcher(new_filtered_dir);
                     exc = mt.find();
@@ -2928,14 +2928,14 @@ public class SyncThread extends Thread {
                     for (int i = 0; i < stwa.dirIncludeFilterPatternList.size(); i++) {
                         String new_filtered_dir = filtered_dir;
 
-                        //compiled filter==/cache/* -> includes master_dir/cache
+                        //compiled filter==/cache -> includes master_dir/cache
                         if (stwa.dirIncludeFilterPatternList.get(i).toString().startsWith("(^/")) {
                             if (!filtered_dir.startsWith("/")) new_filtered_dir = "/" + filtered_dir;
                         }
                         mt = stwa.dirIncludeFilterPatternList.get(i).matcher(new_filtered_dir);
 
-//                      if (stwa.gp.settingDebugLevel >= 2)
-//                          stwa.util.addDebugMsg(2, "I", "pattern_by_name["+i+"]="+stwa.dirIncludeFilterPatternList.get(i) + " filtered_dir="+new_filtered_dir);
+                      if (stwa.gp.settingDebugLevel >= 2)
+                          stwa.util.addDebugMsg(2, "I", "pattern_by_name["+i+"]="+stwa.dirIncludeFilterPatternList.get(i) + " filtered_dir="+new_filtered_dir);
 
                         inc = mt.find();
                         if (inc) {
@@ -3082,24 +3082,24 @@ public class SyncThread extends Thread {
 
         String filtered_dir = "";
         if (abs_dir.length() != 0) {
-            if (stwa.dirIncludeFilterArrayList.size()>0 || stwa.dirExcludeFilterPatternList.size()>0) {
+            if (stwa.dirIncludeFilterArrayList.size() > 0 || stwa.dirExcludeFilterPatternList.size() > 0) {
                 if (abs_dir.endsWith("/")) filtered_dir = abs_dir.substring(0, abs_dir.length() - 1);
                 else filtered_dir = abs_dir;
             }
 
-            //exclude rule wins: start with it to not waste time checking include filters if exclude is true
+            //exclude rule wins: start with it
             if (stwa.dirExcludeFilterPatternList.size() != 0) {
                 for (int i = 0; i < stwa.dirExcludeFilterPatternList.size(); i++) {
                     Pattern filter_pattern = stwa.dirExcludeFilterPatternList.get(i);
                     String new_filtered_dir = filtered_dir;
 
-                    //compiled filter==*/cache/* -> excludes master_dir/cache/ and master_dir/subdir/cache/
-                    //compiled filter==/cache/ or compiled filter==cache, only excludes master_dir/cache/ while master_dir/subdir/cache/
+                    //compiled filter==*/cache -> excludes master_dir/cache and master_dir/subdir/cache
+                    //compiled filter==/cache or compiled filter==cache, only excludes master_dir/cache while master_dir/subdir/cache
                     if (filter_pattern.toString().startsWith("(^/") || filter_pattern.toString().startsWith("(.*/")) {
                         if (!filtered_dir.startsWith("/")) new_filtered_dir = "/" + filtered_dir;
                     }
-//                  if (stwa.gp.settingDebugLevel >= 2)
-//                      stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: exclude filter_pattern=" + filter_pattern + " filtered_dir=" + filtered_dir + " new_filtered_dir=" + new_filtered_dir);
+                  if (stwa.gp.settingDebugLevel >= 2)
+                      stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: exclude filter_pattern=" + filter_pattern + " filtered_dir=" + filtered_dir + " new_filtered_dir=" + new_filtered_dir);
 
                     Matcher mt = filter_pattern.matcher(new_filtered_dir);
                     exc = mt.find();
@@ -3118,8 +3118,8 @@ public class SyncThread extends Thread {
                         Pattern[] pattern_array = stwa.dirIncludeFilterArrayList.get(i);
                         boolean found = true;
                         for(int j = 0; j < Math.min(dir_array.length, pattern_array.length); j++) {
-//                          if (stwa.gp.settingDebugLevel >= 2)
-//                              stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: pattern_array["+j+"]="+pattern_array[j] + " dir_array["+j+"]="+dir_array[j] + " filtered_dir="+filtered_dir);
+                          if (stwa.gp.settingDebugLevel >= 2)
+                              stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: pattern_array["+j+"]="+pattern_array[j] + " dir_array["+j+"]="+dir_array[j] + " filtered_dir="+filtered_dir);
 
                             Matcher mt = pattern_array[j].matcher(dir_array[j]);
                             if (dir_array[j].length() != 0) {
@@ -3360,7 +3360,7 @@ public class SyncThread extends Thread {
         mStwa.dirIncludeFilterPatternList.clear();
         mStwa.dirExcludeFilterPatternList.clear();
         if (discreet_df.size() != 0) {
-            String prefix, filter, cni = "", cne = "";
+            String prefix, filter;
             String all_inc = "", all_exc = "";
             for (int j = 0; j < discreet_df.size(); j++) {
                 prefix = discreet_df.get(j).substring(0, 1);
@@ -3368,31 +3368,30 @@ public class SyncThread extends Thread {
 
                 //create inc + exc Filter Array lists
                 createDirFilterArrayList(sti, prefix, filter);
-                String pre_str = "", suf_str = "";
+
+                //get all ";" separated filter items from each filter entry
                 String rem_filter=filter;
                 while(rem_filter.indexOf(";;")>=0) rem_filter=rem_filter.replaceAll(";;",";");
                 if (rem_filter.endsWith(";")) rem_filter=rem_filter.substring(0,rem_filter.length()-1);
                 if (rem_filter.startsWith(";")) rem_filter=rem_filter.replaceFirst(";","");
 
                 //create inc + exc filter pattern list
+                String pre_str = "", suf_str = "";
                 if (prefix.equals("I")) {//include filter
                     String[] rem_filter_array = rem_filter.split(";");
                     for (String filter_item : rem_filter_array) {
                         String new_filter_item=filter_item;
 
-                        //filter=*/dir will match master/dir1/dir, master/dir2/dir...
-                        if (new_filter_item.startsWith("*/")) new_filter_item = "/" + new_filter_item;
-
                         //force match from begining: filter=dir -> match folder named dir but not my_dir
                         if (!new_filter_item.startsWith("*")) pre_str = "^";
                         else pre_str = "";
 
-                        //include filter==dir -> only include dir/* but not dir2/*
+                        //include filter=dir -> only include dir/* but not dir2/*
                         //unlike exclude filter, do not add $ suffix because include filter must check for all child folders of included parent
                         if (!new_filter_item.endsWith("/")) suf_str = "/";
                         else suf_str = "";
 
-                        //case filter starts with whole dir prefix: invalid char, do not modify it, woun't match anything
+                        //case filter starts with whole dir prefix: invalid char, do not modify it, won't match anything
 
                         new_filter_item=CommonUtilities.removeRedundantDirectorySeparator(new_filter_item);//case bad user input
 
@@ -3404,9 +3403,6 @@ public class SyncThread extends Thread {
                     String[] rem_filter_array = rem_filter.split(";");
                     for (String filter_item : rem_filter_array) {
                         String new_filter_item=filter_item;
-
-                        //filter=*/dir will match master/dir1/dir, master/dir2/dir...
-                        if (new_filter_item.startsWith("*/")) new_filter_item = "/" + new_filter_item;
 
                         //if exclude dir filter starts with whole dir prefix `\`, match the filter anywhere in path
                         //filter=\dir -> excludes all */dir/* folders undre master
@@ -3590,7 +3586,7 @@ public class SyncThread extends Thread {
 
             if (new_filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX_V2)) new_filter_item=new_filter_item.replaceFirst(MiscUtil.convertRegExp(WHOLE_DIRECTORY_FILTER_PREFIX_V2), "*/");
 
-            new_filter_item=CommonUtilities.removeRedundantDirectorySeparator(new_filter_item);//case bad user input or input like filter=\/dir -> *//dir in previous whole dir prefix check
+            new_filter_item=CommonUtilities.removeRedundantDirectorySeparator(new_filter_item);//case bad user input or input like filter=\/dir
             //mStwa.util.addDebugMsg(2, "I", "new_filter_item=" + new_filter_item);
 
             if (new_filter_item.startsWith("/")) filter_array = new_filter_item.replaceFirst("/", "").split("/");

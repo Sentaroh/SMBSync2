@@ -389,6 +389,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Inclure</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Non spécifié</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">Le filtre contient un caractère invalide: %s</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts">Le filtre ne peut pas avoir une partie de chemin entièrement générique (séquence /*/, ou début par */,  ou fin avec /*)</string>
         <string name="msgs_profile_sync_task_filter_title">Filtres de fichiers:</string>
         <string name="msgs_profile_sync_task_sync_direction_two_way">Utiliser la synchronisation bidirectionnelle</string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Inclure les filtres suivants:</string>
@@ -438,6 +439,8 @@
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Le filtre %s contient l\'ancien préfixe \"\\\\\". Merci de le remplacer par \"*/\" (exp. %s).</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error">Des caractères invalides (%s) sont presents et doivent être supprimés des filtres suivants:\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error">Le filtre %s contient un caractère invalide (%s). Merci de le supprimer.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error">Une partie du chemin des filtres ci-dessous contient uniquement le caractère générique \"*\". Merci de corriger les filtres concernés:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error">Le filtre %s contient des parties avec uniquement un caractère générique \"%s\" !</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Options réseau</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Options Wifi AP :</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Ne pas créer de fichier temporaire avant l\'écriture dans le dossier SMB</string>
