@@ -3376,7 +3376,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context arg0, Object[] arg1) {
                         if (arg1 != null) {
                             String msg_text = (String) arg1[0];
-                            mUtil.showCommonDialog(false, "E", "SMB Error", msg_text, null);
+                            mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_remote_profile_dlg_logon_error), msg_text, null);
                         }
                     }
                 });
