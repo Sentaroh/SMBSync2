@@ -89,6 +89,7 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import static android.content.Context.USAGE_STATS_SERVICE;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
@@ -991,7 +992,7 @@ public final class CommonUtilities {
     public static String removeRedundantSeparator(String input, String separator, boolean remove_start, boolean remove_end) {
         String out=input;
         while(out.indexOf(separator+separator)>=0) {
-            out=out.replaceAll(separator+separator, separator);
+            out=out.replaceAll(Pattern.quote(separator+separator), separator);
         }
         if (remove_start) {
             out=out.startsWith(separator)?out.substring(1):out;
