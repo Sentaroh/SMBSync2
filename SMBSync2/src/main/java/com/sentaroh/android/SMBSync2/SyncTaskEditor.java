@@ -107,6 +107,8 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWO
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_AUDIO;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_IMAGE;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_VIDEO;
+import static com.sentaroh.android.SMBSync2.Constants.WHOLE_DIRECTORY_FILTER_PREFIX_V1;
+import static com.sentaroh.android.SMBSync2.Constants.WHOLE_DIRECTORY_FILTER_PREFIX_V2;
 
 public class SyncTaskEditor extends DialogFragment {
     private final static String SUB_APPLICATION_TAG = "SyncTask ";
@@ -5092,7 +5094,7 @@ public class SyncTaskEditor extends DialogFragment {
                 }
             }
         }
-        //check dir filter for leading whole dir prefix v2
+        //check dir filters for leading whole dir prefix v2
         if (!error_detected) {
             if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
                 String error_filter="";
@@ -5110,10 +5112,10 @@ public class SyncTaskEditor extends DialogFragment {
                         }
                     }
                 }
-                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error, error_filter);
+                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error, WHOLE_DIRECTORY_FILTER_PREFIX_V2, error_filter);
             }
         }
-        //check dir filter for old style \\ leading whole dir prefix
+        //check dir filter for old whole dir prefix v1
         if (!error_detected) {
             if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
                 String error_filter="";
@@ -5129,7 +5131,7 @@ public class SyncTaskEditor extends DialogFragment {
                         error_detected = true;
                     }
                 }
-                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error, error_filter);
+                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error, WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2, error_filter);
             }
         }
         //check dir filters for invalid chars
@@ -5189,7 +5191,7 @@ public class SyncTaskEditor extends DialogFragment {
                         error_detected = true;
                     }
                 }
-                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_file_filter_error, error_filter);
+                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_file_filter_error, WHOLE_DIRECTORY_FILTER_PREFIX_V2, error_filter);
             }
         }
         //check file filters for invalid chars
