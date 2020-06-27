@@ -3385,7 +3385,7 @@ public class ActivityMain extends AppCompatActivity {
 
         final Toast toast = Toast.makeText(mContext, mContext.getString(R.string.msgs_main_sync_history_copy_completed),
                 Toast.LENGTH_SHORT);
-        toast.setDuration(1500);
+        toast.setDuration(Toast.LENGTH_SHORT);
         mContextHistoryButtonHistiryCopyClipboard.setOnClickListener(new OnClickListener() {
             private long last_show_time = 0;
 
@@ -3418,7 +3418,7 @@ public class ActivityMain extends AppCompatActivity {
                         }
                     }
                     if (out.length() > 0) cm.setText(out);
-                    if ((last_show_time + 1500) < System.currentTimeMillis()) {
+                    if ((last_show_time + Toast.LENGTH_SHORT) < System.currentTimeMillis()) {
                         toast.show();
                         last_show_time = System.currentTimeMillis();
                     }
