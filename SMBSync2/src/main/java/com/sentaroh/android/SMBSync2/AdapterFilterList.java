@@ -169,7 +169,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
                 if (o.isUseFilterV2()) {
                     String whole_dir_filter_v1=SyncTaskUtil.hasWholeDirectoryFilterItemV1(o.getFilter());
                     String whole_dir_filter_v2=SyncTaskUtil.hasWholeDirectoryFilterItemV2(o.getFilter());
-                    String wild_card_only_path_parts=CommonUtilities.hasAsteriskOnlyPathPart(o.getFilter());
+                    String wild_card_only_path_parts=SyncTaskUtil.checkFilterInvalidAsteriskPathPart(o.getFilter());
                     String invalid_chars="";
                     if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
                     else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);

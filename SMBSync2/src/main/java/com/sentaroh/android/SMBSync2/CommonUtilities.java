@@ -969,7 +969,7 @@ public final class CommonUtilities {
         return isCharging;
     }
 
-    public String removeRedundantWildcard(String str, String wc) {
+    public static String removeRedundantWildcard(String str, String wc) {
         String new_str=str;
         if (str != null && wc != null && wc.length() != 0) {
             String wc_dup=wc + wc;
@@ -978,25 +978,6 @@ public final class CommonUtilities {
             }
         }
         return new_str;
-    }
-
-    public boolean isPathWildcardOnly(String str) {
-        boolean isOnlyWildcard=false;
-        String new_str=removeRedundantWildcard(str, "*");
-        if (new_str.equals("*") || new_str.equals("*.*")) isOnlyWildcard=true;
-        if (!isOnlyWildcard) {
-            new_str=new_str.replace("/", "");
-            if (removeRedundantWildcard(new_str, "*").equals("*")) isOnlyWildcard=true;
-        }
-        return isOnlyWildcard;
-    }
-
-    public static String hasAsteriskOnlyPathPart(String path) {
-        String asterisk_only_path="";
-        if (path.startsWith("*/")) asterisk_only_path="*/";
-        else if (path.contains("/*/")) asterisk_only_path="/*/";
-        else if (path.endsWith("/*")) asterisk_only_path="/*";
-        return asterisk_only_path;
     }
 
     public static String removeRedundantDirectorySeparator (String input) {
@@ -1021,6 +1002,42 @@ public final class CommonUtilities {
         return out;
     }
 
+/*
+    private static boolean isPathWildcardOnly(String path) {
+        boolean isOnlyWildcard=false;
+        if (path == null || path.length() == 0) return isOnlyWildcard;
+
+        String new_path=removeRedundantSeparator(path, "/", true, true);
+        new_path=removeRedundantWildcard(new_path, "*");
+
+        String[] path_array=new_path.split("/");
+        int len=path_array.length;
+        for(String item:path_array) {
+            if (item.equals("*") || item.equals("*.*")) len--;
+        }
+        if (len==0) isOnlyWildcard=true;
+
+        return isOnlyWildcard;
+    }
+*/
+
+    public static String hasAsteriskOnlyPathPart(String path) {
+        String asterisk_only_part="";
+        if (path == null || path.length() == 0) return asterisk_only_part;
+
+        String new_path=removeRedundantSeparator(path, "/", true, true);
+        new_path=removeRedundantWildcard(new_path, "*");
+        String[] path_array=new_path.split("/");
+        for(String item:path_array) {
+            if (item.equals("*") || item.equals("*.*")) {
+                asterisk_only_part = item;
+                break;
+            }
+        }
+
+        return asterisk_only_part;
+    }
+
     public static String trimTrailingBlank(String s) {
         if (s == null) return null;
 
@@ -1034,6 +1051,7 @@ public final class CommonUtilities {
 
         return ((st>0) || (len<val.length)) ? s.substring(st,len):s;
     }
+
 //	final static private String array2String(StringBuilder sb_buf,String[] sa) {
 //		sb_buf.setLength(0);
 //		if (sa!=null) {

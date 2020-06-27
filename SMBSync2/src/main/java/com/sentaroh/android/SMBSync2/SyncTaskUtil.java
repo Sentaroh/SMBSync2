@@ -2963,14 +2963,15 @@ public class SyncTaskUtil {
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_select_edit_ok_btn);
         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
 
-        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS))
-            hasWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg);
+        //on main filters dialog, show warning if invalid filters exist + disable ok button
+        //no check for whole dir prefix in file filters: they are always invalid chars not allowed in file filter
+        hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
 
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && !hasWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -2984,7 +2985,7 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && !hasWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -3002,7 +3003,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && !hasWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
+                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                             dlg_msg.setText("");
                         }
@@ -3015,13 +3016,15 @@ public class SyncTaskUtil {
             }
         });
 
-        //Add new filter Text and Button
+        //main file filters dialog: add file filters button, enable/disable bottom include/exclude buttons
         CommonDialog.setViewEnabled(mActivity, addBtn, false);
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
-                    String entered_filter=s.toString();
+                    String entered_filter= s.toString();
+                    String error_filter= "";
+
                     String invalid_char= checkFilterInvalidCharacter(entered_filter, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
                     if (!invalid_char.equals("")) {
                         String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
@@ -3031,26 +3034,17 @@ public class SyncTaskUtil {
                         return;
                     }
 
-                    String wild_card_only_path_parts=mUtil.hasAsteriskOnlyPathPart(entered_filter);
+                    String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(entered_filter);
                     if (!wild_card_only_path_parts.equals("")) {
                         String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
-                        dlg_msg.setText(mtxt);
+                        dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
                         CommonDialog.setViewEnabled(mActivity, addBtn, false);
                         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
 
-                    String error_filter=hasWholeDirectoryFilterItemV2(entered_filter);
+                    error_filter= getDuplicateFilter(entered_filter.trim(), filterAdapter);
                     if (!error_filter.equals("")) {
-                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_file_filter_edit_dlg_error);
-                        dlg_msg.setText(String.format(mtxt, error_filter, WHOLE_DIRECTORY_FILTER_PREFIX_V2));
-                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                        return;
-                    } 
-
-                    String dup_filter= getDuplicateFilter(entered_filter.trim(), filterAdapter);
-                    if (!dup_filter.equals("")) {
                         String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                         dlg_msg.setText(String.format(mtxt, entered_filter.trim()));
                         CommonDialog.setViewEnabled(mActivity, addBtn, false);
@@ -3063,8 +3057,9 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 } else {
                     CommonDialog.setViewEnabled(mActivity, addBtn, false);
+
                     //recheck existing filters before enabling Ok button and clearing warning dialog msg
-                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && !hasWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
+                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS)) {
                         dlg_msg.setText("");
                         CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else {
@@ -3081,38 +3076,17 @@ public class SyncTaskUtil {
         });
 
         //On Add button click, check entered filters validity before adding them
+        //only perform checks thar are not performed in addTextChangedListener()
         addBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                dlg_msg.setText("");
-                String new_filter = et_filter.getText().toString().trim();
-                if (mUtil.isPathWildcardOnly(new_filter)) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
-                    return;
-                }
-
-                String dup_filter= getDuplicateFilter(new_filter, filterAdapter);
-                if (!dup_filter.equals("")) {
-                    String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
-                    dlg_msg.setText(String.format(mtxt, new_filter));
-                    return;
-                }
-
-                String error_filter=hasWholeDirectoryFilterItemV2(new_filter);
-                if (!error_filter.equals("")) {
-                    String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_file_filter_edit_dlg_error);
-                    dlg_msg.setText(String.format(mtxt, error_filter, WHOLE_DIRECTORY_FILTER_PREFIX_V2));
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                    return;
-                }
+                String new_filter = sortFilterSplitedItem(et_filter.getText().toString().trim());
+                AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(new_filter, true);
+                if (use_dir_filter_v2) fli.setUseFilterV2(true);
+                filterAdapter.add(fli);
 
                 et_filter.setText("");
-                filterAdapter.add(new AdapterFilterList.FilterListItem(new_filter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && !hasWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                }
             }
         });
 
@@ -3200,7 +3174,7 @@ public class SyncTaskUtil {
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
 
-        //display warning dialog and enable/disable ok buton in main filter list view
+        //check existing filters for errors and display warning dialog and enable/disable ok buton in main filter list view
         if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS))
             if (isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg))
                 isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg);
@@ -3257,58 +3231,78 @@ public class SyncTaskUtil {
             }
         });
 
-        //main filters dialog: add dir filters button, enable/disable bottom include/exclude buttons
+        //main dir filters dialog: add dir filters button, enable/disable bottom include/exclude buttons
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
+                    CommonDialog.setViewEnabled(mActivity, addbtn, false);
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonDialog.setViewEnabled(mActivity, dirbtn, false);
+                    CommonDialog.setViewEnabled(mActivity, add_include_btn, false);
+                    CommonDialog.setViewEnabled(mActivity, add_exclude_btn, false);
+                    
                     String entered_filter=s.toString();
+                    String error_filter="";
+
                     String invalid_char= checkFilterInvalidCharacter(entered_filter, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
                     if (!invalid_char.equals("")) {
                         String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
                         dlg_msg.setText(String.format(mtxt, invalid_char));
-                        CommonDialog.setViewEnabled(mActivity, addbtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
 
-                    String wild_card_only_path_parts=mUtil.hasAsteriskOnlyPathPart(entered_filter);
+                    String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(entered_filter);
                     if (!wild_card_only_path_parts.equals("")) {
                         String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
-                        dlg_msg.setText(mtxt);
-                        CommonDialog.setViewEnabled(mActivity, addbtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
                         return;
                     }
 
-                    String dup_filter= getDuplicateFilter(entered_filter.trim(), filterAdapter);
-                    if (!dup_filter.equals("")) {
+                    error_filter= getDuplicateFilter(entered_filter.trim(), filterAdapter);
+                    if (!error_filter.equals("")) {
                         String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
-                        dlg_msg.setText(String.format(mtxt, dup_filter));
-                        CommonDialog.setViewEnabled(mActivity, addbtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        dlg_msg.setText(String.format(mtxt, error_filter));
                         return;
                     }
 
-                    //if filter starts with whole dir prefix, allow only as exclude for both v1 and v2 filters
-                    //on Add button pressed will further check to not allow whole dir prefix v1 when v2 filters version is enabled
-                    String has_whole_dir_filter_v1=hasWholeDirectoryFilterItemV1(entered_filter);
-                    String has_whole_dir_filter_v2=hasWholeDirectoryFilterItemV2(entered_filter);
-                    if (!has_whole_dir_filter_v1.equals("") || !has_whole_dir_filter_v2.equals("")) {
-                        add_exclude_btn.setChecked(true);
-                        CommonDialog.setViewEnabled(mActivity, add_include_btn, false);
+                    //if filter starts with whole dir prefix v1, do not allow for filters v2
+                    if (use_dir_filter_v2) {
+                        error_filter=hasWholeDirectoryFilterItemV1(entered_filter);
+                        if (!error_filter.equals("")) {
+                            String suggest_filter = error_filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2);
+                            String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
+                            dlg_msg.setText(String.format(mtxt, error_filter, WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2, suggest_filter));
+                            return;
+                        }
+                    }
+
+                    //if filter has whole dir prefix v2, add it as exclude filter, include is not allowed
+                    if (use_dir_filter_v2) {
+                        String has_whole_dir_item_v2=hasWholeDirectoryFilterItemV2(entered_filter);
+                        if (!has_whole_dir_item_v2.equals("")) {
+                            CommonDialog.setViewEnabled(mActivity, add_exclude_btn, true);
+                            add_exclude_btn.setChecked(true);
+                            CommonDialog.setViewEnabled(mActivity, add_include_btn, false);
+                        } else {
+                            CommonDialog.setViewEnabled(mActivity, add_include_btn, true);
+                            CommonDialog.setViewEnabled(mActivity, add_exclude_btn, true);
+                        }
                     } else {
                         CommonDialog.setViewEnabled(mActivity, add_include_btn, true);
+                        CommonDialog.setViewEnabled(mActivity, add_exclude_btn, true);
                     }
 
                     dlg_msg.setText("");
                     CommonDialog.setViewEnabled(mActivity, addbtn, true);
-                    CommonDialog.setViewEnabled(mActivity, dirbtn, false);
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonDialog.setViewEnabled(mActivity, dirbtn, false);
                 } else {
                     CommonDialog.setViewEnabled(mActivity, addbtn, false);
                     CommonDialog.setViewEnabled(mActivity, dirbtn, true);
                     CommonDialog.setViewEnabled(mActivity, add_include_btn, true);
+                    CommonDialog.setViewEnabled(mActivity, add_exclude_btn, true);
+
                     //recheck existing filters before enabling Ok Button and clearing warning dialog msg
                     if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) &&
                             isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
@@ -3325,49 +3319,20 @@ public class SyncTaskUtil {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
+
+        //On Add button click, check entered filters validity before adding them
+        //only perform checks thar are not performed in addTextChangedListener()
         CommonDialog.setViewEnabled(mActivity, addbtn, false);
         addbtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                dlg_msg.setText("");
-                String new_filter = et_filter.getText().toString();
-                if (mUtil.isPathWildcardOnly(new_filter)) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
-                    return;
-                }
-                String dup_filter= getDuplicateFilter(new_filter, filterAdapter);
-                if (!dup_filter.equals("")) {
-                    String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
-                    dlg_msg.setText(String.format(mtxt, new_filter));
-                    return;
-                }
+                String new_filter = sortFilterSplitedItem(et_filter.getText().toString().trim());
+                AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(new_filter, add_include_btn.isChecked());
+                if (use_dir_filter_v2) fli.setUseFilterV2(true);
+                filterAdapter.add(fli);
 
-                if (use_dir_filter_v2) {
-                    String error_filter=hasWholeDirectoryFilterItemV1(new_filter);
-                    if (!error_filter.equals("")) {
-                        String suggest_filter = error_filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2);
-                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
-                        dlg_msg.setText(String.format(mtxt, error_filter, WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2, suggest_filter));
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                        return;
-                    }
-
-                    String new_filter_value=sortFilterSplitedItem(new_filter);
-                    AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(new_filter_value, add_include_btn.isChecked());
-                    fli.setUseFilterV2(true);
-                    String whole_dir_filter_v2=hasWholeDirectoryFilterItemV2(new_filter);
-                    if (!whole_dir_filter_v2.equals("")) fli.setInclude(false);
-                    filterAdapter.add(fli);
-                } else {
-                    filterAdapter.add(new AdapterFilterList.FilterListItem(new_filter, add_include_btn.isChecked()));
-                }
                 et_filter.setText("");
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                CommonDialog.setViewEnabled(mActivity, dirbtn, true);
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) &&
-                        isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                }
             }
         });
 
@@ -3430,170 +3395,6 @@ public class SyncTaskUtil {
         dialog.show();
     }
 
-    private String sortFilterSplitedItem(String filter) {
-        String[]new_filter_array=filter.split(";");
-        String new_filter_value="";
-        String separator="";
-        ArrayList<String>new_filter_list=new ArrayList<String>();
-        if (new_filter_array.length>1) {
-            for(String item:new_filter_array) new_filter_list.add(item);
-            Collections.sort(new_filter_list);
-            for(String item:new_filter_list) {
-                new_filter_value+=separator+item;
-                separator=";";
-            }
-        } else {
-            new_filter_value=filter;
-        }
-        return new_filter_value;
-    }
-
-    public static String checkFilterInvalidCharacter(String filter, String[] invalid_char_list) {
-        String invalid_char_seq="";
-        if (filter ==null || invalid_char_list ==null) return invalid_char_seq;
-
-        String[] filter_item_array = filter.split(";");
-        for(String filter_item:filter_item_array) {
-            for(String item:invalid_char_list) {
-                if (filter_item.contains(item)) {
-                    invalid_char_seq = item;
-                    break;
-                }
-            }
-
-            //whole directory prefix is always an invalid filename char. If it is present elsewhere than in the beginning, consider it an invalid filter char
-            //if it is at the beginning, further checks to see if it is a valid whole dir prefix are needed by caller
-            if (invalid_char_seq.equals("")) {
-                if (filter_item.lastIndexOf(WHOLE_DIRECTORY_FILTER_PREFIX_V1) > 0) invalid_char_seq = WHOLE_DIRECTORY_FILTER_PREFIX_V1;
-                else if (filter_item.lastIndexOf(WHOLE_DIRECTORY_FILTER_PREFIX_V2) > 0) invalid_char_seq = WHOLE_DIRECTORY_FILTER_PREFIX_V2;
-            }
-
-            if (!invalid_char_seq.equals("")) break;
-        }
-
-        return invalid_char_seq;
-    }
-
-    //check if adapter filter list has invalid chars or generic asterisk only parts in path (*/dir, dir1/*/dir2, dir/*)
-    private boolean hasInvalidCharsAndWildcardsFilterList(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg, String[] invalid_char_list) {
-        boolean has_invalid_chars=false;
-        String error_msg="";
-        String error_filter="";
-        String invalid_char_seq="";
-        for(int i=0;i<filter_adapter.getCount();i++) {
-            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
-            if (!fli.isDeleted() && fli.isUseFilterV2()) {
-                error_filter=fli.getFilter();
-                invalid_char_seq=checkFilterInvalidCharacter(error_filter, invalid_char_list);
-                if (!invalid_char_seq.equals("")) {
-                    has_invalid_chars=true;
-                    error_msg=mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error, error_filter, invalid_char_seq);
-                    break;
-                }
-                //check for invalid asterisk only path in filter (not allowed for all file/dir filters)
-                invalid_char_seq=mUtil.hasAsteriskOnlyPathPart(error_filter);
-                if (!invalid_char_seq.equals("")) {
-                    has_invalid_chars=true;
-                    error_msg=mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error, error_filter, invalid_char_seq);
-                    break;
-                }
-            }
-        }
-
-        if (has_invalid_chars == true) {
-            dlg_msg.setText(error_msg);
-            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
-        }
-
-        return has_invalid_chars;
-    }
-
-    //check filter string for leading `\\` old whole dir prefix
-    public static String hasWholeDirectoryFilterItemV1(String filter) {
-        String whole_dir_filter="";
-        String[] filter_item_array=filter.split(";");
-        for(String filter_item:filter_item_array) {
-            if (filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX_V1)) {
-                whole_dir_filter=filter_item;
-                break;
-            }
-        }
-        return whole_dir_filter;
-    }
-
-    //check if filter is v2 and has items starting with `\\`: not allowed start in v2, file filters has \ char as invalid
-    private boolean isValidWholeDirectoryFilterV1(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
-        boolean result=true;
-        String error_filter="";
-        for(int i=0;i<filter_adapter.getCount();i++) {
-            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
-            if (!fli.isDeleted() && fli.isUseFilterV2()) {
-                error_filter=hasWholeDirectoryFilterItemV1(fli.getFilter());
-                if (!error_filter.equals("")) break;
-            }
-        }
-        if (!error_filter.equals("")) {
-            String suggest_filter = error_filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2);
-            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error,
-                    error_filter, WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2, suggest_filter));
-            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
-            result=false;
-        }
-        return result;
-    }
-
-    //check if filter string has inc or exc filter items staring with whole dir prefix v2 `\`
-    public static String hasWholeDirectoryFilterItemV2(String filter) {
-        String anywhere_dir_filter="";
-        String[] filter_item_array=filter.split(";");
-        for(String filter_item:filter_item_array) {
-            if (filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX_V2)) {
-                anywhere_dir_filter=filter_item;
-                break;
-            }
-        }
-        return anywhere_dir_filter;
-    }
-
-    //check if FILE filter adapter list has inc or exc filter items starting with whole dir prefix v2 `\`: invalid File Filter
-    private boolean hasWholeDirectoryFilterV2(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
-        boolean result=false;
-        String error_filters="";
-        for(int i=0;i<filter_adapter.getCount();i++) {
-            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
-            if (!fli.isDeleted()) {
-                error_filters=hasWholeDirectoryFilterItemV2(fli.getFilter());
-                if (!error_filters.equals("")) break;
-            }
-        }
-        if (!error_filters.equals("")) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_file_filter_edit_dlg_error, error_filters, WHOLE_DIRECTORY_FILTER_PREFIX_V2));
-            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
-            result=true;
-        }
-        return result;
-    }
-
-    //Check if Include directory filter starts with whole dir prefix v2 `\` (invalid)
-    private boolean isValidWholeDirectoryFilterV2(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
-        boolean result=true;
-        String error_filters="";
-        for(int i=0;i<filter_adapter.getCount();i++) {
-            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
-            if (!fli.isDeleted() && fli.isUseFilterV2() && fli.isInclude()) {
-                error_filters=hasWholeDirectoryFilterItemV2(fli.getFilter());
-                if (!error_filters.equals("")) break;
-            }
-        }
-        if (!error_filters.equals("")) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error, error_filters, WHOLE_DIRECTORY_FILTER_PREFIX_V2));
-            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
-            result=false;
-        }
-        return result;
-    }
-
-
     //edit existing filters dialog
     private void editFilter(final int edit_idx, final AdapterFilterList fa,
                             final AdapterFilterList.FilterListItem fli, final String filter, String title_text, final NotifyEvent p_ntfy,
@@ -3633,6 +3434,7 @@ public class SyncTaskUtil {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
 
+            //Check edited filter validity, display dlg warning and enable/disable ok button 
             @Override
             public void afterTextChanged(Editable s) {
                 dlg_msg.setText("");
@@ -3649,9 +3451,10 @@ public class SyncTaskUtil {
                         return;
                     }
 
-                    String wild_card_only_path_parts=mUtil.hasAsteriskOnlyPathPart(s.toString());
+                    String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(s.toString());
                     if (!wild_card_only_path_parts.equals("")) {
-                        dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts));
+                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
+                        dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
                         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
@@ -3690,15 +3493,12 @@ public class SyncTaskUtil {
                 btn_cancel.performClick();
             }
         });
-        // OKボタンの指定
+        //On OK press: check edited filter for errors that are not checked by afterTextChanged()
         btn_ok.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 String new_filter=et_filter.getText().toString().trim();
-                if (mUtil.isPathWildcardOnly(new_filter)) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed));
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                    return;
-                }
+
+                //check if added filter is v2 but has invalid whole dir prefix v1
                 if (fli.isUseFilterV2()) {
                     String error_filter=hasWholeDirectoryFilterItemV1(new_filter);
                     if (!error_filter.equals("")) {
@@ -3713,15 +3513,230 @@ public class SyncTaskUtil {
                 dialog.dismiss();
                 String new_filter_value=sortFilterSplitedItem(new_filter);
                 fli.setFilter(new_filter_value);
-
                 fa.sort();
-
                 fa.setNotifyOnChange(true);
                 if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
             }
         });
         dialog.show();
     }
+
+    private String sortFilterSplitedItem(String filter) {
+        String[]new_filter_array=filter.split(";");
+        String new_filter_value="";
+        String separator="";
+        ArrayList<String>new_filter_list=new ArrayList<String>();
+        if (new_filter_array.length>1) {
+            for(String item:new_filter_array) new_filter_list.add(item);
+            Collections.sort(new_filter_list);
+            for(String item:new_filter_list) {
+                new_filter_value+=separator+item;
+                separator=";";
+            }
+        } else {
+            new_filter_value=filter;
+        }
+        return new_filter_value;
+    }
+
+    public static String checkFilterInvalidCharacter(String filter, String[] invalid_char_list) {
+        String invalid_char_seq="";
+        if (filter ==null || invalid_char_list ==null) return invalid_char_seq;
+
+        String[] filter_item_array = filter.split(";");
+        for(String filter_item:filter_item_array) {
+            for(String item:invalid_char_list) {
+                if (filter_item.contains(item)) {
+                    invalid_char_seq = item;
+                    break;
+                }
+            }
+
+            //whole directory prefix is always an invalid filename char. If it is present elsewhere than in the beginning, consider it an invalid filter char
+            //if it is at the beginning, further checks to see if it is a valid whole dir prefix are needed by caller
+            //once v1 is dropped, if whole dir prefix is a double invalid_char sequence: this implementation is not valid because the single invalid char occurence cannot be asserted and further checks are needed
+            if (invalid_char_seq.equals("")) {
+                if (filter_item.lastIndexOf(WHOLE_DIRECTORY_FILTER_PREFIX_V1) > 0) invalid_char_seq = WHOLE_DIRECTORY_FILTER_PREFIX_V1;
+                else if (filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX_V1)) invalid_char_seq = "";//this line is a temp compatibility workaround: remove once v1 filter is dropped
+                else if (filter_item.lastIndexOf(WHOLE_DIRECTORY_FILTER_PREFIX_V2) > 0) invalid_char_seq = WHOLE_DIRECTORY_FILTER_PREFIX_V2;
+            }
+
+            if (!invalid_char_seq.equals("")) break;
+        }
+
+        return invalid_char_seq;
+    }
+
+    //check ";" separated filter items for * and *.* only path components
+    public static String checkFilterInvalidAsteriskPathPart(String filter) {
+        String invalid_char_seq="";
+        String[] filter_item_array=filter.split(";");
+        for(String filter_item:filter_item_array) {
+            invalid_char_seq=CommonUtilities.hasAsteriskOnlyPathPart(filter_item);
+            if (!invalid_char_seq.equals("")) break;
+        }
+
+        return invalid_char_seq;
+    }
+
+    //check if adapter filter list has invalid chars or generic asterisk only parts in path (*/dir, dir1/*/dir2, dir/*, * only and *.* sequences)
+    private boolean hasInvalidCharsAndWildcardsFilterList(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg, String[] invalid_char_list) {
+        boolean has_invalid_chars=false;
+        String error_msg="";
+        String error_filter="";
+        String invalid_char_seq="";
+        for(int i=0;i<filter_adapter.getCount();i++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
+            if (!fli.isDeleted() && fli.isUseFilterV2()) {
+                error_filter=fli.getFilter();
+                invalid_char_seq=checkFilterInvalidCharacter(error_filter, invalid_char_list);
+                if (!invalid_char_seq.equals("")) {
+                    has_invalid_chars=true;
+                    error_msg=mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error, error_filter, invalid_char_seq);
+                    break;
+                }
+
+                //check for invalid asterisk only path components in filter (not allowed for all file/dir filters)
+                invalid_char_seq=checkFilterInvalidAsteriskPathPart(error_filter);
+                if (!invalid_char_seq.equals("")) {
+                    has_invalid_chars=true;
+                    error_msg=mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error, error_filter, invalid_char_seq);
+                    break;
+                }
+            }
+        }
+
+        if (has_invalid_chars == true) {
+            dlg_msg.setText(error_msg);
+            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+        }
+
+        return has_invalid_chars;
+    }
+
+    //check filter string for leading `\\` old whole dir prefix
+    public static String hasWholeDirectoryFilterItemV1(String filter) {
+        String whole_dir_filter="";
+        String[] filter_item_array=filter.split(";");
+        for(String filter_item:filter_item_array) {
+            if (filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX_V1)) {
+                whole_dir_filter=filter_item;
+                break;
+            }
+        }
+        return whole_dir_filter;
+    }
+
+    //check if there are filters with whole dir prefix v1 that are invalid (v2 filters with the old whole dir prefix)
+    private boolean isValidWholeDirectoryFilterV1(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
+        boolean result=true;
+        String error_filter="";
+        for(int i=0;i<filter_adapter.getCount();i++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
+            if (!fli.isDeleted() && fli.isUseFilterV2()) {
+                error_filter=hasWholeDirectoryFilterItemV1(fli.getFilter());
+                if (!error_filter.equals("")) break;
+            }
+        }
+        if (!error_filter.equals("")) {
+            String suggest_filter = error_filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2);
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error,
+                    error_filter, WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2, suggest_filter));
+            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+            result=false;
+        }
+        return result;
+    }
+
+    //check if filter string has inc or exc filter items staring with whole dir prefix v2 `\`
+    public static String hasWholeDirectoryFilterItemV2(String filter) {
+        String anywhere_dir_filter="";
+        String[] filter_item_array=filter.split(";");
+        for(String filter_item:filter_item_array) {
+            if (filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX_V2)) {
+                anywhere_dir_filter=filter_item;
+                break;
+            }
+        }
+        return anywhere_dir_filter;
+    }
+
+    //Check if there are Include directory filters starting with whole dir prefix v2 `\` (invalid)
+    private boolean isValidWholeDirectoryFilterV2(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
+        boolean result=true;
+        String error_filters="";
+        for(int i=0;i<filter_adapter.getCount();i++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
+            if (!fli.isDeleted() && fli.isUseFilterV2() && fli.isInclude()) {
+                error_filters=hasWholeDirectoryFilterItemV2(fli.getFilter());
+                if (!error_filters.equals("")) break;
+            }
+        }
+        if (!error_filters.equals("")) {
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error, error_filters, WHOLE_DIRECTORY_FILTER_PREFIX_V2));
+            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+            result=false;
+        }
+        return result;
+    }
+
+/*
+    //check if FILE filter adapter list has inc or exc filter items starting with whole dir prefix v2 `\`: invalid File Filter
+    //not used because whole dir prefix is always an invalid char, not allowed in file filters
+    private boolean hasWholeDirectoryFilterV2(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
+        boolean result=false;
+        String error_filters="";
+        for(int i=0;i<filter_adapter.getCount();i++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
+            if (!fli.isDeleted()) {
+                error_filters=hasWholeDirectoryFilterItemV2(fli.getFilter());
+                if (!error_filters.equals("")) break;
+            }
+        }
+        if (!error_filters.equals("")) {
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_file_filter_edit_dlg_error, error_filters, WHOLE_DIRECTORY_FILTER_PREFIX_V2));
+            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+            result=true;
+        }
+        return result;
+    }
+*/
+
+/*
+    //Check if filter adapter list has duplicates
+    *************
+        if (fa.getCount() == 0) return "";
+        String[] mew_filter_array=nf.split(";");
+        for (int i = 0; i < fa.getCount(); i++) {
+            if (!fa.getItem(i).isDeleted()) {
+                String[] current_filter_array=fa.getItem(i).getFilter().split((";"));
+                for(String new_item:mew_filter_array) {
+                    for(String current_item:current_filter_array) {
+                        if (new_item.equalsIgnoreCase(current_item)) return new_item;
+                    }
+                }
+            }
+        }
+        return "";
+    ********************
+    private boolean hasDupFilterItems(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
+        boolean result=false;
+        String error_filters="";
+        for(int i=0;i<filter_adapter.getCount();i++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
+            if (!fli.isDeleted() && fli.isUseFilterV2() && fli.isInclude()) {
+                error_filters=hasWholeDirectoryFilterItemV2(fli.getFilter());
+                if (!error_filters.equals("")) break;
+            }
+        }
+        if (!error_filters.equals("")) {
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error, error_filters));
+            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+            result=true;
+        }
+        return result;
+    }
+*/
 
     private String getDuplicateFilter(String nf, AdapterFilterList fa) {
         if (fa.getCount() == 0) return "";

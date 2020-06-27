@@ -5094,7 +5094,28 @@ public class SyncTaskEditor extends DialogFragment {
                 }
             }
         }
-        //check dir filters for leading whole dir prefix v2
+
+        //check dir filter for old whole dir prefix v1
+        if (!error_detected) {
+            if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
+                String error_filter="";
+                String error_filter_item="";
+                String sep="";
+                for(String item:n_sti.getDirFilter()) {
+                    //String filter_inc_exc=item.substring(0,1);
+                    String filter_entry=item.substring(1);
+                    error_filter_item=mTaskUtil.hasWholeDirectoryFilterItemV1(filter_entry);
+                    if (!error_filter_item.equals("")) {
+                        error_filter+=sep+error_filter_item;
+                        sep=";";
+                        error_detected = true;
+                    }
+                }
+                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error, WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2, error_filter);
+            }
+        }
+
+        //check dir filters for valid leading whole dir prefix v2: allowed only if filter is exclude
         if (!error_detected) {
             if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
                 String error_filter="";
@@ -5115,25 +5136,7 @@ public class SyncTaskEditor extends DialogFragment {
                 if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error, WHOLE_DIRECTORY_FILTER_PREFIX_V2, error_filter);
             }
         }
-        //check dir filter for old whole dir prefix v1
-        if (!error_detected) {
-            if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
-                String error_filter="";
-                String error_filter_item="";
-                String sep="";
-                for(String item:n_sti.getDirFilter()) {
-                    //String filter_inc_exc=item.substring(0,1);
-                    String filter_entry=item.substring(1);
-                    error_filter_item=mTaskUtil.hasWholeDirectoryFilterItemV1(filter_entry);
-                    if (!error_filter_item.equals("")) {
-                        error_filter+=sep+error_filter_item;
-                        sep=";";
-                        error_detected = true;
-                    }
-                }
-                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error, WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2, error_filter);
-            }
-        }
+
         //check dir filters for invalid chars
         if (!error_detected) {
             if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
@@ -5154,7 +5157,8 @@ public class SyncTaskEditor extends DialogFragment {
                 if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error, invalid_chars, error_filter);
             }
         }
-        //check dir filters for generic wild card only path parts (*/dir, dir1/*/dir2, dir/*)
+
+        //check dir filters for generic wild card only path parts (*/dir, dir1/*/dir2, dir/*, * only and *.* sequences)
         if (!error_detected) {
             if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
                 String error_filter="";
@@ -5163,7 +5167,7 @@ public class SyncTaskEditor extends DialogFragment {
                 for(String item:n_sti.getDirFilter()) {
                     //String filter_inc_exc=item.substring(0,1);
                     String filter_entry=item.substring(1);
-                    String is_invalid_char= mUtil.hasAsteriskOnlyPathPart(filter_entry);
+                    String is_invalid_char= mTaskUtil.checkFilterInvalidAsteriskPathPart(filter_entry);
                     if (!is_invalid_char.equals("")) {
                         error_filter+=sep+"["+filter_entry+"]";
                         invalid_chars+=is_invalid_char+"; ";
@@ -5171,29 +5175,10 @@ public class SyncTaskEditor extends DialogFragment {
                         error_detected = true;
                     }
                 }
-                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error, error_filter);
+                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error, invalid_chars, error_filter);
             }
         }
 
-        //check file filters for leading whole dir prefix
-        if (!error_detected) {
-            if (ctUseDirectoryFilterV2.isChecked() && n_sti.getFileFilter().size() > 0) {
-                String error_filter="";
-                String error_filter_item="";
-                String sep="";
-                for(String item:n_sti.getFileFilter()) {
-                    //String filter_inc_exc=item.substring(0,1);
-                    String filter_entry=item.substring(1);
-                    error_filter_item=mTaskUtil.hasWholeDirectoryFilterItemV2(filter_entry);
-                    if (!error_filter_item.equals("")) {
-                        error_filter+=sep+error_filter_item;
-                        sep=";";
-                        error_detected = true;
-                    }
-                }
-                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_file_filter_error, WHOLE_DIRECTORY_FILTER_PREFIX_V2, error_filter);
-            }
-        }
         //check file filters for invalid chars
         if (!error_detected) {
             if (ctUseDirectoryFilterV2.isChecked() && n_sti.getFileFilter().size() > 0) {
@@ -5214,6 +5199,7 @@ public class SyncTaskEditor extends DialogFragment {
                 if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error, invalid_chars, error_filter);
             }
         }
+
         //check file filters for generic wild card only path parts (*/file, dir1/*/file, dir/*)
         if (!error_detected) {
             if (ctUseDirectoryFilterV2.isChecked() && n_sti.getFileFilter().size() > 0) {
@@ -5223,7 +5209,7 @@ public class SyncTaskEditor extends DialogFragment {
                 for(String item:n_sti.getFileFilter()) {
                     //String filter_inc_exc=item.substring(0,1);
                     String filter_entry=item.substring(1);
-                    String is_invalid_char= mUtil.hasAsteriskOnlyPathPart(filter_entry);
+                    String is_invalid_char= mTaskUtil.checkFilterInvalidAsteriskPathPart(filter_entry);
                     if (!is_invalid_char.equals("")) {
                         error_filter+=sep+"["+filter_entry+"]";
                         invalid_chars+=is_invalid_char+"; ";
@@ -5231,9 +5217,11 @@ public class SyncTaskEditor extends DialogFragment {
                         error_detected = true;
                     }
                 }
-                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error, error_filter);
+                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error, invalid_chars, error_filter);
             }
         }
+
+        //check file filters for leading whole dir prefix: not needed because whole dir prefix is always an invalid char, not allowed in file filters
 
         return result;
     }

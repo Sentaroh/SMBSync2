@@ -1359,18 +1359,6 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    public static String removeInvalidCharForFileDirName(String in_str) {
-        String out = in_str.replaceAll(":", "")
-                .replaceAll("\\\\", "")
-                .replaceAll("\\*", "")
-                .replaceAll("\\?", "")
-                .replaceAll("\"", "")
-                .replaceAll("<", "")
-                .replaceAll(">", "")
-                .replaceAll("|", "");
-        return out;
-    }
-
     public static String hasInvalidCharForFileDirName(String in_str) {
         if (in_str.contains(":")) return ":";
         if (in_str.contains("\\")) return "\\";

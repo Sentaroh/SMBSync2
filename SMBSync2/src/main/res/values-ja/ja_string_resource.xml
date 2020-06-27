@@ -110,7 +110,6 @@
         <string name="msgs_filter_list_dlg_filter_hint">フィルター</string>
         <string name="msgs_filter_list_dlg_not_specified">無指定</string>
         <string name="msgs_filter_list_duplicate_filter_specified">%s は既に登録されています。</string>
-        <string name="msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed">ワイルドカードのみのフィルターは使用できません。\”NAME*\”のように指定してください。</string>
         <string name="msgs_filter_list_filter_deleted">削除済み</string>
         <string name="msgs_hist_cont_label_copy">クリップボードにコピー</string>
         <string name="msgs_hist_cont_label_delete">履歴を削除する</string>
@@ -381,14 +380,14 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">削除</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">ディレクトリ一覧</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">除外</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: dir1/dir2;/dir*/dir?\n- exclude all dir/dir2 folders: \dir/dir2\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-ファイル名が対象です: file1;*.txt;*.jpg;file*\n-フィルターは\";\"で区切ることで複数入力できます\n-除外が優先されます</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">ファイル フィルター</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">フィルター</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">選択</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">無指定</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">無効な文字が含まれています。文字=%s</string>
-        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts">The filter cannot have only \"*\" path parts: /*/ sequence, or starting */, or ending /*</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts">The filter path cannot have parts with only \"%s\" generic wildcards.</string>
         <string name="msgs_profile_sync_task_filter_title">フィルター :</string>
         <string name="msgs_profile_sync_task_sync_direction_two_way">Use Bi-directional sync</string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">下記を同期実行時にファイルフィルターとして追加します。</string>
@@ -432,13 +431,11 @@
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">変更するとディレクトリーフィルターの指定によっては同期するファイルが変わり予期せぬファイルの削除や上書きが発生する可能性があります。テストモードで実行して確認するか、テストフォルダーを作成して同期結果を確認することを強くお勧めします。</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error">\"選択\"は、\"%s\"で始まるフィルターでは使用できません。以下のフィルターを修正してください：\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error">%sは\"%s\"で始まるため、「選択」は使用できません。「選択」を使用するには、無効な文字を削除してください。</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_file_filter_error">ファイルフィルターにディレクトリーパスを含める場合は相対ディレクトリーで指定してください。下記のフィルターから先頭の\"%s\"を削除してください。\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_file_filter_edit_dlg_error">\"％s\" ファイルフィルターにディレクトリパスを含める場合は、それを相対ディレクトリとして指定します。フィルターの上部にある \"%s\" を削除します。</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">全てのディレクトリー名フィルター文字\"%s\"は使用できません。\"%s\" に置き換えてください。\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">%sは\"%s\"で始まるため使用できません。\"%s\" に置き換えてください。(例：%s)</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error">下記のフィルター\"%s\"に無効な文字が含まれていす、削除してください。\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error">フィルター \"%s\" に無効な文字(\"%s\")が含まれていす、削除してください。</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error">Invalid \"*\" only path parts must be removed from the below filters:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error">Invalid \"%s\" only path parts must be removed from the below filters:\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error">Filter %s contains generic \"*\" only path parts. Please remove the invalid \"%s\" characters.</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">ネットワークオプション:</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">ワイヤレスAPオプション:</string>
