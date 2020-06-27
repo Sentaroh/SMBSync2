@@ -108,6 +108,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_ACCESS_DENIED;
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_INVALID_LOGON_TYPE;
@@ -3032,24 +3033,7 @@ public class SyncTaskUtil {
                     String entered_filter= s.toString();
                     String error_filter= "";
 
-                    String invalid_char= checkFilterInvalidCharacter(entered_filter, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
-                    if (!invalid_char.equals("")) {
-                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
-                        dlg_msg.setText(String.format(mtxt, invalid_char));
-                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                        return;
-                    }
-
-                    String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(entered_filter);
-                    if (!wild_card_only_path_parts.equals("")) {
-                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
-                        dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
-                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                        return;
-                    }
-
+                    //check filter for duplicates
                     error_filter= getDuplicateFilter(entered_filter.trim(), filterAdapter);
                     if (!error_filter.equals("")) {
                         String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
@@ -3086,7 +3070,28 @@ public class SyncTaskUtil {
         //only perform checks thar are not performed in addTextChangedListener()
         addBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                String new_filter = sortFilterSplitedItem(et_filter.getText().toString().trim());
+                String entered_filter=et_filter.getText().toString().trim();
+
+                //check filter for invalid chars before add
+                String invalid_char= checkFilterInvalidCharacter(entered_filter, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
+                if (!invalid_char.equals("")) {
+                    String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
+                    dlg_msg.setText(String.format(mtxt, invalid_char));
+                    CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                    return;
+                }
+
+                //check filter for wildcard only parts before add (/*/, *.*, */...)
+                String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(entered_filter);
+                if (!wild_card_only_path_parts.equals("")) {
+                    String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
+                    dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
+                    CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                    return;
+                }
+
+                //add the new valid filter
+                String new_filter = sortFilterSplitedItem(entered_filter);
                 AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(new_filter, true);
                 if (use_dir_filter_v2) fli.setUseFilterV2(true);
                 filterAdapter.add(fli);
@@ -3255,20 +3260,7 @@ public class SyncTaskUtil {
                     String entered_filter=s.toString();
                     String error_filter="";
 
-                    String invalid_char= checkFilterInvalidCharacter(entered_filter, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
-                    if (!invalid_char.equals("")) {
-                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
-                        dlg_msg.setText(String.format(mtxt, invalid_char));
-                        return;
-                    }
-
-                    String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(entered_filter);
-                    if (!wild_card_only_path_parts.equals("")) {
-                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
-                        dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
-                        return;
-                    }
-
+                    //check for filter duplicates
                     error_filter= getDuplicateFilter(entered_filter.trim(), filterAdapter);
                     if (!error_filter.equals("")) {
                         String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
@@ -3335,7 +3327,32 @@ public class SyncTaskUtil {
         CommonDialog.setViewEnabled(mActivity, addbtn, false);
         addbtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                String new_filter = sortFilterSplitedItem(et_filter.getText().toString().trim());
+                String entered_filter=et_filter.getText().toString().trim();
+
+                //check filter for invalid chars before add
+                String invalid_char= checkFilterInvalidCharacter(entered_filter, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
+                if (!invalid_char.equals("")) {
+                    String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
+                    dlg_msg.setText(String.format(mtxt, invalid_char));
+                    CommonDialog.setViewEnabled(mActivity, addbtn, false);
+                    CommonDialog.setViewEnabled(mActivity, add_include_btn, false);
+                    CommonDialog.setViewEnabled(mActivity, add_exclude_btn, false);
+                    return;
+                }
+
+                //check filter for wildcard only parts before add (/*/, *.*, */...)
+                String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(entered_filter);
+                if (!wild_card_only_path_parts.equals("")) {
+                    String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
+                    dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
+                    CommonDialog.setViewEnabled(mActivity, addbtn, false);
+                    CommonDialog.setViewEnabled(mActivity, add_include_btn, false);
+                    CommonDialog.setViewEnabled(mActivity, add_exclude_btn, false);
+                    return;
+                }
+
+                //add the new valid filter
+                String new_filter = sortFilterSplitedItem(entered_filter);
                 AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(new_filter, add_include_btn.isChecked());
                 if (use_dir_filter_v2) fli.setUseFilterV2(true);
                 filterAdapter.add(fli);
@@ -3450,22 +3467,6 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 } else {
-                    String has_invalid_char= checkFilterInvalidCharacter(s.toString(), invalid_char);
-                    if (!has_invalid_char.equals("")) {
-                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
-                        dlg_msg.setText(String.format(mtxt, has_invalid_char));
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                        return;
-                    }
-
-                    String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(s.toString());
-                    if (!wild_card_only_path_parts.equals("")) {
-                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
-                        dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                        return;
-                    }
-
                     //check if edited filter has a duplicate in its self and in existing filters
                     if (!filter.equalsIgnoreCase(s.toString())) {
 
@@ -3519,6 +3520,24 @@ public class SyncTaskUtil {
             public void onClick(View v) {
                 String new_filter=et_filter.getText().toString().trim();
 
+                //check filter for invalid chars before add
+                String has_invalid_char= checkFilterInvalidCharacter(new_filter, invalid_char);
+                if (!has_invalid_char.equals("")) {
+                    String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
+                    dlg_msg.setText(String.format(mtxt, has_invalid_char));
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    return;
+                }
+
+                //check filter for wildcard only parts before add (/*/, *.*, */...)
+                String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(new_filter);
+                if (!wild_card_only_path_parts.equals("")) {
+                    String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
+                    dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    return;
+                }
+
                 //check if added filter is v2 but has invalid whole dir prefix v1
                 //case it is a file filter: whole dir prefix is an invalid char detected by afterTextChanged()
                 if (fli.isUseFilterV2()) {
@@ -3532,6 +3551,7 @@ public class SyncTaskUtil {
                     }
                 }
 
+                //set the new edited filter value
                 dialog.dismiss();
                 String new_filter_value=sortFilterSplitedItem(new_filter);
                 fli.setFilter(new_filter_value);
@@ -3543,27 +3563,41 @@ public class SyncTaskUtil {
         dialog.show();
     }
 
+    //on add filter, edit it: sort + remove leading and trail ;
     private String sortFilterSplitedItem(String filter) {
         String[]new_filter_array=filter.split(";");
         String new_filter_value="";
         String separator="";
         ArrayList<String>new_filter_list=new ArrayList<String>();
-        if (new_filter_array.length>1) {
-            for(String item:new_filter_array) new_filter_list.add(item);
-            Collections.sort(new_filter_list);
-            for(String item:new_filter_list) {
-                new_filter_value+=separator+item;
-                separator=";";
-            }
-        } else {
-            new_filter_value=filter;
+        for(String item:new_filter_array) {
+            if (!item.equals("")) new_filter_list.add(item);
         }
+
+        Collections.sort(new_filter_list);
+        for(String item:new_filter_list) {
+            new_filter_value+=separator+item;
+            separator=";";
+        }
+
         return new_filter_value;
     }
 
     public static String checkFilterInvalidCharacter(String filter, String[] invalid_char_list) {
         String invalid_char_seq="";
-        if (filter ==null || invalid_char_list ==null) return invalid_char_seq;
+        if (filter==null || invalid_char_list==null) return invalid_char_seq;
+
+        //do not allow filters with only ";", "." or "?" chars
+        String tmp_filter=filter.replaceAll(Pattern.quote("/"), "");
+        if (tmp_filter.equals("")) return "/";
+        tmp_filter=tmp_filter.replaceAll(Pattern.quote(";"), "");
+        if (tmp_filter.equals("")) return ";";
+        tmp_filter=tmp_filter.replaceAll(Pattern.quote("."), "");
+        if (tmp_filter.equals("")) return ".";
+        tmp_filter=tmp_filter.replaceAll(Pattern.quote("?"), "");
+        if (tmp_filter.equals("")) return "?";
+
+        //do not allow redundant ";;" chars
+        if (filter.contains(";;")) return ";;";
 
         String[] filter_item_array = filter.split(";");
         for(String filter_item:filter_item_array) {
