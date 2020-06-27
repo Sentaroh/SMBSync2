@@ -453,7 +453,7 @@ public final class CommonUtilities {
     }
 
     final public void addDebugMsg(int lvl, String cat, String... msg) {
-        mLog.addDebugMsg(lvl, cat, msg);
+        if (mGp.settingDebugLevel >= lvl) mLog.addDebugMsg(lvl, cat, msg);
     }
 
     final public boolean isLogFileExists() {
