@@ -281,7 +281,7 @@ public class SyncThread extends Thread {
                             mStwa.currentSTI.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                         wifi_msg=isWifiConditionSatisfied(mStwa.currentSTI);
                     } else {
-                        mStwa.util.addDebugMsg(1, "I", "WiFi ciondition check bypassed because SMB folder does not used.");
+                        mStwa.util.addDebugMsg(1, "I", "WiFi ciondition check bypassed because SMB folder is not used.");
                     }
 
                     if (wifi_msg.equals("")) {//Continue
@@ -1431,9 +1431,10 @@ public class SyncThread extends Thread {
                 if (dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) stwa.gp.safMgr.createSdcardItem(dir, true);
                 else stwa.gp.safMgr.createUsbItem(dir, true);
                 result = (new_saf != null) ? true : false;
-                if (result && !i_exists && stwa.gp.settingDebugLevel >= 1)
+                if (stwa.gp.settingDebugLevel >= 1) {
                     stwa.util.addDebugMsg(1, "I", "createDirectoryToExternalStorage directory created, dir=" + dir);
-                stwa.util.addDebugMsg(2, "I", "createDirectoryToExternalStorage result=" + result + ", exists=" + i_exists + ", new_saf=" + new_saf);
+                    stwa.util.addDebugMsg(2, "I", "createDirectoryToExternalStorage result=" + result + ", exists=" + i_exists + ", new_saf=" + new_saf==null? "null":"new_saf");
+                }
             } else {
                 stwa.util.addDebugMsg(2, "I", "createDirectoryToExternalStorage directory exists, Directory=" + dir);
             }
