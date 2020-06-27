@@ -2884,9 +2884,7 @@ public class SyncThread extends Thread {
             //exc=false
         } else {
             Pattern[] inc_matched_pattern_array = new Pattern[0];//debug code
-            if (stwa.gp.settingDebugLevel >= 2) {
-                stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 dir=" + filtered_dir);
-            }
+            //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 dir=" + filtered_dir);
 
             //exclude rule wins: start with it
             if (stwa.dirExcludeFilterPatternList.size() != 0) {
@@ -2898,8 +2896,7 @@ public class SyncThread extends Thread {
                         if (!filtered_dir.startsWith("/")) new_filtered_dir = "/" + filtered_dir;
                     }
 
-                  if (stwa.gp.settingDebugLevel >= 2)
-                      stwa.util.addDebugMsg(2, "I", "exclude dir by name filter_pattern=" + filter_pattern + " new_filtered_dir=" + new_filtered_dir);
+                    //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "exclude dir by name filter_pattern=" + filter_pattern + " new_filtered_dir=" + new_filtered_dir);
 
                     mt = filter_pattern.matcher(new_filtered_dir);
                     exc = mt.find();
@@ -2923,8 +2920,7 @@ public class SyncThread extends Thread {
                         }
                         mt = stwa.dirIncludeFilterPatternList.get(i).matcher(new_filtered_dir);
 
-                      if (stwa.gp.settingDebugLevel >= 2)
-                          stwa.util.addDebugMsg(2, "I", "pattern_by_name["+i+"]="+stwa.dirIncludeFilterPatternList.get(i) + " filtered_dir="+new_filtered_dir);
+                        //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "pattern_by_name["+i+"]="+stwa.dirIncludeFilterPatternList.get(i) + " filtered_dir="+new_filtered_dir);
 
                         inc = mt.find();
                         if (inc) {
@@ -3087,8 +3083,7 @@ public class SyncThread extends Thread {
                     if (filter_pattern.toString().startsWith("(^/") || filter_pattern.toString().startsWith("(.*/")) {
                         if (!filtered_dir.startsWith("/")) new_filtered_dir = "/" + filtered_dir;
                     }
-                  if (stwa.gp.settingDebugLevel >= 2)
-                      stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: exclude filter_pattern=" + filter_pattern + " filtered_dir=" + filtered_dir + " new_filtered_dir=" + new_filtered_dir);
+                    //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: exclude filter_pattern=" + filter_pattern + " filtered_dir=" + filtered_dir + " new_filtered_dir=" + new_filtered_dir);
 
                     Matcher mt = filter_pattern.matcher(new_filtered_dir);
                     exc = mt.find();
@@ -3107,8 +3102,7 @@ public class SyncThread extends Thread {
                         Pattern[] pattern_array = stwa.dirIncludeFilterArrayList.get(i);
                         boolean found = true;
                         for(int j = 0; j < Math.min(dir_array.length, pattern_array.length); j++) {
-                          if (stwa.gp.settingDebugLevel >= 2)
-                              stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: pattern_array["+j+"]="+pattern_array[j] + " dir_array["+j+"]="+dir_array[j] + " filtered_dir="+filtered_dir);
+                            //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: pattern_array["+j+"]=" + pattern_array[j] + " dir_array["+j+"]=" + dir_array[j] + " filtered_dir=" + filtered_dir);
 
                             Matcher mt = pattern_array[j].matcher(dir_array[j]);
                             if (dir_array[j].length() != 0) {
@@ -3419,8 +3413,11 @@ public class SyncThread extends Thread {
                     }
                 }
             }
-            mStwa.util.addDebugMsg(1, "I", "compileFilterVer2" + " Directory include=" + all_inc);
-            mStwa.util.addDebugMsg(1, "I", "compileFilterVer2" + " Directory exclude=" + all_exc);
+
+            if (mStwa.gp.settingDebugLevel >= 1) {
+                mStwa.util.addDebugMsg(1, "I", "compileFilterVer2" + " Directory include=" + all_inc);
+                mStwa.util.addDebugMsg(1, "I", "compileFilterVer2" + " Directory exclude=" + all_exc);
+            }
         }
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -3576,7 +3573,7 @@ public class SyncThread extends Thread {
             if (new_filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX_V2)) new_filter_item=new_filter_item.replaceFirst(MiscUtil.convertRegExp(WHOLE_DIRECTORY_FILTER_PREFIX_V2), "*/");
 
             new_filter_item=CommonUtilities.removeRedundantDirectorySeparator(new_filter_item);//case bad user input or input like filter=\/dir
-            //mStwa.util.addDebugMsg(2, "I", "new_filter_item=" + new_filter_item);
+            //if (mStwa.gp.settingDebugLevel >= 2) mStwa.util.addDebugMsg(2, "I", "new_filter_item=" + new_filter_item);
 
             if (new_filter_item.startsWith("/")) filter_array = new_filter_item.replaceFirst("/", "").split("/");
             else filter_array = new_filter_item.split("/");
@@ -3591,15 +3588,18 @@ public class SyncThread extends Thread {
 
             if (prefix.equals("I")) {
                 mStwa.dirIncludeFilterArrayList.add(pattern_array);
-                String array_item = "";
-                for (int i = 0; i < pattern_array.length; i++) array_item += pattern_array[i] + "/";
-                mStwa.util.addDebugMsg(1, "I", "createDirFilterArrayListVer2" + " Directory include=" + array_item);
-
+                if (mStwa.gp.settingDebugLevel >= 1) {
+                    String array_item = "";
+                    for (int i = 0; i < pattern_array.length; i++) array_item += pattern_array[i] + "/";
+                    mStwa.util.addDebugMsg(1, "I", "createDirFilterArrayListVer2" + " Directory include=" + array_item);
+                }
             } else {
                 mStwa.dirExcludeFilterArrayList.add(pattern_array);
-                String array_item = "";
-                for (int i = 0; i < pattern_array.length; i++) array_item += pattern_array[i] + "/";
-                mStwa.util.addDebugMsg(1, "I", "createDirFilterArrayListVer2" + " Directory exclude=" + array_item);
+                if (mStwa.gp.settingDebugLevel >= 1) {
+                    String array_item = "";
+                    for (int i = 0; i < pattern_array.length; i++) array_item += pattern_array[i] + "/";
+                    mStwa.util.addDebugMsg(1, "I", "createDirFilterArrayListVer2" + " Directory exclude=" + array_item);
+                }
             }
         }
     }
@@ -3622,15 +3622,19 @@ public class SyncThread extends Thread {
 
         if (prefix.equals("I")) {
             mStwa.dirIncludeFilterArrayList.add(pattern_array);
-            String array_item = "";
-            for (int i = 0; i < pattern_array.length; i++) array_item += pattern_array[i] + "/";
-            mStwa.util.addDebugMsg(1, "I", "createDirFilterArrayListVer1" + " Directory include=" + array_item);
+            if (mStwa.gp.settingDebugLevel >= 1) {
+                String array_item = "";
+                for (int i = 0; i < pattern_array.length; i++) array_item += pattern_array[i] + "/";
+                mStwa.util.addDebugMsg(1, "I", "createDirFilterArrayListVer1" + " Directory include=" + array_item);
+            }
 
         } else {
             mStwa.dirExcludeFilterArrayList.add(pattern_array);
-            String array_item = "";
-            for (int i = 0; i < pattern_array.length; i++) array_item += pattern_array[i] + "/";
-            mStwa.util.addDebugMsg(1, "I", "createDirFilterArrayListVer1" + " Directory exclude=" + array_item);
+            if (mStwa.gp.settingDebugLevel >= 1) {
+                String array_item = "";
+                for (int i = 0; i < pattern_array.length; i++) array_item += pattern_array[i] + "/";
+                mStwa.util.addDebugMsg(1, "I", "createDirFilterArrayListVer1" + " Directory exclude=" + array_item);
+            }
         }
     }
 
