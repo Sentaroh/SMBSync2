@@ -166,8 +166,8 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
                 holder.tv_row_filter.setEnabled(true);
                 holder.btn_row_delbtn.setEnabled(true);
                 if (o.isUseFilterV2()) {
-                    String whole_dir_filter=SyncTaskUtil.hasWholeDirectoryFilterItem(o.getFilter());
-                    String match_anywhere_filter=SyncTaskUtil.hasAnyWhereFilterItem(o.getFilter());
+                    String whole_dir_filter_v1=SyncTaskUtil.hasWholeDirectoryFilterItemV1(o.getFilter());
+                    String whole_dir_filter_v2=SyncTaskUtil.hasWholeDirectoryFilterItemV2(o.getFilter());
                     String invalid_chars=null;
                     if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
                     else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
@@ -175,10 +175,10 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
                     if (invalid_chars!=null){
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(false);
-                    } else if (!whole_dir_filter.equals("")) {
+                    } else if (!whole_dir_filter_v1.equals("")) {
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(false);
-                    } else if (!match_anywhere_filter.equals("")) {
+                    } else if (!whole_dir_filter_v2.equals("")) {
                         holder.rb_inc.setEnabled(false);
                         if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) holder.rb_exc.setEnabled(true);
                         else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) holder.rb_exc.setEnabled(false);

@@ -991,7 +991,14 @@ public final class CommonUtilities {
         return isOnlyWildcard;
     }
 
-    //no longer used
+    public static String removeRedundantDirectorySeparator (String input) {
+        return removeRedundantSeparator(input, "/");
+    }
+
+    public static String removeRedundantSeparator(String input, String separator) {
+        return removeRedundantSeparator(input, separator, false, false);
+    }
+
     public static String removeRedundantSeparator(String input, String separator, boolean remove_start, boolean remove_end) {
         String out=input;
         while(out.indexOf(separator+separator)>=0) {
