@@ -3675,7 +3675,11 @@ public class SyncTaskEditor extends DialogFragment {
                 boolean isChecked = !ctvSyncFileTypeSpecific.isChecked();
                 ctvSyncFileTypeSpecific.setChecked(isChecked);
                 if (isChecked) ll_file_filter_detail.setVisibility(Button.VISIBLE);
-                else ll_file_filter_detail.setVisibility(Button.GONE);
+                else {
+                    ll_file_filter_detail.setVisibility(Button.GONE);
+                    n_sti.getFileFilter().clear();
+                    file_filter_btn.setText(buildFilterInfo(n_sti.getFileFilter()));
+                }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
         });
