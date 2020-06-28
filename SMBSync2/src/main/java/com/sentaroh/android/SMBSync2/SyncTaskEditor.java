@@ -5139,7 +5139,7 @@ public class SyncTaskEditor extends DialogFragment {
             }
         }
 
-        //check dir and file filters for generic wild card only path parts (*/dir, dir1/*/dir2, dir/*, * only and *.* sequences)
+        //check dir and file filters for generic wild card only path parts (* and *.* only paths)
         if (!error_detected) {
             if (ctUseDirectoryFilterV2.isChecked() && n_sti.getDirFilter().size() > 0) {
                 String error_filter="";
@@ -5148,7 +5148,7 @@ public class SyncTaskEditor extends DialogFragment {
                 for(String item:n_sti.getDirFilter()) {
                     //String filter_inc_exc=item.substring(0,1);
                     String filter_entry=item.substring(1);
-                    String is_invalid_char= mTaskUtil.checkFilterInvalidAsteriskPathPart(filter_entry);
+                    String is_invalid_char= mTaskUtil.checkFilterInvalidAsteriskOnlyPath(filter_entry);
                     if (!is_invalid_char.equals("")) {
                         error_filter+= sep + "[" + filter_entry + "]";
                         invalid_chars+= is_invalid_char+ ", ";
@@ -5167,7 +5167,7 @@ public class SyncTaskEditor extends DialogFragment {
                 for(String item:n_sti.getFileFilter()) {
                     //String filter_inc_exc=item.substring(0,1);
                     String filter_entry=item.substring(1);
-                    String is_invalid_char= mTaskUtil.checkFilterInvalidAsteriskPathPart(filter_entry);
+                    String is_invalid_char= mTaskUtil.checkFilterInvalidAsteriskOnlyPath(filter_entry);
                     if (!is_invalid_char.equals("")) {
                         error_filter+= sep+ "[" +filter_entry+ "]";
                         invalid_chars+= is_invalid_char+ ", ";

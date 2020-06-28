@@ -3081,8 +3081,8 @@ public class SyncTaskUtil {
                     return;
                 }
 
-                //check filter for wildcard only parts before add (/*/, *.*, */...)
-                String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(entered_filter);
+                //check filter for wildcard only paths (* and *.* only path)
+                String wild_card_only_path_parts=checkFilterInvalidAsteriskOnlyPath(entered_filter);
                 if (!wild_card_only_path_parts.equals("")) {
                     String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
                     dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
@@ -3340,8 +3340,8 @@ public class SyncTaskUtil {
                     return;
                 }
 
-                //check filter for wildcard only parts before add (/*/, *.*, */...)
-                String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(entered_filter);
+                //check filter for wildcard only paths (* and *.* only path)
+                String wild_card_only_path_parts=checkFilterInvalidAsteriskOnlyPath(entered_filter);
                 if (!wild_card_only_path_parts.equals("")) {
                     String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
                     dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
@@ -3536,8 +3536,8 @@ public class SyncTaskUtil {
                     return;
                 }
 
-                //check filter for wildcard only parts before add (/*/, *.*, */...)
-                String wild_card_only_path_parts=checkFilterInvalidAsteriskPathPart(new_filter);
+                //check filter for wildcard only paths (* and *.* only path)
+                String wild_card_only_path_parts=checkFilterInvalidAsteriskOnlyPath(new_filter);
                 if (!wild_card_only_path_parts.equals("")) {
                     String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
                     dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
@@ -3630,19 +3630,19 @@ public class SyncTaskUtil {
         return invalid_char_seq;
     }
 
-    //check ";" separated filter items for * and *.* only path components
-    public static String checkFilterInvalidAsteriskPathPart(String filter) {
+    //check ";" separated filter items for * and *.* only paths
+    public static String checkFilterInvalidAsteriskOnlyPath(String filter) {
         String invalid_char_seq="";
         String[] filter_item_array=filter.split(";");
         for(String filter_item:filter_item_array) {
-            invalid_char_seq=CommonUtilities.hasAsteriskOnlyPathPart(filter_item);
+            invalid_char_seq=CommonUtilities.hasAsteriskOnlyPath(filter_item);
             if (!invalid_char_seq.equals("")) break;
         }
 
         return invalid_char_seq;
     }
 
-    //check if adapter filter list has invalid chars or generic asterisk only parts in path (*/dir, dir1/*/dir2, dir/*, * only and *.* sequences)
+    //check if adapter filter list has invalid chars or generic asterisk only path (* and *.* only filter)
     private boolean hasInvalidCharsAndWildcardsFilterList(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg, String[] invalid_char_list) {
         boolean has_invalid_chars=false;
         String error_msg="";
@@ -3659,8 +3659,8 @@ public class SyncTaskUtil {
                     break;
                 }
 
-                //check for invalid asterisk only path components in filter (not allowed for all file/dir filters)
-                invalid_char_seq=checkFilterInvalidAsteriskPathPart(error_filter);
+                //check for invalid asterisk only path in filter (not allowed for all file/dir filters)
+                invalid_char_seq=checkFilterInvalidAsteriskOnlyPath(error_filter);
                 if (!invalid_char_seq.equals("")) {
                     has_invalid_chars=true;
                     error_msg=mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error, error_filter, invalid_char_seq);

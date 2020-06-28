@@ -1022,7 +1022,7 @@ public final class CommonUtilities {
     }
 */
 
-    public static String hasAsteriskOnlyPathPart(String path) {
+    public static String hasAsteriskOnlyPath(String path) {
         String asterisk_only_part="";
         if (path == null || path.length() == 0) return asterisk_only_part;
 
@@ -1030,9 +1030,11 @@ public final class CommonUtilities {
         new_path=removeRedundantWildcard(new_path, "*");
         String[] path_array=new_path.split("/");
         for(String item:path_array) {
-            if (item.equals("*") || item.equals("*.*")) {
-                asterisk_only_part = item;
+            if (!item.equals("*") && !item.equals("*.*")) {
+                asterisk_only_part = "";
                 break;
+            } else {
+                asterisk_only_part=item;
             }
         }
 
