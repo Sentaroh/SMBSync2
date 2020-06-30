@@ -2958,7 +2958,7 @@ public class SyncThread extends Thread {
                                 mt = filter_pattern[k].matcher(dir_array_item);
                                 if (dir_array_item.length() != 0) {
                                     found = mt.find();
-                                    System.out.println("found="+found);
+                                    //System.out.println("found="+found);
                                     //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: Whole exclude filter_pattern["+k+"]=" + filter_pattern[k] + " dir_array_item=" + dir_array_item + " new_filtered_dir=" + new_filtered_dir + " found=" + found);
                                     if (!found) {//recheck filter_pattern against the dir_array component after the last array element we started with
                                         dir_array_index--;
@@ -3249,7 +3249,7 @@ public class SyncThread extends Thread {
                                 Matcher mt = filter_pattern[k].matcher(dir_array_item);
                                 if (dir_array_item.length() != 0) {
                                     found = mt.find();
-                                    System.out.println("found="+found);
+                                    //System.out.println("found="+found);
                                     //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: Whole exclude filter_pattern["+k+"]=" + filter_pattern[k] + " dir_array_item=" + dir_array_item + " new_filtered_dir=" + new_filtered_dir + " found=" + found);
                                     if (!found) {//recheck filter_pattern against the dir_array component after the last array element we started with
                                         dir_array_index--;
