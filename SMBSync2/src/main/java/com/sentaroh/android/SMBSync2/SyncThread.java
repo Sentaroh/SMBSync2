@@ -116,7 +116,7 @@ public class SyncThread extends Thread {
         public ArrayList<FileLastModifiedTimeEntry> newLastModifiedList = new ArrayList<FileLastModifiedTimeEntry>();
 
         public ArrayList<Pattern[]> dirIncludeFilterArrayList = new ArrayList<Pattern[]>();
-        public ArrayList<Pattern[]> dirExcludeFilterArrayList = new ArrayList<Pattern[]>();
+        public ArrayList<Pattern[]> dirExcludeFilterWithAsteriskArrayList = new ArrayList<Pattern[]>();
         public ArrayList<Pattern> dirExcludeFilterPatternList = new ArrayList<Pattern>();
         public Pattern fileFilterInclude, fileFilterExclude;
         //		public Pattern dirFilterInclude,dirFilterExclude;
@@ -2916,14 +2916,14 @@ public class SyncThread extends Thread {
             }
 
             //if not excluded, check the array exclude list with filters containing "*"
-            if (!exc && stwa.dirExcludeFilterArrayList.size() != 0) {
+            if (!exc && stwa.dirExcludeFilterWithAsteriskArrayList.size() != 0) {
                 String new_filtered_dir = filtered_dir;
                 String[] dir_array = null;
                 if (new_filtered_dir.startsWith("/")) dir_array = new_filtered_dir.substring(1).split("/");
                 else dir_array = new_filtered_dir.split("/");
 
-                for(int i = 0; i < stwa.dirExcludeFilterArrayList.size(); i++) {
-                    Pattern[] filter_pattern = stwa.dirExcludeFilterArrayList.get(i);
+                for(int i = 0; i < stwa.dirExcludeFilterWithAsteriskArrayList.size(); i++) {
+                    Pattern[] filter_pattern = stwa.dirExcludeFilterWithAsteriskArrayList.get(i);
 
                     //first check if it is a whole dir prefix filter: match anywhere in path (filter=\dir -> array pattern=.*.*/dir)
                     // + start from first dir_array element and advance until match error.
@@ -3118,8 +3118,8 @@ public class SyncThread extends Thread {
                         if (mt.find()) {
                             if (stwa.currentSTI.isSyncOptionUseExtendedDirectoryFilter1()) {
                                 Pattern[] exc = new Pattern[0];
-                                if (stwa.dirExcludeFilterArrayList.size() > i) {
-                                    exc = stwa.dirExcludeFilterArrayList.get(i);
+                                if (stwa.dirExcludeFilterWithAsteriskArrayList.size() > i) {
+                                    exc = stwa.dirExcludeFilterWithAsteriskArrayList.get(i);
                                 }
                                 String filter = "";
                                 for (int j = 0; j < exc.length; j++) {
@@ -3175,7 +3175,7 @@ public class SyncThread extends Thread {
 
         String filtered_dir = "";
         if (abs_dir.length() != 0) {
-            if (stwa.dirIncludeFilterArrayList.size() != 0 || stwa.dirExcludeFilterArrayList.size() != 0 || stwa.dirExcludeFilterPatternList.size() != 0) {
+            if (stwa.dirIncludeFilterArrayList.size() != 0 || stwa.dirExcludeFilterWithAsteriskArrayList.size() != 0 || stwa.dirExcludeFilterPatternList.size() != 0) {
                 if (abs_dir.endsWith("/")) filtered_dir = abs_dir.substring(0, abs_dir.length() - 1);
                 else filtered_dir = abs_dir;
             }
@@ -3201,15 +3201,15 @@ public class SyncThread extends Thread {
             }
 
             //if not excluded, check the array exclude list with filters containing "*"
-            if (!exc && stwa.dirExcludeFilterArrayList.size() != 0) {
+            if (!exc && stwa.dirExcludeFilterWithAsteriskArrayList.size() != 0) {
                 String new_filtered_dir = filtered_dir;
                 String[] dir_array = null;
                 if (new_filtered_dir.startsWith("/")) dir_array = new_filtered_dir.substring(1).split("/");
                 else dir_array = new_filtered_dir.split("/");
 
                 //check each filter_pattern[] item. Each filter_pattern[i] item is an array of filter path components ([dir1]/[dir2])
-                for(int i = 0; i < stwa.dirExcludeFilterArrayList.size(); i++) {
-                    Pattern[] filter_pattern = stwa.dirExcludeFilterArrayList.get(i);
+                for(int i = 0; i < stwa.dirExcludeFilterWithAsteriskArrayList.size(); i++) {
+                    Pattern[] filter_pattern = stwa.dirExcludeFilterWithAsteriskArrayList.get(i);
 
                     //whole dir prefix filter: match anywhere in path (filter=\dir -> array pattern=.*.*/dir)
                     //start from first dir_array element and advance until match error.
@@ -3420,7 +3420,7 @@ public class SyncThread extends Thread {
                         if (mt.find()) {
                             if (stwa.currentSTI.isSyncOptionUseExtendedDirectoryFilter1()) {
                                 if (matched_inc_array != null) {
-                                    if (matched_inc_array.length > stwa.dirExcludeFilterArrayList.get(i).length) {
+                                    if (matched_inc_array.length > stwa.dirExcludeFilterWithAsteriskArrayList.get(i).length) {
                                     } else {
                                         exc = true;
                                         break;
@@ -3563,7 +3563,7 @@ public class SyncThread extends Thread {
 
         //compile dir filters
         mStwa.dirIncludeFilterArrayList.clear();
-        mStwa.dirExcludeFilterArrayList.clear();
+        mStwa.dirExcludeFilterWithAsteriskArrayList.clear();
         mStwa.dirIncludeFilterPatternList.clear();
         mStwa.dirExcludeFilterPatternList.clear();
         if (discreet_df.size() != 0) {
@@ -3615,9 +3615,9 @@ public class SyncThread extends Thread {
                         if (new_filter_item.contains("*")) {
                             int index = new_filter_item.indexOf("*");
                             if (index != new_filter_item.length() - 1) {
-                                continue;//has "*" chars in the begin or middle, do not add to dirExcludeFilterPatternList, we will add it to the dirExcludeFilterArrayList
+                                continue;//has "*" chars in the begin or middle, do not add to dirExcludeFilterPatternList, we will add it to the dirExcludeFilterWithAsteriskArrayList
                             } else if (!new_filter_item.endsWith("/*")) {
-                                continue;//has trailing "*" char but not at end of path /* (exp: my_dir/dir*), do not add to dirExcludeFilterPatternList, we will add it to the dirExcludeFilterArrayList
+                                continue;//has trailing "*" char but not at end of path /* (exp: my_dir/dir*), do not add to dirExcludeFilterPatternList, we will add it to the dirExcludeFilterWithAsteriskArrayList
                             } //else: has only * at end of path like dir/* -> add to dirExcludeFilterPatternList
                         } //else: contains no "*" -> add to dirExcludeFilterPatternList
 
@@ -3712,7 +3712,7 @@ public class SyncThread extends Thread {
             }
         }
         mStwa.dirIncludeFilterArrayList.clear();
-        mStwa.dirExcludeFilterArrayList.clear();
+        mStwa.dirExcludeFilterWithAsteriskArrayList.clear();
         mStwa.dirIncludeFilterPatternList.clear();
         mStwa.dirExcludeFilterPatternList.clear();
         if (discreet_df.size() != 0) {
@@ -3793,7 +3793,7 @@ public class SyncThread extends Thread {
         else createDirFilterArrayListVer1(prefix, filter);
     }
 
-    //used for directory include filter compare, adds dirExcludeFilterArrayList (not used) and dirIncludeFilterArrayList (used for dir include filter match)
+    //used for directory include filter compare, adds dirExcludeFilterWithAsteriskArrayList (not used) and dirIncludeFilterArrayList (used for dir include filter match)
     //prefix==I for include filter
     //create array of path elements for each filter: filter==path/to/folder -> array { path, to, folder}
     final private void createDirFilterArrayListVer2(String prefix, String filter) {
@@ -3812,11 +3812,11 @@ public class SyncThread extends Thread {
             //if exclude filter contains no "*" or if it contains "*" only at end of path (dir/*), do not add to array (it is added to dirExcludeFilterPatternList)
             //if exclude filter: check if it is traverse or not
             if (!prefix.equals("I")) {//exclude filter
-                if (!new_filter_item.contains("*")) {//has no * -> add to dirExcludeFilterPatternList, do not add to dirExcludeFilterArrayList
+                if (!new_filter_item.contains("*")) {//has no * -> add to dirExcludeFilterPatternList, do not add to dirExcludeFilterWithAsteriskArrayList
                     continue;
                 } else {//check if "*" only at end of path (dir/*)
                     int index = new_filter_item.indexOf("*");
-                    if (index == (new_filter_item.length() - 1) && new_filter_item.endsWith("/*")) {//has only * at end of path (dir/*) -> added to dirExcludeFilterPatternList, do not add to dirExcludeFilterArrayList
+                    if (index == (new_filter_item.length() - 1) && new_filter_item.endsWith("/*")) {//has only * at end of path (dir/*) -> added to dirExcludeFilterPatternList, do not add to dirExcludeFilterWithAsteriskArrayList
                         continue;
                     }
                 }
@@ -3859,7 +3859,7 @@ public class SyncThread extends Thread {
                     mStwa.util.addDebugMsg(1, "I", "createDirFilterArrayListVer2" + " Directory include=" + array_item);
                 }
             } else {
-                mStwa.dirExcludeFilterArrayList.add(pattern_array);
+                mStwa.dirExcludeFilterWithAsteriskArrayList.add(pattern_array);
                 if (mStwa.gp.settingDebugLevel >= 1) {
                     String array_item = "";
                     for (int i = 0; i < pattern_array.length; i++) array_item += pattern_array[i] + "/";
@@ -3894,7 +3894,7 @@ public class SyncThread extends Thread {
             }
 
         } else {
-            mStwa.dirExcludeFilterArrayList.add(pattern_array);
+            mStwa.dirExcludeFilterWithAsteriskArrayList.add(pattern_array);
             if (mStwa.gp.settingDebugLevel >= 1) {
                 String array_item = "";
                 for (int i = 0; i < pattern_array.length; i++) array_item += pattern_array[i] + "/";
