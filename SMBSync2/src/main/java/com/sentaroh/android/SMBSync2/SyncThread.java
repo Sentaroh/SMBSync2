@@ -2961,7 +2961,7 @@ public class SyncThread extends Thread {
                                 if (dir_array_item.length() != 0) {
                                     found = mt.find();
 
-                                    //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: Whole exclude filter_pattern["+k+"]=" + filter_pattern[k] + " dir_array_item=" + dir_array_item + " new_filtered_dir=" + new_filtered_dir + " found=" + found);
+                                    //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2: Whole exclude filter_pattern["+k+"]=" + filter_pattern[k] + " dir_array_item=" + dir_array_item + " new_filtered_dir=" + new_filtered_dir + " found=" + found);
                                     if (!found) {//recheck filter_pattern against the dir_array component after the last array element we started with
                                         dir_array_index--;
                                         break;
@@ -2996,7 +2996,7 @@ public class SyncThread extends Thread {
                             mt = filter_pattern[j].matcher(dir_array_item);
                             if (dir_array[j].length() != 0) {
                                 found = mt.find();
-                                //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2: filter_pattern["+j+"]=" + filter_pattern[j] + " dir_array_item=" + dir_array_item + " new_filtered_dir=" + new_filtered_dir + " found=" + found);
+                                //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2: filter_pattern["+j+"]=" + filter_pattern[j] + " dir_array_item=" + dir_array_item + " new_filtered_dir=" + new_filtered_dir + " found=" + found);
                                 if (!found) {
                                     break;
                                 }
@@ -3013,32 +3013,33 @@ public class SyncThread extends Thread {
             if (stwa.gp.settingDebugLevel >= 2)
                 stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 Exclude=" + exc);
 
-            if (!exc) {
-                if (stwa.dirIncludeFilterPatternList.size()==0) {
+            if (!exc) {//do not check include filters if folder was excluded
+                if (stwa.dirIncludeFilterArrayList.size()==0) {
                     //nothing to filter
                     inc = true;
                 } else {
-                    for (int i = 0; i < stwa.dirIncludeFilterPatternList.size(); i++) {
-                        String new_filtered_dir = filtered_dir;
+                    String[] dir_array = null;
+                    if (filtered_dir.startsWith("/")) dir_array = filtered_dir.substring(1).split("/");
+                    else dir_array = filtered_dir.split("/");
+                    for(int i = 0; i < stwa.dirIncludeFilterArrayList.size(); i++) {
+                        Pattern[] filter_pattern = stwa.dirIncludeFilterArrayList.get(i);
+                        int pattern_array_len=filter_pattern.length;
+                        boolean found = true;
+                        for(int j = 0; j < Math.min(dir_array.length, filter_pattern.length); j++) {
+                            //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2: filter_pattern["+j+"]=" + filter_pattern[j] + " dir_array["+j+"]=" + dir_array[j] + " filtered_dir=" + filtered_dir);
 
-                        //compiled filter==/cache -> includes master_dir/cache
-                        if (stwa.dirIncludeFilterPatternList.get(i).toString().startsWith("(^/")) {
-                            if (!filtered_dir.startsWith("/")) new_filtered_dir = "/" + filtered_dir;
-                        }
-                        mt = stwa.dirIncludeFilterPatternList.get(i).matcher(new_filtered_dir);
-
-                        //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "pattern_by_name["+i+"]="+stwa.dirIncludeFilterPatternList.get(i) + " filtered_dir="+new_filtered_dir);
-
-                        inc = mt.find();
-                        if (inc) {
-                            if (stwa.gp.settingDebugLevel >= 2) {
-                                inc_matched_pattern_array = stwa.dirIncludeFilterArrayList.get(i);
-                                String filtered_path = "";
-                                for (int j = 0; j < inc_matched_pattern_array.length; j++) {
-                                    filtered_path += inc_matched_pattern_array[j].toString() + "/";
+                            pattern_array_len--;
+                            mt = filter_pattern[j].matcher(dir_array[j]);
+                            if (dir_array[j].length() != 0) {
+                                found = mt.find();
+                                if (!found) {
+                                    break;
                                 }
-                                stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 Include match filtered_path=" + filtered_path);
                             }
+                        }
+                        //unlike isDirectoryToBeProcessed(), we're matching whole path to file: include only if all pattern path is matched
+                        if (found && pattern_array_len == 0) {
+                            inc = true;
                             break;
                         }
                     }
@@ -3338,6 +3339,9 @@ public class SyncThread extends Thread {
                                 }
                             }
                         }
+                        //if dir_array[] is shorter than filter_pattern[], unlike exlude matcher and include by isDirectorySelectedByDirectoryName()
+                        //  -> inc = true, else excluded subdirs will not be processed by sync code to optimize speed
+                        //  -> exp. filter=/dir1/dir2 , filtered_dir=/dir1 -> inc must be true. Files will be dropped by isDirectorySelectedByDirectoryName()
                         if (found) {
                             inc = true;
                             break;
