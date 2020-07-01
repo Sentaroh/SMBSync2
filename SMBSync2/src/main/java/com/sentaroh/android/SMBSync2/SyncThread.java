@@ -2932,7 +2932,7 @@ public class SyncThread extends Thread {
                         int pattern_array_len=filter_pattern.length;
                         int dir_array_index=0;//last dir array index we started with, if no match, check again starting from dir_array element after it
                         int current_dir_index=0;//actual dir array index to match
-                        boolean found = true;
+                        boolean found = false;
 
                         //overhead optimize: if the filter_pattern array has more path components than the dir_array -> no match possible, check next filter (-1 because of leading ".*.*" element)
                         if ((filter_pattern.length-1) > dir_array.length) continue;
@@ -2980,7 +2980,7 @@ public class SyncThread extends Thread {
                                 break;
                         } //not found, continue to check against next filters
                     } else {//filter is not a match anywhere filter: match from beginning of dir_array
-                        boolean found = true;
+                        boolean found = false;
                         int pattern_array_len=filter_pattern.length;
 
                         //overhead optimize: if the filter_pattern array has more path components than the dir_array -> no match possible, check next filter
@@ -3217,7 +3217,7 @@ public class SyncThread extends Thread {
                         int pattern_array_len=filter_pattern.length;
                         int dir_array_index=0;//last dir array index we started with, if no match, check again starting from dir_array element after it
                         int current_dir_index=0;//actual dir array index to match
-                        boolean found = true;
+                        boolean found = false;
                         boolean excl_match = false;
                         boolean traverse = false;
 
@@ -3277,7 +3277,7 @@ public class SyncThread extends Thread {
                     } else {//not whole dir prefix, must match from beginning
                         int dir_array_len=dir_array.length;
                         int pattern_array_len=filter_pattern.length;
-                        boolean found = true;
+                        boolean found = false;
                         boolean traverse = false;
 
                         //overhead optimize: if the filter_pattern array has more path components than the dir_array -> no match possible, check next filter
