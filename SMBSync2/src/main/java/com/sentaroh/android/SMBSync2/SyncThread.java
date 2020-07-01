@@ -3609,22 +3609,17 @@ public class SyncThread extends Thread {
                     for (String filter_item : rem_filter_array) {
                         String new_filter_item=filter_item;
 
-                        //if filter contains "*": if it is only at end of path, use pattern matcher
+                        //if filter contains "*": use array matcher
                         if (new_filter_item.contains("*")) {
-                            int index = new_filter_item.indexOf("*");
-                            if (index != new_filter_item.length() - 1) {
-                                continue;//has "*" chars in the begin or middle, do not add to dirExcludeFilterPatternList, we will add it to the dirExcludeFilterWithAsteriskArrayList
-                            } else if (!new_filter_item.endsWith("/*")) {
-                                continue;//has trailing "*" char but not at end of path /* (exp: my_dir/dir*), do not add to dirExcludeFilterPatternList, we will add it to the dirExcludeFilterWithAsteriskArrayList
-                            } //else: has only * at end of path like dir/* -> add to dirExcludeFilterPatternList
+                            continue;
                         } //else: contains no "*" -> add to dirExcludeFilterPatternList
 
                         //add to exclude whole pattern matcher
                         //if exclude dir filter starts with whole dir prefix `\`, match the filter anywhere in path
-                        //filter=\dir -> excludes all */dir/* folders undre master
+                        //filter=\dir -> excludes all folders named "dir"
                         if (new_filter_item.startsWith(WHOLE_DIRECTORY_FILTER_PREFIX_V2)) new_filter_item=new_filter_item.replaceFirst(MiscUtil.convertRegExp(WHOLE_DIRECTORY_FILTER_PREFIX_V2), "*/");
 
-                        //force match from begining: filter=dir -> match folder named dir but not my_dir
+                        //force match from begining: filter=dir -> match folder named dir but not my_dir (no more applicable because filter with * is moved to array matcher only)
                         if (!new_filter_item.startsWith("*")) pre_str = "^";
                         else pre_str = "";
 
@@ -3794,6 +3789,7 @@ public class SyncThread extends Thread {
     //used for directory include filter compare, adds dirExcludeFilterWithAsteriskArrayList (not used) and dirIncludeFilterArrayList (used for dir include filter match)
     //prefix==I for include filter
     //create array of path elements for each filter: filter==path/to/folder -> array { path, to, folder}
+    //exclude filters: only those containing * are added to the array matcher
     final private void createDirFilterArrayListVer2(String prefix, String filter) {
         int flags = Pattern.CASE_INSENSITIVE | Pattern.MULTILINE;
 
@@ -3807,16 +3803,12 @@ public class SyncThread extends Thread {
             String[] filter_array = null;
             String new_filter_item = filter_item;
             
-            //if exclude filter contains no "*" or if it contains "*" only at end of path (dir/*), do not add to array (it is added to dirExcludeFilterPatternList)
-            //if exclude filter: check if it is traverse or not
+            //if exclude filter
+            //  + if it contains no "*": do not add to array (it is added to dirExcludeFilterPatternList)
+            //  + check if it is traverse or not
             if (!prefix.equals("I")) {//exclude filter
-                if (!new_filter_item.contains("*")) {//has no * -> add to dirExcludeFilterPatternList, do not add to dirExcludeFilterWithAsteriskArrayList
+                if (!new_filter_item.contains("*")) {//has no * -> it was added to dirExcludeFilterPatternList, do not add to dirExcludeFilterWithAsteriskArrayList
                     continue;
-                } else {//check if "*" only at end of path (dir/*)
-                    int index = new_filter_item.indexOf("*");
-                    if (index == (new_filter_item.length() - 1) && new_filter_item.endsWith("/*")) {//has only * at end of path (dir/*) -> added to dirExcludeFilterPatternList, do not add to dirExcludeFilterWithAsteriskArrayList
-                        continue;
-                    }
                 }
 
                 //decide to create or not the excluded dir folders:
