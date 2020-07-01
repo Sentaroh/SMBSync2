@@ -2934,7 +2934,7 @@ public class SyncThread extends Thread {
                         int current_dir_index=0;//actual dir array index to match
                         boolean found = true;
 
-                        //if the filter_pattern array has more path components than the dir_array: no match possible, check next filter (-1 because of leading ".*.*" element)
+                        //overhead optimize: if the filter_pattern array has more path components than the dir_array -> no match possible, check next filter (-1 because of leading ".*.*" element)
                         if ((filter_pattern.length-1) > dir_array.length) continue;
 
                         //compare each filter_pattern[j] path component to the filtered dir path component dir_array[j]
@@ -2950,7 +2950,7 @@ public class SyncThread extends Thread {
                                 pattern_array_len--;
                                 dir_array_item=dir_array[current_dir_index];
 
-                                if ((filter_pattern.length - 1 - k) > (dir_array.length - current_dir_index)) break;//overhead optimize, no match is expected (pattern length -1 because of first .*.* skipped)
+                                if ((filter_pattern.length - k) > (dir_array.length - current_dir_index)) break;//overhead optimize, no match is expected because remaining pattern items > remaining filtered dir items
 
                                 //check if we need to traverse: filter=dir/ : create empty dir folder, else not ("<" added during array filter creation)
                                 if (filter_pattern[k].toString().endsWith("<$")) {//no need to check for traverse, files are excluded if base dir matches
@@ -2983,7 +2983,7 @@ public class SyncThread extends Thread {
                         boolean found = true;
                         int pattern_array_len=filter_pattern.length;
 
-                        //if the filter_pattern array has more path components than the dir_array: no match possible, check next filter
+                        //overhead optimize: if the filter_pattern array has more path components than the dir_array -> no match possible, check next filter
                         if (filter_pattern.length > dir_array.length) continue;
 
                         for(int j = 0; j < Math.min(dir_array.length, filter_pattern.length); j++) {
@@ -3221,7 +3221,7 @@ public class SyncThread extends Thread {
                         boolean excl_match = false;
                         boolean traverse = false;
 
-                        //if the filter_pattern array has more path components than the dir_array: no match possible, check next filter (-1 because of leading ".*.*" element)
+                        //overhead optimize: if the filter_pattern array has more path components than the dir_array -> no match possible, check next filter (-1 because of leading ".*.*" element)
                         if ((filter_pattern.length - 1) > dir_array_length) continue;
 
                         //compare each filter_pattern[j] path component to the filtered dir path component dir_array[j]
@@ -3237,7 +3237,7 @@ public class SyncThread extends Thread {
                                 pattern_array_len--;
                                 dir_array_item=dir_array[current_dir_index];
 
-                                if ((filter_pattern.length - 1 - k) > (dir_array_length - current_dir_index)) break;//overhead optimize, no match is expected (-1 to because of first .*.* element skipped
+                                if ((filter_pattern.length - k) > (dir_array_length - current_dir_index)) break;//overhead optimize, no match is expected because remaining pattern items > remaining filtered dir items
 
                                 //check if we need to traverse: filter=dir/ : create empty dir folder, else not ("<" added during array filter creation)
                                 if (filter_pattern[k].toString().endsWith("<$")) {
@@ -3280,7 +3280,7 @@ public class SyncThread extends Thread {
                         boolean found = true;
                         boolean traverse = false;
 
-                        //if the filter_pattern array has more path components than the dir_array: no match possible, check next filter
+                        //overhead optimize: if the filter_pattern array has more path components than the dir_array -> no match possible, check next filter
                         if (pattern_array_len > dir_array_len) continue;
 
                         //compare each filter_pattern[j] path component to the filtered dir path component dir_array[j]
