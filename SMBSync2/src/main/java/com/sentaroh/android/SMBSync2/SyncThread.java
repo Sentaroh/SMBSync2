@@ -2929,14 +2929,13 @@ public class SyncThread extends Thread {
                     // + start from first dir_array element and advance until match error.
                     // + if match error, recheck dir_array starting from the next element
                     if (filter_pattern[0].toString().equals(".*.*")) {
-                        int dir_array_len=dir_array.length;
                         int pattern_array_len=filter_pattern.length;
                         int dir_array_index=0;//last dir array index we started with, if no match, check again starting from dir_array element after it
                         int current_dir_index=0;//actual dir array index to match
                         boolean found = true;
 
                         //if the filter_pattern array has more path components than the dir_array: no match possible, check next filter (+1 because of leading ".*.*" element)
-                        if (pattern_array_len > dir_array_len + 1) break;
+                        if (filter_pattern.length > dir_array.length + 1) continue;
 
                         //compare each filter_pattern[j] path component to the filtered dir path component dir_array[j]
                         for(int j = 0; !exc && (dir_array_index + j) < dir_array.length; j++) {
@@ -2982,11 +2981,10 @@ public class SyncThread extends Thread {
                         //System.out.println("excluded="+exc + " current_dir_index=" + current_dir_index);
                     } else {//filter is not a match anywhere filter: match from beginning of dir_array
                         boolean found = true;
-                        int dir_array_len=dir_array.length;
                         int pattern_array_len=filter_pattern.length;
 
                         //if the filter_pattern array has more path components than the dir_array: no match possible, check next filter
-                        if (pattern_array_len > dir_array_len) break;
+                        if (filter_pattern.length > dir_array.length) continue;
 
                         for(int j = 0; j < Math.min(dir_array.length, filter_pattern.length); j++) {
                             pattern_array_len--;
@@ -3215,7 +3213,7 @@ public class SyncThread extends Thread {
                     //start from first dir_array element and advance until match error.
                     //if match error, recheck dir_array starting from the next element
                     if (filter_pattern[0].toString().equals(".*.*")) {
-                        int dir_array_len=dir_array.length;
+                        int dir_array_length=dir_array.length;
                         int pattern_array_len=filter_pattern.length;
                         int dir_array_index=0;//last dir array index we started with, if no match, check again starting from dir_array element after it
                         int current_dir_index=0;//actual dir array index to match
@@ -3224,7 +3222,7 @@ public class SyncThread extends Thread {
                         boolean traverse = false;
 
                         //if the filter_pattern array has more path components than the dir_array: no match possible, check next filter (+1 because of leading ".*.*" element)
-                        if (pattern_array_len > dir_array_len + 1) break;
+                        if (filter_pattern.length > dir_array_length + 1) continue;
 
                         //compare each filter_pattern[j] path component to the filtered dir path component dir_array[j]
                         for(int j = 0; !excl_match && (dir_array_index + j) < dir_array.length; j++) {
@@ -3267,9 +3265,9 @@ public class SyncThread extends Thread {
                         }
 
                         if (excl_match) {//path should be excluded, check if we include it because of "traverse" rule (filter=dir/ -> create empty dir folder)
-                            if (traverse && current_dir_index == (dir_array_len-1)) {//it is an exclude match, + traverse rule by user + at end of the filtered_dir path: allow it
+                            if (traverse && current_dir_index == (dir_array_length-1)) {//it is an exclude match, + traverse rule by user + at end of the filtered_dir path: allow it
                                 exc = false;
-                                break;//or continue with next exclude filters ? case duplicate exclude filter !
+                                break;//no need to check next filters, it is excluded, only empty dir is created
                             } else {//must be excluded
                                 exc = true;
                                 break;
@@ -3283,7 +3281,7 @@ public class SyncThread extends Thread {
                         boolean traverse = false;
 
                         //if the filter_pattern array has more path components than the dir_array: no match possible, check next filter
-                        if (pattern_array_len > dir_array_len) break;
+                        if (pattern_array_len > dir_array_len) continue;
 
                         //compare each filter_pattern[j] path component to the filtered dir path component dir_array[j]
                         for(int j = 0; j < Math.min(dir_array.length, filter_pattern.length); j++) {
@@ -3309,7 +3307,7 @@ public class SyncThread extends Thread {
                         }
                         if (found && pattern_array_len == 0) {
                             if (traverse) {
-                                break;//or continue with next exclude filters ? case duplicate exclude filter !
+                                break;//no need to check next filters, it is excluded, only empty dir is created
                             } else {
                                 exc = true;
                                 break;
