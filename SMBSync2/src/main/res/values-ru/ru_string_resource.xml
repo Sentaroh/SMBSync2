@@ -439,6 +439,8 @@
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error">Фильтр %s содержит путь только с общими знаками. Удалите недопустимые символы\"%s\".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_error">Удалить дубликаты из следующих фильтров: %s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error">Удалить дубликаты из следующих фильтров: %s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">Использование символа * в фильтрах файлов возможно только в имени файла. Удалите все символы "*" из пути к файлу в следующих фильтрах:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_edit_dlg_error">Символ * не допускается за пределами имени файла для следующих файловых фильтров: %s</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Сетевые настройки</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Опции Wifi AP:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Запись файлов непосредственно в папку SMB без использования временных файлов</string>

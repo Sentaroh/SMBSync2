@@ -171,16 +171,25 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
                     String whole_dir_filter_v2=SyncTaskUtil.hasWholeDirectoryFilterItemV2(o.getFilter());
                     String wild_card_only_path_parts=SyncTaskUtil.checkFilterInvalidAsteriskOnlyPath(o.getFilter());
                     String invalid_chars="";
-                    if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
-                    else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
+                    String file_filter_asterisk_path="";
+                    if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) {
+                        invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
+                        file_filter_asterisk_path=SyncTaskUtil.checkFileFilterHasAsteriskInPathToFile(o.getFilter());
+                    } else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) {
+                        invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
+                        //file_filter_asterisk_path="";
+                    }
 
                     if (!invalid_chars.equals("") || !wild_card_only_path_parts.equals("")){
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(false);
-                    } else if (!whole_dir_filter_v1.equals("")) {
+                    } else if (!file_filter_asterisk_path.equals("")) {//file filters cannot have asterisk in path outside the file name
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(false);
-                    } else if (!whole_dir_filter_v2.equals("")) {
+                    } else if (!whole_dir_filter_v1.equals("")) {//not allowed in new filter v2
+                        holder.rb_inc.setEnabled(false);
+                        holder.rb_exc.setEnabled(false);
+                    } else if (!whole_dir_filter_v2.equals("")) {//only exclude dir filters support whole dir prefix
                         holder.rb_inc.setEnabled(false);
                         if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) holder.rb_exc.setEnabled(true);
                         else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) holder.rb_exc.setEnabled(false);

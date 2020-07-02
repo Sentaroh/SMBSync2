@@ -2971,6 +2971,7 @@ public class SyncTaskUtil {
         //on main filters dialog, show warning if invalid filters exist + disable ok button
         //no check for whole dir prefix in file filters: they are always invalid chars not allowed in file filter
         if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+                isValidWildcardsFileFilterWithPath(filterAdapter, btn_ok, dlg_msg) &&
                 isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
             //ok
         }
@@ -2979,7 +2980,8 @@ public class SyncTaskUtil {
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+                        isValidWildcardsFileFilterWithPath(filterAdapter, btn_ok, dlg_msg) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -2993,7 +2995,8 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+                        isValidWildcardsFileFilterWithPath(filterAdapter, btn_ok, dlg_msg) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
@@ -3011,7 +3014,8 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
+                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+                                isValidWildcardsFileFilterWithPath(filterAdapter, btn_ok, dlg_msg) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                             dlg_msg.setText("");
                         }
@@ -3050,7 +3054,8 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, addBtn, false);
 
                     //recheck existing filters before enabling Ok button and clearing warning dialog msg
-                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
+                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+                            isValidWildcardsFileFilterWithPath(filterAdapter, btn_ok, dlg_msg) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                         dlg_msg.setText("");
                         CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else {
@@ -3086,6 +3091,15 @@ public class SyncTaskUtil {
                 if (!wild_card_only_path_parts.equals("")) {
                     String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
                     dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
+                    CommonDialog.setViewEnabled(mActivity, addBtn, false);
+                    return;
+                }
+
+                //file filters support use of * char only in the file name, but not in the path to file
+                String error_filter=checkFileFilterHasAsteriskInPathToFile(entered_filter);
+                if (!error_filter.equals("")) {
+                    String mtxt=mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_edit_dlg_error);
+                    dlg_msg.setText(String.format(mtxt, error_filter));
                     CommonDialog.setViewEnabled(mActivity, addBtn, false);
                     return;
                 }
@@ -3545,8 +3559,11 @@ public class SyncTaskUtil {
                     return;
                 }
 
+                //file filters support use of * char only in the file name, but not in the path to file:
+                //we will add the filter and error message will show by editFileFilterDlg() after it is added
+
                 //check if added filter is v2 but has invalid whole dir prefix v1
-                //case it is a file filter: whole dir prefix is an invalid char detected by afterTextChanged()
+                //case it is a file filter: whole dir prefix is an invalid char and will be detected by editFileFilterDlg() after filter is added
                 if (fli.isUseFilterV2()) {
                     String error_filter=hasWholeDirectoryFilterItemV1(new_filter);
                     if (!error_filter.equals("")) {
@@ -3640,6 +3657,43 @@ public class SyncTaskUtil {
         }
 
         return invalid_char_seq;
+    }
+
+    //file filter path cannot have asterisk outside filename (relative full path only)
+    public static String checkFileFilterHasAsteriskInPathToFile(String filter) {
+        String error_filter = "";
+        String[] filter_item_array=filter.split(";");
+        for(String filter_item:filter_item_array) {
+            if (!filter_item.contains("/")) continue;//filename only filter
+
+            //file filter item is a path to file
+            if (CommonUtilities.basedirOf(filter_item).contains("*")) {
+                error_filter=filter_item;
+                break;
+            }
+        }
+
+        return error_filter;
+        //msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error
+    }
+
+    //file filter path cannot have asterisk outside filename
+    private boolean isValidWildcardsFileFilterWithPath(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg) {
+        boolean result=true;
+        String error_filters="";
+        for(int i=0; i<filter_adapter.getCount(); i++) {
+            AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
+            if (!fli.isDeleted() && fli.isUseFilterV2()) {
+                error_filters=checkFileFilterHasAsteriskInPathToFile(fli.getFilter());
+                if (!error_filters.equals("")) break;
+            }
+        }
+        if (!error_filters.equals("")) {
+            dlg_msg.setText(mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_edit_dlg_error, error_filters));
+            CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+            result=false;
+        }
+        return result;
     }
 
     //check if adapter filter list has invalid chars or generic asterisk only path (* and *.* only filter)

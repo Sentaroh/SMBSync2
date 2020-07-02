@@ -5178,6 +5178,24 @@ public class SyncTaskEditor extends DialogFragment {
                 if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error, invalid_chars, error_filter);
             }
         }
+        //file filter only: check for invalid asterisk in the path to file (* char allowed only in file name)
+        if (!error_detected) {
+            if (ctUseDirectoryFilterV2.isChecked() && n_sti.getFileFilter().size() > 0) {
+                String error_filter="";
+                String sep="";
+                for(String item:n_sti.getFileFilter()) {
+                    //String filter_inc_exc=item.substring(0,1);
+                    String filter_entry=item.substring(1);
+                    String error_filter_item= mTaskUtil.checkFileFilterHasAsteriskInPathToFile(filter_entry);
+                    if (!error_filter_item.equals("")) {
+                        error_filter+= sep + error_filter_item;
+                        sep="; ";
+                        error_detected = true;
+                    }
+                }
+                if (error_detected) result = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error, error_filter);
+            }
+        }
 
         //check dir and file filters for duplicate entries
         if (!error_detected) {

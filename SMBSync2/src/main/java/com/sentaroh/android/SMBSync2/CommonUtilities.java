@@ -1041,6 +1041,32 @@ public final class CommonUtilities {
         return asterisk_only_part;
     }
 
+    //return the basedir path from a given path
+    public static String basedirOf(String path) {
+        if (path==null || path.equals("")) return "";
+
+        String basedir="";
+        int index=path.lastIndexOf("/");
+        if (index > 0) {
+            basedir=path.substring(0, index);
+        }
+        return basedir;
+    }
+
+    //return file name from path [not used]
+    public static String filenameOf(String path) {
+        if (path==null || path.equals("")) return "";
+
+        String filename=path.substring(path.lastIndexOf("/") + 1);
+
+        return filename;
+    }
+
+    //return dir name from path [not used]
+    public static String dirnameOf(String path) {
+        return filenameOf(path);
+    }
+
     public static String trimTrailingBlank(String s) {
         if (s == null) return null;
 
