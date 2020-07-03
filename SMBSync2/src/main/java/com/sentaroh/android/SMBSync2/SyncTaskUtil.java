@@ -3567,11 +3567,19 @@ public class SyncTaskUtil {
                     }
 
                     //file filters support use of * char only in the file name, but not in the path to file:
-                    //we will add the filter and error message will show by editFileFilterDlg() after it is added
+                    if (filter_type.equals(SMBSYNC2_PROF_FILTER_FILE)) {
+                        String error_filter=checkFileFilterHasAsteriskInPathToFile(new_filter);
+                        if (!error_filter.equals("")) {
+                            String mtxt=mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_edit_dlg_error);
+                            dlg_msg.setText(String.format(mtxt, error_filter));
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            return;
+                        }
+                    }
 
-                    //check if added filter is v2 but has invalid whole dir prefix v1
-                    //case it is a file filter: whole dir prefix is an invalid char and will be detected by editFileFilterDlg() after filter is added
-                    if (fli.isUseFilterV2()) {
+                    //check if added directory filter is v2 but has invalid whole dir prefix v1
+                    //if filter is file, whole dir prefix v1 and v2 are invalid chars detected above
+                    if (filter_type.equals(SMBSYNC2_PROF_FILTER_DIR) && fli.isUseFilterV2()) {
                         String error_filter=hasWholeDirectoryFilterItemV1(new_filter);
                         if (!error_filter.equals("")) {
                             String suggest_filter = error_filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2);
@@ -3690,7 +3698,6 @@ public class SyncTaskUtil {
         }
 
         return error_filter;
-        //msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error
     }
 
     //file filter path cannot have asterisk outside filename
