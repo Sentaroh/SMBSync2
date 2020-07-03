@@ -71,9 +71,7 @@ public class SyncThreadSyncFile {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
             if (tf.isDirectory()) { // Directory Delete
-                if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
-                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
-                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     if (isSmbFileExists(stwa, smb_fl, master_dir)) {
                         File[] children = tf.listFiles();
                         if (children != null) {
@@ -172,9 +170,7 @@ public class SyncThreadSyncFile {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
             if (tf.isDirectory()) { // Directory Delete
-                if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
-                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
-                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     if (isSmbFileExists(stwa, smb_fl, master_dir)) {
                         File[] children = tf.listFiles();
                         if (children != null) {
@@ -281,10 +277,7 @@ public class SyncThreadSyncFile {
         String tmp_target_dir = target_dir.substring(to_base.length());
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
         if (tf.isDirectory()) { // Directory Delete
-            if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
-                    !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
-                            SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)
-                    ) {
+            if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                 mf = new File(master_dir);
                 if (mf.exists()) {
                     File[] children = tf.listFiles();
@@ -367,9 +360,7 @@ public class SyncThreadSyncFile {
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
         try {
             if (tf.isDirectory()) { // Directory Delete
-                if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
-                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
-                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     mf = new File(master_dir);
                     if (mf.exists()) {
                         JcifsFile[] children = tf.listFiles();
@@ -2937,9 +2928,7 @@ public class SyncThreadSyncFile {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
             if (tf.isDirectory()) { // Directory Delete
-                if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
-                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
-                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     if (isSmbFileExists(stwa, smb_fl, master_dir)) {
                         JcifsFile[] children = tf.listFiles();
                         if (children != null) {
