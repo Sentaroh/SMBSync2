@@ -1053,7 +1053,7 @@ public final class CommonUtilities {
         return basedir;
     }
 
-    //return file name from path [not used]
+    //return file name from path
     public static String filenameOf(String path) {
         if (path==null || path.equals("")) return "";
 

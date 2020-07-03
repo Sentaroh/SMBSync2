@@ -441,6 +441,8 @@
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error">Please remove the following duplicate filter entries: %s</string>
         <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">Use of asterisk characters in file filters is not supported outside the file name. Please remove any "*" char from the path of the below filters:\n%s </string>
         <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_edit_dlg_error">Use of * char in file filters is allowed only in the file name. Remove the * chars from the path of this filter: %s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_file_option_warning">The filters %s contain hidden files but the option \"Include hidden files\" is disabled. No hidden file will be processed unless you enable it in Advanced Options and save the Sync Task.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_directory_option_warning">The filters %s contain hidden folders but the option \"Include hidden directories\" is disabled. No hidden folder will be processed unless you enable it in Advanced Options and save the Sync Task.</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">ネットワークオプション:</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">ワイヤレスAPオプション:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">SMBフォルダーへのファイル書き込みで一時ファイルを使用せず直接書き込む</string>

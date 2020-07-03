@@ -40,9 +40,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_DIR;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_FILE;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS;
 
 @SuppressWarnings("ALL")
 public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterListItem> {
@@ -52,7 +50,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
 
     private boolean mShowIncludeExclude = true;
 
-    private String mFileFolderFilter = "";
+    private String mFilterType = "";
 
     public NotifyEvent mNotifyIncExcListener = null;
 
@@ -81,7 +79,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
         id = textViewResourceId;
         items = objects;
         mShowIncludeExclude = true;
-        mFileFolderFilter = filter_type;
+        mFilterType = filter_type;
     }
 
     public AdapterFilterList(Context context, int textViewResourceId,
@@ -91,7 +89,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
         id = textViewResourceId;
         items = objects;
         mShowIncludeExclude = show_inc_exc;
-        mFileFolderFilter = "";
+        mFilterType = "";
     }
 
     public FilterListItem getItem(int i) {
@@ -170,15 +168,11 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
                     String whole_dir_filter_v1=SyncTaskUtil.hasWholeDirectoryFilterItemV1(o.getFilter());
                     String whole_dir_filter_v2=SyncTaskUtil.hasWholeDirectoryFilterItemV2(o.getFilter());
                     String wild_card_only_path_parts=SyncTaskUtil.checkFilterInvalidAsteriskOnlyPath(o.getFilter());
-                    String invalid_chars="";
+                    String invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), mFilterType);
                     String file_filter_asterisk_path="";
-                    if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) {
-                        invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
+                    if (mFilterType.equals(SMBSYNC2_PROF_FILTER_FILE)) {
                         file_filter_asterisk_path=SyncTaskUtil.checkFileFilterHasAsteriskInPathToFile(o.getFilter());
-                    } else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) {
-                        invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
-                        //file_filter_asterisk_path="";
-                    }
+                    } //else file_filter_asterisk_path="";
 
                     if (!invalid_chars.equals("") || !wild_card_only_path_parts.equals("")){
                         holder.rb_inc.setEnabled(false);
@@ -191,8 +185,8 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
                         holder.rb_exc.setEnabled(false);
                     } else if (!whole_dir_filter_v2.equals("")) {//only exclude dir filters support whole dir prefix
                         holder.rb_inc.setEnabled(false);
-                        if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) holder.rb_exc.setEnabled(true);
-                        else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) holder.rb_exc.setEnabled(false);
+                        if (mFilterType.equals(SMBSYNC2_PROF_FILTER_DIR)) holder.rb_exc.setEnabled(true);
+                        else if (mFilterType.equals(SMBSYNC2_PROF_FILTER_FILE)) holder.rb_exc.setEnabled(false);
                         else holder.rb_exc.setEnabled(true);//not used
                     } else {
                         holder.rb_inc.setEnabled(true);

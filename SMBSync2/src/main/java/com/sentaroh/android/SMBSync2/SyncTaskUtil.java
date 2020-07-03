@@ -2612,7 +2612,7 @@ public class SyncTaskUtil {
 
                 });
                 editFilter(idx, filterAdapter, fli, fli.getFilter(),
-                        mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_edit_title), ntfy, null);
+                        mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_ap_edit_title), ntfy, null, null);
             }
         });
 
@@ -2811,7 +2811,7 @@ public class SyncTaskUtil {
 
                 });
                 editFilter(idx, filterAdapter, fli, fli.getFilter(),
-                        mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_edit_title), ntfy, null);
+                        mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_edit_title), ntfy, null, null);
             }
         });
 
@@ -2921,7 +2921,7 @@ public class SyncTaskUtil {
 
     }
 
-    public void editFileFilterDlg(final ArrayList<String> file_filter, final NotifyEvent p_ntfy, boolean use_dir_filter_v2) {
+    public void editFileFilterDlg(final SyncTaskItem sti, final NotifyEvent p_ntfy, boolean use_dir_filter_v2) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
         final AdapterFilterList filterAdapter;
 
@@ -2949,9 +2949,9 @@ public class SyncTaskUtil {
         if (use_dir_filter_v2) ll_file_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
         else ll_file_filter_v2_guide.setVisibility(LinearLayout.GONE);
 
-        for (int i = 0; i < file_filter.size(); i++) {
-            String inc = file_filter.get(i).substring(0, 1);
-            String filter = file_filter.get(i).substring(1, file_filter.get(i).length());
+        for (int i = 0; i < sti.getFileFilter().size(); i++) {
+            String inc = sti.getFileFilter().get(i).substring(0, 1);
+            String filter = sti.getFileFilter().get(i).substring(1, sti.getFileFilter().get(i).length());
             AdapterFilterList.FilterListItem fli=new AdapterFilterList.FilterListItem(filter, inc.equals(SMBSYNC2_PROF_FILTER_INCLUDE));
             fli.setUseFilterV2(use_dir_filter_v2);
             filterAdapter.add(fli);
@@ -2970,7 +2970,7 @@ public class SyncTaskUtil {
 
         //on main filters dialog, show warning if invalid filters exist + disable ok button
         //no check for whole dir prefix in file filters: they are always invalid chars not allowed in file filter
-        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE) &&
                 isValidWildcardsFileFilterWithPath(filterAdapter, btn_ok, dlg_msg) &&
                 isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
             //ok
@@ -2980,7 +2980,7 @@ public class SyncTaskUtil {
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE) &&
                         isValidWildcardsFileFilterWithPath(filterAdapter, btn_ok, dlg_msg) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
@@ -2995,7 +2995,7 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE) &&
                         isValidWildcardsFileFilterWithPath(filterAdapter, btn_ok, dlg_msg) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
@@ -3014,7 +3014,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE) &&
                                 isValidWildcardsFileFilterWithPath(filterAdapter, btn_ok, dlg_msg) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                             dlg_msg.setText("");
@@ -3024,11 +3024,11 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context c, Object[] o) {}
 
                 });
-                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
+                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy, sti, SMBSYNC2_PROF_FILTER_FILE);
             }
         });
 
-        //main file filters dialog: add file filters button, enable/disable bottom include/exclude buttons
+        //main file filters dialog: On typing filter text enable/disable Add and bottom include/exclude buttons
         CommonDialog.setViewEnabled(mActivity, addBtn, false);
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
@@ -3054,7 +3054,7 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, addBtn, false);
 
                     //recheck existing filters before enabling Ok button and clearing warning dialog msg
-                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS) &&
+                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_FILE) &&
                             isValidWildcardsFileFilterWithPath(filterAdapter, btn_ok, dlg_msg) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg)) {
                         dlg_msg.setText("");
                         CommonDialog.setViewEnabled(mActivity, btn_ok, true);
@@ -3078,7 +3078,7 @@ public class SyncTaskUtil {
                 String entered_filter=et_filter.getText().toString().trim();
 
                 //check filter for invalid chars before add
-                String invalid_char= checkFilterInvalidCharacter(entered_filter, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
+                String invalid_char= checkFilterInvalidCharacter(entered_filter, SMBSYNC2_PROF_FILTER_FILE);
                 if (!invalid_char.equals("")) {
                     String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
                     dlg_msg.setText(String.format(mtxt, invalid_char));
@@ -3103,6 +3103,9 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, addBtn, false);
                     return;
                 }
+
+                //display a warning if file filter has hidden files while the sync hidden files option is not enabled
+                checkFilterHiddenOptionWarning(sti, SMBSYNC2_PROF_FILTER_FILE, entered_filter);
 
                 //add the new valid filter
                 String new_filter = sortFilterSplitedItem(entered_filter);
@@ -3133,16 +3136,16 @@ public class SyncTaskUtil {
         btn_ok.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
-                file_filter.clear();
+                sti.getFileFilter().clear();
                 if (filterAdapter.getCount() > 0) {
                     for (int i = 0; i < filterAdapter.getCount(); i++) {
                         String inc = SMBSYNC2_PROF_FILTER_EXCLUDE;
                         if (filterAdapter.getItem(i).isInclude())
                             inc = SMBSYNC2_PROF_FILTER_INCLUDE;
-                        file_filter.add(inc + filterAdapter.getItem(i).getFilter());
+                        sti.getFileFilter().add(inc + filterAdapter.getItem(i).getFilter());
                     }
                 }
-                p_ntfy.notifyToListener(true, null);
+                p_ntfy.notifyToListener(true, new Object[]{sti.getFileFilter()});
             }
         });
         dialog.show();
@@ -3201,7 +3204,7 @@ public class SyncTaskUtil {
         lv.setScrollbarFadingEnabled(false);
 
         //when entering main dir filters dialog, check existing filters for errors and display warning dialog and enable/disable ok buton in main filter list view
-        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) &&
+        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR) &&
                 isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
                 isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) &&
                 isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
@@ -3212,7 +3215,7 @@ public class SyncTaskUtil {
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
                         isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
@@ -3227,7 +3230,7 @@ public class SyncTaskUtil {
         ntfy_delete.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
                         isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
@@ -3246,7 +3249,7 @@ public class SyncTaskUtil {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
                                 isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                             dlg_msg.setText("");
@@ -3256,7 +3259,7 @@ public class SyncTaskUtil {
                     public void negativeResponse(Context c, Object[] o) {
                     }
                 });
-                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
+                editFilter(idx, filterAdapter, fli, fli.getFilter(), "", ntfy, sti, SMBSYNC2_PROF_FILTER_DIR);
             }
         });
 
@@ -3320,7 +3323,7 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, add_exclude_btn, true);
 
                     //recheck existing filters before enabling Ok Button and clearing warning dialog msg
-                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                    if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
                             isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
                         dlg_msg.setText("");
                         CommonDialog.setViewEnabled(mActivity, btn_ok, true);
@@ -3344,7 +3347,7 @@ public class SyncTaskUtil {
                 String entered_filter=et_filter.getText().toString().trim();
 
                 //check filter for invalid chars before add
-                String invalid_char= checkFilterInvalidCharacter(entered_filter, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
+                String invalid_char= checkFilterInvalidCharacter(entered_filter, SMBSYNC2_PROF_FILTER_DIR);
                 if (!invalid_char.equals("")) {
                     String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
                     dlg_msg.setText(String.format(mtxt, invalid_char));
@@ -3364,6 +3367,9 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, add_exclude_btn, false);
                     return;
                 }
+
+                //display a warning if file filter has hidden files while the sync hidden files option is not enabled
+                checkFilterHiddenOptionWarning(sti, SMBSYNC2_PROF_FILTER_DIR, entered_filter);
 
                 //add the new valid filter
                 String new_filter = sortFilterSplitedItem(entered_filter);
@@ -3385,7 +3391,7 @@ public class SyncTaskUtil {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
                         //recheck existing filters before enabling Ok Button and clearing warning dialog msg
-                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
+                        if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR) && isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
                                 isValidWholeDirectoryFilterV1(filterAdapter, btn_ok, dlg_msg) && isValidWholeDirectoryFilterV2(filterAdapter, btn_ok, dlg_msg)) {
                             dlg_msg.setText("");
                             CommonDialog.setViewEnabled(mActivity, btn_ok, true);
@@ -3443,7 +3449,7 @@ public class SyncTaskUtil {
     //edit existing filters dialog
     private void editFilter(final int edit_idx, final AdapterFilterList fa,
                             final AdapterFilterList.FilterListItem fli, final String filter, String title_text, final NotifyEvent p_ntfy,
-                            final String[] invalid_char) {
+                            final SyncTaskItem sti, final String filter_type) {
 
         // カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
@@ -3541,38 +3547,43 @@ public class SyncTaskUtil {
             public void onClick(View v) {
                 String new_filter=et_filter.getText().toString().trim();
 
-                //check filter for invalid chars before add
-                String has_invalid_char= checkFilterInvalidCharacter(new_filter, invalid_char);
-                if (!has_invalid_char.equals("")) {
-                    String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
-                    dlg_msg.setText(String.format(mtxt, has_invalid_char));
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                    return;
-                }
-
-                //check filter for wildcard only paths (* and *.* only path)
-                String wild_card_only_path_parts=checkFilterInvalidAsteriskOnlyPath(new_filter);
-                if (!wild_card_only_path_parts.equals("")) {
-                    String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
-                    dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                    return;
-                }
-
-                //file filters support use of * char only in the file name, but not in the path to file:
-                //we will add the filter and error message will show by editFileFilterDlg() after it is added
-
-                //check if added filter is v2 but has invalid whole dir prefix v1
-                //case it is a file filter: whole dir prefix is an invalid char and will be detected by editFileFilterDlg() after filter is added
-                if (fli.isUseFilterV2()) {
-                    String error_filter=hasWholeDirectoryFilterItemV1(new_filter);
-                    if (!error_filter.equals("")) {
-                        String suggest_filter = error_filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2);
-                        String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
-                        dlg_msg.setText(String.format(mtxt, error_filter, WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2, suggest_filter));
+                if (filter_type != null && (filter_type.equals(SMBSYNC2_PROF_FILTER_DIR) || filter_type.equals(SMBSYNC2_PROF_FILTER_FILE))) {
+                    //check filter for invalid chars before add
+                    String has_invalid_char= checkFilterInvalidCharacter(new_filter, filter_type);
+                    if (!has_invalid_char.equals("")) {
+                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character);
+                        dlg_msg.setText(String.format(mtxt, has_invalid_char));
                         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
+
+                    //check filter for wildcard only paths (* and *.* only path)
+                    String wild_card_only_path_parts=checkFilterInvalidAsteriskOnlyPath(new_filter);
+                    if (!wild_card_only_path_parts.equals("")) {
+                        String mtxt=mContext.getString(R.string.msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts);
+                        dlg_msg.setText(String.format(mtxt, wild_card_only_path_parts));
+                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        return;
+                    }
+
+                    //file filters support use of * char only in the file name, but not in the path to file:
+                    //we will add the filter and error message will show by editFileFilterDlg() after it is added
+
+                    //check if added filter is v2 but has invalid whole dir prefix v1
+                    //case it is a file filter: whole dir prefix is an invalid char and will be detected by editFileFilterDlg() after filter is added
+                    if (fli.isUseFilterV2()) {
+                        String error_filter=hasWholeDirectoryFilterItemV1(new_filter);
+                        if (!error_filter.equals("")) {
+                            String suggest_filter = error_filter.replace(WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2);
+                            String mtxt = mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error);
+                            dlg_msg.setText(String.format(mtxt, error_filter, WHOLE_DIRECTORY_FILTER_PREFIX_V1, WHOLE_DIRECTORY_FILTER_PREFIX_V2, suggest_filter));
+                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            return;
+                        }
+                    }
+
+                    //display a warning if filter has hidden files/dirs while the sync hidden files/dirs option is not enabled
+                    checkFilterHiddenOptionWarning(sti, filter_type, new_filter);
                 }
 
                 //set the new edited filter value
@@ -3606,9 +3617,14 @@ public class SyncTaskUtil {
         return new_filter_value;
     }
 
-    public static String checkFilterInvalidCharacter(String filter, String[] invalid_char_list) {
+    public static String checkFilterInvalidCharacter(String filter, String filter_type) {
         String invalid_char_seq="";
-        if (filter==null || invalid_char_list==null) return invalid_char_seq;
+        if (filter==null || filter_type==null) return invalid_char_seq;
+
+        String[] invalid_char_list;
+        if (filter_type.equals(SMBSYNC2_PROF_FILTER_FILE)) invalid_char_list=SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS;
+        else if (filter_type.equals(SMBSYNC2_PROF_FILTER_DIR)) invalid_char_list=SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS;
+        else return invalid_char_seq;
 
         //do not allow filters with only ";", "." or "?" chars
         String tmp_filter=filter.replaceAll(Pattern.quote("/"), "");
@@ -3697,8 +3713,15 @@ public class SyncTaskUtil {
     }
 
     //check if adapter filter list has invalid chars or generic asterisk only path (* and *.* only filter)
-    private boolean hasInvalidCharsAndWildcardsFilterList(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg, String[] invalid_char_list) {
+    private boolean hasInvalidCharsAndWildcardsFilterList(AdapterFilterList filter_adapter, Button ok_btn, TextView dlg_msg, String filter_type) {
         boolean has_invalid_chars=false;
+        if (filter_type==null) return has_invalid_chars;
+
+        String[] invalid_char_list;
+        if (filter_type.equals(SMBSYNC2_PROF_FILTER_FILE)) invalid_char_list=SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS;
+        else if (filter_type.equals(SMBSYNC2_PROF_FILTER_DIR)) invalid_char_list=SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS;
+        else return has_invalid_chars;
+
         String error_msg="";
         String error_filter="";
         String invalid_char_seq="";
@@ -3706,7 +3729,7 @@ public class SyncTaskUtil {
             AdapterFilterList.FilterListItem fli=filter_adapter.getItem(i);
             if (!fli.isDeleted() && fli.isUseFilterV2()) {
                 error_filter=fli.getFilter();
-                invalid_char_seq=checkFilterInvalidCharacter(error_filter, invalid_char_list);
+                invalid_char_seq=checkFilterInvalidCharacter(error_filter, filter_type);
                 if (!invalid_char_seq.equals("")) {
                     has_invalid_chars=true;
                     error_msg=mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error, error_filter, invalid_char_seq);
@@ -3925,6 +3948,49 @@ public class SyncTaskUtil {
             }
         }
         return changed_filter;
+    }
+
+    //when adding exclude/include filter with hidden file/folder, display a Warning dialog if the corresponding Sync Hidden Files/Dirs option is not enabled
+    private void checkFilterHiddenOptionWarning(SyncTaskItem sti, String filter_type, String filter) {
+        String hidden_filters="";
+        String hf_sep="";
+        String f_flt_with_hidden_path="";//file filter with hidden dir path like dir1/.dir2/file.txt
+        String fflt_sep="";
+        String[] filter_item_array=filter.split(";");
+        for(String filter_item : filter_item_array) {
+            if (filter_type.equals(SMBSYNC2_PROF_FILTER_FILE)) {
+                if (CommonUtilities.filenameOf(filter_item).startsWith(".")) {
+                    hidden_filters+=hf_sep+filter_item;
+                    hf_sep="; ";
+                }
+                String[] path_array = CommonUtilities.basedirOf(filter_item).split("/");
+                for(String path_part : path_array) {
+                    if (path_part.startsWith(".")) {
+                        f_flt_with_hidden_path+=fflt_sep+filter_item;
+                        fflt_sep="; ";
+                        break;
+                    }
+                }
+            } else if (filter_type.equals(SMBSYNC2_PROF_FILTER_DIR)) {
+                String[] path_array = filter_item.split("/");
+                for(String path_part : path_array) {
+                    if (path_part.startsWith(".")) {
+                        hidden_filters+=hf_sep+filter_item;
+                        hf_sep="; ";
+                    }
+                }
+            }
+        }
+
+        if (filter_type.equals(SMBSYNC2_PROF_FILTER_FILE)) {
+            if (!hidden_filters.equals("") && !sti.isSyncOptionSyncHiddenFile())
+                mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_file_option_warning, hidden_filters), "", null);
+            if (!f_flt_with_hidden_path.equals("") && !sti.isSyncOptionSyncHiddenDirectory())//file filter contains hidden dir path like dir1/.dir2/file.txt
+                mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_directory_option_warning, f_flt_with_hidden_path), "", null);
+        } else if (filter_type.equals(SMBSYNC2_PROF_FILTER_DIR)) {
+            if (!hidden_filters.equals("") && !sti.isSyncOptionSyncHiddenDirectory())
+                mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_directory_option_warning, hidden_filters), "", null);
+        }
     }
 
     static public SyncTaskItem getSyncTaskByName(ArrayList<SyncTaskItem> t_prof, String task_name) {

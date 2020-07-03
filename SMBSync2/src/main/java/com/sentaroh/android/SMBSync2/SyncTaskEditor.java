@@ -97,8 +97,8 @@ import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
 import static com.sentaroh.android.SMBSync2.Constants.ARCHIVE_FILE_TYPE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_DECRYPT_FAILED;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_ENCRYPT_FAILED;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_DIR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_FILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_INCLUDE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR;
@@ -2891,7 +2891,7 @@ public class SyncTaskEditor extends DialogFragment {
             }
 
         });
-        mTaskUtil.editFileFilterDlg(n_sti.getFileFilter(), ntfy, use_dir_filter_v2);
+        mTaskUtil.editFileFilterDlg(n_sti, ntfy, use_dir_filter_v2);
 
     }
 
@@ -5108,7 +5108,7 @@ public class SyncTaskEditor extends DialogFragment {
                 for(String item:n_sti.getDirFilter()) {
                     //String filter_inc_exc=item.substring(0,1);
                     String filter_entry=item.substring(1);
-                    String is_invalid_char= mTaskUtil.checkFilterInvalidCharacter(filter_entry, SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
+                    String is_invalid_char= mTaskUtil.checkFilterInvalidCharacter(filter_entry, SMBSYNC2_PROF_FILTER_DIR);
                     if (!is_invalid_char.equals("")) {
                         error_filter+=sep + "[" + filter_entry + "]";
                         invalid_chars+=is_invalid_char + ", ";
@@ -5127,7 +5127,7 @@ public class SyncTaskEditor extends DialogFragment {
                 for(String item:n_sti.getFileFilter()) {
                     //String filter_inc_exc=item.substring(0,1);
                     String filter_entry=item.substring(1);
-                    String is_invalid_char= mTaskUtil.checkFilterInvalidCharacter(filter_entry, SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
+                    String is_invalid_char= mTaskUtil.checkFilterInvalidCharacter(filter_entry, SMBSYNC2_PROF_FILTER_FILE);
                     if (!is_invalid_char.equals("")) {
                         error_filter+= sep+ "["+ filter_entry+ "]";
                         invalid_chars+= is_invalid_char+ ", ";

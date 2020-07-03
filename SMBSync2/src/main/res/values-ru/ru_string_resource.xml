@@ -441,6 +441,8 @@
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error">Удалить дубликаты из следующих фильтров: %s</string>
         <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">Использование символа * в фильтрах файлов возможно только в имени файла. Удалите все символы "*" из пути к файлу в следующих фильтрах:\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_edit_dlg_error">Символ * не допускается за пределами имени файла для следующих файловых фильтров: %s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_file_option_warning">Фильтры %s обозначают скрытые файлы, но опция \"Включить скрытые файлы\" отключена. Скрытые файлы не будут скопированы, если этот параметр не активирован, а задача синхронизации сохранена ранее.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_directory_option_warning">Фильтры %s обозначают скрытые папки, но опция \"Включить скрытые папки\" отключена. Скрытые папки не будут скопированы, если эта опция не активирована и задача синхронизации сохранена ранее.</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Сетевые настройки</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Опции Wifi AP:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Запись файлов непосредственно в папку SMB без использования временных файлов</string>
