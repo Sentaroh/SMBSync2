@@ -465,9 +465,9 @@ public class SyncThreadSyncFile {
         String tmp_target_dir = target_dir.replace(to_base, "");
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
         if (tf.isDirectory()) { // Directory Delete
-            mf = new File(master_dir);
-            if (mf.exists()) {
-                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+            if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                mf = new File(master_dir);
+                if (mf.exists()) {
                     File[] children = tf.listFiles();
                     if (children != null) {
                         for (File element : children) {
@@ -490,14 +490,14 @@ public class SyncThreadSyncFile {
                         stwa.util.addLogMsg("W", "File/Directory was not found, fp=" + tf.getPath());
 //                      sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
                     }
-                }
-            } else {
-                if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, target_dir)) {
-                    SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
                 } else {
-                    stwa.totalIgnoreCount++;
-                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                            "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, target_dir)) {
+                        SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
+                    } else {
+                        stwa.totalIgnoreCount++;
+                        SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
+                                "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                    }
                 }
             }
         } else { // file Delete
