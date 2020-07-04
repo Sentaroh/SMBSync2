@@ -3724,11 +3724,6 @@ public class SyncTaskUtil {
         boolean has_invalid_chars=false;
         if (filter_type==null) return has_invalid_chars;
 
-        String[] invalid_char_list;
-        if (filter_type.equals(SMBSYNC2_PROF_FILTER_FILE)) invalid_char_list=SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS;
-        else if (filter_type.equals(SMBSYNC2_PROF_FILTER_DIR)) invalid_char_list=SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS;
-        else return has_invalid_chars;
-
         String error_msg="";
         String error_filter="";
         String invalid_char_seq="";
@@ -3984,6 +3979,7 @@ public class SyncTaskUtil {
                     if (path_part.startsWith(".")) {
                         hidden_filters+=hf_sep+filter_item;
                         hf_sep="; ";
+                        break;
                     }
                 }
             }
