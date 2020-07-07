@@ -936,9 +936,12 @@ public class SyncThread extends Thread {
         return result;
     }
 
+    static private long tt_matcher_time_tot=0;
     private int performSync(SyncTaskItem sti) {
         int sync_result = 0;
         long time_millis = System.currentTimeMillis();
+        tt_matcher_time_tot=0;
+		mStwa.util.addDebugMsg(2, "I", "Total_matcher_time_INIT=" + tt_matcher_time_tot);
         String from, to, to_temp;
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
@@ -1313,6 +1316,7 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadArchiveFile.syncArchiveSmbToSmb(mStwa, sti, from, to);
             }
         }
+        mStwa.util.addDebugMsg(2, "I", "Total_matcher_time (sec)=" + tt_matcher_time_tot);
         return sync_result;
     }
 
@@ -2880,7 +2884,7 @@ public class SyncThread extends Thread {
     static final private boolean isDirectorySelectedByDirectoryNameVer2(SyncThreadWorkArea stwa, String f_dir) {
         boolean result = false, inc=false, exc=false;
         Matcher mt;
-
+		long tt_matcher_time=System.currentTimeMillis();
         String t_dir = f_dir;
         String filtered_dir = "";
         if (f_dir.startsWith("/")) t_dir = f_dir.substring(1);
@@ -3056,6 +3060,8 @@ public class SyncThread extends Thread {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "isDirectorySelectedByDirectoryNameVer2 result:" + result);
 
+		tt_matcher_time_tot+=System.currentTimeMillis() - tt_matcher_time;
+        stwa.util.addDebugMsg(2, "I", "tt_matcher_time=" + tt_matcher_time + " tt_matcher_time_tot=" + tt_matcher_time_tot);
         return result;
     }
 
@@ -3170,6 +3176,7 @@ public class SyncThread extends Thread {
     //check if abs_dir directory must be processed based on the folder compiled filter, exclude rule wins
     //if a directory is exluded, sync task will not re-check its subdirs against the compiled filter
     static final public boolean isDirectoryToBeProcessedVer2(SyncThreadWorkArea stwa, String abs_dir) {
+        long tt_matcher_time = System.currentTimeMillis();
         boolean inc = false, exc = false, result = false;
 
         String filtered_dir = "";
@@ -3360,6 +3367,8 @@ public class SyncThread extends Thread {
         if (stwa.gp.settingDebugLevel >= 2)
             stwa.util.addDebugMsg(2, "I", "isDirectoryToBeProcessedVer2 include=" + inc + ", exclude=" + exc + ", result=" + result + ", dir=" + abs_dir);
 
+		tt_matcher_time_tot+=System.currentTimeMillis() - tt_matcher_time;
+        stwa.util.addDebugMsg(2, "I", "tt_matcher_time=" + tt_matcher_time + " tt_matcher_time_tot=" + tt_matcher_time_tot);
         return result;
     }
 
