@@ -109,9 +109,7 @@
         <string name="msgs_filter_list_dlg_filter_added">Фильтр %s был добавлен.</string>
         <string name="msgs_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_filter_list_dlg_not_specified">Не определен</string>
-        <string name="msgs_filter_list_duplicate_filter_specified">%s уже существует.</string>
-        <string name="msgs_filter_list_invalid_filter_specified_wildcard_only_disallowed">Фильтры только для дикой природы не могут быть использованы. Пожалуйста, укажите это как \"NAME*\".</string>
-        <string name="msgs_filter_list_invalid_filter_specified_redundant_wildcard">Символ подстановки (\"*\") указывается последовательно. Пожалуйста, удалите любые дубликаты подстановочных знаков. Пример: \"**\"->\"*\".</string>
+        <string name="msgs_filter_list_duplicate_filter_specified">Следующие фильтры уже существуют: %s</string>
         <string name="msgs_filter_list_filter_deleted">Эта запись была удалена.</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
@@ -168,7 +166,7 @@
         <string name="msgs_main_external_usb_select_retry_select_msg">Корневой каталог USB-носителя не был выбран. Хотите его выбрать?</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARD была выбрана. Хотите повторно выбрать USB-накопитель?</string>
         <string name="msgs_main_permission_coarse_location_denied_msg">Если в задаче синхронизации указать «подключиться к SSID» или «Список точек доступа» до тех пор, пока не будет предоставлено разрешение, будет прекращено с ошибкой. Чтобы предоставить разрешение, запустите «Разрешение на неточное расположение» из меню.</string>
-        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 привилегии, необходимые для чтения SSID WiFi. \nЕсли вы укажете \ "Список точек доступа \" в задаче синхронизации, пока не будет предоставлено разрешение, завершится с ошибкой. \nВы хотите запросить разрешение на неточное местоопределение?</string>
+        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 привилегии, необходимые для чтения SSID WiFi. \nЕсли вы укажете \"Список точек доступа\" в задаче синхронизации, пока не будет предоставлено разрешение, завершится с ошибкой. \nВы хотите запросить разрешение на неточное местоопределение?</string>
         <string name="msgs_main_permission_coarse_location_title">Разрешение на неточное местоположение</string>
         <string name="msgs_main_permission_external_storage_denied_msg">Невозможно запустить приложение, так как вам не было предоставлено разрешение на доступ к внутренней памяти.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Предоставьте разрешение на доступ к внутреннему хранилищу для чтения и записи данных, которые синхронизированы с внутренним хранилищем и для административных данных.</string>
@@ -382,13 +380,14 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Удалить</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Список каталога</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Исключить</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: path/to/folder;/fo*der/p?th*\n- exclude exp: path/to/folder;*/p?th/to/*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- отфильтровать все файлы с именами: file1;*.txt;*.jpg;file*.\n- фильтры можно также вводить в той же строке, разделенной \"; \"; \n- фильтры можно также вводить в той же строке, разделенной \"; \".\n - исключить выигрыши фильтров</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Фильтр файла</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Включать</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Не определенный</string>
-        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">The filter contains an invalid character. Char=%s</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">Фильтр содержит недопустимые символы: %s</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts">The filter path cannot consist of only \"%s\" generic wildcards.</string>
         <string name="msgs_profile_sync_task_filter_title">Фильтры файла:</string>
         <string name="msgs_profile_sync_task_sync_direction_two_way">Используйте двунаправленную синхронизацию</string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Включить следующие фильтры:</string>
@@ -430,14 +429,20 @@
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Использовать расширенный фильтр выбора каталогов</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new filter version 2</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Изменение фильтра каталогов может привести к неожиданному удалению или перезаписи файлов, что может изменить синхронизированные файлы. Настоятельно рекомендуется запустить его в тестовом режиме для проверки или создать тестовую папку для проверки результатов синхронизации.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_error">Фильтр включенной папки должен иметь в качестве корневого пути Master. Или измените фильтры на \ "Exlude\", или удалите ведущие символы \ "*/\" из нижеперечисленных фильтров:\n%s".</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_edit_dlg_error">Включить фильтр каталогов %s должен иметь Master в качестве корневого пути. Либо измените фильтр на \ "Исключить \", либо удалите первые символы \ "* / \".</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_file_filter_error">Файловые фильтры, имеющие путь, должны быть относительно Ведущего. Удалите любой ведущий \"*/\" из нижеперечисленных фильтров:\n%s.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_match_anywhere_in_path_file_filter_edit_dlg_error">Файловый фильтр %s должен иметь путь относительно Ведущего. Удалите ведущие символы \"*/\" из фильтра.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Префикс полного каталога \"\\\\\" больше не действует. Замените его символом \"*/\" в нижеследующих фильтрах:\n%s.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Фильтр %s имеет старый префикс всей директории \"\\\\\". Заменить на \"*/\" символом (exp. %s).</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error">Фильтр включенной папки должен иметь в качестве корневого пути Master. Или измените фильтры на \"Exlude\", или удалите ведущие символы \"%s\" из нижеперечисленных фильтров:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error">Включить фильтр каталогов %s должен иметь Master в качестве корневого пути. Либо измените фильтр на \"Исключить\", либо удалите первые символы \"%s\".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Префикс полного каталога \"%s\" больше не действует. Замените его символом \"%s\" в нижеследующих фильтрах:\n%s.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Фильтр %s имеет старый префикс всей директории \"%s\". Заменить на \"%s\" символом (exp. %s).</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error">Недействительные символы (%s) присутствуют и должны быть удалены из следующих фильтров:\n%s.</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error">Фильтр %s имеет недопустимый символ (%s), который должен быть удален.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error">Фильтры ниже содержат только подстановочный знак \"%s\". Пожалуйста, исправьте затронутые фильтры:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error">Фильтр %s содержит путь только с общими знаками. Удалите недопустимые символы\"%s\".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_error">Удалить дубликаты из следующих фильтров: %s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error">Удалить дубликаты из следующих фильтров: %s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">Использование символа * в фильтрах файлов возможно только в имени файла. Удалите все символы "*" из пути к файлу в следующих фильтрах:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_edit_dlg_error">Символ * не допускается за пределами имени файла для следующих файловых фильтров: %s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_file_option_warning">Фильтры %s обозначают скрытые файлы, но опция \"Включить скрытые файлы\" отключена. Скрытые файлы не будут скопированы, если этот параметр не активирован, а задача синхронизации сохранена ранее.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_directory_option_warning">Фильтры %s обозначают скрытые папки, но опция \"Включить скрытые папки\" отключена. Скрытые папки не будут скопированы, если эта опция не активирована и задача синхронизации сохранена ранее.</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Сетевые настройки</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Опции Wifi AP:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Запись файлов непосредственно в папку SMB без использования временных файлов</string>
@@ -468,7 +473,7 @@
         <string name="msgs_smbsync_main_private_key_corrupted_title">Внутренняя ошибка ключа шифрования</string>
         <string name="msgs_smbsync_main_private_key_corrupted_msg">Невозможно сохранить список задач синхронизации, поскольку внутренний ключ шифрования недействителен. \n Создать внутренний ключ шифрования?</string>
         <string name="msgs_smbsync_main_no_external_storage">Внешнее хранилище не было установлено. Некоторые функции недоступны.</string>
-        <string name="msgs_smbsync_main_restart_by_destroyed">Приложение было перезапущено после KillProcess. Чтобы отключить перезапуск, включите \ "Не сохранять действия \" в Настройках> Параметры разработчика.</string>
+        <string name="msgs_smbsync_main_restart_by_destroyed">Приложение было перезапущено после KillProcess. Чтобы отключить перезапуск, включите \"Не сохранять действия \" в Настройках> Параметры разработчика.</string>
         <string name="msgs_smbsync_main_restart_by_killed">Приложение было перезапущено, потому что оно было отключено при перемещении в фоновый режим.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Параметры SMBv1 были изменены. Это изменение не вступит в силу, пока приложение не будет перезапущено. Выход из этого приложения сейчас?</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart">После изменения темы или языка необходимо перезапустить приложение. Нажмите \"Начни заново\", чтобы перезагрузить систему. Если вы хотите перезапустить его позже, нажмите \"Потом\".</string>
@@ -510,14 +515,14 @@
         <string name="msgs_menu_show_battery_optimization_screen">Показать экран оптимизации батареи</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Архив отменен]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">Время и дата изображения не могут быть получены из данных EXIF. Вместо этого использовать время и дату обновления файла? (Отключите параметр архивации \ "Подтвердить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">Время и дата изображения не могут быть получены из данных EXIF. Вместо этого использовать время и дату обновления файла? (Отключите параметр архивации \"Подтвердить\" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[Копия отменена]</string>
-        <string name="msgs_mirror_confirm_copy_confirm">Подтвердить перезапись файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_copy_confirm">Подтвердить перезапись файла \n %s \n (отключите опцию \"Подтвердить перед перезаписью / удалить\" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[удаление отменено]</string>
-        <string name="msgs_mirror_confirm_delete_dir_confirm">Подтвердите удаление каталога \n %s \n (отключите параметр \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
-        <string name="msgs_mirror_confirm_delete_file_confirm">Подтвердите удаление файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_delete_dir_confirm">Подтвердите удаление каталога \n %s \n (отключите параметр \"Подтвердить перед перезаписью / удалить\" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_delete_file_confirm">Подтвердите удаление файла \n %s \n (отключите опцию \"Подтвердить перед перезаписью / удалить\" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_move_cancel">[Движение отменено]</string>
-        <string name="msgs_mirror_confirm_move_confirm">Подтвердить перемещение файла \n %s \n (отключите опцию \ "Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_move_confirm">Подтвердить перемещение файла \n %s \n (отключите опцию \"Подтвердить перед перезаписью / удалить\" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_no_btn">Нет</string>
         <string name="msgs_mirror_confirm_noall_btn">Нет для всех</string>
         <string name="msgs_mirror_confirm_please_check_confirm_msg_archive">Нажмите здесь, чтобы подтвердить архивирование файла.</string>
@@ -536,11 +541,11 @@
         <string name="msgs_mirror_external_sdcard_not_mounted">Синхронизация отменена, поскольку SDCARD не смонтирован.</string>
         <string name="msgs_mirror_external_sdcard_select_required">Синхронизация отменена, поскольку разрешение на запись SDCARD не предоставлено.</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">Кажется, что содержимое SDCARD не отражается в хранилище мультимедиа. Выполните сканирование носителя для обновления содержимого SDCARD.</string>
-        <string name="msgs_mirror_file_set_last_modified_failed">setLastModified () не удалось. Включите \ "Не устанавливайте время обновления целевого файла в соответствии с исходным файлом \" для задачи синхронизации.</string>
+        <string name="msgs_mirror_file_set_last_modified_failed">setLastModified () не удалось. Включите \"Не устанавливайте время обновления целевого файла в соответствии с исходным файлом\" для задачи синхронизации.</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">Копирование файла ZIP в целевой файл ...%s%% завершено.</string>
         <string name="msgs_mirror_file_zip_copy_to_work">Копирование файла ZIP в рабочий файл ...%s%% завершено.</string>
-        <string name="msgs_mirror_ignore_override_copy_file">Копирование файла игнорируется, поскольку для этой задачи отключена опция \ "Перезаписать файл (ы) назначения \".</string>
-        <string name="msgs_mirror_ignore_override_move_file">Перемещение файла игнорируется, поскольку для этой задачи отключена опция \ "Перезаписать файл (ы) назначения \".</string>
+        <string name="msgs_mirror_ignore_override_copy_file">Копирование файла игнорируется, поскольку для этой задачи отключена опция \"Перезаписать файл (ы) назначения\".</string>
+        <string name="msgs_mirror_ignore_override_move_file">Перемещение файла игнорируется, поскольку для этой задачи отключена опция \"Перезаписать файл (ы) назначения\".</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">Исходный файл или имя каталога содержит символы, которые недопустимы для места назначения. Измените имя, чтобы разрешить синхронизацию. Персонаж=%s</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_skipped" formatted="false">Файл или каталог исключены из процесса синхронизации, поскольку имя источника содержит символы, недопустимые для места назначения. Персонаж=%s</string>
         <string name="msgs_mirror_remote_addr_not_connected">Невозможно подключиться к адресу хоста SMB %s</string>
@@ -832,11 +837,11 @@
         <string name="settings_security_application_password_desc_remove">Удалить пароль приложения</string>
         <string name="settings_security_application_password_confirm_remove">Вы хотите удалить пароль приложения?</string>
         <string name="settings_security_application_password_protect_title">Элементы для защиты</string>
-        <string name="settings_security_application_password_use_app_startup_title">Выполните аутентификацию по паролю приложения, когда \ "Запустите приложение \"</string>
+        <string name="settings_security_application_password_use_app_startup_title">Выполните аутентификацию по паролю приложения, когда \"Запустите приложение\"</string>
         <string name="settings_security_application_password_use_app_startup">settings_security_application_password_use_app_startup</string>
-        <string name="settings_security_application_password_use_edit_task_title">Выполните проверку подлинности пароля приложения, когда \ "Задача Erdit \"</string>
+        <string name="settings_security_application_password_use_edit_task_title">Выполните проверку подлинности пароля приложения, когда \"Задача Edit\"</string>
         <string name="settings_security_application_password_use_edit_task">settings_security_application_password_use_edit_task</string>
-        <string name="settings_security_application_password_use_export_task_title">Выполните проверку подлинности пароля приложения, когда \ "Экспорт списка задач \"</string>
+        <string name="settings_security_application_password_use_export_task_title">Выполните проверку подлинности пароля приложения, когда \"Экспорт списка задач\"</string>
         <string name="settings_security_application_password_use_export_task">settings_security_application_password_use_export_task</string>
         <string name="settings_security_init_smb_account_password_title">Скрыть сохраненную учетную запись и пароль при редактировании папки SMB</string>
         <string name="settings_security_init_smb_account_password">settings_security_init_smb_account_password</string>

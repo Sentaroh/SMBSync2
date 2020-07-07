@@ -1501,7 +1501,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.progressSpinCancel.setText(getString(R.string.msgs_progress_spin_dlg_housekeep_cancel));
         mGp.progressSpinCancel.setEnabled(true);
         // CANCELボタンの指定
-        mGp.progressSpinCancelListener = new View.OnClickListener() {
+        mGp.progressSpinCancelListener = new OnClickListener() {
             public void onClick(View v) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
@@ -1954,7 +1954,7 @@ public class ActivityMain extends AppCompatActivity {
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
         // OKボタンの指定
-        btnOk.setOnClickListener(new View.OnClickListener() {
+        btnOk.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
             }
@@ -2115,7 +2115,7 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", "Invoke log file browser.");
         LogUtil.flushLog(mContext, mGp);
         if (mGp.settingLogOption) {
-            Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             try {
@@ -2654,7 +2654,7 @@ public class ActivityMain extends AppCompatActivity {
                             if (item.sync_result_file_path!=null && !item.sync_result_file_path.equals("")) {
                                 File lf=new File(item.sync_result_file_path);
                                 if (lf.exists()) {
-                                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
                                     if (Build.VERSION.SDK_INT>=24) {
                                         Uri uri=FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(item.sync_result_file_path));
                                         intent.setDataAndType(uri, "text/plain");
@@ -2857,7 +2857,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void setScheduleContextButtonListener() {
         NotifyEvent ntfy_cb = new NotifyEvent(mContext);
-        ntfy_cb.setListener(new NotifyEvent.NotifyEventListener() {
+        ntfy_cb.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
 //                setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
@@ -2870,7 +2870,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncTabScheduleAdapter.setCbNotify(ntfy_cb);
 
         NotifyEvent ntfy_sw = new NotifyEvent(mContext);
-        ntfy_sw.setListener(new NotifyEvent.NotifyEventListener() {
+        ntfy_sw.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
                 int pos=(int)objects[0];
@@ -2886,11 +2886,11 @@ public class ActivityMain extends AppCompatActivity {
         });
         mGp.syncTabScheduleAdapter.setSwNotify(ntfy_sw);
 
-        mContextScheduleButtonAdd.setOnClickListener(new View.OnClickListener() {
+        mContextScheduleButtonAdd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         ScheduleItem si = (ScheduleItem) objects[0];
@@ -2912,11 +2912,11 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonAdd, mContext.getString(R.string.msgs_schedule_cont_label_add));
 
-        mContextScheduleButtonDelete.setOnClickListener(new View.OnClickListener() {
+        mContextScheduleButtonDelete.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         for (int i = mGp.syncTabScheduleAdapter.getCount() - 1; i >= 0; i--) {
@@ -2951,11 +2951,11 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonDelete, mContext.getString(R.string.msgs_schedule_cont_label_delete));
 
-        mContextScheduleButtonActivate.setOnClickListener(new View.OnClickListener() {
+        mContextScheduleButtonActivate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         for (int i = mGp.syncTabScheduleAdapter.getCount() - 1; i >= 0; i--) {
@@ -2988,11 +2988,11 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonActivate, mContext.getString(R.string.msgs_schedule_cont_label_activate));
 
-        mContextScheduleButtonInactivate.setOnClickListener(new View.OnClickListener() {
+        mContextScheduleButtonInactivate.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         for (int i = mGp.syncTabScheduleAdapter.getCount() - 1; i >= 0; i--) {
@@ -3024,11 +3024,11 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonInactivate, mContext.getString(R.string.msgs_schedule_cont_label_inactivate));
 
-        mContextScheduleButtonRename.setOnClickListener(new View.OnClickListener() {
+        mContextScheduleButtonRename.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         mGp.syncTabScheduleAdapter.setSelectMode(false);
@@ -3059,11 +3059,11 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonRename, mContext.getString(R.string.msgs_schedule_cont_label_rename));
 
-        mContextScheduleButtonCopy.setOnClickListener(new View.OnClickListener() {
+        mContextScheduleButtonCopy.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         ScheduleItem si = (ScheduleItem) objects[0];
@@ -3092,7 +3092,7 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonCopy, mContext.getString(R.string.msgs_schedule_cont_label_copy));
 
-        mContextScheduleButtonSelectAll.setOnClickListener(new View.OnClickListener() {
+        mContextScheduleButtonSelectAll.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 mGp.syncTabScheduleAdapter.setSelectMode(true);
@@ -3102,7 +3102,7 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonSelectAll, mContext.getString(R.string.msgs_schedule_cont_label_select_all));
 
-        mContextScheduleButtonUnselectAll.setOnClickListener(new View.OnClickListener() {
+        mContextScheduleButtonUnselectAll.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 //                mGp.syncTabScheduleAdapter.setSelectMode(false);
@@ -3171,7 +3171,7 @@ public class ActivityMain extends AppCompatActivity {
         });
 
         //OK button
-        btn_ok.setOnClickListener(new View.OnClickListener() {
+        btn_ok.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
                 String new_name = etInput.getText().toString();
@@ -3183,7 +3183,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         // CANCELボタンの指定
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        btn_cancel.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
             }
@@ -3214,7 +3214,7 @@ public class ActivityMain extends AppCompatActivity {
                         setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
                     } else {
                         NotifyEvent ntfy = new NotifyEvent(mContext);
-                        ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                        ntfy.setListener(new NotifyEventListener() {
                             @Override
                             public void positiveResponse(Context context, Object[] objects) {
                                 saveScheduleList();
@@ -3385,7 +3385,7 @@ public class ActivityMain extends AppCompatActivity {
 
         final Toast toast = Toast.makeText(mContext, mContext.getString(R.string.msgs_main_sync_history_copy_completed),
                 Toast.LENGTH_SHORT);
-        toast.setDuration(1500);
+        toast.setDuration(Toast.LENGTH_SHORT);
         mContextHistoryButtonHistiryCopyClipboard.setOnClickListener(new OnClickListener() {
             private long last_show_time = 0;
 
@@ -3418,7 +3418,7 @@ public class ActivityMain extends AppCompatActivity {
                         }
                     }
                     if (out.length() > 0) cm.setText(out);
-                    if ((last_show_time + 1500) < System.currentTimeMillis()) {
+                    if ((last_show_time + Toast.LENGTH_SHORT) < System.currentTimeMillis()) {
                         toast.show();
                         last_show_time = System.currentTimeMillis();
                     }
@@ -4574,7 +4574,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.progressSpinCancel.setText(getString(R.string.msgs_progress_spin_dlg_sync_cancel));
         mGp.progressSpinCancel.setEnabled(true);
         // CANCELボタンの指定
-        mGp.progressSpinCancelListener = new View.OnClickListener() {
+        mGp.progressSpinCancelListener = new OnClickListener() {
             public void onClick(View v) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
@@ -4819,7 +4819,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmMsg.setText(msg_text);
 
         // Yesボタンの指定
-        mGp.confirmYesListener = new View.OnClickListener() {
+        mGp.confirmYesListener = new OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
@@ -4828,7 +4828,7 @@ public class ActivityMain extends AppCompatActivity {
         };
         mGp.confirmYes.setOnClickListener(mGp.confirmYesListener);
         // YesAllボタンの指定
-        mGp.confirmYesAllListener = new View.OnClickListener() {
+        mGp.confirmYesAllListener = new OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
@@ -4837,7 +4837,7 @@ public class ActivityMain extends AppCompatActivity {
         };
         mGp.confirmYesAll.setOnClickListener(mGp.confirmYesAllListener);
         // Noボタンの指定
-        mGp.confirmNoListener = new View.OnClickListener() {
+        mGp.confirmNoListener = new OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
@@ -4846,7 +4846,7 @@ public class ActivityMain extends AppCompatActivity {
         };
         mGp.confirmNo.setOnClickListener(mGp.confirmNoListener);
         // NoAllボタンの指定
-        mGp.confirmNoAllListener = new View.OnClickListener() {
+        mGp.confirmNoAllListener = new OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
@@ -4855,7 +4855,7 @@ public class ActivityMain extends AppCompatActivity {
         };
         mGp.confirmNoAll.setOnClickListener(mGp.confirmNoAllListener);
         // Task cancelボタンの指定
-        mGp.confirmCancelListener = new View.OnClickListener() {
+        mGp.confirmCancelListener = new OnClickListener() {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);

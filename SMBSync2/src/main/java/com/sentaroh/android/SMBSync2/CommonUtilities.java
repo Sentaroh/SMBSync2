@@ -89,6 +89,7 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import static android.content.Context.USAGE_STATS_SERVICE;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
@@ -452,7 +453,7 @@ public final class CommonUtilities {
     }
 
     final public void addDebugMsg(int lvl, String cat, String... msg) {
-        mLog.addDebugMsg(lvl, cat, msg);
+        if (mGp.settingDebugLevel >= lvl) mLog.addDebugMsg(lvl, cat, msg);
     }
 
     final public boolean isLogFileExists() {
@@ -969,7 +970,7 @@ public final class CommonUtilities {
         return isCharging;
     }
 
-    public String removeRedundantWildcard(String str, String wc) {
+    public static String removeRedundantWildcard(String str, String wc) {
         String new_str=str;
         if (str != null && wc != null && wc.length() != 0) {
             String wc_dup=wc + wc;
@@ -980,22 +981,18 @@ public final class CommonUtilities {
         return new_str;
     }
 
-    public boolean isPathWildcardOnly(String str) {
-        boolean isOnlyWildcard=false;
-        String new_str=removeRedundantWildcard(str, "*");
-        if (new_str.equals("*") || new_str.equals("*.*")) isOnlyWildcard=true;
-        if (!isOnlyWildcard) {
-            new_str=new_str.replace("/", "");
-            if (removeRedundantWildcard(new_str, "*").equals("*")) isOnlyWildcard=true;
-        }
-        return isOnlyWildcard;
+    public static String removeRedundantDirectorySeparator (String input) {
+        return removeRedundantSeparator(input, "/");
     }
 
-    //no longer used
+    public static String removeRedundantSeparator(String input, String separator) {
+        return removeRedundantSeparator(input, separator, false, false);
+    }
+
     public static String removeRedundantSeparator(String input, String separator, boolean remove_start, boolean remove_end) {
         String out=input;
         while(out.indexOf(separator+separator)>=0) {
-            out=out.replaceAll(separator+separator, separator);
+            out=out.replaceAll(Pattern.quote(separator+separator), separator);
         }
         if (remove_start) {
             out=out.startsWith(separator)?out.substring(1):out;
@@ -1004,6 +1001,70 @@ public final class CommonUtilities {
             out=out.endsWith(separator)?out.substring(0, out.length()-1):out;
         }
         return out;
+    }
+
+/*
+    private static boolean isPathWildcardOnly(String path) {
+        boolean isOnlyWildcard=false;
+        if (path == null || path.length() == 0) return isOnlyWildcard;
+
+        String new_path=removeRedundantSeparator(path, "/", true, true);
+        new_path=removeRedundantWildcard(new_path, "*");
+
+        String[] path_array=new_path.split("/");
+        int len=path_array.length;
+        for(String item:path_array) {
+            if (item.equals("*") || item.equals("*.*")) len--;
+        }
+        if (len==0) isOnlyWildcard=true;
+
+        return isOnlyWildcard;
+    }
+*/
+
+    public static String hasAsteriskOnlyPath(String path) {
+        String asterisk_only_part="";
+        if (path == null || path.length() == 0) return asterisk_only_part;
+
+        String new_path=removeRedundantSeparator(path, "/", true, true);
+        new_path=removeRedundantWildcard(new_path, "*");
+        String[] path_array=new_path.split("/");
+        for(String item:path_array) {
+            if (!item.equals("*") && !item.equals("*.*")) {
+                asterisk_only_part = "";
+                break;
+            } else {
+                asterisk_only_part=item;
+            }
+        }
+
+        return asterisk_only_part;
+    }
+
+    //return the basedir path from a given path
+    public static String basedirOf(String path) {
+        if (path==null || path.equals("")) return "";
+
+        String basedir="";
+        int index=path.lastIndexOf("/");
+        if (index > 0) {
+            basedir=path.substring(0, index);
+        }
+        return basedir;
+    }
+
+    //return file name from path
+    public static String filenameOf(String path) {
+        if (path==null || path.equals("")) return "";
+
+        String filename=path.substring(path.lastIndexOf("/") + 1);
+
+        return filename;
+    }
+
+    //return dir name from path [not used]
+    public static String dirnameOf(String path) {
+        return filenameOf(path);
     }
 
     public static String trimTrailingBlank(String s) {
@@ -1019,6 +1080,7 @@ public final class CommonUtilities {
 
         return ((st>0) || (len<val.length)) ? s.substring(st,len):s;
     }
+
 //	final static private String array2String(StringBuilder sb_buf,String[] sa) {
 //		sb_buf.setLength(0);
 //		if (sa!=null) {

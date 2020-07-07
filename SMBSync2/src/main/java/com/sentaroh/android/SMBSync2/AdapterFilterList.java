@@ -40,9 +40,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_DIR;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_FILE;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS;
 
 @SuppressWarnings("ALL")
 public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterListItem> {
@@ -52,7 +50,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
 
     private boolean mShowIncludeExclude = true;
 
-    private String mFileFolderFilter = "";
+    private String mFilterType = "";
 
     public NotifyEvent mNotifyIncExcListener = null;
 
@@ -81,7 +79,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
         id = textViewResourceId;
         items = objects;
         mShowIncludeExclude = true;
-        mFileFolderFilter = filter_type;
+        mFilterType = filter_type;
     }
 
     public AdapterFilterList(Context context, int textViewResourceId,
@@ -91,7 +89,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
         id = textViewResourceId;
         items = objects;
         mShowIncludeExclude = show_inc_exc;
-        mFileFolderFilter = "";
+        mFilterType = "";
     }
 
     public FilterListItem getItem(int i) {
@@ -118,6 +116,7 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
         });
     }
 
+    //in main filters dialog: check if exclude/include buttons and layout parts are enabled/disabled
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
@@ -166,22 +165,28 @@ public class AdapterFilterList extends ArrayAdapter<AdapterFilterList.FilterList
                 holder.tv_row_filter.setEnabled(true);
                 holder.btn_row_delbtn.setEnabled(true);
                 if (o.isUseFilterV2()) {
-                    String whole_dir_filter=SyncTaskUtil.hasWholeDirectoryFilterItem(o.getFilter());
-                    String match_anywhere_filter=SyncTaskUtil.hasAnyWhereFilterItem(o.getFilter());
-                    String invalid_chars=null;
-                    if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS);
-                    else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS);
+                    String whole_dir_filter_v1=SyncTaskUtil.hasWholeDirectoryFilterItemV1(o.getFilter());
+                    String whole_dir_filter_v2=SyncTaskUtil.hasWholeDirectoryFilterItemV2(o.getFilter());
+                    String wild_card_only_path_parts=SyncTaskUtil.checkFilterInvalidAsteriskOnlyPath(o.getFilter());
+                    String invalid_chars=SyncTaskUtil.checkFilterInvalidCharacter(o.getFilter(), mFilterType);
+                    String file_filter_asterisk_path="";
+                    if (mFilterType.equals(SMBSYNC2_PROF_FILTER_FILE)) {
+                        file_filter_asterisk_path=SyncTaskUtil.checkFileFilterHasAsteriskInPathToFile(o.getFilter());
+                    } //else file_filter_asterisk_path="";
 
-                    if (invalid_chars!=null){
+                    if (!invalid_chars.equals("") || !wild_card_only_path_parts.equals("")){
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(false);
-                    } else if (!whole_dir_filter.equals("")) {
+                    } else if (!file_filter_asterisk_path.equals("")) {//file filters cannot have asterisk in path outside the file name
                         holder.rb_inc.setEnabled(false);
                         holder.rb_exc.setEnabled(false);
-                    } else if (!match_anywhere_filter.equals("")) {
+                    } else if (!whole_dir_filter_v1.equals("")) {//not allowed in new filter v2
                         holder.rb_inc.setEnabled(false);
-                        if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_DIR)) holder.rb_exc.setEnabled(true);
-                        else if (mFileFolderFilter.equals(SMBSYNC2_PROF_FILTER_FILE)) holder.rb_exc.setEnabled(false);
+                        holder.rb_exc.setEnabled(false);
+                    } else if (!whole_dir_filter_v2.equals("")) {//only exclude dir filters support whole dir prefix
+                        holder.rb_inc.setEnabled(false);
+                        if (mFilterType.equals(SMBSYNC2_PROF_FILTER_DIR)) holder.rb_exc.setEnabled(true);
+                        else if (mFilterType.equals(SMBSYNC2_PROF_FILTER_FILE)) holder.rb_exc.setEnabled(false);
                         else holder.rb_exc.setEnabled(true);//not used
                     } else {
                         holder.rb_inc.setEnabled(true);

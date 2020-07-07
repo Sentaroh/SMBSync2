@@ -101,7 +101,7 @@ public class SyncThreadSyncFile {
                                     }
                                     if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) break;
                                 } else {
-                                    stwa.util.addDebugMsg(2, "I", "sub directory ignored by option, dir=" + master_dir + "/" + tmp);
+                                    if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "sub directory ignored by option, dir=" + master_dir + "/" + tmp);
                                 }
                                 if (!stwa.gp.syncThreadCtrl.isEnabled() || sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     if (!stwa.gp.syncThreadCtrl.isEnabled())
@@ -263,7 +263,7 @@ public class SyncThreadSyncFile {
     private static boolean isSmbFileExists(SyncThreadWorkArea stwa, ArrayList<String> smb_fl, String fp) throws IOException, JcifsException {
         boolean mf_exists = (Collections.binarySearch(stwa.smbFileList, fp) >= 0);
         if (!mf_exists) {
-            stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " file list not found, fp=" + fp);
+            if (stwa.gp.settingDebugLevel >= 1) stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " file list not found, fp=" + fp);
             JcifsFile mf = new JcifsFile(fp, stwa.masterAuth);
             mf_exists = mf.exists();
         }
@@ -301,7 +301,7 @@ public class SyncThreadSyncFile {
                                 sync_result = syncDeleteInternalToInternal(stwa, sti, from_base, master_dir + "/" + tmp,
                                         to_base, target_dir + "/" + tmp, element);
                             } else {
-                                stwa.util.addDebugMsg(2, "I", "sub directory ignored by option, dir=" + master_dir + "/" + tmp);
+                                if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "sub directory ignored by option, dir=" + master_dir + "/" + tmp);
                             }
                             if (!stwa.gp.syncThreadCtrl.isEnabled() || sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                 if (!stwa.gp.syncThreadCtrl.isEnabled())
@@ -405,7 +405,7 @@ public class SyncThreadSyncFile {
                                     }
                                     if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) break;
                                 } else {
-                                    stwa.util.addDebugMsg(2, "I", "sub directory ignored by option, dir=" + master_dir + "/" + tmp);
+                                    if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "sub directory ignored by option, dir=" + master_dir + "/" + tmp);
                                 }
                                 if (!stwa.gp.syncThreadCtrl.isEnabled() || sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     if (!stwa.gp.syncThreadCtrl.isEnabled())
@@ -491,7 +491,7 @@ public class SyncThreadSyncFile {
                                 sync_result = syncDeleteInternalToExternal(stwa, sti, from_base, master_dir + "/" + tmp,
                                         to_base, target_dir + "/" + tmp, element);
                             } else {
-                                stwa.util.addDebugMsg(2, "I", "sub directory ignored by option, dir=" + master_dir + "/" + tmp);
+                                if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "sub directory ignored by option, dir=" + master_dir + "/" + tmp);
                             }
                             if (!stwa.gp.syncThreadCtrl.isEnabled() || sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                 if (!stwa.gp.syncThreadCtrl.isEnabled())
@@ -608,8 +608,7 @@ public class SyncThreadSyncFile {
                                             }
                                         } else {
                                             stwa.util.addDebugMsg(1, "W",
-                                                    String.format(stwa.context.getString(R.string.msgs_mirror_same_directory_ignored),
-                                                            from_path + "/" + element.getName()));
+                                                    String.format(stwa.context.getString(R.string.msgs_mirror_same_directory_ignored), from_path + "/" + element.getName()));
                                         }
                                     }
                                 } else {
@@ -637,10 +636,10 @@ public class SyncThreadSyncFile {
                                 }
                             }
                         } else {
-                            stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
+                            if (stwa.gp.settingDebugLevel >= 1) stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
                     } else {
-                        if (!mf.canRead())
+                        if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
                             stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
                     }
                 } else { // file copy
@@ -919,10 +918,10 @@ public class SyncThreadSyncFile {
                                 }
                             }
                         } else {
-                            stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
+                            if (stwa.gp.settingDebugLevel >= 1) stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
                     } else {
-                        if (!mf.canRead())
+                        if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
                             stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
                     }
                 } else { // file copy
@@ -1172,10 +1171,10 @@ public class SyncThreadSyncFile {
                                 }
                             }
                         } else {
-                            stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
+                            if (stwa.gp.settingDebugLevel >= 1) stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
                     } else {
-                        if (!mf.canRead())
+                        if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
                             stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
                     }
                 } else { // file copy
@@ -1391,10 +1390,10 @@ public class SyncThreadSyncFile {
                                 }
                             }
                         } else {
-                            stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
+                            if (stwa.gp.settingDebugLevel >= 1) stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
                     } else {
-                        if (!mf.canRead())
+                        if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
                             stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
                     }
                 } else { // file copy
@@ -1592,9 +1591,8 @@ public class SyncThreadSyncFile {
                                                 }
                                             }
                                         } else {
-                                            stwa.util.addDebugMsg(1, "W",
-                                                    String.format(stwa.context.getString(R.string.msgs_mirror_same_directory_ignored),
-                                                            from_path + "/" + element.getName()));
+                                            if (stwa.gp.settingDebugLevel >= 1)
+                                                stwa.util.addDebugMsg(1, "W", String.format(stwa.context.getString(R.string.msgs_mirror_same_directory_ignored), from_path + "/" + element.getName()));
                                         }
                                     }
                                 } else {
@@ -1622,10 +1620,10 @@ public class SyncThreadSyncFile {
                                 }
                             }
                         } else {
-                            stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
+                            if (stwa.gp.settingDebugLevel >= 1) stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
                     } else {
-                        if (!mf.canRead())
+                        if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
                             stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
                     }
                 } else { // file copy
@@ -1874,10 +1872,10 @@ public class SyncThreadSyncFile {
                                 }
                             }
                         } else {
-                            stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
+                            if (stwa.gp.settingDebugLevel >= 1) stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
                     } else {
-                        if (!mf.canRead())
+                        if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
                             stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
                     }
                 } else { // file copy
@@ -2365,8 +2363,10 @@ public class SyncThreadSyncFile {
                 SystemClock.sleep(500);
                 count--;
             }
-            if (count==0) stwa.util.addDebugMsg(1,"I","External media file flush wait time over occured");
-            else stwa.util.addDebugMsg(1,"I","External media file flush wait ended, elapsed time="+(System.currentTimeMillis()-b_time));
+            if (stwa.gp.settingDebugLevel >= 1) {
+                if (count==0) stwa.util.addDebugMsg(1,"I","External media file flush wait time over occured");
+                else stwa.util.addDebugMsg(1,"I","External media file flush wait ended, elapsed time="+(System.currentTimeMillis()-b_time));
+            }
         }
     }
 
@@ -2500,10 +2500,10 @@ public class SyncThreadSyncFile {
                                 }
                             }
                         } else {
-                            stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
+                            if (stwa.gp.settingDebugLevel >= 1) stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
                     } else {
-                        if (!mf.canRead())
+                        if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
                             stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
                     }
                 } else { // file copy
