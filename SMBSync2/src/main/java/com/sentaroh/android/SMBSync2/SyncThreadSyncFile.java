@@ -60,7 +60,7 @@ public class SyncThreadSyncFile {
 //      return sr;
 //  };
 
-    static private boolean exact_target_mirror = false;
+    //called by syncMirrorSmbToExternal() before or at end of Mirror operation to delete non matching target files
     static final private int syncDeleteSmbToExternal(SyncThreadWorkArea stwa,
                                                      SyncTaskItem sti, String from_base, String master_dir, String to_base, String target_dir,
                                                      File tf, ArrayList<String> smb_fl) {
@@ -75,7 +75,7 @@ public class SyncThreadSyncFile {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
             if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
-                if (exact_target_mirror) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
+                if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
                     process_subdirs = !remove_tf;
                 } else if (SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {//delete target dir if it is included by dir filter AND it is deleted from source dir
@@ -132,7 +132,7 @@ public class SyncThreadSyncFile {
                     }
                 }
             } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
-                if (exact_target_mirror) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
+                if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
                 } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir);
@@ -171,6 +171,7 @@ public class SyncThreadSyncFile {
 //      return sr;
 //  };
 
+    //called by syncMirrorSmbToInternal() before or at end of Mirror operation to delete non matching target files
     static final private int syncDeleteSmbToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
                                                      String master_dir, String to_base, String target_dir, File tf, ArrayList<String> smb_fl) {
         int sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -184,7 +185,7 @@ public class SyncThreadSyncFile {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
             if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
-                if (exact_target_mirror) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
+                if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
                     process_subdirs = !remove_tf;
                 } else if (SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {//delete target dir if it is included by dir filter AND it is deleted from source dir
@@ -242,7 +243,7 @@ public class SyncThreadSyncFile {
                     }
                 }
             } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
-                if (exact_target_mirror) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
+                if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
                 } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir);
@@ -271,6 +272,7 @@ public class SyncThreadSyncFile {
         return sync_result;
     }
 
+    //called by syncMirrorSmbToSmb() before or at end of Mirror operation to delete non matching target files
     static final private int syncDeleteSmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
                                                 String master_dir, String to_base, String target_dir, JcifsFile tf, ArrayList<String> smb_fl) {
         int sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -284,7 +286,7 @@ public class SyncThreadSyncFile {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
             if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
-                if (exact_target_mirror) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
+                if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
                     process_subdirs = !remove_tf;
                 } else if (SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {//delete target dir if it is included by dir filter AND it is deleted from source dir
@@ -344,7 +346,7 @@ public class SyncThreadSyncFile {
                     }
                 }
             } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
-                if (exact_target_mirror) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
+                if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
                 } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir);
@@ -390,6 +392,7 @@ public class SyncThreadSyncFile {
 //              master_dir, target_dir, target_dir, tf);
 //  };
 
+    //called by syncMirrorInternalToInternal() and syncMirrorExternalToInternal() before or at end of Mirror operation to delete non matching target files
     static final private int syncDeleteInternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
                                                           String master_dir, String to_base, String target_dir, File tf) {
         int sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -403,7 +406,7 @@ public class SyncThreadSyncFile {
         String tmp_target_dir = target_dir.substring(to_base.length());
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
         if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
-            if (exact_target_mirror) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
+            if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                 mf = new File(master_dir);
                 remove_tf = !mf.exists() || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
                 process_subdirs = !remove_tf;
@@ -444,7 +447,7 @@ public class SyncThreadSyncFile {
                 }
             }
         } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
-            if (exact_target_mirror) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
+            if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                 mf = new File(master_dir);
                 remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
             } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
@@ -484,6 +487,7 @@ public class SyncThreadSyncFile {
 //              master_dir, target_dir, target_dir, tf);
 //  };
 
+    //called by syncMirrorInternalToSmb() and syncMirrorExternalToSmb() before or at end of Mirror operation to delete non matching target files
     static final private int syncDeleteInternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
                                                      String master_dir, String to_base, String target_dir, JcifsFile tf) {
         int sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -498,7 +502,7 @@ public class SyncThreadSyncFile {
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
         try {
             if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
-                if (exact_target_mirror) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
+                if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                     mf = new File(master_dir);
                     remove_tf = !mf.exists() || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
                     process_subdirs = !remove_tf;
@@ -554,7 +558,7 @@ public class SyncThreadSyncFile {
                     }
                 }
             } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
-                if (exact_target_mirror) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
+                if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                     mf = new File(master_dir);
                     remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
                 } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
@@ -592,7 +596,7 @@ public class SyncThreadSyncFile {
 //              master_dir, target_dir, target_dir, tf);
 //  };
 
-    //called by syncMirrorInternalToExternal() and syncMirrorExternalToExternal() at end of copy operation to delete non matching target files
+    //called by syncMirrorInternalToExternal() and syncMirrorExternalToExternal() before or at end of Mirror operation to delete non matching target files
     static final private int syncDeleteInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
                                                           String master_dir, String to_base, String target_dir, File tf) {
         int sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
@@ -606,7 +610,7 @@ public class SyncThreadSyncFile {
         String tmp_target_dir = target_dir.replace(to_base, "");
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
         if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
-            if (exact_target_mirror) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
+            if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                 mf = new File(master_dir);
                 remove_tf = !mf.exists() || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
                 process_subdirs = !remove_tf;
@@ -649,7 +653,7 @@ public class SyncThreadSyncFile {
                 }
             }
         } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
-            if (exact_target_mirror) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
+            if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                 mf = new File(master_dir);
                 remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
             } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
