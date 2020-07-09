@@ -250,6 +250,98 @@ public class SyncThreadSyncFile {
         return sync_result;
     }
 
+    static final private int syncDeleteSmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
+                                                String master_dir, String to_base, String target_dir, JcifsFile tf, ArrayList<String> smb_fl) {
+        int sync_result = 0;
+        stwa.jcifsNtStatusCode=0;
+        if (stwa.gp.settingDebugLevel >= 2)
+            stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " master=", master_dir, ", target=", target_dir);
+        try {
+            String tmp_target_dir = target_dir.substring(to_base.length());
+            if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
+            if (tf.isDirectory()) { // Directory Delete
+                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                    if (isSmbFileExists(stwa, smb_fl, master_dir)) {
+                        JcifsFile[] children = tf.listFiles();
+                        if (children != null) {
+                            for (JcifsFile element : children) {
+                                String tmp_fname = element.getName();
+                                if (element.isFile() || (element.isDirectory() && sti.isSyncOptionSyncSubDirectory())) {
+                                    while (stwa.syncTaskRetryCount > 0) {
+                                        if (element.isFile()) {
+                                            sync_result = syncDeleteSmbToSmb(stwa, sti, from_base, master_dir + tmp_fname,
+                                                    to_base, target_dir + tmp_fname, element, smb_fl);
+                                        } else {
+//                                            sync_result = syncDeleteSmbToSmb(stwa, sti, from_base, master_dir + tmp_fname + "/",
+//                                                    to_base, target_dir + "/" + tmp_fname, element, smb_fl);
+                                            sync_result = syncDeleteSmbToSmb(stwa, sti, from_base, master_dir + tmp_fname,
+                                                    to_base, target_dir + tmp_fname, element, smb_fl);
+                                        }
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
+                                            stwa.syncTaskRetryCount--;
+                                            if (stwa.syncTaskRetryCount > 0)
+                                                sync_result = waitRetryInterval(stwa);
+                                            if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
+                                                break;
+                                        } else {
+                                            stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
+                                            break;
+                                        }
+                                    }
+                                    if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) break;
+                                } else {
+                                    if (stwa.gp.settingDebugLevel >= 2)
+                                        stwa.util.addDebugMsg(2, "I", "sub directory ignored by option, dir=" + master_dir + "/" + tmp_fname);
+                                }
+                                if (!stwa.gp.syncThreadCtrl.isEnabled() || sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                    if (!stwa.gp.syncThreadCtrl.isEnabled())
+                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                                    break;
+                                }
+                            }
+                        } else {
+                            stwa.util.addLogMsg("W", "File/Directory was not found, fp=" + tf.getPath());
+//                          sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
+                        }
+                    } else {
+                        if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, target_dir)) {
+                            SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
+                        } else {
+                            stwa.totalIgnoreCount++;
+                            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
+                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                        }
+                    }
+                }
+            } else { // file Delete
+//              String parent_dir="", t_dir=tmp_target_dir.length()>0?tmp_target_dir.substring(1):"";
+//              if (t_dir.lastIndexOf("/")>=0) parent_dir="/"+t_dir.substring(0, t_dir.lastIndexOf("/"));
+//              Log.v("","parent="+parent_dir+", t="+t_dir+", tmp="+tmp_target_dir);
+                if (!SyncThread.isHiddenFile(stwa, sti, tf) && SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {
+                    //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "syncDeleteSmbToSmb: " + "tmp_target_dir="+tmp_target_dir + ", tf="+tf + ", master_dir="+master_dir + ", target_dir="+target_dir);
+                    if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
+                        if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
+                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
+                                SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
+                            } else {
+                                stwa.totalIgnoreCount++;
+                                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
+                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            putErrorMessageIOE(stwa, sti, e, master_dir, target_dir);
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        } catch (JcifsException e) {
+            putErrorMessageJcifs(stwa, sti,e, master_dir, target_dir);
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
+        return sync_result;
+    }
+
     private static boolean isSmbFileExists(SyncThreadWorkArea stwa, ArrayList<String> smb_fl, String fp) throws IOException, JcifsException {
         boolean mf_exists = (Collections.binarySearch(stwa.smbFileList, fp) >= 0);
         if (!mf_exists) {
@@ -2913,98 +3005,6 @@ public class SyncThreadSyncFile {
             return SyncTaskItem.SYNC_STATUS_ERROR;
         } catch (JcifsException e) {
             putErrorMessageJcifs(stwa, sti,e, from_path, to_path);
-            return SyncTaskItem.SYNC_STATUS_ERROR;
-        }
-        return sync_result;
-    }
-
-    static final private int syncDeleteSmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
-                                                String master_dir, String to_base, String target_dir, JcifsFile tf, ArrayList<String> smb_fl) {
-        int sync_result = 0;
-        stwa.jcifsNtStatusCode=0;
-        if (stwa.gp.settingDebugLevel >= 2)
-            stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " master=", master_dir, ", target=", target_dir);
-        try {
-            String tmp_target_dir = target_dir.substring(to_base.length());
-            if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
-            if (tf.isDirectory()) { // Directory Delete
-                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
-                    if (isSmbFileExists(stwa, smb_fl, master_dir)) {
-                        JcifsFile[] children = tf.listFiles();
-                        if (children != null) {
-                            for (JcifsFile element : children) {
-                                String tmp_fname = element.getName();
-                                if (element.isFile() || (element.isDirectory() && sti.isSyncOptionSyncSubDirectory())) {
-                                    while (stwa.syncTaskRetryCount > 0) {
-                                        if (element.isFile()) {
-                                            sync_result = syncDeleteSmbToSmb(stwa, sti, from_base, master_dir + tmp_fname,
-                                                    to_base, target_dir + tmp_fname, element, smb_fl);
-                                        } else {
-//                                            sync_result = syncDeleteSmbToSmb(stwa, sti, from_base, master_dir + tmp_fname + "/",
-//                                                    to_base, target_dir + "/" + tmp_fname, element, smb_fl);
-                                            sync_result = syncDeleteSmbToSmb(stwa, sti, from_base, master_dir + tmp_fname,
-                                                    to_base, target_dir + tmp_fname, element, smb_fl);
-                                        }
-                                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
-                                            stwa.syncTaskRetryCount--;
-                                            if (stwa.syncTaskRetryCount > 0)
-                                                sync_result = waitRetryInterval(stwa);
-                                            if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
-                                                break;
-                                        } else {
-                                            stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
-                                            break;
-                                        }
-                                    }
-                                    if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) break;
-                                } else {
-                                    if (stwa.gp.settingDebugLevel >= 2)
-                                        stwa.util.addDebugMsg(2, "I", "sub directory ignored by option, dir=" + master_dir + "/" + tmp_fname);
-                                }
-                                if (!stwa.gp.syncThreadCtrl.isEnabled() || sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                    if (!stwa.gp.syncThreadCtrl.isEnabled())
-                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                    break;
-                                }
-                            }
-                        } else {
-                            stwa.util.addLogMsg("W", "File/Directory was not found, fp=" + tf.getPath());
-//                          sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
-                        }
-                    } else {
-                        if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, target_dir)) {
-                            SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
-                        } else {
-                            stwa.totalIgnoreCount++;
-                            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
-                        }
-                    }
-                }
-            } else { // file Delete
-//              String parent_dir="", t_dir=tmp_target_dir.length()>0?tmp_target_dir.substring(1):"";
-//              if (t_dir.lastIndexOf("/")>=0) parent_dir="/"+t_dir.substring(0, t_dir.lastIndexOf("/"));
-//              Log.v("","parent="+parent_dir+", t="+t_dir+", tmp="+tmp_target_dir);
-                if (!SyncThread.isHiddenFile(stwa, sti, tf) && SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {
-                    //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "syncDeleteSmbToSmb: " + "tmp_target_dir="+tmp_target_dir + ", tf="+tf + ", master_dir="+master_dir + ", target_dir="+target_dir);
-                    if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
-                        if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
-                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
-                                SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
-                            } else {
-                                stwa.totalIgnoreCount++;
-                                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            putErrorMessageIOE(stwa, sti, e, master_dir, target_dir);
-            return SyncTaskItem.SYNC_STATUS_ERROR;
-        } catch (JcifsException e) {
-            putErrorMessageJcifs(stwa, sti,e, master_dir, target_dir);
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
         return sync_result;
