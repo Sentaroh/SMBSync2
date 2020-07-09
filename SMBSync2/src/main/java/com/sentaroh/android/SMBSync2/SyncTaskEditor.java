@@ -3836,7 +3836,35 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
         CommonUtilities.setCheckedTextView(ctvEnsureTargetExactMirror);
         ctvEnsureTargetExactMirror.setChecked(n_sti.isSyncOptionEnsureTargetIsExactMirror());
-        setCtvListenerForEditSyncTask(ctvEnsureTargetExactMirror, type, n_sti, dlg_msg);
+        ctvEnsureTargetExactMirror.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !ctvEnsureTargetExactMirror.isChecked();
+                NotifyEvent ntfy=new NotifyEvent(mContext);
+                if (isChecked) {//if checked, display warning that also files not matching the filters will be removed from the target
+                    mUtil.showCommonDialog(true, "W",
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title),
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog),
+                            mContext.getString(R.string.msgs_common_dialog_save),
+                            mContext.getString(R.string.msgs_common_dialog_cancel),
+                            ntfy);
+                } else {//if unchecked, no unexpected deletes will ever be done on the target (delete only files/dir included by filters AND removed from master), do not display warning
+                    ctvEnsureTargetExactMirror.setChecked(isChecked);
+                    checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                }
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        ctvEnsureTargetExactMirror.setChecked(isChecked);
+                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                    }
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                    }
+                });
+            }
+        });
 
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
         CommonUtilities.setCheckedTextView(ctUseExtendedDirectoryFilter1);
