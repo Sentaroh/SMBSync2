@@ -71,7 +71,9 @@ public class SyncThreadSyncFile {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
             if (tf.isDirectory()) { // Directory Delete
-                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
+                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
+                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     if (isSmbFileExists(stwa, smb_fl, master_dir)) {
                         File[] children = tf.listFiles();
                         if (children != null) {
@@ -125,16 +127,19 @@ public class SyncThreadSyncFile {
 //				String parent_dir="", t_dir=tmp_target_dir.length()>0?tmp_target_dir.substring(1):"";
 //				if (t_dir.lastIndexOf("/")>=0) parent_dir="/"+t_dir.substring(0, t_dir.lastIndexOf("/"));
 //				Log.v("","parent="+parent_dir+", t="+t_dir+", tmp="+tmp_target_dir);
-                if (!SyncThread.isHiddenFile(stwa, sti, tf) && SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {
-                    //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "syncDeleteSmbToExternal: " + "tmp_target_dir="+tmp_target_dir + ", tf="+tf + ", master_dir="+master_dir + ", target_dir="+target_dir);
-                    if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
-                        if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
-                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
-                                SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
-                            } else {
-                                stwa.totalIgnoreCount++;
-                                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                if (//!SyncThread.isDirectoryExcluded(stwa, parent_dir) &&
+                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
+                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                    if (!SyncThread.isHiddenFile(stwa, sti, tf)) {
+                        if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
+                            if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
+                                if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
+                                    SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
+                                } else {
+                                    stwa.totalIgnoreCount++;
+                                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
+                                            "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                }
                             }
                         }
                     }
@@ -170,7 +175,9 @@ public class SyncThreadSyncFile {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
             if (tf.isDirectory()) { // Directory Delete
-                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
+                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
+                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     if (isSmbFileExists(stwa, smb_fl, master_dir)) {
                         File[] children = tf.listFiles();
                         if (children != null) {
@@ -225,16 +232,19 @@ public class SyncThreadSyncFile {
 //				String parent_dir="", t_dir=tmp_target_dir.length()>0?tmp_target_dir.substring(1):"";
 //				if (t_dir.lastIndexOf("/")>=0) parent_dir="/"+t_dir.substring(0, t_dir.lastIndexOf("/"));
 //				Log.v("","parent="+parent_dir+", t="+t_dir+", tmp="+tmp_target_dir);
-                if (!SyncThread.isHiddenFile(stwa, sti, tf) && SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {
-                    //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "syncDeleteSmbToInternal: " + "tmp_target_dir="+tmp_target_dir + ", tf="+tf + ", master_dir="+master_dir + ", target_dir="+target_dir);
-                    if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
-                        if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
-                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
-                                SyncThread.deleteInternalStorageItem(stwa, true, sti, target_dir);
-                            } else {
-                                stwa.totalIgnoreCount++;
-                                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                if (//!SyncThread.isDirectoryExcluded(stwa, parent_dir) &&
+                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
+                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                    if (!SyncThread.isHiddenFile(stwa, sti, tf)) {
+                        if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
+                            if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
+                                if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
+                                    SyncThread.deleteInternalStorageItem(stwa, true, sti, target_dir);
+                                } else {
+                                    stwa.totalIgnoreCount++;
+                                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
+                                            "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                }
                             }
                         }
                     }
@@ -277,7 +287,10 @@ public class SyncThreadSyncFile {
         String tmp_target_dir = target_dir.substring(to_base.length());
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
         if (tf.isDirectory()) { // Directory Delete
-            if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+            if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
+                    !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
+                            SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)
+            ) {
                 mf = new File(master_dir);
                 if (mf.exists()) {
                     File[] children = tf.listFiles();
@@ -314,17 +327,21 @@ public class SyncThreadSyncFile {
 //			String parent_dir="", t_dir=tmp_target_dir.length()>0?tmp_target_dir.substring(1):"";
 //			if (t_dir.lastIndexOf("/")>=0) parent_dir="/"+t_dir.substring(0, t_dir.lastIndexOf("/"));
 //			Log.v("","parent="+parent_dir+", t="+t_dir+", tmp="+tmp_target_dir);
-            if (!SyncThread.isHiddenFile(stwa, sti, tf) && SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {
-                //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "syncDeleteInternalToInternal: " + "tmp_target_dir="+tmp_target_dir + ", tf="+tf + ", master_dir="+master_dir + ", target_dir="+target_dir);
-                mf = new File(master_dir);
-                if (!mf.exists()) {
-                    if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
-                        if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
-                            SyncThread.deleteInternalStorageItem(stwa, true, sti, target_dir);
-                        } else {
-                            stwa.totalIgnoreCount++;
-                            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+            if (//!SyncThread.isDirectoryExcluded(stwa, parent_dir) &&
+                    !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
+                            SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)
+            ) {
+                if (!SyncThread.isHiddenFile(stwa, sti, tf)) {
+                    mf = new File(master_dir);
+                    if (!mf.exists()) {
+                        if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
+                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
+                                SyncThread.deleteInternalStorageItem(stwa, true, sti, target_dir);
+                            } else {
+                                stwa.totalIgnoreCount++;
+                                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
+                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                            }
                         }
                     }
                 }
@@ -360,7 +377,9 @@ public class SyncThreadSyncFile {
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
         try {
             if (tf.isDirectory()) { // Directory Delete
-                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
+                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
+                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     mf = new File(master_dir);
                     if (mf.exists()) {
                         JcifsFile[] children = tf.listFiles();
@@ -412,17 +431,21 @@ public class SyncThreadSyncFile {
 //				String parent_dir="", t_dir=tmp_target_dir.length()>0?tmp_target_dir.substring(1):"";
 //				if (t_dir.lastIndexOf("/")>=0) parent_dir="/"+t_dir.substring(0, t_dir.lastIndexOf("/"));
 //				Log.v("","parent="+parent_dir+", t="+t_dir+", tmp="+tmp_target_dir);
-                if (!SyncThread.isHiddenFile(stwa, sti, tf) && SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {
-                    //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "syncDeleteInternalToSmb: " + "tmp_target_dir="+tmp_target_dir + ", tf="+tf + ", master_dir="+master_dir + ", target_dir="+target_dir);
-                    mf = new File(master_dir);
-                    if (!mf.exists()) {
-                        if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
-                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
-                                SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
-                            } else {
-                                stwa.totalIgnoreCount++;
-                                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                if (//!SyncThread.isDirectoryExcluded(stwa, parent_dir) &&
+                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
+                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)
+                ) {
+                    if (!SyncThread.isHiddenFile(stwa, sti, tf)) {
+                        mf = new File(master_dir);
+                        if (!mf.exists()) {
+                            if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
+                                if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
+                                    SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
+                                } else {
+                                    stwa.totalIgnoreCount++;
+                                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
+                                            "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                }
                             }
                         }
                     }
@@ -445,7 +468,6 @@ public class SyncThreadSyncFile {
 //				master_dir, target_dir, target_dir, tf);
 //	};
 
-    //called by sync syncMirrorInternalToExternal() and syncMirrorExternalToExternal() at end of copy operation to delete non matching target files
     static final private int syncDeleteInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
                                                           String master_dir, String to_base, String target_dir, File tf) {
         int sync_result = 0;
@@ -456,9 +478,9 @@ public class SyncThreadSyncFile {
         String tmp_target_dir = target_dir.replace(to_base, "");
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
         if (tf.isDirectory()) { // Directory Delete
-            if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
-                mf = new File(master_dir);
-                if (mf.exists()) {
+            mf = new File(master_dir);
+            if (mf.exists()) {
+                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     File[] children = tf.listFiles();
                     if (children != null) {
                         for (File element : children) {
@@ -481,27 +503,29 @@ public class SyncThreadSyncFile {
                         stwa.util.addLogMsg("W", "File/Directory was not found, fp=" + tf.getPath());
 //						sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
                     }
-                    if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, target_dir)) {
-                        SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
-                    } else {
-                        stwa.totalIgnoreCount++;
-                        SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
-                    }
+                }
+            } else {
+                if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_DIR, target_dir)) {
+                    SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
+                } else {
+                    stwa.totalIgnoreCount++;
+                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
+                            "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
                 }
             }
         } else { // file Delete
-            if (!SyncThread.isHiddenFile(stwa, sti, tf) && SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {
-                //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "syncDeleteInternalToExternal: " + "tmp_target_dir="+tmp_target_dir + ", tf="+tf + ", master_dir="+master_dir + ", target_dir="+target_dir);
-                mf = new File(master_dir);
-                if (!mf.exists()) {
-                    if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
-                        if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
-                            SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
-                        } else {
-                            stwa.totalIgnoreCount++;
-                            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                    "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+            if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                if (!SyncThread.isHiddenFile(stwa, sti, tf)) {
+                    mf = new File(master_dir);
+                    if (!mf.exists()) {
+                        if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
+                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
+                                SyncThread.deleteExternalStorageItem(stwa, true, sti, target_dir);
+                            } else {
+                                stwa.totalIgnoreCount++;
+                                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
+                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                            }
                         }
                     }
                 }
@@ -732,7 +756,7 @@ public class SyncThreadSyncFile {
     }
 
     static private String convertToExifDateTime(SyncThreadWorkArea stwa, SyncTaskItem sti, InputStream is,
-                                          long file_last_modified, String from_path, String to_path) {
+                                                long file_last_modified, String from_path, String to_path) {
         String parsed_to_path=to_path;
         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync) {
             String[] taken_date=null;
@@ -2927,7 +2951,9 @@ public class SyncThreadSyncFile {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
             if (tf.isDirectory()) { // Directory Delete
-                if (!SyncThread.isHiddenDirectory(stwa, sti, tf) && SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                if (//!SyncThread.isDirectoryExcluded(stwa, tmp_target_dir) &&
+                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
+                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
                     if (isSmbFileExists(stwa, smb_fl, master_dir)) {
                         JcifsFile[] children = tf.listFiles();
                         if (children != null) {
@@ -2984,16 +3010,19 @@ public class SyncThreadSyncFile {
 //				String parent_dir="", t_dir=tmp_target_dir.length()>0?tmp_target_dir.substring(1):"";
 //				if (t_dir.lastIndexOf("/")>=0) parent_dir="/"+t_dir.substring(0, t_dir.lastIndexOf("/"));
 //				Log.v("","parent="+parent_dir+", t="+t_dir+", tmp="+tmp_target_dir);
-                if (!SyncThread.isHiddenFile(stwa, sti, tf) && SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {
-                    //if (stwa.gp.settingDebugLevel >= 2) stwa.util.addDebugMsg(2, "I", "syncDeleteSmbToSmb: " + "tmp_target_dir="+tmp_target_dir + ", tf="+tf + ", master_dir="+master_dir + ", target_dir="+target_dir);
-                    if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
-                        if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
-                            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
-                                SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
-                            } else {
-                                stwa.totalIgnoreCount++;
-                                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
-                                        "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                if (//!SyncThread.isDirectoryExcluded(stwa, parent_dir) &&
+                        !SyncThread.isHiddenDirectory(stwa, sti, tf) &&
+                                SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir)) {
+                    if (!SyncThread.isHiddenFile(stwa, sti, tf)) {
+                        if (!isSmbFileExists(stwa, smb_fl, master_dir)) {
+                            if (!(tmp_target_dir.equals("") && !sti.isSyncProcessRootDirFile())) {
+                                if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, target_dir)) {
+                                    SyncThread.deleteSmbItem(stwa, true, sti, to_base, target_dir, stwa.targetAuth);
+                                } else {
+                                    stwa.totalIgnoreCount++;
+                                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", target_dir, tf.getName(),
+                                            "", stwa.context.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                                }
                             }
                         }
                     }
