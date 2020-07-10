@@ -74,7 +74,8 @@ public class SyncThreadSyncFile {
         try {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
-            if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
+            boolean is_Directory = tf.isDirectory();
+            if (is_Directory && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
                     process_subdirs = !remove_tf;
@@ -131,7 +132,7 @@ public class SyncThreadSyncFile {
 //							sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
                     }
                 }
-            } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
+            } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
                 } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
@@ -184,7 +185,8 @@ public class SyncThreadSyncFile {
         try {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
-            if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
+            boolean is_Directory = tf.isDirectory();
+            if (is_Directory && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
                     process_subdirs = !remove_tf;
@@ -242,7 +244,7 @@ public class SyncThreadSyncFile {
 //								sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
                     }
                 }
-            } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
+            } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
                 } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
@@ -285,7 +287,8 @@ public class SyncThreadSyncFile {
         try {
             String tmp_target_dir = target_dir.substring(to_base.length());
             if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
-            if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
+            boolean is_Directory = tf.isDirectory();
+            if (is_Directory && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
                     process_subdirs = !remove_tf;
@@ -345,7 +348,7 @@ public class SyncThreadSyncFile {
 //								sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
                     }
                 }
-            } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
+            } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
                 } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
@@ -405,7 +408,8 @@ public class SyncThreadSyncFile {
             stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " master=", master_dir, ", target=", target_dir);
         String tmp_target_dir = target_dir.substring(to_base.length());
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
-        if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
+        boolean is_Directory = tf.isDirectory();
+        if (is_Directory && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
             if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                 mf = new File(master_dir);
                 remove_tf = !mf.exists() || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
@@ -446,7 +450,7 @@ public class SyncThreadSyncFile {
 //						sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
                 }
             }
-        } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
+        } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
             if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                 mf = new File(master_dir);
                 remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
@@ -501,7 +505,8 @@ public class SyncThreadSyncFile {
         String tmp_target_dir = target_dir.substring(to_base.length());
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
         try {
-            if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
+            boolean is_Directory = tf.isDirectory();
+            if (is_Directory && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                     mf = new File(master_dir);
                     remove_tf = !mf.exists() || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
@@ -557,7 +562,7 @@ public class SyncThreadSyncFile {
 //							sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
                     }
                 }
-            } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
+            } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                     mf = new File(master_dir);
                     remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
@@ -609,7 +614,8 @@ public class SyncThreadSyncFile {
             stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " master=", master_dir, ", target=", target_dir);
         String tmp_target_dir = target_dir.replace(to_base, "");
         if (tmp_target_dir.startsWith("/")) tmp_target_dir = tmp_target_dir.substring(1);
-        if (tf.isDirectory() && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
+        boolean is_Directory = tf.isDirectory();
+        if (is_Directory && !SyncThread.isHiddenDirectory(stwa, sti, tf)) { // Directory Delete
             if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
                 mf = new File(master_dir);
                 remove_tf = !mf.exists() || !SyncThread.isDirectoryToBeProcessed(stwa, tmp_target_dir);
@@ -652,7 +658,7 @@ public class SyncThreadSyncFile {
 //						sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
                 }
             }
-        } else if (!SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
+        } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
             if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                 mf = new File(master_dir);
                 remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
