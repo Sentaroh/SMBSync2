@@ -508,6 +508,7 @@ public class SyncThread extends Thread {
                 ", SkipIfConnectAnotherWifiSsid=" + sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid() ,
                 ", SyncOnlyCharging=" + sti.isSyncOptionSyncWhenCharging() ,
                 ", DeleteFirst=" + sti.isSyncOptionDeleteFirstWhenMirror() ,
+                ", TargetIsExactMirror=" + sti.isSyncOptionEnsureTargetIsExactMirror() ,
 
                 ", IgnoreDstDifference=" + sti.isSyncOptionIgnoreDstDifference(),
                 ", OffsetOfDst=" + sti.getSyncOptionOffsetOfDst(),

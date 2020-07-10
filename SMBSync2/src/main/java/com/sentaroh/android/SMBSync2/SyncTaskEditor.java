@@ -261,7 +261,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         public int sync_opt = -1;
         public boolean sync_process_root_dir_file, sync_conf_required, sync_use_smbsync_last_mod, sync_do_not_reset_remote_file,
-                sync_retry, sync_empty_dir, sync_hidden_dir, sync_hidden_file, sync_sub_dir, sync_use_ext_dir_fileter, sync_delete_first;
+                sync_retry, sync_empty_dir, sync_hidden_dir, sync_hidden_file, sync_sub_dir, sync_use_ext_dir_fileter, sync_delete_first, sync_exact_mirror;
         public boolean sync_UseRemoteSmallIoArea;
         public int sync_master_pos = -1, sync_target_pos = -1;
 
@@ -352,6 +352,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
         final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
+        final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
         final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
         final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
         final CheckedTextView ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write =
@@ -400,6 +401,7 @@ public class SyncTaskEditor extends DialogFragment {
         sv.sync_process_override=ctvProcessOverride.isChecked();
         sv.sync_conf_required = ctvConfirmOverride.isChecked();
         sv.sync_delete_first = ctvDeleteFirst.isChecked();
+        sv.sync_exact_mirror = ctvEnsureTargetExactMirror.isChecked();
 
         sv.sync_wifi_option = spinnerSyncWifiStatus.getSelectedItemPosition();
 
@@ -491,6 +493,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
         final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
+        final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
         final CheckedTextView ctvRetry = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
         final CheckedTextView ctvSyncUseRemoteSmallIoArea = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
         final CheckedTextView ctv_edit_sync_tak_option_do_not_use_rename_when_smb_file_write =
@@ -549,6 +552,7 @@ public class SyncTaskEditor extends DialogFragment {
                 ctvProcessOverride.setChecked(sv.sync_process_override);
                 ctvConfirmOverride.setChecked(sv.sync_conf_required);
                 ctvDeleteFirst.setChecked(sv.sync_delete_first);
+                ctvEnsureTargetExactMirror.setChecked(sv.sync_exact_mirror);
 
                 CommonDialog.setViewEnabled(getActivity(), spinnerSyncWifiStatus, false);
                 spinnerSyncWifiStatus.setSelection(sv.sync_wifi_option);
@@ -3829,6 +3833,39 @@ public class SyncTaskEditor extends DialogFragment {
         ctvDeleteFirst.setChecked(n_sti.isSyncOptionDeleteFirstWhenMirror());
         setCtvListenerForEditSyncTask(ctvDeleteFirst, type, n_sti, dlg_msg);
 
+        final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
+        CommonUtilities.setCheckedTextView(ctvEnsureTargetExactMirror);
+        ctvEnsureTargetExactMirror.setChecked(n_sti.isSyncOptionEnsureTargetIsExactMirror());
+        ctvEnsureTargetExactMirror.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !ctvEnsureTargetExactMirror.isChecked();
+                NotifyEvent ntfy=new NotifyEvent(mContext);
+                if (isChecked) {//if checked, display warning that also files not matching the filters will be removed from the target
+                    mUtil.showCommonDialog(true, "W",
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title),
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog),
+                            mContext.getString(R.string.msgs_common_dialog_save),
+                            mContext.getString(R.string.msgs_common_dialog_cancel),
+                            ntfy);
+                } else {//if unchecked, no unexpected deletes will ever be done on the target (delete only files/dir included by filters AND removed from master), do not display warning
+                    ctvEnsureTargetExactMirror.setChecked(isChecked);
+                    checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                }
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        ctvEnsureTargetExactMirror.setChecked(isChecked);
+                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                    }
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                    }
+                });
+            }
+        });
+
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
         CommonUtilities.setCheckedTextView(ctUseExtendedDirectoryFilter1);
         ctUseExtendedDirectoryFilter1.setChecked(n_sti.isSyncOptionUseExtendedDirectoryFilter1());
@@ -4701,6 +4738,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvProcessOverride = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_process_override_delete_file);
         final CheckedTextView ctvConfirmOverride = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_confirm_override_delete_file);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
+        final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
         final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
         final CheckedTextView ctvShowSpecialOption = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
@@ -4738,6 +4776,7 @@ public class SyncTaskEditor extends DialogFragment {
         nstli.setSyncConfirmOverrideOrDelete(ctvConfirmOverride.isChecked());
 
         nstli.setSyncOptionDeleteFirstWhenMirror(ctvDeleteFirst.isChecked());
+        nstli.setSyncOptionEnsureTargetIsExactMirror(ctvEnsureTargetExactMirror.isChecked());
 
         nstli.setSyncOptionUseExtendedDirectoryFilter1(ctUseExtendedDirectoryFilter1.isChecked());
         nstli.setsyncOptionUseDirectoryFilterV2(ctUseDirectoryFilterV2.isChecked());
@@ -4931,6 +4970,9 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final LinearLayout ll_sync_delete_first_when_mirror=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_delete_first_when_mirror);
 
+        final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
+        final LinearLayout ll_sync_ensure_target_is_exact_mirror=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_ensure_target_is_exact_mirror);
+
         final LinearLayout ll_edit_sync_tak_option_keep_conflict_file=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file_view);
         final LinearLayout ll_spinnerTwoWaySyncConflictRule=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_view);
 
@@ -4952,6 +4994,9 @@ public class SyncTaskEditor extends DialogFragment {
 
         if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) ll_sync_delete_first_when_mirror.setVisibility(CheckedTextView.VISIBLE);
         else ll_sync_delete_first_when_mirror.setVisibility(CheckedTextView.GONE);
+
+        if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) ll_sync_ensure_target_is_exact_mirror.setVisibility(CheckedTextView.VISIBLE);
+        else ll_sync_ensure_target_is_exact_mirror.setVisibility(CheckedTextView.GONE);
 
         if (!n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             ll_ctvUseSmbsyncLastMod.setVisibility(LinearLayout.GONE);

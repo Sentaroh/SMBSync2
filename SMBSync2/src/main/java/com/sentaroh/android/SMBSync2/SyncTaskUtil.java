@@ -7181,6 +7181,8 @@ public class SyncTaskUtil {
 
             if (!parm[93].equals("") && !parm[93].equals("end")) stli.setsyncOptionUseDirectoryFilterV2((parm[93].equals("1") ? true : false));
 
+            if (!parm[94].equals("") && !parm[94].equals("end")) stli.setSyncOptionEnsureTargetIsExactMirror((parm[94].equals("1") ? true : false));
+
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -7712,6 +7714,8 @@ public class SyncTaskUtil {
                             item.getSyncOptionOffsetOfDst()+ "\t" +                                     //92
 
                             (item.isSyncOptionUseDirectoryFilterV2() ? "1" : "0") + "\t" +             //93
+                            
+                            (item.isSyncOptionEnsureTargetIsExactMirror() ? "1" : "0") + "\t" +     //94
 
                             "end"
                     ;
