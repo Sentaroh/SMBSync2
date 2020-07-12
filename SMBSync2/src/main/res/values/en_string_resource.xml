@@ -201,6 +201,7 @@
         <string name="msgs_main_sync_list_array_mtype_archive">ARCHIVE</string>
         <string name="msgs_main_sync_list_array_mtype_copy">COPY</string>
         <string name="msgs_main_sync_list_array_mtype_mirr">MIRR</string>
+        <string name="msgs_main_sync_list_array_mtype_mirr_img">IMAGE</string>
         <string name="msgs_main_sync_list_array_mtype_move">MOVE</string>
         <string name="msgs_main_sync_list_array_mtype_sync">SYNC</string>
         <string name="msgs_main_sync_list_array_no_last_sync_time">Sync task has not been executed.</string>
@@ -212,6 +213,7 @@
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Master and target folders are identical. You must select different source and destination directory names.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Target folder path is either identical or included in Master folder. You must select a different destination directory or define proper folder filters.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Mirror</string>
+        <string name="msgs_main_sync_profile_dlg_mirror_image">Mirror (Exact Image)</string>
         <string name="msgs_main_sync_profile_dlg_move">Move</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Specify the IP address or host name of the SMB server.</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_port_number">Specify the port number of the SMB server.</string>

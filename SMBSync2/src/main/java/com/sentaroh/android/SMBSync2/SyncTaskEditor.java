@@ -3304,14 +3304,19 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.notifyDataSetChanged();
     }
 
-    private void setSpinnerSyncTaskType(Spinner spinnerSyncOption, String prof_syncopt, String target_folder_type) {
+    private void setSpinnerSyncTaskType(Spinner spinnerSyncOption, SyncTaskItem n_sti) {
         CommonUtilities.setSpinnerBackground(mContext, spinnerSyncOption, mGp.isScreenThemeIsLight());
+        String prof_syncopt = n_sti.getSyncTaskType();
         final CustomSpinnerAdapter adapterSyncOption =
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         adapterSyncOption.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinnerSyncOption.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_syncopt_prompt));
         spinnerSyncOption.setAdapter(adapterSyncOption);
-        adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror));
+
+        final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
+        if (ctvEnsureTargetExactMirror.isChecked()) adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror_image));
+        else adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror));
+
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_copy));
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_move));
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive));
@@ -3520,7 +3525,7 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
-        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
+        setSpinnerSyncTaskType(spinnerSyncType, n_sti);
         spinnerSyncType.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -3836,6 +3841,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
         CommonUtilities.setCheckedTextView(ctvEnsureTargetExactMirror);
         ctvEnsureTargetExactMirror.setChecked(n_sti.isSyncOptionEnsureTargetIsExactMirror());
+        setSpinnerSyncTaskType(spinnerSyncType, n_sti);
         ctvEnsureTargetExactMirror.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3850,12 +3856,15 @@ public class SyncTaskEditor extends DialogFragment {
                             ntfy);
                 } else {//if unchecked, no unexpected deletes will ever be done on the target (delete only files/dir included by filters AND removed from master), do not display warning
                     ctvEnsureTargetExactMirror.setChecked(isChecked);
+                    setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                     checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                 }
+
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        ctvEnsureTargetExactMirror.setChecked(isChecked);
+                        ctvEnsureTargetExactMirror.setChecked(isChecked);//true
+                        setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                     }
                     @Override
@@ -4118,7 +4127,7 @@ public class SyncTaskEditor extends DialogFragment {
                         master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                         target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
 
-                        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
+                        setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                         if (dlg_msg.getText().length()==0) {
                             if (!prev_master_folder_type.equals(n_sti.getMasterFolderType())) {
@@ -4236,7 +4245,7 @@ public class SyncTaskEditor extends DialogFragment {
                 master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
                 target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
 
-                setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
+                setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
         });
@@ -4292,7 +4301,7 @@ public class SyncTaskEditor extends DialogFragment {
                         if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) CommonDialog.setViewEnabled(getActivity(), swap_master_target, false);
                         else CommonDialog.setViewEnabled(getActivity(), swap_master_target, true);
 
-                        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getTargetFolderType());
+                        setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
 
                         if (dlg_msg.getText().length()==0) {
@@ -4875,9 +4884,14 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setSyncTaskTypeFromSpinnere(Spinner spinner, SyncTaskItem n_stli) {
-        String so = mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror);
-        if (spinner.getSelectedItemPosition()<spinner.getAdapter().getCount()) so=spinner.getSelectedItem().toString();
-        if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror)))
+        String so = null;
+
+        final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
+        if (ctvEnsureTargetExactMirror.isChecked()) so = mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror_image);
+        else so = mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror);
+
+        if (spinner.getSelectedItemPosition()<spinner.getAdapter().getCount()) so=spinner.getSelectedItem().toString();//Mirror adapter.getCount() = 0 (Spinner position 0)
+        if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror)) || so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror_image)))
             n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_MIRROR);
         else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_copy)))
             n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_COPY);

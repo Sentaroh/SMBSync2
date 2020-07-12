@@ -201,6 +201,7 @@
         <string name="msgs_main_sync_list_array_mtype_archive">АРХИВ</string>
         <string name="msgs_main_sync_list_array_mtype_copy">КОПИРОВАТЬ</string>
         <string name="msgs_main_sync_list_array_mtype_mirr">ЗЕРКАЛО</string>
+        <string name="msgs_main_sync_list_array_mtype_mirr_img">ИЗОБРАЖЕНИЕ</string>
         <string name="msgs_main_sync_list_array_mtype_move">ПЕРЕНЕСТИ</string>
         <string name="msgs_main_sync_list_array_mtype_sync">СИНХРОНИЗИРОВАТЬ</string>
         <string name="msgs_main_sync_list_array_no_last_sync_time">Задача синхронизации не была выполнена.</string>
@@ -212,6 +213,7 @@
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Главная и целевая папки идентичны. Вы должны выбрать разные имена исходного и целевого каталогов.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Главный путь и путь к целевой папке идентичны. Вы должны выбрать разные имена исходного и целевого каталогов или определить соответствующие фильтры папок.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Зеркало</string>
+        <string name="msgs_main_sync_profile_dlg_mirror_image">Зеркало (Точное изображение)</string>
         <string name="msgs_main_sync_profile_dlg_move">Переместить</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Укажите IP-адрес или имя хоста SMB-сервера.</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_port_number">Укажите номер порта сервера SMB.</string>
