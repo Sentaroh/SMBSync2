@@ -678,22 +678,42 @@ public class SyncThreadSyncZip {
 //			Log.v("","root="+root_dir);
             ArrayList<FileHeader> remove_list = new ArrayList<FileHeader>();
             for (ZipFileListItem zfli : stwa.zipFileList) {
-                String master_path = "", zf_name = zfli.getPath().replace(root_dir + "/", "");
-                if (root_dir.equals("")) master_path = from_path + "/" + zfli.getPath();
+                String zf_name = zfli.getPath().replace(root_dir + "/", "");//zf_name: relative file/dir path (without storage/master/ part)
+                String master_path = "";
+                if (root_dir.equals("")) master_path = from_path + "/" + zfli.getPath();//master_path = file/dir complete path in master (storage/master_dir/file-dir-path)
                 else master_path = from_path + "/" + zfli.getPath().replace(root_dir + "/", "");
 //				Log.v("","master="+master_path+", zfname="+zf_name);
+//              stwa.util.addDebugMsg(2, "I", "master="+master_path+", zfname="+zf_name);
+//              stwa.util.addDebugMsg(2, "I", "zfli  ="+zfli.getPath() + " isDirectory="+zfli.isDirectory());
                 if (!zf_name.equals(root_dir) && !zf_name.equals(root_dir + "/")) {
-                    File lf = new File(master_path);
-                    if (!lf.exists()) {
+                    File mf = new File(master_path);
+
+                    boolean remove_zfli = false;
+                    boolean is_directory = zfli.isDirectory();
+                    if (is_directory && !SyncThread.isHiddenDirectory(stwa, sti, zf_name)) { // Directory Delete
+                        if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete the target dir if source dir doesn't exist OR if it is excluded by dir filters
+                            remove_zfli = !mf.exists() || !SyncThread.isDirectoryToBeProcessed(stwa, zf_name);
+                        } else if (SyncThread.isDirectoryToBeProcessed(stwa, zf_name)) {//delete target dir if it is included by dir filter AND it is deleted from source dir
+                            remove_zfli = !mf.exists();
+                        } //target dir is excluded by filters: never remove target dir (remove_zfli=false), do not waste time checking mf.exists()
+                    } else if (!is_directory && !SyncThread.isHiddenFile(stwa, sti, zf_name)) { // file Delete
+                        if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
+                            remove_zfli = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, zf_name) || !SyncThread.isFileSelected(stwa, sti, zf_name);
+                        } else if (SyncThread.isDirectorySelectedByFileName(stwa, zf_name) && SyncThread.isFileSelected(stwa, sti, zf_name)) {//delete target file if it is included by filters and it doesn't exist on source
+                            remove_zfli = !mf.exists();
+                        } //file is excluded by filters: never remove target file, do not waste time checking mf.exists()
+                    }
+
+                    if (remove_zfli) {
                         ArrayList<FileHeader> fhl = (ArrayList<FileHeader>) zf.getFileHeaders();
                         String del = "";
-                        if (zfli.isDirectory()) del = "/";
+                        if (is_directory) del = "/";
                         for (FileHeader dfh : fhl) {
                             if (dfh.getFileName().equals(zfli.getPath() + del)) {
                                 if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE, dfh.getFileName())) {
                                     remove_list.add(dfh);
 //									if (!sti.isSyncTestMode()) zf.removeFile(dfh);
-                                    if (zfli.isDirectory())
+                                    if (is_directory)
                                         SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", zfli.getPath(), zfli.getFileName(),
                                                 "", stwa.context.getString(R.string.msgs_mirror_task_dir_deleted));
                                     else
