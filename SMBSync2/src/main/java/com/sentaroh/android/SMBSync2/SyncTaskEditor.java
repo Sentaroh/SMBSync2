@@ -3575,9 +3575,8 @@ public class SyncTaskEditor extends DialogFragment {
                 boolean isChecked = !ctv_never_overwrite_target_file_newer_than_the_master_file.isChecked();
                 ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(isChecked);
                 if (isChecked) {
-                    mUtil.showCommonDialog(false, "D",
-                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning),
-                            "", null );
+                    mUtil.showCommonDialog(false, "D", mContext.getString(R.string.msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file),
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning), null );
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
