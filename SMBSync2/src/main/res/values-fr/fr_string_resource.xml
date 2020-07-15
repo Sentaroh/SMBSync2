@@ -402,7 +402,7 @@
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Autoriser la connexion aux adresses IP publiques</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirmer avant de remplacer/supprimer</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Faire de la Destination une image exacte de la Source</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Avertissement: tous les dossiers et fichiers qui n\'existent pas dans le répertoire Source ainsi que ceux non inclus par les filtres seront supprimés du répertoire Destination !</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Avertissement: tous les dossiers et fichiers qui n\'existent pas dans le répertoire Source ainsi que ceux non inclus par les filtres seront supprimés du répertoire Destination !\nNous vous recommandons vivement de faire des tests et de vous assurer qu\'aucun fichier ou répertoire involontaire n\'est supprimé.</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Faire du dossier Destination une image exacte de la Source (mode Miroir uniquement)</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Supprimer les fichiers avant la sync (mode Miroir uniquement)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Comparaison uniquement par la taille des fichiers (les fichiers sont considérés différents seulement si la taille de la source est supérieure à celle de la destination)</string>

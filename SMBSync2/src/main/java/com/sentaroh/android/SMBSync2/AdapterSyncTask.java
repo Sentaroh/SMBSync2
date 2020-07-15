@@ -208,11 +208,8 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             holder.ll_view = (LinearLayout) v.findViewById(R.id.profile_list_view);
             if (ll_default != null) ll_default = holder.ll_view.getBackground();
 
-            holder.tv_last_sync_time = (TextView) v.findViewById(R.id.sync_task_sync_result_time);
-            holder.tv_last_sync_result = (TextView) v.findViewById(R.id.sync_task_sync_result_status);
+            holder.tv_last_sync_result = (TextView) v.findViewById(R.id.sync_task_sync_result_text);
             holder.ll_last_sync = (LinearLayout) v.findViewById(R.id.sync_task_sync_result_view);
-
-            holder.tv_dir_name = (TextView) v.findViewById(R.id.sync_task_sync_dir_name);
 
             if (mTextColor==null) mTextColor=holder.tv_row_name.getTextColors();
             v.setTag(holder);
@@ -240,7 +237,6 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             holder.tv_row_active.setText(act);
             holder.tv_row_name.setText(o.getSyncTaskName());
 
-            holder.tv_dir_name.setVisibility(LinearLayout.GONE);
             holder.ll_sync.setVisibility(LinearLayout.VISIBLE);
             holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
             holder.tv_row_active.setVisibility(LinearLayout.VISIBLE);
@@ -285,8 +281,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             if (!o.getLastSyncTime().equals("")) {
                 holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
                 holder.tv_last_sync_result.setTextColor(mTextColor);
-                holder.tv_last_sync_time.setText(o.getLastSyncTime());
-                holder.tv_last_sync_result.setText(result);
+                holder.tv_last_sync_result.setText(o.getLastSyncTime()+" - "+result);
             } else {
                 holder.ll_last_sync.setVisibility(LinearLayout.GONE);
             }
@@ -434,9 +429,9 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         ImageView iv_row_image_master, iv_row_image_target;
         String tv_mtype_mirror, tv_mtype_move, tv_mtype_copy, tv_mtype_sync, tv_mtype_archive;
 
-        TextView tv_dir_name, tv_dir_const;
+        TextView tv_dir_const;
 
-        TextView tv_last_sync_time, tv_last_sync_result;
+        TextView tv_last_sync_result;
         LinearLayout ll_sync, ll_entry, ll_last_sync, ll_view;
     }
 }

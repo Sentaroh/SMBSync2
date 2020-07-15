@@ -402,7 +402,7 @@
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Разрешить синхронизацию с глобальными IP-адресами</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Подтвердите, прежде чем перезаписать/удалить</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Сделайте Target точным изображением исходного каталога</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Предупреждение: все папки и файлы, которые не существуют в исходной папке, а также те, которые не включены в фильтры, будут удалены из папки назначения!</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Предупреждение: все папки и файлы, которые не существуют в исходной папке, а также те, которые не включены в фильтры, будут удалены из папки назначения!\nНастоятельно рекомендуем протестировать и убедиться в том, что непреднамеренные файлы или каталоги не удалены.</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Сделайте папку назначения точным изображением исходной папки (только в режиме зеркала)</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Удаление файлов перед синхронизацией (только в режиме зеркального отображения).</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Файлы считаются разными только в том случае, если размер источника больше, чем место назначения (только сравнение размеров, отключение разницы во времени).</string>
