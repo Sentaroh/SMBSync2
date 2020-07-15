@@ -134,9 +134,22 @@ public final class CommonUtilities {
         cdf.showDialog(mFragMgr,cdf,ntfy);
     };
 
+    public void showCommonDialog(final boolean negative, String type, String title, String msgtext, int text_color, NotifyEvent ntfy) {
+        MessageDialogFragment cdf = MessageDialogFragment.newInstance(negative, type, title, msgtext);
+        cdf.setMessageTextColor(text_color);
+        cdf.showDialog(mFragMgr,cdf,ntfy);
+    };
+
     public void showCommonDialog(final boolean negative, String type, String title, String msgtext,
                                  String button_text_ok, String button_text_cancel, NotifyEvent ntfy) {
         MessageDialogFragment cdf = MessageDialogFragment.newInstance(negative, type, title, msgtext, button_text_ok, button_text_cancel);
+        cdf.showDialog(mFragMgr,cdf,ntfy);
+    };
+
+    public void showCommonDialog(final boolean negative, String type, String title, String msgtext,
+                                 String button_text_ok, String button_text_cancel, int text_color, NotifyEvent ntfy) {
+        MessageDialogFragment cdf = MessageDialogFragment.newInstance(negative, type, title, msgtext, button_text_ok, button_text_cancel);
+        cdf.setMessageTextColor(text_color);
         cdf.showDialog(mFragMgr,cdf,ntfy);
     };
 
