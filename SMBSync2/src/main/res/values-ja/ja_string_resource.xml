@@ -201,6 +201,7 @@
         <string name="msgs_main_sync_list_array_mtype_archive">アーカイブ</string>
         <string name="msgs_main_sync_list_array_mtype_copy">コピー</string>
         <string name="msgs_main_sync_list_array_mtype_mirr">ミラー</string>
+        <string name="msgs_main_sync_list_array_mtype_mirr_img">IMAGE</string>
         <string name="msgs_main_sync_list_array_mtype_move">移動</string>
         <string name="msgs_main_sync_list_array_mtype_sync">同期</string>
         <string name="msgs_main_sync_list_array_no_last_sync_time">同期は実行されていません</string>
@@ -212,6 +213,7 @@
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">マスターフォルダーとターゲットフォルダーの両方が内部ストレージでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">マスターフォルダーとターゲットフォルダーで同じディレクトリにアクセスします、どちらかのディレクトリを変更するかディレクトリフィルターを指定してください。</string>
         <string name="msgs_main_sync_profile_dlg_mirror">ミラー</string>
+        <string name="msgs_main_sync_profile_dlg_mirror_image">Mirror (Exact Image)</string>
         <string name="msgs_main_sync_profile_dlg_move">移動</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">SMBホストのアドレスまたは名前を指定してください。</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_port_number">SMBホストのポートを指定してください。</string>
@@ -401,6 +403,9 @@
         <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">指定されたアクセスポイントまたはIPアドレスで無い場合タスクをスキップし、次のタスクを開始する。</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">グローバルIPアドレスでの同期を許可する</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">ファイルの上書または削除の前に確認する</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Make Target an exact image of Source</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Warning: all files and folders that do not exist in the Source directory and those that are not included by the defined filters will be deleted from the Target directory !</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Maintain Target directory as an exact image of the Source (Mirror mode only)</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">ミラーの時は削除を最初に行う</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">マスターのファイルサイズが大きい時だけ差分ファイルとして判定する</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">差分ファイルの判定にファイル サイズを使用する</string>

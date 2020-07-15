@@ -204,6 +204,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private boolean syncOptionUseExtendedDirectoryFilter1 = false;
 
     private boolean syncOptionDeleteFirstWhenMirror = false;
+    private boolean SyncOptionEnsureTargetIsExactMirror = false;
 
     public final static String SYNC_WIFI_STATUS_WIFI_OFF = "0"; // list index 0
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP = "1"; // list index 1
@@ -567,6 +568,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setSyncOptionDeleteFirstWhenMirror(boolean first) {syncOptionDeleteFirstWhenMirror = first;}
     public boolean isSyncOptionDeleteFirstWhenMirror() {return syncOptionDeleteFirstWhenMirror;}
 
+    public void setSyncOptionEnsureTargetIsExactMirror(boolean first) {SyncOptionEnsureTargetIsExactMirror = first;}
+    public boolean isSyncOptionEnsureTargetIsExactMirror() {return SyncOptionEnsureTargetIsExactMirror;}
+
     private boolean syncOptionConfirmNotExistsExifDate = true;
     public void setSyncOptionConfirmNotExistsExifDate(boolean enabled) {syncOptionConfirmNotExistsExifDate=enabled;}
     public boolean isSyncOptionConfirmNotExistsExifDate() {return syncOptionConfirmNotExistsExifDate;}
@@ -748,6 +752,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionDeterminChangedFileByTimeValue == sti.getSyncOptionDifferentFileAllowableTime()) &&
 //                        (syncOptionUseFileCopyByTempName==sti.isSyncUseFileCopyByTempName()) &&
                         (syncOptionDeleteFirstWhenMirror==sti.isSyncOptionDeleteFirstWhenMirror()) &&
+                        (SyncOptionEnsureTargetIsExactMirror==sti.isSyncOptionEnsureTargetIsExactMirror()) &&
                         (syncOptionConfirmNotExistsExifDate==sti.isSyncOptionConfirmNotExistsExifDate()) &&
 
                         (syncOptionUseExtendedDirectoryFilter1==sti.isSyncOptionUseExtendedDirectoryFilter1()) &&

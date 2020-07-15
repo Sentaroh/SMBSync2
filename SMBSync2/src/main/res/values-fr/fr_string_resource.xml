@@ -201,6 +201,7 @@
         <string name="msgs_main_sync_list_array_mtype_archive">ARCHIVER</string>
         <string name="msgs_main_sync_list_array_mtype_copy">COPIER</string>
         <string name="msgs_main_sync_list_array_mtype_mirr">MIROIR</string>
+        <string name="msgs_main_sync_list_array_mtype_mirr_img">IMAGE</string>
         <string name="msgs_main_sync_list_array_mtype_move">DEPLACER</string>
         <string name="msgs_main_sync_list_array_mtype_sync">SYNCHRONISER</string>
         <string name="msgs_main_sync_list_array_no_last_sync_time">La tâche de synchronisation n\'a pas été exécutée.</string>
@@ -212,6 +213,7 @@
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_internal">Les dossiers source et destination sont identiques. Vous devez choisir des dossiers différents comme source et destination</string>
         <string name="msgs_main_sync_profile_dlg_invalid_master_target_combination_same_dir">Le dossier de destination a un chemin identique ou inclu dans celui du dossier source. Vous devez choisir un dossier de destination différent ou bien définir un filtre de dossiers approprié.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Miroir</string>
+        <string name="msgs_main_sync_profile_dlg_mirror_image">Miroir (Image Exacte)</string>
         <string name="msgs_main_sync_profile_dlg_move">Déplacer</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Indiquer l\'adresse IP ou le nom d\'hôte du serveur SMB.</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_port_number">Indiquer le numéro de port du serveur SMB.</string>
@@ -401,6 +403,9 @@
         <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Ignorer la tâche si le WLAN n\'est pas connecté au point d\'accès spécifié, ou que l\'adresse IP ne correspond pas à celle spécifiée.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Autoriser la connexion aux adresses IP publiques</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirmer avant de remplacer/supprimer</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Faire de la Destination une image exacte de la Source</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Avertissement: tous les dossiers et fichiers qui n\'existent pas dans le répertoire Source ainsi que ceux non inclus par les filtres seront supprimés du répertoire Destination !</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Faire du dossier Destination une image exacte de la Source (mode Miroir uniquement)</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Supprimer les fichiers avant la sync (mode Miroir uniquement)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Comparaison uniquement par la taille des fichiers (les fichiers sont considérés différents seulement si la taille de la source est supérieure à celle de la destination)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">Utiliser la taille des fichiers pour déterminer s\'ils sont différents</string>

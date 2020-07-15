@@ -508,6 +508,7 @@ public class SyncThread extends Thread {
                 ", SkipIfConnectAnotherWifiSsid=" + sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid() ,
                 ", SyncOnlyCharging=" + sti.isSyncOptionSyncWhenCharging() ,
                 ", DeleteFirst=" + sti.isSyncOptionDeleteFirstWhenMirror() ,
+                ", TargetIsExactMirror=" + sti.isSyncOptionEnsureTargetIsExactMirror() ,
 
                 ", IgnoreDstDifference=" + sti.isSyncOptionIgnoreDstDifference(),
                 ", OffsetOfDst=" + sti.getSyncOptionOffsetOfDst(),
@@ -2685,6 +2686,17 @@ public class SyncThread extends Thread {
         return t_df;
     }
 
+    static public boolean isHiddenDirectory(SyncThreadWorkArea stwa, SyncTaskItem sti, String lf) {
+        boolean result = false;
+        if (sti.isSyncOptionSyncHiddenDirectory()) result = false;
+        else {
+            if (stwa.util.dirnameOf(lf).substring(0, 1).equals(".")) result = true;
+        }
+        if (stwa.gp.settingDebugLevel >= 2)
+            stwa.util.addDebugMsg(2, "I", "isHiddenDirectory(Local) result=" + result + ", Name=" + stwa.util.dirnameOf(lf));
+        return result;
+    }
+
     static public boolean isHiddenDirectory(SyncThreadWorkArea stwa, SyncTaskItem sti, File lf) {
         boolean result = false;
         if (sti.isSyncOptionSyncHiddenDirectory()) result = false;
@@ -2706,6 +2718,18 @@ public class SyncThread extends Thread {
             String name = hf.getName().replace("/", "");
             stwa.util.addDebugMsg(2, "I", "isHiddenDirectory(Remote) result=" + result + ", Name=" + name);
         }
+        return result;
+    }
+
+    static public boolean isHiddenFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String lf) {
+        boolean result = false;
+        if (sti.isSyncOptionSyncHiddenFile()) result = false;
+        else {
+            if (stwa.util.filenameOf(lf).substring(0, 1).equals(".")) result = true;
+        }
+        if (stwa.gp.settingDebugLevel >= 2)
+            stwa.util.addDebugMsg(2, "I", "isHiddenFile(Local) result=" + result + ", Name=" + stwa.util.filenameOf(lf));
+
         return result;
     }
 

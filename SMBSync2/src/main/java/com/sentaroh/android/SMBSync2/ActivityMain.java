@@ -4419,7 +4419,7 @@ public class ActivityMain extends AppCompatActivity {
         });
         ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
                 mUtil, false, ntfy_check, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_EDIT_SYNC_TASK);
-     }
+    }
 
     private void syncSpecificSyncTask(SyncTaskItem sti) {
         final ArrayList<SyncTaskItem> t_list = new ArrayList<SyncTaskItem>();
