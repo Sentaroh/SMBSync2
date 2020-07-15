@@ -194,8 +194,9 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             holder.iv_row_sync_dir_image = (ImageView) v.findViewById(R.id.sync_task_direction_image);
             holder.iv_row_image_master = (ImageView) v.findViewById(R.id.sync_task_master_icon);
             holder.iv_row_image_target = (ImageView) v.findViewById(R.id.sync_task_target_icon);
-            if (o != null && o.isSyncOptionEnsureTargetIsExactMirror()) holder.tv_mtype_mirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr_img);
-            else holder.tv_mtype_mirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr);
+//            if (o != null && o.isSyncOptionEnsureTargetIsExactMirror()) holder.tv_mtype_mirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr_img);
+//            else holder.tv_mtype_mirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr);
+            holder.tv_mtype_mirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr);
             //mUtil.addDebugMsg(2, "I", "o.isSyncOptionEnsureTargetIsExactMirror()=" + o.isSyncOptionEnsureTargetIsExactMirror());
             holder.tv_mtype_copy = mContext.getString(R.string.msgs_main_sync_list_array_mtype_copy);
             holder.tv_mtype_move = mContext.getString(R.string.msgs_main_sync_list_array_mtype_move);
@@ -217,8 +218,9 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             v.setTag(holder);
         } else {
             holder = (ViewHolder) v.getTag();
-            if (o != null && o.isSyncOptionEnsureTargetIsExactMirror()) holder.tv_mtype_mirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr_img);
-            else holder.tv_mtype_mirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr);
+//            if (o != null && o.isSyncOptionEnsureTargetIsExactMirror()) holder.tv_mtype_mirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr_img);
+//            else holder.tv_mtype_mirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr);
+            holder.tv_mtype_mirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr);
         }
 
         if (o != null) {
@@ -258,8 +260,9 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 synctp = holder.tv_mtype_archive;
             else synctp = "ERR";
 
-            if (o.isSyncOptionEnsureTargetIsExactMirror()) holder.tv_row_synctype.setTextColor(mThemeColorList.text_color_warning);
-            else holder.tv_row_synctype.setTextColor(mTextColor);
+//            if (o.isSyncOptionEnsureTargetIsExactMirror()) holder.tv_row_synctype.setTextColor(mThemeColorList.text_color_warning);
+//            else holder.tv_row_synctype.setTextColor(mTextColor);
+            holder.tv_row_synctype.setTextColor(mTextColor);
             holder.tv_row_synctype.setText(synctp);
 
             String result = "";
