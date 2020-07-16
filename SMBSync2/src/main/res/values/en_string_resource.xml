@@ -402,7 +402,7 @@
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Allow sync with all IP addresses (include public)</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirm before overwrite/delete</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Make Target an exact image of Source</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Warning: all files and folders that do not exist in the Source directory and those that are not included by the defined filters will be deleted from the Target directory !\nStrongly recommend that you test and make sure that no unintended files or directories are removed.</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Warning: all files and folders that do not exist in the Source directory and those that are not included by the defined filters will be deleted from the Target directory !\nIt is strongly recommend that you enable Test mode and ensure that no unexpected files or directories are removed or replaced.</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Maintain Target directory as an exact image of the Source (Mirror mode only)</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Delete files prior to sync (Mirror mode only)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Size only compare (files are considered different only if size of the source is larger than the destination)</string>
@@ -417,13 +417,13 @@
         <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">Synchronize the files in root of the master directory (if unchecked, only the folders and their files/subfolders are synchronized).</string>
         <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning">WARNING: Possible Unexpected Results !\nIf you live in a zone with DST or if you switch TimeZones, target file can wrongly show an older time than the source if it was modified within the DST/TimeZone interval change. It is strongly recommended to enable \"Confirm before overwrite/delete\" option. Please verify the contents of the file before overwiting it.</string>
         <string name="msgs_profile_sync_task_sync_option_copy_no_compare_title">Target file overwrite warning</string>
-        <string name="msgs_profile_sync_task_sync_option_copy_no_compare_warning">Warning: \"Use file size to determine if files are different\" and \"Use time of last modification to determine if files are different\" are both not selected and will always overwrite the target file.</string>
+        <string name="msgs_profile_sync_task_sync_option_copy_no_compare_warning">Warning: \"Use file size to determine if files are different\" and \"Use time of last modification to determine if files are different\" options are both not selected. This will force the source files to be copied on each sync and overwrite the target files.</string>
         <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file">Do not overwrite destination file if it is newer than source file</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_ignore_dst_difference">Ignore Day Light Saving Time difference between files</string>
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value">Time difference between daylight saving time and standard time (minutes)</string>
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">Select Daylight Saving Time offset (minutes)</string>
         <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">Do not set last modified time of destination file to match source file</string>
-        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified_warning">When enabled, the last modified time of the target file cannot be the same as the source file, so the file is copied each time it is synchronized.　Use this option when the target cannot set the last modified time, for example.\nIf this option is enabled, you can prevent files from being copied each time by disabling \"Use time of last modification to determine if files are different\".</string>
+        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified_warning">When enabled, the last modified time of the target file cannot be set to be the same as the source file. Target file will always appear as newer than the source file. This option is useful when the target cannot set the last modified time.\nIf this option is enabled, you can prevent files from being copied each time by disabling \"Use time of last modification to determine if files are different\" or by enabling the \"Do not overwrite destination file if it is newer than source file\".</string>
         <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">Overwrite destination files</string>
         <string name="msgs_profile_sync_task_sync_option_network_adv_options">Network advanced options:</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Retry on network error</string>
@@ -694,7 +694,7 @@
         <string name="msgs_schedule_confirm_title_delete">Really delete schedule?</string>
         <string name="msgs_schedule_confirm_title_enable">Really enable schedule?</string>
         <string name="msgs_schedule_confirm_title_disable">Really disable schedule?</string>
-        <string name="msgs_schedule_confirm_title_nosave">Quit?</string>
+        <string name="msgs_schedule_confirm_title_nosave">Quit without saving ?</string>
         <string name="msgs_schedule_confirm_msg_delete">Do you want to delete the following item(s)? The results are immediately reflected and cannot be undone.</string>
         <string name="msgs_schedule_confirm_msg_enable">Do you want to enable the following item(s)? The results are immediately reflected and cannot be undone.</string>
         <string name="msgs_schedule_confirm_msg_disable">Do you want to disable the following item(s)? The results are immediately reflected and cannot be undone.</string>
