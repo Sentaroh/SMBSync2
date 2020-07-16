@@ -161,6 +161,14 @@
                    android:layout_height="wrap_content"
                    android:orientation="horizontal" >
 
+               <HorizontalScrollView
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:fillViewport="true"
+                   android:scrollbars="none"
+                   android:layout_marginRight="5dp"
+                   android:orientation="horizontal"
+                   android:textAppearance="?android:attr/textAppearanceSmall" >
                    <Button
                        android:id="@+id/edit_sync_task_master_folder_info_btn"
                        android:layout_width="0dp"
@@ -174,6 +182,7 @@
 			           android:ellipsize="end"
 			           android:maxLines="1"
                        android:textAppearance="?android:attr/textAppearanceMedium" />
+               </HorizontalScrollView>
 
                </LinearLayout>
 
@@ -184,12 +193,14 @@
                    android:text="@string/msgs_profile_sync_task_dlg_target"
                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-               <LinearLayout
+               <HorizontalScrollView
                    android:layout_width="fill_parent"
                    android:layout_height="wrap_content"
+                   android:fillViewport="true"
+                   android:scrollbars="none"
+                   android:layout_marginRight="5dp"
                    android:orientation="horizontal"
                    android:textAppearance="?android:attr/textAppearanceSmall" >
-
                    <Button
                        android:id="@+id/edit_sync_task_target_folder_info_btn"
                        android:layout_width="0dp"
@@ -203,8 +214,7 @@
 			           android:maxLines="1"
                        android:text="TextView"
                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-               </LinearLayout>
+               </HorizontalScrollView>
 
                <include layout="@layout/edit_sync_task_dlg_filter" />
 

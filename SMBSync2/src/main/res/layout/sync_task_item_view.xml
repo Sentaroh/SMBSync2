@@ -65,14 +65,24 @@
                             android:layout_gravity="center_vertical|top"
                             android:src="@drawable/ic_16_server" />
 
-                        <TextView
-                            android:id="@+id/sync_task_master_info"
-                            android:layout_width="wrap_content"
+                        <HorizontalScrollView
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:lines="1"
-                            android:text="Master"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:fillViewport="true"
+                            android:scrollbars="none"
+                            android:orientation="horizontal"
+                            android:layout_marginRight="5dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall" >
+                            <TextView
+                                android:id="@+id/sync_task_master_info"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:text="Master"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                        </HorizontalScrollView>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -95,14 +105,24 @@
                             android:layout_gravity="top"
                             android:src="@drawable/ic_16_server" />
 
-                        <TextView
-                            android:id="@+id/sync_task_target_info"
-                            android:layout_width="wrap_content"
+                        <HorizontalScrollView
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:lines="1"
-                            android:text="Target"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:fillViewport="true"
+                            android:scrollbars="none"
+                            android:orientation="horizontal"
+                            android:layout_marginRight="5dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall" >
+                            <TextView
+                                android:id="@+id/sync_task_target_info"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:lines="1"
+                                android:text="Target"
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                        </HorizontalScrollView>
+
                     </LinearLayout>
                 </LinearLayout>
 
