@@ -162,6 +162,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
 
+                <HorizontalScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true"
+                    android:scrollbars="none"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal"
+                    android:textAppearance="?android:attr/textAppearanceSmall" >
                     <Button
                         android:id="@+id/edit_sync_task_master_folder_info_btn"
                         android:layout_width="0dp"
@@ -175,6 +183,8 @@
                         android:paddingLeft="5dp"
                         android:text="TextView"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
+                </HorizontalScrollView>
+
                 </LinearLayout>
 
                 <TextView
@@ -190,6 +200,14 @@
                     android:orientation="horizontal"
                     android:textAppearance="?android:attr/textAppearanceSmall" >
 
+                <HorizontalScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true"
+                    android:scrollbars="none"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal"
+                    android:textAppearance="?android:attr/textAppearanceSmall" >
                     <Button
                         android:id="@+id/edit_sync_task_target_folder_info_btn"
                         android:layout_width="0dp"
@@ -203,6 +221,8 @@
                         android:paddingLeft="5dp"
                         android:text="TextView"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
+                </HorizontalScrollView>
+
                 </LinearLayout>
 
                 <include layout="@layout/edit_sync_task_dlg_filter" />
