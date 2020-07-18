@@ -382,7 +382,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Exclure</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- exp. inclure: mon/dossier;/doss*/p?ivé\n- exclure tous les dossiers cache/tmp: \\cache/tmp\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- exp. de filtre: fichier1;*.txt;*.jpg;fichier*\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Avertissement : \"Faire de la Destination une image exacte de la Source\" est activé, donc ignorez les fichiers de paramètres de filtrage et les répertoires qui ne sont pas dans le répertoire maître seront supprimés du répertoire cible.</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Avec \"Supprime les répertoires et les fichiers exclus par le filtre\" activé, tous les fichiers et répertoires qui ne sont pas dans le répertoire source, ainsi que les fichiers et répertoires exclus par le filtre, seront supprimés du répertoire de destination.</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Filtre de fichiers</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filtre</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Inclure</string>
@@ -402,9 +402,9 @@
         <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Ignorer la tâche si le WLAN n\'est pas connecté au point d\'accès spécifié, ou que l\'adresse IP ne correspond pas à celle spécifiée.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Autoriser la connexion aux adresses IP publiques</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirmer avant de remplacer/supprimer</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Faire de la Destination une image exacte de la Source</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Avertissement: tous les dossiers et fichiers qui n\'existent pas dans le répertoire Source ainsi que ceux non inclus par les filtres seront supprimés du répertoire Destination !\nIl est vivement  recommandé d\'activer le mode Test et de vous assurer qu\'aucun fichier ou répertoire ne sera supprimé ou remplacé de manière involontaire.</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Faire du dossier Destination une image exacte de la Source (mode Miroir uniquement)</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Supprime les répertoires et les fichiers exclus par le filtre</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Avertissement: tous les dossiers et fichiers qui n\'existent pas dans le répertoire Source ainsi que ceux non inclus par les filtres seront supprimés du répertoire Destination !\nNous vous recommandons vivement de faire des tests et de vous assurer qu\'aucun fichier ou répertoire involontaire n\'est supprimé.</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Supprime les répertoires et les fichiers exclus par le filtre</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Supprimer les fichiers avant la sync (mode Miroir uniquement)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Comparaison uniquement par la taille des fichiers (les fichiers sont considérés différents seulement si la taille de la source est supérieure à celle de la destination)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">Utiliser la taille des fichiers pour déterminer s\'ils sont différents</string>

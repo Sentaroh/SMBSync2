@@ -2962,7 +2962,7 @@ public class SyncTaskUtil {
         }
         lv.setAdapter(filterAdapter);
 
-        if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
         else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
 
         title.setText(mContext.getString(R.string.msgs_filter_list_dlg_file_filter));
@@ -3008,7 +3008,7 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
-                if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
                 else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
             }
             @Override
@@ -3044,6 +3044,7 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
+                    ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
                     String entered_filter= s.toString();
                     String error_filter= "";
 
@@ -3061,6 +3062,8 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, addBtn, true);
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 } else {
+                    if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                    else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
                     CommonDialog.setViewEnabled(mActivity, addBtn, false);
 
                     //recheck existing filters before enabling Ok button and clearing warning dialog msg
@@ -3127,7 +3130,7 @@ public class SyncTaskUtil {
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
 
-                if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
                 else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
             }
         });
@@ -3221,7 +3224,7 @@ public class SyncTaskUtil {
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
 
-        if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
         else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
 
         //when entering main dir filters dialog, check existing filters for errors and display warning dialog and enable/disable ok buton in main filter list view
@@ -3256,7 +3259,7 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
-                if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
                 else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
             }
             @Override
@@ -3291,6 +3294,7 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
+                    ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
                     CommonDialog.setViewEnabled(mActivity, addbtn, false);
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     CommonDialog.setViewEnabled(mActivity, dirbtn, false);
@@ -3340,6 +3344,8 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     CommonDialog.setViewEnabled(mActivity, dirbtn, false);
                 } else {
+                    if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                    else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
                     CommonDialog.setViewEnabled(mActivity, addbtn, false);
                     CommonDialog.setViewEnabled(mActivity, dirbtn, true);
                     CommonDialog.setViewEnabled(mActivity, add_include_btn, true);
@@ -3403,7 +3409,7 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
                 else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
             }
         });
@@ -3423,7 +3429,7 @@ public class SyncTaskUtil {
                         } else {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                         }
-                        if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
                         else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
                     }
                     @Override

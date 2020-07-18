@@ -3583,7 +3583,7 @@ public class SyncTaskEditor extends DialogFragment {
                     mUtil.showCommonDialog(false, "D",
                             mContext.getString(R.string.msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file),
                             mContext.getString(R.string.msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning),
-                            mContext.getString(R.string.msgs_common_dialog_save),
+                            mContext.getString(R.string.msgs_common_dialog_confirm),
                             mContext.getString(R.string.msgs_common_dialog_cancel),
                             null );
                 }
@@ -3861,7 +3861,7 @@ public class SyncTaskEditor extends DialogFragment {
                     mUtil.showCommonDialog(true, "D",
                             mContext.getString(R.string.msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title),
                             mContext.getString(R.string.msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog),
-                            mContext.getString(R.string.msgs_common_dialog_save),
+                            mContext.getString(R.string.msgs_common_dialog_confirm),
                             mContext.getString(R.string.msgs_common_dialog_cancel),
                             ntfy);
                 } else {//if unchecked, no unexpected deletes will ever be done on the target (delete only files/dir included by filters AND removed from master), do not display warning
@@ -4016,7 +4016,7 @@ public class SyncTaskEditor extends DialogFragment {
                         mUtil.showCommonDialog(false, "D",
                                 mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_title),
                                 mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_warning),
-                                mContext.getString(R.string.msgs_common_dialog_save),
+                                mContext.getString(R.string.msgs_common_dialog_confirm),
                                 mContext.getString(R.string.msgs_common_dialog_cancel),
                                 null );
                     }
@@ -4074,7 +4074,7 @@ public class SyncTaskEditor extends DialogFragment {
                         mUtil.showCommonDialog(false, "D",
                                 mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_title),
                                 mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_warning),
-                                mContext.getString(R.string.msgs_common_dialog_save),
+                                mContext.getString(R.string.msgs_common_dialog_confirm),
                                 mContext.getString(R.string.msgs_common_dialog_cancel),
                                 null );
                     }
