@@ -3842,7 +3842,7 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
         CommonUtilities.setCheckedTextView(ctvEnsureTargetExactMirror);
         ctvEnsureTargetExactMirror.setChecked(n_sti.isSyncOptionEnsureTargetIsExactMirror());
-        setSpinnerSyncTaskType(spinnerSyncType, n_sti);
+//        setSpinnerSyncTaskType(spinnerSyncType, n_sti);
         ctvEnsureTargetExactMirror.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3857,7 +3857,7 @@ public class SyncTaskEditor extends DialogFragment {
                             ntfy);
                 } else {//if unchecked, no unexpected deletes will ever be done on the target (delete only files/dir included by filters AND removed from master), do not display warning
                     ctvEnsureTargetExactMirror.setChecked(isChecked);
-                    setSpinnerSyncTaskType(spinnerSyncType, n_sti);
+//                    setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                     checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                 }
 
@@ -3865,7 +3865,7 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         ctvEnsureTargetExactMirror.setChecked(isChecked);//true
-                        setSpinnerSyncTaskType(spinnerSyncType, n_sti);
+//                        setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                     }
                     @Override
