@@ -382,6 +382,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Исключить</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- отфильтровать все файлы с именами: file1;*.txt;*.jpg;file*.\n- фильтры можно также вводить в той же строке, разделенной \"; \"; \n- фильтры можно также вводить в той же строке, разделенной \"; \".\n - исключить выигрыши фильтров</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Внимание: \"Сделайте Target точным изображением исходного каталога\" включен, поэтому игнорируйте файлы настроек фильтров, и каталоги, которые не находятся в главном каталоге, будут удалены из этого каталога.</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Фильтр файла</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Включать</string>

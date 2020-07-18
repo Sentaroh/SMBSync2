@@ -2921,7 +2921,7 @@ public class SyncTaskUtil {
 
     }
 
-    public void editFileFilterDlg(final SyncTaskItem sti, final NotifyEvent p_ntfy, boolean use_dir_filter_v2) {
+    public void editFileFilterDlg(final SyncTaskItem sti, final NotifyEvent p_ntfy, boolean use_dir_filter_v2, boolean use_ensure_target_exact_mirror) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
         final AdapterFilterList filterAdapter;
 
@@ -2940,6 +2940,10 @@ public class SyncTaskUtil {
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
 
+        final LinearLayout ll_dir_filter_mirror_warning = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_mirror_method_warning_view);
+        final TextView tv_dir_filter_mirror_warning = (TextView) dialog.findViewById(R.id. filter_select_edit_mirror_method_warning_message);
+        tv_dir_filter_mirror_warning.setTextColor(mGp.themeColorList.text_color_warning);
+
         Button dirbtn = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
         dirbtn.setVisibility(Button.GONE);
 
@@ -2957,6 +2961,10 @@ public class SyncTaskUtil {
             filterAdapter.add(fli);
         }
         lv.setAdapter(filterAdapter);
+
+        if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+        else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
+
         title.setText(mContext.getString(R.string.msgs_filter_list_dlg_file_filter));
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_select_edit_msg);
 
@@ -3000,6 +3008,8 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
+                if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
             }
             @Override
             public void negativeResponse(Context c, Object[] o) {}
@@ -3116,6 +3126,9 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
+
+                if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
             }
         });
 
@@ -3151,7 +3164,7 @@ public class SyncTaskUtil {
         dialog.show();
     }
 
-    public void editDirFilterDlg(final SyncTaskItem sti, final NotifyEvent p_ntfy, boolean use_dir_filter_v2) {
+    public void editDirFilterDlg(final SyncTaskItem sti, final NotifyEvent p_ntfy, boolean use_dir_filter_v2, boolean use_ensure_target_exact_mirror) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
         final AdapterFilterList filterAdapter;
 
@@ -3166,9 +3179,14 @@ public class SyncTaskUtil {
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
         final LinearLayout ll_dir_filter_v2_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_dir_v2_guide_ll);
+
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
+
+        final LinearLayout ll_dir_filter_mirror_warning = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_mirror_method_warning_view);
+        final TextView tv_dir_filter_mirror_warning = (TextView) dialog.findViewById(R.id. filter_select_edit_mirror_method_warning_message);
+        tv_dir_filter_mirror_warning.setTextColor(mGp.themeColorList.text_color_warning);
 
         filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList, SMBSYNC2_PROF_FILTER_DIR);
         final ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
@@ -3203,6 +3221,9 @@ public class SyncTaskUtil {
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
 
+        if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+        else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
+
         //when entering main dir filters dialog, check existing filters for errors and display warning dialog and enable/disable ok buton in main filter list view
         if (!hasInvalidCharsAndWildcardsFilterList(filterAdapter, btn_ok, dlg_msg, SMBSYNC2_PROF_FILTER_DIR) &&
                 isNoDuplicateFilters(filterAdapter, btn_ok, dlg_msg) &&
@@ -3235,6 +3256,8 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 }
+                if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
             }
             @Override
             public void negativeResponse(Context c, Object[] o) { }
@@ -3380,6 +3403,8 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
+                if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
             }
         });
 
@@ -3398,6 +3423,8 @@ public class SyncTaskUtil {
                         } else {
                             CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                         }
+                        if (use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                        else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
                     }
                     @Override
                     public void negativeResponse(Context arg0, Object[] arg1) {

@@ -382,6 +382,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Exclure</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- exp. inclure: mon/dossier;/doss*/p?ivé\n- exclure tous les dossiers cache/tmp: \\cache/tmp\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- exp. de filtre: fichier1;*.txt;*.jpg;fichier*\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Avertissement : \"Faire de la Destination une image exacte de la Source\" est activé, donc ignorez les fichiers de paramètres de filtrage et les répertoires qui ne sont pas dans le répertoire maître seront supprimés du répertoire cible.</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Filtre de fichiers</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filtre</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Inclure</string>

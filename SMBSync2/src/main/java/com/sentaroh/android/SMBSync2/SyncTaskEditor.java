@@ -2858,7 +2858,9 @@ public class SyncTaskEditor extends DialogFragment {
         dialog.show();
     }
 
-    private void invokeEditDirFilterDlg(final Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg, boolean use_dir_filter_v2) {
+    private void invokeEditDirFilterDlg(final Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg) {
+        final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
+        final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
         final TextView dlg_dir_filter = (TextView) dialog.findViewById(R.id.sync_filter_edit_dir_filter_btn);
         NotifyEvent ntfy = new NotifyEvent(mContext);
         //Listen setRemoteShare response
@@ -2874,12 +2876,14 @@ public class SyncTaskEditor extends DialogFragment {
             }
 
         });
-        mTaskUtil.editDirFilterDlg(n_sti, ntfy, use_dir_filter_v2);
+        mTaskUtil.editDirFilterDlg(n_sti, ntfy, ctUseDirectoryFilterV2.isChecked(), ctvEnsureTargetExactMirror.isChecked());
 
     }
 
-    private void invokeEditFileFilterDlg(Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg, boolean use_dir_filter_v2) {
+    private void invokeEditFileFilterDlg(Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg) {
         final TextView dlg_file_filter = (TextView) dialog.findViewById(R.id.sync_filter_edit_file_filter_btn);
+        final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
+        final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
         NotifyEvent ntfy = new NotifyEvent(mContext);
         //Listen setRemoteShare response
         ntfy.setListener(new NotifyEventListener() {
@@ -2895,7 +2899,7 @@ public class SyncTaskEditor extends DialogFragment {
             }
 
         });
-        mTaskUtil.editFileFilterDlg(n_sti, ntfy, use_dir_filter_v2);
+        mTaskUtil.editFileFilterDlg(n_sti, ntfy, ctUseDirectoryFilterV2.isChecked(), ctvEnsureTargetExactMirror.isChecked());
 
     }
 
@@ -4488,13 +4492,13 @@ public class SyncTaskEditor extends DialogFragment {
         // file filterボタンの指定
         file_filter_btn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                invokeEditFileFilterDlg(mDialog, n_sti, type, dlg_msg, ctUseDirectoryFilterV2.isChecked());
+                invokeEditFileFilterDlg(mDialog, n_sti, type, dlg_msg);
             }
         });
         // directory filterボタンの指定
         dir_filter_btn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                invokeEditDirFilterDlg(mDialog, n_sti, type, dlg_msg, ctUseDirectoryFilterV2.isChecked());
+                invokeEditDirFilterDlg(mDialog, n_sti, type, dlg_msg);
             }
         });
 

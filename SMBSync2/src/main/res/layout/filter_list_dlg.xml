@@ -69,8 +69,6 @@
             android:text="@string/msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <include layout="@layout/divider_line1" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -94,7 +92,23 @@
             android:text="@string/msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <include layout="@layout/divider_line1" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/filter_select_edit_mirror_method_warning_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/filter_select_edit_mirror_method_warning_message"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>
 
