@@ -3425,13 +3425,14 @@ public class SyncTaskEditor extends DialogFragment {
     private String buildFilterInfo(ArrayList<String> filter_list) {
         String info = "";
         if (filter_list != null && filter_list.size() > 0) {
-            String t_info = "", cn = "";
+            String t_info = "", cn = "", sep="";
             for (int i = 0; i < filter_list.size(); i++) {
                 String inc = filter_list.get(i).substring(0, 1);
                 String filter = filter_list.get(i).substring(1, filter_list.get(i).length());
                 if (inc.equals(SMBSYNC2_PROF_FILTER_INCLUDE)) cn = "\u2295"; //(+) ASCII
                 else cn = "\u2296"; //(-) ASCII
-                t_info += cn + filter_list.get(i).substring(1, filter_list.get(i).length()) + ";";
+                t_info += sep+cn + filter_list.get(i).substring(1, filter_list.get(i).length()) + ";";
+                sep=" ";
             }
             if (!t_info.equals("")) info = t_info;
 //				info=mContext.getString(R.string.msgs_filter_list_dlg_filter_hint)+" : "+t_info;
