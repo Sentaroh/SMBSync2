@@ -3575,8 +3575,12 @@ public class SyncTaskEditor extends DialogFragment {
                 boolean isChecked = !ctv_never_overwrite_target_file_newer_than_the_master_file.isChecked();
                 ctv_never_overwrite_target_file_newer_than_the_master_file.setChecked(isChecked);
                 if (isChecked) {
-                    mUtil.showCommonDialog(false, "D", mContext.getString(R.string.msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file),
-                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning), null );
+                    mUtil.showCommonDialog(false, "D",
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file),
+                            mContext.getString(R.string.msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning),
+                            mContext.getString(R.string.msgs_common_dialog_save),
+                            mContext.getString(R.string.msgs_common_dialog_cancel),
+                            null );
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -3903,7 +3907,7 @@ public class SyncTaskEditor extends DialogFragment {
                 mUtil.showCommonDialog(true, "D",
                         mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_v2_title),
                         mContext.getString(R.string.msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning),
-                        mContext.getString(R.string.msgs_common_dialog_save),
+                        mContext.getString(R.string.msgs_common_dialog_confirm),
                         mContext.getString(R.string.msgs_common_dialog_cancel),
                         ntfy);
             }
@@ -3953,7 +3957,7 @@ public class SyncTaskEditor extends DialogFragment {
                     mUtil.showCommonDialog(true, "D",
                             mContext.getString(R.string.msgs_profile_sync_task_sync_option_not_set_file_last_modified),
                             mContext.getString(R.string.msgs_profile_sync_task_sync_option_not_set_file_last_modified_warning),
-                            mContext.getString(R.string.msgs_common_dialog_save),
+                            mContext.getString(R.string.msgs_common_dialog_confirm),
                             mContext.getString(R.string.msgs_common_dialog_cancel),
                             ntfy);
                 }
@@ -4004,8 +4008,12 @@ public class SyncTaskEditor extends DialogFragment {
                 } else {
                     ctvDeterminChangedFileSizeGtTarget.setEnabled(false);
                     if (!ctDeterminChangedFileByTime.isChecked()) {
-                        mUtil.showCommonDialog(false, "D", mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_title),
-                                mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_warning), null );
+                        mUtil.showCommonDialog(false, "D",
+                                mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_title),
+                                mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_warning),
+                                mContext.getString(R.string.msgs_common_dialog_save),
+                                mContext.getString(R.string.msgs_common_dialog_cancel),
+                                null );
                     }
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
@@ -4058,8 +4066,12 @@ public class SyncTaskEditor extends DialogFragment {
                 } else {
                     ll_DeterminChangedFileByTime_dependant_view.setVisibility(LinearLayout.GONE);
                     if (!ctvDiffUseFileSize.isChecked()) {
-                        mUtil.showCommonDialog(false, "D", mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_title),
-                                mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_warning), null );
+                        mUtil.showCommonDialog(false, "D",
+                                mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_title),
+                                mContext.getString(R.string.msgs_profile_sync_task_sync_option_copy_no_compare_warning),
+                                mContext.getString(R.string.msgs_common_dialog_save),
+                                mContext.getString(R.string.msgs_common_dialog_cancel),
+                                null );
                     }
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
