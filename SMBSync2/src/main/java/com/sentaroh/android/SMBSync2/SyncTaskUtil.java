@@ -3043,8 +3043,10 @@ public class SyncTaskUtil {
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
+                if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
+
                 if (s.length() != 0) {
-                    ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
                     String entered_filter= s.toString();
                     String error_filter= "";
 
@@ -3062,8 +3064,6 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, addBtn, true);
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 } else {
-                    if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
-                    else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
                     CommonDialog.setViewEnabled(mActivity, addBtn, false);
 
                     //recheck existing filters before enabling Ok button and clearing warning dialog msg
@@ -3129,9 +3129,6 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-
-                if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
-                else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
             }
         });
 
@@ -3293,8 +3290,10 @@ public class SyncTaskUtil {
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
+                if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
+                else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
+
                 if (s.length() != 0) {
-                    ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
                     CommonDialog.setViewEnabled(mActivity, addbtn, false);
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     CommonDialog.setViewEnabled(mActivity, dirbtn, false);
@@ -3344,8 +3343,6 @@ public class SyncTaskUtil {
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     CommonDialog.setViewEnabled(mActivity, dirbtn, false);
                 } else {
-                    if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
-                    else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
                     CommonDialog.setViewEnabled(mActivity, addbtn, false);
                     CommonDialog.setViewEnabled(mActivity, dirbtn, true);
                     CommonDialog.setViewEnabled(mActivity, add_include_btn, true);
@@ -3409,8 +3406,6 @@ public class SyncTaskUtil {
                 et_filter.setText("");
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && use_ensure_target_exact_mirror && filterAdapter.getCount()>0) ll_dir_filter_mirror_warning.setVisibility(LinearLayout.VISIBLE);
-                else ll_dir_filter_mirror_warning.setVisibility(LinearLayout.GONE);
             }
         });
 
