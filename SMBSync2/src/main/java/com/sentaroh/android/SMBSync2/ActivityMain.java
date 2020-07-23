@@ -3674,55 +3674,62 @@ public class ActivityMain extends AppCompatActivity {
         setSyncTaskListItemClickSyncButtonListener();
     }
 
+    private boolean setSyncTaskListLongClickAction(int pos) {
+        if (mGp.syncTaskAdapter.isEmptyAdapter()) return true;
+        if (!isUiEnabled()) return true;
+
+        if (!mGp.syncTaskAdapter.getItem(pos).isChecked()) {
+            if (SyncTaskUtil.isSyncTaskSelected(mGp.syncTaskAdapter)) {
+
+                int down_sel_pos = -1, up_sel_pos = -1;
+                int tot_cnt = mGp.syncTaskAdapter.getCount();
+                if (pos + 1 <= tot_cnt) {
+                    for (int i = pos + 1; i < tot_cnt; i++) {
+                        if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
+                            up_sel_pos = i;
+                            break;
+                        }
+                    }
+                }
+                if (pos > 0) {
+                    for (int i = pos; i >= 0; i--) {
+                        if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
+                            down_sel_pos = i;
+                            break;
+                        }
+                    }
+                }
+//						Log.v("","up="+up_sel_pos+", down="+down_sel_pos);
+                if (up_sel_pos != -1 && down_sel_pos == -1) {
+                    for (int i = pos; i < up_sel_pos; i++)
+                        mGp.syncTaskAdapter.getItem(i).setChecked(true);
+                } else if (up_sel_pos != -1 && down_sel_pos != -1) {
+                    for (int i = down_sel_pos + 1; i < up_sel_pos; i++)
+                        mGp.syncTaskAdapter.getItem(i).setChecked(true);
+                } else if (up_sel_pos == -1 && down_sel_pos != -1) {
+                    for (int i = down_sel_pos + 1; i <= pos; i++)
+                        mGp.syncTaskAdapter.getItem(i).setChecked(true);
+                }
+                mGp.syncTaskAdapter.notifyDataSetChanged();
+            } else {
+                mGp.syncTaskAdapter.setShowCheckBox(true);
+                mGp.syncTaskAdapter.getItem(pos).setChecked(true);
+                mGp.syncTaskAdapter.notifyDataSetChanged();
+            }
+            setSyncTaskContextButtonSelectMode();
+        }
+        return true;
+    }
+
+    public void dispatchSyncTaskListLongClick(SyncTaskItem item, int position) {
+        setSyncTaskListLongClickAction(position);
+    }
+
     private void setSyncTaskListLongClickListener() {
         mGp.syncTaskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(final AdapterView<?> list_view, final View item_view,
-                                           int pos, long arg3) {
-                if (mGp.syncTaskAdapter.isEmptyAdapter()) return true;
-                if (!isUiEnabled()) return true;
-
-                if (!mGp.syncTaskAdapter.getItem(pos).isChecked()) {
-                    if (SyncTaskUtil.isSyncTaskSelected(mGp.syncTaskAdapter)) {
-
-                        int down_sel_pos = -1, up_sel_pos = -1;
-                        int tot_cnt = mGp.syncTaskAdapter.getCount();
-                        if (pos + 1 <= tot_cnt) {
-                            for (int i = pos + 1; i < tot_cnt; i++) {
-                                if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
-                                    up_sel_pos = i;
-                                    break;
-                                }
-                            }
-                        }
-                        if (pos > 0) {
-                            for (int i = pos; i >= 0; i--) {
-                                if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
-                                    down_sel_pos = i;
-                                    break;
-                                }
-                            }
-                        }
-    //						Log.v("","up="+up_sel_pos+", down="+down_sel_pos);
-                        if (up_sel_pos != -1 && down_sel_pos == -1) {
-                            for (int i = pos; i < up_sel_pos; i++)
-                                mGp.syncTaskAdapter.getItem(i).setChecked(true);
-                        } else if (up_sel_pos != -1 && down_sel_pos != -1) {
-                            for (int i = down_sel_pos + 1; i < up_sel_pos; i++)
-                                mGp.syncTaskAdapter.getItem(i).setChecked(true);
-                        } else if (up_sel_pos == -1 && down_sel_pos != -1) {
-                            for (int i = down_sel_pos + 1; i <= pos; i++)
-                                mGp.syncTaskAdapter.getItem(i).setChecked(true);
-                        }
-                        mGp.syncTaskAdapter.notifyDataSetChanged();
-                    } else {
-                        mGp.syncTaskAdapter.setShowCheckBox(true);
-                        mGp.syncTaskAdapter.getItem(pos).setChecked(true);
-                        mGp.syncTaskAdapter.notifyDataSetChanged();
-                    }
-                    setSyncTaskContextButtonSelectMode();
-                }
-                return true;
+            public boolean onItemLongClick(final AdapterView<?> list_view, final View item_view, int pos, long arg3) {
+                return setSyncTaskListLongClickAction(pos);
             }
         });
     }

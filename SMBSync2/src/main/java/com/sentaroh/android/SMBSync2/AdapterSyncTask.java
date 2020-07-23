@@ -424,6 +424,13 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 }
             });
 
+            holder.ib_row_sync.setOnLongClickListener(new View.OnLongClickListener() {
+                public boolean onLongClick(View v) {
+                    ((ActivityMain) mContext).dispatchSyncTaskListLongClick(o, position);
+                    return true;// notify long touch event is consumed
+                }
+            });
+
             holder.cbv_row_cb1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
