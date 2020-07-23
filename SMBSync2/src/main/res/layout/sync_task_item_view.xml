@@ -65,10 +65,18 @@
                             android:layout_gravity="center_vertical|top"
                             android:src="@drawable/ic_16_server" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/sync_task_master_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:editable="false"
+                            android:background="@android:color/transparent"
+                            android:cursorVisible="false"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:singleLine="true"
                             android:ellipsize="end"
                             android:lines="1"
                             android:text="Master"
@@ -95,10 +103,18 @@
                             android:layout_gravity="top"
                             android:src="@drawable/ic_16_server" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/sync_task_target_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:editable="false"
+                            android:background="@android:color/transparent"
+                            android:cursorVisible="false"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:singleLine="true"
                             android:ellipsize="end"
                             android:lines="1"
                             android:text="Target"

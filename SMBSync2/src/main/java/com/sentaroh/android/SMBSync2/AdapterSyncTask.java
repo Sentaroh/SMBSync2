@@ -29,6 +29,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -188,8 +190,8 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             holder.cbv_row_cb1 = (CheckBox) v.findViewById(R.id.sync_task_selected);
             holder.ib_row_sync=(ImageButton)v.findViewById(R.id.sync_task_perform_sync);
 
-            holder.tv_row_master = (TextView) v.findViewById(R.id.sync_task_master_info);
-            holder.tv_row_target = (TextView) v.findViewById(R.id.sync_task_target_info);
+            holder.tv_row_master = (EditText) v.findViewById(R.id.sync_task_master_info);
+            holder.tv_row_target = (EditText) v.findViewById(R.id.sync_task_target_info);
             holder.tv_row_synctype = (TextView) v.findViewById(R.id.sync_task_sync_type);
             holder.iv_row_sync_dir_image = (ImageView) v.findViewById(R.id.sync_task_direction_image);
             holder.iv_row_image_master = (ImageView) v.findViewById(R.id.sync_task_master_icon);
@@ -327,6 +329,9 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 }
                 holder.iv_row_image_master.setImageResource(R.drawable.ic_32_server);
             }
+            holder.tv_row_master.setTextColor(mTextColor);
+            holder.tv_row_master.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);// disable highlight language errors
+
             String target_dir = o.getTargetDirectoryName().startsWith("/")?o.getTargetDirectoryName().substring(1):o.getTargetDirectoryName();
             if (o.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                 if (target_dir.equals("")) holder.tv_row_target.setText(o.getTargetLocalMountPoint());
@@ -373,6 +378,8 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 }
                 holder.iv_row_image_target.setImageResource(R.drawable.ic_32_server);
             }
+            holder.tv_row_target.setTextColor(mTextColor);
+            holder.tv_row_target.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);// disable highlight language errors
 
             if (isShowCheckBox) {
                 holder.cbv_row_cb1.setVisibility(CheckBox.VISIBLE);
@@ -386,6 +393,20 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 }
             }
             final int p = position;
+
+            holder.tv_row_master.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ActivityMain) mContext).dispatchSyncTaskListItemClick(o, position);
+                }
+            });
+
+            holder.tv_row_target.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ActivityMain) mContext).dispatchSyncTaskListItemClick(o, position);
+                }
+            });
 
             holder.ib_row_sync.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -424,7 +445,8 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         CheckBox cbv_row_cb1;
         ImageButton ib_row_sync;
 
-        TextView tv_row_synctype, tv_row_master, tv_row_target;
+        TextView tv_row_synctype;
+        EditText tv_row_master, tv_row_target;
         ImageView iv_row_sync_dir_image;
         ImageView iv_row_image_master, iv_row_image_target;
         String tv_mtype_mirror, tv_mtype_move, tv_mtype_copy, tv_mtype_sync, tv_mtype_archive;

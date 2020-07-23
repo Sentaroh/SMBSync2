@@ -3590,33 +3590,8 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    private void setSyncTaskListItemClickListener() {
-        mGp.syncTaskListView.setEnabled(true);
-        mGp.syncTaskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                if (isUiEnabled()) {
-                    mGp.syncTaskListView.setEnabled(false);
-                    SyncTaskItem item = mGp.syncTaskAdapter.getItem(position);
-                    if (!mGp.syncTaskAdapter.isShowCheckBox()) {
-                        editSyncTask(item.getSyncTaskName(), item.isSyncTaskAuto(), position);
-                        mUiHandler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mGp.syncTaskListView.setEnabled(true);
-                            }
-                        }, 1000);
-                    } else {
-                        item.setChecked(!item.isChecked());
-                        setSyncTaskContextButtonSelectMode();
-                        mGp.syncTaskListView.setEnabled(true);
-                    }
-                    mGp.syncTaskAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-
+    //select check box of the sync item
+    private void setSyncTaskListItemClickCheckBoxListener() {
         NotifyEvent ntfy_cb = new NotifyEvent(mContext);
         ntfy_cb.setListener(new NotifyEventListener() {
             @Override
@@ -3635,7 +3610,10 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         mGp.syncTaskAdapter.setNotifyCheckBoxEventHandler(ntfy_cb);
+    }
 
+    //sync icon of the sync item
+    private void setSyncTaskListItemClickSyncButtonListener() {
         NotifyEvent ntfy_sync = new NotifyEvent(mContext);
         ntfy_sync.setListener(new NotifyEventListener() {
             @Override
@@ -3651,7 +3629,49 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         mGp.syncTaskAdapter.setNotifySyncButtonEventHandler(ntfy_sync);
+    }
 
+    private void setSyncTaskListItemClickAction(SyncTaskItem item, int position) {
+        if (isUiEnabled()) {
+            mGp.syncTaskListView.setEnabled(false);
+            if (item == null) item = mGp.syncTaskAdapter.getItem(position);
+            if (!mGp.syncTaskAdapter.isShowCheckBox()) {
+                editSyncTask(item.getSyncTaskName(), item.isSyncTaskAuto(), position);
+                mUiHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mGp.syncTaskListView.setEnabled(true);
+                    }
+                }, 1000);
+            } else {
+                item.setChecked(!item.isChecked());
+                setSyncTaskContextButtonSelectMode();
+                mGp.syncTaskListView.setEnabled(true);
+            }
+            mGp.syncTaskAdapter.notifyDataSetChanged();
+        }
+    }
+
+    //click action on syncTaskListView item consuming touch events (master/target EditText field)
+    public void dispatchSyncTaskListItemClick(SyncTaskItem item, int position) {
+        mGp.syncTaskListView.setEnabled(true);
+        setSyncTaskListItemClickAction(item, position);
+
+        setSyncTaskListItemClickCheckBoxListener();
+        setSyncTaskListItemClickSyncButtonListener();
+    }
+
+    private void setSyncTaskListItemClickListener() {
+        mGp.syncTaskListView.setEnabled(true);
+        mGp.syncTaskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                setSyncTaskListItemClickAction(null, position);
+            }
+        });
+
+        setSyncTaskListItemClickCheckBoxListener();
+        setSyncTaskListItemClickSyncButtonListener();
     }
 
     private void setSyncTaskListLongClickListener() {
