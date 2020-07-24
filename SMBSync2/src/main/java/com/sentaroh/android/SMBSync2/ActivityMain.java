@@ -47,6 +47,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.os.storage.StorageVolume;
 import android.provider.Settings;
 import android.support.v4.content.FileProvider;
@@ -61,11 +62,13 @@ import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -3651,7 +3654,33 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         mGp.syncTaskAdapter.setNotifySyncButtonEventHandler(ntfy_sync);
+    }
 
+    //click action on syncTaskListView item consuming touch events (master/target EditText field)
+    public void dispatchSyncTaskListItemClick(SyncTaskItem item, int position) {
+        long downTime = SystemClock.uptimeMillis();
+        long eventTime = SystemClock.uptimeMillis();
+        int first_visible_pos = mGp.syncTaskListView.getFirstVisiblePosition();
+
+        View v = mGp.syncTaskListView.getChildAt(position - first_visible_pos);
+
+        float x = v.getX() + 1;//view items start at 0, MotionEvent doesn't handle the UP action at 0
+        float y = v.getY();
+
+        //first touch
+        MotionEvent motionDown = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
+        motionDown.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+        mGp.syncTaskListView.onTouchEvent(motionDown);
+
+        //release touch
+        downTime = SystemClock.uptimeMillis();
+        eventTime = SystemClock.uptimeMillis();
+        MotionEvent motionUp = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
+        motionUp.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+        mGp.syncTaskListView.onTouchEvent(motionUp);
+
+        motionUp.recycle();
+        motionDown.recycle();
     }
 
     private void setSyncTaskListLongClickListener() {
@@ -3706,6 +3735,21 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
     }
+
+    //send long click action of EditText and SyncIcon to SyncTask Adapter ListView
+    public void dispatchSyncTaskListLongClick(SyncTaskItem item, int position) {
+        long downTime = SystemClock.uptimeMillis();
+        long eventTime = SystemClock.uptimeMillis();
+        int first_visible_pos = mGp.syncTaskListView.getFirstVisiblePosition();
+
+        View v = mGp.syncTaskListView.getChildAt(position - first_visible_pos);
+
+        MotionEvent motion = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, v.getX(), v.getY(), 0);
+        motion.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+        mGp.syncTaskListView.onTouchEvent(motion);
+        motion.recycle();
+    }
+
 
     private ImageButton mContextSyncTaskButtonActivete = null;
     private ImageButton mContextSyncTaskButtonInactivete = null;
