@@ -62,6 +62,7 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -2903,7 +2904,7 @@ public class SyncTaskEditor extends DialogFragment {
 
     }
 
-    private String buildMasterSyncFolderInfo(SyncTaskItem sti, Button ib) {
+    private String buildMasterSyncFolderInfo(SyncTaskItem sti, Button info_btn, ImageView info_icon) {
         String info = "";
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             String dir = sti.getMasterDirectoryName();
@@ -2913,9 +2914,7 @@ public class SyncTaskEditor extends DialogFragment {
                 if (dir.startsWith("/")) info = sti.getMasterLocalMountPoint() + dir;
                 else info = sti.getMasterLocalMountPoint() + "/" + dir;
             }
-            ib.setCompoundDrawablePadding(32);
-            ib.setCompoundDrawablesWithIntrinsicBounds(
-                    mContext.getResources().getDrawable(R.drawable.ic_32_mobile, null), null, null, null);
+            info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_mobile, null));
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             String dir = sti.getMasterDirectoryName();
             if (dir.equals("")) info = mGp.safMgr.getSdcardRootPath();
@@ -2924,13 +2923,9 @@ public class SyncTaskEditor extends DialogFragment {
                 else info = mGp.safMgr.getSdcardRootPath() + "/" + dir;
             }
             if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                ib.setCompoundDrawablePadding(32);
-                ib.setCompoundDrawablesWithIntrinsicBounds(
-                        mContext.getResources().getDrawable(R.drawable.ic_32_sdcard_bad, null), null, null, null);
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_sdcard_bad, null));
             } else {
-                ib.setCompoundDrawablePadding(32);
-                ib.setCompoundDrawablesWithIntrinsicBounds(
-                        mContext.getResources().getDrawable(R.drawable.ic_32_sdcard, null), null, null, null);
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_sdcard, null));
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
             String dir = sti.getMasterDirectoryName();
@@ -2940,13 +2935,9 @@ public class SyncTaskEditor extends DialogFragment {
                 else info = mGp.safMgr.getUsbRootPath() + "/" + dir;
             }
             if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
-                ib.setCompoundDrawablePadding(32);
-                ib.setCompoundDrawablesWithIntrinsicBounds(
-                        mContext.getResources().getDrawable(R.drawable.ic_32_usb_bad, null), null, null, null);
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_usb_bad, null));
             } else {
-                ib.setCompoundDrawablePadding(32);
-                ib.setCompoundDrawablesWithIntrinsicBounds(
-                        mContext.getResources().getDrawable(R.drawable.ic_32_usb, null), null, null, null);
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_usb, null));
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String host = sti.getMasterSmbAddr();
@@ -2958,14 +2949,12 @@ public class SyncTaskEditor extends DialogFragment {
                 if (dir.startsWith("/")) info = "smb://" + host + "/" + share + dir;
                 else info = "smb://" + host + "/" + share + "/" + dir;
             }
-            ib.setCompoundDrawablePadding(32);
-            ib.setCompoundDrawablesWithIntrinsicBounds(
-                    mContext.getResources().getDrawable(R.drawable.ic_32_server, null), null, null, null);
+            info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_server, null));
         }
         return info;
     }
 
-    private String buildTargetSyncFolderInfo(SyncTaskItem sti, Button ib) {
+    private String buildTargetSyncFolderInfo(SyncTaskItem sti, Button info_btn, ImageView info_icon) {
         String info = "";
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             String dir = sti.getTargetDirectoryName();
@@ -2974,9 +2963,7 @@ public class SyncTaskEditor extends DialogFragment {
                 if (dir.startsWith("/")) info = sti.getTargetLocalMountPoint() + dir;
                 else info = sti.getTargetLocalMountPoint() + "/" + dir;
             }
-            ib.setCompoundDrawablePadding(32);
-            ib.setCompoundDrawablesWithIntrinsicBounds(
-                    mContext.getResources().getDrawable(R.drawable.ic_32_mobile, null), null, null, null);
+            info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_mobile, null));
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             String dir = sti.getTargetDirectoryName();
             if (dir.equals("")) info = mGp.safMgr.getSdcardRootPath();
@@ -2985,13 +2972,9 @@ public class SyncTaskEditor extends DialogFragment {
                 else info = mGp.safMgr.getSdcardRootPath() + "/" + dir;
             }
             if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                ib.setCompoundDrawablePadding(32);
-                ib.setCompoundDrawablesWithIntrinsicBounds(
-                        mContext.getResources().getDrawable(R.drawable.ic_32_sdcard_bad, null), null, null, null);
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_sdcard_bad, null));
             } else {
-                ib.setCompoundDrawablePadding(32);
-                ib.setCompoundDrawablesWithIntrinsicBounds(
-                        mContext.getResources().getDrawable(R.drawable.ic_32_sdcard, null), null, null, null);
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_sdcard, null));
             }
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
             String dir = sti.getTargetDirectoryName();
@@ -3001,13 +2984,9 @@ public class SyncTaskEditor extends DialogFragment {
                 else info = mGp.safMgr.getUsbRootPath() + "/" + dir;
             }
             if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
-                ib.setCompoundDrawablePadding(32);
-                ib.setCompoundDrawablesWithIntrinsicBounds(
-                        mContext.getResources().getDrawable(R.drawable.ic_32_usb_bad, null), null, null, null);
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_usb_bad, null));
             } else {
-                ib.setCompoundDrawablePadding(32);
-                ib.setCompoundDrawablesWithIntrinsicBounds(
-                        mContext.getResources().getDrawable(R.drawable.ic_32_usb, null), null, null, null);
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_usb, null));
             }
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
             if (!sti.isTargetZipUseExternalSdcard())
@@ -3017,13 +2996,9 @@ public class SyncTaskEditor extends DialogFragment {
             }
             if (sti.isTargetZipUseExternalSdcard() &&
                     mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                ib.setCompoundDrawablePadding(32);
-                ib.setCompoundDrawablesWithIntrinsicBounds(
-                        mContext.getResources().getDrawable(R.drawable.ic_32_sdcard_bad, null), null, null, null);
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_sdcard_bad, null));
             } else {
-                ib.setCompoundDrawablePadding(32);
-                ib.setCompoundDrawablesWithIntrinsicBounds(
-                        mContext.getResources().getDrawable(R.drawable.ic_32_archive, null), null, null, null);
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_sdcard, null));
             }
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String host = sti.getTargetSmbAddr();
@@ -3035,9 +3010,7 @@ public class SyncTaskEditor extends DialogFragment {
                 if (dir.startsWith("/")) info = "smb://" + host + "/" + share + dir;
                 else info = "smb://" + host + "/" + share + "/" + dir;
             }
-            ib.setCompoundDrawablePadding(32);
-            ib.setCompoundDrawablesWithIntrinsicBounds(
-                    mContext.getResources().getDrawable(R.drawable.ic_32_server, null), null, null, null);
+            info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_server, null));
         }
         return info;
     }
@@ -3487,7 +3460,13 @@ public class SyncTaskEditor extends DialogFragment {
         dlg_msg.setTextColor(mGp.themeColorList.text_color_error);
         dlg_msg.setVisibility(TextView.GONE);
 
+        final Button swap_master_target = (Button) mDialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
+        final Button master_folder_info = (Button) mDialog.findViewById(R.id.edit_sync_task_master_folder_info_btn);
+        final ImageView master_folder_icon = (ImageView) mDialog.findViewById(R.id.edit_sync_task_master_folder_info_icon);
+//        master_folder_icon.bringToFront();
         final Button target_folder_info = (Button) mDialog.findViewById(R.id.edit_sync_task_target_folder_info_btn);
+        final ImageView target_folder_icon = (ImageView) mDialog.findViewById(R.id.edit_sync_task_target_folder_info_icon);
+//        target_folder_icon.bringToFront();
 
         final EditText et_sync_main_task_name = (EditText) mDialog.findViewById(R.id.edit_sync_task_task_name);
         if (type.equals("EDIT")) {
@@ -3541,7 +3520,8 @@ public class SyncTaskEditor extends DialogFragment {
                         n_sti.setTargetFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL);
                         mUtil.showCommonDialog(false, "W",
                                 mContext.getString(R.string.msgs_sync_folder_archive_zip_folder_not_supported), "", null);
-                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info, target_folder_icon));
+                        target_folder_info.requestLayout();
                     }
 
                 }
@@ -3665,10 +3645,10 @@ public class SyncTaskEditor extends DialogFragment {
 
         setSyncTaskFieldHelpListener(mDialog, n_sti);
 
-        final Button swap_master_target = (Button) mDialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
-        final Button master_folder_info = (Button) mDialog.findViewById(R.id.edit_sync_task_master_folder_info_btn);
-        master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
-        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+        master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info, master_folder_icon));
+        master_folder_info.requestLayout();
+        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info, target_folder_icon));
+        target_folder_info.requestLayout();
 
         boolean is_all_file_type = false;
         if (!n_sti.isSyncFileTypeAudio() && !n_sti.isSyncFileTypeImage() && !n_sti.isSyncFileTypeVideo() &&
@@ -4170,8 +4150,10 @@ public class SyncTaskEditor extends DialogFragment {
 //						n_sti.setMasterFolderUseInternalUsbFolder(nsfev.folder_use_usb_folder);
 //						Log.v("","mdi="+n_sti.getMasterDirectoryName());
                         n_sti.setMasterFolderError(nsfev.folder_error_code);
-                        master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
-                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                        master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info, master_folder_icon));
+                        master_folder_info.requestLayout();
+                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info, target_folder_icon));
+                        target_folder_info.requestLayout();
 
                         setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
@@ -4221,7 +4203,8 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
                         mGp.safMgr.loadSafFile();
-                        master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
+                        master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info, master_folder_icon));
+                        master_folder_info.requestLayout();
                     }
 
                 });
@@ -4288,8 +4271,10 @@ public class SyncTaskEditor extends DialogFragment {
                 n_sti.setTargetRemovableStorageID(t_sti.getMasterRemovableStorageID());
                 n_sti.setTargetFolderError(t_sti.getMasterFolderError());
 
-                master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
-                target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info, master_folder_icon));
+                master_folder_info.requestLayout();
+                target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info, target_folder_icon));
+                target_folder_info.requestLayout();
 
                 setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
@@ -4341,8 +4326,10 @@ public class SyncTaskEditor extends DialogFragment {
                         n_sti.setTargetZipPassword(nsfev.zip_file_password);
                         n_sti.setTargetFolderError(nsfev.folder_error_code);
 
-                        master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info));
-                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                        master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info, master_folder_icon));
+                        master_folder_info.requestLayout();
+                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info, target_folder_icon));
+                        target_folder_info.requestLayout();
 
                         if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) CommonDialog.setViewEnabled(getActivity(), swap_master_target, false);
                         else CommonDialog.setViewEnabled(getActivity(), swap_master_target, true);
@@ -4396,7 +4383,8 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
                         mGp.safMgr.loadSafFile();
-                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info));
+                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info, target_folder_icon));
+                        target_folder_info.requestLayout();
                         confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                     }
 

@@ -327,6 +327,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 }
                 holder.iv_row_image_master.setImageResource(R.drawable.ic_32_server);
             }
+            holder.tv_row_master.requestLayout();
             String target_dir = o.getTargetDirectoryName().startsWith("/")?o.getTargetDirectoryName().substring(1):o.getTargetDirectoryName();
             if (o.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                 if (target_dir.equals("")) holder.tv_row_target.setText(o.getTargetLocalMountPoint());
@@ -373,6 +374,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 }
                 holder.iv_row_image_target.setImageResource(R.drawable.ic_32_server);
             }
+            holder.tv_row_target.requestLayout();
 
             if (isShowCheckBox) {
                 holder.cbv_row_cb1.setVisibility(CheckBox.VISIBLE);
