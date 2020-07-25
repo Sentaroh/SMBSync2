@@ -403,6 +403,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 
             holder.tv_row_master.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
+                    v.setHapticFeedbackEnabled(false);
                     ((ActivityMain) mContext).dispatchSyncTaskListLongClick(o, position);
                     return true;//notify long touch event is consumed
                 }
@@ -417,6 +418,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 
             holder.tv_row_target.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
+                    v.setHapticFeedbackEnabled(false);
                     ((ActivityMain) mContext).dispatchSyncTaskListLongClick(o, position);
                     return true;//notify long touch event is consumed
                 }
@@ -440,6 +442,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 
             holder.ib_row_sync.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
+                    v.setHapticFeedbackEnabled(false);
                     ((ActivityMain) mContext).dispatchSyncTaskListLongClick(o, position);
                     return true;// notify long touch event is consumed
                 }

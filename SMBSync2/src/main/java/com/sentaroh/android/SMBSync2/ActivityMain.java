@@ -3669,14 +3669,14 @@ public class ActivityMain extends AppCompatActivity {
 
         //first touch
         MotionEvent motionDown = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
-        motionDown.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+        //motionDown.setSource(InputDevice.SOURCE_TOUCHSCREEN);
         mGp.syncTaskListView.onTouchEvent(motionDown);
 
         //release touch
         downTime = SystemClock.uptimeMillis();
         eventTime = SystemClock.uptimeMillis();
         MotionEvent motionUp = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
-        motionUp.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+        //motionUp.setSource(InputDevice.SOURCE_TOUCHSCREEN);
         mGp.syncTaskListView.onTouchEvent(motionUp);
 
         motionUp.recycle();
@@ -3745,7 +3745,7 @@ public class ActivityMain extends AppCompatActivity {
         View v = mGp.syncTaskListView.getChildAt(position - first_visible_pos);
 
         MotionEvent motion = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, v.getX(), v.getY(), 0);
-        motion.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+        //motion.setSource(InputDevice.SOURCE_TOUCHSCREEN);
         mGp.syncTaskListView.onTouchEvent(motion);
         motion.recycle();
     }
