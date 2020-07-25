@@ -1738,11 +1738,22 @@ public class SyncTaskUtil {
     }
 
     public void copySyncTask(SyncTaskItem pli, NotifyEvent p_ntfy) {
-        SyncTaskItem npfli = pli.clone();
-        npfli.setLastSyncResult(0);
-        npfli.setLastSyncTime("");
-        SyncTaskEditor pmsp = SyncTaskEditor.newInstance();
-        pmsp.showDialog(mFragMgr, pmsp, "COPY", npfli, this, mUtil, mCommonDlg, mGp, p_ntfy);
+        final SyncTaskUtil stu=this;
+        NotifyEvent ntfy=new NotifyEvent(mContext);
+        ntfy.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                SyncTaskItem npfli = pli.clone();
+                npfli.setLastSyncResult(0);
+                npfli.setLastSyncTime("");
+                SyncTaskEditor pmsp = SyncTaskEditor.newInstance();
+                pmsp.showDialog(mFragMgr, pmsp, "COPY", npfli, stu, mUtil, mCommonDlg, mGp, p_ntfy);
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {}
+        });
+        ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, mFragMgr, mUtil, false, ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_EDIT_SYNC_TASK);
     }
 
     public void renameSyncTask(final SyncTaskItem pli, final NotifyEvent p_ntfy) {
