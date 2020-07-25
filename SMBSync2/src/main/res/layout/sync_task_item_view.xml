@@ -65,11 +65,13 @@
                             android:layout_gravity="center_vertical|top"
                             android:src="@drawable/ic_16_server" />
 
-                        <com.sentaroh.android.Utilities.Widget.NonWordwrapTextView
+                        <TextView
                             android:id="@+id/sync_task_master_info"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:ellipsize="middle"
+                            android:singleLine="true"
                             android:text="Master"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
                     </LinearLayout>
@@ -94,11 +96,13 @@
                             android:layout_gravity="top"
                             android:src="@drawable/ic_16_server" />
 
-                        <com.sentaroh.android.Utilities.Widget.NonWordwrapTextView
+                        <TextView
                             android:id="@+id/sync_task_target_info"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:ellipsize="middle"
+                            android:singleLine="true"
                             android:text="Target"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
                     </LinearLayout>
