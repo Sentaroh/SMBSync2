@@ -2998,7 +2998,7 @@ public class SyncTaskEditor extends DialogFragment {
                     mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                 info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_sdcard_bad, null));
             } else {
-                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_sdcard, null));
+                info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_archive, null));
             }
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String host = sti.getTargetSmbAddr();
