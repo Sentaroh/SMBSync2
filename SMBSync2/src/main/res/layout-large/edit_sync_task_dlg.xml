@@ -157,35 +157,31 @@
                     android:text="@string/msgs_profile_sync_task_dlg_master"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
 
-                <HorizontalScrollView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:fillViewport="true"
-                    android:scrollbars="none"
-                    android:layout_marginRight="5dp"
-                    android:orientation="horizontal"
-                    android:textAppearance="?android:attr/textAppearanceSmall" >
-                    <Button
+                    <com.sentaroh.android.Utilities.Widget.NonWordwrapButton
                         android:id="@+id/edit_sync_task_master_folder_info_btn"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="1dp"
-                        android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:gravity="left"
-                        android:maxLines="1"
-                        android:paddingLeft="5dp"
+                        android:gravity="left|top"
                         android:text="TextView"
+                        android:paddingLeft="32dp"
+                        android:stateListAnimator="@null"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
-                </HorizontalScrollView>
+                    <ImageView
+                        android:id="@+id/edit_sync_task_master_folder_info_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerInside"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginLeft="2dp"
+                        android:src="@drawable/ic_32_mobile" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -194,36 +190,31 @@
                     android:text="@string/msgs_profile_sync_task_dlg_target"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:textAppearance="?android:attr/textAppearanceSmall" >
+                    android:orientation="horizontal" >
 
-                <HorizontalScrollView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:fillViewport="true"
-                    android:scrollbars="none"
-                    android:layout_marginRight="5dp"
-                    android:orientation="horizontal"
-                    android:textAppearance="?android:attr/textAppearanceSmall" >
-                    <Button
+                    <com.sentaroh.android.Utilities.Widget.NonWordwrapButton
                         android:id="@+id/edit_sync_task_target_folder_info_btn"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="1dp"
-                        android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:gravity="left"
-                        android:maxLines="1"
-                        android:paddingLeft="5dp"
+                        android:gravity="left|top"
                         android:text="TextView"
+                        android:paddingLeft="32dp"
+                        android:stateListAnimator="@null"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
-                </HorizontalScrollView>
+                    <ImageView
+                        android:id="@+id/edit_sync_task_target_folder_info_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerInside"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginLeft="2dp"
+                        android:src="@drawable/ic_32_mobile" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <include layout="@layout/edit_sync_task_dlg_filter" />
 
