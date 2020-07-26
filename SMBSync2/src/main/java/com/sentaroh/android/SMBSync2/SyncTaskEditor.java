@@ -3935,7 +3935,7 @@ public class SyncTaskEditor extends DialogFragment {
 
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {
-                        ctvDoNotResetFileLastMod.setChecked(false);
+                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                     }
                 });
                 if (isChecked) {
@@ -3945,6 +3945,9 @@ public class SyncTaskEditor extends DialogFragment {
                             mContext.getString(R.string.msgs_common_dialog_confirm),
                             mContext.getString(R.string.msgs_common_dialog_cancel),
                             ntfy);
+                } else {
+                    ctvDoNotResetFileLastMod.setChecked(false);
+                    checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                 }
             }
         });
