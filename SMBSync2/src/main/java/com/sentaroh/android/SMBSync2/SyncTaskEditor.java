@@ -3868,6 +3868,8 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
         CommonUtilities.setCheckedTextView(ctUseExtendedDirectoryFilter1);
         ctUseExtendedDirectoryFilter1.setChecked(n_sti.isSyncOptionUseExtendedDirectoryFilter1());
+        if (n_sti.isSyncOptionUseDirectoryFilterV2()) ctUseExtendedDirectoryFilter1.setVisibility(CheckedTextView.GONE);
+        else ctUseExtendedDirectoryFilter1.setVisibility(CheckedTextView.VISIBLE);
         setCtvListenerForEditSyncTask(ctUseExtendedDirectoryFilter1, type, n_sti, dlg_msg);
 
         final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
@@ -3882,6 +3884,9 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         ctUseDirectoryFilterV2.setChecked(isChecked);
+                        if (isChecked) ctUseExtendedDirectoryFilter1.setVisibility(CheckedTextView.GONE);
+                        else ctUseExtendedDirectoryFilter1.setVisibility(CheckedTextView.VISIBLE);
+
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                     }
                     @Override
