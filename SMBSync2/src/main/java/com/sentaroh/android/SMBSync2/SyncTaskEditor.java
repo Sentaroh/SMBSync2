@@ -4246,46 +4246,61 @@ public class SyncTaskEditor extends DialogFragment {
         swap_master_target.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                SyncTaskItem t_sti = n_sti.clone();
-                n_sti.setTargetUseTakenDateTimeToDirectoryNameKeyword(t_sti.isTargetUseTakenDateTimeToDirectoryNameKeyword());
-                n_sti.setMasterDirectoryName(t_sti.getTargetDirectoryName());
-                n_sti.setMasterLocalMountPoint(t_sti.getTargetLocalMountPoint());
-                n_sti.setMasterFolderType(t_sti.getTargetFolderType());
-                n_sti.setMasterSmbAddr(t_sti.getTargetSmbAddr());
-                n_sti.setMasterSmbDomain(t_sti.getTargetSmbDomain());
-                n_sti.setMasterSmbHostName(t_sti.getTargetSmbHostName());
-                n_sti.setMasterSmbPassword(t_sti.getTargetSmbPassword());
-                n_sti.setMasterSmbPort(t_sti.getTargetSmbPort());
-                n_sti.setMasterSmbShareName(t_sti.getTargetSmbShareName());
-                n_sti.setMasterSmbUserName(t_sti.getTargetSmbUserName());
-                n_sti.setMasterSmbProtocol(t_sti.getTargetSmbProtocol());
-                n_sti.setMasterSmbIpcSigningEnforced(t_sti.isTargetSmbIpcSigningEnforced());
-                n_sti.setMasterRemovableStorageID(t_sti.getTargetRemovableStorageID());
-                n_sti.setMasterFolderError(t_sti.getTargetFolderError());
+                NotifyEvent ntfy_swap=new NotifyEvent(mContext);
+                ntfy_swap.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        SyncTaskItem t_sti = n_sti.clone();
+                        n_sti.setTargetUseTakenDateTimeToDirectoryNameKeyword(t_sti.isTargetUseTakenDateTimeToDirectoryNameKeyword());
+                        n_sti.setMasterDirectoryName(t_sti.getTargetDirectoryName());
+                        n_sti.setMasterLocalMountPoint(t_sti.getTargetLocalMountPoint());
+                        n_sti.setMasterFolderType(t_sti.getTargetFolderType());
+                        n_sti.setMasterSmbAddr(t_sti.getTargetSmbAddr());
+                        n_sti.setMasterSmbDomain(t_sti.getTargetSmbDomain());
+                        n_sti.setMasterSmbHostName(t_sti.getTargetSmbHostName());
+                        n_sti.setMasterSmbPassword(t_sti.getTargetSmbPassword());
+                        n_sti.setMasterSmbPort(t_sti.getTargetSmbPort());
+                        n_sti.setMasterSmbShareName(t_sti.getTargetSmbShareName());
+                        n_sti.setMasterSmbUserName(t_sti.getTargetSmbUserName());
+                        n_sti.setMasterSmbProtocol(t_sti.getTargetSmbProtocol());
+                        n_sti.setMasterSmbIpcSigningEnforced(t_sti.isTargetSmbIpcSigningEnforced());
+                        n_sti.setMasterRemovableStorageID(t_sti.getTargetRemovableStorageID());
+                        n_sti.setMasterFolderError(t_sti.getTargetFolderError());
 
-                n_sti.setTargetDirectoryName(t_sti.getMasterDirectoryName());
-                n_sti.setTargetLocalMountPoint(t_sti.getMasterLocalMountPoint());
-                n_sti.setTargetFolderType(t_sti.getMasterFolderType());
-                n_sti.setTargetSmbAddr(t_sti.getMasterSmbAddr());
-                n_sti.setTargetSmbDomain(t_sti.getMasterSmbDomain());
-                n_sti.setTargetSmbHostname(t_sti.getMasterSmbHostName());
-                n_sti.setTargetSmbPassword(t_sti.getMasterSmbPassword());
-                n_sti.setTargetSmbPort(t_sti.getMasterSmbPort());
-                n_sti.setTargetSmbShareName(t_sti.getMasterSmbShareName());
-                n_sti.setTargetSmbUserName(t_sti.getMasterSmbUserName());
-                n_sti.setTargetSmbProtocol(t_sti.getMasterSmbProtocol());
-                n_sti.setTargetSmbIpcSigningEnforced(t_sti.isMasterSmbIpcSigningEnforced());
-                n_sti.setTargetSmbUseSmb2Negotiation(t_sti.isMasterSmbUseSmb2Negotiation());
-                n_sti.setTargetRemovableStorageID(t_sti.getMasterRemovableStorageID());
-                n_sti.setTargetFolderError(t_sti.getMasterFolderError());
+                        n_sti.setTargetDirectoryName(t_sti.getMasterDirectoryName());
+                        n_sti.setTargetLocalMountPoint(t_sti.getMasterLocalMountPoint());
+                        n_sti.setTargetFolderType(t_sti.getMasterFolderType());
+                        n_sti.setTargetSmbAddr(t_sti.getMasterSmbAddr());
+                        n_sti.setTargetSmbDomain(t_sti.getMasterSmbDomain());
+                        n_sti.setTargetSmbHostname(t_sti.getMasterSmbHostName());
+                        n_sti.setTargetSmbPassword(t_sti.getMasterSmbPassword());
+                        n_sti.setTargetSmbPort(t_sti.getMasterSmbPort());
+                        n_sti.setTargetSmbShareName(t_sti.getMasterSmbShareName());
+                        n_sti.setTargetSmbUserName(t_sti.getMasterSmbUserName());
+                        n_sti.setTargetSmbProtocol(t_sti.getMasterSmbProtocol());
+                        n_sti.setTargetSmbIpcSigningEnforced(t_sti.isMasterSmbIpcSigningEnforced());
+                        n_sti.setTargetSmbUseSmb2Negotiation(t_sti.isMasterSmbUseSmb2Negotiation());
+                        n_sti.setTargetRemovableStorageID(t_sti.getMasterRemovableStorageID());
+                        n_sti.setTargetFolderError(t_sti.getMasterFolderError());
 
-                master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info, master_folder_icon));
-                master_folder_info.requestLayout();
-                target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info, target_folder_icon));
-                target_folder_info.requestLayout();
+                        master_folder_info.setText(buildMasterSyncFolderInfo(n_sti, master_folder_info, master_folder_icon));
+                        master_folder_info.requestLayout();
+                        target_folder_info.setText(buildTargetSyncFolderInfo(n_sti, target_folder_info, target_folder_icon));
+                        target_folder_info.requestLayout();
 
-                setSpinnerSyncTaskType(spinnerSyncType, n_sti);
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                        setSpinnerSyncTaskType(spinnerSyncType, n_sti);
+                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {}
+                });
+                mUtil.showCommonDialog(true, "D",
+                        mContext.getString(R.string.msgs_profile_sync_task_ｄｌg_swap_warning_title),
+                        mContext.getString(R.string.msgs_profile_sync_task_ｄｌg_swap_warning_message),
+                        mContext.getString(R.string.msgs_common_dialog_confirm),
+                        mContext.getString(R.string.msgs_common_dialog_cancel),
+                        ntfy_swap);
             }
         });
 
