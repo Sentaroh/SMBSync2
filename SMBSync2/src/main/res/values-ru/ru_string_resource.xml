@@ -338,6 +338,8 @@
         <string name="msgs_profile_sync_folder_dlg_confirm_msg_nosave">Предупреждение: синхронизирующие настройки папки изменились. Выйти без сохранения?</string>
         <string name="msgs_profile_sync_task_dlg_active">Автоматическая синхронизация</string>
         <string name="msgs_profile_sync_task_dlg_change_master_and_target">Источник подкачки и место назначения</string>
+        <string name="msgs_profile_sync_task_ｄｌg_swap_warning_title">Источник подкачки и место назначения</string>
+        <string name="msgs_profile_sync_task_ｄｌg_swap_warning_message">Замена содержимого исходной и конечной папок может привести к удалению непреднамеренных файлов или каталогов.\nНастройте тестовый режим или создайте тестовую директорию и проведите проверку, чтобы убедиться, что непреднамеренные файлы или каталоги не будут удалены.</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Фильтр каталога не был определен</string>
         <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">Имя каталога содержало недопустимые символы, и они былио удалены (\": \\, *, &lt; &gt; \|).</string>
         <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">Фильтр файла не был определен</string>
