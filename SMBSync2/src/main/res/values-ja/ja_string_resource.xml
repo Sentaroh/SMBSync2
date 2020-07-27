@@ -338,6 +338,8 @@
         <string name="msgs_profile_sync_folder_dlg_confirm_msg_nosave">同期フォルダーの設定が変更されています、保存せず終了しますか。</string>
         <string name="msgs_profile_sync_task_dlg_active">自動同期タスク</string>
         <string name="msgs_profile_sync_task_dlg_change_master_and_target">マスターとターゲットを入れ替える</string>
+        <string name="msgs_profile_sync_task_ｄｌg_swap_warning_title">ソースと宛先フォルダーを入替える</string>
+        <string name="msgs_profile_sync_task_ｄｌg_swap_warning_message">ソースフォルダーと宛先フォルダーの内容を入れ替えるとファイルやディレクトリーが削除される可能性があります。\nテストモードまたはテストディレクトリー作成してテストを行い意図しないファイルやディレクトリーが削除されない事を確認してください。</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">ディレクトリフィルタ―は指定されてません</string>
         <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, *, &lt;, &gt;, \|)</string>
         <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">ファイルフィルタ―は指定されてません</string>
