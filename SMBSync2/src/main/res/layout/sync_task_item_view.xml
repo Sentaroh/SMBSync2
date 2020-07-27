@@ -83,7 +83,7 @@
                             android:id="@+id/sync_task_direction_image"
                             android:layout_width="12dp"
                             android:layout_height="18dp"
-                            android:layout_gravity="center"
+                            android:layout_gravity="top"
                             android:scaleType="fitXY"
                             android:src="@drawable/arrow_right_enabled" />
 
