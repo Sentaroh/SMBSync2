@@ -338,8 +338,8 @@
         <string name="msgs_profile_sync_folder_dlg_confirm_msg_nosave">Warning:  The sync task settings have changed. Exit without saving?</string>
         <string name="msgs_profile_sync_task_dlg_active">Auto sync</string>
         <string name="msgs_profile_sync_task_dlg_change_master_and_target">Swap source and destination</string>
-        <string name="msgs_profile_sync_task_ｄｌg_swap_warning_title">Swap source and destination</string>
-        <string name="msgs_profile_sync_task_ｄｌg_swap_warning_message">Swapping the contents of the source and destination folders can result in the deletion of unintentional files or directories.\nPlease set up a test mode or create a test directory and test to make sure that no unintended files or directories are deleted.</string>
+        <string name="msgs_profile_sync_task_dlg_swap_warning_title">Swap source and destination</string>
+        <string name="msgs_profile_sync_task_dlg_swap_warning_message">Reversing the direction of synchronization may result in unexpected deletes of files and directories.\nIt is strongly recommend that you enable Test mode and ensure that no files or directories are removed or replaced unintentionally.</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Directory filter has not been specified</string>
         <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">Invalid characters have been removed from the specified directory name (\", :, \\, *, &lt;, &gt; \|)</string>
         <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">File filter has not been specified</string>
@@ -405,7 +405,7 @@
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Allow sync with all IP addresses (include public)</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirm before overwrite/delete</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Remove directories and files excluded by the filters</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Warning: all files and folders that do not exist in the Source directory and those that are not included by the defined filters will be deleted from the Target directory !\nIt is strongly recommend that you enable Test mode and ensure that no unexpected files or directories are removed or replaced.</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Warning: all files and folders that do not exist in the Source directory and those that are not included by the defined filters will be deleted from the Target directory !\nIt is strongly recommend that you enable Test mode and ensure that no files or directories are removed or replaced unintentionally.</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Remove directories and files excluded by the filters</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Delete files prior to sync (Mirror mode only)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Size only compare (files are considered different only if size of the source is larger than the destination)</string>
