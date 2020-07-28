@@ -352,6 +352,9 @@
         <string name="msg_edit_sync_folder_keyword_insert_month">МЕСЯЦ</string>
         <string name="msg_edit_sync_folder_keyword_insert_day">ДЕНЬ</string>
         <string name="msg_edit_sync_folder_keyword_insert_day_of_year">ДЕНЬ ГОДА</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_number">ЕЖЕНЕДЕЛЬНЫЙ ЧИСЛО</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day">Недельный день (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day_long">Недельный день (%s, %s ...)</string>
         <string name="msgs_profile_sync_task_dlg_master">Основная папка (Источник)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">Тип синхронизации</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Архив</string>

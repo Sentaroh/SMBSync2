@@ -352,6 +352,9 @@
         <string name="msg_edit_sync_folder_keyword_insert_month">MONTH</string>
         <string name="msg_edit_sync_folder_keyword_insert_day">DAY</string>
         <string name="msg_edit_sync_folder_keyword_insert_day_of_year">DAY OF YEAR</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_number">WEEK NUMBER</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day">WEEK DAY (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day_long">WEEK DAY (%s, %s ...)</string>
         <string name="msgs_profile_sync_task_dlg_master">Master folder (Source)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">Sync type</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Archive</string>

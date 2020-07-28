@@ -167,6 +167,10 @@ public class Constants {
     public static final String SMBSYNC2_REPLACEABLE_KEYWORD_DAY="%DAY%";
     public static final String SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR="%DAY-OF-YEAR%";
 
+    public static final String SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY ="%WEEKDAY%";
+    public static final String SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG ="%WEEKDAY_LONG%";
+    public static final String SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER ="%WEEKNO%";
+
 //    *.aac, *.aif, *.aifc, *.aiff, *.kar, *.m3u, *.m4a, *.mid, *.midi, *.mp2, *.mp3, *.mpga, *.ra, *.ram, *.wav
 //    *.bmp, *.cgm, *.djv, *.djvu, *.gif, *.ico, *.ief, *.jpe, *.jpeg, *.jpg, *.pbm, *.pgm, *.png, *.pnm, *.ppm, *.ras, *.rgb, *.svg, *.tif, *.tiff, *.wbmp, *.xbm, *.xpm, *.xwd
 //    *.avi, *.m4u, *.mov, *.movie, *.mpe, *.mpeg, *.mpg, *.mxu, *.qt, *.wmv

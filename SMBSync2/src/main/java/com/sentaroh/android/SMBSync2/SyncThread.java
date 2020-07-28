@@ -74,6 +74,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -90,6 +91,9 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YESA
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_MONTH;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_YEAR;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_AUDIO;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_IMAGE;
@@ -926,13 +930,17 @@ public class SyncThread extends Thread {
         });
     }
 
-    private static boolean isreplaceKeywordRequiredAtWhileSync(String fp) {
+    private static boolean isReplaceKeywordRequiredAtWhileSync(String fp) {
         boolean result=false;
 
         if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_YEAR)>=0) result=true;
         if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_MONTH)>=0) result=true;
         if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_DAY)>=0) result=true;
         if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR)>=0) result=true;
+
+        if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY)>=0) result=true;
+        if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG)>=0) result=true;
+        if (fp.indexOf(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER)>=0) result=true;
 
         return result;
     }
@@ -948,7 +956,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-Internal From=" + from + ", To=" + to);
 
@@ -970,7 +978,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-ZIP From=" + from + ", To=" + to);
 
@@ -993,7 +1001,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-SDCARD From=" + from + ", To=" + to);
 
@@ -1013,7 +1021,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-USB From=" + from + ", To=" + to);
 
@@ -1037,7 +1045,7 @@ public class SyncThread extends Thread {
             else to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-SMB From=" + from + ", To=" + to);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyInternalToSmb(mStwa, sti, from, to);
@@ -1058,7 +1066,7 @@ public class SyncThread extends Thread {
             else to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-Internal From=" + from + ", To=" + to);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyExternalToInternal(mStwa, sti, from, to);
@@ -1077,7 +1085,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync USB-To-Internal From=" + from + ", To=" + to);
 
@@ -1100,7 +1108,7 @@ public class SyncThread extends Thread {
             else to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-SDCARD From=" + from + ", To=" + to);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyExternalToExternal(mStwa, sti, from, to);
@@ -1121,7 +1129,7 @@ public class SyncThread extends Thread {
             else to = replaceKeywordValue(to_temp, time_millis);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-USB From=" + from + ", To=" + to);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyExternalToExternal(mStwa, sti, from, to);
@@ -1140,7 +1148,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync USB-To-USB From=" + from + ", To=" + to);
 
@@ -1161,7 +1169,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync USB-To-SDCARD From=" + from + ", To=" + to);
 
@@ -1184,7 +1192,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SDCARD-To-SMB From=" + from + ", To=" + to);
 
@@ -1207,7 +1215,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync USB-To-SMB From=" + from + ", To=" + to);
 
@@ -1230,7 +1238,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-Internal From=" + from + ", To=" + to);
 
@@ -1253,7 +1261,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-SDCARD From=" + from + ", To=" + to);
 
@@ -1276,7 +1284,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-USB From=" + from + ", To=" + to);
 
@@ -1300,7 +1308,7 @@ public class SyncThread extends Thread {
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
-            mStwa.replaceKeywordRequiredAtWhileSync=isreplaceKeywordRequiredAtWhileSync(to);
+            mStwa.replaceKeywordRequiredAtWhileSync= isReplaceKeywordRequiredAtWhileSync(to);
 
             mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-SMB From=" + from + ", To=" + to);
 
@@ -1327,11 +1335,25 @@ public class SyncThread extends Thread {
         date.setTime(time_millis);
         String day_of_year = sdf.format(date);
 
+        sdf=new SimpleDateFormat("EEE");
+        String tmp=sdf.format(time_millis).toLowerCase();
+        String week_day=tmp.endsWith(".")?tmp.substring(0, tmp.length()-1):tmp;
+
+        sdf=new SimpleDateFormat("EEEE");
+        String week_day_long=sdf.format(time_millis).toLowerCase();
+
+        sdf=new SimpleDateFormat("w");
+        String week_no=sdf.format(time_millis);
+
         String to_temp = null;
         to_temp = replaceable_string.replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_YEAR, c_date_yyyy)
                 .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_MONTH, c_date_mm)
                 .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_DAY, c_date_dd)
-                .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR, day_of_year);
+                .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR, day_of_year)
+                .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY, week_day)
+                .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG, week_day_long)
+                .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER, week_no)
+        ;
 //        Log.v("","org="+replaceable_string+", after="+to_temp);
         return to_temp;
     }

@@ -352,6 +352,9 @@
         <string name="msg_edit_sync_folder_keyword_insert_month">月</string>
         <string name="msg_edit_sync_folder_keyword_insert_day">日</string>
         <string name="msg_edit_sync_folder_keyword_insert_day_of_year">今年の日</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_number">週番号</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day">曜日 (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day_long">曜日 (%s, %s ...)</string>
         <string name="msgs_profile_sync_task_dlg_master">マスター フォルダー(同期元)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">同期方式</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">アーカイブ</string>

@@ -87,7 +87,9 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -104,6 +106,9 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_FILTER_INCLU
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_MONTH;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_YEAR;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_AUDIO;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_IMAGE;
@@ -769,6 +774,10 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_dir_view_keyword_insert_day = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_day);
         final Button btn_dir_view_keyword_insert_day_of_year = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_day_of_year);
 
+        final Button btn_dir_view_keyword_insert_week_number = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_week_number);
+        final Button btn_dir_view_keyword_insert_week_day = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday);
+        final Button btn_dir_view_keyword_insert_week_day_long = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday_long);
+
         final CheckedTextView ctv_smb_use_taken_date_time_for_directory_keyword = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_use_taken_date_time_for_directory_keyword);
         if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
             ctv_smb_use_taken_date_time_for_directory_keyword.setVisibility(CheckedTextView.GONE);
@@ -1021,6 +1030,15 @@ public class SyncTaskEditor extends DialogFragment {
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_month, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_MONTH);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day_of_year, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR);
+
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_number, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_day, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_day_long, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG);
+
+        setWeekDayButtonLabel(btn_dir_view_keyword_insert_week_day, btn_dir_view_keyword_insert_week_day_long,
+                mContext.getString(R.string.msg_edit_sync_folder_keyword_insert_week_day),
+                mContext.getString(R.string.msg_edit_sync_folder_keyword_insert_week_day_long));
+
     }
 
     private void setSyncFolderInternalListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
@@ -1045,6 +1063,10 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_dir_view_keyword_insert_month = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_month);
         final Button btn_dir_view_keyword_insert_day = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_day);
         final Button btn_dir_view_keyword_insert_day_of_year = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_day_of_year);
+
+        final Button btn_dir_view_keyword_insert_week_number = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_week_number);
+        final Button btn_dir_view_keyword_insert_week_day = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday);
+        final Button btn_dir_view_keyword_insert_week_day_long = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday_long);
 
         final CheckedTextView ctv_internal_use_taken_date_time_for_directory_keyword = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_use_taken_date_time_for_directory_keyword);
         if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
@@ -1146,6 +1168,14 @@ public class SyncTaskEditor extends DialogFragment {
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day_of_year, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR);
 
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_number, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_day, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_day_long, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG);
+
+        setWeekDayButtonLabel(btn_dir_view_keyword_insert_week_day, btn_dir_view_keyword_insert_week_day_long,
+                mContext.getString(R.string.msg_edit_sync_folder_keyword_insert_week_day),
+                mContext.getString(R.string.msg_edit_sync_folder_keyword_insert_week_day_long));
+
     }
 
     private String formatSyncFolderDirectoryName(String in) {//remove redundant "//" in path name
@@ -1178,6 +1208,10 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_dir_view_keyword_insert_day = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_day);
         final Button btn_dir_view_keyword_insert_day_of_year = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_day_of_year);
 
+        final Button btn_dir_view_keyword_insert_week_number = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_week_number);
+        final Button btn_dir_view_keyword_insert_week_day = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday);
+        final Button btn_dir_view_keyword_insert_week_day_long = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday_long);
+
         final CheckedTextView ctv_sdcard_use_taken_date_time_for_directory_keyword = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_sdcard_use_taken_date_time_for_directory_keyword);
         if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
             ctv_sdcard_use_taken_date_time_for_directory_keyword.setVisibility(CheckedTextView.GONE);
@@ -1198,6 +1232,14 @@ public class SyncTaskEditor extends DialogFragment {
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_month, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_MONTH);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day_of_year, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR);
+
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_number, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_day, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_day_long, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG);
+
+        setWeekDayButtonLabel(btn_dir_view_keyword_insert_week_day, btn_dir_view_keyword_insert_week_day_long,
+                mContext.getString(R.string.msg_edit_sync_folder_keyword_insert_week_day),
+                mContext.getString(R.string.msg_edit_sync_folder_keyword_insert_week_day_long));
 
         et_sync_folder_dir_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -1324,10 +1366,22 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_dir_view_keyword_insert_day = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_day);
         final Button btn_dir_view_keyword_insert_day_of_year = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_day_of_year);
 
+        final Button btn_dir_view_keyword_insert_week_number = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_week_number);
+        final Button btn_dir_view_keyword_insert_week_day = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday);
+        final Button btn_dir_view_keyword_insert_week_day_long = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday_long);
+
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_year, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_YEAR);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_month, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_MONTH);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_day_of_year, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR);
+
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_number, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_day, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_dir_view_keyword_insert_week_day_long, et_sync_folder_dir_name, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG);
+
+        setWeekDayButtonLabel(btn_dir_view_keyword_insert_week_day, btn_dir_view_keyword_insert_week_day_long,
+                mContext.getString(R.string.msg_edit_sync_folder_keyword_insert_week_day),
+                mContext.getString(R.string.msg_edit_sync_folder_keyword_insert_week_day_long));
 
         final CheckedTextView ctv_usb_use_taken_date_time_for_directory_keyword = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_usb_use_taken_date_time_for_directory_keyword);
         if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
@@ -1450,6 +1504,20 @@ public class SyncTaskEditor extends DialogFragment {
                 }
             }
         });
+
+    }
+
+    private void setWeekDayButtonLabel(Button short_button, Button long_button, String short_label, String long_label) {
+        String s_sunday=SyncThread.replaceKeywordValue(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY, (new Date("2020/07/26").getTime()));
+        String s_monday=SyncThread.replaceKeywordValue(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY, (new Date("2020/07/27").getTime()));
+        String l_sunday=SyncThread.replaceKeywordValue(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG, (new Date("2020/07/26").getTime()));
+        String l_monday=SyncThread.replaceKeywordValue(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG, (new Date("2020/07/27").getTime()));
+
+        String new_short_label=String.format(short_label, s_sunday, s_monday);
+        String new_long_label=String.format(long_label, l_sunday, l_monday);
+
+        short_button.setText(new_short_label);
+        long_button.setText(new_long_label);
 
     }
 
