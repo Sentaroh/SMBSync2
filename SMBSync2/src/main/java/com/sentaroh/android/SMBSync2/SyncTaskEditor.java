@@ -4296,8 +4296,8 @@ public class SyncTaskEditor extends DialogFragment {
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
                 mUtil.showCommonDialog(true, "D",
-                        mContext.getString(R.string.msgs_profile_sync_task_ｄｌg_swap_warning_title),
-                        mContext.getString(R.string.msgs_profile_sync_task_ｄｌg_swap_warning_message),
+                        mContext.getString(R.string.msgs_profile_sync_task_dlg_swap_warning_title),
+                        mContext.getString(R.string.msgs_profile_sync_task_dlg_swap_warning_message),
                         mContext.getString(R.string.msgs_common_dialog_confirm),
                         mContext.getString(R.string.msgs_common_dialog_cancel),
                         ntfy_swap);
