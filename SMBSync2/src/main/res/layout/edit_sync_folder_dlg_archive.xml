@@ -99,7 +99,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:text="@string/msgs_sync_folder_archive_btn_title_original_name"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/edit_sync_folder_dlg_archive_btn_file_date"
@@ -108,7 +108,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/msgs_sync_folder_archive_btn_title_date"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/edit_sync_folder_dlg_archive_btn_file_time"
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/msgs_sync_folder_archive_btn_title_time"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
             <LinearLayout
@@ -132,7 +132,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/msgs_sync_folder_archive_btn_title_yyyymmdd"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/edit_sync_folder_dlg_archive_btn_file_hhmmss"
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/msgs_sync_folder_archive_btn_title_hhmmss"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 

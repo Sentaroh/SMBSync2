@@ -353,8 +353,8 @@
         <string name="msg_edit_sync_folder_keyword_insert_day">JOUR</string>
         <string name="msg_edit_sync_folder_keyword_insert_day_of_year">JOUR DE L\'ANNEE</string>
         <string name="msg_edit_sync_folder_keyword_insert_week_number">NUMÉRO DE LA SEMAINE</string>
-        <string name="msg_edit_sync_folder_keyword_insert_week_day">JOUR DE LA SEMAINE (%s, %s ...)</string>
-        <string name="msg_edit_sync_folder_keyword_insert_week_day_long">JOUR DE LA SEMAINE (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day">JOUR DE SEMAINE (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day_long">JOUR DE SEMAINE (%s, %s ...)</string>
         <string name="msgs_profile_sync_task_dlg_master">Dossier Maitre (Source)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">Mode de sync</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Archiver</string>

@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/msg_edit_sync_folder_keyword_insert_year"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/edit_sync_folder_keyword_insert_month"
@@ -24,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/msg_edit_sync_folder_keyword_insert_month"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/edit_sync_folder_keyword_insert_day"
@@ -32,7 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/msg_edit_sync_folder_keyword_insert_day"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
@@ -47,14 +50,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/msg_edit_sync_folder_keyword_insert_day_of_year"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="12sp"/>
         <Button
             android:id="@+id/edit_sync_folder_keyword_insert_week_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/msg_edit_sync_folder_keyword_insert_week_number"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
@@ -69,14 +74,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/msg_edit_sync_folder_keyword_insert_week_day"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="12sp"/>
         <Button
             android:id="@+id/edit_sync_folder_keyword_insert_weekday_long"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/msg_edit_sync_folder_keyword_insert_week_day_long"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 

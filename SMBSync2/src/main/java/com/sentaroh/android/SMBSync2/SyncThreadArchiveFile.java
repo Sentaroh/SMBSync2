@@ -37,6 +37,9 @@ import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.jcifs.JcifsException;
 import com.sentaroh.jcifs.JcifsFile;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,18 +49,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.TimeZone;
 
 import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
 import static com.sentaroh.android.SMBSync2.Constants.ARCHIVE_FILE_TYPE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_MOVE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER;
 
 public class SyncThreadArchiveFile {
+    private static final Logger log= LoggerFactory.getLogger(SyncThreadArchiveFile.class);
 
     static public int syncArchiveInternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                                    String from_path, String to_path) {
@@ -2121,6 +2130,7 @@ public class SyncThreadArchiveFile {
     static private class ArchiveFileListItem {
         Object file=null;
         String shoot_date="", shoot_time="";
+        String shoot_week_number="", shoot_week_day="", shoot_week_day_long="";
         String file_name="";
         String full_path="";
         boolean date_from_exif=true;
@@ -2135,16 +2145,25 @@ public class SyncThreadArchiveFile {
                 afli.file=element;
                 afli.file_name=element.getName();
                 afli.full_path=element.getPath();
+                Date date=null;
                 if (date_time==null || date_time[0]==null) {
                     String[] dt= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(element.lastModified()).split(" ");
                     afli.shoot_date=dt[0].replace("/","-");
                     afli.shoot_time=dt[1].replace(":","-");
+                    date=new Date(element.lastModified());
                     afli.date_from_exif=false;
                 } else {
 //                    Log.v("SMBSync2","name="+afli.file_name+", 0="+date_time[0]+", 1="+date_time[1]);
+                    date=new Date(date_time[0]+" "+date_time[1]);
+                    String[] dt= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(date.getTime()).split(" ");
                     afli.shoot_date=date_time[0].replace("/","-");
                     afli.shoot_time=date_time[1].replace(":","-");
                 }
+                SimpleDateFormat sdf=new SimpleDateFormat(("w"));
+                afli.shoot_week_number=sdf.format(date.getTime());
+                afli.shoot_week_day=getWeekDay(date.getTime());
+                afli.shoot_week_day_long=getWeekDay(date.getTime());
+
                 if (isFileArchiveRequired(stwa, sti, afli)) fl.add(afli);
             }
         }
@@ -2167,15 +2186,22 @@ public class SyncThreadArchiveFile {
                 afli.file=element;
                 afli.file_name=element.getName();
                 afli.full_path=element.getPath();
+                Date date=null;
                 if (date_time==null || date_time[0]==null) {
                     String[] dt= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(element.lastModified()).split(" ");
+                    date=new Date(date_time[0]+" "+date_time[1]);
                     afli.shoot_date=dt[0].replace("/","-");
                     afli.shoot_time=dt[1].replace(":","-");
                     afli.date_from_exif=false;
                 } else {
+                    date=new Date(date_time[0]+" "+date_time[1]);
                     afli.shoot_date=date_time[0].replace("/","-");
                     afli.shoot_time=date_time[1].replace(":","-");
                 }
+                SimpleDateFormat sdf=new SimpleDateFormat(("w"));
+                afli.shoot_week_number=sdf.format(date.getTime());
+                afli.shoot_week_day=getWeekDay(date.getTime());
+                afli.shoot_week_day_long=getWeekDay(date.getTime());
                 if (isFileArchiveRequired(stwa, sti, afli)) fl.add(afli);
             }
         }
@@ -2208,18 +2234,27 @@ public class SyncThreadArchiveFile {
                 afli.file=element;
                 afli.file_name=element.getName();
                 afli.full_path=element.getPath();
+                Date date=null;
                 if (date_time==null || date_time[0]==null) {
                     String[] dt= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(element.getLastModified()).split(" ");
+                    date=new Date(date_time[0]+" "+date_time[1]);
                     afli.shoot_date=dt[0].replace("/","-");
                     afli.shoot_time=dt[1].replace(":","-");
                     afli.date_from_exif=false;
                 } else {
+                    date=new Date(date_time[0]+" "+date_time[1]);
                     afli.shoot_date=date_time[0].replace("/","-");
                     afli.shoot_time=date_time[1].replace(":","-");
                 }
+                SimpleDateFormat sdf=new SimpleDateFormat(("w"));
+                afli.shoot_week_number=sdf.format(date.getTime());
+                sdf=new SimpleDateFormat(("EEE"));
+                afli.shoot_week_day=getWeekDay(date.getTime());
+                afli.shoot_week_day_long=getWeekDay(date.getTime());
                 if (isFileArchiveRequired(stwa, sti, afli)) fl.add(afli);
             }
         }
+
         Collections.sort(fl, new Comparator<ArchiveFileListItem>(){
             @Override
             public int compare(ArchiveFileListItem ri, ArchiveFileListItem li) {
@@ -2227,6 +2262,22 @@ public class SyncThreadArchiveFile {
             }
         });
         return fl;
+    }
+
+    static private String getWeekDay(long time) {
+        SimpleDateFormat sdf=new SimpleDateFormat(("w"));
+        sdf=new SimpleDateFormat(("EEE"));
+        String tmp=sdf.format(time).toLowerCase();
+        String result=tmp.endsWith(".")?tmp.substring(0, tmp.length()-1):tmp;
+        return result;
+    }
+
+    static private String getWeekDayLong(long time) {
+        SimpleDateFormat sdf=new SimpleDateFormat(("w"));
+        sdf=new SimpleDateFormat(("EEEE"));
+        String tmp=sdf.format(time).toLowerCase();
+        String result=tmp.endsWith(".")?tmp.substring(0, tmp.length()-1):tmp;
+        return result;
     }
 
     static final public boolean isFileArchiveRequired(SyncThreadWorkArea stwa, SyncTaskItem sti, ArchiveFileListItem afli) {
@@ -2269,6 +2320,9 @@ public class SyncThreadArchiveFile {
                 temp_dir=sti.getArchiveCreateDirectoryTemplate().replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_YEAR,year)
                         .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_MONTH,month)
                         .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_DAY,day)
+                        .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER,afli.shoot_week_number)
+                        .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY,afli.shoot_week_day)
+                        .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG,afli.shoot_week_day_long)
                         +"/";
             }
         }
@@ -2286,7 +2340,11 @@ public class SyncThreadArchiveFile {
 
                 target_directory=to_path.replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_YEAR,year)
                         .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_MONTH,month)
-                        .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_DAY,day);
+                        .replaceAll(SyncTaskItem.PICTURE_ARCHIVE_RENAME_KEYWORD_DAY,day)
+                        .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER,afli.shoot_week_number)
+                        .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY,afli.shoot_week_day)
+                        .replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG,afli.shoot_week_day_long)
+                ;
             }
         } else {
             target_directory=to_path;
