@@ -642,33 +642,35 @@ public class GlobalParameters extends CommonGlobalParms {
 
     // wrap language layout in the base context for all activities
     private Context updateLanguageResources(Context context, String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
+        //language="0"だとLocaleが"und"となりユーザーによる言語設定を取得できないので、language="0"の時は処理を行わないようにした
+        if (!language.equals(SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM)) {
+            Locale locale = new Locale(language);
+            Locale.setDefault(locale);
 
-        Resources res = context.getResources();
-        Configuration config = new Configuration(res.getConfiguration());
-        if (LANGUAGE_LOCALE_USE_NEW_API) {// use createConfigurationContext() when updateConfiguration() is deprecated
-            if (Build.VERSION.SDK_INT >= 24) {//we can ignore and use "config.setLocale(locale)" like Build.VERSION.SDK_INT >= 21 if we target above API 24 (API 24 only bug)
-                setLocaleForApi24(config, locale);
-                context = context.createConfigurationContext(config);
-            } else if (Build.VERSION.SDK_INT >= 21) {
-                config.setLocale(locale);
-                context = context.createConfigurationContext(config);
-            } else {
-                config.locale = locale;
+            Resources res = context.getResources();
+            Configuration config = new Configuration(res.getConfiguration());
+            if (LANGUAGE_LOCALE_USE_NEW_API) {// use createConfigurationContext() when updateConfiguration() is deprecated
+                if (Build.VERSION.SDK_INT >= 24) {//we can ignore and use "config.setLocale(locale)" like Build.VERSION.SDK_INT >= 21 if we target above API 24 (API 24 only bug)
+                    setLocaleForApi24(config, locale);
+                    context = context.createConfigurationContext(config);
+                } else if (Build.VERSION.SDK_INT >= 21) {
+                    config.setLocale(locale);
+                    context = context.createConfigurationContext(config);
+                } else {
+                    config.locale = locale;
+                    res.updateConfiguration(config, res.getDisplayMetrics());
+                }
+            } else {// ignore deprecation and always use updateConfiguration()
+                if (Build.VERSION.SDK_INT >= 24) {
+                    setLocaleForApi24(config, locale);
+                } else if (Build.VERSION.SDK_INT >= 21) {
+                    config.setLocale(locale);
+                } else {
+                    config.locale = locale;
+                }
                 res.updateConfiguration(config, res.getDisplayMetrics());
             }
-        } else {// ignore deprecation and always use updateConfiguration()
-            if (Build.VERSION.SDK_INT >= 24) {
-                setLocaleForApi24(config, locale);
-            } else if (Build.VERSION.SDK_INT >= 21) {
-                config.setLocale(locale);
-            } else {
-                config.locale = locale;
-            }
-            res.updateConfiguration(config, res.getDisplayMetrics());
         }
-
         return context;
     }
 
