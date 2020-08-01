@@ -29,6 +29,7 @@
         android:theme="@style/Main"
         android:largeHeap="true"
         android:allowBackup="false"
+        android:requestLegacyExternalStorage="true"
         >
         <receiver
     	    android:name="com.sentaroh.android.SMBSync2.SyncReceiver"
