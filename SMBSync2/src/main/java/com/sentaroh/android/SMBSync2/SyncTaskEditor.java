@@ -94,6 +94,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import it.sephiroth.android.library.easing.Linear;
+
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
@@ -3934,10 +3936,11 @@ public class SyncTaskEditor extends DialogFragment {
         });
 
         final CheckedTextView ctUseExtendedDirectoryFilter1 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_extended_filter1);
+        final LinearLayout ll_ctUseExtendedDirectoryFilter1 = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_use_extended_filter1);
         CommonUtilities.setCheckedTextView(ctUseExtendedDirectoryFilter1);
         ctUseExtendedDirectoryFilter1.setChecked(n_sti.isSyncOptionUseExtendedDirectoryFilter1());
-        if (n_sti.isSyncOptionUseDirectoryFilterV2()) ctUseExtendedDirectoryFilter1.setVisibility(CheckedTextView.GONE);
-        else ctUseExtendedDirectoryFilter1.setVisibility(CheckedTextView.VISIBLE);
+        if (n_sti.isSyncOptionUseDirectoryFilterV2()) ll_ctUseExtendedDirectoryFilter1.setVisibility(LinearLayout.GONE);
+        else ll_ctUseExtendedDirectoryFilter1.setVisibility(LinearLayout.VISIBLE);
         setCtvListenerForEditSyncTask(ctUseExtendedDirectoryFilter1, type, n_sti, dlg_msg);
 
         final CheckedTextView ctUseDirectoryFilterV2 = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_directory_filter_v2);
@@ -3952,8 +3955,8 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         ctUseDirectoryFilterV2.setChecked(isChecked);
-                        if (isChecked) ctUseExtendedDirectoryFilter1.setVisibility(CheckedTextView.GONE);
-                        else ctUseExtendedDirectoryFilter1.setVisibility(CheckedTextView.VISIBLE);
+                        if (isChecked) ll_ctUseExtendedDirectoryFilter1.setVisibility(LinearLayout.GONE);
+                        else ll_ctUseExtendedDirectoryFilter1.setVisibility(LinearLayout.VISIBLE);
 
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                     }
@@ -3970,11 +3973,13 @@ public class SyncTaskEditor extends DialogFragment {
                         ntfy);
             }
         });
-        //Hide option for release APK
-//        if (!mGp.debuggable) {
-//            ctUseDirectoryFilterV2.setVisibility(CheckedTextView.GONE);
-//            ctUseDirectoryFilterV2.setChecked(false);
-//        }
+        //Disable option for release APK
+        if (!mGp.debuggable) {
+            CommonDialog.setViewEnabled(getActivity(), ctUseDirectoryFilterV2, false);
+            ctUseDirectoryFilterV2.setChecked(false);
+            CommonDialog.setViewEnabled(getActivity(), ctvEnsureTargetExactMirror, false);
+            ctvEnsureTargetExactMirror.setChecked(false);
+        }
 
         final LinearLayout ll_special_option_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_special_option_view);
         final CheckedTextView ctvShowSpecialOption = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
