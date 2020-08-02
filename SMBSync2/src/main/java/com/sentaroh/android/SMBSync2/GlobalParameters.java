@@ -642,7 +642,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
     // wrap language layout in the base context for all activities
     private Context updateLanguageResources(Context context, String language) {
-        //language="0"だとLocaleが"und"となりユーザーによる言語設定を取得できないので、language="0"の時は処理を行わないようにした
+        //if language is set to system default (defined as "0"), do not apply non existing language code "0" and return current context without wrapped language
         if (!language.equals(SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM)) {
             Locale locale = new Locale(language);
             Locale.setDefault(locale);
