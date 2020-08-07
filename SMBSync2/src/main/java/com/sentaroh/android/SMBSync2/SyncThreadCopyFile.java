@@ -381,7 +381,14 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
+
+        String to_dir_tmp = "";
+        if (Build.VERSION.SDK_INT>=30) {
+            to_dir_tmp=getTempFileDirectory(to_dir);
+        } else {
+            to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
+        }
+
         File tmp_dir=new File(to_dir_tmp);
         if (!tmp_dir.exists()) tmp_dir.mkdirs();
         String temp_path = to_dir_tmp+"/"+"temp_file.tmp";
@@ -465,6 +472,17 @@ public class SyncThreadCopyFile {
         t_df.renameTo(file_name);
 
         return SyncTaskItem.SYNC_STATUS_SUCCESS;
+    }
+
+    static public String getTempFileDirectory(String to_dir) {
+        String result="";
+        if (to_dir.startsWith("/storage/emulated/0")) {
+            result="/storage/emulated/0/"+APP_SPECIFIC_DIRECTORY+"/cache";
+        } else {
+            String[] dir_parts=to_dir.split("/");
+            result="/"+dir_parts[1]+"/"+dir_parts[2]+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
+        }
+        return result;
     }
 
     static private int copyFileInternalToExternalSetLastMod(SyncThreadWorkArea stwa,
@@ -715,7 +733,14 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
+
+        String to_dir_tmp = "";
+        if (Build.VERSION.SDK_INT>=30) {
+            to_dir_tmp=getTempFileDirectory(to_dir);
+        } else {
+            to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
+        }
+
         File tmp_dir=new File(to_dir_tmp);
         if (!tmp_dir.exists()) tmp_dir.mkdirs();
         String to_file_temp = to_dir_tmp+"/"+"temp_file.tmp";

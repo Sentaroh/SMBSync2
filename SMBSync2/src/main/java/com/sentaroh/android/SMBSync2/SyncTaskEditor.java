@@ -1323,11 +1323,18 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                            dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
-                            dlg_msg.setVisibility(TextView.VISIBLE);
-                            CommonDialog.setViewEnabled(getActivity(), btn_sdcard_select_sdcard, true);
-                            btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
-                            CommonDialog.setViewEnabled(getActivity(), btn_sync_folder_list_dir, false);
+                            if (Build.VERSION.SDK_INT>=30) {
+                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+                                dlg_msg.setVisibility(TextView.VISIBLE);
+                                btn_sdcard_select_sdcard.setVisibility(Button.GONE);
+                            } else {
+                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                                dlg_msg.setVisibility(TextView.VISIBLE);
+                                CommonDialog.setViewEnabled(getActivity(), btn_sdcard_select_sdcard, true);
+                                btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
+                                CommonDialog.setViewEnabled(getActivity(), btn_sync_folder_list_dir, false);
+                            }
+
                         } else {
                             CommonDialog.setViewEnabled(getActivity(), btn_sync_folder_list_dir, true);
                             dlg_msg.setVisibility(TextView.GONE);
@@ -1897,10 +1904,17 @@ public class SyncTaskEditor extends DialogFragment {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                            dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
-                            dlg_msg.setVisibility(TextView.VISIBLE);
-                            CommonDialog.setViewEnabled(getActivity(), btn_sdcard_select_sdcard, true);
-                            CommonDialog.setViewEnabled(getActivity(), btn_zip_filelist, false);
+                            if (Build.VERSION.SDK_INT>=30) {
+                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+                                dlg_msg.setVisibility(TextView.VISIBLE);
+                                btn_sdcard_select_sdcard.setVisibility(Button.GONE);
+                            } else {
+                                dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                                dlg_msg.setVisibility(TextView.VISIBLE);
+                                CommonDialog.setViewEnabled(getActivity(), btn_sdcard_select_sdcard, true);
+                                CommonDialog.setViewEnabled(getActivity(), btn_zip_filelist, false);
+                                btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
+                            }
                         } else {
                             CommonDialog.setViewEnabled(getActivity(), btn_zip_filelist, true);
                             dlg_msg.setVisibility(TextView.GONE);
@@ -2410,10 +2424,16 @@ public class SyncTaskEditor extends DialogFragment {
             ll_sync_folder_mp.setVisibility(LinearLayout.GONE);
             if (isSdcardDeviceExists(mContext,mUtil)) {
                 if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
-                    dlg_msg.setVisibility(TextView.VISIBLE);
-                    CommonDialog.setViewEnabled(getActivity(), btn_sdcard_select_sdcard, true);
-                    btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
+                    if (Build.VERSION.SDK_INT>=30) {
+                        dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+                        dlg_msg.setVisibility(TextView.VISIBLE);
+                        btn_sdcard_select_sdcard.setVisibility(Button.GONE);
+                    } else {
+                        dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                        dlg_msg.setVisibility(TextView.VISIBLE);
+                        CommonDialog.setViewEnabled(getActivity(), btn_sdcard_select_sdcard, true);
+                        btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
+                    }
                     setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
                 } else {
                     setSyncFolderSmbListDirectoryButtonEnabled(dialog, true);
@@ -2483,9 +2503,16 @@ public class SyncTaskEditor extends DialogFragment {
                 ll_sync_folder_mp.setVisibility(Spinner.GONE);
                 btn_zip_select_sdcard.setVisibility(Button.VISIBLE);
                 if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
-                    dlg_msg.setVisibility(TextView.VISIBLE);
-                    CommonDialog.setViewEnabled(getActivity(), btn_zip_select_sdcard, true);
+                    if (Build.VERSION.SDK_INT>=30) {
+                        dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+                        dlg_msg.setVisibility(TextView.VISIBLE);
+                        btn_sdcard_select_sdcard.setVisibility(Button.GONE);
+                    } else {
+                        dlg_msg.setText(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                        dlg_msg.setVisibility(TextView.VISIBLE);
+                        CommonDialog.setViewEnabled(getActivity(), btn_zip_select_sdcard, true);
+                        btn_sdcard_select_sdcard.setVisibility(Button.VISIBLE);
+                    }
                     setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
                 } else {
                     setSyncFolderSmbListDirectoryButtonEnabled(dialog, true);
@@ -5470,13 +5497,21 @@ public class SyncTaskEditor extends DialogFragment {
         String emsg = "";
         if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master);
+                if (Build.VERSION.SDK_INT>=30) {
+                    emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted);
+                } else {
+                    emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_master);
+                }
             }
         }
         if (emsg.equals("")) {
             if (n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
                 if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                    emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target);
+                    if (Build.VERSION.SDK_INT>=30) {
+                        emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted);
+                    } else {
+                        emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_target);
+                    }
                 }
             }
         }
