@@ -23,9 +23,23 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
 
+import com.sentaroh.android.SMBSync2.BuildConfig;
+import com.sentaroh.android.SMBSync2.R;
+import com.sentaroh.android.Utilities.Dialog.CommonDialog;
+import com.sentaroh.android.Utilities.Dialog.MessageDialogFragment;
 import com.sentaroh.android.Utilities.LogUtil.CommonLogFileListDialogFragment;
+
+import java.io.File;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class LogFileListDialogFragment extends CommonLogFileListDialogFragment {
     public static LogFileListDialogFragment newInstance(String theme_id, boolean retainInstance, String title, String send_msg, String enable_msg, String send_subject) {
@@ -40,6 +54,27 @@ public class LogFileListDialogFragment extends CommonLogFileListDialogFragment {
         bundle.putString("subject", send_subject);
         frag.setArguments(bundle);
         return frag;
+    }
+
+    @Override
+    public void startLogfileViewerIntent(Context c, String fpath) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Uri uri=createLogFileUri(c, fpath);
+        intent.setDataAndType(uri, "text/plain");
+        startActivity(intent);
+    }
+
+    @Override
+    public Uri createLogFileUri(Context c, String fpath) {
+        Uri uri=null;
+        if (Build.VERSION.SDK_INT>=24) {
+            uri= FileProvider.getUriForFile(c, BuildConfig.APPLICATION_ID + ".provider", new File(fpath));
+        } else {
+            uri=Uri.parse("file://"+fpath);
+        }
+        return uri;
     }
 
 }
