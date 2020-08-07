@@ -122,8 +122,8 @@ public class SyncThreadCopyFile {
         String to_file_dest = to_dir + "/" + file_name;
         String to_file_temp = null, to_file_dir_tmp="";
 
-        if (to_dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) to_file_dir_tmp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
-        else to_file_dir_tmp = stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
+        if (to_dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) to_file_dir_tmp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/";//+file_name;
+        else to_file_dir_tmp = stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/";//+file_name;
         to_file_temp=to_file_dir_tmp+System.currentTimeMillis();//file_name;
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
@@ -190,7 +190,7 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files";
+        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
         File tmp_dir=new File(to_dir_tmp);
         if (!tmp_dir.exists()) tmp_dir.mkdirs();
         String to_file_path = to_dir_tmp+"/"+"temp_file.tmp";
@@ -381,7 +381,7 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files";
+        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
         File tmp_dir=new File(to_dir_tmp);
         if (!tmp_dir.exists()) tmp_dir.mkdirs();
         String temp_path = to_dir_tmp+"/"+"temp_file.tmp";
@@ -478,8 +478,8 @@ public class SyncThreadCopyFile {
         String to_file_dest = to_dir + "/" + file_name;
         String to_file_temp = null, to_file_dir_tmp="";
 
-        if (to_dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) to_file_dir_tmp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
-        else to_file_dir_tmp = stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
+        if (to_dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) to_file_dir_tmp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/";//+file_name;
+        else to_file_dir_tmp = stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/";//+file_name;
         to_file_temp=to_file_dir_tmp+System.currentTimeMillis();//file_name;
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);
@@ -715,7 +715,7 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files";
+        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
         File tmp_dir=new File(to_dir_tmp);
         if (!tmp_dir.exists()) tmp_dir.mkdirs();
         String to_file_temp = to_dir_tmp+"/"+"temp_file.tmp";
@@ -818,8 +818,8 @@ public class SyncThreadCopyFile {
         String to_file_dest = to_dir + "/" + file_name;
         String to_file_temp = null, to_file_dir_tmp="";
 
-        if (to_dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) to_file_dir_tmp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
-        else to_file_dir_tmp = stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/";//+file_name;
+        if (to_dir.startsWith(stwa.gp.safMgr.getSdcardRootPath())) to_file_dir_tmp = stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/";//+file_name;
+        else to_file_dir_tmp = stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/";//+file_name;
         to_file_temp=to_file_dir_tmp+System.currentTimeMillis();//file_name;
 
         SyncThread.createDirectoryToExternalStorage(stwa, sti, to_dir);

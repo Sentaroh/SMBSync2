@@ -306,8 +306,8 @@ public class SyncThreadArchiveFile {
                 SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
 
                 String temp_path=isSdcardPath(stwa,to_path)?
-                        stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/archive_temp.tmp":
-                        stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/archive_temp.tmp";
+                        stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/archive_temp.tmp":
+                        stwa.gp.safMgr.getUsbRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/archive_temp.tmp";
                 File temp_file=new File(temp_path);
                 OutputStream os=null;
                 try {
@@ -739,8 +739,8 @@ public class SyncThreadArchiveFile {
             if (!sti.isSyncTestMode()) {
                 SyncThread.createDirectoryToInternalStorage(stwa, sti, tf.getParent());
                 String temp_path=isSdcardPath(stwa,to_path)?
-                        stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp":
-                        stwa.gp.safMgr.getUsbRootPath()+   "/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
+                        stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/temp_file.tmp":
+                        stwa.gp.safMgr.getUsbRootPath()+   "/"+APP_SPECIFIC_DIRECTORY+"/cache/temp_file.tmp";
                 File temp_file=new File(temp_path);
                 sync_result= copyFile(stwa, sti,  stwa.context.getContentResolver().openInputStream(m_df.getUri()),
                         new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
@@ -952,8 +952,8 @@ public class SyncThreadArchiveFile {
                 SyncThread.createDirectoryToExternalStorage(stwa, sti, tf.getParent());
 
                 String temp_path=isSdcardPath(stwa,to_path)?
-                        stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/archive_temp.tmp":
-                        stwa.gp.safMgr.getUsbRootPath()+   "/"+APP_SPECIFIC_DIRECTORY+"/files/archive_temp.tmp";
+                        stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/archive_temp.tmp":
+                        stwa.gp.safMgr.getUsbRootPath()+   "/"+APP_SPECIFIC_DIRECTORY+"/cache/archive_temp.tmp";
                 File temp_file=new File(temp_path);
                 OutputStream os=null;
                 try {
@@ -1366,7 +1366,7 @@ public class SyncThreadArchiveFile {
                 String dir=tf.getParent();
                 File lf_dir=new File(dir);
                 if (!lf_dir.exists()) lf_dir.mkdirs();
-                File temp_file=new File(stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp");
+                File temp_file=new File(stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache/temp_file.tmp");
                 while (stwa.syncTaskRetryCount > 0) {
                     sync_result= copyFile(stwa, sti, mf.getInputStream(), new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
                     if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
@@ -1643,8 +1643,8 @@ public class SyncThreadArchiveFile {
 
                 OutputStream os=null;
                 String temp_path=isSdcardPath(stwa,to_path)?
-                        stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/files/archive_temp.tmp":
-                        stwa.gp.safMgr.getUsbRootPath()+   "/"+APP_SPECIFIC_DIRECTORY+"/files/archive_temp.tmp";
+                        stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/archive_temp.tmp":
+                        stwa.gp.safMgr.getUsbRootPath()+   "/"+APP_SPECIFIC_DIRECTORY+"/cache/archive_temp.tmp";
                 File temp_file=new File(temp_path);
                 try {
                     os=new FileOutputStream(temp_file);
