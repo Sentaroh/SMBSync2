@@ -163,8 +163,14 @@ public class SyncThreadSyncZip {
 
     private static boolean copyZipFileToDestination(SyncThreadWorkArea stwa, String to_dir, String file_path) {
         boolean result=false;
-        if (Build.VERSION.SDK_INT>=24) result=copyZipFileToDestinationMoveMode(stwa, to_dir, file_path);
-        else result=copyZipFileToDestinationCopyMode(stwa, to_dir, file_path);
+        if (Build.VERSION.SDK_INT<=29) {
+            if (Build.VERSION.SDK_INT>=24) result=copyZipFileToDestinationMoveMode(stwa, to_dir, file_path);
+            else result=copyZipFileToDestinationCopyMode(stwa, to_dir, file_path);
+        } else {
+            File work_file=new File(stwa.zipWorkFileName);
+            File dest_file=new File(to_dir+file_path);
+            result=work_file.renameTo(dest_file);
+        }
         return result;
     }
 
