@@ -94,6 +94,7 @@ import java.util.regex.Pattern;
 import static android.content.Context.USAGE_STATS_SERVICE;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.DEFAULT_PREFS_FILENAME;
+import static com.sentaroh.android.SMBSync2.Constants.GENERAL_IO_AREA_SIZE;
 
 public final class CommonUtilities {
     private Context mContext = null;
@@ -352,7 +353,7 @@ public final class CommonUtilities {
             if (!mfd.exists()) mfd.mkdirs();
             File mf = new File(dir + "/.messages");
             fos=new FileOutputStream(mf);
-            PrintWriter bos=new PrintWriter(new BufferedOutputStream(fos,1024*1024));
+            PrintWriter bos=new PrintWriter(new BufferedOutputStream(fos, GENERAL_IO_AREA_SIZE));
             StringBuffer sb=new StringBuffer(1024);
             synchronized (gp.msgList) {
                 for (SyncMessageItem smi:gp.msgList) {
@@ -385,7 +386,7 @@ public final class CommonUtilities {
 //            File mf=new File(c.getFilesDir().getPath()+"/"+"message_list.txt");
             if (mf.exists()) {
                 FileReader fr=new FileReader(mf);
-                BufferedReader bis=new BufferedReader(fr, 1024*1024);
+                BufferedReader bis=new BufferedReader(fr, GENERAL_IO_AREA_SIZE);
                 String line=null;
                 while((line=bis.readLine())!=null) {
                     String[] msg_array=line.split("\u0000");
@@ -814,7 +815,7 @@ public final class CommonUtilities {
             File lf = new File(dir + "/history.txt");
             if (lf.exists()) {
                 FileReader fw = new FileReader(lf);
-                BufferedReader br = new BufferedReader(fw, 4096 * 16);
+                BufferedReader br = new BufferedReader(fw, GENERAL_IO_AREA_SIZE);
                 String line = "";
                 String[] l_array = null;
                 while ((line = br.readLine()) != null) {
@@ -899,7 +900,7 @@ public final class CommonUtilities {
             lf.mkdirs();
             lf = new File(dir + "/history.txt");
             FileWriter fw = new FileWriter(lf);
-            BufferedWriter bw = new BufferedWriter(fw, 4096 * 16);
+            BufferedWriter bw = new BufferedWriter(fw, GENERAL_IO_AREA_SIZE);
             int max = 500;
             StringBuilder sb_buf = new StringBuilder(1024 * 2);
             SyncHistoryItem shli = null;

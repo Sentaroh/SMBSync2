@@ -40,7 +40,6 @@ import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.progress.ProgressMonitor;
 import net.lingala.zip4j.util.Zip4jConstants;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -50,6 +49,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_IO_AREA_SIZE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_MOVE;
@@ -65,7 +65,6 @@ public class SyncThreadSyncZip {
             stwa.zipFileList = ZipUtil.buildZipFileList(dest_path, ZipUtil.DEFAULT_ZIP_FILENAME_ENCODING);
             if (stwa.zipFileList.size() == 0) {
                 lf.delete();
-//				Log.v("","delete");
             }
         } else {
             stwa.zipFileList = new ArrayList<ZipFileListItem>();
@@ -115,7 +114,6 @@ public class SyncThreadSyncZip {
             SyncThread.printStackTraceElement(stwa, e.getStackTrace());
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
         }
-//		Log.v("","zf path="+zf.getFile().getPath());
         return zf;
     }
 
@@ -125,16 +123,11 @@ public class SyncThreadSyncZip {
         if (!in.exists()) return true;//No iput file
 
         File out = new File(stwa.zipWorkFileName);
-//		Log.v("","copy to work from="+in.getPath()+", out="+out.getPath());
-//        if (!in.exists()) {
-//            out.delete();
-//            return false;
-//        }
         stwa.zipFileCopyBackRequired = false;
         try {
             FileInputStream fis = new FileInputStream(in);
             FileOutputStream fos = new FileOutputStream(out);
-            byte[] buff = new byte[1024 * 1024 * 8];
+            byte[] buff = new byte[SYNC_IO_AREA_SIZE];
             int rc = fis.read(buff);
             long read_byte=0, tot_byte=in.length();
             while (rc > 0) {
@@ -187,7 +180,7 @@ public class SyncThreadSyncZip {
                 long tot_byte=in.length();
                 FileInputStream fis = new FileInputStream(in);
                 OutputStream fos = stwa.context.getContentResolver().openOutputStream(out.getUri());
-                byte[] buff = new byte[1024 * 1024 * 8];
+                byte[] buff = new byte[SYNC_IO_AREA_SIZE];
                 int rc = fis.read(buff);
                 long read_byte=0;
                 while (rc > 0) {
@@ -490,7 +483,6 @@ public class SyncThreadSyncZip {
         boolean result = false;
         if (!sti.isSyncTestMode()) {
             File mf = new File(to_dir);
-//			Log.v("","from="+to_dir+", base="+zp.getDefaultFolderPath());
             if (zp.getDefaultFolderPath().equals(to_dir)) {
                 stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " directory not created, Directory=" + to_dir +
                         ", Base=" + zp.getDefaultFolderPath());
@@ -502,7 +494,7 @@ public class SyncThreadSyncZip {
                     try {
                         fh = zf.getFileHeader(zip_dir_name + "/");
                     } catch (ZipException e) {
-//							e.printStackTrace();
+						e.printStackTrace();
                         error = true;
                     }
 
@@ -513,7 +505,6 @@ public class SyncThreadSyncZip {
                             stwa.zipFileCopyBackRequired = true;
                             stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " directory created, dir=" + to_dir);
                         } else {
-//							Log.v("","name="+fh.getFileName());
                             stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " directory was already exist, dir=" + to_dir);
                         }
                     } else {
@@ -558,8 +549,6 @@ public class SyncThreadSyncZip {
                             for (File element : children) {
                                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                     if (!element.getName().equals(".android_secure")) {
-//										Log.v("","from="+from_path);
-//										Log.v("","to  ="+to_path);
                                         if (element.isFile()) {
                                             sync_result = moveCopyInternalToInternalZip(stwa, sti, move_file, from_base, from_path + "/" + element.getName(),
                                                     element, zf, zp);
@@ -594,12 +583,10 @@ public class SyncThreadSyncZip {
                             SyncThread.isFileSelected(stwa, sti, t_from_path)) {
                         boolean tf_exists = false;
                         try {
-//							Log.v("","t="+t_from_path);
                             FileHeader fh = zf.getFileHeader(t_from_path.substring(1));
                             tf_exists = fh == null ? false : true;
-//							Log.v("","fh="+fh);
                         } catch (ZipException e) {
-//							e.printStackTrace();
+							e.printStackTrace();
                         }
                         if (tf_exists && !sti.isSyncOverrideCopyMoveFile()) {
                             //Ignore override the file
@@ -675,16 +662,12 @@ public class SyncThreadSyncZip {
             stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " master=", from_path, ", target=", zf.getFile().getPath());
         try {
             String root_dir = from_path.replace(stwa.gp.internalRootDirectory + "/", "");
-//			Log.v("","root="+root_dir);
             ArrayList<FileHeader> remove_list = new ArrayList<FileHeader>();
             for (ZipFileListItem zfli : stwa.zipFileList) {
                 String zf_name = zfli.getPath().replace(root_dir + "/", "");//zf_name: relative file/dir path (without storage/master/ part)
                 String master_path = "";
                 if (root_dir.equals("")) master_path = from_path + "/" + zfli.getPath();//master_path = file/dir complete path in master (storage/master_dir/file-dir-path)
                 else master_path = from_path + "/" + zfli.getPath().replace(root_dir + "/", "");
-//				Log.v("","master="+master_path+", zfname="+zf_name);
-//              stwa.util.addDebugMsg(2, "I", "master="+master_path+", zfname="+zf_name);
-//              stwa.util.addDebugMsg(2, "I", "zfli  ="+zfli.getPath() + " isDirectory="+zfli.isDirectory());
                 if (!zf_name.equals(root_dir) && !zf_name.equals(root_dir + "/")) {
                     File mf = new File(master_path);
 
@@ -759,13 +742,12 @@ public class SyncThreadSyncZip {
                                                      SyncTaskItem sti, String from_dir, File mf, String to_dirx, String dest_path, ZipFile zf, ZipParameters zp) throws IOException {
         int sync_result=0;
         String to_dir = from_dir.replace(stwa.gp.internalRootDirectory + "/", "");
-//		Log.v("","copy from="+from_dir+", to="+to_dir);
         long read_begin_time = System.currentTimeMillis();
         long file_read_bytes = mf.length();
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 //		ZipModel zipModel=null;
-        FileInputStream is = new FileInputStream(mf);
-        BufferedInputStream ifs = new BufferedInputStream(is, SyncThreadCopyFile.LARGE_BUFFERED_STREAM_BUFFER_SIZE);
+//        FileInputStream is = new FileInputStream(mf);
+//        BufferedInputStream ifs = new BufferedInputStream(is, IO_AREA_SIZE);
         try {
             String to_name = to_dir + "/" + dest_path;
 
@@ -775,7 +757,6 @@ public class SyncThreadSyncZip {
                 String[] no_comp_array = stwa.gp.settingNoCompressFileType.split(";");
                 if (no_comp_array != null && no_comp_array.length > 0) {
                     for (String no_comp_type : no_comp_array) {
-//						Log.v("","item="+item+", path="+add_item.getName().toLowerCase());
                         if (mf.getName().toLowerCase().endsWith("." + no_comp_type)) {
                             n_zp.setCompressionMethod(Zip4jConstants.COMP_STORE);
                             break;
@@ -804,9 +785,7 @@ public class SyncThreadSyncZip {
 //			fh=zf.getFileHeader(to_name);
 //			fh.setLastModFileTime((int)ZipUtil.javaToDosTime(mf.lastModified()));
 
-//			Log.v("","name="+fh.getFileName()+", fh_lastmod="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(ZipUtil.dosToJavaTme(fh.getLastModFileTime()))+
-//					", file_lastMod="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(mf.lastModified()));
-            ifs.close();
+//            ifs.close();
         } catch (ZipException e) {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     CommonUtilities.getExecutedMethodName() + " master=" + from_dir + ", target=" + to_dir);

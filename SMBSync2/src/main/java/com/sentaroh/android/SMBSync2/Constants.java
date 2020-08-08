@@ -35,6 +35,9 @@ public class Constants {
 
 	public static final String DEFAULT_PREFS_FILENAME="default_preferences";
 
+    public final static int SYNC_IO_AREA_SIZE = 1024 * 1024 * 4;
+    public final static int GENERAL_IO_AREA_SIZE = 1024 * 1024;
+
 	public final static boolean BUILD_FOR_AMAZON=false;
 	
 	public final static String SMBSYNC2_TAB_NAME_TASK="task", SMBSYNC2_TAB_NAME_SCHEDULE="sched",
