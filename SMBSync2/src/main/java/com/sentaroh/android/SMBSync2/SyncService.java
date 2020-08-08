@@ -219,7 +219,7 @@ public class SyncService extends Service {
         } else if (action.equals(SMBSYNC2_SERVICE_HEART_BEAT)) {
 //			mUtil.addDebugMsg(0,"I","onStartCommand entered, action="+action);
             if (mHeartBeatActive) setHeartBeat();
-        } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) ||
+        } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) || action.equals(Intent.ACTION_MEDIA_UNMOUNTED) ||
                 action.equals(Intent.ACTION_MEDIA_EJECT)) {
             String path = intent.getDataString();
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action+", Path="+path);
