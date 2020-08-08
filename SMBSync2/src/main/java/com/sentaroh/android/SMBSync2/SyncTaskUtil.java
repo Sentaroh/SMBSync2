@@ -216,7 +216,8 @@ public class SyncTaskUtil {
         Collections.sort(auto_saved_file_list, new Comparator<File>() {
             @Override
             public int compare(File o1, File o2) {
-                return (int)(o2.lastModified()-o1.lastModified());
+//                return (int)(o2.lastModified()-o1.lastModified());
+                return o2.getName().compareToIgnoreCase(o1.getName());
             }
         });
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
