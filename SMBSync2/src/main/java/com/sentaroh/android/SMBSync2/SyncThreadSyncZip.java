@@ -262,8 +262,12 @@ public class SyncThreadSyncZip {
         if (sti.isTargetZipUseExternalSdcard()) {
             File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+dest_file);
             File df=new File(lf.getParent());
-            if (!df.exists()) {
-                SafFile sf=stwa.gp.safMgr.createSdcardDirectory(df.getPath());
+            if (Build.VERSION.SDK_INT<=29) {
+                if (!df.exists()) {
+                    SafFile sf=stwa.gp.safMgr.createSdcardDirectory(df.getPath());
+                }
+            } else {
+                if (!df.exists()) df.mkdirs();
             }
         } else {
             File lf=new File(stwa.gp.internalRootDirectory+"/"+dest_file);
@@ -276,8 +280,12 @@ public class SyncThreadSyncZip {
             File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache");
             lf.mkdirs();
             stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache"+dest_file;
-            if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
-            zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
+            if (Build.VERSION.SDK_INT<=29) {
+                if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
+                zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
+            } else {
+                zf = setZipEnvironment(stwa, sti, from_path, stwa.gp.safMgr.getSdcardRootPath() + dest_file, zp);
+            }
         } else {
             zf = setZipEnvironment(stwa, sti, from_path, stwa.gp.internalRootDirectory + dest_file, zp);
         }
@@ -288,32 +296,13 @@ public class SyncThreadSyncZip {
                 sync_result = syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
                 if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                     if (sti.isTargetZipUseExternalSdcard()) {
-                        if (!copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
+                        if (Build.VERSION.SDK_INT<=29) {
+                            if (!copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
+                        }
                     }
                 }
             }
 
-//            if (sti.isSyncOptionDeleteFirstWhenMirror()) {
-//                sync_result =syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
-//                if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-//                    sync_result =moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
-//                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-//                        if (sti.isTargetZipUseExternalSdcard()) {
-//                            copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file);
-//                        }
-//                    }
-//                }
-//            } else {
-//                sync_result = moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
-//                if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-//                    sync_result = syncDeleteInternalToInternalZip(stwa, sti, from_path, zf, zp);
-//                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-//                        if (sti.isTargetZipUseExternalSdcard()) {
-//                            copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file);
-//                        }
-//                    }
-//                }
-//            }
         }
         return sync_result;
     }
@@ -327,7 +316,11 @@ public class SyncThreadSyncZip {
             File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+dest_file);
             File df=new File(lf.getParent());
             if (!df.exists()) {
-                SafFile sf=stwa.gp.safMgr.createSdcardDirectory(df.getPath());
+                if (Build.VERSION.SDK_INT<=29) {
+                    SafFile sf=stwa.gp.safMgr.createSdcardDirectory(df.getPath());
+                } else {
+                    if (!df.exists()) df.mkdirs();
+                }
             }
         } else {
             File lf=new File(stwa.gp.internalRootDirectory+"/"+dest_file);
@@ -341,8 +334,12 @@ public class SyncThreadSyncZip {
             File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache");
             lf.mkdirs();
             stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/zip_work_file.zip";
-            if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
-            zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
+            if (Build.VERSION.SDK_INT<=29) {
+                if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
+                zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
+            } else {
+                zf = setZipEnvironment(stwa, sti, from_path, stwa.gp.safMgr.getSdcardRootPath() + dest_file, zp);
+            }
         } else {
             zf = setZipEnvironment(stwa, sti, from_path, stwa.gp.internalRootDirectory + dest_file, zp);
         }
@@ -350,7 +347,7 @@ public class SyncThreadSyncZip {
             File mf = new File(from_path);
             sync_result = moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                if (sti.isTargetZipUseExternalSdcard()) {
+                if (sti.isTargetZipUseExternalSdcard() && Build.VERSION.SDK_INT<=29) {
                     if (!copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
                 }
             }
@@ -366,8 +363,12 @@ public class SyncThreadSyncZip {
         if (sti.isTargetZipUseExternalSdcard()) {
             File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+dest_file);
             File df=new File(lf.getParent());
-            if (!df.exists()) {
-                SafFile sf=stwa.gp.safMgr.createSdcardDirectory(df.getPath());
+            if (Build.VERSION.SDK_INT<=29) {
+                if (!df.exists()) {
+                    SafFile sf=stwa.gp.safMgr.createSdcardDirectory(df.getPath());
+                }
+            } else {
+                if (!df.exists()) df.mkdirs();
             }
         } else {
             File lf=new File(stwa.gp.internalRootDirectory+"/"+dest_file);
@@ -381,8 +382,12 @@ public class SyncThreadSyncZip {
             File lf=new File(stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache");
             lf.mkdirs();
             stwa.zipWorkFileName=stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/zip_work_file.zip";
-            if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
-            zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
+            if (Build.VERSION.SDK_INT<=29) {
+                if (!copyZipFileToWorkDirectory(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
+                zf = setZipEnvironment(stwa, sti, from_path, stwa.zipWorkFileName, zp);
+            } else {
+                zf = setZipEnvironment(stwa, sti, from_path, stwa.gp.safMgr.getSdcardRootPath() + dest_file, zp);
+            }
         } else {
             zf = setZipEnvironment(stwa, sti, from_path, stwa.gp.internalRootDirectory + dest_file, zp);
         }
@@ -390,7 +395,7 @@ public class SyncThreadSyncZip {
             File mf = new File(from_path);
             sync_result = moveCopyInternalToInternalZip(stwa, sti, true, from_path, from_path, mf, zf, zp);
             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                if (sti.isTargetZipUseExternalSdcard()) {
+                if (sti.isTargetZipUseExternalSdcard() && Build.VERSION.SDK_INT<=29) {
                     if (!copyZipFileToDestination(stwa, stwa.gp.safMgr.getSdcardRootPath(), dest_file)) return SyncTaskItem.SYNC_STATUS_ERROR;
                 }
             }
@@ -401,13 +406,11 @@ public class SyncThreadSyncZip {
     static private ZipFileListItem getZipFileListItem(SyncThreadWorkArea stwa, String fp) {
         ZipFileListItem zfli = null;
         for (ZipFileListItem item : stwa.zipFileList) {
-//			Log.v("","item="+item.getPath()+", fp="+fp);
             if (item.getPath().equals(fp)) {
                 zfli = item;
                 break;
             }
         }
-//		Log.v("","fp="+fp+", result="+zfli);
         return zfli;
     }
 
@@ -581,7 +584,8 @@ public class SyncThreadSyncZip {
                         }
                     } else {
                         if (!mf.canRead())
-                            stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
+                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                    stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&

@@ -662,72 +662,101 @@ public class SyncThread extends Thread {
 
     private int checkStorageAccess(SyncTaskItem sti) {
         int sync_result = 0;
-        if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) ||
-                sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
-            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                String e_msg = "";
-                if (mGp.safMgr.hasExternalSdcardPath()) {
-                    e_msg = mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required);
-                } else {
-                    e_msg = mStwa.context.getString(R.string.msgs_mirror_external_sdcard_not_mounted);
+        if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) || sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
+            if (Build.VERSION.SDK_INT<=29) {
+                if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    String e_msg = "";
+                    if (mGp.safMgr.hasExternalSdcardPath()) {
+                        e_msg = mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required);
+                    } else {
+                        e_msg = mStwa.context.getString(R.string.msgs_mirror_external_sdcard_not_mounted);
+                    }
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
+                    mGp.syncThreadCtrl.setThreadMessage(e_msg);
+                    return sync_result;
+                } else if (mGp.safMgr.getSdcardRootSafFile() == null) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
+                            mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
+                    mGp.syncThreadCtrl.setThreadMessage(
+                            mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
+                    return sync_result;
                 }
-                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
-                mGp.syncThreadCtrl.setThreadMessage(e_msg);
-                return sync_result;
-            } else if (mGp.safMgr.getSdcardRootSafFile() == null) {
-                sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-                        mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
-                mGp.syncThreadCtrl.setThreadMessage(
-                        mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
-                return sync_result;
+            } else {
+                if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
+                            mStwa.context.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+                    mGp.syncThreadCtrl.setThreadMessage(
+                            mStwa.context.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+                    return sync_result;
+                }
             }
         }
-        if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB) ||
-                sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-            if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
-                sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                String e_msg = "";
-                e_msg = mStwa.context.getString(R.string.msgs_mirror_usb_storage_not_mounted);
-                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
-                mGp.syncThreadCtrl.setThreadMessage(e_msg);
-                return sync_result;
-            } else if (mGp.safMgr.getUsbRootSafFile() == null) {
-                sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-                        mStwa.context.getString(R.string.msgs_mirror_usb_storage_not_mounted));
-                mGp.syncThreadCtrl.setThreadMessage(
-                        mStwa.context.getString(R.string.msgs_mirror_usb_storage_not_mounted));
-                return sync_result;
+        if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB) || sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
+            if (Build.VERSION.SDK_INT<=29) {
+                if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    String e_msg = "";
+                    e_msg = mStwa.context.getString(R.string.msgs_mirror_usb_storage_not_mounted);
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
+                    mGp.syncThreadCtrl.setThreadMessage(e_msg);
+                    return sync_result;
+                } else if (mGp.safMgr.getUsbRootSafFile() == null) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
+                            mStwa.context.getString(R.string.msgs_mirror_usb_storage_not_mounted));
+                    mGp.syncThreadCtrl.setThreadMessage(
+                            mStwa.context.getString(R.string.msgs_mirror_usb_storage_not_mounted));
+                    return sync_result;
+                }
+            } else {
+                if (mGp.safMgr.getUsbRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
+                            mStwa.context.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted));
+                    mGp.syncThreadCtrl.setThreadMessage(
+                            mStwa.context.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted));
+                    return sync_result;
+                }
             }
         }
-        if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP) &&
-                sti.isTargetZipUseExternalSdcard()) {
-            if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
-                sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                String e_msg = "";
-                if (mGp.safMgr.hasExternalSdcardPath()) {
-                    e_msg = mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required);
-                } else {
-                    e_msg = mStwa.context.getString(R.string.msgs_mirror_external_sdcard_not_mounted);
+        if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP) && sti.isTargetZipUseExternalSdcard()) {
+            if (Build.VERSION.SDK_INT<=29) {
+                if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    String e_msg = "";
+                    if (mGp.safMgr.hasExternalSdcardPath()) {
+                        e_msg = mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required);
+                    } else {
+                        e_msg = mStwa.context.getString(R.string.msgs_mirror_external_sdcard_not_mounted);
+                    }
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
+                    mGp.syncThreadCtrl.setThreadMessage(e_msg);
+                    return sync_result;
+                } else if (mGp.safMgr.getSdcardRootSafFile() == null) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
+                            mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
+                    mGp.syncThreadCtrl.setThreadMessage(
+                            mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
+                    return sync_result;
                 }
-                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "", e_msg);
-                mGp.syncThreadCtrl.setThreadMessage(e_msg);
-                return sync_result;
-            } else if (mGp.safMgr.getSdcardRootSafFile() == null) {
-                sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
-                showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
-                        mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
-                mGp.syncThreadCtrl.setThreadMessage(
-                        mStwa.context.getString(R.string.msgs_mirror_external_sdcard_select_required));
-                return sync_result;
+            } else {
+                if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_USB_DIRECTORY)) {
+                    sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                    showMsg(mStwa, true, sti.getSyncTaskName(), "E", "", "",
+                            mStwa.context.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+                    mGp.syncThreadCtrl.setThreadMessage(
+                            mStwa.context.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted));
+                    return sync_result;
+                }
             }
         }
 
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String addr=null;
-//            if (sti.getMasterSmbHostName().equals("") && !sti.getMasterSmbHostName().equals("")) {
             if (!sti.getMasterSmbHostName().equals("")) {
                 addr = CommonUtilities.resolveHostName(mGp, mStwa.util, mStwa.masterAuth.getSmbLevel(), sti.getMasterSmbHostName());
                 if (addr == null) {

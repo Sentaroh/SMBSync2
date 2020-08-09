@@ -1320,6 +1320,7 @@ public class ActivityMain extends AppCompatActivity {
 
         }
         menu.findItem(R.id.menu_top_add_shortcut).setVisible(false);
+        if (Build.VERSION.SDK_INT>=30) menu.findItem(R.id.menu_top_select_storage).setVisible(false);
 
         return super.onPrepareOptionsMenu(menu);
     }

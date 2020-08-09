@@ -2499,7 +2499,7 @@ public class SyncTaskEditor extends DialogFragment {
             checkSyncFolderValidation(dialog, org_sfev);
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_ZIP);
 
-            if (ctv_zip_file_save_sdcard.isChecked()) {
+            if (ctv_zip_file_save_sdcard.isChecked() && Build.VERSION.SDK_INT<=29) {
                 ll_sync_folder_mp.setVisibility(Spinner.GONE);
                 btn_zip_select_sdcard.setVisibility(Button.VISIBLE);
                 if (mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
@@ -2785,7 +2785,7 @@ public class SyncTaskEditor extends DialogFragment {
 //            setSyncFolderSmbListDirectoryButtonEnabled(dialog, enabled);
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {
             result = false;
-            if (ctv_zip_file_save_sdcard.isChecked()) {
+            if (ctv_zip_file_save_sdcard.isChecked() && Build.VERSION.SDK_INT<=29) {
                 if (mGp.safMgr.getSdcardRootSafFile() == null) {
                     CommonDialog.setViewEnabled(getActivity(), btn_zip_filelist, false);
                 } else {

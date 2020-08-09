@@ -605,6 +605,7 @@
         <string name="msgs_mirror_task_success_end">正常終了しました。</string>
         <string name="msgs_mirror_task_sync_request_error_detected">エラーで終了した同期タスクがあります。</string>
         <string name="msgs_mirror_task_was_cancelled">キャンセルされました。</string>
+        <string name="msgs_mirror_task_directory_ignored_because_can_not_read">アプリにディレクトリーを読取る権限がないためディレクトリーを無視しました。ディレクトリー=%s</string>
         <string name="msgs_mirror_usb_storage_not_mounted">USBストレージがマウントされていないため同期を中止します。</string>
     <!-- Scan network -->
         <string name="msgs_scan_progress_spin_dlg_addr_cancel">検索中止</string>

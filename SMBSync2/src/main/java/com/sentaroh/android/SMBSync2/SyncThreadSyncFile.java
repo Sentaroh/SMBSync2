@@ -789,7 +789,8 @@ public class SyncThreadSyncFile {
                         }
                     } else {
                         if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
-                            stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
+                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                    stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
@@ -1071,7 +1072,8 @@ public class SyncThreadSyncFile {
                         }
                     } else {
                         if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
-                            stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
+                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                    stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
@@ -1324,7 +1326,8 @@ public class SyncThreadSyncFile {
                         }
                     } else {
                         if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
-                            stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
+                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                    stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
@@ -1543,7 +1546,8 @@ public class SyncThreadSyncFile {
                         }
                     } else {
                         if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
-                            stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
+                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                    stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
@@ -1773,7 +1777,8 @@ public class SyncThreadSyncFile {
                         }
                     } else {
                         if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
-                            stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
+                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                    stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
@@ -2025,7 +2030,8 @@ public class SyncThreadSyncFile {
                         }
                     } else {
                         if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
-                            stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
+                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                    stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
@@ -2314,7 +2320,8 @@ public class SyncThreadSyncFile {
                     } else {
                         if (!mf.canRead()) {
                             if (stwa.gp.settingDebugLevel >= 1)
-                                stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
+                                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                        stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                         }
                     }
                 } else { // file copy
@@ -2653,7 +2660,8 @@ public class SyncThreadSyncFile {
                         }
                     } else {
                         if (stwa.gp.settingDebugLevel >= 1 && !mf.canRead())
-                            stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
+                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                    stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
@@ -2978,7 +2986,8 @@ public class SyncThreadSyncFile {
                     } else {
                         if (!mf.canRead()) {
                             if (stwa.gp.settingDebugLevel >= 1)
-                                stwa.util.addDebugMsg(1, "I", "Directory ignored because can not read, fp=" + from_path + "/" + mf.getName());
+                                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                        stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                         }
                     }
                 } else { // file copy
