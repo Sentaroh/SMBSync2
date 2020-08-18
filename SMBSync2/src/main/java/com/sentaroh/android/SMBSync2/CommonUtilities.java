@@ -35,6 +35,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -45,14 +47,19 @@ import android.os.storage.StorageManager;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
+import com.sentaroh.android.Utilities.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities.Dialog.MessageDialogFragment;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.StringUtil;
@@ -153,6 +160,22 @@ public final class CommonUtilities {
         cdf.setMessageTextColor(text_color);
         cdf.showDialog(mFragMgr,cdf,ntfy);
     };
+
+    static public void showToastMessageLong(Activity c, String msg_txt) {
+        showToastMessage(c, msg_txt, Toast.LENGTH_LONG);
+    }
+
+    static public void showToastMessageShort(Activity c, String msg_txt) {
+        showToastMessage(c, msg_txt, Toast.LENGTH_SHORT);
+    }
+
+    static public void showToastMessage(Activity c, String msg_txt, int duration) {
+        Toast toast=null;
+        if (duration==Toast.LENGTH_SHORT) toast=CommonDialog.getToastShort(c, msg_txt);
+        else toast=CommonDialog.getToastLong(c, msg_txt);
+        toast.setGravity(Gravity.BOTTOM, 0, (int) CommonDialog.toPixel(c.getResources(), 100));
+        toast.show();
+    }
 
     public String getStringWithLocale(Activity c, String lang_code, int res_id) {
 

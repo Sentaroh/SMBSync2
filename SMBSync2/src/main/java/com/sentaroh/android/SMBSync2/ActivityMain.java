@@ -583,8 +583,7 @@ public class ActivityMain extends AppCompatActivity {
                 android.content.ClipboardManager cm=(android.content.ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData cd=cm.getPrimaryClip();
                 cm.setPrimaryClip(ClipData.newPlainText("SMBSync2 storage info", tv_msg.getText().toString()));
-                Toast.makeText(mContext,
-                        mContext.getString(R.string.msgs_info_storage_copy_completed), Toast.LENGTH_LONG).show();
+                CommonUtilities.showToastMessageLong(mActivity, mContext.getString(R.string.msgs_info_storage_copy_completed));
             }
         });
 
@@ -3254,7 +3253,7 @@ public class ActivityMain extends AppCompatActivity {
         ScheduleUtil.saveScheduleData(mActivity, mGp, mGp.syncTabScheduleList);
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER);
         ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
-        SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
+        SyncTaskUtil.autosaveSyncTaskList(mGp, mActivity, mUtil, mCommonDlg, mGp.syncTaskList);
     }
 
     private void setScheduleContextButtonNormalMode() {
@@ -3384,9 +3383,6 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonDeleteHistory, mContext.getString(R.string.msgs_hist_cont_label_delete));
 
-        final Toast toast = Toast.makeText(mContext, mContext.getString(R.string.msgs_main_sync_history_copy_completed),
-                Toast.LENGTH_SHORT);
-        toast.setDuration(Toast.LENGTH_SHORT);
         mContextHistoryButtonHistiryCopyClipboard.setOnClickListener(new OnClickListener() {
             private long last_show_time = 0;
 
@@ -3420,7 +3416,7 @@ public class ActivityMain extends AppCompatActivity {
                     }
                     if (out.length() > 0) cm.setText(out);
                     if ((last_show_time + Toast.LENGTH_SHORT) < System.currentTimeMillis()) {
-                        toast.show();
+                        CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_history_copy_completed));
                         last_show_time = System.currentTimeMillis();
                     }
                     mGp.syncHistoryAdapter.setAllItemChecked(false);
@@ -3920,7 +3916,7 @@ public class ActivityMain extends AppCompatActivity {
                 else setSyncTaskContextButtonNormalMode();
 //				checkSafExternalSdcardTreeUri(null);
                 ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
-                SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
+                SyncTaskUtil.autosaveSyncTaskList(mGp, mActivity, mUtil, mCommonDlg, mGp.syncTaskList);
                 if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
                 else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
             }
@@ -4311,8 +4307,6 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setMessageContextButtonListener() {
-        final Toast toast_active = Toast.makeText(mContext, mContext.getString(R.string.msgs_log_activate_pinned), Toast.LENGTH_SHORT);
-        final Toast toast_inactive = Toast.makeText(mContext, mContext.getString(R.string.msgs_log_inactivate_pinned), Toast.LENGTH_SHORT);
         mContextMessageButtonPinned.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -4320,13 +4314,13 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.freezeMessageViewScroll = !mGp.freezeMessageViewScroll;
                 if (mGp.freezeMessageViewScroll) {
                     mContextMessageButtonPinned.setImageResource(R.drawable.context_button_pinned_active);
-                    toast_active.show();
+                    CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_log_activate_pinned));
                     ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonPinned,
                             mContext.getString(R.string.msgs_msg_cont_label_pinned_active));
                 } else {
                     mContextMessageButtonPinned.setImageResource(R.drawable.context_button_pinned_inactive);
                     mGp.msgListView.setSelection(mGp.msgListView.getCount() - 1);
-                    toast_inactive.show();
+                    CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_log_inactivate_pinned));
                     ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonPinned,
                             mContext.getString(R.string.msgs_msg_cont_label_pinned_inactive));
                 }
@@ -4426,12 +4420,8 @@ public class ActivityMain extends AppCompatActivity {
         final ArrayList<SyncTaskItem> t_list = new ArrayList<SyncTaskItem>();
         t_list.add(sti);
         mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_selected_profiles));
-        mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_prof_name_list) +
-                " " + sti.getSyncTaskName());
-        Toast.makeText(mContext,
-                mContext.getString(R.string.msgs_main_sync_selected_profiles),
-                Toast.LENGTH_SHORT)
-                .show();
+        mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_prof_name_list) + " " + sti.getSyncTaskName());
+        CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles));
         startSyncTask(t_list);
     }
 
@@ -4461,12 +4451,8 @@ public class ActivityMain extends AppCompatActivity {
                     mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
                 } else {
                     mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_selected_profiles));
-                    mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_prof_name_list) +
-                            " " + sync_list);
-                    Toast.makeText(mContext,
-                            mContext.getString(R.string.msgs_main_sync_selected_profiles),
-                            Toast.LENGTH_SHORT)
-                            .show();
+                    mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_prof_name_list) + " " + sync_list);
+                    CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles));
                     startSyncTask(t_list);
                 }
             }
@@ -4504,10 +4490,7 @@ public class ActivityMain extends AppCompatActivity {
             mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_all_active_profiles));
             mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_prof_name_list) + sync_list);
 //			tabHost.setCurrentTabByTag(TAB_TAG_MSG);
-            Toast.makeText(mContext,
-                    mContext.getString(R.string.msgs_main_sync_all_active_profiles),
-                    Toast.LENGTH_SHORT)
-                    .show();
+            CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_all_active_profiles));
             startSyncTask(t_list);
         }
 

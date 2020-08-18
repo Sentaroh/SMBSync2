@@ -4694,7 +4694,7 @@ public class SyncTaskEditor extends DialogFragment {
                         }
                         if (mNotifyComplete != null) mNotifyComplete.notifyToListener(true, null);
                         SyncTaskUtil.saveSyncTaskListToFile(mGp, mContext, mUtil, false, "", "", mGp.syncTaskList, false);
-                        SyncTaskUtil.autosaveSyncTaskList(mGp, mContext, mUtil, mCommonDlg, mGp.syncTaskList);
+                        SyncTaskUtil.autosaveSyncTaskList(mGp, getActivity(), mUtil, mCommonDlg, mGp.syncTaskList);
                         mFragment.dismissAllowingStateLoss();
                         mUtil.addDebugMsg(1,"I","editSyncTask edit saved, type="+type+", task="+new_stli.getSyncTaskName());
                         ((ActivityMain)getActivity()).refreshOptionMenu();

@@ -224,7 +224,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             boolean sync_btn_disable=false;
 
             holder.ll_view.setBackgroundDrawable(ll_default);
-            holder.ib_row_sync.setBackgroundDrawable(ll_default);
+//            holder.ib_row_sync.setBackgroundDrawable(ll_default);
 
             String act = "";
             if (o.isSyncTaskAuto()) {
