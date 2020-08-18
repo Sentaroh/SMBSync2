@@ -605,7 +605,7 @@
         <string name="msgs_mirror_task_success_end">ended successfully.</string>
         <string name="msgs_mirror_task_sync_request_error_detected">Sync ended with errors.</string>
         <string name="msgs_mirror_task_was_cancelled">cancelled.</string>
-        <string name="msgs_mirror_task_directory_ignored_because_can_not_read">The directory was ignored because the app does not have permission to read the directory. Directory=%s</string>
+        <string name="msgs_mirror_task_directory_ignored_because_can_not_read">Directory sync skipped because of non-allowed read permission. Directory=%s</string>
         <string name="msgs_mirror_usb_storage_not_mounted">Sync cancelled because USB media is not mounted.</string>
     <!-- Scan network -->
         <string name="msgs_scan_progress_spin_dlg_addr_cancel">Cancel search</string>
