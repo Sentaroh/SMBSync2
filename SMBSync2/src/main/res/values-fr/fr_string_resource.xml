@@ -172,7 +172,7 @@
         <string name="msgs_main_permission_external_storage_request_msg">Autorisez l\'accès au stockage interne pour permettre la lecture et l\'écriture des données synchronisées ainsi que pour la gestion des paramètres de l\'application. </string>
         <string name="msgs_main_permission_external_storage_title">Permission d\'Accès au Stockage Interne</string>
         <string name="msgs_main_shortcut_shortcut_added">Un raccourci a été rajouté à l\'écran d\'accueil.</string>
-        <string name="msgs_main_sync_all_active_profiles">Exécuter toutes les tâches configurées pour Auto Synchronisation</string>
+        <string name="msgs_main_sync_all_active_profiles">Exécution de toutes les tâches configurées en mode Auto</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">Aucune tâche à exécuter. Merci de créer une tâche de synchronisation.</string>
         <string name="msgs_main_sync_cancel_confirm">Annuler la synchronisation ?</string>
         <string name="msgs_main_sync_history_copy_completed">Les éléments sélectionnés ont été copiés dans le presse-papier</string>
