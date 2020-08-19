@@ -4450,9 +4450,9 @@ public class ActivityMain extends AppCompatActivity {
                     mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile));
                     mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
                 } else {
-                    mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_selected_profiles));
+                    mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_selected_profiles_checked_boxes));
                     mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_prof_name_list) + " " + sync_list);
-                    CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles));
+                    CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles_checked_boxes));
                     startSyncTask(t_list);
                 }
             }
