@@ -205,7 +205,6 @@
         <string name="msgs_main_sync_list_array_mtype_sync">同期</string>
         <string name="msgs_main_sync_list_array_no_last_sync_time">同期は実行されていません</string>
         <string name="msgs_main_sync_prof_name_list">同期を開始したタスク：</string>
-        <string name="msgs_main_sync_profile">同期実行 (%s)</string>
         <string name="msgs_main_sync_profile_dlg_archive">アーカイブ</string>
         <string name="msgs_main_sync_profile_dlg_copy">コピー</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">最終更新時刻の差（秒）</string>

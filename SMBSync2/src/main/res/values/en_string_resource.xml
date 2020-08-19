@@ -205,7 +205,6 @@
         <string name="msgs_main_sync_list_array_mtype_sync">SYNC</string>
         <string name="msgs_main_sync_list_array_no_last_sync_time">Sync task has not been executed.</string>
         <string name="msgs_main_sync_prof_name_list">Started sync task:</string>
-        <string name="msgs_main_sync_profile">Sync task (%s)</string>
         <string name="msgs_main_sync_profile_dlg_archive">Archive</string>
         <string name="msgs_main_sync_profile_dlg_copy">Copy</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Time difference tolerance (sec)</string>
