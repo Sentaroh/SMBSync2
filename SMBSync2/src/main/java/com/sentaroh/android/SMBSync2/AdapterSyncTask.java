@@ -406,6 +406,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             });
 
             holder.ib_row_sync.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
                 public boolean onLongClick(View v) {
                     CommonUtilities.showToastMessageShort((ActivityMain)(parent.getContext()), mContext.getString(R.string.msgs_main_sync_profile, o.getSyncTaskName()));
                     return true;// notify long touch event is consumed
