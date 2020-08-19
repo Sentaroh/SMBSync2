@@ -165,6 +165,7 @@ public class SyncTaskEditor extends DialogFragment {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         View view = super.onCreateView(inflater, container, savedInstanceState);
         CommonDialog.setDlgBoxSizeLimit(mDialog, true);
+        setHasOptionsMenu(true);//force refresh options menu state (needed to update Top Sync button Toast info message when changing task from Manual to Auto)
         return view;
     }
 

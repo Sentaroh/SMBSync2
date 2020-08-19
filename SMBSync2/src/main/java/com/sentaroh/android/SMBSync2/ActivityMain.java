@@ -1204,7 +1204,29 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_top, menu);
-        return true;//super.onCreateOptionsMenu(menu);
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                View v = findViewById(R.id.menu_top_sync);
+                if (v != null) {
+                    v.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0)  {
+                                CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles_toast));
+                            } else {
+                                CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_auto_profiles_toast));
+                            }
+                            return true;// notify long touch event is consumed
+                        }
+                    });
+                }
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+
+        //return true;//super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -1264,6 +1286,25 @@ public class ActivityMain extends AppCompatActivity {
             } else {
                 menu.findItem(R.id.menu_top_sync).setVisible(false);
             }
+/*
+            //issue: toast message state not updated on start
+            MenuItem top_sync_btn = menu.findItem(R.id.menu_top_sync);
+            View v = top_sync_btn.getActionView();
+            //View v = findViewById(R.id.menu_top_sync);
+            if (v != null) {
+                v.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0)  {
+                            CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles_toast));
+                        } else {
+                            CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_auto_profiles_toast));
+                        }
+                        return true;// notify long touch event is consumed
+                    }
+                });
+            }
+*/
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_settings), true);
             if (!mGp.externalStorageIsMounted) {
                 setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_browse_log), false);

@@ -247,6 +247,8 @@
         <string name="msgs_main_sync_select_prof_no_active_profile">Tache de synchronisation non sélectionnée</string>
         <string name="msgs_main_sync_selected_profiles">Exécution de la tâche de synchronisation sélectionnée</string>
         <string name="msgs_main_sync_selected_profiles_checked_boxes">Exécution de toutes les tâches de synchronisation sélectionnées</string>
+        <string name="msgs_main_sync_selected_profiles_toast">Exécuter toutes les tâches de synchronisation sélectionnées</string>
+        <string name="msgs_main_sync_auto_profiles_toast">Exécuter toutes les tâches configurées en mode Auto</string>
         <string name="msgs_main_sync_selected_task_not_found">La tâche sélectionnée n\'existe pas:</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">La tâche sélectionnée ne sera pas exécutée, car elle a été ignorée.</string>
         <string name="msgs_main_sync_test_mode_warnning">La tâche sélectionnée est configurée en mode Test. Aucun fichier ne sera copié ou effacé. Exécuter la tâche ?</string>

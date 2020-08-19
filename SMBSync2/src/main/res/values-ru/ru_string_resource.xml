@@ -247,6 +247,8 @@
         <string name="msgs_main_sync_select_prof_no_active_profile">Синхронизирующая задача не была выбрана.</string>
         <string name="msgs_main_sync_selected_profiles">Выполните выбранную синхронизирующую задачу</string>
         <string name="msgs_main_sync_selected_profiles_checked_boxes">Выполните выбранную синхронизирующую задачу</string>
+        <string name="msgs_main_sync_selected_profiles_toast">Выполните выбранную синхронизирующую задачу</string>
+        <string name="msgs_main_sync_auto_profiles_toast">Выполнить все задачи автосинхронизации</string>
         <string name="msgs_main_sync_selected_task_not_found">Выбранная задача не существует:</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">Указанная синхронизирующая задача не будет выполняться, потому что она была проигнорирована.</string>
         <string name="msgs_main_sync_test_mode_warnning">Выбранная задача настроена только для теста. Никакие файлы не будут скопированы или удалены. Выполнить задачу?</string>

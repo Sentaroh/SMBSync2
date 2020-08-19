@@ -247,6 +247,8 @@
         <string name="msgs_main_sync_select_prof_no_active_profile">Sync task was not selected.</string>
         <string name="msgs_main_sync_selected_profiles">Executing selected sync task</string>
         <string name="msgs_main_sync_selected_profiles_checked_boxes">Executing all selected sync tasks</string>
+        <string name="msgs_main_sync_selected_profiles_toast">Execute all selected sync tasks</string>
+        <string name="msgs_main_sync_auto_profiles_toast">Execute all auto sync tasks</string>
         <string name="msgs_main_sync_selected_task_not_found">Selected task does not exist:</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">The specified sync task will not be executed because it was ignored.</string>
         <string name="msgs_main_sync_test_mode_warnning">Selected task is configured for test only.  No files will be copied or deleted.  Execute the task?</string>
