@@ -23,10 +23,9 @@
             android:layout_marginBottom="5dp"
             android:layout_gravity="center_vertical">
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:layout_weight="0.4"
                 android:layout_gravity="center_vertical"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_local_mount_point"
                 android:textAppearance="?android:attr/textAppearanceMedium"
