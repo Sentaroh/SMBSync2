@@ -1254,9 +1254,11 @@ public class ActivityMain extends AppCompatActivity {
             if (mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
                 menu.findItem(R.id.menu_top_sync).setVisible(false);
                 for(SyncTaskItem sti:mGp.syncTaskList) {
-                    if (sti.isSyncTaskAuto() && !sti.isSyncTaskError()) {
-                        menu.findItem(R.id.menu_top_sync).setVisible(true);
-                        break;
+                    if (sti.isSyncTaskAuto() || SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0) {
+                        if (!sti.isSyncTaskError()) {//invalid sync task with error in master/target name, etc...
+                            menu.findItem(R.id.menu_top_sync).setVisible(true);
+                            break;
+                        }
                     }
                 }
             } else {
