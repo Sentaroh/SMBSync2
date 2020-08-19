@@ -11,7 +11,7 @@
         android:id="@+id/edit_sync_folder_dlg_zip_file_use_sdcard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="3dp"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="center_vertical"
         android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_use_sdcard"
@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:text="@string/msgs_profile_sync_task_dlg_keyword_insert_file"
             android:textAppearance="?android:attr/textAppearanceMedium"
             tools:ignore="RtlHardcoded" />
@@ -85,14 +85,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:layout_marginLeft="3dp"
             android:gravity="center"
             android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_comp_level_title"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -101,6 +100,8 @@
             android:id="@+id/edit_sync_folder_dlg_zip_comp_level"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="3dp"
             android:minHeight="36dp"
             android:paddingLeft="5dp"
             android:layout_gravity="clip_vertical"
@@ -111,8 +112,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="3dp"
         android:text="@string/msgs_profile_edit_sync_folder_dlg_zip_encrypt_title"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -120,25 +120,23 @@
         android:id="@+id/edit_sync_folder_dlg_zip_enc_method"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp"
         android:minHeight="36dp"
         android:paddingLeft="5dp"
         android:layout_gravity="clip_vertical"
-        android:layout_marginLeft="5dp"
         />
 
     <LinearLayout
         android:id="@+id/edit_sync_folder_dlg_zip_enc_password_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="5dp"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="3dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
@@ -158,6 +156,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"

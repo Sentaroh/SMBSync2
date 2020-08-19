@@ -67,16 +67,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp" >
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="4dp"
                     android:text="@string/msgs_profile_edit_sync_folder_dlg_folder_type"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     tools:ignore="HardcodedText,RtlHardcoded" />
@@ -84,11 +83,11 @@
                 <Spinner
                     android:id="@+id/edit_sync_folder_dlg_folder_type"
                     style="?android:attr/spinnerStyle"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="4dp"
                     android:minHeight="36dp"
                     android:paddingLeft="5dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"

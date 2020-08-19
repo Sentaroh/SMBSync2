@@ -8,80 +8,78 @@
     android:orientation="vertical"
     tools:ignore="SpUsage,InefficientWeight,ContentDescription" >
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="clip_horizontal|fill_horizontal"
+        android:orientation="vertical" >
+
         <LinearLayout
+            android:id="@+id/edit_sync_folder_dlg_sdcard_directory_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="clip_horizontal|fill_horizontal"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:orientation="vertical" >
 
             <LinearLayout
-                android:id="@+id/edit_sync_folder_dlg_sdcard_directory_view"
+                android:id="@+id/edit_sync_folder_dlg_sdcard_dir_keyword_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/msgs_profile_sync_task_dlg_keyword_insert_dir"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    tools:ignore="RtlHardcoded" />
 
-                <LinearLayout
-                    android:id="@+id/edit_sync_folder_dlg_sdcard_dir_keyword_view"
+                <include layout="@layout/edit_sync_folder_keyword"/>
+
+                <CheckedTextView
+                    android:id="@+id/edit_sync_folder_dlg_sdcard_use_taken_date_time_for_directory_keyword"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="@string/msgs_profile_sync_task_dlg_keyword_insert_dir"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        tools:ignore="RtlHardcoded" />
-
-                    <include layout="@layout/edit_sync_folder_keyword"/>
-
-                    <CheckedTextView
-                        android:id="@+id/edit_sync_folder_dlg_sdcard_use_taken_date_time_for_directory_keyword"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                        android:gravity="center_vertical"
-                        android:text="@string/msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <Button
-                        android:id="@+id/edit_sync_folder_dlg_list_sdcard_directory_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:text="@string/msgs_profile_edit_sync_folder_dlg_dirlist"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/edit_sync_folder_dlg_sdcard_directory_name"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/msgs_profile_edit_sync_folder_dlg_directory"
-                        android:inputType="text|textMultiLine"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                </LinearLayout>
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/edit_sync_folder_dlg_sdcard_select_document_tree"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/msgs_profile_edit_sync_folder_dlg_select_sdcard"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/edit_sync_folder_dlg_list_sdcard_directory_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="@string/msgs_profile_edit_sync_folder_dlg_dirlist"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/edit_sync_folder_dlg_sdcard_directory_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/msgs_profile_edit_sync_folder_dlg_directory"
+                    android:inputType="text|textMultiLine"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/edit_sync_folder_dlg_sdcard_select_document_tree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msgs_profile_edit_sync_folder_dlg_select_sdcard"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    </LinearLayout>
 
 </LinearLayout>

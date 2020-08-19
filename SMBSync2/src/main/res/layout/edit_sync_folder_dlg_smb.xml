@@ -12,8 +12,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="clip_horizontal|fill_horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="0dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -41,15 +39,14 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="3dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
                     android:gravity="left"
                     android:text="@string/msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr"
                     android:textAppearance="?android:attr/textAppearanceMedium"
@@ -61,7 +58,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
                     android:minHeight="36dp"
                     android:paddingLeft="0dp"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -72,9 +68,9 @@
                 android:id="@+id/edit_sync_folder_dlg_ctv_smb_ipc_signing_enforced"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:gravity="center_vertical"
+                android:layout_marginLeft="3dp"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 tools:ignore="RtlHardcoded" />
@@ -83,9 +79,9 @@
                 android:id="@+id/edit_sync_folder_dlg_ctv_smb_use_smb2_negotiation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:gravity="center_vertical"
+                android:layout_marginLeft="3dp"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_smb_use_smb2_negotiation"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 tools:ignore="RtlHardcoded" />
@@ -122,9 +118,9 @@
                 android:id="@+id/edit_sync_folder_dlg_ctv_use_user_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:gravity="center_vertical"
+                android:layout_marginLeft="3dp"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_use_user_pass"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 tools:ignore="RtlHardcoded" />
@@ -166,11 +162,11 @@
                 android:id="@+id/edit_sync_folder_dlg_ctv_show_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:gravity="center_vertical"
                 android:text="@string/msgs_profile_edit_sync_folder_dlg_show_password"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginLeft="3dp"
                 android:visibility="gone"
                 tools:ignore="RtlHardcoded" />
 
@@ -225,8 +221,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:text="@string/msgs_profile_sync_task_dlg_keyword_insert_dir"
+                    android:layout_marginLeft="3dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     tools:ignore="RtlHardcoded" />
 
@@ -236,9 +232,9 @@
                     android:id="@+id/edit_sync_folder_dlg_smb_use_taken_date_time_for_directory_keyword"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
                     android:text="@string/msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 

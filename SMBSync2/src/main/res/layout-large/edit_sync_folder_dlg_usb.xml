@@ -2,7 +2,7 @@
 <!DOCTYPE layout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/edit_sync_folder_dlg_internal_view"
+    android:id="@+id/edit_sync_folder_dlg_usb_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -15,47 +15,20 @@
         android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/edit_sync_folder_dlg_internal_local_mount_point_selector_view"
+            android:id="@+id/edit_sync_folder_dlg_usb_directory_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:text="@string/msgs_profile_edit_sync_folder_dlg_local_mount_point"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                tools:ignore="RtlHardcoded" />
-            <Spinner
-                android:id="@+id/edit_sync_folder_dlg_internal_local_mount_point_selector"
-                style="?android:attr/spinnerStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="3dp"
-                android:layout_marginLeft="3dp"
-                android:minHeight="36dp"
-                android:paddingLeft="5dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                tools:ignore="RtlSymmetry,RtlHardcoded" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/edit_sync_folder_dlg_internal_directory_view"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:orientation="vertical" >
 
             <LinearLayout
-                android:id="@+id/edit_sync_folder_dlg_internal_dir_keyword_view"
+                android:id="@+id/edit_sync_folder_dlg_usb_dir_keyword_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
+                    android:layout_marginLeft="4dp"
                     android:text="@string/msgs_profile_sync_task_dlg_keyword_insert_dir"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     tools:ignore="RtlHardcoded" />
@@ -63,10 +36,10 @@
                 <include layout="@layout/edit_sync_folder_keyword"/>
 
                 <CheckedTextView
-                    android:id="@+id/edit_sync_folder_dlg_internal_use_taken_date_time_for_directory_keyword"
+                    android:id="@+id/edit_sync_folder_dlg_usb_use_taken_date_time_for_directory_keyword"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
+                    android:layout_marginLeft="4dp"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword"
@@ -77,20 +50,21 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="horizontal" >
 
                 <Button
-                    android:id="@+id/edit_sync_folder_dlg_list_internal_directory_btn"
-                    android:layout_width="match_parent"
+                    android:id="@+id/edit_sync_folder_dlg_list_usb_directory_btn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
                     android:text="@string/msgs_profile_edit_sync_folder_dlg_dirlist"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <EditText
-                    android:id="@+id/edit_sync_folder_dlg_internal_directory_name"
-                    android:layout_width="match_parent"
+                    android:id="@+id/edit_sync_folder_dlg_usb_directory_name"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:hint="@string/msgs_profile_edit_sync_folder_dlg_directory"
                     android:inputType="text|textMultiLine"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -98,6 +72,13 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/edit_sync_folder_dlg_usb_select_document_tree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msgs_profile_edit_sync_folder_dlg_select_usb"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     </LinearLayout>
 

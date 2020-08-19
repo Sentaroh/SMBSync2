@@ -12,8 +12,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="clip_horizontal|fill_horizontal"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -30,7 +28,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="3dp"
                     android:text="@string/msgs_profile_sync_task_dlg_keyword_insert_dir"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     tools:ignore="RtlHardcoded" />
@@ -41,7 +39,7 @@
                     android:id="@+id/edit_sync_folder_dlg_usb_use_taken_date_time_for_directory_keyword"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="3dp"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
                     android:text="@string/msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword"

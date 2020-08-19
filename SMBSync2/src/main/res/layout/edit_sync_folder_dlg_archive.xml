@@ -7,14 +7,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginLeft="3dp"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:text="@string/msgs_sync_folder_archive_option"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="13dp"
         android:orientation="vertical">
 
         <CheckedTextView
@@ -58,6 +58,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
                 android:text="@string/msgs_sync_folder_archive_retention_period"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -67,7 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="3dp"
                 android:minHeight="36dp"
                 android:paddingLeft="5dp" />
 
@@ -77,6 +79,7 @@
             android:id="@+id/edit_sync_folder_dlg_archive_rename_when_archive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:text="@string/msgs_sync_folder_archive_rename_rule"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -161,6 +164,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
                     android:text="@string/msgs_sync_folder_archive_seq_number_title"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -169,8 +173,9 @@
                     style="?android:attr/spinnerStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="3dp"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="20dp"
                     android:minHeight="36dp"
                     android:paddingLeft="5dp" />
 
@@ -186,6 +191,7 @@
                     android:id="@+id/edit_sync_folder_dlg_archive_use_archive_directory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:text="@string/msgs_sync_folder_archive_create_directory"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -242,7 +248,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="3dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/msgs_sync_folder_archive_output_image"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -251,7 +257,7 @@
                 android:id="@+id/edit_sync_folder_dlg_archive_new_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="3dp"
                 android:text="test" />
 
         </LinearLayout>
