@@ -27,7 +27,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.usage.UsageStatsManager;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ComponentName;
@@ -38,8 +37,6 @@ import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -56,11 +53,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.SpannableString;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -74,11 +67,9 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -100,10 +91,8 @@ import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.SystemInfo;
-import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.Widget.CustomTabContentView;
-import com.sentaroh.android.Utilities.Widget.CustomTextView;
 import com.sentaroh.android.Utilities.Widget.CustomViewPager;
 import com.sentaroh.android.Utilities.Widget.CustomViewPagerAdapter;
 import com.sentaroh.android.Utilities.Widget.NonWordwrapTextView;
@@ -113,9 +102,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Locale;
-
-import javax.crypto.SecretKey;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS;
@@ -131,7 +117,6 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_NO;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_NOALL;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YES;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YESALL;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_KEY_STORE_AES_ALIAS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_KEY_STORE_ALIAS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SERIALIZABLE_FILE_NAME;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_HIST;
@@ -325,7 +310,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void processOnResumeForStart() {
         mGp.syncTaskListView.setVisibility(ListView.INVISIBLE);
-        final Dialog pd=CommonDialog.showProgressSpinIndicator(mActivity);
+        final Dialog pd= CommonDialog.showProgressSpinIndicator(mActivity);
         pd.show();
         Thread th = new Thread() {
             @Override
@@ -1204,7 +1189,29 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_top, menu);
-        return true;//super.onCreateOptionsMenu(menu);
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                View v = findViewById(R.id.menu_top_sync);
+                if (v != null) {
+                    v.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0)  {
+                                CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles_toast));
+                            } else {
+                                CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_auto_profiles_toast));
+                            }
+                            return true;// notify long touch event is consumed
+                        }
+                    });
+                }
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+
+        //return true;//super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -1254,14 +1261,35 @@ public class ActivityMain extends AppCompatActivity {
             if (mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
                 menu.findItem(R.id.menu_top_sync).setVisible(false);
                 for(SyncTaskItem sti:mGp.syncTaskList) {
-                    if (sti.isSyncTaskAuto() && !sti.isSyncTaskError()) {
-                        menu.findItem(R.id.menu_top_sync).setVisible(true);
-                        break;
+                    if (sti.isSyncTaskAuto() || SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0) {
+                        if (!sti.isSyncTaskError()) {//invalid sync task with error in master/target name, etc...
+                            menu.findItem(R.id.menu_top_sync).setVisible(true);
+                            break;
+                        }
                     }
                 }
             } else {
                 menu.findItem(R.id.menu_top_sync).setVisible(false);
             }
+/*
+            //issue: toast message state not updated on start
+            MenuItem top_sync_btn = menu.findItem(R.id.menu_top_sync);
+            View v = top_sync_btn.getActionView();
+            //View v = findViewById(R.id.menu_top_sync);
+            if (v != null) {
+                v.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0)  {
+                            CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles_toast));
+                        } else {
+                            CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_auto_profiles_toast));
+                        }
+                        return true;// notify long touch event is consumed
+                    }
+                });
+            }
+*/
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_settings), true);
             if (!mGp.externalStorageIsMounted) {
                 setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_browse_log), false);
@@ -2349,12 +2377,12 @@ public class ActivityMain extends AppCompatActivity {
 //                } else
                 if (!mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
                     if (!mGp.safMgr.isRootTreeUri(data.getData())) {
-                        mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                        mUtil.addDebugMsg(1, "I", "Selected UUID="+ SafManager.getUuidFromUri(data.getData().toString()));
                         String em=mGp.safMgr.getLastErrorMessage();
                         if (em.length()>0) mUtil.addDebugMsg(1, "I", "SafMessage="+em);
                         reselectSdcard(mContext.getString(R.string.msgs_main_external_sdcard_select_retry_select_msg), data.getData().getPath());
                     } else {
-                        mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                        mUtil.addDebugMsg(1, "I", "Selected UUID="+ SafManager.getUuidFromUri(data.getData().toString()));
                         String em=mGp.safMgr.getLastErrorMessage();
                         if (em.length()>0) mUtil.addDebugMsg(1, "I", "SafMessage="+em);
                         if (mGp.safMgr.isRootTreeUri(data.getData())) {
@@ -2398,12 +2426,12 @@ public class ActivityMain extends AppCompatActivity {
                 mUtil.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
                 if (mGp.safMgr.isUsbUuid(SafManager.getUuidFromUri(data.getData().toString()))) {
                     if (!mGp.safMgr.isRootTreeUri(data.getData())) {
-                        mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                        mUtil.addDebugMsg(1, "I", "Selected UUID="+ SafManager.getUuidFromUri(data.getData().toString()));
                         String em=mGp.safMgr.getLastErrorMessage();
                         if (em.length()>0) mUtil.addDebugMsg(1, "I", "SafMessage="+em);
                         reselectUsb(mContext.getString(R.string.msgs_main_external_usb_select_retry_select_msg), data.getData().getPath());
                     } else {
-                        mUtil.addDebugMsg(1, "I", "Selected UUID="+SafManager.getUuidFromUri(data.getData().toString()));
+                        mUtil.addDebugMsg(1, "I", "Selected UUID="+ SafManager.getUuidFromUri(data.getData().toString()));
                         String em=mGp.safMgr.getLastErrorMessage();
                         if (em.length()>0) mUtil.addDebugMsg(1, "I", "SafMessage="+em);
                         if (mGp.safMgr.isRootTreeUri(data.getData())) {
@@ -2656,7 +2684,7 @@ public class ActivityMain extends AppCompatActivity {
                                 if (lf.exists()) {
                                     Intent intent = new Intent(Intent.ACTION_VIEW);
                                     if (Build.VERSION.SDK_INT>=24) {
-                                        Uri uri=FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(item.sync_result_file_path));
+                                        Uri uri= FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", new File(item.sync_result_file_path));
                                         intent.setDataAndType(uri, "text/plain");
                                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
@@ -2816,7 +2844,7 @@ public class ActivityMain extends AppCompatActivity {
 
 //                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
                     if (Build.VERSION.SDK_INT>=24) {
-                        Uri uri=FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", lf);
+                        Uri uri= FileProvider.getUriForFile(mContext, BuildConfig.APPLICATION_ID + ".provider", lf);
                         intent.putExtra(Intent.EXTRA_STREAM, uri);
                     } else {
                         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
@@ -4450,9 +4478,9 @@ public class ActivityMain extends AppCompatActivity {
                     mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile));
                     mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
                 } else {
-                    mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_selected_profiles));
+                    mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_selected_profiles_checked_boxes));
                     mUtil.addLogMsg("I", mContext.getString(R.string.msgs_main_sync_prof_name_list) + " " + sync_list);
-                    CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles));
+                    CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles_checked_boxes));
                     startSyncTask(t_list);
                 }
             }

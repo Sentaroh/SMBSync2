@@ -49,10 +49,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import static com.sentaroh.android.SMBSync2.Constants.APP_SPECIFIC_DIRECTORY;
-import static com.sentaroh.android.SMBSync2.Constants.SYNC_IO_AREA_SIZE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_DELETE_FILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_MOVE;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_IO_AREA_SIZE;
 
 public class SyncThreadSyncZip {
 
@@ -548,44 +548,45 @@ public class SyncThreadSyncZip {
             String t_from_path = from_path.substring(from_base.length());
             if (mf.exists()) {
                 if (mf.isDirectory()) { // Directory copy
-                    if (mf.canRead() && !SyncThread.isHiddenDirectory(stwa, sti, mf) &&
-                            SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
-                        if (sti.isSyncOptionSyncEmptyDirectory()) {
-                            createDirectoryToZip(stwa, sti, from_path, zf, zp);
-                        }
-                        File[] children = mf.listFiles();
-                        if (children != null) {
-                            for (File element : children) {
-                                if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                    if (!element.getName().equals(".android_secure")) {
-                                        if (element.isFile()) {
-                                            sync_result = moveCopyInternalToInternalZip(stwa, sti, move_file, from_base, from_path + "/" + element.getName(),
-                                                    element, zf, zp);
-                                        } else {
-                                            if (sti.isSyncOptionSyncSubDirectory()) {
+                    if (mf.canRead()) {
+                        if (!SyncThread.isHiddenDirectory(stwa, sti, mf) && SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
+                            if (sti.isSyncOptionSyncEmptyDirectory()) {
+                                createDirectoryToZip(stwa, sti, from_path, zf, zp);
+                            }
+                            File[] children = mf.listFiles();
+                            if (children != null) {
+                                for (File element : children) {
+                                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                        if (!element.getName().equals(".android_secure")) {
+                                            if (element.isFile()) {
                                                 sync_result = moveCopyInternalToInternalZip(stwa, sti, move_file, from_base, from_path + "/" + element.getName(),
                                                         element, zf, zp);
                                             } else {
-                                                if (stwa.gp.settingDebugLevel >= 1)
-                                                    stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                if (sti.isSyncOptionSyncSubDirectory()) {
+                                                    sync_result = moveCopyInternalToInternalZip(stwa, sti, move_file, from_base, from_path + "/" + element.getName(),
+                                                            element, zf, zp);
+                                                } else {
+                                                    if (stwa.gp.settingDebugLevel >= 1)
+                                                        stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                }
                                             }
                                         }
+                                    } else {
+                                        return sync_result;
                                     }
-                                } else {
-                                    return sync_result;
+                                    if (!stwa.gp.syncThreadCtrl.isEnabled()) {
+                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                                        break;
+                                    }
                                 }
-                                if (!stwa.gp.syncThreadCtrl.isEnabled()) {
-                                    sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                    break;
-                                }
+                            } else {
+                                stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                             }
-                        } else {
-                            stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                         }
                     } else {
-                        if (!mf.canRead())
-                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
-                                    stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
+                        stwa.totalIgnoreCount++;
+                        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
