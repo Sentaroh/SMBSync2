@@ -41,6 +41,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sentaroh.android.Utilities.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.ThemeColorList;
@@ -409,7 +410,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             holder.ib_row_sync.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    CommonUtilities.showToastMessageShort((ActivityMain)(parent.getContext()), mContext.getString(R.string.msgs_main_sync_profile, o.getSyncTaskName()));
+                    CommonDialog.showPopupMessageAsUpAnchorView((ActivityMain)(parent.getContext()), v, mContext.getString(R.string.msgs_main_sync_profile, o.getSyncTaskName()), 2);
                     return true;// notify long touch event is consumed
                 }
             });

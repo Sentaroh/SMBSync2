@@ -1198,12 +1198,15 @@ public class ActivityMain extends AppCompatActivity {
                     v.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
-                            if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0)  {
-                                CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_selected_profiles_toast));
-                            } else {
-                                CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_main_sync_auto_profiles_toast));
+                            if (v.getId()==R.id.menu_top_sync) {
+                                if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0)  {
+                                    CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_main_sync_selected_profiles_toast), 2);
+                                } else {
+                                    CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_main_sync_auto_profiles_toast), 2);
+                                }
+                                return true;// notify long touch event is consumed
                             }
-                            return true;// notify long touch event is consumed
+                            return false;
                         }
                     });
                 }
