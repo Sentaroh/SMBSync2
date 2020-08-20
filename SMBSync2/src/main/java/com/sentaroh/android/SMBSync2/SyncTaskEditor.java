@@ -87,14 +87,11 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import it.sephiroth.android.library.easing.Linear;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
@@ -165,6 +162,7 @@ public class SyncTaskEditor extends DialogFragment {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         View view = super.onCreateView(inflater, container, savedInstanceState);
         CommonDialog.setDlgBoxSizeLimit(mDialog, true);
+        setHasOptionsMenu(true);//force refresh options menu state (needed to update Top Sync button Toast info message when changing task from Manual to Auto)
         return view;
     }
 
@@ -3175,7 +3173,7 @@ public class SyncTaskEditor extends DialogFragment {
             mUtil.addDebugMsg(1,"I","setSpinnerSyncFolderMountPoint add MP by InternalStorage only.");
         } else {
             for (String item : mpl) {
-                mUtil.addDebugMsg(1,"I","setSpinnerSyncFolderMountPoint MP list="+item+", write="+LocalMountPoint.isMountPointCanWrite(item));
+                mUtil.addDebugMsg(1,"I","setSpinnerSyncFolderMountPoint MP list="+item+", write="+ LocalMountPoint.isMountPointCanWrite(item));
                 if ((write_only && LocalMountPoint.isMountPointCanWrite(item)) ||
                         !write_only) {
                     if (item.equals(cv)) {
@@ -5541,7 +5539,7 @@ public class SyncTaskEditor extends DialogFragment {
         for(String item:sti.getDirFilter()) {
             String inc_exc=item.substring(0,1);
             String filter=master_dir.equals("")?item.substring(1):master_dir+"/"+item.substring(1);
-            Pattern pattern=Pattern.compile("^"+MiscUtil.convertRegExp(filter.toLowerCase())+"$");
+            Pattern pattern=Pattern.compile("^"+ MiscUtil.convertRegExp(filter.toLowerCase())+"$");
             if (inc_exc.equals("I")) {
                 select_specified=true;
                 Matcher mt=pattern.matcher(sti.getTargetDirectoryName().toLowerCase());
@@ -5554,7 +5552,7 @@ public class SyncTaskEditor extends DialogFragment {
         for(String item:sti.getDirFilter()) {
             String inc_exc=item.substring(0,1);
             String filter=master_dir.equals("")?item.substring(1):master_dir+"/"+item.substring(1);
-            Pattern pattern=Pattern.compile("^"+MiscUtil.convertRegExp(filter.toLowerCase())+"$");
+            Pattern pattern=Pattern.compile("^"+ MiscUtil.convertRegExp(filter.toLowerCase())+"$");
             if (inc_exc.equals("E")) {
                 exclude_specified=true;
                 Matcher mt=pattern.matcher(sti.getTargetDirectoryName().toLowerCase());

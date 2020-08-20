@@ -205,6 +205,7 @@
         <string name="msgs_main_sync_list_array_mtype_sync">同期</string>
         <string name="msgs_main_sync_list_array_no_last_sync_time">同期は実行されていません</string>
         <string name="msgs_main_sync_prof_name_list">同期を開始したタスク：</string>
+        <string name="msgs_main_sync_profile">同期実行 (%s)</string>
         <string name="msgs_main_sync_profile_dlg_archive">アーカイブ</string>
         <string name="msgs_main_sync_profile_dlg_copy">コピー</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">最終更新時刻の差（秒）</string>
@@ -245,6 +246,9 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">オフでも実行</string>
         <string name="msgs_main_sync_select_prof_no_active_profile">同期タスクが選択されていません。</string>
         <string name="msgs_main_sync_selected_profiles">選択された同期タスクを同期します。</string>
+        <string name="msgs_main_sync_selected_profiles_checked_boxes">選択された同期タスクを同期します。</string>
+        <string name="msgs_main_sync_selected_profiles_toast">選択された同期タスクを同期します。</string>
+        <string name="msgs_main_sync_auto_profiles_toast">自動同期タスクだけを同期する</string>
         <string name="msgs_main_sync_selected_task_not_found">選択されたタスクは存在しません。タスク=</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">指定された同期タスクは無視されたため実行されません。</string>
         <string name="msgs_main_sync_test_mode_warnning">選択された同期タスクにテストモードの同期タスクが含まれています。テストモードの同期タスクではファイルのコピーや削除が行われません。同期を開始しますか？</string>

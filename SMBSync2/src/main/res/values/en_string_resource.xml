@@ -172,7 +172,7 @@
         <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access internal storage to be able to read and write data that is synchronized and for the management of application settings.</string>
         <string name="msgs_main_permission_external_storage_title">Internal Storage Permission</string>
         <string name="msgs_main_shortcut_shortcut_added">Shortcut added to home screen.</string>
-        <string name="msgs_main_sync_all_active_profiles">Execute all tasks configured to Auto Sync.</string>
+        <string name="msgs_main_sync_all_active_profiles">Executing all Auto Sync tasks</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">No sync tasks available for execution. Please create a sync task.</string>
         <string name="msgs_main_sync_cancel_confirm">Cancel sync?</string>
         <string name="msgs_main_sync_history_copy_completed">Selected items copied to clipboard.</string>
@@ -205,6 +205,7 @@
         <string name="msgs_main_sync_list_array_mtype_sync">SYNC</string>
         <string name="msgs_main_sync_list_array_no_last_sync_time">Sync task has not been executed.</string>
         <string name="msgs_main_sync_prof_name_list">Started sync task:</string>
+        <string name="msgs_main_sync_profile">Start sync task (%s)</string>
         <string name="msgs_main_sync_profile_dlg_archive">Archive</string>
         <string name="msgs_main_sync_profile_dlg_copy">Copy</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Time difference tolerance (sec)</string>
@@ -244,7 +245,10 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">Access point list</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Run even when off</string>
         <string name="msgs_main_sync_select_prof_no_active_profile">Sync task was not selected.</string>
-        <string name="msgs_main_sync_selected_profiles">Execute selected sync task</string>
+        <string name="msgs_main_sync_selected_profiles">Executing selected sync task</string>
+        <string name="msgs_main_sync_selected_profiles_checked_boxes">Executing all selected sync tasks</string>
+        <string name="msgs_main_sync_selected_profiles_toast">Execute all selected sync tasks</string>
+        <string name="msgs_main_sync_auto_profiles_toast">Execute all auto sync tasks</string>
         <string name="msgs_main_sync_selected_task_not_found">Selected task does not exist:</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">The specified sync task will not be executed because it was ignored.</string>
         <string name="msgs_main_sync_test_mode_warnning">Selected task is configured for test only.  No files will be copied or deleted.  Execute the task?</string>
@@ -604,7 +608,7 @@
         <string name="msgs_mirror_task_success_end">ended successfully.</string>
         <string name="msgs_mirror_task_sync_request_error_detected">Sync ended with errors.</string>
         <string name="msgs_mirror_task_was_cancelled">cancelled.</string>
-        <string name="msgs_mirror_task_directory_ignored_because_can_not_read">The directory was ignored because the app does not have permission to read the directory. Directory=%s</string>
+        <string name="msgs_mirror_task_directory_ignored_because_can_not_read">Directory sync skipped because of non-allowed read permission. Directory=%s</string>
         <string name="msgs_mirror_usb_storage_not_mounted">Sync cancelled because USB media is not mounted.</string>
     <!-- Scan network -->
         <string name="msgs_scan_progress_spin_dlg_addr_cancel">Cancel search</string>

@@ -224,6 +224,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             boolean sync_btn_disable=false;
 
             holder.ll_view.setBackgroundDrawable(ll_default);
+            //Do not change the background to make it clear that it is a button.
 //            holder.ib_row_sync.setBackgroundDrawable(ll_default);
 
             String act = "";
@@ -402,6 +403,14 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                             }
                         },1000);
                     }
+                }
+            });
+
+            holder.ib_row_sync.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    CommonUtilities.showToastMessageShort((ActivityMain)(parent.getContext()), mContext.getString(R.string.msgs_main_sync_profile, o.getSyncTaskName()));
+                    return true;// notify long touch event is consumed
                 }
             });
 

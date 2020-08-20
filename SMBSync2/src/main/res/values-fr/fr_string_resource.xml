@@ -172,7 +172,7 @@
         <string name="msgs_main_permission_external_storage_request_msg">Autorisez l\'accès au stockage interne pour permettre la lecture et l\'écriture des données synchronisées ainsi que pour la gestion des paramètres de l\'application. </string>
         <string name="msgs_main_permission_external_storage_title">Permission d\'Accès au Stockage Interne</string>
         <string name="msgs_main_shortcut_shortcut_added">Un raccourci a été rajouté à l\'écran d\'accueil.</string>
-        <string name="msgs_main_sync_all_active_profiles">Exécuter toutes les tâches configurées pour Auto Synchronisation</string>
+        <string name="msgs_main_sync_all_active_profiles">Exécution de toutes les tâches configurées en mode Auto</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">Aucune tâche à exécuter. Merci de créer une tâche de synchronisation.</string>
         <string name="msgs_main_sync_cancel_confirm">Annuler la synchronisation ?</string>
         <string name="msgs_main_sync_history_copy_completed">Les éléments sélectionnés ont été copiés dans le presse-papier</string>
@@ -205,6 +205,7 @@
         <string name="msgs_main_sync_list_array_mtype_sync">SYNCHRONISER</string>
         <string name="msgs_main_sync_list_array_no_last_sync_time">La tâche de synchronisation n\'a pas été exécutée.</string>
         <string name="msgs_main_sync_prof_name_list">Début de la tâche de sync:</string>
+        <string name="msgs_main_sync_profile">Démarrer la synchronisation (%s)</string>
         <string name="msgs_main_sync_profile_dlg_archive">Archiver</string>
         <string name="msgs_main_sync_profile_dlg_copy">Copier</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Différence de temps tolérée (sec)</string>
@@ -244,7 +245,10 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">Wifi Sélectionnés</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Même si Wifi éteint</string>
         <string name="msgs_main_sync_select_prof_no_active_profile">Tache de synchronisation non sélectionnée</string>
-        <string name="msgs_main_sync_selected_profiles">Exécuter la tâche de synchronisation sélectionnée</string>
+        <string name="msgs_main_sync_selected_profiles">Exécution de la tâche de synchronisation sélectionnée</string>
+        <string name="msgs_main_sync_selected_profiles_checked_boxes">Exécution de toutes les tâches de synchronisation sélectionnées</string>
+        <string name="msgs_main_sync_selected_profiles_toast">Exécuter toutes les tâches de synchronisation sélectionnées</string>
+        <string name="msgs_main_sync_auto_profiles_toast">Exécuter toutes les tâches configurées en mode Auto</string>
         <string name="msgs_main_sync_selected_task_not_found">La tâche sélectionnée n\'existe pas:</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">La tâche sélectionnée ne sera pas exécutée, car elle a été ignorée.</string>
         <string name="msgs_main_sync_test_mode_warnning">La tâche sélectionnée est configurée en mode Test. Aucun fichier ne sera copié ou effacé. Exécuter la tâche ?</string>
@@ -604,7 +608,7 @@
         <string name="msgs_mirror_task_success_end">terminée avec succès.</string>
         <string name="msgs_mirror_task_sync_request_error_detected">Sync terminée avec des erreurs.</string>
         <string name="msgs_mirror_task_was_cancelled">annulé(e).</string>
-        <string name="msgs_mirror_task_directory_ignored_because_can_not_read">Le répertoire a été ignoré parce que l\'application n\'a pas la permission de lire le répertoire. Répertoire=%s</string>
+        <string name="msgs_mirror_task_directory_ignored_because_can_not_read">Synchronisation du dossier ignorée car l\'accès en lécture n\'est pas autorisé. Répertoire=%s</string>
         <string name="msgs_mirror_usb_storage_not_mounted">Sync annulée, car le stockage USB n\'est pas monté.</string>
     <!-- Scan network -->
         <string name="msgs_scan_progress_spin_dlg_addr_cancel">Annuler la recherche</string>
