@@ -1379,12 +1379,12 @@ public class ActivityMain extends AppCompatActivity {
             case R.id.menu_top_sync:
                 if (isUiEnabled()) {
                     if (mGp.syncTaskAdapter.isShowCheckBox()) {
-                        if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) == 0) {
+                        if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0) {
+                            syncSelectedSyncTask();
+                        } else {
                             //no sync task is selected
                             mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
                             return true;//do not reset to normal view to let user select a task
-                        } else {
-                            syncSelectedSyncTask();
                         }
                     } else {
                         syncAutoSyncTask();
