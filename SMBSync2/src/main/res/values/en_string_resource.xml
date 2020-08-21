@@ -716,7 +716,8 @@
         <string name="msgs_schedule_list_edit_scheduler_disabled">Scheduled tasks will not be executed because the scheduling service is disabled. To enable the scheduling service, tap the calendar icon in the top right corner of this window. You must  also enable the toggle switch in front of each sync plan to execute.</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Do you want to enable the schedule?</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Do you want to disable the schedule?</string>
-        <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">Toggle Enable or Disable the schedule.</string>
+        <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Enable schedule service</string>
+        <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">Disable schedule service</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Schedules and WiFi options for multiple tasks will be consolidated to prevent duplicate sync processes.  </string>
     <!-- Send logcat -->
         <string name="msgs_send_logcat_menu_start_logcat">Start LogCat</string>

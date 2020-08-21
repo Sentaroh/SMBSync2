@@ -1193,9 +1193,10 @@ public class ActivityMain extends AppCompatActivity {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                View v = findViewById(R.id.menu_top_sync);
-                if (v != null) {
-                    v.setOnLongClickListener(new View.OnLongClickListener() {
+                //display toast info message for top action buttons (sync and service scheduler)
+                View v_top_action_btn = findViewById(R.id.menu_top_sync);
+                if (v_top_action_btn != null) {
+                    v_top_action_btn.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
                             if (v.getId()==R.id.menu_top_sync) {
@@ -1203,6 +1204,13 @@ public class ActivityMain extends AppCompatActivity {
                                     CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_main_sync_selected_profiles_toast), 2);
                                 } else {
                                     CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_main_sync_auto_profiles_toast), 2);
+                                }
+                                return true;// notify long touch event is consumed
+                            } else if (v.getId()==R.id.menu_top_scheduler) {
+                                if (mGp.settingScheduleSyncEnabled)  {
+                                    CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_schedule_list_edit_scheduler_service_toggle_disable), 2);
+                                } else {
+                                    CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_schedule_list_edit_scheduler_service_toggle_enable), 2);
                                 }
                                 return true;// notify long touch event is consumed
                             }

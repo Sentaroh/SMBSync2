@@ -716,7 +716,8 @@
         <string name="msgs_schedule_list_edit_scheduler_disabled">Les tâches planifiées ne seront pas exécutées, car le service de planification est désactivé. Pour l\'activer, appuyer sur l\'icône du calendrier dans le coin supérieur droit de cet écran. Vous devez aussi activer l\'interrupteur en face de chacun des plans à exécuter.</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Voulez-vous activer la planification?</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Voulez-vous désactiver la planification?</string>
-        <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">Activer/Désactiver la planification</string>
+        <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Activer le service de planification</string>
+        <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">Désactiver le service de planification</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Les planifications et les différentes options Wifi seront regroupées pour éviter les processus de sync doubles.</string>
     <!-- Send logcat -->
         <string name="msgs_send_logcat_menu_start_logcat">Démarrer le LogCat</string>
