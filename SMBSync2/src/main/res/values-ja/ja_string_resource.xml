@@ -244,7 +244,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">アドレスリスト</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">アクセスポイントリスト</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">オフでも実行</string>
-        <string name="msgs_main_sync_select_prof_no_active_profile">同期タスクが選択されていません。</string>
+        <string name="msgs_main_sync_select_prof_no_active_profile">同期するタスクを少なくとも1つ選択する必要があります。</string>
         <string name="msgs_main_sync_selected_profiles">選択された同期タスクを同期します。</string>
         <string name="msgs_main_sync_selected_profiles_checked_boxes">選択された同期タスクを同期します。</string>
         <string name="msgs_main_sync_selected_profiles_toast">選択された同期タスクを同期します。</string>

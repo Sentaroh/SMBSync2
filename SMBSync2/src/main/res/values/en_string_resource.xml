@@ -244,7 +244,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">IP address list</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">Access point list</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Run even when off</string>
-        <string name="msgs_main_sync_select_prof_no_active_profile">Sync task was not selected.</string>
+        <string name="msgs_main_sync_select_prof_no_active_profile">You must select at least one task to Sync.</string>
         <string name="msgs_main_sync_selected_profiles">Executing selected sync task</string>
         <string name="msgs_main_sync_selected_profiles_checked_boxes">Executing all selected sync tasks</string>
         <string name="msgs_main_sync_selected_profiles_toast">Execute all selected sync tasks</string>

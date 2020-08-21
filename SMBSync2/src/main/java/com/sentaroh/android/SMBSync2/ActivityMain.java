@@ -1200,7 +1200,7 @@ public class ActivityMain extends AppCompatActivity {
                         @Override
                         public boolean onLongClick(View v) {
                             if (v.getId()==R.id.menu_top_sync) {
-                                if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0)  {
+                                if (mGp.syncTaskAdapter.isShowCheckBox())  {
                                     CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_main_sync_selected_profiles_toast), 2);
                                 } else {
                                     CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_main_sync_auto_profiles_toast), 2);
@@ -1378,8 +1378,14 @@ public class ActivityMain extends AppCompatActivity {
                 return true;
             case R.id.menu_top_sync:
                 if (isUiEnabled()) {
-                    if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0) {
-                        syncSelectedSyncTask();
+                    if (mGp.syncTaskAdapter.isShowCheckBox()) {
+                        if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) == 0) {
+                            //no sync task is selected
+                            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
+                            return true;//do not reset to normal view to let user select a task
+                        } else {
+                            syncSelectedSyncTask();
+                        }
                     } else {
                         syncAutoSyncTask();
                     }

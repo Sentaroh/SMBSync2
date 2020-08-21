@@ -244,7 +244,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Liste d\'adresses IP</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">Wifi Sélectionnés</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Même si Wifi éteint</string>
-        <string name="msgs_main_sync_select_prof_no_active_profile">Tache de synchronisation non sélectionnée</string>
+        <string name="msgs_main_sync_select_prof_no_active_profile">Vous devez sélectionner au moins une tâche à synchroniser.</string>
         <string name="msgs_main_sync_selected_profiles">Exécution de la tâche de synchronisation sélectionnée</string>
         <string name="msgs_main_sync_selected_profiles_checked_boxes">Exécution de toutes les tâches de synchronisation sélectionnées</string>
         <string name="msgs_main_sync_selected_profiles_toast">Exécuter toutes les tâches de synchronisation sélectionnées</string>
