@@ -91,6 +91,7 @@ import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafManager;
 import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.SystemInfo;
+import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.Widget.CustomTabContentView;
 import com.sentaroh.android.Utilities.Widget.CustomViewPager;
@@ -3749,8 +3750,8 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
-    private ImageButton mContextSyncTaskButtonActivete = null;
-    private ImageButton mContextSyncTaskButtonInactivete = null;
+    private ImageButton mContextSyncTaskButtonAutoTask = null;
+    private ImageButton mContextSyncTaskButtonManualTask = null;
     private ImageButton mContextSyncTaskButtonAddSync = null;
     private ImageButton mContextSyncTaskButtonCopySyncTask = null;
     private ImageButton mContextSyncTaskButtonDeleteSyncTask = null;
@@ -3760,21 +3761,8 @@ public class ActivityMain extends AppCompatActivity {
     private ImageButton mContextSyncTaskButtonSelectAll = null;
     private ImageButton mContextSyncTaskButtonUnselectAll = null;
 
-//    private Bitmap mContextSyncTaskBitmapActive=null;
-//    private Bitmap mContextSyncTaskBitmapInactive=null;
-//    private Bitmap mContextSyncTaskBitmapAddLocal=null;
-//    private Bitmap mContextSyncTaskBitmapAddRemote=null;
-//    private Bitmap mContextSyncTaskBitmapAddSync=null;
-//    private Bitmap mContextSyncTaskBitmapStartWizard=null;
-//    private Bitmap mContextSyncTaskBitmapCopyProfile=null;
-//    private Bitmap mContextSyncTaskBitmapDeleteProfile=null;
-//    private Bitmap mContextSyncTaskBitmapRenameProfile=null;
-//    private Bitmap mContextSyncTaskBitmapSync=null;
-//    private Bitmap mContextSyncTaskBitmapSelectAll=null;
-//    private Bitmap mContextSyncTaskBitmapUnselectAll=null;
-
-    private LinearLayout mContextSyncTaskViewActivete = null;
-    private LinearLayout mContextSyncTaskViewInactivete = null;
+    private LinearLayout mContextSyncTaskViewAutoTask = null;
+    private LinearLayout mContextSyncTaskViewManualTask = null;
     private LinearLayout mContextSyncTaskViewAddSync = null;
     private LinearLayout mContextSyncTaskViewCopySyncTask = null;
     private LinearLayout mContextSyncTaskViewDeleteSyncTask = null;
@@ -3832,8 +3820,8 @@ public class ActivityMain extends AppCompatActivity {
     private LinearLayout mContextMessageViewClear = null;
 
     private void releaseImageResource() {
-        releaseImageBtnRes(mContextSyncTaskButtonActivete);
-        releaseImageBtnRes(mContextSyncTaskButtonInactivete);
+        releaseImageBtnRes(mContextSyncTaskButtonAutoTask);
+        releaseImageBtnRes(mContextSyncTaskButtonManualTask);
         releaseImageBtnRes(mContextSyncTaskButtonAddSync);
         releaseImageBtnRes(mContextSyncTaskButtonCopySyncTask);
         releaseImageBtnRes(mContextSyncTaskButtonDeleteSyncTask);
@@ -3869,8 +3857,9 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void createContextView() {
-        mContextSyncTaskButtonActivete = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_activate);
-        mContextSyncTaskButtonInactivete = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_inactivate);
+        mContextSyncTaskButtonAutoTask = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_auto_task);
+        if (ThemeUtil.isLightThemeUsed(mActivity)) mContextSyncTaskButtonAutoTask.setImageResource(R.drawable.smbsync_auto_task_light);
+        mContextSyncTaskButtonManualTask = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_inactivate);
         mContextSyncTaskButtonAddSync = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_add_sync);
         mContextSyncTaskButtonCopySyncTask = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_copy);
         mContextSyncTaskButtonDeleteSyncTask = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_delete);
@@ -3880,8 +3869,8 @@ public class ActivityMain extends AppCompatActivity {
         mContextSyncTaskButtonSelectAll = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_select_all);
         mContextSyncTaskButtonUnselectAll = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_unselect_all);
 
-        mContextSyncTaskViewActivete = (LinearLayout) mSyncTaskView.findViewById(R.id.context_button_activate_view);
-        mContextSyncTaskViewInactivete = (LinearLayout) mSyncTaskView.findViewById(R.id.context_button_inactivate_view);
+        mContextSyncTaskViewAutoTask = (LinearLayout) mSyncTaskView.findViewById(R.id.context_button_auto_task_view);
+        mContextSyncTaskViewManualTask = (LinearLayout) mSyncTaskView.findViewById(R.id.context_button_inactivate_view);
         mContextSyncTaskViewAddSync = (LinearLayout) mSyncTaskView.findViewById(R.id.context_button_add_sync_view);
         mContextSyncTaskViewCopySyncTask = (LinearLayout) mSyncTaskView.findViewById(R.id.context_button_copy_view);
         mContextSyncTaskViewDeleteSyncTask = (LinearLayout) mSyncTaskView.findViewById(R.id.context_button_delete_view);
@@ -3972,21 +3961,21 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        mContextSyncTaskButtonActivete.setOnClickListener(new OnClickListener() {
+        mContextSyncTaskButtonAutoTask.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isUiEnabled()) confirmActivate(mGp.syncTaskAdapter, ntfy);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonActivete, mContext.getString(R.string.msgs_prof_cont_label_activate));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonAutoTask, mContext.getString(R.string.msgs_prof_cont_label_activate));
 
-        mContextSyncTaskButtonInactivete.setOnClickListener(new OnClickListener() {
+        mContextSyncTaskButtonManualTask.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isUiEnabled()) confirmInactivate(mGp.syncTaskAdapter, ntfy);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonInactivete, mContext.getString(R.string.msgs_prof_cont_label_inactivate));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonManualTask, mContext.getString(R.string.msgs_prof_cont_label_inactivate));
 
         mContextSyncTaskButtonAddSync.setOnClickListener(new OnClickListener() {
             @Override
@@ -4241,14 +4230,14 @@ public class ActivityMain extends AppCompatActivity {
         }
 
         if (inact_prof_selected) {
-            if (any_selected) mContextSyncTaskViewActivete.setVisibility(ImageButton.VISIBLE);
-            else mContextSyncTaskViewActivete.setVisibility(ImageButton.INVISIBLE);
-        } else mContextSyncTaskViewActivete.setVisibility(ImageButton.INVISIBLE);
+            if (any_selected) mContextSyncTaskViewAutoTask.setVisibility(ImageButton.VISIBLE);
+            else mContextSyncTaskViewAutoTask.setVisibility(ImageButton.INVISIBLE);
+        } else mContextSyncTaskViewAutoTask.setVisibility(ImageButton.INVISIBLE);
 
         if (act_prof_selected) {
-            if (any_selected) mContextSyncTaskViewInactivete.setVisibility(ImageButton.VISIBLE);
-            else mContextSyncTaskViewInactivete.setVisibility(ImageButton.INVISIBLE);
-        } else mContextSyncTaskViewInactivete.setVisibility(ImageButton.INVISIBLE);
+            if (any_selected) mContextSyncTaskViewManualTask.setVisibility(ImageButton.VISIBLE);
+            else mContextSyncTaskViewManualTask.setVisibility(ImageButton.INVISIBLE);
+        } else mContextSyncTaskViewManualTask.setVisibility(ImageButton.INVISIBLE);
 
         mContextSyncTaskViewAddSync.setVisibility(ImageButton.INVISIBLE);
 
@@ -4295,8 +4284,8 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncTaskAdapter.setShowCheckBox(false);
         mGp.syncTaskAdapter.notifyDataSetChanged();
 
-        mContextSyncTaskViewActivete.setVisibility(ImageButton.INVISIBLE);
-        mContextSyncTaskViewInactivete.setVisibility(ImageButton.INVISIBLE);
+        mContextSyncTaskViewAutoTask.setVisibility(ImageButton.INVISIBLE);
+        mContextSyncTaskViewManualTask.setVisibility(ImageButton.INVISIBLE);
         mContextSyncTaskViewAddSync.setVisibility(ImageButton.INVISIBLE);
         mContextSyncTaskViewCopySyncTask.setVisibility(ImageButton.INVISIBLE);
         mContextSyncTaskViewDeleteSyncTask.setVisibility(ImageButton.INVISIBLE);
@@ -4330,8 +4319,8 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncTaskAdapter.setShowCheckBox(false);
         mGp.syncTaskAdapter.notifyDataSetChanged();
 
-        mContextSyncTaskViewActivete.setVisibility(ImageButton.INVISIBLE);
-        mContextSyncTaskViewInactivete.setVisibility(ImageButton.INVISIBLE);
+        mContextSyncTaskViewAutoTask.setVisibility(ImageButton.INVISIBLE);
+        mContextSyncTaskViewManualTask.setVisibility(ImageButton.INVISIBLE);
         if (isUiEnabled()) mContextSyncTaskViewAddSync.setVisibility(ImageButton.VISIBLE);
         else mContextSyncTaskViewAddSync.setVisibility(ImageButton.INVISIBLE);
         mContextSyncTaskViewCopySyncTask.setVisibility(ImageButton.INVISIBLE);
