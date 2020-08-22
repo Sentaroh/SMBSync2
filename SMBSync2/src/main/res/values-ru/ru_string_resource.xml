@@ -244,7 +244,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Список IP-адресов</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">Список точек доступа</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Выполнить, даже когда офлайн</string>
-        <string name="msgs_main_sync_select_prof_no_active_profile">Синхронизирующая задача не была выбрана.</string>
+        <string name="msgs_main_sync_select_prof_no_active_profile">Вы должны выбрать хотя бы одну задачу для синхронизации.</string>
         <string name="msgs_main_sync_selected_profiles">Выполните выбранную синхронизирующую задачу</string>
         <string name="msgs_main_sync_selected_profiles_checked_boxes">Выполните выбранную синхронизирующую задачу</string>
         <string name="msgs_main_sync_selected_profiles_toast">Выполните выбранную синхронизирующую задачу</string>
@@ -716,7 +716,8 @@
         <string name="msgs_schedule_list_edit_scheduler_disabled">Запланированные задачи не будут выполняться, так как служба планирования отключена. Чтобы включить службу планирования, нажмите значок календаря в правом верхнем углу этого окна. Также необходимо включить тумблер перед каждым планом синхронизации для его выполнения.</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Вы хотите включить расписание?</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Вы хотите отключить расписание?</string>
-        <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">Включить или отключить расписание.</string>
+        <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Активировать услугу планирования</string>
+        <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">Отключить службу планирования</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Расписание и параметры Wi-Fi для нескольких задач будут объединены, чтобы избежать дублирования процессов синхронизации.</string>
     <!-- Send logcat -->
         <string name="msgs_send_logcat_menu_start_logcat">Запустить LogCat</string>

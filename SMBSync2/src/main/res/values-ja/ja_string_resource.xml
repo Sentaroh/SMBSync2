@@ -244,7 +244,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">アドレスリスト</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap">アクセスポイントリスト</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">オフでも実行</string>
-        <string name="msgs_main_sync_select_prof_no_active_profile">同期タスクが選択されていません。</string>
+        <string name="msgs_main_sync_select_prof_no_active_profile">同期するタスクを少なくとも1つ選択する必要があります。</string>
         <string name="msgs_main_sync_selected_profiles">選択された同期タスクを同期します。</string>
         <string name="msgs_main_sync_selected_profiles_checked_boxes">選択された同期タスクを同期します。</string>
         <string name="msgs_main_sync_selected_profiles_toast">選択された同期タスクを同期します。</string>
@@ -716,7 +716,8 @@
         <string name="msgs_schedule_list_edit_scheduler_disabled">スケジュールが無効になっているためスケジュール同期は実行されません。スケジュール同期を行うには画面上部のスケジュールアイコンをタップして有効にしてください。</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">スケジュールを有効にしますか？</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">スケジュールを無効にしますか？</string>
-        <string name="msgs_schedule_list_edit_scheduler_toggle_enable_disable">スケジュールの有効・無効を切り替える</string>
+        <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">計画サービスを有効化</string>
+        <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">スケジューリングサービスを無効にする</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">複数スケジュールが同時刻に起動される場合は同期リストをまとめ、重複した同期タスクを無視します。またWI-FIオプションも各スケジュールで指定したオプションを組み合わせします。</string>
     <!-- Send logcat -->
         <string name="msgs_send_logcat_menu_start_logcat">LogCatの開始</string>
