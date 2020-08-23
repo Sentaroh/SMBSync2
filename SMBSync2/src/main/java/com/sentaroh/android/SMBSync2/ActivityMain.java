@@ -1230,7 +1230,8 @@ public class ActivityMain extends AppCompatActivity {
                             return false;
                         }
                     });
-                }            }
+                }
+            }
         });
         return super.onCreateOptionsMenu(menu);
 
