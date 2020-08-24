@@ -37,7 +37,27 @@
                     android:layout_weight="1"
                     android:text="SyncName"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-
+                <TextView
+                    android:id="@+id/sync_task_sync_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right | center_vertical"
+                    android:text="MIRR"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right | center_vertical"
+                    android:text=",  "
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                <TextView
+                    android:id="@+id/sync_task_enabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right | center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:text="MANUAL"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
             <LinearLayout
@@ -104,33 +124,6 @@
                             android:ellipsize="middle"
                             android:lines="1"
                             android:text="Target"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/sync_task_sync_type"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="MIRR"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text=",  "
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-                        <TextView
-                            android:id="@+id/sync_task_enabled"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="MANUAL"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
                     </LinearLayout>
 
