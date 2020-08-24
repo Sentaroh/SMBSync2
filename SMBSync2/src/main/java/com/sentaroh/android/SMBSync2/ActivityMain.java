@@ -3869,7 +3869,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void createContextView() {
         mContextSyncTaskButtonAutoTask = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_auto_task);
-        if (ThemeUtil.isLightThemeUsed(mActivity)) mContextSyncTaskButtonAutoTask.setImageResource(R.drawable.smbsync_auto_task_light);
+        if (ThemeUtil.isLightThemeUsed(mActivity)) mContextSyncTaskButtonAutoTask.setImageResource(R.drawable.smbsync_auto_task_black);
         mContextSyncTaskButtonManualTask = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_inactivate);
         mContextSyncTaskButtonAddSync = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_add_sync);
         mContextSyncTaskButtonCopySyncTask = (ImageButton) mSyncTaskView.findViewById(R.id.context_button_copy);

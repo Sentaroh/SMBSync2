@@ -11,6 +11,6 @@
             android:layout_height="@dimen/context_button_height"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
-            android:src="@drawable/smbsync_auto_task" />
+            android:src="@drawable/smbsync_auto_task_white" />
 
 </LinearLayout>
