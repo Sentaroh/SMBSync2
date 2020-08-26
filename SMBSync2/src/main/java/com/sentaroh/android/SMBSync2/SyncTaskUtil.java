@@ -7107,7 +7107,7 @@ public class SyncTaskUtil {
                 stli.setMasterLocalMountPoint(parm[61]);
 
             if (!parm[62].equals("") && !parm[62].equals("end"))
-                stli.setMasterLocalMountPoint(parm[62]);
+                stli.setTargetLocalMountPoint(parm[62]);
 
             if (!parm[63].equals("") && !parm[63].equals("end")) stli.setSyncTaskGroup(parm[63]);
 
