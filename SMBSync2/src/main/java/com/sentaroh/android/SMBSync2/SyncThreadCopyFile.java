@@ -187,7 +187,7 @@ public class SyncThreadCopyFile {
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_STATUS_SUCCESS;
 
         String to_file_dest = to_dir + "/" + file_name;
-        String to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
+        String to_dir_tmp=getTempFileDirectory(to_dir);;//to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
         File tmp_dir=new File(to_dir_tmp);
         if (!tmp_dir.exists()) tmp_dir.mkdirs();
         String to_file_path = to_dir_tmp+"/"+"temp_file.tmp";
@@ -383,7 +383,8 @@ public class SyncThreadCopyFile {
         if (Build.VERSION.SDK_INT>=30) {
             to_dir_tmp=getTempFileDirectory(to_dir);
         } else {
-            to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
+            to_dir_tmp=getTempFileDirectory(to_dir);
+//            to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
         }
 
         File tmp_dir=new File(to_dir_tmp);
@@ -735,7 +736,8 @@ public class SyncThreadCopyFile {
         if (Build.VERSION.SDK_INT>=30) {
             to_dir_tmp=getTempFileDirectory(to_dir);
         } else {
-            to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
+            to_dir_tmp=getTempFileDirectory(to_dir);
+//            to_dir_tmp = stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/cache";
         }
 
         File tmp_dir=new File(to_dir_tmp);
