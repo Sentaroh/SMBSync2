@@ -1132,6 +1132,12 @@ public class ActivityMain extends AppCompatActivity {
                 setSyncTaskContextButtonNormalMode();
             }
 
+            if (mGp.syncTabScheduleAdapter.isSelectMode()) {
+                mGp.syncTabScheduleAdapter.setSelectMode(false);
+                mGp.syncTabScheduleAdapter.unselectAll();
+                setScheduleContextButtonNormalMode();
+            }
+
             if (mGp.syncHistoryAdapter.isShowCheckBox()) {
                 mGp.syncHistoryAdapter.setShowCheckBox(false);
                 mGp.syncHistoryAdapter.setAllItemChecked(false);
