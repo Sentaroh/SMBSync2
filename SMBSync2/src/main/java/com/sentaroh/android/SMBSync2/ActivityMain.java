@@ -1282,10 +1282,12 @@ public class ActivityMain extends AppCompatActivity {
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_housekeep), true);
             if (mGp.syncThreadActive) menu.findItem(R.id.menu_top_housekeep).setVisible(false);
             else menu.findItem(R.id.menu_top_housekeep).setVisible(true);
+
             if (mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
                 menu.findItem(R.id.menu_top_sync).setVisible(false);
                 for(SyncTaskItem sti:mGp.syncTaskList) {
-                    if (sti.isSyncTaskAuto() || mGp.syncTaskAdapter.isShowCheckBox()) {
+                    if ((sti.isSyncTaskAuto() && !sti.isSyncTestMode()) ||
+                            mGp.syncTaskAdapter.isShowCheckBox()) {
                         if (!sti.isSyncTaskError()) {//invalid sync task with error in master/target name, etc...
                             menu.findItem(R.id.menu_top_sync).setVisible(true);
                             break;
