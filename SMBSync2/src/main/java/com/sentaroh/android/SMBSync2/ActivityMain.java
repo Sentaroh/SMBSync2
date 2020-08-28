@@ -1132,6 +1132,12 @@ public class ActivityMain extends AppCompatActivity {
                 setSyncTaskContextButtonNormalMode();
             }
 
+            if (mGp.syncTabScheduleAdapter.isSelectMode()) {
+                mGp.syncTabScheduleAdapter.setSelectMode(false);
+                mGp.syncTabScheduleAdapter.unselectAll();
+                setScheduleContextButtonNormalMode();
+            }
+
             if (mGp.syncHistoryAdapter.isShowCheckBox()) {
                 mGp.syncHistoryAdapter.setShowCheckBox(false);
                 mGp.syncHistoryAdapter.setAllItemChecked(false);
@@ -1282,10 +1288,12 @@ public class ActivityMain extends AppCompatActivity {
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_housekeep), true);
             if (mGp.syncThreadActive) menu.findItem(R.id.menu_top_housekeep).setVisible(false);
             else menu.findItem(R.id.menu_top_housekeep).setVisible(true);
+
             if (mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
                 menu.findItem(R.id.menu_top_sync).setVisible(false);
                 for(SyncTaskItem sti:mGp.syncTaskList) {
-                    if (sti.isSyncTaskAuto() || mGp.syncTaskAdapter.isShowCheckBox()) {
+                    if ((sti.isSyncTaskAuto() && !sti.isSyncTestMode()) ||
+                            mGp.syncTaskAdapter.isShowCheckBox()) {
                         if (!sti.isSyncTaskError()) {//invalid sync task with error in master/target name, etc...
                             menu.findItem(R.id.menu_top_sync).setVisible(true);
                             break;
@@ -2913,6 +2921,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncTabScheduleAdapter.notifyDataSetChanged();
     }
 
+    //action when bottom buttons are pressed in schedule view when a schedule task is selected
     private void setScheduleContextButtonListener() {
         NotifyEvent ntfy_cb = new NotifyEvent(mContext);
         ntfy_cb.setListener(new NotifyEventListener() {
@@ -3953,6 +3962,7 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
+    //process bottom action buttons press (Auto, set to Manual, delete task, move task...)
     private void setSyncTaskContextButtonListener() {
         final NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
@@ -4223,6 +4233,7 @@ public class ActivityMain extends AppCompatActivity {
                 msg, ntfy);
     }
 
+    //set bottom action buttons visibility (Auto, Manual, delete, move... buttons when a task is selected in main view)
     private void setSyncTaskContextButtonSelectMode() {
         int sel_cnt = SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter);
         int tot_cnt = mGp.syncTaskAdapter.getCount();
@@ -4234,9 +4245,14 @@ public class ActivityMain extends AppCompatActivity {
         if (any_selected) {
             for (int i = 0; i < tot_cnt; i++) {
                 if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
+                    if (mGp.syncTaskAdapter.getItem(i).isSyncTestMode()) {
+                        //A Test Sync Task is selected: hide set to Auto/Manual bottom buttons
+                        act_prof_selected = false;
+                        inact_prof_selected = false;
+                        break;
+                    }
                     if (mGp.syncTaskAdapter.getItem(i).isSyncTaskAuto()) act_prof_selected = true;
                     else inact_prof_selected = true;
-                    if (act_prof_selected && inact_prof_selected) break;
                 }
             }
         }
