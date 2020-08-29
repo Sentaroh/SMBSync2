@@ -237,6 +237,7 @@ public class ActivityMain extends AppCompatActivity {
 
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET);
         setSyncTaskContextButtonHide();
+
     }
 
     @SuppressLint("NewApi")
@@ -1264,18 +1265,19 @@ public class ActivityMain extends AppCompatActivity {
 //        LogCatUtil.prepareOptionMenu(mGp, mUtil, menu);
 
         if (Build.VERSION.SDK_INT >= 27) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
-                if (Build.VERSION.SDK_INT>=29) {
-                    if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED) {
-                        menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
-                    } else {
-                        menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
-                    }
-                } else {
+            if (Build.VERSION.SDK_INT>=29) {
+                if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED &&
+                        checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED) {
                     menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
+                } else {
+                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
                 }
             } else {
-                menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
+                if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
+                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
+                } else {
+                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
+                }
             }
         } else {
             menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
@@ -2158,7 +2160,7 @@ public class ActivityMain extends AppCompatActivity {
                 ", settingNotificationVolume="+mGp.settingNotificationVolume +
                 ", settingPreventSyncStartDelay="+mGp.settingPreventSyncStartDelay +
                 ", Force Screen on at start of the sync="+mGp.settingScreenOnIfScreenOnAtStartOfSync +
-                ", settingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired +
+                ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired +
 
                 ", settingSupressAppSpecifiDirWarning=" + mGp.settingSupressAppSpecifiDirWarning +
                 ", settingSupressLocationServiceWarning=" + mGp.settingSupressLocationServiceWarning +
@@ -2250,19 +2252,22 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private final int REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
-    private final int REQUEST_PERMISSIONS_ACCESS_COARSE_LOCATION = 2;
+    private final int REQUEST_PERMISSIONS_ACCESS_LOCATION = 2;
+    private final int REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION =3;
 
+    /*
+    Target SDK 29に変更によりACCESS_COARSE_LOCATIONからACCESS_FINE_LOCATIONに変更
+    https://developer.android.com/guide/topics/connectivity/wifi-scan?hl=ja
+     */
     private void checkRequiredPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             mUtil.addDebugMsg(1, "I", "Prermission WriteExternalStorage=" + checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) +
-                    ", WakeLock=" + checkSelfPermission(Manifest.permission.WAKE_LOCK)
-            );
+                    ", WakeLock=" + checkSelfPermission(Manifest.permission.WAKE_LOCK));
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-//                        checkLocationPermission();
                         requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                                 REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
                     }
@@ -2278,9 +2283,7 @@ public class ActivityMain extends AppCompatActivity {
                             }
 
                             @Override
-                            public void negativeResponse(Context c, Object[] o) {
-//                                checkLocationPermission();
-                            }
+                            public void negativeResponse(Context c, Object[] o) {}
                         });
                         mUtil.showCommonDialog(false, "W",
                                 mContext.getString(R.string.msgs_main_permission_external_storage_title),
@@ -2300,45 +2303,103 @@ public class ActivityMain extends AppCompatActivity {
 
     public void checkLocationPermission(boolean force_permission) {
         if (Build.VERSION.SDK_INT >= 27) {
-            mUtil.addDebugMsg(1, "I", "Prermission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)+
-                                    ", settingGrantCoarseLocationRequired="+mGp.settingGrantCoarseLocationRequired);
-            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
-                    (mGp.settingGrantCoarseLocationRequired || force_permission)) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context c, Object[] o) {
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                                REQUEST_PERMISSIONS_ACCESS_COARSE_LOCATION);
-                    }
+            if (Build.VERSION.SDK_INT >= 29) {
+                mUtil.addDebugMsg(1, "I", "Permission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)+
+                        ", Backgrund Location=" + checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)+
+                        ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired);
+                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
+                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                    ntfy.setListener(new NotifyEventListener() {
+                        @Override
+                        public void positiveResponse(Context c, Object[] o) {
+                            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSIONS_ACCESS_LOCATION);
+                        }
 
-                    @Override
-                    public void negativeResponse(Context c, Object[] o) {
-//                        NotifyEvent ntfy_deny=new NotifyEvent(mContext);
-//                        ntfy_deny.setListener(new NotifyEventListener() {
-//                            @Override
-//                            public void positiveResponse(Context context, Object[] objects) {
-//                                mGp.setSettingGrantCoarseLocationRequired(false);
-//                            }
-//                            @Override
-//                            public void negativeResponse(Context context, Object[] objects) {}
-//                        });
-//                        mUtil.showCommonDialog(true, "W",
-//                                mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-//                                mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
-                        mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+                        @Override
+                        public void negativeResponse(Context c, Object[] o) {
+                            mGp.setSettingGrantCoarseLocationRequired(mContext, false);
+                            SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+                        }
+                    });
+                    mUtil.showCommonDialog(true, "W",
+                            mContext.getString(R.string.msgs_main_permission_coarse_location_title),
+                            mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
+                } else {
+                    if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
+                        checkBackgroundLocationPermission(null);
                     }
-                });
-                mUtil.showCommonDialog(true, "W",
-                        mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-                        mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
+                }
             } else {
-                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+                mUtil.addDebugMsg(1, "I", "Permission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)+
+                        ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired);
+                if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
+                        (mGp.settingGrantLocationRequired || force_permission)) {
+                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                    ntfy.setListener(new NotifyEventListener() {
+                        @Override
+                        public void positiveResponse(Context c, Object[] o) {
+                            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_PERMISSIONS_ACCESS_LOCATION);
+                        }
+
+                        @Override
+                        public void negativeResponse(Context c, Object[] o) {
+                            mGp.setSettingGrantCoarseLocationRequired(mContext, false);
+                            SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+                        }
+                    });
+                    mUtil.showCommonDialog(true, "W",
+                            mContext.getString(R.string.msgs_main_permission_coarse_location_title),
+                            mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
+                } else {
+                    SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+                }
             }
         }
     }
 
+    public void checkBackgroundLocationPermission(final NotifyEvent p_ntfy) {
+        mUtil.addDebugMsg(1, "I", "Background location permission=" + checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION));
+        NotifyEvent ntfy_bg_location_request = new NotifyEvent(mContext);
+        ntfy_bg_location_request.setListener(new NotifyEvent.NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context c, Object[] o) {
+                NotifyEvent ntfy_bg_location_response=new NotifyEvent(mContext);
+                ntfy_bg_location_response.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        mGp.setSettingGrantCoarseLocationRequired(mContext, true);
+                        if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
+                    }
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                        mGp.setSettingGrantCoarseLocationRequired(mContext, true);
+                        mUtil.showCommonDialog(false, "W",
+                                mContext.getString(R.string.msgs_main_permission_background_location_title),
+                                mContext.getString(R.string.msgs_main_permission_background_location_denied_msg),
+                                null);
+                        if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
+                    }
+                });
+                requestPermissions(new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION);
+            }
+
+            @Override
+            public void negativeResponse(Context c, Object[] o) {
+                mGp.setSettingGrantCoarseLocationRequired(mContext, true);
+                if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
+            }
+        });
+
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED &&
+                checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
+            mUtil.showCommonDialog(true, "W",
+                    mContext.getString(R.string.msgs_main_permission_background_location_title),
+                    mContext.getString(R.string.msgs_main_permission_background_location_request_msg),
+                    ntfy_bg_location_request);
+        } else {
+            if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -2368,24 +2429,49 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_main_permission_external_storage_title),
                         mContext.getString(R.string.msgs_main_permission_external_storage_denied_msg), ntfy_term);
             }
-        }
-        if (REQUEST_PERMISSIONS_ACCESS_COARSE_LOCATION == requestCode) {
+        } else if (REQUEST_PERMISSIONS_ACCESS_LOCATION == requestCode) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT>=29) {
+                    checkBackgroundLocationPermission(null);
+                } else {
+                    SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+                }
+            } else {
+                mGp.setSettingGrantCoarseLocationRequired(mContext, false);
+                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+//                NotifyEvent ntfy_deny=new NotifyEvent(mContext);
+//                ntfy_deny.setListener(new NotifyEventListener() {
+//                    @Override
+//                    public void positiveResponse(Context context, Object[] objects) {
+//                        mGp.setSettingGrantCoarseLocationRequired(mContext, false);
+//                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+//                    }
+//                    @Override
+//                    public void negativeResponse(Context context, Object[] objects) {}
+//                });
+//                mUtil.showCommonDialog(false, "W",
+//                        mContext.getString(R.string.msgs_main_permission_coarse_location_title),
+//                        mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
+            }
+        } else if (REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION == requestCode) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
             } else {
-                NotifyEvent ntfy_deny=new NotifyEvent(mContext);
-                ntfy_deny.setListener(new NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-                    }
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {}
-                });
-                mUtil.showCommonDialog(false, "W",
-                        mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-                        mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
+                mGp.setSettingGrantCoarseLocationRequired(mContext, false);
+                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+//                NotifyEvent ntfy_deny=new NotifyEvent(mContext);
+//                ntfy_deny.setListener(new NotifyEventListener() {
+//                    @Override
+//                    public void positiveResponse(Context context, Object[] objects) {
+//                        mGp.setSettingGrantCoarseLocationRequired(mContext, false);
+//                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
+//                    }
+//                    @Override
+//                    public void negativeResponse(Context context, Object[] objects) {}
+//                });
+//                mUtil.showCommonDialog(false, "W",
+//                        mContext.getString(R.string.msgs_main_permission_background_location_title),
+//                        mContext.getString(R.string.msgs_main_permission_background_location_denied_msg), ntfy_deny);
             }
         }
     }

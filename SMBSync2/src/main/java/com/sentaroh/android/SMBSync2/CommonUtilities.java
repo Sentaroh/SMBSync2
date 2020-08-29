@@ -35,8 +35,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -48,14 +46,12 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
@@ -236,17 +232,14 @@ public final class CommonUtilities {
         ArrayList<String> out= SystemInfo.listSystemInfo(c, gp.safMgr);
 
         if (Build.VERSION.SDK_INT>=27) {
-            out.add("setSettingGrantCoarseLocationRequired="+gp.settingGrantCoarseLocationRequired);
-            out.add("ACCESS_COARSE_LOCATION Permission="+c.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION));
-        }
-
-        if (Build.VERSION.SDK_INT>=29) {
-            boolean backgroundLocationPermissionApproved =
-                    c.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)== PackageManager.PERMISSION_GRANTED;
-            out.add("ACCESS_BACKGROUND_LOCATION="+backgroundLocationPermissionApproved);
-        }
-
-        if (Build.VERSION.SDK_INT>=27) {
+            out.add("setSettingGrantLocationRequired="+gp.settingGrantLocationRequired);
+            if (Build.VERSION.SDK_INT==27 || Build.VERSION.SDK_INT==28) {
+                out.add("ACCESS_COARSE_LOCATION Permission="+(c.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED));
+            } else if (Build.VERSION.SDK_INT>=29) {
+                out.add("ACCESS_FINE_LOCATION Permission="+(c.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED));
+                boolean backgroundLocationPermissionApproved = c.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)== PackageManager.PERMISSION_GRANTED;
+                out.add("ACCESS_BACKGROUND_LOCATION="+backgroundLocationPermissionApproved);
+            }
             out.add("LocationService enabled="+isLocationServiceEnabled(c, gp)+", warning="+gp.settingSupressLocationServiceWarning);
         }
 

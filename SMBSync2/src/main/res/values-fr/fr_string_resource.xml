@@ -165,8 +165,11 @@
         <string name="msgs_main_external_usb_select_required_title">Autoriser l\'écriture au stockage USB</string>
         <string name="msgs_main_external_usb_select_retry_select_msg">Le dossier racine du stockage USB n\'a pas été sélectionné. Voulez-vous choisir à nouveau ?</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">L\'emplacement "carte SD" a été sélectionné. Voulez-vous resélectionner le stockage USB?</string>
-        <string name="msgs_main_permission_coarse_location_denied_msg">Si vous choisissez \"Liste SSID\" ou \"Wifi Sélectionnés\" dans les paramètres de la tâche, la synchronisation échouera si vous n\'accordez pas la permission d\'accès au service de localisation. Merci d\'autoriser "Permission d\'accès au service de localisation" dans le menu.</string>
+        <string name="msgs_main_permission_coarse_location_denied_msg">Si vous choisissez \"Wifi Sélectionnés\" dans les paramètres de la tâche, la synchronisation échouera si vous n\'accordez pas la permission d\'accès au service de localisation. Merci d\'autoriser "Permission d\'accès au service de localisation" dans le menu.</string>
         <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 nécessite la permission d\'accès au service de localisation pour pouvoir identifier le SSID du réseau Wifi.\nSi vous spécifiez \"Wifi Sélectionnés\", la synchronisation échouera tant que cette permission n\'est pas accordée.\nVoulez vous demander l\'accès à la localisation?</string>
+        <string name="msgs_main_permission_background_location_title">Autorisation de localisation en arrière-plan</string>
+        <string name="msgs_main_permission_background_location_denied_msg">Si vous choisissez \"Wifi Sélectionnés\" dans les paramètres de la tâche, la synchronisation échouera si vous n\'accordez pas la permission d\'accès au service de localisation. Merci d\'autoriser "Permission d\'accès au service de localisation" dans le menu.</string>
+        <string name="msgs_main_permission_background_location_request_msg">Cette autorisation est nécessaire pour lire le SSID WiFi dans SMBSync2.\nJusqu\'à ce que la permission soit accordée, SMBSync2 se terminera avec une erreur si \"Liste des points d\'accès\" est spécifiée dans la tâche de synchronisation.\nSous Permissions de localisation, sélectionnez \"Toujours autoriser\".\nVous souhaitez demander une autorisation de localisation de fond ?</string>
         <string name="msgs_main_permission_coarse_location_title">Permission pour la Localisation</string>
         <string name="msgs_main_permission_external_storage_denied_msg">L\'application ne peut pas démarrer, car elle ne dispose pas de l\'autorisation d\'accès au stockage interne.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Autorisez l\'accès au stockage interne pour permettre la lecture et l\'écriture des données synchronisées ainsi que pour la gestion des paramètres de l\'application. </string>
@@ -356,8 +359,8 @@
         <string name="msg_edit_sync_folder_keyword_insert_day">JOUR</string>
         <string name="msg_edit_sync_folder_keyword_insert_day_of_year">JOUR DE L\'ANNEE</string>
         <string name="msg_edit_sync_folder_keyword_insert_week_number">NUMÉRO DE LA SEMAINE</string>
-        <string name="msg_edit_sync_folder_keyword_insert_week_day">JOUR DE SEMAINE (%s, %s ...)</string>
-        <string name="msg_edit_sync_folder_keyword_insert_week_day_long">JOUR DE SEMAINE (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day" formatted="false">JOUR DE SEMAINE (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day_long" formatted="false">JOUR DE SEMAINE (%s, %s ...)</string>
         <string name="msgs_profile_sync_task_dlg_master">Dossier Maitre (Source)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">Mode de sync</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Archiver</string>
@@ -443,14 +446,14 @@
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Utiliser le filtre amélioré de sélection de dossiers</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Utiliser la version 2 des filtres</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Le changement de version du filtre de répertoire peut entraîner la suppression ou l\'écrasement inattendu de fichiers, ce qui peut modifier les fichiers synchronisés. Il est fortement recommandé de l\'exécuter en mode test pour le vérifier, ou de créer un dossier test pour vérifier les résultats de la synchronisation.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error">Le filtre de dossier Inclure doit avoir un chemin relatif au dossier Source. Changer le filtre en \"Exclure\" ou supprimer la séquence \"%s\" du début des filtres suivants:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error">Le filtre de dossier Inclure %s doit avoir un chemin relatif au dossier Source. Changer le filtre en \"Exclure\" ou supprimer la séquence \"%s\" du début.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Le préfixe \"%s\" n\'est plus supporté. Merci de le remplacer par \"%s\" dans les filtres suivants:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Le filtre %s contient l\'ancien préfixe \"%s\". Merci de le remplacer par \"%s\" (exp. %s).</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error">Des caractères invalides (%s) sont présents et doivent être supprimés des filtres suivants:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error">Le filtre %s contient un caractère invalide (%s). Merci de le supprimer.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error">Les filtres ci-dessous contiennent uniquement le caractère générique \"%s\". Merci de corriger les filtres concernés:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error">Le filtre %s contient uniquement des caractère génériques \"%s\" !</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error" formatted="false">Le filtre de dossier Inclure doit avoir un chemin relatif au dossier Source. Changer le filtre en \"Exclure\" ou supprimer la séquence \"%s\" du début des filtres suivants:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error" formatted="false">Le filtre de dossier Inclure %s doit avoir un chemin relatif au dossier Source. Changer le filtre en \"Exclure\" ou supprimer la séquence \"%s\" du début.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error" formatted="false">Le préfixe \"%s\" n\'est plus supporté. Merci de le remplacer par \"%s\" dans les filtres suivants:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error" formatted="false">Le filtre %s contient l\'ancien préfixe \"%s\". Merci de le remplacer par \"%s\" (exp. %s).</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error" formatted="false">Des caractères invalides (%s) sont présents et doivent être supprimés des filtres suivants:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error" formatted="false">Le filtre %s contient un caractère invalide (%s). Merci de le supprimer.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error" formatted="false">Les filtres ci-dessous contiennent uniquement le caractère générique \"%s\". Merci de corriger les filtres concernés:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error" formatted="false">Le filtre %s contient uniquement des caractère génériques \"%s\" !</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_error">Merci de supprimer les doublons des filtres suivants: %s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error">Merci de supprimer les doublons des filtres suivants: %s</string>
         <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">L\'utilisation du caractère * dans les filtres de fichiers n\'est possible que dans le nom du fichier. Merci de supprimer tous les symboles "*" du chemin de fichier dans les filtres suivants:\n%s</string>
@@ -681,7 +684,7 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Merci de spécifier les tâches de synchronisation à planifier en pressant le bouton \"Tâches de sync...\" ci-dessous.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Prochaine sync à %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Prochaine sync: Heure=%s, Nom= (%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error">La tâche spécifiée dans la planification est introuvable.\nPlanification: %s, Tâche: %s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error" formatted="false">La tâche spécifiée dans la planification est introuvable.\nPlanification: %s, Tâche: %s</string>
         <string name="msgs_scheduler_info_schedule_disabled">Planification désactivée</string>
         <string name="msgs_scheduler_info_schedule_enabled">Planification activée</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">Exécuter toutes les tâches configurées en mode Auto</string>
@@ -746,8 +749,8 @@
         <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Demande de démarrer la tâche de synchronisation acceptée. Tâche=%s, Demandeur=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">Demande de démarrer la tâche de synchronisation acceptée. Planification=%s, Tâche=%s, Demandeur=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_title" formatted="false">Les tâches de sync suivantes ont été ignorées, car la dernière synchronisation a terminé avec des erreurs ou a été annulée.</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg">Tâche=%s, Demandeur=%s</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule">Planification=%s, Tâche=%s, Demandeur=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg" formatted="false">Tâche=%s, Demandeur=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule" formatted="false">Planification=%s, Tâche=%s, Demandeur=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_activity">UTILISATEUR</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_external">EXTERNE</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_shortcut">RACCOURCI</string>

@@ -165,8 +165,12 @@
         <string name="msgs_main_external_usb_select_required_title">Разрешить запись на USB-носитель</string>
         <string name="msgs_main_external_usb_select_retry_select_msg">Корневой каталог USB-носителя не был выбран. Хотите его выбрать?</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARD была выбрана. Хотите повторно выбрать USB-накопитель?</string>
-        <string name="msgs_main_permission_coarse_location_denied_msg">Если в задаче синхронизации указать «подключиться к SSID» или «Список точек доступа» до тех пор, пока не будет предоставлено разрешение, будет прекращено с ошибкой. Чтобы предоставить разрешение, запустите «Разрешение на неточное расположение» из меню.</string>
+        <string name="msgs_main_permission_coarse_location_denied_msg">Если в настройках задания указать \"Список точек доступа\", то синхронизация будет неудачной, если вы не разрешите Службе Местоположения. Пожалуйста, разрешите \"Разрешение на грубое расположение\" из меню.</string>
         <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 привилегии, необходимые для чтения SSID WiFi. \nЕсли вы укажете \"Список точек доступа\" в задаче синхронизации, пока не будет предоставлено разрешение, завершится с ошибкой. \nВы хотите запросить разрешение на неточное местоопределение?</string>
+        <string name="msgs_main_permission_background_location_title">Разрешение на фоновое расположение</string>
+        <string name="msgs_main_permission_background_location_denied_msg">Если в настройках задания указать \"Список точек доступа\", то синхронизация будет неудачной, если вы не разрешите Службе Местоположения. Пожалуйста, разрешите \"Разрешение на грубое расположение\" из меню.</string>
+        <string name="msgs_main_permission_background_location_request_msg">Это разрешение необходимо для чтения WiFi SSID в SMBSync2.\nДо тех пор пока разрешение не будет предоставлено, SMBSync2 выйдет с ошибкой, если в задаче синхронизации указан \"Список точек доступа\".\nВ разделе Разрешения на местоположение выберите \"Всегда разрешать\".
+Вы хотите запросить разрешение на фоновое расположение?</string>
         <string name="msgs_main_permission_coarse_location_title">Разрешение на неточное местоположение</string>
         <string name="msgs_main_permission_external_storage_denied_msg">Невозможно запустить приложение, так как вам не было предоставлено разрешение на доступ к внутренней памяти.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Предоставьте разрешение на доступ к внутреннему хранилищу для чтения и записи данных, которые синхронизированы с внутренним хранилищем и для административных данных.</string>
@@ -356,8 +360,8 @@
         <string name="msg_edit_sync_folder_keyword_insert_day">ДЕНЬ</string>
         <string name="msg_edit_sync_folder_keyword_insert_day_of_year">ДЕНЬ ГОДА</string>
         <string name="msg_edit_sync_folder_keyword_insert_week_number">ЕЖЕНЕДЕЛЬНЫЙ ЧИСЛО</string>
-        <string name="msg_edit_sync_folder_keyword_insert_week_day">День недели (%s, %s ...)</string>
-        <string name="msg_edit_sync_folder_keyword_insert_week_day_long">День недели (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day" formatted="false">День недели (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day_long" formatted="false">День недели (%s, %s ...)</string>
         <string name="msgs_profile_sync_task_dlg_master">Основная папка (Источник)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">Тип синхронизации</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Архив</string>
@@ -443,14 +447,14 @@
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Использовать расширенный фильтр выбора каталогов</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new filter version 2</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Изменение фильтра каталогов может привести к неожиданному удалению или перезаписи файлов, что может изменить синхронизированные файлы. Настоятельно рекомендуется запустить его в тестовом режиме для проверки или создать тестовую папку для проверки результатов синхронизации.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error">Фильтр включенной папки должен иметь в качестве корневого пути Master. Или измените фильтры на \"Exlude\", или удалите ведущие символы \"%s\" из нижеперечисленных фильтров:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error">Включить фильтр каталогов %s должен иметь Master в качестве корневого пути. Либо измените фильтр на \"Исключить\", либо удалите первые символы \"%s\".</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Префикс полного каталога \"%s\" больше не действует. Замените его символом \"%s\" в нижеследующих фильтрах:\n%s.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Фильтр %s имеет старый префикс всей директории \"%s\". Заменить на \"%s\" символом (exp. %s).</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error">Недействительные символы (%s) присутствуют и должны быть удалены из следующих фильтров:\n%s.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error">Фильтр %s имеет недопустимый символ (%s), который должен быть удален.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error">Фильтры ниже содержат только подстановочный знак \"%s\". Пожалуйста, исправьте затронутые фильтры:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error">Фильтр %s содержит путь только с общими знаками. Удалите недопустимые символы\"%s\".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error" formatted="false">Фильтр включенной папки должен иметь в качестве корневого пути Master. Или измените фильтры на \"Exlude\", или удалите ведущие символы \"%s\" из нижеперечисленных фильтров:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error" formatted="false">Включить фильтр каталогов %s должен иметь Master в качестве корневого пути. Либо измените фильтр на \"Исключить\", либо удалите первые символы \"%s\".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error" formatted="false">Префикс полного каталога \"%s\" больше не действует. Замените его символом \"%s\" в нижеследующих фильтрах:\n%s.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error" formatted="false">Фильтр %s имеет старый префикс всей директории \"%s\". Заменить на \"%s\" символом (exp. %s).</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error" formatted="false">Недействительные символы (%s) присутствуют и должны быть удалены из следующих фильтров:\n%s.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error" formatted="false">Фильтр %s имеет недопустимый символ (%s), который должен быть удален.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error" formatted="false">Фильтры ниже содержат только подстановочный знак \"%s\". Пожалуйста, исправьте затронутые фильтры:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error" formatted="false">Фильтр %s содержит путь только с общими знаками. Удалите недопустимые символы\"%s\".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_error">Удалить дубликаты из следующих фильтров: %s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error">Удалить дубликаты из следующих фильтров: %s</string>
         <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">Использование символа * в фильтрах файлов возможно только в имени файла. Удалите все символы "*" из пути к файлу в следующих фильтрах:\n%s</string>
@@ -681,7 +685,7 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Укажите профиль для синхронизации, нажав кнопку «Редактировать список синхронизации».</string>
         <string name="msgs_scheduler_info_next_schedule_time">Время следующей синхронизации %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Следующая синхронизация: время = %s, имя = (%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error">Задача, указанная в расписании, не найдена.\nРасписание: %s, задача: %s </string>
+        <string name="msgs_scheduler_info_next_schedule_main_error" formatted="false">Задача, указанная в расписании, не найдена.\nРасписание: %s, задача: %s </string>
         <string name="msgs_scheduler_info_schedule_disabled">Расписание синхронизации отключено</string>
         <string name="msgs_scheduler_info_schedule_enabled">Расписание синхронизации включено</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">Выполнить все задачи автосинхронизации</string>
@@ -746,8 +750,8 @@
         <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Запрос на запуск задачи синхронизации принят. Задача = %s, Запросчик = %s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">Запрос на запуск задачи синхронизации принят. Расписание = %s, Задача = %s, Запросчик = %s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_title" formatted="false">Следующий запрос синхронизации был проигнорирован, поскольку предыдущая синхронизация была ошибкой или отменена.</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg">Задача = %s, Запросчик = %s</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule">Расписание = %s, Задача = %s, Запросчик = %s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg" formatted="false">Задача = %s, Запросчик = %s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule" formatted="false">Расписание = %s, Задача = %s, Запросчик = %s</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_activity">ДЕЯТЕЛЬНОСТЬ</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_external">ВНЕШНИЙ</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_shortcut">быстрый запуск</string>

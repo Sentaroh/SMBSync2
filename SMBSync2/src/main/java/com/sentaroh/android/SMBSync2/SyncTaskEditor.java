@@ -2885,22 +2885,42 @@ public class SyncTaskEditor extends DialogFragment {
 
     static public void checkLocationServiceWarning(Activity activity, GlobalParameters gp, CommonUtilities cu) {
         if (Build.VERSION.SDK_INT<=26) return;
-        boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED);
-        if (gp.settingSupressLocationServiceWarning ||
-                (CommonUtilities.isLocationServiceEnabled(activity, gp) && coarse_granted)) return;
-        boolean waring_required=false;
-        String used_st="", sep="-";
-        for(SyncTaskItem st_item:gp.syncTaskList) {
-            if (st_item.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
-                waring_required=true;
-                used_st+=sep+st_item.getSyncTaskName();
-                sep="\n-";
+        if (Build.VERSION.SDK_INT>=29) {
+            boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED);
+            boolean background_granted=background_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED);
+            if (gp.settingSupressLocationServiceWarning ||
+                    (CommonUtilities.isLocationServiceEnabled(activity, gp) && coarse_granted && background_granted)) return;
+            boolean waring_required=false;
+            String used_st="", sep="-";
+            for(SyncTaskItem st_item:gp.syncTaskList) {
+                if (st_item.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
+                    waring_required=true;
+                    used_st+=sep+st_item.getSyncTaskName();
+                    sep="\n-";
+                }
             }
+
+            if (!waring_required) return;
+
+            showLocationServiceWarning(activity, gp, cu, used_st);
+        } else {
+            boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED);
+            if (gp.settingSupressLocationServiceWarning ||
+                    (CommonUtilities.isLocationServiceEnabled(activity, gp) && coarse_granted)) return;
+            boolean waring_required=false;
+            String used_st="", sep="-";
+            for(SyncTaskItem st_item:gp.syncTaskList) {
+                if (st_item.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
+                    waring_required=true;
+                    used_st+=sep+st_item.getSyncTaskName();
+                    sep="\n-";
+                }
+            }
+
+            if (!waring_required) return;
+
+            showLocationServiceWarning(activity, gp, cu, used_st);
         }
-
-        if (!waring_required) return;
-
-        showLocationServiceWarning(activity, gp, cu, used_st);
     }
 
     static public void showLocationServiceWarning(final Activity activity, final GlobalParameters gp, final CommonUtilities cu, final String used_st) {
@@ -2919,10 +2939,26 @@ public class SyncTaskEditor extends DialogFragment {
         title.setText(activity.getString(R.string.msgs_main_location_service_warning_title));
 
         String msg_text="";
-        boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED);
-        if (!CommonUtilities.isLocationServiceEnabled(activity, gp) && !coarse_granted) msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_both);
-        else if (!CommonUtilities.isLocationServiceEnabled(activity, gp)) msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_location);
-        else if (!coarse_granted) msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_coarse);
+        boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED);
+        if (Build.VERSION.SDK_INT>=29) {
+            boolean background_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED);
+            boolean loc=CommonUtilities.isLocationServiceEnabled(activity, gp);
+            if (!CommonUtilities.isLocationServiceEnabled(activity, gp) && (!coarse_granted||!background_granted)) {
+                msg_text = activity.getString(R.string.msgs_main_location_service_warning_msg_both);
+            } else if (!CommonUtilities.isLocationServiceEnabled(activity, gp)) {
+                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_location);
+            } else if (!coarse_granted || !background_granted) {
+                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_coarse);
+            }
+        } else {
+            if (!CommonUtilities.isLocationServiceEnabled(activity, gp) && !coarse_granted) {
+                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_both);
+            } else if (!CommonUtilities.isLocationServiceEnabled(activity, gp)) {
+                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_location);
+            } else if (!coarse_granted) {
+                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_coarse);
+            }
+        }
 
         if (!used_st.equals("")) msg_text+="\n\n"+used_st;
         ((TextView) dialog.findViewById(R.id.show_warning_message_dlg_msg)).setText(msg_text);

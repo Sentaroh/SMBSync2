@@ -2074,7 +2074,7 @@ public class SyncThread extends Thread {
                         result=mStwa.context.getString(R.string.msgs_main_location_error_location_permission_not_granted);
                     }
                 } else if (Build.VERSION.SDK_INT>=29) {//Android 10 以上
-                    if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+                    if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
                         result=mStwa.context.getString(R.string.msgs_main_location_error_location_permission_not_granted);
                     } else if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
                         result=mStwa.context.getString(R.string.msgs_main_location_error_background_location_permission_not_granted);

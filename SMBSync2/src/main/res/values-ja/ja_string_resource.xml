@@ -136,11 +136,11 @@
         <string name="msgs_main_app_specific_dir_used_suppress">この警告を次回以降表示しない （アプリ設定のユーザーインターフェース設定で再表示できます）</string>
         <string name="msgs_main_app_specific_dir_used_title">アプリケーション固有ディレクトリ使用についての警告</string>
         <string name="msgs_main_location_service_warning_msg_location">Android 8.1から下記のタスクは位置情報サービスが無効のため、同期はエラーで終了します。 システム設定でロケーションサービスを有効にするか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
-        <string name="msgs_main_location_service_warning_msg_coarse">Android 8.1から下記のタスクは「低精度ロケーション許可」が与えられていないため、同期はエラーで終了します。 メニューから許可を与えるか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
-        <string name="msgs_main_location_service_warning_msg_both">Android 8.1から下記のタスクは位置情報サービスと低精度ロケーションが無効なため同期はエラーで終了します。 以下の何れかの対応を行ってください。\n1.システム設定でロケーションサービスを有効にし、その後にアプリメニューから「低精度ロケーション許可」与える。\n2.同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更する。</string>
+        <string name="msgs_main_location_service_warning_msg_coarse">Android 8.1から下記のタスクは「ロケーション許可」が与えられていないため、同期はエラーで終了します。 メニューから許可を与えるか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
+        <string name="msgs_main_location_service_warning_msg_both">Android 8.1から下記のタスクは位置情報サービスとロケーションが無効なため同期はエラーで終了します。 以下の何れかの対応を行ってください。\n1.システム設定でロケーションサービスを有効にし、その後にアプリメニューから「ロケーション許可」与える。\n2.同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更する。</string>
         <string name="msgs_main_location_error_location_service_is_disabled">ロケーションサービスが有効になっていないためWiFi AP名を取得できません。設定からロケーションを有効にしてください。</string>
-        <string name="msgs_main_location_error_location_permission_not_granted">低精度ロケーションが許可されていないためWiFi AP名を取得できません。メニューから低精度ロケーションを許可してください。</string>
-        <string name="msgs_main_location_error_background_location_permission_not_granted">低精度ロケーションが「アプリの使用中のみ許可」になっているためWiFi AP名を取得できません。メニューから低精度ロケーションを「常に許可」に変更してください。</string>
+        <string name="msgs_main_location_error_location_permission_not_granted">ロケーションが許可されていないためWiFi AP名を取得できません。メニューからロケーションを許可してください。</string>
+        <string name="msgs_main_location_error_background_location_permission_not_granted">低精度ロケーションが「アプリの使用中のみ許可」になっているためWiFi AP名を取得できません。メニューからロケーションを「常に許可」に変更してください。</string>
         <string name="msgs_main_location_service_warning_suppress">この警告を次回以降表示しない （アプリ設定の同期設定で再表示できます）</string>
         <string name="msgs_main_location_service_warning_title">ロケーションサービスについての警告</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
@@ -165,9 +165,12 @@
         <string name="msgs_main_external_usb_select_required_title">USBメディアへの書込許可</string>
         <string name="msgs_main_external_usb_select_retry_select_msg">USBメディアのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARDが選択されました。USBストレージを選択しなおしますか？</string>
-        <string name="msgs_main_permission_coarse_location_denied_msg">権限が許可されるまでは同期タスクで「APに接続されている時」または「アクセスポイントリスト」を指定している場合はエラーで終了します。許可を与える場合はメニューから「低精度ロケーション許可」を実行してください。</string>
-        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\n低精度ロケーション許可を要求しますか？</string>
-        <string name="msgs_main_permission_coarse_location_title">低精度ロケーション許可</string>
+        <string name="msgs_main_permission_coarse_location_denied_msg">権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。許可を与える場合はメニューから「低精度ロケーション許可」を実行してください。</string>
+        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\nロケーション許可を要求しますか？</string>
+        <string name="msgs_main_permission_background_location_title">背景ロケーション許可</string>
+        <string name="msgs_main_permission_background_location_denied_msg">権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。許可を与える場合はメニューから「低精度ロケーション許可」を実行してください。</string>
+        <string name="msgs_main_permission_background_location_request_msg">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\nロケーション許可で「常に許可」を選択してください。\nロケーション許可を要求しますか？</string>
+        <string name="msgs_main_permission_coarse_location_title">ロケーション許可</string>
         <string name="msgs_main_permission_external_storage_denied_msg">内部ストレージにアクセスする許可が与えられていないためアプリケーションを起動できません。</string>
         <string name="msgs_main_permission_external_storage_request_msg">内部ストレージに同期するデータや管理用データの読み書きを行うために、内部ストレージにアクセスする許可を与えてください。</string>
         <string name="msgs_main_permission_external_storage_title">内部ストレージ許可</string>
@@ -356,8 +359,8 @@
         <string name="msg_edit_sync_folder_keyword_insert_day">日</string>
         <string name="msg_edit_sync_folder_keyword_insert_day_of_year">今年の日</string>
         <string name="msg_edit_sync_folder_keyword_insert_week_number">週番号</string>
-        <string name="msg_edit_sync_folder_keyword_insert_week_day">曜日 (%s, %s ...)</string>
-        <string name="msg_edit_sync_folder_keyword_insert_week_day_long">曜日 (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day" formatted="false">曜日 (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day_long" formatted="false">曜日 (%s, %s ...)</string>
         <string name="msgs_profile_sync_task_dlg_master">マスター フォルダー(同期元)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">同期方式</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">アーカイブ</string>
@@ -443,14 +446,14 @@
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">拡張されたディレクトリ選択/除外フィルタを使用する</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">ディレクトリーフィルターV2を使用</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">変更するとディレクトリーフィルターの指定によっては同期するファイルが変わり予期せぬファイルの削除や上書きが発生する可能性があります。テストモードで実行して確認するか、テストフォルダーを作成して同期結果を確認することを強くお勧めします。</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error">\"選択\"は、\"%s\"で始まるフィルターでは使用できません。以下のフィルターを修正してください：\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error">%sは\"%s\"で始まるため、「選択」は使用できません。「選択」を使用するには、無効な文字を削除してください。</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">全てのディレクトリー名フィルター文字\"%s\"は使用できません。\"%s\" に置き換えてください。\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">%sは\"%s\"で始まるため使用できません。\"%s\" に置き換えてください。(例：%s)</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error">下記のフィルター\"%s\"に無効な文字が含まれていす、削除してください。\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error">フィルター \"%s\" に無効な文字(\"%s\")が含まれていす、削除してください。</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error">フィルターで使用できない文字が含まれています(\"%s\")。 下記のフィルターから文字を取り除いてください。:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error">フィルター(%s)に使用できない文字が含まれています。 \"%s\"を取り除いてください。</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error" formatted="false">\"選択\"は、\"%s\"で始まるフィルターでは使用できません。以下のフィルターを修正してください：\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error" formatted="false">%sは\"%s\"で始まるため、「選択」は使用できません。「選択」を使用するには、無効な文字を削除してください。</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error" formatted="false">全てのディレクトリー名フィルター文字\"%s\"は使用できません。\"%s\" に置き換えてください。\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error" formatted="false">%sは\"%s\"で始まるため使用できません。\"%s\" に置き換えてください。(例：%s)</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error" formatted="false">下記のフィルター\"%s\"に無効な文字が含まれていす、削除してください。\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error" formatted="false">フィルター \"%s\" に無効な文字(\"%s\")が含まれていす、削除してください。</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error" formatted="false">フィルターで使用できない文字が含まれています(\"%s\")。 下記のフィルターから文字を取り除いてください。:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error" formatted="false">フィルター(%s)に使用できない文字が含まれています。 \"%s\"を取り除いてください。</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_error">重複しているフィルターを取り除いてください。フィルタ=%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error">重複しているフィルターを取り除いてください。フィルタ=%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">ファイル名以外での\"*\"は使用できません。\"*\"を取り除いてください。</string>
@@ -681,7 +684,7 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">同期リストの編集ボタンを押して、同期するプロファイルを指定してください。</string>
         <string name="msgs_scheduler_info_next_schedule_time">同期予定時刻 %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">同期予定 : 時刻=%s, 名前=(%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error">スケジュールで指定したタスクが見つかりません。スケジュール:%s, タスク:%s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error" formatted="false">スケジュールで指定したタスクが見つかりません。スケジュール:%s, タスク:%s</string>
         <string name="msgs_scheduler_info_schedule_disabled">スケジュール同期:無効</string>
         <string name="msgs_scheduler_info_schedule_enabled">スケジュール同期:有効</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">自動同期タスクすべて</string>
@@ -746,8 +749,8 @@
         <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">同期タスクの開始要求を受け付けました。タスク=%s, リクエスター=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">同期タスクの開始要求を受け付けました。スケジュール=%s, タスク=%s, リクエスター=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_title" formatted="false">下記の同期要求は直前の同期がエラーまたはキャンセルされたため無視しました。</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg">タスク=%s, リクエスター=%s</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule">スケジュール=%s, タスク=%s, リクエスター=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg" formatted="false">タスク=%s, リクエスター=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule" formatted="false">スケジュール=%s, タスク=%s, リクエスター=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_activity">アクティビティ</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_external">外部</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_shortcut">ショートカット</string>

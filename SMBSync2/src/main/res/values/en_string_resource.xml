@@ -136,10 +136,10 @@
         <string name="msgs_main_app_specific_dir_used_suppress">Disable this warning (can be enabled again in user interface settings)</string>
         <string name="msgs_main_app_specific_dir_used_title">Warning about using the application data folder</string>
         <string name="msgs_main_location_service_warning_msg_location">The following sync tasks failed because "Location service" is disabled. Since Android 8.1, location service is requiered to connect to a specific Wifi AP name (SSID). Either enable location service in system settings or enable \"Conn to any Wifi SSID\", \"Private address\" or \"IP Address List\"  in the synchronization options.</string>
-        <string name="msgs_main_location_service_warning_msg_coarse">The following sync tasks failed because \"Coarse location permission\" was not allowed. Since Android 8.1, permission to access location service is requiered to connect to a specific Wifi AP name (SSID). Either give permission to the application to access coarse location service or enable \"Conn to any Wifi SSID\", \"Private address\" or \"IP Address List\" in the synchronization options.</string>
-        <string name="msgs_main_location_service_warning_msg_both">The following sync tasks failed because "Location service" and \"Coarse location permission\" are disabled. Since Android 8.1, location service is requiered to connect to a specific Wifi AP name (SSID). Either enable location service in system settings then allow the application to access coarse location, or enable \"Conn to any Wifi SSID\", \"Private address\" or \"IP Address List\" in the synchronization options.</string>
+        <string name="msgs_main_location_service_warning_msg_coarse">The following sync tasks failed because \"Location permission\" was not allowed. Since Android 8.1, permission to access location service is requiered to connect to a specific Wifi AP name (SSID). Either give permission to the application to access location service or enable \"Conn to any Wifi SSID\", \"Private address\" or \"IP Address List\" in the synchronization options.</string>
+        <string name="msgs_main_location_service_warning_msg_both">The following sync tasks failed because "Location service" and \"Location permission\" are disabled. Since Android 8.1, location service is requiered to connect to a specific Wifi AP name (SSID). Either enable location service in system settings then allow the application to access location, or enable \"Conn to any Wifi SSID\", \"Private address\" or \"IP Address List\" in the synchronization options.</string>
         <string name="msgs_main_location_error_location_service_is_disabled">Cannot get WiFi AP name because location service is not enabled. Please enable the location in the settings.</string>
-        <string name="msgs_main_location_error_location_permission_not_granted">Cannot get WiFi AP name because coarse location is not allowed. Please allow coarse location from the menu.</string>
+        <string name="msgs_main_location_error_location_permission_not_granted">Cannot get WiFi AP name because location is not allowed. Please allow location from the menu.</string>
         <string name="msgs_main_location_error_background_location_permission_not_granted">Cannot get WiFi AP names because the location is set to "Allow only while using the app". Change the Location to "Always Allowed" from the menu (use while in background).</string>
         <string name="msgs_main_location_service_warning_suppress">Disable this warning (can be enabled in sync settings)</string>
         <string name="msgs_main_location_service_warning_title">Warning about Location service</string>
@@ -165,9 +165,12 @@
         <string name="msgs_main_external_usb_select_required_title">Allow Write to USB Media</string>
         <string name="msgs_main_external_usb_select_retry_select_msg">The root directory of the USB media was not selected. Do you want to reselect?</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARD was selected. Do you want to reselect USB storage?</string>
-        <string name="msgs_main_permission_coarse_location_denied_msg">If you specify \"conn to SSID\" or \"Access point list\" in the task settings, the synchronisation will fail if you don\'t grant permission to Location service. Please allow \"Coarse location Permission\" from the menu.</string>
-        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 requieres Coarse Location permission to be able to read the SSID of the WiFi. \nIf you specify \"Access point list\", the synchronisation task will fail unless the permission is granted.\nDo you want to request a Coarse permission?</string>
-        <string name="msgs_main_permission_coarse_location_title">Coarse Location Permission</string>
+        <string name="msgs_main_permission_coarse_location_denied_msg">If you specify \"Access point list\" in the task settings, the synchronisation will fail if you don\'t grant permission to Location service. Please allow \"Location Permission\" from the menu.</string>
+        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 requieres Location permission to be able to read the SSID of the WiFi. \nIf you specify \"Access point list\", the synchronisation task will fail unless the permission is granted.\nDo you want to request a Location permission?</string>
+        <string name="msgs_main_permission_background_location_title">Background location permission</string>
+        <string name="msgs_main_permission_background_location_denied_msg">If you specify \"Access point list\" in the task settings, the synchronisation will fail if you don\'t grant permission to Location service. Please allow \"Location Permission\" from the menu.</string>
+        <string name="msgs_main_permission_background_location_request_msg">This permission is required to read the WiFi SSID in SMBSync2.\nUntil the permission is granted, SMBSync2 will exit with an error if \"Access Point List\" is specified in the Sync task.\nUnder Location Permissions, select \"Allow all the time\".\nDo you want to request background location permission?</string>
+        <string name="msgs_main_permission_coarse_location_title">Location Permission</string>
         <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be started because you have not been granted permission to access the internal storage.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access internal storage to be able to read and write data that is synchronized and for the management of application settings.</string>
         <string name="msgs_main_permission_external_storage_title">Internal Storage Permission</string>
@@ -356,8 +359,8 @@
         <string name="msg_edit_sync_folder_keyword_insert_day">DAY</string>
         <string name="msg_edit_sync_folder_keyword_insert_day_of_year">DAY OF YEAR</string>
         <string name="msg_edit_sync_folder_keyword_insert_week_number">WEEK NUMBER</string>
-        <string name="msg_edit_sync_folder_keyword_insert_week_day">WEEK DAY (%s, %s ...)</string>
-        <string name="msg_edit_sync_folder_keyword_insert_week_day_long">WEEK DAY (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day" formatted="false">WEEK DAY (%s, %s ...)</string>
+        <string name="msg_edit_sync_folder_keyword_insert_week_day_long" formatted="false">WEEK DAY (%s, %s ...)</string>
         <string name="msgs_profile_sync_task_dlg_master">Master folder (Source)</string>
         <string name="msgs_profile_sync_task_dlg_sync_type">Sync type</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Archive</string>
@@ -443,14 +446,14 @@
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Use enhanced directory selection filter</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Use new filter version 2</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Changing the directory filter version may result in unexpected file deletion or overwriting, which may change the synchronized files. It is highly recommended that you run it in test mode to check it, or create a test folder to check the synchronization results.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error">Include directory filter must have Master as root path. Either change the filters as \"Exclude\" or remove any leading \"%s\" characters from the below filters:\n%s.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error">Include directory filter %s must have Master as root path. Either change the filter to \"Exclude\" or remove leading \"%s\".</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error">Whole directory prefix \"%s\" is no longer valid. Replace it by \"%s\" in the below filters:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error">Filter %s has old whole directory prefix \"%s\". Replace it by \"%s\" character (exp. %s).</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error">Invalid characters (%s) are present and must be removed from the below filters:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error">Filter %s has an invalid character (%s) that must be removed</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error">Invalid \"%s\" only paths must be removed from the below filters:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error">Filter %s contains generic only path parts. Please remove the invalid \"%s\" characters.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error" formatted="false">Include directory filter must have Master as root path. Either change the filters as \"Exclude\" or remove any leading \"%s\" characters from the below filters:\n%s.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error" formatted="false">Include directory filter %s must have Master as root path. Either change the filter to \"Exclude\" or remove leading \"%s\".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error" formatted="false">Whole directory prefix \"%s\" is no longer valid. Replace it by \"%s\" in the below filters:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error" formatted="false">Filter %s has old whole directory prefix \"%s\". Replace it by \"%s\" character (exp. %s).</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error" formatted="false">Invalid characters (%s) are present and must be removed from the below filters:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error" formatted="false">Filter %s has an invalid character (%s) that must be removed</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error" formatted="false">Invalid \"%s\" only paths must be removed from the below filters:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error" formatted="false">Filter %s contains generic only path parts. Please remove the invalid \"%s\" characters.</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_error">Please remove the following duplicate filter entries: %s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error">Please remove the following duplicate filter entries: %s</string>
         <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">Use of asterisk characters in file filters is not supported outside the file name. Please remove any "*" char from the path of the below filters:\n%s </string>
@@ -681,7 +684,7 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Please specify the sync tasks to be scheduled by pressing the ‘Sync list...’ button below.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Next sync time is %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Next sync:  Time=%s, Name= (%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error">The task specified in the schedule cannot be found.\nSchedule: %s, Task: %s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error" formatted="false">The task specified in the schedule cannot be found.\nSchedule: %s, Task: %s</string>
         <string name="msgs_scheduler_info_schedule_disabled">Sync schedule disabled</string>
         <string name="msgs_scheduler_info_schedule_enabled">Sync schedule enabled</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">Execute all auto sync tasks</string>
@@ -746,8 +749,8 @@
         <string name="msgs_svc_received_start_sync_task_request_accepted" formatted="false">Start sync task request accepted. Task=%s, Requestor=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_schedule" formatted="false">Start sync task request accepted. Schedule=%s, Task=%s, Requestor=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_title" formatted="false">The following sync requests were ignored because the previous sync ended with errors or was cancelled.</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg">Task=%s, Requestor=%s</string>
-        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule">Schedule=%s, Task=%s, Requestor=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg" formatted="false">Task=%s, Requestor=%s</string>
+        <string name="msgs_svc_received_start_sync_task_request_accepted_but_not_executed_msg_schedule" formatted="false">Schedule=%s, Task=%s, Requestor=%s</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_activity">ACTIVITY</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_external">EXTERNAL</string>
         <string name="msgs_svc_received_start_sync_task_request_intent_shortcut">SHORTCUT</string>

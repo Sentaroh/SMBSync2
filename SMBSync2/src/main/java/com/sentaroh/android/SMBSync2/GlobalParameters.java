@@ -183,7 +183,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public boolean settingExportedProfileEncryptRequired = true;
 
-    public boolean settingGrantCoarseLocationRequired = true;
+    public boolean settingGrantLocationRequired = true;
 
     public String settingNotificationMessageWhenSyncEnded = SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
     public String settingVibrateWhenSyncEnded = SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
@@ -524,7 +524,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public void setSettingGrantCoarseLocationRequired(Context c, boolean enabled) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         prefs.edit().putBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, enabled).commit();
-        settingGrantCoarseLocationRequired=enabled;
+        settingGrantLocationRequired =enabled;
     }
 
     public void loadSettingsParms(Context c) {
@@ -597,7 +597,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingWriteSyncResultLog = prefs.getBoolean(c.getString(R.string.settings_sync_history_log), true);
 
-        settingGrantCoarseLocationRequired = prefs.getBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, true);
+        settingGrantLocationRequired = prefs.getBoolean(GRANT_COARSE_LOCATION_REQUIRED_KEY, true);
 
         settingScreenOnIfScreenOnAtStartOfSync =prefs.getBoolean(c.getString(R.string.settings_force_screen_on_while_sync), false);
 
