@@ -432,7 +432,7 @@ public class SyncService extends Service {
             if (bundle.containsKey(SMBSYNC2_EXTRA_PARM_SYNC_PROFILE)) {
                 if (bundle.get(SMBSYNC2_EXTRA_PARM_SYNC_PROFILE).getClass().getSimpleName().equals("String")) {
                     String t_sp = bundle.getString(SMBSYNC2_EXTRA_PARM_SYNC_PROFILE);
-                    String[] sp = t_sp.split(Pattern.quote(SMBSYNC2_LIST_SEPARATOR));
+                    String[] sp = t_sp.split(",");
                     ArrayList<String> pl = new ArrayList<String>();
                     for (int i = 0; i < sp.length; i++) {
                         if (SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, sp[i]) != null) {
@@ -442,10 +442,6 @@ public class SyncService extends Service {
                                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_task_not_found) + sp[i]);
                             NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
                                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_task_not_found) + sp[i]);
-                            if (t_sp.contains(",")) {
-                                //old script using "," separator ?
-                                mUtil.addLogMsg("W", "Task %s could not be found. It could be caused by using old ',' separator in script. Please replace it by pipe |");
-                            }
                         }
                     }
                     if (pl.size() > 0) {
