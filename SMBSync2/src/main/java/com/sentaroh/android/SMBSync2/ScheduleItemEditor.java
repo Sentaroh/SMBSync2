@@ -33,6 +33,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -62,6 +63,9 @@ import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_LIST_SEPARATOR;
 
 public class ScheduleItemEditor {
 //    private CommonDialog commonDlg = null;
@@ -409,7 +413,7 @@ public class ScheduleItemEditor {
             btn_edit.setVisibility(Button.VISIBLE);//.setEnabled(true);
             tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
         }
-        tv_sync_prof.setText(mSched.syncTaskList);
+        tv_sync_prof.setText(mSched.syncTaskList.replace(SMBSYNC2_LIST_SEPARATOR, "; "));
 
         sp_sched_type.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -595,7 +599,7 @@ public class ScheduleItemEditor {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         String prof_list = (String) o[0];
-                        tv_sync_prof.setText(prof_list);
+                        tv_sync_prof.setText(prof_list.replace(SMBSYNC2_LIST_SEPARATOR, "; "));
                         if (prof_list.equals("")) {
                             tv_msg.setText(mContext.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
                             CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
@@ -612,7 +616,7 @@ public class ScheduleItemEditor {
                     public void negativeResponse(Context c, Object[] o) {
                     }
                 });
-                editSyncTaskList(tv_sync_prof.getText().toString(), ntfy);
+                editSyncTaskList(tv_sync_prof.getText().toString().replace("; ", SMBSYNC2_LIST_SEPARATOR), ntfy);
             }
         });
 
@@ -675,13 +679,13 @@ public class ScheduleItemEditor {
 
     private String getNotExistsSyncTaskName(String task_list) {
         String error_item_name="";
-        if (task_list.indexOf(",")>0) {
-            String[] stl=task_list.split(",");
+        if (task_list.indexOf(SMBSYNC2_LIST_SEPARATOR)>0) {
+            String[] stl=task_list.split(Pattern.quote(SMBSYNC2_LIST_SEPARATOR));
             String sep="";
             for(String stn:stl) {
                 if (ScheduleUtil.getSyncTask(mGp,stn)==null) {
                     error_item_name=sep+stn;
-                    sep=",";
+                    sep="; ";
                 }
             }
         } else {
@@ -904,7 +908,7 @@ public class ScheduleItemEditor {
             sp.syncTaskList = "";
             sp.syncAutoSyncTask=true;
         } else {
-            sp.syncTaskList = tv_sync_prof.getText().toString();
+            sp.syncTaskList = tv_sync_prof.getText().toString().replace("; ", SMBSYNC2_LIST_SEPARATOR);
             sp.syncAutoSyncTask=false;
         }
 
@@ -931,6 +935,7 @@ public class ScheduleItemEditor {
     private void editSyncTaskList(final String prof_list, final NotifyEvent p_ntfy) {
         // カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
+        Log.v("I", "prof_list=" + prof_list);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.schedule_sync_edit_synclist_dlg);
@@ -978,7 +983,7 @@ public class ScheduleItemEditor {
                 for (int i = 0; i < lv_sync_list.getCount(); i++) {
                     if (lv_sync_list.isItemChecked(i)) {
                         n_prof_list = n_prof_list + sep + adapter.getItem(i).substring(1);
-                        sep = ",";
+                        sep = SMBSYNC2_LIST_SEPARATOR;
                     }
                 }
                 p_ntfy.notifyToListener(true, new Object[]{n_prof_list});
@@ -1008,7 +1013,7 @@ public class ScheduleItemEditor {
         }
 
         String[] pfa = null;
-        pfa = prof_list.split(",");
+        pfa = prof_list.split(Pattern.quote(SMBSYNC2_LIST_SEPARATOR));
         if (!prof_list.equals("")) {
             for (int i = 0; i < pfa.length; i++) {
                 setSelectedSyncList(pfa[i], lv, adapter);

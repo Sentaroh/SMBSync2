@@ -53,6 +53,7 @@ import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.regex.Pattern;
 
 import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE;
 import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL;
@@ -65,6 +66,7 @@ import static com.sentaroh.android.SMBSync2.Constants.REPLY_SYNC_TASK_EXTRA_PARM
 import static com.sentaroh.android.SMBSync2.Constants.REPLY_SYNC_TASK_INTENT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_AUTO_SYNC_INTENT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_EXTRA_PARM_SYNC_PROFILE;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS;
@@ -339,24 +341,24 @@ public class SyncService extends Service {
                 if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST.toLowerCase())) {
                     if (sti.isSyncTestMode()) {
                         reply_list+=sep+sti.getSyncTaskName();
-                        sep=",";
+                        sep=SMBSYNC2_LIST_SEPARATOR;
                         reply_count++;
                     }
                 } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO.toLowerCase())) {
                     if (sti.isSyncTaskAuto()) {
                         reply_list+=sep+sti.getSyncTaskName();
-                        sep=",";
+                        sep=SMBSYNC2_LIST_SEPARATOR;
                         reply_count++;
                     }
                 } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL.toLowerCase())) {
                     if (!sti.isSyncTaskAuto()) {
                         reply_list+=sep+sti.getSyncTaskName();
-                        sep=",";
+                        sep=SMBSYNC2_LIST_SEPARATOR;
                         reply_count++;
                     }
                 } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL.toLowerCase())) {
                     reply_list+=sep+sti.getSyncTaskName();
-                    sep=",";
+                    sep=SMBSYNC2_LIST_SEPARATOR;
                     reply_count++;
                 }
             }
@@ -388,19 +390,19 @@ public class SyncService extends Service {
                         queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
                     } else {
                         if (si.syncTaskList != null && si.syncTaskList.length() > 0) {
-                            String[] pl = si.syncTaskList.split(",");
+                            String[] pl = si.syncTaskList.split(Pattern.quote(SMBSYNC2_LIST_SEPARATOR));
                             String n_tl = "", sep = "";
                             for (int i = 0; i < pl.length; i++) {
                                 if (getSyncTask(pl[i]) != null) {
                                     n_tl += sep + pl[i];
-                                    sep = ",";
+                                    sep = SMBSYNC2_LIST_SEPARATOR;
                                 } else {
                                     mUtil.addLogMsg("W",
                                             mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_task_not_found) + pl[i]);
                                 }
                             }
                             if (!n_tl.equals("")) {
-                                String[] n_pl = n_tl.split(",");
+                                String[] n_pl = n_tl.split(Pattern.quote(SMBSYNC2_LIST_SEPARATOR));
                                 queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
                             } else {
                                 mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
@@ -430,7 +432,7 @@ public class SyncService extends Service {
             if (bundle.containsKey(SMBSYNC2_EXTRA_PARM_SYNC_PROFILE)) {
                 if (bundle.get(SMBSYNC2_EXTRA_PARM_SYNC_PROFILE).getClass().getSimpleName().equals("String")) {
                     String t_sp = bundle.getString(SMBSYNC2_EXTRA_PARM_SYNC_PROFILE);
-                    String[] sp = t_sp.split(",");
+                    String[] sp = t_sp.split(Pattern.quote(SMBSYNC2_LIST_SEPARATOR));
                     ArrayList<String> pl = new ArrayList<String>();
                     for (int i = 0; i < sp.length; i++) {
                         if (SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, sp[i]) != null) {
@@ -440,6 +442,10 @@ public class SyncService extends Service {
                                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_task_not_found) + sp[i]);
                             NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
                                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_task_not_found) + sp[i]);
+                            if (t_sp.contains(",")) {
+                                //old script using "," separator ?
+                                mUtil.addLogMsg("W", "Task %s could not be found. It could be caused by using old ',' separator in script. Please replace it by pipe |");
+                            }
                         }
                     }
                     if (pl.size() > 0) {

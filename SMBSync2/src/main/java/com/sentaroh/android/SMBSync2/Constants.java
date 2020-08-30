@@ -114,6 +114,7 @@ public class Constants {
 
     public final static String SMBSYNC2_SERVICE_MEDIA_STATUS_CAHNGED="com.sentaroh.android."+APPLICATION_TAG+".ACTION_MEDIA_STATUS_CHANGED";
 
+    public final static String SMBSYNC2_LIST_SEPARATOR="|";//pipe char !
 
     public final static String SMBSYNC2_SYNC_REQUEST_ACTIVITY="ACTIVITY";
 	public final static String SMBSYNC2_SYNC_REQUEST_EXTERNAL="EXTERNAL";

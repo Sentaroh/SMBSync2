@@ -4498,7 +4498,7 @@ public class ActivityMain extends AppCompatActivity {
             if (item.isChecked()  && !item.isSyncTaskError()) {
                 t_list.add(item);
                 sync_list_tmp += sep + item.getSyncTaskName();
-                sep = ",";
+                sep = ";";
                 if (item.isSyncTestMode()) test_sync_task_found = true;
             }
         }
@@ -4540,7 +4540,7 @@ public class ActivityMain extends AppCompatActivity {
             if (item.isSyncTaskAuto() && !item.isSyncTestMode() && !item.isSyncTaskError()) {
                 t_list.add(item);
                 sync_list_tmp += sep + item.getSyncTaskName();
-                sep = ",";
+                sep = ";";
             }
         }
 
