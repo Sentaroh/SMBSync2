@@ -152,6 +152,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_T
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_INT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_LONG;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_UNUSABLE_CHARACTER;
 import static com.sentaroh.android.SMBSync2.Constants.WHOLE_DIRECTORY_FILTER_PREFIX_V1;
 import static com.sentaroh.android.SMBSync2.Constants.WHOLE_DIRECTORY_FILTER_PREFIX_V2;
 import static com.sentaroh.android.SMBSync2.GlobalParameters.DEFAULT_NOCOMPRESS_FILE_TYPE;
@@ -4040,6 +4041,13 @@ public class SyncTaskUtil {
         }
     }
 
+    static public String hasSyncTaskNameContainsUnusableCharacter(Context c, String task_name) {
+        for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
+            if (task_name.contains(item)) return c.getString(R.string.msgs_task_name_contains_invalid_character,item);
+        }
+        return "";
+    }
+
     static public SyncTaskItem getSyncTaskByName(ArrayList<SyncTaskItem> t_prof, String task_name) {
         SyncTaskItem stli = null;
 
@@ -4056,8 +4064,7 @@ public class SyncTaskUtil {
         return getSyncTaskByName(t_prof.getArrayList(), task_name);
     }
 
-    private void listDirectoryFilter(SyncTaskItem sti,
-                                     AdapterFilterList fla, final NotifyEvent p_ntfy) {
+    private void listDirectoryFilter(SyncTaskItem sti, AdapterFilterList fla, final NotifyEvent p_ntfy) {
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             listLocalDirectoryFilter(sti, fla, p_ntfy);
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
@@ -4067,8 +4074,7 @@ public class SyncTaskUtil {
         }
     }
 
-    private void listLocalDirectoryFilter(final SyncTaskItem sti,
-                                          final AdapterFilterList fla, final NotifyEvent p_ntfy) {
+    private void listLocalDirectoryFilter(final SyncTaskItem sti, final AdapterFilterList fla, final NotifyEvent p_ntfy) {
         final String m_dir = sti.getMasterDirectoryName();
         String localBaseDir_t = sti.getMasterLocalMountPoint();//mGp.internalRootDirectory;
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD))

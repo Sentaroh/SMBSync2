@@ -93,6 +93,7 @@
         <string name="msgs_delete_following_profile">下記タスクを削除します。</string>
         <string name="msgs_dir_empty">ディレクトリが見つかりませんでした</string>
         <string name="msgs_duplicate_task_name">タスク名が重複しています</string>
+        <string name="msgs_task_name_contains_invalid_character">タスク名に無効な文字が含まれています: \"%s\"</string>
         <string name="msgs_edit_sync_profile">同期タスクの編集</string>
         <string name="msgs_export_prof_fail">タスクリスト保存が失敗しました。</string>
         <string name="msgs_export_prof_success">タスクリストが保存されました。</string>
@@ -696,6 +697,7 @@
         <string name="msgs_schedule_list_edit_dlg_title">スケジュールリストの編集</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">スケジュール名が指定されていません。</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">スケジュール名に無効な文字が含まれています: \"%s\"</string>
         <string name="msgs_schedule_cont_label_add">スケジュールの追加</string>
         <string name="msgs_schedule_cont_label_activate">スケジュールの有効化</string>
         <string name="msgs_schedule_cont_label_inactivate">スケジュールの無効化</string>

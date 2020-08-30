@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_DAY_OF_THE_WEEK_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_ENABLED_KEY;
@@ -50,6 +51,9 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V4;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V5;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_TYPE_KEY;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SEPARATOR_DUMMY_DATA;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SEPARATOR_ENTRY;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SEPARATOR_ITEM;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_DEFAULT_VALUE;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_DELAYED_TIME_FOR_WIFI_ON_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SYNC_PROFILE_KEY;
@@ -67,7 +71,6 @@ public class ScheduleUtil {
         String v3_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V3, "-1");
         String v4_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V4, "-1");
         String v5_data = prefs.getString(SCHEDULER_SCHEDULE_SAVED_DATA_V5, "-1");
-//    	Log.v("","data="+v2_data);
         if (!v5_data.equals("-1")) {
             sl = buildScheduleListV5(gp, v5_data);
         } else if (!v4_data.equals("-1")) {
@@ -113,32 +116,30 @@ public class ScheduleUtil {
         String[] sd_array = v2_data.split("\n");
         int nc=0;
         for (String sd_sub : sd_array) {
-//            Log.v("","sub="+sd_sub);
             if (sd_sub.equals("end")) break;
             String[] sub_array = sd_sub.split("\t");
-//            Log.v("","array="+sub_array.length);
             if (sub_array.length >= 14) {
-                for (String item : sub_array) item = item.replace("\u0000", "");
+                for (String item : sub_array) item = item.replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 ScheduleItem si = new ScheduleItem();
-                si.scheduleEnabled = sub_array[0].replace("\u0000", "").equals("1") ? true : false;
-                si.scheduleName = sub_array[1].replace("\u0000", "");
+                si.scheduleEnabled = sub_array[0].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+                si.scheduleName = sub_array[1].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 nc++;
                 if (si.scheduleName==null || si.scheduleName.equals("")) si.scheduleName="NO NAME"+nc;
                 if (sub_array[2].length() > 0)
-                    si.schedulePosition = Integer.valueOf(sub_array[2].replace("\u0000", ""));
-                si.scheduleType = sub_array[3].replace("\u0000", "");
-                si.scheduleHours = sub_array[4].replace("\u0000", "");
-                si.scheduleMinutes = sub_array[5].replace("\u0000", "");
-                si.scheduleDayOfTheWeek = sub_array[6].replace("\u0000", "");
-                si.scheduleIntervalFirstRunImmed = sub_array[7].replace("\u0000", "").equals("1") ? true : false;
+                    si.schedulePosition = Integer.valueOf(sub_array[2].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
+                si.scheduleType = sub_array[3].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleHours = sub_array[4].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleMinutes = sub_array[5].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleDayOfTheWeek = sub_array[6].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[8].length() > 0)
-                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace("\u0000", ""));
-                si.syncTaskList = sub_array[9].replace("\u0000", "");
-                si.syncGroupList = sub_array[10].replace("\u0000", "");
-                si.syncWifiOnBeforeStart = sub_array[11].replace("\u0000", "").equals("1") ? true : false;
-                si.syncWifiOffAfterEnd = sub_array[12].replace("\u0000", "").equals("1") ? true : false;
+                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
+                si.syncTaskList = sub_array[9].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.syncGroupList = sub_array[10].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.syncWifiOnBeforeStart = sub_array[11].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+                si.syncWifiOffAfterEnd = sub_array[12].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[13].length() > 0)
-                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace("\u0000", ""));
+                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
 
                 if (!si.syncTaskList.equals("")) si.syncAutoSyncTask=false;
 
@@ -146,52 +147,45 @@ public class ScheduleUtil {
                     si.scheduleLastExecTime = System.currentTimeMillis();
 
                 sl.add(si);
-//                Log.v("","load="+si.scheduleName);
             }
         }
-//        if (sl.size()==0) {
-//            ScheduleItem si=new ScheduleItem();
-//            sl.add(si);
-//        }
         return sl;
     }
 
 
     final static public ArrayList<ScheduleItem> buildScheduleListV3(GlobalParameters gp, String v3_data) {
         ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
-        String[] sd_array = v3_data.split("\u0001");
+        String[] sd_array = v3_data.split(SCHEDULER_SEPARATOR_ENTRY);
         int nc=0;
         for (String sd_sub : sd_array) {
-//            Log.v("","sub="+sd_sub);
             if (sd_sub.equals("end")) break;
-            String[] sub_array = sd_sub.split("\u0002");
-//            Log.v("","array="+sub_array.length);
+            String[] sub_array = sd_sub.split(SCHEDULER_SEPARATOR_ITEM);
             if (sub_array.length >= 14) {
-                for (String item : sub_array) item = item.replace("\u0000", "");
+                for (String item : sub_array) item = item.replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 ScheduleItem si = new ScheduleItem();
-                si.scheduleEnabled = sub_array[0].replace("\u0000", "").equals("1") ? true : false;
-                si.scheduleName = sub_array[1].replace("\u0000", "");
+                si.scheduleEnabled = sub_array[0].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+                si.scheduleName = sub_array[1].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 nc++;
                 if (si.scheduleName==null || si.scheduleName.equals("")) si.scheduleName="NO NAME"+nc;
 
                 if (sub_array[2].length() > 0)
-                    si.schedulePosition = Integer.valueOf(sub_array[2].replace("\u0000", ""));
-                si.scheduleType = sub_array[3].replace("\u0000", "");
-                si.scheduleHours = sub_array[4].replace("\u0000", "");
-                si.scheduleMinutes = sub_array[5].replace("\u0000", "");
-                si.scheduleDayOfTheWeek = sub_array[6].replace("\u0000", "");
-                si.scheduleIntervalFirstRunImmed = sub_array[7].replace("\u0000", "").equals("1") ? true : false;
+                    si.schedulePosition = Integer.valueOf(sub_array[2].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
+                si.scheduleType = sub_array[3].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleHours = sub_array[4].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleMinutes = sub_array[5].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleDayOfTheWeek = sub_array[6].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[8].length() > 0)
-                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace("\u0000", ""));
-                si.syncTaskList = sub_array[9].replace("\u0000", "");
-                si.syncGroupList = sub_array[10].replace("\u0000", "");
-                si.syncWifiOnBeforeStart = sub_array[11].replace("\u0000", "").equals("1") ? true : false;
-                si.syncWifiOffAfterEnd = sub_array[12].replace("\u0000", "").equals("1") ? true : false;
+                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
+                si.syncTaskList = sub_array[9].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.syncGroupList = sub_array[10].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.syncWifiOnBeforeStart = sub_array[11].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+                si.syncWifiOffAfterEnd = sub_array[12].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[13].length() > 0)
-                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace("\u0000", ""));
+                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
 
                 if (sub_array.length >= 15 && sub_array[14]!=null && sub_array[14].length() > 0)
-                    si.scheduleDay = sub_array[14].replace("\u0000", "");
+                    si.scheduleDay = sub_array[14].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
 
                 if (!si.syncTaskList.equals("")) si.syncAutoSyncTask=false;
 
@@ -199,113 +193,99 @@ public class ScheduleUtil {
                     si.scheduleLastExecTime = System.currentTimeMillis();
 
                 sl.add(si);
-//                Log.v("","load="+si.scheduleName);
             }
         }
-//        if (sl.size()==0) {
-//            ScheduleItem si=new ScheduleItem();
-//            sl.add(si);
-//        }
         return sl;
     }
 
     final static public ArrayList<ScheduleItem> buildScheduleListV4(GlobalParameters gp, String v4_data) {
         ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
-        String[] sd_array = v4_data.split("\u0001");
+        String[] sd_array = v4_data.split(SCHEDULER_SEPARATOR_ENTRY);
         int nc=0;
         for (String sd_sub : sd_array) {
-//            Log.v("","sub="+sd_sub);
             if (sd_sub.equals("end")) break;
-            String[] sub_array = sd_sub.split("\u0002");
-//            Log.v("","array="+sub_array.length);
+            String[] sub_array = sd_sub.split(SCHEDULER_SEPARATOR_ITEM);
             if (sub_array.length >= 14) {
-                for (String item : sub_array) item = item.replace("\u0000", "");
+                for (String item : sub_array) item = item.replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 ScheduleItem si = new ScheduleItem();
-                si.scheduleEnabled = sub_array[0].replace("\u0000", "").equals("1") ? true : false;
-                si.scheduleName = sub_array[1].replace("\u0000", "");
+                si.scheduleEnabled = sub_array[0].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+                si.scheduleName = sub_array[1].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 nc++;
                 if (si.scheduleName==null || si.scheduleName.equals("")) si.scheduleName="NO NAME"+nc;
 
                 if (sub_array[2].length() > 0)
-                    si.schedulePosition = Integer.valueOf(sub_array[2].replace("\u0000", ""));
-                si.scheduleType = sub_array[3].replace("\u0000", "");
-                si.scheduleHours = sub_array[4].replace("\u0000", "");
-                si.scheduleMinutes = sub_array[5].replace("\u0000", "");
-                si.scheduleDayOfTheWeek = sub_array[6].replace("\u0000", "");
-                si.scheduleIntervalFirstRunImmed = sub_array[7].replace("\u0000", "").equals("1") ? true : false;
+                    si.schedulePosition = Integer.valueOf(sub_array[2].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
+                si.scheduleType = sub_array[3].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleHours = sub_array[4].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleMinutes = sub_array[5].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleDayOfTheWeek = sub_array[6].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[8].length() > 0)
-                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace("\u0000", ""));
-                si.syncTaskList = sub_array[9].replace("\u0000", "");
-                si.syncGroupList = sub_array[10].replace("\u0000", "");
-                si.syncWifiOnBeforeStart = sub_array[11].replace("\u0000", "").equals("1") ? true : false;
-                si.syncWifiOffAfterEnd = sub_array[12].replace("\u0000", "").equals("1") ? true : false;
+                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
+                si.syncTaskList = sub_array[9].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.syncGroupList = sub_array[10].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.syncWifiOnBeforeStart = sub_array[11].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+                si.syncWifiOffAfterEnd = sub_array[12].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[13].length() > 0)
-                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace("\u0000", ""));
+                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
 
                 if (sub_array.length >= 15 && sub_array[14]!=null && sub_array[14].length() > 0)
-                    si.scheduleDay = sub_array[14].replace("\u0000", "");
+                    si.scheduleDay = sub_array[14].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
 
                 if (sub_array.length >= 16 && sub_array[15]!=null && sub_array[15].length() > 0)
-                    si.syncAutoSyncTask = sub_array[15].replace("\u0000", "").equals("1") ? true : false;
+                    si.syncAutoSyncTask = sub_array[15].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (!si.syncTaskList.equals("")) si.syncAutoSyncTask=false;
 
                 if (si.scheduleLastExecTime == 0)
                     si.scheduleLastExecTime = System.currentTimeMillis();
 
                 sl.add(si);
-//                Log.v("","load="+si.scheduleName);
             }
         }
-//        if (sl.size()==0) {
-//            ScheduleItem si=new ScheduleItem();
-//            sl.add(si);
-//        }
         return sl;
     }
 
     final static public ArrayList<ScheduleItem> buildScheduleListV5(GlobalParameters gp, String v5_data) {
         ArrayList<ScheduleItem> sl = new ArrayList<ScheduleItem>();
-        String[] sd_array = v5_data.split("\u0001");
+        String[] sd_array = v5_data.split(SCHEDULER_SEPARATOR_ENTRY);
         int nc=0;
         for (String sd_sub : sd_array) {
-//            Log.v("","sub="+sd_sub);
             if (sd_sub.equals("end")) break;
-            String[] sub_array = sd_sub.split("\u0002");
-//            Log.v("","array="+sub_array.length);
+            String[] sub_array = sd_sub.split(SCHEDULER_SEPARATOR_ITEM);
             if (sub_array.length >= 14) {
-                for (String item : sub_array) item = item.replace("\u0000", "");
+                for (String item : sub_array) item = item.replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 ScheduleItem si = new ScheduleItem();
-                si.scheduleEnabled = sub_array[0].replace("\u0000", "").equals("1") ? true : false;
-                si.scheduleName = sub_array[1].replace("\u0000", "");
+                si.scheduleEnabled = sub_array[0].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+                si.scheduleName = sub_array[1].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 nc++;
                 if (si.scheduleName==null || si.scheduleName.equals("")) si.scheduleName="NO NAME"+nc;
 
                 if (sub_array[2].length() > 0)
-                    si.schedulePosition = Integer.valueOf(sub_array[2].replace("\u0000", ""));
-                si.scheduleType = sub_array[3].replace("\u0000", "");
-                si.scheduleHours = sub_array[4].replace("\u0000", "");
-                si.scheduleMinutes = sub_array[5].replace("\u0000", "");
-                si.scheduleDayOfTheWeek = sub_array[6].replace("\u0000", "");
-                si.scheduleIntervalFirstRunImmed = sub_array[7].replace("\u0000", "").equals("1") ? true : false;
+                    si.schedulePosition = Integer.valueOf(sub_array[2].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
+                si.scheduleType = sub_array[3].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleHours = sub_array[4].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleMinutes = sub_array[5].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleDayOfTheWeek = sub_array[6].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[8].length() > 0)
-                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace("\u0000", ""));
-                si.syncTaskList = sub_array[9].replace("\u0000", "");
-                si.syncGroupList = sub_array[10].replace("\u0000", "");
-                si.syncWifiOnBeforeStart = sub_array[11].replace("\u0000", "").equals("1") ? true : false;
-                si.syncWifiOffAfterEnd = sub_array[12].replace("\u0000", "").equals("1") ? true : false;
+                    si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
+                si.syncTaskList = sub_array[9].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.syncGroupList = sub_array[10].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
+                si.syncWifiOnBeforeStart = sub_array[11].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+                si.syncWifiOffAfterEnd = sub_array[12].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[13].length() > 0)
-                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace("\u0000", ""));
+                    si.syncDelayAfterWifiOn = Integer.valueOf(sub_array[13].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
 
                 if (sub_array.length >= 15 && sub_array[14]!=null && sub_array[14].length() > 0)
-                    si.scheduleDay = sub_array[14].replace("\u0000", "");
+                    si.scheduleDay = sub_array[14].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
 
                 if (sub_array.length >= 16 && sub_array[15]!=null && sub_array[15].length() > 0)
-                    si.syncAutoSyncTask = sub_array[15].replace("\u0000", "").equals("1") ? true : false;
+                    si.syncAutoSyncTask = sub_array[15].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (!si.syncTaskList.equals("")) si.syncAutoSyncTask=false;
 
                 if (sub_array.length >= 17 && sub_array[16]!=null && sub_array[16].length() > 0) {
                     try {
-                        si.syncOverrideOptionCharge = sub_array[16].replace("\u0000", "");
+                        si.syncOverrideOptionCharge = sub_array[16].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                     } catch(Exception e) {}
                 }
 
@@ -313,13 +293,8 @@ public class ScheduleUtil {
                     si.scheduleLastExecTime = System.currentTimeMillis();
 
                 sl.add(si);
-//                Log.v("","load="+si.scheduleName);
             }
         }
-//        if (sl.size()==0) {
-//            ScheduleItem si=new ScheduleItem();
-//            sl.add(si);
-//        }
         return sl;
     }
 
@@ -343,8 +318,8 @@ public class ScheduleUtil {
     final static public void removeSyncTaskFromSchedule(GlobalParameters gp, CommonUtilities cu, ArrayList<ScheduleItem> sl, String delete_task_name) {
         for (ScheduleItem si : sl) {
             if (!si.syncTaskList.equals("")&& si.syncTaskList.contains(delete_task_name)) {
-                if (si.syncTaskList.indexOf(",")>0) {//Multiple entry
-                    String[] task_list=si.syncTaskList.split(",");
+                if (si.syncTaskList.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {//Multiple entry
+                    String[] task_list=si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
                     ArrayList<String>n_task_list=new ArrayList<String>();
                     if (task_list!=null) {
                         for(String stn:task_list) {
@@ -361,7 +336,7 @@ public class ScheduleUtil {
                             si.syncTaskList="";
                             for(String item:n_task_list) {
                                 si.syncTaskList+=sep+item;
-                                sep=",";
+                                sep=SYNC_TASK_LIST_SEPARATOR;
                             }
                         }
                     } else {
@@ -382,8 +357,8 @@ public class ScheduleUtil {
     final static public void renameSyncTaskFromSchedule(GlobalParameters gp, CommonUtilities cu, ArrayList<ScheduleItem> sl, String rename_task_name, String new_name) {
         for (ScheduleItem si : sl) {
             if (!si.syncTaskList.equals("") && si.syncTaskList.contains(rename_task_name)) {
-                if (si.syncTaskList.indexOf(",")>0) {//Multiple entry
-                    String[] task_list=si.syncTaskList.split(",");
+                if (si.syncTaskList.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {//Multiple entry
+                    String[] task_list=si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
                     ArrayList<String>n_task_list=new ArrayList<String>();
                     if (task_list!=null) {
                         for(String stn:task_list) {
@@ -399,7 +374,7 @@ public class ScheduleUtil {
                     si.syncTaskList="";
                     for(String item:n_task_list) {
                         si.syncTaskList+=sep+item;
-                        sep=",";
+                        sep=SYNC_TASK_LIST_SEPARATOR;
                     }
                 } else {
                     if (si.syncTaskList.equals(rename_task_name)) {
@@ -420,25 +395,24 @@ public class ScheduleUtil {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         String data = "";
         for (ScheduleItem si : sl) {
-//                Log.v("","name="+si.scheduleName);
-            data += (si.scheduleEnabled ? "1" : "0") + "\u0000" + "\u0002";     //0
-            data += si.scheduleName + "\u0000" + "\u0002";                      //1
-            data += String.valueOf(si.schedulePosition) + "\u0002";             //2
-            data += si.scheduleType + "\u0000" + "\u0002";                      //3
-            data += si.scheduleHours + "\u0000" + "\u0002";                     //4
-            data += si.scheduleMinutes + "\u0000" + "\u0002";                   //5
-            data += si.scheduleDayOfTheWeek + "\u0000" + "\u0002";              //6
-            data += (si.scheduleIntervalFirstRunImmed ? "1" : "0") + "\u0000" + "\u0002";//7
-            data += String.valueOf(si.scheduleLastExecTime) + "\u0002";         //8
-            data += si.syncTaskList + "\u0000" + "\u0002";                      //9
-            data += si.syncGroupList + "\u0000" + "\u0002";                     //10
-            data += (si.syncWifiOnBeforeStart ? "1" : "0") + "\u0000" + "\u0002";//11
-            data += (si.syncWifiOffAfterEnd ? "1" : "0") + "\u0000" + "\u0002"; //12
-            data += String.valueOf(si.syncDelayAfterWifiOn) + "\u0002";         //13
-            data += si.scheduleDay + "\u0000" + "\u0002";                       //14
-            data += (si.syncAutoSyncTask ? "1" : "0") + "\u0000" + "\u0002";    //15
-            data += (si.syncOverrideOptionCharge) + "\u0000" + "\u0002";        //16
-            data += "\u0001";
+            data += (si.scheduleEnabled ? "1" : "0") + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;     //0
+            data += si.scheduleName + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                      //1
+            data += String.valueOf(si.schedulePosition) + SCHEDULER_SEPARATOR_ITEM;             //2
+            data += si.scheduleType + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                      //3
+            data += si.scheduleHours + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                     //4
+            data += si.scheduleMinutes + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                   //5
+            data += si.scheduleDayOfTheWeek + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;              //6
+            data += (si.scheduleIntervalFirstRunImmed ? "1" : "0") + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;//7
+            data += String.valueOf(si.scheduleLastExecTime) + SCHEDULER_SEPARATOR_ITEM;         //8
+            data += si.syncTaskList + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                      //9
+            data += si.syncGroupList + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                     //10
+            data += (si.syncWifiOnBeforeStart ? "1" : "0") + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;//11
+            data += (si.syncWifiOffAfterEnd ? "1" : "0") + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM; //12
+            data += String.valueOf(si.syncDelayAfterWifiOn) + SCHEDULER_SEPARATOR_ITEM;         //13
+            data += si.scheduleDay + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                       //14
+            data += (si.syncAutoSyncTask ? "1" : "0") + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;    //15
+            data += (si.syncOverrideOptionCharge) + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;        //16
+            data += SCHEDULER_SEPARATOR_ENTRY;
 
         }
         data += "end";
@@ -506,17 +480,6 @@ public class ScheduleUtil {
             slf4jLog.info("name="+sp.scheduleName+", c_year="+c_year+", c_month="+c_month+
                     ", s_day="+s_day_temp+", s_hrs="+s_hrs+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
         } else if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
-//    		cal.clear();
-//    		cal.setTimeInMillis(sp.scheduleLastExecTime+s_min*(60*1000));
-//    		c_year=cal.get(Calendar.YEAR);
-//    		c_month=cal.get(Calendar.MONTH);
-//    		c_day=cal.get(Calendar.DAY_OF_MONTH);
-//    		c_hr=cal.get(Calendar.HOUR_OF_DAY);
-//    		c_mm=cal.get(Calendar.MINUTE);
-//    		int c_ss=cal.get(Calendar.SECOND);
-//    		cal.set(c_year, c_month, c_day, c_hr, c_mm, 0);
-//    		if (c_ss==0) result=cal.getTimeInMillis();
-//    		else result=cal.getTimeInMillis()+60*1000;
             if (sp.scheduleLastExecTime == 0) {
                 if (!sp.scheduleIntervalFirstRunImmed) {
                     sp.scheduleLastExecTime = System.currentTimeMillis();
@@ -544,21 +507,14 @@ public class ScheduleUtil {
 
                 slf4jLog.info("name="+sp.scheduleName+", m_nt="+m_nt+", nt="+nt+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
             }
-//    		Log.v("","last="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(sp.scheduleLastExecTime));
-//    		Log.v("","result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
-//    		Log.v("","last="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(sp.scheduleLastExecTime));
-//    		Log.v("","c_year="+c_year+", c_month="+c_month+", c_day="+c_day+", c_hr="+c_hr+", c_mm="+c_mm+", c_ss="+c_ss);
-//    		Log.v("","new="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
         } else if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
             boolean[] dwa = new boolean[]{false, false, false, false, false, false, false};
             for (int i = 0; i < sp.scheduleDayOfTheWeek.length(); i++) {
                 String dw_s = sp.scheduleDayOfTheWeek.substring(i, i + 1);
                 if (dw_s.equals("1")) dwa[i] = true;
-//    			Log.v("","i="+i+", de_s="+dw_s+", dwa="+dwa[i]);
             }
             int s_hhmm = Integer.parseInt(sp.scheduleHours) * 100 + s_min;
             int c_hhmm = c_hr * 100 + c_mm;
-//        	Log.v("","c_hhmm="+c_hhmm+", s_hhmm="+s_hhmm+", c_dw="+c_dw);
             int s_dw = 0;
             if (c_hhmm >= s_hhmm) {
                 if (c_dw == 6) {
@@ -570,14 +526,12 @@ public class ScheduleUtil {
                         }
                         s_dw++;
                     }
-//        			Log.v("","c1 s_dw="+s_dw);
                 } else {
                     c_dw++;
                     s_dw = 1;
                     boolean found = false;
                     for (int i = c_dw; i < 7; i++) {
                         if (dwa[i]) {
-//        					Log.v("","c2 s_dw="+s_dw+", i="+i);
                             found = true;
                             break;
                         }
@@ -586,7 +540,6 @@ public class ScheduleUtil {
                     if (!found) {
                         for (int i = 0; i < c_dw; i++) {
                             if (dwa[i]) {
-//            					Log.v("","c3 s_dw="+s_dw+", i="+i);
                                 found = true;
                                 break;
                             }
@@ -597,10 +550,8 @@ public class ScheduleUtil {
             } else {
                 s_dw = 0;
                 boolean found = false;
-//				Log.v("","c_dw="+c_dw);
                 for (int i = c_dw; i < 7; i++) {
                     if (dwa[i]) {
-//    					Log.v("","c4 s_dw="+s_dw);
                         found = true;
                         break;
                     }
@@ -609,7 +560,6 @@ public class ScheduleUtil {
                 if (!found) {
                     for (int i = 0; i < c_dw; i++) {
                         if (dwa[i]) {
-//        					Log.v("","c5 s_dw="+s_dw);
                             found = true;
                             break;
                         }
@@ -617,7 +567,6 @@ public class ScheduleUtil {
                     }
                 }
             }
-//    		Log.v("","s_dw="+s_dw);
             cal.clear();
             cal.set(c_year, c_month, c_day, s_hrs, 0, 0);
             result = cal.getTimeInMillis() + s_dw * (60 * 1000 * 60 * 24) + (60 * 1000 * s_min);
@@ -687,13 +636,13 @@ public class ScheduleUtil {
                 if (si.scheduleEnabled) {
                     long time = ScheduleUtil.getNextSchedule(si);
                     String dt=StringUtil.convDateTimeTo_YearMonthDayHourMin(time);
-                    String item=dt+","+si.scheduleName;
+                    String item=dt+SYNC_TASK_LIST_SEPARATOR+si.scheduleName;
                     if (si.syncAutoSyncTask) {
                         //NOP
                     } else {
                         if (!si.syncTaskList.equals("")) {
-                            if (si.syncTaskList.indexOf(",")>0) {
-                                String[] stl=si.syncTaskList.split(",");
+                            if (si.syncTaskList.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {
+                                String[] stl=si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
                                 for(String stn:stl) {
 //    /*debug*/                   cu.addDebugMsg(1,"I", "setSchedulerInfo findSyncTask1 name="+stn+", result="+getSyncTask(gp,stn));
                                     if (getSyncTask(gp,stn)==null) {
@@ -730,12 +679,12 @@ public class ScheduleUtil {
         Collections.sort(sched_array);
 
         if (sched_array.size()>0) {
-            String[] key=sched_array.get(0).split(",");
+            String[] key=sched_array.get(0).split(SYNC_TASK_LIST_SEPARATOR);
             for(String item:sched_array) {
-                String[] s_key=item.split(",");
+                String[] s_key=item.split(SYNC_TASK_LIST_SEPARATOR);
                 if (key[0].equals(s_key[0])) {
                     sched_list+=sep+s_key[1];
-                    sep=",";
+                    sep=SYNC_TASK_LIST_SEPARATOR;
                 }
             }
             String sched_info ="";

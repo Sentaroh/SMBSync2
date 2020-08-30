@@ -124,6 +124,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_HIST;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_MESSAGE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_SCHEDULE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_TASK;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET;
 
@@ -4584,7 +4585,7 @@ public class ActivityMain extends AppCompatActivity {
             if (item.isChecked()  && !item.isSyncTaskError()) {
                 t_list.add(item);
                 sync_list_tmp += sep + item.getSyncTaskName();
-                sep = ",";
+                sep = SYNC_TASK_LIST_SEPARATOR;
                 if (item.isSyncTestMode()) test_sync_task_found = true;
             }
         }
@@ -4626,7 +4627,7 @@ public class ActivityMain extends AppCompatActivity {
             if (item.isSyncTaskAuto() && !item.isSyncTestMode() && !item.isSyncTaskError()) {
                 t_list.add(item);
                 sync_list_tmp += sep + item.getSyncTaskName();
-                sep = ",";
+                sep = SYNC_TASK_LIST_SEPARATOR;
             }
         }
 
