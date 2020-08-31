@@ -559,10 +559,9 @@ public class SyncThread extends Thread {
 
         if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             if (sti.isSyncDetectLastModifiedBySmbsync()) mStwa.lastModifiedIsFunctional = false;
-            else
-                mStwa.lastModifiedIsFunctional = isSetLastModifiedFunctional(mStwa.gp.internalRootDirectory);
-//		} else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-//			mStwa.lastModifiedIsFunctional=false;
+            else {
+                mStwa.lastModifiedIsFunctional = isSetLastModifiedFunctional(sti.getTargetLocalMountPoint());
+            }
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             mStwa.lastModifiedIsFunctional = true;
         } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
