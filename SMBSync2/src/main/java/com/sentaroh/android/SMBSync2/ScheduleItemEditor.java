@@ -63,6 +63,9 @@ import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
 
 import java.util.ArrayList;
 
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_UNUSABLE_CHARACTER;
+
 public class ScheduleItemEditor {
 //    private CommonDialog commonDlg = null;
 
@@ -675,13 +678,13 @@ public class ScheduleItemEditor {
 
     private String getNotExistsSyncTaskName(String task_list) {
         String error_item_name="";
-        if (task_list.indexOf(",")>0) {
-            String[] stl=task_list.split(",");
+        if (task_list.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {
+            String[] stl=task_list.split(SYNC_TASK_LIST_SEPARATOR);
             String sep="";
             for(String stn:stl) {
                 if (ScheduleUtil.getSyncTask(mGp,stn)==null) {
                     error_item_name=sep+stn;
-                    sep=",";
+                    sep=SYNC_TASK_LIST_SEPARATOR;
                 }
             }
         } else {
@@ -705,6 +708,13 @@ public class ScheduleItemEditor {
         }
     }
 
+    static public String hasScheduleNameContainsUnusableCharacter(Context c, String name) {
+        for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
+            if (name.contains(item)) return c.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character,item);
+        }
+        return "";
+    }
+
     private void setOkButtonEnabledDisabled(Dialog dialog) {
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
@@ -714,25 +724,31 @@ public class ScheduleItemEditor {
             tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
             CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
         } else {
-            if (!mEditMode && ScheduleUtil.isScheduleExists(mScheduleList, et_name.getText().toString())) {
-                //Name alread exists
-                tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists));
+            String e_msg=hasScheduleNameContainsUnusableCharacter(mContext, et_name.getText().toString());
+            if (!e_msg.equals("")) {
+                tv_msg.setText(e_msg);
                 CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
             } else {
-                if (!mSched.syncAutoSyncTask) {
-                    String error_task_name=getNotExistsSyncTaskName(mSched.syncTaskList);
-                    if (!error_task_name.equals("")) {
-                        tv_msg.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_task_name));
+                if (!mEditMode && ScheduleUtil.isScheduleExists(mScheduleList, et_name.getText().toString())) {
+                    //Name alread exists
+                    tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists));
+                    CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
+                } else {
+                    if (!mSched.syncAutoSyncTask) {
+                        String error_task_name=getNotExistsSyncTaskName(mSched.syncTaskList);
+                        if (!error_task_name.equals("")) {
+                            tv_msg.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_task_name));
+                        } else {
+                            tv_msg.setText("");
+                            CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
+                        }
                     } else {
                         tv_msg.setText("");
                         CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                     }
-                } else {
-                    tv_msg.setText("");
-                    CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
+                    if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
+                    else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                 }
-                if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
-                else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
             }
         }
 
@@ -951,8 +967,8 @@ public class ScheduleItemEditor {
         final SchedulerAdapterSyncList adapter =
                 new SchedulerAdapterSyncList(mActivity, android.R.layout.simple_list_item_checked);
 
-        CommonDialog.setViewEnabled(mActivity, btn_ok, setSyncTaskListView(true, prof_list, lv_sync_list, adapter));
-        setSyncTaskListView(true, prof_list, lv_sync_list, adapter);
+        boolean selected=setSyncTaskListView(true, prof_list, lv_sync_list, adapter);
+        CommonDialog.setViewEnabled(mActivity, btn_ok, selected);
 
         lv_sync_list.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -973,12 +989,11 @@ public class ScheduleItemEditor {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-//				SparseBooleanArray sba=lv_sync_list.getCheckedItemPositions();
                 String n_prof_list = "", sep = "";
                 for (int i = 0; i < lv_sync_list.getCount(); i++) {
                     if (lv_sync_list.isItemChecked(i)) {
                         n_prof_list = n_prof_list + sep + adapter.getItem(i).substring(1);
-                        sep = ",";
+                        sep = SYNC_TASK_LIST_SEPARATOR;
                     }
                 }
                 p_ntfy.notifyToListener(true, new Object[]{n_prof_list});
@@ -1004,11 +1019,13 @@ public class ScheduleItemEditor {
 
         for (int i = 0; i < mGp.syncTaskAdapter.getCount(); i++) {
             SyncTaskItem pfli = mGp.syncTaskAdapter.getItem(i);
-            adapter.add(SYNC_TASK_ENABLED + pfli.getSyncTaskName());
+            String e_msg=SyncTaskUtil.hasSyncTaskNameContainsUnusableCharacter(mContext, pfli.getSyncTaskName());
+            if (e_msg.equals("")) adapter.add(SYNC_TASK_ENABLED + pfli.getSyncTaskName());
+            else mUtil.addDebugMsg(1, "I", "Invalid sync task name, Task="+pfli.getSyncTaskName());
         }
 
         String[] pfa = null;
-        pfa = prof_list.split(",");
+        pfa = prof_list.split(SYNC_TASK_LIST_SEPARATOR);
         if (!prof_list.equals("")) {
             for (int i = 0; i < pfa.length; i++) {
                 setSelectedSyncList(pfa[i], lv, adapter);

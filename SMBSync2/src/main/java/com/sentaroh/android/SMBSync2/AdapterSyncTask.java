@@ -378,6 +378,14 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             }
             holder.tv_row_target.requestLayout();
 
+            String e_msg=SyncTaskUtil.hasSyncTaskNameContainsUnusableCharacter(mContext, o.getSyncTaskName());
+            if (!e_msg.equals("")) {
+                sync_btn_disable=true;
+                holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
+                holder.tv_last_sync_result.setText(e_msg);
+                holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_warning);
+            }
+
             if (isShowCheckBox) {
                 holder.cbv_row_cb1.setVisibility(CheckBox.VISIBLE);
                 holder.ib_row_sync.setVisibility(CheckBox.GONE);

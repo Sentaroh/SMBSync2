@@ -5182,6 +5182,8 @@ public class SyncTaskEditor extends DialogFragment {
         final LinearLayout ll_edit_sync_tak_option_keep_conflict_file=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file_view);
         final LinearLayout ll_spinnerTwoWaySyncConflictRule=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_view);
 
+        final EditText et_sync_main_task_name = (EditText) mDialog.findViewById(R.id.edit_sync_task_task_name);
+
         final Button swap_master_target = (Button) mDialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
 
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
@@ -5251,6 +5253,7 @@ public class SyncTaskEditor extends DialogFragment {
                 swap_master_target.setVisibility(Button.GONE);
             }
         }
+        t_name_msg=SyncTaskUtil.hasSyncTaskNameContainsUnusableCharacter(mContext, et_sync_main_task_name.getText().toString());
         if (t_name_msg.equals("")) {
             String e_msg = checkMasterTargetCombination(dialog, n_sti);
             if (!e_msg.equals("")) {

@@ -93,6 +93,7 @@
         <string name="msgs_delete_following_profile">Supprimer les tâches suivantes ?</string>
         <string name="msgs_dir_empty">Dossier non trouvé</string>
         <string name="msgs_duplicate_task_name">Une tâche de synchronisation du même nom existe.</string>
+        <string name="msgs_task_name_contains_invalid_character">Le nom de la tâche contient des caractères non valides: \"%s\"</string>
         <string name="msgs_edit_sync_profile">Modifier la Tâche de Synchronisation</string>
         <string name="msgs_export_prof_fail">Echec d\'exportation des paramètres de synchronisation.</string>
         <string name="msgs_export_prof_success">Paramètres de synchronisation exportés avec succès.</string>
@@ -696,6 +697,7 @@
         <string name="msgs_schedule_list_edit_dlg_title">Modifier la liste de planification</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Ce nom de tâche existe déjà. Spécifier un nom différent.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Aucun nom spécifié pour la tâche de planification.</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Caractère non valide dans le nom de l\'annexe : \"%s\".</string>
         <string name="msgs_schedule_cont_label_add">Ajouter une planification</string>
         <string name="msgs_schedule_cont_label_activate">Activer</string>
         <string name="msgs_schedule_cont_label_inactivate">Désactiver</string>

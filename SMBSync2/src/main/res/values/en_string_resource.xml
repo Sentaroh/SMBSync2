@@ -93,6 +93,7 @@
         <string name="msgs_delete_following_profile">Delete the following task(s)?</string>
         <string name="msgs_dir_empty">Directory could not be found</string>
         <string name="msgs_duplicate_task_name">Duplicate task name.</string>
+        <string name="msgs_task_name_contains_invalid_character">The task name contains invalid characters: \"%s\"</string>
         <string name="msgs_edit_sync_profile">Edit Sync Task</string>
         <string name="msgs_export_prof_fail">Failed to export synchronisation settings.</string>
         <string name="msgs_export_prof_success">Successfully exported synchronisation settings.</string>
@@ -696,6 +697,7 @@
         <string name="msgs_schedule_list_edit_dlg_title">Edit schedule list</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">This sync task name already exists. Use a different name.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Task schedule name is not specified.</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Invalid character in schedule name: \"%s\".</string>
         <string name="msgs_schedule_cont_label_add">Add schedule</string>
         <string name="msgs_schedule_cont_label_activate">Enable</string>
         <string name="msgs_schedule_cont_label_inactivate">Disable</string>

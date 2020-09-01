@@ -59,4 +59,8 @@ public class ScheduleConstants {
     public static final String SCHEDULER_ENABLED_KEY = "scheduler_enabled_key";
 
     public static final String SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY = "scheduler_last_set_utc_time_key";
+
+    public static final String SCHEDULER_SEPARATOR_DUMMY_DATA = "\u0000";
+    public static final String SCHEDULER_SEPARATOR_ENTRY = "\u0001";
+    public static final String SCHEDULER_SEPARATOR_ITEM = "\u0002";
 }

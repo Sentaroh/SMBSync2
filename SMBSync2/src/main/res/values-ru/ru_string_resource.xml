@@ -93,6 +93,7 @@
         <string name="msgs_delete_following_profile">Удалить следующие задачи?</string>
         <string name="msgs_dir_empty">Каталог не найден</string>
         <string name="msgs_duplicate_task_name">Задача с таким именем существует.</string>
+        <string name="msgs_task_name_contains_invalid_character">Имя задачи содержит недопустимые символы: \"%s\"</string>
         <string name="msgs_edit_sync_profile">Изменить задачу синхронизации</string>
         <string name="msgs_export_prof_fail">Не удалось экспортировать список задач.</string>
         <string name="msgs_export_prof_success">Список задач успешно экспортирован.</string>
@@ -697,6 +698,7 @@
         <string name="msgs_schedule_list_edit_dlg_title">Изменить список расписаний</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Это имя задачи синхронизации уже существует. Используйте другое имя.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Имя синхронизации не указано.</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Недействительный символ в названии расписания: \"%s\".</string>
         <string name="msgs_schedule_cont_label_add">Добавить расписание</string>
         <string name="msgs_schedule_cont_label_activate">Включить</string>
         <string name="msgs_schedule_cont_label_inactivate">Отключить</string>

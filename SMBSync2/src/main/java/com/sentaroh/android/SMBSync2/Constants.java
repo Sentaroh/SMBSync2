@@ -137,6 +137,9 @@ public class Constants {
 
     final public static String[] SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS=new String[]{"\"", ":", ">", "<", "|", "//", "**", "\\"};
     final public static String[] SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS=new String[] {"\"", ":", ">", "<", "|", "//", "**"};
+    final public static String[] SYNC_TASK_NAME_UNUSABLE_CHARACTER=new String[]{","};
+
+    final public static String SYNC_TASK_LIST_SEPARATOR=",";
 
     public static final String SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_NO = "0";
 	public static final String SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS = "1";
