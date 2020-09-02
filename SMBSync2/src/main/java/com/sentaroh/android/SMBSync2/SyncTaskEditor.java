@@ -2999,7 +2999,7 @@ public class SyncTaskEditor extends DialogFragment {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                dlg_dir_filter.setText(buildFilterInfo(n_sti.getDirFilter()));
+                dlg_dir_filter.setText(buildDirectoryFilterInfo(n_sti.getDirFilter()));
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
 
@@ -3021,7 +3021,7 @@ public class SyncTaskEditor extends DialogFragment {
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context arg0, Object[] arg1) {
-                dlg_file_filter.setText(buildFilterInfo(n_sti.getFileFilter()));
+                dlg_file_filter.setText(buildFileFilterInfo(n_sti.getFileFilter()));
 //				Log.v("","siz="+n_sti.getFileFilter().size());
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -3526,6 +3526,22 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.notifyDataSetChanged();
     }
 
+    private String buildDirectoryFilterInfo(ArrayList<String> filter_list) {
+        String info=buildFilterInfo(filter_list);
+        if (info.equals("")) {
+            return mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_filter_not_specified);
+        }
+        return info;
+    }
+
+    private String buildFileFilterInfo(ArrayList<String> filter_list) {
+        String info=buildFilterInfo(filter_list);
+        if (info.equals("")) {
+            return mContext.getString(R.string.msgs_profile_sync_task_dlg_file_filter_not_specified);
+        }
+        return info;
+    }
+
     private String buildFilterInfo(ArrayList<String> filter_list) {
         String info = "";
         if (filter_list != null && filter_list.size() > 0) {
@@ -3539,9 +3555,7 @@ public class SyncTaskEditor extends DialogFragment {
                 sep=" ";
             }
             if (!t_info.equals("")) info = t_info;
-//				info=mContext.getString(R.string.msgs_filter_list_dlg_filter_hint)+" : "+t_info;
         } else {
-//			info=mContext.getString(R.string.msgs_filter_list_dlg_not_specified);
             info = "";
         }
         return info;
@@ -3561,7 +3575,6 @@ public class SyncTaskEditor extends DialogFragment {
                 result = mContext.getString(R.string.msgs_specify_task_name);
             }
         }
-//		Log.v("","result="+result+", name="+t_name+", type="+type);
         return result;
     }
 
@@ -3791,9 +3804,9 @@ public class SyncTaskEditor extends DialogFragment {
         final Button dir_filter_btn = (Button) mDialog.findViewById(R.id.sync_filter_edit_dir_filter_btn);
         final Button file_filter_btn = (Button) mDialog.findViewById(R.id.sync_filter_edit_file_filter_btn);
 //		final TextView dlg_file_filter=(TextView) mDialog.findViewById(R.id.sync_filter_summary_file_filter);
-        file_filter_btn.setText(buildFilterInfo(n_sti.getFileFilter()));
+        file_filter_btn.setText(buildFileFilterInfo(n_sti.getFileFilter()));
 //		final TextView dlg_dir_filter=(TextView) mDialog.findViewById(R.id.sync_filter_summary_dir_filter);
-        dir_filter_btn.setText(buildFilterInfo(n_sti.getDirFilter()));
+        dir_filter_btn.setText(buildDirectoryFilterInfo(n_sti.getDirFilter()));
 
         final LinearLayout ll_file_filter_detail = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
         final LinearLayout ll_dir_filter_detail = (LinearLayout) mDialog.findViewById(R.id.sync_filter_sub_directory_detail_view);
@@ -3808,7 +3821,7 @@ public class SyncTaskEditor extends DialogFragment {
                 else {
                     ll_file_filter_detail.setVisibility(Button.GONE);
                     n_sti.getFileFilter().clear();
-                    file_filter_btn.setText(buildFilterInfo(n_sti.getFileFilter()));
+                    file_filter_btn.setText(buildFileFilterInfo(n_sti.getFileFilter()));
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -3888,7 +3901,7 @@ public class SyncTaskEditor extends DialogFragment {
                 else {
                     ll_dir_filter_detail.setVisibility(Button.GONE);
                     n_sti.getDirFilter().clear();
-                    dir_filter_btn.setText(buildFilterInfo(n_sti.getDirFilter()));
+                    dir_filter_btn.setText(buildDirectoryFilterInfo(n_sti.getDirFilter()));
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }

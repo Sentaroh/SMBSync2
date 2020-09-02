@@ -76,7 +76,7 @@
 	            android:layout_height="wrap_content"
 	            android:ellipsize="end"
 	            android:gravity="center_vertical|left"
-	            android:hint="@string/msgs_profile_sync_task_dlg_file_filter_not_specified"
+	            android:text="@string/msgs_profile_sync_task_dlg_file_filter_not_specified"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
 	        	        
 	    </LinearLayout>
@@ -105,7 +105,7 @@
 	        android:layout_height="wrap_content"
 	        android:gravity="center_vertical|left"
 	        android:ellipsize="end"
-	        android:hint="@string/msgs_profile_sync_task_dlg_dir_filter_not_specified"
+	        android:text="@string/msgs_profile_sync_task_dlg_dir_filter_not_specified"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
         
     </LinearLayout>
