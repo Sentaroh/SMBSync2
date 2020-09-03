@@ -167,10 +167,10 @@
         <string name="msgs_main_external_usb_select_retry_select_msg">The root directory of the USB media was not selected. Do you want to reselect?</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARD was selected. Do you want to reselect USB storage?</string>
         <string name="msgs_main_permission_coarse_location_denied_msg">If you specify \"Access point list\" in the task settings, the synchronisation will fail if you don\'t grant permission to Location service. Please allow \"Location Permission\" from the menu.</string>
-        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 requieres Location permission to be able to read the SSID of the WiFi. \nIf you specify \"Access point list\", the synchronisation task will fail unless the permission is granted.\nDo you want to request a Location permission?</string>
+        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 requieres Location permission to be able to read the SSID of the WiFi. \nIf you specify \"Access point list\", the synchronisation task will fail unless the permission is granted.\nDo you want to request Location permission now ?</string>
         <string name="msgs_main_permission_background_location_title">Background location permission</string>
         <string name="msgs_main_permission_background_location_denied_msg">If you specify \"Access point list\" in the task settings, the synchronisation will fail if you don\'t grant permission to Location service. Please allow \"Location Permission\" from the menu.</string>
-        <string name="msgs_main_permission_background_location_request_msg">This permission is required to read the WiFi SSID in SMBSync2.\nUntil the permission is granted, SMBSync2 will exit with an error if \"Access Point List\" is specified in the Sync task.\nUnder Location Permissions, select \"Allow all the time\".\nDo you want to request background location permission?</string>
+        <string name="msgs_main_permission_background_location_request_msg">This permission is required to read the WiFi SSID in SMBSync2.\nUntil the permission is granted, SMBSync2 will exit with an error if \"Access Point List\" is specified in the Sync task.\nUnder Location Permissions, select \"Allow all the time\".\nDo you want to request background location permission now ?</string>
         <string name="msgs_main_permission_coarse_location_title">Location Permission</string>
         <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be started because you have not been granted permission to access the internal storage.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access internal storage to be able to read and write data that is synchronized and for the management of application settings.</string>
@@ -697,7 +697,7 @@
         <string name="msgs_schedule_list_edit_dlg_title">Edit schedule list</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">This sync task name already exists. Use a different name.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Task schedule name is not specified.</string>
-        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Invalid character in schedule name: \"%s\".</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Invalid character in schedule name: \"%s\"</string>
         <string name="msgs_schedule_cont_label_add">Add schedule</string>
         <string name="msgs_schedule_cont_label_activate">Enable</string>
         <string name="msgs_schedule_cont_label_inactivate">Disable</string>
