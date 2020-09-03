@@ -17,6 +17,8 @@ import com.sentaroh.android.Utilities.NotifyEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
+
 class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
     private int layout_id = 0;
     private Context mContext = null;
@@ -192,18 +194,20 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
                 time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_interval) + " " + o.scheduleMinutes + " " +
                         mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_minute);
             }
+
             String sync_prof = "";
+            String error_msg = "";
+            holder.tv_error_info.setVisibility(TextView.GONE);
             if (o.syncAutoSyncTask) {
                 sync_prof = mContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
-                holder.tv_error_info.setVisibility(TextView.GONE);
             } else {
                 boolean schedule_error=false;
                 String error_item_name="";
                 if (o.syncTaskList.equals("")) {
                     schedule_error=true;
                 } else {
-                    if (o.syncTaskList.indexOf(",")>0) {
-                        String[] stl=o.syncTaskList.split(",");
+                    if (o.syncTaskList.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {
+                        String[] stl=o.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
                         String sep="";
                         for(String stn:stl) {
                             if (ScheduleUtil.getSyncTask(mGp,stn)==null) {
@@ -219,20 +223,31 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
                         }
                     }
                 }
+
                 if (schedule_error) {
-                    holder.tv_error_info.setVisibility(TextView.VISIBLE);
                     if (o.syncTaskList.equals("")) {
-                        holder.tv_error_info.setText(mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty));
+                        error_msg=mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty);
                     } else {
-                        holder.tv_error_info.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found),
-                                error_item_name));
+                        error_msg=String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_item_name);
                     }
-                } else {
-                    holder.tv_error_info.setVisibility(TextView.GONE);
                 }
-                sync_prof = String.format(mContext.getString(R.string.msgs_scheduler_info_sync_selected_profile),
-                        o.syncTaskList);
+                sync_prof = String.format(mContext.getString(R.string.msgs_scheduler_info_sync_selected_profile), o.syncTaskList);
             }
+
+            if (o.scheduleName.equals("")) {
+                error_msg = mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified);
+            } else {
+                String sched_name_error_msg = ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, o.scheduleName);
+                if (!sched_name_error_msg.equals("")) {
+                    if (error_msg.equals("")) error_msg = sched_name_error_msg;
+                    else error_msg = sched_name_error_msg + "\n" + error_msg;
+                }
+            }
+            if (!error_msg.equals("")) {
+                holder.tv_error_info.setText(error_msg);
+                holder.tv_error_info.setVisibility(TextView.VISIBLE);
+            }
+
             holder.tv_time_info.setText(time_info + " " + sync_prof);
 
             holder.cbChecked.setOnClickListener(new View.OnClickListener() {

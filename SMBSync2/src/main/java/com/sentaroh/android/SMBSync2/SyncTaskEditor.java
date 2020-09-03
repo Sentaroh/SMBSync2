@@ -3566,9 +3566,10 @@ public class SyncTaskEditor extends DialogFragment {
         if (type.equals("EDIT")) {
         } else {
             if (t_name.length() > 0) {
-                if (SyncTaskUtil.getSyncTaskByName(mGp.syncTaskAdapter, t_name) == null) {
-                    result = "";
-                } else {
+                String invalid_chars_msg = SyncTaskUtil.hasSyncTaskNameContainsUnusableCharacter(mContext, t_name);
+                if (!invalid_chars_msg.equals("")) {
+                    result = invalid_chars_msg;
+                } else if (SyncTaskUtil.getSyncTaskByName(mGp.syncTaskAdapter, t_name) != null) {
                     result = mContext.getString(R.string.msgs_duplicate_task_name);
                 }
             } else {
@@ -5266,7 +5267,7 @@ public class SyncTaskEditor extends DialogFragment {
                 swap_master_target.setVisibility(Button.GONE);
             }
         }
-        t_name_msg=SyncTaskUtil.hasSyncTaskNameContainsUnusableCharacter(mContext, et_sync_main_task_name.getText().toString());
+
         if (t_name_msg.equals("")) {
             String e_msg = checkMasterTargetCombination(dialog, n_sti);
             if (!e_msg.equals("")) {

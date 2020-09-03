@@ -39,6 +39,7 @@ import java.util.Calendar;
 import java.util.Collections;
 
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_UNUSABLE_CHARACTER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_DAY_OF_THE_WEEK_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_ENABLED_KEY;
@@ -721,6 +722,13 @@ public class ScheduleUtil {
             result = c.getString(R.string.msgs_scheduler_info_schedule_disabled);
         }
         return result;
+    }
+
+    static public String hasScheduleNameContainsUnusableCharacter(Context c, String name) {
+        for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
+            if (name.contains(item)) return c.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character,item);
+        }
+        return "";
     }
 
 }
