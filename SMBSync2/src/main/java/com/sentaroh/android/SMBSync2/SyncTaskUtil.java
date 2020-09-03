@@ -1789,14 +1789,30 @@ public class SyncTaskUtil {
         title.setText(mContext.getString(R.string.msgs_rename_profile));
 
         dlg_cmp.setVisibility(TextView.GONE);
+        dlg_cmp.setTextColor(mGp.themeColorList.text_color_error);
+        String e_msg=checkTaskNameValidity(mContext, mGp, pli.getSyncTaskName());
+        if (!e_msg.equals("")) {
+            dlg_cmp.setText(e_msg);
+            dlg_cmp.setVisibility(TextView.VISIBLE);
+        }
+
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(pli.getSyncTaskName());
         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                if (!arg0.toString().equalsIgnoreCase(pli.getSyncTaskName())) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                String edit_text=arg0.toString();
+                String error_msg = checkTaskNameValidity(mContext, mGp, edit_text);
+                if (!error_msg.equals("")) {
+                    dlg_cmp.setText(error_msg);
+                    dlg_cmp.setVisibility(TextView.VISIBLE);
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                } else {
+                    dlg_cmp.setText("");
+                    dlg_cmp.setVisibility(TextView.GONE);
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                }
             }
 
             @Override
@@ -4046,6 +4062,26 @@ public class SyncTaskUtil {
             if (task_name.contains(item)) return c.getString(R.string.msgs_task_name_contains_invalid_character,item);
         }
         return "";
+    }
+
+    static public String checkTaskNameValidity(Context c, GlobalParameters gp, String t_name) {
+        return checkTaskNameValidity(c, gp, "", t_name, null, null);
+    }
+
+    static public String checkTaskNameValidity(Context c, GlobalParameters gp, String type, String t_name, TextView tv, Button ok) {
+        String result = "";
+        if (t_name.length() > 0) {
+            String invalid_chars_msg = hasSyncTaskNameContainsUnusableCharacter(c, t_name);
+            if (!invalid_chars_msg.equals("")) {
+                result = invalid_chars_msg;
+            } else if (getSyncTaskByName(gp.syncTaskAdapter, t_name) != null) {
+                result = c.getString(R.string.msgs_duplicate_task_name);
+            }
+        } else {
+            result = c.getString(R.string.msgs_specify_task_name);
+        }
+
+        return result;
     }
 
     static public SyncTaskItem getSyncTaskByName(ArrayList<SyncTaskItem> t_prof, String task_name) {

@@ -3561,24 +3561,6 @@ public class SyncTaskEditor extends DialogFragment {
         return info;
     }
 
-    private String checkTaskNameValidity(String type, String t_name, TextView tv, Button ok) {
-        String result = "";
-        if (type.equals("EDIT")) {
-        } else {
-            if (t_name.length() > 0) {
-                String invalid_chars_msg = SyncTaskUtil.hasSyncTaskNameContainsUnusableCharacter(mContext, t_name);
-                if (!invalid_chars_msg.equals("")) {
-                    result = invalid_chars_msg;
-                } else if (SyncTaskUtil.getSyncTaskByName(mGp.syncTaskAdapter, t_name) != null) {
-                    result = mContext.getString(R.string.msgs_duplicate_task_name);
-                }
-            } else {
-                result = mContext.getString(R.string.msgs_specify_task_name);
-            }
-        }
-        return result;
-    }
-
     public void editSyncTask(final String type, final SyncTaskItem pfli) {
         final SyncTaskItem n_sti = pfli.clone();
         mUtil.addDebugMsg(1,"I","editSyncTask entered, type="+type+", task="+pfli.getSyncTaskName());
@@ -5201,7 +5183,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button swap_master_target = (Button) mDialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
 
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
-        String t_name_msg = checkTaskNameValidity(type, n_sti.getSyncTaskName(), dlg_msg, btn_ok);
+        String t_name_msg = mTaskUtil.checkTaskNameValidity(mContext, mGp, type, n_sti.getSyncTaskName(), dlg_msg, btn_ok);
         boolean error_detected = false;
         ll_edit_sync_tak_option_keep_conflict_file.setVisibility(LinearLayout.GONE);
         ll_spinnerTwoWaySyncConflictRule.setVisibility(LinearLayout.GONE);

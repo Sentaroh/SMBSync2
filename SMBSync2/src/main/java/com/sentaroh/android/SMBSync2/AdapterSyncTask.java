@@ -378,7 +378,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             }
             holder.tv_row_target.requestLayout();
 
-            String e_msg=SyncTaskUtil.hasSyncTaskNameContainsUnusableCharacter(mContext, o.getSyncTaskName());
+            String e_msg=SyncTaskUtil.checkTaskNameValidity(mContext, mGp, o.getSyncTaskName());
             if (!e_msg.equals("")) {
                 sync_btn_disable=true;
                 holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
