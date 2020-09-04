@@ -39,7 +39,7 @@ import java.util.TimeZone;
  */
 class SyncTaskItem implements Serializable, Cloneable {
     private static final long serialVersionUID = 1L;
-    private String syncTasｋName = "";
+    private String syncTaskName = "";
     private String syncTasｋGroup = "";
     private boolean syncTaskEnabled = true;
     private boolean isChecked = false;
@@ -236,7 +236,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private boolean syncTaskIsRunning = false;
 
     public SyncTaskItem(String stn, boolean pfa, boolean ic) {
-        syncTasｋName = stn;
+        syncTaskName = stn;
         syncTaskEnabled = pfa;
         isChecked = ic;
         initOffsetOfDst();
@@ -251,7 +251,7 @@ class SyncTaskItem implements Serializable, Cloneable {
         else setSyncOptionOffsetOfDst(SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
     }
 
-    public String getSyncTaskName() {return syncTasｋName;}
+    public String getSyncTaskName() {return syncTaskName;}
 
     public String getSyncTaskType() {return syncTaskType;}
 
@@ -455,7 +455,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public void setSyncDoNotResetFileLastModified(boolean p) {syncOptionNotUsedLastModifiedForRemote = p;}
 
-    public void setSyncTaskName(String p) {syncTasｋName = p;}
+    public void setSyncTaskName(String p) {syncTaskName = p;}
 
     public void setMasterSmbUserName(String p) {syncTaskMasterFolderSmbUserName = p;}
 
@@ -676,7 +676,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public boolean isSame(SyncTaskItem sti) {
         boolean result = false;
-        if ((syncTasｋName.equals(sti.getSyncTaskName()) &&
+        if ((syncTaskName.equals(sti.getSyncTaskName()) &&
                 (syncTasｋGroup.equals(sti.getSyncTaskGroup())) &&
                 (syncTaskEnabled==sti.isSyncTaskAuto()) &&
                 (syncOptionSyncTestMode==sti.isSyncTestMode()) &&
