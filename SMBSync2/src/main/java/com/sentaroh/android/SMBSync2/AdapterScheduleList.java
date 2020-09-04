@@ -197,7 +197,21 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
 
             String sync_prof = "";
             String error_msg = "";
+            String error_sched_name_msg = "";
+            String sep_msg = "";
             holder.tv_error_info.setVisibility(TextView.GONE);
+
+            if (o.scheduleName.equals("")) {
+                error_msg = mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified);
+                sep_msg = "\n";
+            } else {
+                if (isScheduleNameDuplicate(mScheduleList, o.scheduleName)) {
+                    error_msg = mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name);
+                    sep_msg = "\n";
+                }
+                error_msg += sep_msg + ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, o.scheduleName);
+            }
+
             if (o.syncAutoSyncTask) {
                 sync_prof = mContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
             } else {
@@ -226,23 +240,14 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
 
                 if (schedule_error) {
                     if (o.syncTaskList.equals("")) {
-                        error_msg=mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty);
+                        error_msg+= sep_msg + mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty);
                     } else {
-                        error_msg=String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_item_name);
+                        error_msg+= sep_msg + String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_item_name);
                     }
                 }
                 sync_prof = String.format(mContext.getString(R.string.msgs_scheduler_info_sync_selected_profile), o.syncTaskList);
             }
 
-            if (o.scheduleName.equals("")) {
-                error_msg = mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified);
-            } else {
-                String sched_name_error_msg = ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, o.scheduleName);
-                if (!sched_name_error_msg.equals("")) {
-                    if (error_msg.equals("")) error_msg = sched_name_error_msg;
-                    else error_msg = sched_name_error_msg + "\n" + error_msg;
-                }
-            }
             if (!error_msg.equals("")) {
                 holder.tv_error_info.setText(error_msg);
                 holder.tv_error_info.setVisibility(TextView.VISIBLE);
@@ -278,6 +283,15 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
         }
         return v;
 
+    }
+
+    //check if schedule name is duplicate in existing Schedule adapter
+    private static boolean isScheduleNameDuplicate(ArrayList<ScheduleItem> sl, String name) {
+        int count = 0;
+        for (ScheduleItem si : sl) {
+            if (si.scheduleName.equalsIgnoreCase(name)) count++;
+        }
+        return count > 1;
     }
 
     class ViewHolder {

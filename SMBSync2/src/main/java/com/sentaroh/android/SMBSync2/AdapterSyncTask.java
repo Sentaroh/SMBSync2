@@ -450,7 +450,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         int count = 0;
         for (int i = 0; i < gp.syncTaskAdapter.getCount(); i++) {
             SyncTaskItem item = gp.syncTaskAdapter.getItem(i);
-            if (t_name.equals(item.getSyncTaskName())) count++;
+            if (t_name.equalsIgnoreCase(item.getSyncTaskName())) count++;
         }
         if (count > 1) return true;
         else return false;

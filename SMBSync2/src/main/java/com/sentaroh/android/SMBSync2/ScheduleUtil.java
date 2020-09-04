@@ -594,7 +594,7 @@ public class ScheduleUtil {
     public static boolean isScheduleExists(ArrayList<ScheduleItem> sl, String name) {
         boolean result = false;
         for (ScheduleItem si : sl) {
-            if (si.scheduleName.equals(name)) result = true;
+            if (si.scheduleName.equalsIgnoreCase(name)) result = true;
         }
         return result;
     }
