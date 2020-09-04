@@ -386,6 +386,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 
             if (!e_msg.equals("")) {
                 sync_btn_disable=true;
+                o.setSyncTaskNameError(true);
                 holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
                 holder.tv_last_sync_result.setText(e_msg);
                 holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_warning);

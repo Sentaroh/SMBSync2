@@ -626,11 +626,14 @@ class SyncTaskItem implements Serializable, Cloneable {
     static public final int SYNC_FOLDER_ERROR_ZIP_PASSWORD =4;
     private int syncMasterFolderError =SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
     private int syncTargetFolderError =SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
-    public boolean isSyncTaskError() {return (syncMasterFolderError+syncTargetFolderError)!=SYNC_FOLDER_ERROR_NO_ERROR;}
+    private boolean isSyncTaskNameError =false;
+    public boolean isSyncTaskError() {return (isSyncTaskNameError || (syncMasterFolderError+syncTargetFolderError)!=SYNC_FOLDER_ERROR_NO_ERROR);}
     public int getMasterFolderError() {return syncMasterFolderError;}
     public void setMasterFolderError(int error_code) {syncMasterFolderError = error_code;}
     public int getTargetFolderError() {return syncTargetFolderError;}
     public void setTargetFolderError(int error_code) {syncTargetFolderError = error_code;}
+    public boolean getSyncTaskNameError() {return isSyncTaskNameError;}
+    public void setSyncTaskNameError(boolean is_error) {isSyncTaskNameError = is_error;}
 
     public void setLastSyncTime(String p) {syncLastSyncTime = p;}
     public void setLastSyncResult(int p) {syncLastSyncResult = p;}
@@ -683,6 +686,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskType.equals(sti.getSyncTaskType())) &&
                 (syncMasterFolderError==sti.getMasterFolderError()) &&
                 (syncTargetFolderError==sti.getTargetFolderError()) &&
+                //(isSyncTaskNameError==sti.getSyncTaskNameError()) &&
                 (syncTwoWayConflictOption.equals(sti.getSyncTwoWayConflictFileRule())) &&
                 (syncTwoWayConflictKeepConflictFile==sti.isSyncTwoWayKeepConflictFile() ))&&
                 (syncTaskMasterFolderType.equals(sti.getMasterFolderType())) &&

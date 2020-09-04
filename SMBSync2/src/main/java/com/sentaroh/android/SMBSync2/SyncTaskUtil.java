@@ -4074,7 +4074,7 @@ public class SyncTaskUtil {
             String invalid_chars_msg = hasSyncTaskNameContainsUnusableCharacter(c, t_name);
             if (!invalid_chars_msg.equals("")) {
                 result = invalid_chars_msg;
-            } else if (getSyncTaskByName(gp.syncTaskAdapter, t_name) != null) {
+            } else if (getSyncTaskByName(gp.syncTaskAdapter, t_name) != null) {//check if task name already exists
                 result = c.getString(R.string.msgs_duplicate_task_name);
             }
         } else {
@@ -5545,9 +5545,9 @@ public class SyncTaskUtil {
                                 String enc_str = pl.replace(prof_pre, "");
                                 byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
                                 String dec_str = EncryptUtil.decrypt(enc_array, cp);
-                                addSyncTaskList(sdcard, prof_pre + dec_str, sync, ispl, util, cp_autosave, auto_save);
+                                addSyncTaskList(context, gp, sdcard, prof_pre + dec_str, sync, ispl, util, cp_autosave, auto_save);
                             } else {
-                                addSyncTaskList(sdcard, pl, sync, ispl, util, cp_autosave, auto_save);
+                                addSyncTaskList(context, gp, sdcard, pl, sync, ispl, util, cp_autosave, auto_save);
                             }
                         }
                     }
@@ -5611,16 +5611,16 @@ public class SyncTaskUtil {
                             String enc_str = pl.substring(6);
                             byte[] dec_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
                             String dec_str = EncryptUtil.decrypt(dec_array, cp_int);
-                            addSyncTaskList(sdcard, prof_pre + dec_str, sync, ispl, util, null, auto_save);
+                            addSyncTaskList(context, gp, sdcard, prof_pre + dec_str, sync, ispl, util, null, auto_save);
                         } else if (pl.startsWith(SMBSYNC2_PROF_VER8)) {
                             String prof_pre="";
                             if (pl.startsWith(SMBSYNC2_PROF_VER8)) prof_pre=SMBSYNC2_PROF_VER8;
                             String enc_str=pl.substring(6);
                             byte[] dec_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
                             String dec_str = EncryptUtil.decrypt(dec_array, cp_int);
-                            addSyncTaskList(sdcard,prof_pre+dec_str , sync, ispl, util, null, auto_save);
+                            addSyncTaskList(context, gp, sdcard,prof_pre+dec_str , sync, ispl, util, null, auto_save);
                         } else {
-                            addSyncTaskList(sdcard, pl, sync, ispl, util, null, auto_save);
+                            addSyncTaskList(context, gp, sdcard, pl, sync, ispl, util, null, auto_save);
                         }
                     }
                     br.close();
@@ -5739,7 +5739,7 @@ public class SyncTaskUtil {
         for (int i = 0; i < items.size(); i++) items.get(i).setSyncTaskPosition(i);
     }
 
-    private static void addSyncTaskList(boolean sdcard, String pl, ArrayList<SyncTaskItem> sync,
+    private static void addSyncTaskList(Context c, GlobalParameters gp, boolean sdcard, String pl, ArrayList<SyncTaskItem> sync,
                                         ArrayList<PreferenceParmListIItem> ispl, CommonUtilities util, CipherParms cp_autosave, boolean auto_save) {
         if (pl.startsWith(SMBSYNC2_PROF_VER1)) {
             if (pl.length() > 10) {
@@ -5778,7 +5778,7 @@ public class SyncTaskUtil {
             }
         } else if (pl.startsWith(SMBSYNC2_PROF_VER8)) {
             if (pl.length() > 10) {
-                addSyncTaskListVer8(sdcard, pl.replace(SMBSYNC2_PROF_VER8, ""), sync, util, cp_autosave, auto_save);
+                addSyncTaskListVer8(c, gp, sdcard, pl.replace(SMBSYNC2_PROF_VER8, ""), sync, util, cp_autosave, auto_save);
                 if (ispl != null) addImportSettingsParm(pl.replace(SMBSYNC2_PROF_VER8, ""), ispl);
             }
         }
@@ -6842,7 +6842,7 @@ public class SyncTaskUtil {
         cu.addLogMsg("W", String.format(msg_template, item_name, val, item_name));
     }
 
-    private static void addSyncTaskListVer8(boolean sdcard, String pl, ArrayList<SyncTaskItem> sync, CommonUtilities util, CipherParms cp_autosave, boolean auto_save) {
+    private static void addSyncTaskListVer8(Context c, GlobalParameters gp, boolean sdcard, String pl, ArrayList<SyncTaskItem> sync, CommonUtilities util, CipherParms cp_autosave, boolean auto_save) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
         String list1 = "", list2 = "", list3 = "", list4="", npl = "";
         int ls = pl.indexOf("[");
@@ -6890,7 +6890,10 @@ public class SyncTaskUtil {
                 for (int i = 0; i < al.length; i++) wifi_addr_list.add(convertToSpecChar(al[i]));
             } else wifi_addr_list.clear();
 
-            SyncTaskItem stli = new SyncTaskItem(parm[1], parm[2].equals("0") ? false : true, false);
+            SyncTaskItem stli = new SyncTaskItem(parm[1], parm[2].equals("0") ? false : true, false); //parm[1]: syncTasｋName, parm[2]: syncTaskEnabled, last SyncTaskItem param (..., false): isChecked
+            if (!checkTaskNameValidity(c, gp, stli.getSyncTaskName()).equals("")) {//If task Name is invalid (invalid char, duplicate), set it to error
+                stli.setSyncTaskNameError(true);
+            }
             if (isValidTaskItemValue(SyncTaskItem.SYNC_TASK_TYPE_LIST, parm[3])) {
                 stli.setSyncTaskType(parm[3]);
             } else {
