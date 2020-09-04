@@ -197,7 +197,6 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
 
             String sync_prof = "";
             String error_msg = "";
-            String error_sched_name_msg = "";
             String sep_msg = "";
             holder.tv_error_info.setVisibility(TextView.GONE);
 
@@ -209,7 +208,12 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
                     error_msg = mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name);
                     sep_msg = "\n";
                 }
-                error_msg += sep_msg + ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, o.scheduleName);
+
+                String invalid_chars_msg = ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, o.scheduleName);
+                if (!invalid_chars_msg.equals("")) {
+                    error_msg += sep_msg + invalid_chars_msg;
+                    sep_msg = "\n";
+                }
             }
 
             if (o.syncAutoSyncTask) {
