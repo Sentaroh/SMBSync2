@@ -707,6 +707,8 @@ public class ScheduleUtil {
         } else {
             gp.scheduleInfoText = c.getString(R.string.msgs_scheduler_info_schedule_disabled);
             gp.scheduleInfoView.setText(gp.scheduleInfoText);
+            gp.scheduleErrorText="";
+            gp.scheduleErrorView.setVisibility(TextView.GONE);
         }
     }
 
