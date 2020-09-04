@@ -3077,9 +3077,11 @@ public class ActivityMain extends AppCompatActivity {
                             }
                         }
                         if (mGp.syncTabScheduleAdapter.getCount() == 0) {
-                            mGp.syncTabScheduleAdapter.setSelectMode(false);
                             mGp.syncTabMessage.setVisibility(TextView.VISIBLE);
                         }
+                        mGp.syncTabScheduleAdapter.setSelectMode(false);
+                        mGp.syncTabScheduleAdapter.sort();
+                        mGp.syncTabScheduleAdapter.unselectAll();
                         setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
                         mGp.syncTabScheduleAdapter.notifyDataSetChanged();
                         saveScheduleList();
