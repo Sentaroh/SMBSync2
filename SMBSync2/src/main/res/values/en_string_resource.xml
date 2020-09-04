@@ -685,12 +685,12 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Please specify the sync tasks to be scheduled by pressing the ‘Sync list...’ button below.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Next sync time is %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Next sync:  Time=%s, Name= (%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error" formatted="false">The task specified in the schedule cannot be found.\nSchedule: %s, Task: %s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">Some enabled schedules contain errors. Check the \"Schedule\" tab for more details.</string>
         <string name="msgs_scheduler_info_schedule_disabled">Sync schedule disabled</string>
         <string name="msgs_scheduler_info_schedule_enabled">Sync schedule enabled</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">Execute all auto sync tasks</string>
         <string name="msgs_scheduler_info_sync_selected_profile">Sync task(s) %s</string>
-        <string name="msgs_scheduler_info_sync_task_was_not_found">Specified sync task name was not found, Name= (%s)</string>
+        <string name="msgs_scheduler_info_sync_task_was_not_found">The following sync tasks were not found: %s</string>
         <string name="msgs_scheduler_info_sync_task_was_deleted_or_renamed">Sync task was already deleted or renamed.</string>
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Empty sync task list</string>
         <string name="msgs_scheduler_main_dw_not_selected">Please select at least one day of the week.</string>

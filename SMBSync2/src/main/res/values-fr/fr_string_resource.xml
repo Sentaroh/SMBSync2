@@ -685,12 +685,12 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Merci de spécifier les tâches de synchronisation à planifier en pressant le bouton \"Tâches de sync...\" ci-dessous.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Prochaine sync à %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Prochaine sync: Heure=%s, Nom= (%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error" formatted="false">La tâche spécifiée dans la planification est introuvable.\nPlanification: %s, Tâche: %s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">Certaines tâches planifiées contiennent des erreurs. Vous trouverez plus de détails dans l\'onglet \"Planfication\".</string>
         <string name="msgs_scheduler_info_schedule_disabled">Planification désactivée</string>
         <string name="msgs_scheduler_info_schedule_enabled">Planification activée</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">Exécuter toutes les tâches configurées en mode Auto</string>
         <string name="msgs_scheduler_info_sync_selected_profile">Tâche à sync %s</string>
-        <string name="msgs_scheduler_info_sync_task_was_not_found">Le nom de la tâche de sync spécifié n\'a pas été trouvé, Nom= (%s)</string>
+        <string name="msgs_scheduler_info_sync_task_was_not_found">Les tâches de synchronisation suivantes n\'existent pas: %s</string>
         <string name="msgs_scheduler_info_sync_task_was_deleted_or_renamed">La tâche de sync a déjà été supprimée ou renommée.</string>
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Liste des tâches de sync vide.</string>
         <string name="msgs_scheduler_main_dw_not_selected">Sélectionner au moins un jour de la semaine.</string>

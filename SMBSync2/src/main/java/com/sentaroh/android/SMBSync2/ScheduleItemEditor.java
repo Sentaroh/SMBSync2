@@ -674,7 +674,7 @@ public class ScheduleItemEditor {
             String sep="";
             for(String stn:stl) {
                 if (ScheduleUtil.getSyncTask(mGp,stn)==null) {
-                    error_item_name=sep+stn;
+                    error_item_name+=sep+stn;//display all non found sync tasks in the Edit Schedule dialog error message
                     sep=SYNC_TASK_LIST_SEPARATOR;
                 }
             }

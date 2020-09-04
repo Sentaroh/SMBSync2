@@ -685,12 +685,12 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">同期リストの編集ボタンを押して、同期するプロファイルを指定してください。</string>
         <string name="msgs_scheduler_info_next_schedule_time">同期予定時刻 %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">同期予定 : 時刻=%s, 名前=(%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error" formatted="false">スケジュールで指定したタスクが見つかりません。スケジュール:%s, タスク:%s</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">一部のスケジュールされたタスクにエラーが含まれています。詳細については、\"計画\"タブを参照してください。</string>
         <string name="msgs_scheduler_info_schedule_disabled">スケジュール同期:無効</string>
         <string name="msgs_scheduler_info_schedule_enabled">スケジュール同期:有効</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">自動同期タスクすべて</string>
         <string name="msgs_scheduler_info_sync_selected_profile">プロファイル %s を同期</string>
-        <string name="msgs_scheduler_info_sync_task_was_not_found">指定された同期タスクが見つかりませんでした。名前=(%s)</string>
+        <string name="msgs_scheduler_info_sync_task_was_not_found">次の同期タスクは存在しません：%s</string>
         <string name="msgs_scheduler_info_sync_task_was_deleted_or_renamed">同期タスクが削除または改名されています。</string>
         <string name="msgs_scheduler_info_sync_task_list_was_empty">同期タスクが指定されていません</string>
         <string name="msgs_scheduler_main_dw_not_selected">少なくても一つの曜日を選択してください</string>

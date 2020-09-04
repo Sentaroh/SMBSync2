@@ -212,7 +212,7 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
                         for(String stn:stl) {
                             if (ScheduleUtil.getSyncTask(mGp,stn)==null) {
                                 schedule_error=true;
-                                error_item_name=sep+stn;
+                                error_item_name+=sep+stn;//display all not found sync tasks in Schedule Tab entries
                                 sep=",";
                             }
                         }
