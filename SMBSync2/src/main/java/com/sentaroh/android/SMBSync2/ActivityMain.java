@@ -323,10 +323,8 @@ public class ActivityMain extends AppCompatActivity {
                     synchronized (mGp.syncTaskList) {
                         ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil, false);
                         for(SyncTaskItem sti:task_list) {
-                            if (SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, sti.getSyncTaskName())==null) {
-                                mGp.syncTaskList.add(sti);
-                                mUtil.addDebugMsg(1, "I", "Sync task list added, name="+sti.getSyncTaskName());
-                            }
+                            mGp.syncTaskList.add(sti);
+                            mUtil.addDebugMsg(1, "I", "Sync task list added, name="+sti.getSyncTaskName());
                         }
                     }
                     if (mGp.debuggable) {
