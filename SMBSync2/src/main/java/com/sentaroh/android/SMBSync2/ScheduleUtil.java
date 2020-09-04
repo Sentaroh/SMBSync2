@@ -655,7 +655,7 @@ public class ScheduleUtil {
                                     if (getSyncTask(gp,stn)==null) {
                                         schedule_error=true;
                                         error_task_name+= sep + "\"" + stn + "\"";//display all not found task names in the debug message
-                                        error_sched_name=si.scheduleName;
+                                        error_sched_name="\""+si.scheduleName+"\"";
                                         sep = ", ";
                                     }
                                 }
@@ -663,7 +663,7 @@ public class ScheduleUtil {
                                 if (getSyncTask(gp,si.syncTaskList)==null) {
                                     schedule_error=true;
                                     error_task_name="\""+si.syncTaskList+"\"";
-                                    error_sched_name=si.scheduleName;
+                                    error_sched_name="\""+si.scheduleName+"\"";
                                 }
                             }
                         } else {
@@ -672,7 +672,7 @@ public class ScheduleUtil {
                             error_sched_name="\""+ si.scheduleName+ "\"";
                         }
 
-                        if (!error_sched_name.equals("")) cu.addDebugMsg(1,"I", "setSchedulerInfo Error: invalid tasks in schedule, schedule name="+error_sched_name+", task name="+error_task_name);
+                        if (!error_sched_name.equals("")) cu.addDebugMsg(1,"I", "setSchedulerInfo Error: invalid tasks in schedule, schedule name=" + error_sched_name + "; task name=" + error_task_name);
                     }
                     sched_array.add(item);
                 }
