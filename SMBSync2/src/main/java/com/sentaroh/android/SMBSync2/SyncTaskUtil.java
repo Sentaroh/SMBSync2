@@ -4074,7 +4074,7 @@ public class SyncTaskUtil {
             String invalid_chars_msg = hasSyncTaskNameContainsUnusableCharacter(c, t_name);
             if (!invalid_chars_msg.equals("")) {
                 result = invalid_chars_msg;
-            } else if (!type.equals("EDIT") && getSyncTaskByName(gp.syncTaskAdapter, t_name) != null) {//check if task name already exists
+            } else if (!type.equals("EDIT") && getSyncTaskByName(gp.syncTaskList, t_name) != null) {//check if task name already exists
                 result = c.getString(R.string.msgs_duplicate_task_name);
             }
         } else {
@@ -4087,10 +4087,12 @@ public class SyncTaskUtil {
     static public SyncTaskItem getSyncTaskByName(ArrayList<SyncTaskItem> t_prof, String task_name) {
         SyncTaskItem stli = null;
 
-        for (SyncTaskItem li : t_prof) {
-            if (li.getSyncTaskName().equalsIgnoreCase(task_name)) {
-                stli = li;
-                break;
+        if (t_prof!=null) {
+            for (SyncTaskItem li : t_prof) {
+                if (li.getSyncTaskName().equalsIgnoreCase(task_name)) {
+                    stli = li;
+                    break;
+                }
             }
         }
         return stli;
