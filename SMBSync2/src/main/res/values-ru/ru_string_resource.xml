@@ -170,8 +170,7 @@
         <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 привилегии, необходимые для чтения SSID WiFi. \nЕсли вы укажете \"Список точек доступа\" в задаче синхронизации, пока не будет предоставлено разрешение, завершится с ошибкой. \nВы хотите запросить разрешение на неточное местоопределение?</string>
         <string name="msgs_main_permission_background_location_title">Разрешение на фоновое расположение</string>
         <string name="msgs_main_permission_background_location_denied_msg">Если в настройках задания указать \"Список точек доступа\", то синхронизация будет неудачной, если вы не разрешите Службе Местоположения. Пожалуйста, разрешите \"Разрешение на грубое расположение\" из меню.</string>
-        <string name="msgs_main_permission_background_location_request_msg">Это разрешение необходимо для чтения WiFi SSID в SMBSync2.\nДо тех пор пока разрешение не будет предоставлено, SMBSync2 выйдет с ошибкой, если в задаче синхронизации указан \"Список точек доступа\".\nВ разделе Разрешения на местоположение выберите \"Всегда разрешать\".
-Вы хотите запросить разрешение на фоновое расположение?</string>
+        <string name="msgs_main_permission_background_location_request_msg">Это разрешение необходимо для чтения WiFi SSID в SMBSync2.\nДо тех пор пока разрешение не будет предоставлено, SMBSync2 выйдет с ошибкой, если в задаче синхронизации указан \"Список точек доступа\".\nВ разделе Разрешения на местоположение выберите \"Всегда разрешать\".\nВы хотите запросить разрешение на фоновое расположение?</string>
         <string name="msgs_main_permission_coarse_location_title">Разрешение на неточное местоположение</string>
         <string name="msgs_main_permission_external_storage_denied_msg">Невозможно запустить приложение, так как вам не было предоставлено разрешение на доступ к внутренней памяти.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Предоставьте разрешение на доступ к внутреннему хранилищу для чтения и записи данных, которые синхронизированы с внутренним хранилищем и для административных данных.</string>
@@ -686,19 +685,19 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Укажите профиль для синхронизации, нажав кнопку «Редактировать список синхронизации».</string>
         <string name="msgs_scheduler_info_next_schedule_time">Время следующей синхронизации %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Следующая синхронизация: время = %s, имя = (%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error" formatted="false">Задача, указанная в расписании, не найдена.\nРасписание: %s, задача: %s </string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">Некоторые запланированные задачи содержат ошибки. Вы найдете более подробную информацию во вкладке \"Планирование\".</string>
         <string name="msgs_scheduler_info_schedule_disabled">Расписание синхронизации отключено</string>
         <string name="msgs_scheduler_info_schedule_enabled">Расписание синхронизации включено</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">Выполнить все задачи автосинхронизации</string>
         <string name="msgs_scheduler_info_sync_selected_profile">Синхронизировать задачу %s</string>
-        <string name="msgs_scheduler_info_sync_task_was_not_found">Указанное имя задачи синхронизации не найдено, Имя = (%s)</string>
+        <string name="msgs_scheduler_info_sync_task_was_not_found">Следующие задачи синхронизации не существуют: %s</string>
         <string name="msgs_scheduler_info_sync_task_was_deleted_or_renamed">Задача синхронизации уже удалена или переименована.</string>
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Пустой список задач синхронизации</string>
         <string name="msgs_scheduler_main_dw_not_selected">Пожалуйста, выберите хотя бы один день недели.</string>
         <string name="msgs_schedule_list_edit_dlg_title">Изменить список расписаний</string>
-        <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Это имя задачи синхронизации уже существует. Используйте другое имя.</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Задача планирования с таким именем уже существует.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Имя синхронизации не указано.</string>
-        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Недействительный символ в названии расписания: \"%s\".</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Недействительный символ в названии расписания: \"%s\"</string>
         <string name="msgs_schedule_cont_label_add">Добавить расписание</string>
         <string name="msgs_schedule_cont_label_activate">Включить</string>
         <string name="msgs_schedule_cont_label_inactivate">Отключить</string>

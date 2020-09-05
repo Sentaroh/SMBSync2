@@ -39,7 +39,7 @@ import java.util.TimeZone;
  */
 class SyncTaskItem implements Serializable, Cloneable {
     private static final long serialVersionUID = 1L;
-    private String syncTasｋName = "";
+    private String syncTaskName = "";
     private String syncTasｋGroup = "";
     private boolean syncTaskEnabled = true;
     private boolean isChecked = false;
@@ -236,7 +236,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     private boolean syncTaskIsRunning = false;
 
     public SyncTaskItem(String stn, boolean pfa, boolean ic) {
-        syncTasｋName = stn;
+        syncTaskName = stn;
         syncTaskEnabled = pfa;
         isChecked = ic;
         initOffsetOfDst();
@@ -251,7 +251,7 @@ class SyncTaskItem implements Serializable, Cloneable {
         else setSyncOptionOffsetOfDst(SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
     }
 
-    public String getSyncTaskName() {return syncTasｋName;}
+    public String getSyncTaskName() {return syncTaskName;}
 
     public String getSyncTaskType() {return syncTaskType;}
 
@@ -455,7 +455,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public void setSyncDoNotResetFileLastModified(boolean p) {syncOptionNotUsedLastModifiedForRemote = p;}
 
-    public void setSyncTaskName(String p) {syncTasｋName = p;}
+    public void setSyncTaskName(String p) {syncTaskName = p;}
 
     public void setMasterSmbUserName(String p) {syncTaskMasterFolderSmbUserName = p;}
 
@@ -626,11 +626,14 @@ class SyncTaskItem implements Serializable, Cloneable {
     static public final int SYNC_FOLDER_ERROR_ZIP_PASSWORD =4;
     private int syncMasterFolderError =SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
     private int syncTargetFolderError =SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
-    public boolean isSyncTaskError() {return (syncMasterFolderError+syncTargetFolderError)!=SYNC_FOLDER_ERROR_NO_ERROR;}
+    private boolean isSyncTaskNameError =false;
+    public boolean isSyncTaskError() {return (isSyncTaskNameError || (syncMasterFolderError+syncTargetFolderError)!=SYNC_FOLDER_ERROR_NO_ERROR);}
     public int getMasterFolderError() {return syncMasterFolderError;}
     public void setMasterFolderError(int error_code) {syncMasterFolderError = error_code;}
     public int getTargetFolderError() {return syncTargetFolderError;}
     public void setTargetFolderError(int error_code) {syncTargetFolderError = error_code;}
+    public boolean getSyncTaskNameError() {return isSyncTaskNameError;}
+    public void setSyncTaskNameError(boolean is_error) {isSyncTaskNameError = is_error;}
 
     public void setLastSyncTime(String p) {syncLastSyncTime = p;}
     public void setLastSyncResult(int p) {syncLastSyncResult = p;}
@@ -676,13 +679,14 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public boolean isSame(SyncTaskItem sti) {
         boolean result = false;
-        if ((syncTasｋName.equals(sti.getSyncTaskName()) &&
+        if ((syncTaskName.equals(sti.getSyncTaskName()) &&
                 (syncTasｋGroup.equals(sti.getSyncTaskGroup())) &&
                 (syncTaskEnabled==sti.isSyncTaskAuto()) &&
                 (syncOptionSyncTestMode==sti.isSyncTestMode()) &&
                 (syncTaskType.equals(sti.getSyncTaskType())) &&
                 (syncMasterFolderError==sti.getMasterFolderError()) &&
                 (syncTargetFolderError==sti.getTargetFolderError()) &&
+                //(isSyncTaskNameError==sti.getSyncTaskNameError()) &&
                 (syncTwoWayConflictOption.equals(sti.getSyncTwoWayConflictFileRule())) &&
                 (syncTwoWayConflictKeepConflictFile==sti.isSyncTwoWayKeepConflictFile() ))&&
                 (syncTaskMasterFolderType.equals(sti.getMasterFolderType())) &&

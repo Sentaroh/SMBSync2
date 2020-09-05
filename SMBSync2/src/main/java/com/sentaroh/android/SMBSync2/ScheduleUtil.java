@@ -39,6 +39,7 @@ import java.util.Calendar;
 import java.util.Collections;
 
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_UNUSABLE_CHARACTER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_DAY_OF_THE_WEEK_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_ENABLED_KEY;
@@ -593,7 +594,7 @@ public class ScheduleUtil {
     public static boolean isScheduleExists(ArrayList<ScheduleItem> sl, String name) {
         boolean result = false;
         for (ScheduleItem si : sl) {
-            if (si.scheduleName.equals(name)) result = true;
+            if (si.scheduleName.equalsIgnoreCase(name)) result = true;
         }
         return result;
     }
@@ -620,11 +621,10 @@ public class ScheduleUtil {
     public static void setSchedulerInfo(Context c, GlobalParameters gp, CommonUtilities cu) {
 //        gp.scheduleInfoList =loadScheduleData(gp);
         ArrayList<ScheduleItem> sl = loadScheduleData(c, gp);
-        String sched_list="", sep="", first="";
+        String sched_list="";
         long latest_sched_time = -1;
         ArrayList<String>sched_array=new ArrayList<String>();
         boolean schedule_error=false;
-        String error_sched_name="", error_task_name="";
 
 ///*debug*/for (SyncTaskItem sji : gp.syncTaskList) cu.addDebugMsg(1, "I", "setSchedulerInfo TaskName=\""+sji.getSyncTaskName()+"\"");
         if (gp.settingScheduleSyncEnabled) {
@@ -637,49 +637,53 @@ public class ScheduleUtil {
                     long time = ScheduleUtil.getNextSchedule(si);
                     String dt=StringUtil.convDateTimeTo_YearMonthDayHourMin(time);
                     String item=dt+SYNC_TASK_LIST_SEPARATOR+si.scheduleName;
+
+                    if (!hasScheduleNameContainsUnusableCharacter(c, si.scheduleName).equals("")) {
+                        schedule_error=true;
+                        cu.addDebugMsg(1, "I", "setSchedulerInfo Error: schedule name has non valid chars, schedule name=" + "\"" + si.scheduleName + "\"");
+                    }
+
                     if (si.syncAutoSyncTask) {
                         //NOP
                     } else {
+                        String error_sched_name="", error_task_name="";
                         if (!si.syncTaskList.equals("")) {
                             if (si.syncTaskList.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {
                                 String[] stl=si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
+                                String sep="";
                                 for(String stn:stl) {
-//    /*debug*/                   cu.addDebugMsg(1,"I", "setSchedulerInfo findSyncTask1 name="+stn+", result="+getSyncTask(gp,stn));
                                     if (getSyncTask(gp,stn)==null) {
                                         schedule_error=true;
-                                        error_task_name="\""+stn+"\"";
-                                        error_sched_name=si.scheduleName;
-                                        break;
+                                        error_task_name+= sep + "\"" + stn + "\"";//display all not found task names in the debug message
+                                        error_sched_name="\""+si.scheduleName+"\"";
+                                        sep = ", ";
                                     }
                                 }
                             } else {
-//    /*debug*/               cu.addDebugMsg(1,"I", "setSchedulerInfo findSyncTask name="+si.syncTaskList+", result="+getSyncTask(gp,si.syncTaskList));
                                 if (getSyncTask(gp,si.syncTaskList)==null) {
                                     schedule_error=true;
                                     error_task_name="\""+si.syncTaskList+"\"";
-                                    error_sched_name=si.scheduleName;
-                                    break;
+                                    error_sched_name="\""+si.scheduleName+"\"";
                                 }
                             }
                         } else {
                             schedule_error=true;
-                            error_task_name="\""+si.syncTaskList+"\"";
-                            error_sched_name=si.scheduleName;
-                            break;
+                            error_task_name= "\""+ si.syncTaskList+ "\"";
+                            error_sched_name="\""+ si.scheduleName+ "\"";
                         }
+
+                        if (!error_sched_name.equals("")) cu.addDebugMsg(1,"I", "setSchedulerInfo Error: invalid tasks in schedule, schedule name=" + error_sched_name + "; task name=" + error_task_name);
                     }
                     sched_array.add(item);
-                    if (schedule_error) break;
                 }
             }
-///*debug*/cu.addDebugMsg(1,"I", "setSchedulerInfo Error schedule name="+error_sched_name+", task name="+error_task_name);
-
         }
 
         Collections.sort(sched_array);
 
         if (sched_array.size()>0) {
             String[] key=sched_array.get(0).split(SYNC_TASK_LIST_SEPARATOR);
+            String sep="";
             for(String item:sched_array) {
                 String[] s_key=item.split(SYNC_TASK_LIST_SEPARATOR);
                 if (key[0].equals(s_key[0])) {
@@ -689,7 +693,7 @@ public class ScheduleUtil {
             }
             String sched_info ="";
             if (schedule_error) {
-                gp.scheduleErrorText = String.format(c.getString(R.string.msgs_scheduler_info_next_schedule_main_error), error_sched_name, error_task_name);
+                gp.scheduleErrorText = String.format(c.getString(R.string.msgs_scheduler_info_next_schedule_main_error));
                 gp.scheduleErrorView.setText(gp.scheduleErrorText);
                 gp.scheduleErrorView.setTextColor(gp.themeColorList.text_color_warning);
                 gp.scheduleErrorView.setVisibility(TextView.VISIBLE);
@@ -703,6 +707,8 @@ public class ScheduleUtil {
         } else {
             gp.scheduleInfoText = c.getString(R.string.msgs_scheduler_info_schedule_disabled);
             gp.scheduleInfoView.setText(gp.scheduleInfoText);
+            gp.scheduleErrorText="";
+            gp.scheduleErrorView.setVisibility(TextView.GONE);
         }
     }
 
@@ -721,6 +727,13 @@ public class ScheduleUtil {
             result = c.getString(R.string.msgs_scheduler_info_schedule_disabled);
         }
         return result;
+    }
+
+    static public String hasScheduleNameContainsUnusableCharacter(Context c, String name) {
+        for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
+            if (name.contains(item)) return c.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character,item);
+        }
+        return "";
     }
 
 }

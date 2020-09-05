@@ -323,10 +323,8 @@ public class ActivityMain extends AppCompatActivity {
                     synchronized (mGp.syncTaskList) {
                         ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil, false);
                         for(SyncTaskItem sti:task_list) {
-                            if (SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, sti.getSyncTaskName())==null) {
-                                mGp.syncTaskList.add(sti);
-                                mUtil.addDebugMsg(1, "I", "Sync task list added, name="+sti.getSyncTaskName());
-                            }
+                            mGp.syncTaskList.add(sti);
+                            mUtil.addDebugMsg(1, "I", "Sync task list added, name="+sti.getSyncTaskName());
                         }
                     }
                     if (mGp.debuggable) {
@@ -2361,11 +2359,11 @@ public class ActivityMain extends AppCompatActivity {
     public void checkBackgroundLocationPermission(final NotifyEvent p_ntfy) {
         mUtil.addDebugMsg(1, "I", "Background location permission=" + checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION));
         NotifyEvent ntfy_bg_location_request = new NotifyEvent(mContext);
-        ntfy_bg_location_request.setListener(new NotifyEvent.NotifyEventListener() {
+        ntfy_bg_location_request.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 NotifyEvent ntfy_bg_location_response=new NotifyEvent(mContext);
-                ntfy_bg_location_response.setListener(new NotifyEvent.NotifyEventListener() {
+                ntfy_bg_location_response.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         mGp.setSettingGrantCoarseLocationRequired(mContext, true);
@@ -3079,9 +3077,11 @@ public class ActivityMain extends AppCompatActivity {
                             }
                         }
                         if (mGp.syncTabScheduleAdapter.getCount() == 0) {
-                            mGp.syncTabScheduleAdapter.setSelectMode(false);
                             mGp.syncTabMessage.setVisibility(TextView.VISIBLE);
                         }
+                        mGp.syncTabScheduleAdapter.setSelectMode(false);
+                        mGp.syncTabScheduleAdapter.sort();
+                        mGp.syncTabScheduleAdapter.unselectAll();
                         setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
                         mGp.syncTabScheduleAdapter.notifyDataSetChanged();
                         saveScheduleList();
@@ -3301,17 +3301,30 @@ public class ActivityMain extends AppCompatActivity {
         dlg_cmp.setVisibility(TextView.GONE);
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(si.scheduleName);
-        dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
+
+        String e_msg=ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, si.scheduleName);
+        if (si.scheduleName.equals("")) dlg_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
+        else if (!e_msg.equals("")) dlg_msg.setText(e_msg);
+        else dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
+
         btn_ok.setEnabled(false);
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                if (!arg0.toString().equalsIgnoreCase(si.scheduleName)) {
-                    btn_ok.setEnabled(true);
-                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_warning));
-                } else {
+                String edit_text = arg0.toString();
+                String invalid_chars_msg=ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, edit_text);
+                if (edit_text.equals("")) {
+                    btn_ok.setEnabled(false);
+                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
+                } else if (!invalid_chars_msg.equals("")) {
+                    btn_ok.setEnabled(false);
+                    dlg_msg.setText(invalid_chars_msg);
+                } else if (edit_text.equalsIgnoreCase(si.scheduleName)) {
                     btn_ok.setEnabled(false);
                     dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
+                } else {
+                    btn_ok.setEnabled(true);
+                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_warning));
                 }
             }
 

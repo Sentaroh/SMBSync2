@@ -64,7 +64,6 @@ import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
 import java.util.ArrayList;
 
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
-import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_UNUSABLE_CHARACTER;
 
 public class ScheduleItemEditor {
 //    private CommonDialog commonDlg = null;
@@ -132,6 +131,7 @@ public class ScheduleItemEditor {
             else mScheduleChanged=true;
             CommonDialog.setButtonEnabled(mActivity, btn_ok, mScheduleChanged);
         }
+        setOkButtonEnabledDisabled(dialog);
     }
 
     private boolean isScheduleWasChanged() {
@@ -341,7 +341,6 @@ public class ScheduleItemEditor {
             @Override
             public void afterTextChanged(Editable editable) {
                 setScheduleWasChanged(dialog, mSched);
-                setOkButtonEnabledDisabled(dialog);
             }
         });
         ctv_first_time.setOnClickListener(new OnClickListener() {
@@ -423,7 +422,6 @@ public class ScheduleItemEditor {
                 setViewVisibility(dialog);
 
 //				btn_ok.setEnabled(true);
-                setOkButtonEnabledDisabled(dialog);
 
                 if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_DAY_OF_THE_WEEK) &&
                         buildDayOfWeekString(dialog).equals("0000000")) {
@@ -544,8 +542,6 @@ public class ScheduleItemEditor {
                             if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                             else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                             tv_msg.setText("");
-                            setOkButtonEnabledDisabled(dialog);
-
                         } else {
                             btn_edit.setVisibility(Button.VISIBLE);//.setEnabled(true);
                             tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
@@ -556,8 +552,6 @@ public class ScheduleItemEditor {
                                 if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                                 else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                                 tv_msg.setText("");
-                                setOkButtonEnabledDisabled(dialog);
-
                             }
                         }
                         setScheduleWasChanged(dialog, mSched);
@@ -571,7 +565,6 @@ public class ScheduleItemEditor {
                         if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                         else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                         tv_msg.setText("");
-                        setOkButtonEnabledDisabled(dialog);
                     } else {
                         btn_edit.setVisibility(Button.VISIBLE);//.setEnabled(true);
                         tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
@@ -582,7 +575,6 @@ public class ScheduleItemEditor {
                             if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                             else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                             tv_msg.setText("");
-                            setOkButtonEnabledDisabled(dialog);
                         }
                     }
                     setScheduleWasChanged(dialog, mSched);
@@ -606,7 +598,6 @@ public class ScheduleItemEditor {
                             if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                             else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                             tv_msg.setText("");
-                            setOkButtonEnabledDisabled(dialog);
                         }
                         setScheduleWasChanged(dialog, mSched);
                     }
@@ -636,7 +627,7 @@ public class ScheduleItemEditor {
             public void onClick(View v) {
                 if (isScheduleWasChanged()) {
                     NotifyEvent ntfy = new NotifyEvent(mContext);
-                    ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    ntfy.setListener(new NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
                             dialog.dismiss();
@@ -683,7 +674,7 @@ public class ScheduleItemEditor {
             String sep="";
             for(String stn:stl) {
                 if (ScheduleUtil.getSyncTask(mGp,stn)==null) {
-                    error_item_name=sep+stn;
+                    error_item_name+=sep+stn;//display all non found sync tasks in the Edit Schedule dialog error message
                     sep=SYNC_TASK_LIST_SEPARATOR;
                 }
             }
@@ -708,13 +699,6 @@ public class ScheduleItemEditor {
         }
     }
 
-    static public String hasScheduleNameContainsUnusableCharacter(Context c, String name) {
-        for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
-            if (name.contains(item)) return c.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character,item);
-        }
-        return "";
-    }
-
     private void setOkButtonEnabledDisabled(Dialog dialog) {
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
@@ -724,7 +708,7 @@ public class ScheduleItemEditor {
             tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
             CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
         } else {
-            String e_msg=hasScheduleNameContainsUnusableCharacter(mContext, et_name.getText().toString());
+            String e_msg=ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, et_name.getText().toString());
             if (!e_msg.equals("")) {
                 tv_msg.setText(e_msg);
                 CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
