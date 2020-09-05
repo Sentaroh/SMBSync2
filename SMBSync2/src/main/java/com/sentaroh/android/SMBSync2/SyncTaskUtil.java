@@ -1790,7 +1790,7 @@ public class SyncTaskUtil {
 
         dlg_cmp.setVisibility(TextView.GONE);
         dlg_cmp.setTextColor(mGp.themeColorList.text_color_error);
-        String e_msg=checkTaskNameValidity(mContext, mGp, pli.getSyncTaskName());
+        String e_msg=checkTaskNameValidity(mContext, mGp, pli.getSyncTaskName(), false, false);
         if (!e_msg.equals("")) {
             dlg_cmp.setText(e_msg);
             dlg_cmp.setVisibility(TextView.VISIBLE);
@@ -1803,7 +1803,7 @@ public class SyncTaskUtil {
             @Override
             public void afterTextChanged(Editable arg0) {
                 String edit_text=arg0.toString();
-                String error_msg = checkTaskNameValidity(mContext, mGp, edit_text);
+                String error_msg = checkTaskNameValidity(mContext, mGp, edit_text, false, false);
                 if (!error_msg.equals("")) {
                     dlg_cmp.setText(error_msg);
                     dlg_cmp.setVisibility(TextView.VISIBLE);
@@ -4064,19 +4064,37 @@ public class SyncTaskUtil {
         return "";
     }
 
-    static public String checkTaskNameValidity(Context c, GlobalParameters gp, String t_name) {
-        return checkTaskNameValidity(c, gp, "", t_name, null, null);
+    //check if an existing task name is already a duplicate in the syncTaskAdapter (could be caused by bug in previous versions or modification to the settings file)
+    static public boolean isSyncTaskNameDuplicate (Context c, GlobalParameters gp, String t_name) {
+        int count = 0;
+        for (int i = 0; i < gp.syncTaskAdapter.getCount(); i++) {
+            SyncTaskItem item = gp.syncTaskAdapter.getItem(i);
+            if (t_name.equalsIgnoreCase(item.getSyncTaskName())) count++;
+        }
+        return count > 1;
     }
 
-    static public String checkTaskNameValidity(Context c, GlobalParameters gp, String type, String t_name, TextView tv, Button ok) {
-        String result = "";
+    //check if provided sync task name already exists
+    static public boolean isSyncTasknameExists(Context c, GlobalParameters gp, String t_name) {
+        return getSyncTaskByName(gp.syncTaskAdapter, t_name) != null;
+    }
+
+    //showAllError: show all errors with "\n" separator (for display of all name errors in Sync Task List details)
+    //check_dup_status==false: check a new sync task name for validity against existing sync tasks (called when rename/create a sync task)
+    //check_dup_status==true: check if task name is already a duplicate in the syncTaskAdapter (could be caused by bug in previous versions or modification to the settings file)
+    //                        called when editing sync task and in the Sync Task Adapter
+    static public String checkTaskNameValidity(Context c, GlobalParameters gp, String t_name, boolean check_dup_status, boolean showAllError) {
+        String result = "", invalid_chars_msg="", dup_msg="", sep="";
         if (t_name.length() > 0) {
-            String invalid_chars_msg = hasSyncTaskNameContainsUnusableCharacter(c, t_name);
-            if (!invalid_chars_msg.equals("")) {
-                result = invalid_chars_msg;
-            } else if (!type.equals("EDIT") && getSyncTaskByName(gp.syncTaskList, t_name) != null) {//check if task name already exists
-                result = c.getString(R.string.msgs_duplicate_task_name);
+            invalid_chars_msg= hasSyncTaskNameContainsUnusableCharacter(c, t_name);
+            if (!check_dup_status && isSyncTasknameExists(c, gp, t_name)) {
+                dup_msg= c.getString(R.string.msgs_duplicate_task_name);
+            } else if (check_dup_status && isSyncTaskNameDuplicate(c, gp, t_name)) {
+                dup_msg= c.getString(R.string.msgs_duplicate_task_name);
             }
+            sep= !invalid_chars_msg.equals("") && !dup_msg.equals("") ? "\n":"";
+            if (showAllError) result= invalid_chars_msg + sep + dup_msg;
+            else result= invalid_chars_msg.equals("") ? dup_msg:invalid_chars_msg;
         } else {
             result = c.getString(R.string.msgs_specify_task_name);
         }
@@ -5784,7 +5802,6 @@ public class SyncTaskUtil {
                 if (ispl != null) addImportSettingsParm(pl.replace(SMBSYNC2_PROF_VER8, ""), ispl);
             }
         }
-
     }
 
     private static void addSyncTaskListVer1(String pl, ArrayList<SyncTaskItem> sync) {
@@ -6893,7 +6910,7 @@ public class SyncTaskUtil {
             } else wifi_addr_list.clear();
 
             SyncTaskItem stli = new SyncTaskItem(parm[1], parm[2].equals("0") ? false : true, false); //parm[1]: syncTasｋName, parm[2]: syncTaskEnabled, last SyncTaskItem param (..., false): isChecked
-            if (!checkTaskNameValidity(c, gp, stli.getSyncTaskName()).equals("")) {//If task Name is invalid (invalid char, duplicate), set it to error
+            if (!checkTaskNameValidity(c, gp, stli.getSyncTaskName(), false, false).equals("")) {//If task Name is invalid (invalid char, duplicate), set it to error
                 stli.setSyncTaskNameError(true);
             }
             if (isValidTaskItemValue(SyncTaskItem.SYNC_TASK_TYPE_LIST, parm[3])) {

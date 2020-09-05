@@ -378,18 +378,15 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             }
             holder.tv_row_target.requestLayout();
 
-            String e_msg=SyncTaskUtil.hasSyncTaskNameContainsUnusableCharacter(mContext, o.getSyncTaskName());
-            if (isSyncTaskNameDuplicate(mContext, mGp, o.getSyncTaskName())) {
-                if (e_msg.equals("")) e_msg= mContext.getString(R.string.msgs_duplicate_task_name);
-                else e_msg+= "\n" + mContext.getString(R.string.msgs_duplicate_task_name);
-            }
-
+            String e_msg=SyncTaskUtil.checkTaskNameValidity(mContext, mGp, o.getSyncTaskName(), true, true);
             if (!e_msg.equals("")) {
                 sync_btn_disable=true;
                 o.setSyncTaskNameError(true);
                 holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
                 holder.tv_last_sync_result.setText(e_msg);
                 holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_warning);
+            } else {
+                o.setSyncTaskNameError(false);
             }
 
             if (isShowCheckBox) {
@@ -443,17 +440,6 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             notifyDataSetChanged();
         }
         return v;
-    }
-
-    //check if task name is duplicate in existing syncTaskAdapter
-    private static boolean isSyncTaskNameDuplicate (Context c, GlobalParameters gp, String t_name) {
-        int count = 0;
-        for (int i = 0; i < gp.syncTaskAdapter.getCount(); i++) {
-            SyncTaskItem item = gp.syncTaskAdapter.getItem(i);
-            if (t_name.equalsIgnoreCase(item.getSyncTaskName())) count++;
-        }
-        if (count > 1) return true;
-        else return false;
     }
 
     static class ViewHolder {

@@ -5183,7 +5183,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button swap_master_target = (Button) mDialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
 
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
-        String t_name_msg = mTaskUtil.checkTaskNameValidity(mContext, mGp, type, n_sti.getSyncTaskName(), dlg_msg, btn_ok);
+        String t_name_msg = mTaskUtil.checkTaskNameValidity(mContext, mGp, n_sti.getSyncTaskName(), true, false);
         boolean error_detected = false;
         ll_edit_sync_tak_option_keep_conflict_file.setVisibility(LinearLayout.GONE);
         ll_spinnerTwoWaySyncConflictRule.setVisibility(LinearLayout.GONE);
