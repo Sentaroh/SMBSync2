@@ -685,7 +685,7 @@
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">同期リストの編集ボタンを押して、同期するプロファイルを指定してください。</string>
         <string name="msgs_scheduler_info_next_schedule_time">同期予定時刻 %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">同期予定 : 時刻=%s, 名前=(%s)</string>
-        <string name="msgs_scheduler_info_next_schedule_main_error">一部のスケジュールされたタスクにエラーが含まれています。詳細については、\"計画\"タブを参照してください。</string>
+        <string name="msgs_scheduler_info_next_schedule_main_error">一部のスケジュールされたタスクにエラーが含まれています。詳細については、\"スケジュール\"タブを参照してください。</string>
         <string name="msgs_scheduler_info_schedule_disabled">スケジュール同期:無効</string>
         <string name="msgs_scheduler_info_schedule_enabled">スケジュール同期:有効</string>
         <string name="msgs_scheduler_info_sync_all_active_profile">自動同期タスクすべて</string>
