@@ -287,6 +287,15 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             } else {
                 holder.ll_last_sync.setVisibility(LinearLayout.GONE);
             }
+
+            String e_msg=SyncTaskUtil.isValidSyncTaskName(mContext, mGp.syncTaskList, o.getSyncTaskName(), true, true);
+            if (!e_msg.equals("")) {
+                sync_btn_disable=true;
+                holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
+                holder.tv_last_sync_result.setText(e_msg);
+                holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_warning);
+            }
+
             if (!o.isSyncTaskError()) {
                 if (o.isSyncTestMode()) {
                     if (ThemeUtil.isLightThemeUsed(mContext))
@@ -377,17 +386,6 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 holder.iv_row_image_target.setImageResource(R.drawable.ic_32_server);
             }
             holder.tv_row_target.requestLayout();
-
-            String e_msg=SyncTaskUtil.checkTaskNameValidity(mContext, mGp, o.getSyncTaskName(), true, true);
-            if (!e_msg.equals("")) {
-                sync_btn_disable=true;
-                o.setSyncTaskNameError(true);
-                holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
-                holder.tv_last_sync_result.setText(e_msg);
-                holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_warning);
-            } else {
-                o.setSyncTaskNameError(false);
-            }
 
             if (isShowCheckBox) {
                 holder.cbv_row_cb1.setVisibility(CheckBox.VISIBLE);

@@ -1003,7 +1003,7 @@ public class ScheduleItemEditor {
 
         for (int i = 0; i < mGp.syncTaskAdapter.getCount(); i++) {
             SyncTaskItem pfli = mGp.syncTaskAdapter.getItem(i);
-            String e_msg=SyncTaskUtil.hasSyncTaskNameContainsUnusableCharacter(mContext, pfli.getSyncTaskName());
+            String e_msg=SyncTaskUtil.hasSyncTaskNameUnusableCharacter(mContext, pfli.getSyncTaskName());
             if (e_msg.equals("")) adapter.add(SYNC_TASK_ENABLED + pfli.getSyncTaskName());
             else mUtil.addDebugMsg(1, "I", "Invalid sync task name, Task="+pfli.getSyncTaskName());
         }
