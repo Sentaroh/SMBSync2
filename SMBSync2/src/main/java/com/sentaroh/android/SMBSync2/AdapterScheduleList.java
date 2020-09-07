@@ -200,11 +200,12 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
             String sep_msg = "";
             holder.tv_error_info.setVisibility(TextView.GONE);
 
+            //check for schedule name errors
             if (o.scheduleName.equals("")) {
                 error_msg = mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified);
                 sep_msg = "\n";
             } else {
-                if (isScheduleNameDuplicate(mScheduleList, o.scheduleName)) {
+                if (ScheduleUtil.isScheduleDuplicate(mScheduleList, o.scheduleName)) {
                     error_msg = mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name);
                     sep_msg = "\n";
                 }
@@ -216,6 +217,7 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
                 }
             }
 
+            //check for errors in schedule sync task list
             if (o.syncAutoSyncTask) {
                 sync_prof = mContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
             } else {
@@ -304,15 +306,6 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
         }
         return v;
 
-    }
-
-    //check if schedule name is duplicate in existing Schedule adapter
-    private static boolean isScheduleNameDuplicate(ArrayList<ScheduleItem> sl, String name) {
-        int count = 0;
-        for (ScheduleItem si : sl) {
-            if (si.scheduleName.equalsIgnoreCase(name)) count++;
-        }
-        return count > 1;
     }
 
     class ViewHolder {
