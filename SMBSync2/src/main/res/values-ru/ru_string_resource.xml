@@ -699,6 +699,7 @@
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Задача планирования с таким именем уже существует.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Имя синхронизации не указано.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Недействительный символ в названии расписания: \"%s\"</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">Задача синхронизации содержит ошибки, которые необходимо исправить.</string>
         <string name="msgs_schedule_cont_label_add">Добавить расписание</string>
         <string name="msgs_schedule_cont_label_activate">Включить</string>
         <string name="msgs_schedule_cont_label_inactivate">Отключить</string>

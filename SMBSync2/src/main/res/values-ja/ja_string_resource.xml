@@ -699,6 +699,7 @@
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">スケジュール名が指定されていません。</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">スケジュール名に無効な文字が含まれています: \"%s\"</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">同期タスクに修正が必要なエラーが含まれています。</string>
         <string name="msgs_schedule_cont_label_add">スケジュールの追加</string>
         <string name="msgs_schedule_cont_label_activate">スケジュールの有効化</string>
         <string name="msgs_schedule_cont_label_inactivate">スケジュールの無効化</string>

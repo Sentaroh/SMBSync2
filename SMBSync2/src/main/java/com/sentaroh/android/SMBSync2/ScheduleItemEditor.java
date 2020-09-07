@@ -1000,18 +1000,24 @@ public class ScheduleItemEditor {
         dialog.show();
     }
 
-    private final static String SYNC_TASK_ENABLED="E";
-    private final static String SYNC_TASK_DISABLED="D";
+    private final static String SYNC_TASK_ENABLED="V";//valid sync task
+    private final static String SYNC_TASK_NOT_FOUND="N";//not found sync task
+    private final static String SYNC_TASK_ERROR="E";//sync task in error state
 
-    private boolean setSyncTaskListView(boolean active,
-                                        String prof_list, ListView lv, SchedulerAdapterSyncList adapter) {
+    private boolean setSyncTaskListView(boolean active, String prof_list, ListView lv, SchedulerAdapterSyncList adapter) {
         adapter.clear();
 
+        //add all existing sync tasks to the SchedulerAdapterSyncList (list of available sync tasks displayed in edit schedule dialog)
+        //if sync task is error, we set it
         for (int i = 0; i < mGp.syncTaskAdapter.getCount(); i++) {
             SyncTaskItem pfli = mGp.syncTaskAdapter.getItem(i);
-            String e_msg=SyncTaskUtil.hasSyncTaskNameUnusableCharacter(mContext, pfli.getSyncTaskName());
-            if (e_msg.equals("")) adapter.add(SYNC_TASK_ENABLED + pfli.getSyncTaskName());
-            else mUtil.addDebugMsg(1, "I", "Invalid sync task name, Task="+pfli.getSyncTaskName());
+            if (!pfli.isSyncTaskError()) {
+                adapter.add(SYNC_TASK_ENABLED + pfli.getSyncTaskName());
+            } else {
+                //sync tasks with error (invalid name, duplicate, invalid source/target folder...)
+                adapter.add(SYNC_TASK_ERROR + pfli.getSyncTaskName());
+                mUtil.addDebugMsg(1, "I", "Invalid sync task, Task="+pfli.getSyncTaskName());
+            }
         }
 
         String[] pfa = null;
@@ -1026,12 +1032,13 @@ public class ScheduleItemEditor {
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         lv.setSelected(true);
 
+        //the sync tasks specified in the schedule will display as checked in the schedule sync tasks list
         if (!prof_list.equals("")) {
             for (int k = 0; k < pfa.length; k++) {
                 for (int i = 0; i < adapter.getCount(); i++) {
                     String prof_name = adapter.getItem(i).substring(1);
-                    if (prof_name.equals(pfa[k])) {
-                        if (adapter.getItem(i).startsWith(SYNC_TASK_ENABLED)) lv.setItemChecked(i, true);
+                    if (prof_name.compareToIgnoreCase(pfa[k]) == 0) {
+                        lv.setItemChecked(i, true);
                         break;
                     }
                 }
@@ -1048,11 +1055,13 @@ public class ScheduleItemEditor {
         return selected;
     }
 
+    //check if sync task "sel" that is defined in the schedule exists in the global sync task list
+    //if not, add it to the schedule sync tasks list with a notification that it was deleted/renamed
     private void setSelectedSyncList(String sel, ListView lv, SchedulerAdapterSyncList adapter) {
         boolean found = false;
         for (int i = 0; i < adapter.getCount(); i++) {
             String prof_name = adapter.getItem(i).substring(1);
-            if (prof_name.equals(sel)) {
+            if (prof_name.compareToIgnoreCase(sel) == 0) {
                 found = true;
 //				lv.setItemChecked(i, true);
                 break;
@@ -1062,7 +1071,7 @@ public class ScheduleItemEditor {
             for (int i = 0; i < adapter.getCount(); i++) {
                 String prof_name = adapter.getItem(i).substring(1);
                 if (prof_name.compareToIgnoreCase(sel) > 0) {
-                    adapter.insert(SYNC_TASK_DISABLED + sel, i + 1);
+                    adapter.insert(SYNC_TASK_NOT_FOUND + sel, i + 1);
                     adapter.notifyDataSetChanged();
 //					lv.setItemChecked(i+1, true);
                     break;
@@ -1326,10 +1335,14 @@ public class ScheduleItemEditor {
                 holder = (ViewHolder) v.getTag();
             }
             if (o != null) {
-                if (o.substring(0, 1).equals(SYNC_TASK_DISABLED)) {
+                if (o.substring(0, 1).equals(SYNC_TASK_NOT_FOUND)) {
                     holder.tv_name.setText(o.substring(1)+"\n"+mContext.getString(R.string.msgs_scheduler_info_sync_task_was_deleted_or_renamed));
                     holder.tv_name.setTextColor(mThemeColorList.text_color_warning);
-                    holder.tv_name.setChecked(false);
+                    //holder.tv_name.setChecked(false);
+                } else if (o.substring(0, 1).equals(SYNC_TASK_ERROR)) {
+                    holder.tv_name.setText(o.substring(1)+"\n"+mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error));
+                    holder.tv_name.setTextColor(mThemeColorList.text_color_error);
+                    //holder.tv_name.setChecked(false);
                 } else {
                     holder.tv_name.setText(o.substring(1));
                     holder.tv_name.setTextColor(text_color);
@@ -1341,7 +1354,6 @@ public class ScheduleItemEditor {
 //            	}
             }
             return v;
-
         }
 
         class ViewHolder {
