@@ -526,6 +526,7 @@ public class ScheduleItemEditor {
             }
         });
 
+        //sync all auto sync tasks checkbox
         ctv_sync_all_prof.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -582,6 +583,7 @@ public class ScheduleItemEditor {
             }
         });
 
+        //edit sync tasks to be scheduled (checkmarks on the enabled tasks)
         btn_edit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -704,7 +706,7 @@ public class ScheduleItemEditor {
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_msg);
         CommonDialog.setButtonEnabled(mActivity, btn_ok, !mEditMode);
-        if (et_name.getText().length() == 0) {
+        if (et_name.getText().length() == 0) {//empty schedule name
             tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
             CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
         } else {
@@ -712,27 +714,30 @@ public class ScheduleItemEditor {
             if (!e_msg.equals("")) {
                 tv_msg.setText(e_msg);
                 CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
-            } else {
-                if (!mEditMode && ScheduleUtil.isScheduleExists(mScheduleList, et_name.getText().toString())) {
-                    //Name alread exists
+            } else if (mEditMode && ScheduleUtil.isScheduleDuplicate(mScheduleList, et_name.getText().toString())) {//edit an existing schedule
+                    //edited schedule is a duplicate, it must first be renamed
+                    tv_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
+                    CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
+            } else if (!mEditMode && ScheduleUtil.isScheduleExists(mScheduleList, et_name.getText().toString())) {//create or copy a schedule
+                    //schedule name alread exists
                     tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists));
                     CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
-                } else {
-                    if (!mSched.syncAutoSyncTask) {
-                        String error_task_name=getNotExistsSyncTaskName(mSched.syncTaskList);
-                        if (!error_task_name.equals("")) {
-                            tv_msg.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_task_name));
-                        } else {
-                            tv_msg.setText("");
-                            CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
-                        }
+            } else {
+                //schedule name is valid
+                if (!mSched.syncAutoSyncTask) {
+                    String error_task_name=getNotExistsSyncTaskName(mSched.syncTaskList);
+                    if (!error_task_name.equals("")) {
+                        tv_msg.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_task_name));
                     } else {
                         tv_msg.setText("");
                         CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                     }
-                    if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
-                    else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
+                } else {
+                    tv_msg.setText("");
+                    CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                 }
+                if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
+                else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
             }
         }
 
@@ -928,6 +933,7 @@ public class ScheduleItemEditor {
         else if (rb_override_sync_option_charge_2.isChecked()) sp.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_DISABLED;
     }
 
+    //edit the sync tasks list in the schedule editor
     private void editSyncTaskList(final String prof_list, final NotifyEvent p_ntfy) {
         // カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);

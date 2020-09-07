@@ -591,6 +591,14 @@ public class ScheduleUtil {
         c.sendBroadcast(intent);
     }
 
+    public static boolean isScheduleDuplicate(ArrayList<ScheduleItem> sl, String name) {
+        int count = 0;
+        for (ScheduleItem si : sl) {
+            if (si.scheduleName.equalsIgnoreCase(name)) count++;
+        }
+        return count > 1;
+    }
+
     public static boolean isScheduleExists(ArrayList<ScheduleItem> sl, String name) {
         boolean result = false;
         for (ScheduleItem si : sl) {
