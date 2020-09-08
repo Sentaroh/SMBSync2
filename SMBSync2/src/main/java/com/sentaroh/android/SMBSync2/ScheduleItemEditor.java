@@ -1081,28 +1081,35 @@ public class ScheduleItemEditor {
         return selected;
     }
 
-    //check if sync task "sel" that is defined in the schedule exists in the global sync task list
+    //check if sync task name "stn" that is defined in the schedule exists in the global sync task list
     //if not, add it to the schedule sync tasks list with a notification that it was deleted/renamed
-    private void setSelectedSyncList(String sel, ListView lv, SchedulerAdapterSyncList adapter) {
+    private void setSelectedSyncList(String stn, ListView lv, SchedulerAdapterSyncList adapter) {
         boolean found = false;
         for (int i = 0; i < adapter.getCount(); i++) {
             String prof_name = adapter.getItem(i).substring(1);
-            if (prof_name.compareToIgnoreCase(sel) == 0) {
+            if (prof_name.compareToIgnoreCase(stn) == 0) {
                 found = true;
 //				lv.setItemChecked(i, true);
                 break;
             }
         }
         if (!found) {
+            //add the non found sync task to schedule sync task list
+            boolean added = false;
             for (int i = 0; i < adapter.getCount(); i++) {
                 String prof_name = adapter.getItem(i).substring(1);
-                if (prof_name.compareToIgnoreCase(sel) > 0) {
-                    adapter.insert(SYNC_TASK_NOT_FOUND + sel, i + 1);
-                    adapter.notifyDataSetChanged();
+                if (prof_name.compareToIgnoreCase(stn) < 0) {
+                    adapter.insert(SYNC_TASK_NOT_FOUND + stn, i + 1);
 //					lv.setItemChecked(i+1, true);
+                    added = true;
                     break;
                 }
             }
+            if (!added) {
+                //it is the shortest task name in the list, add it to the top of the list
+                adapter.insert(SYNC_TASK_NOT_FOUND + stn, 0);
+            }
+            adapter.notifyDataSetChanged();
         }
     }
 
