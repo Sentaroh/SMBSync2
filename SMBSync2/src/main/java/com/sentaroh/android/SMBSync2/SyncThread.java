@@ -301,7 +301,7 @@ public class SyncThread extends Thread {
                                 mStwa.util.addDebugMsg(1, "I", "Charge staus option was disabled by schedule option.");
                             }
                         }
-                        if ((charge_status && CommonUtilities.isCharging(mStwa.context)) || !charge_status) {
+                        if ((charge_status && CommonUtilities.isCharging(mStwa.context, mStwa.util)) || !charge_status) {
                             sync_result = compileFilter(mStwa.currentSTI, mStwa.currentSTI.getFileFilter(), mStwa.currentSTI.getDirFilter());
                             if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                 sync_result = checkStorageAccess(mStwa.currentSTI);

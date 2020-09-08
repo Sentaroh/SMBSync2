@@ -64,6 +64,9 @@ import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.jcifs.JcifsUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -100,6 +103,8 @@ import static com.sentaroh.android.SMBSync2.Constants.DEFAULT_PREFS_FILENAME;
 import static com.sentaroh.android.SMBSync2.Constants.GENERAL_IO_AREA_SIZE;
 
 public final class CommonUtilities {
+    private static Logger log= LoggerFactory.getLogger(CommonUtilities.class);
+
     private Context mContext = null;
     private LogUtil mLog = null;
     private GlobalParameters mGp = null;
@@ -984,19 +989,29 @@ public final class CommonUtilities {
         return px;
     }
 
-    public static boolean isCharging(Context c) {
+    public static boolean isCharging(Context c, CommonUtilities cu) {
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        Intent batteryStatus = c.registerReceiver(null, ifilter);
+        Intent batteryInfo = c.registerReceiver(null, ifilter);
         // Are we charging / charged?
-        int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-        boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
-                status == BatteryManager.BATTERY_STATUS_FULL;
+        int status = batteryInfo.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+        boolean isCharging = (status==BatteryManager.BATTERY_STATUS_CHARGING) || (status==BatteryManager.BATTERY_STATUS_FULL);
 
         // How are we charging?
-//        int chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+        int chargePlug = batteryInfo.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
 //        boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
 //        boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
 
+        int bs=batteryInfo.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
+        int bl=batteryInfo.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+        int batteryLevel=(bs==0)?bl:(bl*100)/bs;
+
+        if (Build.VERSION.SDK_INT>=23) {
+            BatteryManager bm=(BatteryManager)c.getSystemService(Context.BATTERY_SERVICE);;
+            boolean bm_charging=bm.isCharging();
+            cu.addDebugMsg(1, "I", "Battery status="+status+", level="+batteryLevel+", chargePlug="+chargePlug+", bm_charging="+bm_charging+", isCharging="+isCharging);
+        } else {
+            cu.addDebugMsg(1, "I", "Battery status="+status+", level="+batteryLevel+", chargePlug="+chargePlug+", isCharging="+isCharging);
+        }
         return isCharging;
     }
 
