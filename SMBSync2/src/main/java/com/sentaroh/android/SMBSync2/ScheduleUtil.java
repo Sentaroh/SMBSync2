@@ -591,6 +591,15 @@ public class ScheduleUtil {
         c.sendBroadcast(intent);
     }
 
+    //check if schedule name is duplicate in Schedule List
+    public static boolean isScheduleDuplicate(ArrayList<ScheduleItem> sl, String name) {
+        int count = 0;
+        for (ScheduleItem si : sl) {
+            if (si.scheduleName.equalsIgnoreCase(name)) count++;
+        }
+        return count > 1;
+    }
+
     public static boolean isScheduleExists(ArrayList<ScheduleItem> sl, String name) {
         boolean result = false;
         for (ScheduleItem si : sl) {
@@ -618,6 +627,7 @@ public class ScheduleUtil {
         return prefs.getLong(SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY, 0L);
     }
 
+    //set the next schedule info or schedule error message in bottom of main tabs
     public static void setSchedulerInfo(Context c, GlobalParameters gp, CommonUtilities cu) {
 //        gp.scheduleInfoList =loadScheduleData(gp);
         ArrayList<ScheduleItem> sl = loadScheduleData(c, gp);
@@ -638,11 +648,22 @@ public class ScheduleUtil {
                     String dt=StringUtil.convDateTimeTo_YearMonthDayHourMin(time);
                     String item=dt+SYNC_TASK_LIST_SEPARATOR+si.scheduleName;
 
-                    if (!hasScheduleNameContainsUnusableCharacter(c, si.scheduleName).equals("")) {
+                    //check for schedule name errors
+                    if (si.scheduleName.equals("")) {
                         schedule_error=true;
-                        cu.addDebugMsg(1, "I", "setSchedulerInfo Error: schedule name has non valid chars, schedule name=" + "\"" + si.scheduleName + "\"");
+                        cu.addDebugMsg(1, "I", "setSchedulerInfo Error: schedule name is empty, schedule name=" + "\"" + "\"");
+                    } else {
+                        if (isScheduleDuplicate(sl, si.scheduleName)) {
+                            schedule_error=true;
+                            cu.addDebugMsg(1, "I", "setSchedulerInfo Error: schedule name is duplicate, schedule name=" + "\"" + si.scheduleName + "\"");
+                        }
+                        if (!hasScheduleNameContainsUnusableCharacter(c, si.scheduleName).equals("")) {
+                            schedule_error=true;
+                            cu.addDebugMsg(1, "I", "setSchedulerInfo Error: schedule name has non valid chars, schedule name=" + "\"" + si.scheduleName + "\"");
+                        }
                     }
 
+                    //check for errors in schedule sync task list
                     if (si.syncAutoSyncTask) {
                         //NOP
                     } else {
@@ -652,7 +673,8 @@ public class ScheduleUtil {
                                 String[] stl=si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
                                 String sep="";
                                 for(String stn:stl) {
-                                    if (getSyncTask(gp,stn)==null) {
+                                    SyncTaskItem sti = getSyncTask(gp, stn);
+                                    if (sti==null || sti.isSyncTaskError()) {
                                         schedule_error=true;
                                         error_task_name+= sep + "\"" + stn + "\"";//display all not found task names in the debug message
                                         error_sched_name="\""+si.scheduleName+"\"";
@@ -660,7 +682,8 @@ public class ScheduleUtil {
                                     }
                                 }
                             } else {
-                                if (getSyncTask(gp,si.syncTaskList)==null) {
+                                SyncTaskItem sti = getSyncTask(gp, si.syncTaskList);
+                                if (sti==null || sti.isSyncTaskError()) {
                                     schedule_error=true;
                                     error_task_name="\""+si.syncTaskList+"\"";
                                     error_sched_name="\""+si.scheduleName+"\"";

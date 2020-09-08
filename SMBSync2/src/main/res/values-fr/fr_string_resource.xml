@@ -691,13 +691,15 @@
         <string name="msgs_scheduler_info_sync_all_active_profile">Exécuter toutes les tâches configurées en mode Auto</string>
         <string name="msgs_scheduler_info_sync_selected_profile">Tâche à sync %s</string>
         <string name="msgs_scheduler_info_sync_task_was_not_found">Les tâches de synchronisation suivantes n\'existent pas: %s</string>
-        <string name="msgs_scheduler_info_sync_task_was_deleted_or_renamed">La tâche de sync a déjà été supprimée ou renommée.</string>
+        <string name="msgs_scheduler_info_sync_task_was_deleted_or_renamed">Tâche de synchronisation supprimée ou renommée.</string>
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Liste des tâches de sync vide.</string>
+        <string name="msgs_scheduler_info_sync_task_in_error">Les tâches de synchronisation suivantes contiennent des erreurs: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">Sélectionner au moins un jour de la semaine.</string>
         <string name="msgs_schedule_list_edit_dlg_title">Modifier la liste de planification</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Une planification avec ce nom existe déjà.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Nom de la planification non spécifié.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Le nom de la tâche de planification contient un caractère non valide: \"%s\"</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">La tâche de synchronisation contient des erreurs qui doivent être corrigées.</string>
         <string name="msgs_schedule_cont_label_add">Ajouter une planification</string>
         <string name="msgs_schedule_cont_label_activate">Activer</string>
         <string name="msgs_schedule_cont_label_inactivate">Désactiver</string>

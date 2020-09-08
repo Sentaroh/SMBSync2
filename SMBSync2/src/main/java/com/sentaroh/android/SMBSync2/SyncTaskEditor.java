@@ -3607,6 +3607,7 @@ public class SyncTaskEditor extends DialogFragment {
             et_sync_main_task_name.setText(n_sti.getSyncTaskName());
             dlg_title.setText(mContext.getString(R.string.msgs_copy_sync_profile));
             dlg_title_sub.setText(" (" + n_sti.getSyncTaskName() + ")");
+            n_sti.setSyncTaskNameError(false);//allow copy of existing sync task that have an invalid name if renamed during copy
         } else if (type.equals("ADD")) {
             dlg_title.setText(mContext.getString(R.string.msgs_add_sync_profile));
             dlg_title_sub.setVisibility(TextView.GONE);
@@ -5183,7 +5184,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button swap_master_target = (Button) mDialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
 
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
-        String t_name_msg = mTaskUtil.checkTaskNameValidity(mContext, mGp, type, n_sti.getSyncTaskName(), dlg_msg, btn_ok);
+
         boolean error_detected = false;
         ll_edit_sync_tak_option_keep_conflict_file.setVisibility(LinearLayout.GONE);
         ll_spinnerTwoWaySyncConflictRule.setVisibility(LinearLayout.GONE);
@@ -5250,6 +5251,11 @@ public class SyncTaskEditor extends DialogFragment {
             }
         }
 
+        //type=="EDIT": we cannot modify the task name -> check duplicates in the adapter (error if at least 2 entries with same name are present)
+        //type=="COPY" or "ADD": we can edit the task name, check duplicate in the adapter (error if the entered text "et_sync_main_task_name" has at least one occurence)
+        String t_name_msg = "";
+        if (type.equals("EDIT")) t_name_msg= mTaskUtil.isValidSyncTaskName(mContext, mGp.syncTaskList, n_sti.getSyncTaskName(), true, false);
+        else t_name_msg= mTaskUtil.isValidSyncTaskName(mContext, mGp.syncTaskList, n_sti.getSyncTaskName(), false, false);
         if (t_name_msg.equals("")) {
             String e_msg = checkMasterTargetCombination(dialog, n_sti);
             if (!e_msg.equals("")) {

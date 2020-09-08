@@ -693,11 +693,13 @@
         <string name="msgs_scheduler_info_sync_task_was_not_found">次の同期タスクは存在しません：%s</string>
         <string name="msgs_scheduler_info_sync_task_was_deleted_or_renamed">同期タスクが削除または改名されています。</string>
         <string name="msgs_scheduler_info_sync_task_list_was_empty">同期タスクが指定されていません</string>
+        <string name="msgs_scheduler_info_sync_task_in_error">次の同期タスクにはエラーが含まれています: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">少なくても一つの曜日を選択してください</string>
         <string name="msgs_schedule_list_edit_dlg_title">スケジュールリストの編集</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">スケジュール名が指定されていません。</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">スケジュール名に無効な文字が含まれています: \"%s\"</string>
+        <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">同期タスクに修正が必要なエラーが含まれています。</string>
         <string name="msgs_schedule_cont_label_add">スケジュールの追加</string>
         <string name="msgs_schedule_cont_label_activate">スケジュールの有効化</string>
         <string name="msgs_schedule_cont_label_inactivate">スケジュールの無効化</string>

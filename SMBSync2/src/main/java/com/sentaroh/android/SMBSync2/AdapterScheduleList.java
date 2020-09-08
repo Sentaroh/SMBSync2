@@ -200,11 +200,12 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
             String sep_msg = "";
             holder.tv_error_info.setVisibility(TextView.GONE);
 
+            //check for schedule name errors
             if (o.scheduleName.equals("")) {
                 error_msg = mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified);
                 sep_msg = "\n";
             } else {
-                if (isScheduleNameDuplicate(mScheduleList, o.scheduleName)) {
+                if (ScheduleUtil.isScheduleDuplicate(mScheduleList, o.scheduleName)) {
                     error_msg = mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name);
                     sep_msg = "\n";
                 }
@@ -216,26 +217,37 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
                 }
             }
 
+            //check for errors in schedule sync task list
             if (o.syncAutoSyncTask) {
                 sync_prof = mContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
             } else {
                 boolean schedule_error=false;
+                String error_not_found_item_name="";
                 String error_item_name="";
                 if (o.syncTaskList.equals("")) {
                     schedule_error=true;
                 } else {
                     if (o.syncTaskList.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {
                         String[] stl=o.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
-                        String sep="";
+                        String sep_not_found="", sep_error="";
                         for(String stn:stl) {
-                            if (ScheduleUtil.getSyncTask(mGp,stn)==null) {
+                            SyncTaskItem sti = ScheduleUtil.getSyncTask(mGp, stn);
+                            if (sti==null) {
                                 schedule_error=true;
-                                error_item_name+=sep+stn;//display all not found sync tasks in Schedule Tab entries
-                                sep=",";
+                                error_not_found_item_name+=sep_not_found+stn;//display all not found sync tasks in Schedule Tab entries
+                                sep_not_found=",";
+                            } else if (sti.isSyncTaskError()) {//display sync tasks with errors (invalid name, duplicate, error in master/target folder...)
+                                schedule_error=true;
+                                error_item_name+=sep_error+stn;
+                                sep_error=",";
                             }
                         }
                     } else {
-                        if (ScheduleUtil.getSyncTask(mGp, o.syncTaskList)==null) {
+                        SyncTaskItem sti = ScheduleUtil.getSyncTask(mGp, o.syncTaskList);
+                        if (sti==null) {
+                            schedule_error=true;
+                            error_not_found_item_name=o.syncTaskList;
+                        } else if (sti.isSyncTaskError()) {
                             schedule_error=true;
                             error_item_name=o.syncTaskList;
                         }
@@ -246,7 +258,14 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
                     if (o.syncTaskList.equals("")) {
                         error_msg+= sep_msg + mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty);
                     } else {
-                        error_msg+= sep_msg + String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_item_name);
+                        if (!error_not_found_item_name.equals("")) {
+                            error_msg+= sep_msg + String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_not_found_item_name);
+                            sep_msg = "\n";
+                        }
+                        if (!error_item_name.equals("")) {
+                            error_msg+= sep_msg + String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_in_error), error_item_name);
+                            sep_msg = "\n";
+                        }
                     }
                 }
                 sync_prof = String.format(mContext.getString(R.string.msgs_scheduler_info_sync_selected_profile), o.syncTaskList);
@@ -287,15 +306,6 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
         }
         return v;
 
-    }
-
-    //check if schedule name is duplicate in existing Schedule adapter
-    private static boolean isScheduleNameDuplicate(ArrayList<ScheduleItem> sl, String name) {
-        int count = 0;
-        for (ScheduleItem si : sl) {
-            if (si.scheduleName.equalsIgnoreCase(name)) count++;
-        }
-        return count > 1;
     }
 
     class ViewHolder {

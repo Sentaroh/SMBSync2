@@ -3305,7 +3305,7 @@ public class ActivityMain extends AppCompatActivity {
         String e_msg=ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, si.scheduleName);
         if (si.scheduleName.equals("")) dlg_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
         else if (!e_msg.equals("")) dlg_msg.setText(e_msg);
-        else dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
+        else dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));//by default it is the original name
 
         btn_ok.setEnabled(false);
         etInput.addTextChangedListener(new TextWatcher() {
@@ -3313,13 +3313,14 @@ public class ActivityMain extends AppCompatActivity {
             public void afterTextChanged(Editable arg0) {
                 String edit_text = arg0.toString();
                 String invalid_chars_msg=ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, edit_text);
+                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mActivity, mGp);
                 if (edit_text.equals("")) {
                     btn_ok.setEnabled(false);
                     dlg_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
                 } else if (!invalid_chars_msg.equals("")) {
                     btn_ok.setEnabled(false);
                     dlg_msg.setText(invalid_chars_msg);
-                } else if (edit_text.equalsIgnoreCase(si.scheduleName)) {
+                } else if (ScheduleUtil.isScheduleExists(sl, edit_text)) {
                     btn_ok.setEnabled(false);
                     dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
                 } else {
