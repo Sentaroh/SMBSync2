@@ -705,6 +705,7 @@ public class ScheduleItemEditor {
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_msg);
+        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
         CommonDialog.setButtonEnabled(mActivity, btn_ok, !mEditMode);
         if (et_name.getText().length() == 0) {//empty schedule name
             tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
@@ -725,7 +726,7 @@ public class ScheduleItemEditor {
             } else {
                 //schedule name is valid
                 if (!mSched.syncAutoSyncTask) {
-                    String error_task_name=getNotExistsSyncTaskName(mSched.syncTaskList);
+                    String error_task_name=getNotExistsSyncTaskName(tv_sync_prof.getText().toString());
                     if (!error_task_name.equals("")) {
                         tv_msg.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_task_name));
                     } else {
@@ -1024,7 +1025,7 @@ public class ScheduleItemEditor {
         pfa = prof_list.split(SYNC_TASK_LIST_SEPARATOR);
         if (!prof_list.equals("")) {
             for (int i = 0; i < pfa.length; i++) {
-                setSelectedSyncList(pfa[i], lv, adapter);
+                if (!pfa[i].equals("")) setSelectedSyncList(pfa[i], lv, adapter);
             }
         }
 
@@ -1352,6 +1353,19 @@ public class ScheduleItemEditor {
 //            	} else {
 //            		holder.tv_name.setTextColor(Color.DKGRAY);
 //            	}
+
+                holder.tv_name.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CheckedTextView ctv=(CheckedTextView)v;
+                        if (o.substring(0, 1).equals(SYNC_TASK_ENABLED)) {
+                            ctv.setChecked(!ctv.isChecked());
+                        } else {
+                            if (ctv.isChecked()) ctv.setChecked(!ctv.isChecked());
+                        }
+                    }
+                });
+
             }
             return v;
         }
