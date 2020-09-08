@@ -965,6 +965,21 @@ public class ScheduleItemEditor {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 boolean sel = false;
+                //sample code snippets to implement ?
+                int first_visible_list_item = lv_sync_list.getFirstVisiblePosition();
+                mUtil.addDebugMsg(1, "I", "***************** first_visible_item="+first_visible_list_item + ", position="+position);
+                String err = lv_sync_list.getItemAtPosition(position).toString().substring(0, 1);
+                mUtil.addDebugMsg(1, "I", "***************** err="+err + ", item="+lv_sync_list.getItemAtPosition(position).toString().substring(1));
+                CheckedTextView ctv = (CheckedTextView) view;
+                if (err.equals(SYNC_TASK_NOT_FOUND) || err.equals(SYNC_TASK_ERROR)) {
+                    //lv_sync_list.getChildAt(position).setEnabled(false);//causes NPE if we disable last item in a scroll list + doesn't disable items in list
+                    //view.setSelected(false);//doesn't unselect
+                    //view.setClickable(true);//disable click after first click works, but if it was unchecked, invalid item gets checked at first time
+                    ctv.setChecked(false);//works but the list item is selected/saved while the adapter shows unchecked
+                    ctv.setEnabled(false);//to implement in @override isEnabled() ?
+                    //parent.setEnabled(false);//disables all adapter after first click
+                }
+
                 for (int i = 0; i < lv_sync_list.getCount(); i++) {
                     if (lv_sync_list.isItemChecked(i)) {
                         sel = true;
@@ -1353,7 +1368,8 @@ public class ScheduleItemEditor {
 //            	} else {
 //            		holder.tv_name.setTextColor(Color.DKGRAY);
 //            	}
-
+/*
+                //this is not proper as it intercepts ListView clicks to check/uncheck
                 holder.tv_name.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1365,11 +1381,19 @@ public class ScheduleItemEditor {
                         }
                     }
                 });
+*/
 
             }
             return v;
         }
 
+        //to implement:
+/*
+        @Override
+        public boolean isEnabled(int position) {
+            //override and return the enabled/disabled from onItemClick
+        }
+*/
         class ViewHolder {
             CheckedTextView tv_name;
         }
