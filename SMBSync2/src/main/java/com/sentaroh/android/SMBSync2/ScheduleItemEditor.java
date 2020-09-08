@@ -38,6 +38,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -79,6 +80,8 @@ public class ScheduleItemEditor {
 
     private ArrayList<ScheduleItem> mScheduleList = null;
     private NotifyEvent mNotify = null;
+
+    private ListView lv_sync_list = null;
 
     private boolean mEditMode = true;
 
@@ -953,7 +956,7 @@ public class ScheduleItemEditor {
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_ok);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_cancel);
 
-        final ListView lv_sync_list = (ListView) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_sync_prof_list);
+        lv_sync_list = (ListView) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_sync_prof_list);
 
         final SchedulerAdapterSyncList adapter =
                 new SchedulerAdapterSyncList(mActivity, android.R.layout.simple_list_item_checked);
@@ -961,10 +964,17 @@ public class ScheduleItemEditor {
         boolean selected=setSyncTaskListView(true, prof_list, lv_sync_list, adapter);
         CommonDialog.setViewEnabled(mActivity, btn_ok, selected);
 
+        //check if there is at least one selected sync task to enable the save button in schedule sync task list
         lv_sync_list.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 boolean sel = false;
+                if (position == 0) {
+                    //workaround needed to properly set alpha on first/last items during scroll (android bug ? with isEnabled() not always called on first/last items in scroll view)
+                    adapter.isEnabled(lv_sync_list.getLastVisiblePosition());
+                    //adapter.isEnabled(lv_sync_list.getFirstVisiblePosition());
+                }
+
                 for (int i = 0; i < lv_sync_list.getCount(); i++) {
                     if (lv_sync_list.isItemChecked(i)) {
                         sel = true;
@@ -973,6 +983,20 @@ public class ScheduleItemEditor {
                 }
                 if (sel) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+            }
+        });
+
+        //workaround needed to properly set alpha on first/last items during scroll (android bug ? with isEnabled() not always called on first/last items in scroll view)
+        lv_sync_list.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                adapter.isEnabled(lv_sync_list.getLastVisiblePosition());
+                //adapter.isEnabled(lv_sync_list.getFirstVisiblePosition());
+                //for(int i=0; i < lv_sync_list.getCount(); i++) adapter.isEnabled(i);
             }
         });
 
@@ -1021,6 +1045,7 @@ public class ScheduleItemEditor {
             }
         }
 
+        //calls setSelectedSyncList to set the SYNC_TASK_NOT_FOUND flag for tasks in the schedule that cannot be found in the adapter (deleted, renamed tasks)
         String[] pfa = null;
         pfa = prof_list.split(SYNC_TASK_LIST_SEPARATOR);
         if (!prof_list.equals("")) {
@@ -1348,26 +1373,33 @@ public class ScheduleItemEditor {
                     holder.tv_name.setText(o.substring(1));
                     holder.tv_name.setTextColor(text_color);
                 }
-//            	if (o.substring(0, 1).equals(SMBSYNC2_TASK_ENABLED)) {
-//            		holder.tv_name.setTextColor(text_color);
-//            	} else {
-//            		holder.tv_name.setTextColor(Color.DKGRAY);
-//            	}
-
-                holder.tv_name.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CheckedTextView ctv=(CheckedTextView)v;
-                        if (o.substring(0, 1).equals(SYNC_TASK_ENABLED)) {
-                            ctv.setChecked(!ctv.isChecked());
-                        } else {
-                            if (ctv.isChecked()) ctv.setChecked(!ctv.isChecked());
-                        }
-                    }
-                });
-
             }
             return v;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            View child  = lv_sync_list.getChildAt(position - lv_sync_list.getFirstVisiblePosition());
+            if (child == null) {
+                mUtil.addDebugMsg(1, "I", "child=null, " + "position="+position + ", getFirstVisiblePosition="+lv_sync_list.getFirstVisiblePosition());
+                return true;//false ?
+            }
+
+            //mUtil.addDebugMsg(1, "I", "first visible item=" + lv_sync_list.getFirstVisiblePosition() + ", position=" + position);
+            String syncTaskState = lv_sync_list.getItemAtPosition(position).toString().substring(0, 1);
+            //mUtil.addDebugMsg(1, "I", "syncTaskState=" + syncTaskState + ", item=" + lv_sync_list.getItemAtPosition(position).toString().substring(1));
+
+            CheckedTextView ctv = (CheckedTextView) child;
+            child.setEnabled(true);
+            child.setAlpha(1f);
+            if (syncTaskState.equals(SYNC_TASK_NOT_FOUND) || syncTaskState.equals(SYNC_TASK_ERROR)) {
+                if (!ctv.isChecked()) {
+                    child.setEnabled(false);
+                    child.setAlpha(0.5f);
+                    return false;
+                }
+            }
+            return true;
         }
 
         class ViewHolder {
