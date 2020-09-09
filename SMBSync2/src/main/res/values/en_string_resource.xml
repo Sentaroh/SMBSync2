@@ -144,6 +144,8 @@
         <string name="msgs_main_location_error_background_location_permission_not_granted">Cannot get WiFi AP names because the location is set to "Allow only while using the app". Change the Location to "Always Allowed" from the menu (use while in background).</string>
         <string name="msgs_main_location_service_warning_suppress">Disable this warning (can be enabled in sync settings)</string>
         <string name="msgs_main_location_service_warning_title">Warning about Location service</string>
+        <string name="msgs_main_location_location_permission_screen_shot">LocationPermission1-EN.jpg</string>
+        <string name="msgs_main_location_background_location_permission_screen_shot">LocationPermission2-EN.jpg</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">Failed to launch activity to allow SDCARD write permission.</string>
         <string name="msgs_main_external_sdcard_select_required_cancel_msg">You cannot synchronize until you allow write to SDCARD. Task=%s</string>
@@ -168,9 +170,12 @@
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARD was selected. Do you want to reselect USB storage?</string>
         <string name="msgs_main_permission_coarse_location_denied_msg">If you specify \"Access point list\" in the task settings, the synchronisation will fail if you don\'t grant permission to Location service. Please allow \"Location Permission\" from the menu.</string>
         <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 requieres Location permission to be able to read the SSID of the WiFi. \nIf you specify \"Access point list\", the synchronisation task will fail unless the permission is granted.\nDo you want to request Location permission now ?</string>
+        <string name="msgs_main_permission_coarse_location_request_msg_api29">SMBSync2 requieres Location permission to be able to read the SSID of the WiFi. \nIf you specify \"Access point list\", the synchronisation task will fail unless the permission is granted. Please select \"Allow only while using the app\" on the next screen.</string>
+        <string name="msgs_main_permission_coarse_location_request_msg_api30">SMBSync2 requieres Location permission to be able to read the SSID of the WiFi. \nIf you specify \"Access point list\", the synchronisation task will fail unless the permission is granted. Please select \"While using the app\" on the next screen.</string>
         <string name="msgs_main_permission_background_location_title">Background location permission</string>
         <string name="msgs_main_permission_background_location_denied_msg">If you specify \"Access point list\" in the task settings, the synchronisation will fail if you don\'t grant permission to Location service. Please allow \"Location Permission\" from the menu.</string>
-        <string name="msgs_main_permission_background_location_request_msg">This permission is required to read the WiFi SSID in SMBSync2.\nUntil the permission is granted, SMBSync2 will exit with an error if \"Access Point List\" is specified in the Sync task.\nUnder Location Permissions, select \"Allow all the time\".\nDo you want to request background location permission now ?</string>
+        <string name="msgs_main_permission_background_location_request_msg">This permission is required to read the WiFi SSID in SMBSync2.\nUntil the permission is granted, SMBSync2 will exit with an error if \"Access Point List\" is specified in the Sync task.\nUnder Location Permissions, select \"Allow all the time\".</string>
+        <string name="msgs_main_permission_background_location_request_msg_api30">This permission is required to read the WiFi SSID in SMBSync2.\nUntil the permission is granted, SMBSync2 will exit with an error if \"Access Point List\" is specified in the Sync task.\nUnder Location Permissions, select \"Allow all the time\".</string>
         <string name="msgs_main_permission_coarse_location_title">Location Permission</string>
         <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be started because you have not been granted permission to access the internal storage.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access internal storage to be able to read and write data that is synchronized and for the management of application settings.</string>

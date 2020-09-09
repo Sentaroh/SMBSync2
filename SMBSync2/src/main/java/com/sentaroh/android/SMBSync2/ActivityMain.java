@@ -37,6 +37,8 @@ import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -68,6 +70,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -100,6 +103,8 @@ import com.sentaroh.android.Utilities.Widget.NonWordwrapTextView;
 import com.sentaroh.android.Utilities.ZipUtil;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -2320,16 +2325,22 @@ public class ActivityMain extends AppCompatActivity {
                             SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
                         }
                     });
-                    mUtil.showCommonDialog(true, "W",
-                            mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-                            mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
+                    if (Build.VERSION.SDK_INT>=30) {
+                        showLocationPermissionMessage(mContext.getString(R.string.msgs_main_permission_coarse_location_title),
+                                mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg_api30),
+                                mContext.getString(R.string.msgs_main_location_location_permission_screen_shot), ntfy);
+                    } else {
+                        mUtil.showCommonDialog(true, "W",
+                                mContext.getString(R.string.msgs_main_permission_coarse_location_title),
+                                mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
+                    }
                 } else {
                     if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
                         checkBackgroundLocationPermission(null);
                     }
                 }
             } else {
-                mUtil.addDebugMsg(1, "I", "Permission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)+
+                mUtil.addDebugMsg(1, "I", "Permission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)+
                         ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired);
                 if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
                         (mGp.settingGrantLocationRequired || force_permission)) {
@@ -2362,23 +2373,6 @@ public class ActivityMain extends AppCompatActivity {
         ntfy_bg_location_request.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                NotifyEvent ntfy_bg_location_response=new NotifyEvent(mContext);
-                ntfy_bg_location_response.setListener(new NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        mGp.setSettingGrantCoarseLocationRequired(mContext, true);
-                        if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-                    }
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {
-                        mGp.setSettingGrantCoarseLocationRequired(mContext, true);
-                        mUtil.showCommonDialog(false, "W",
-                                mContext.getString(R.string.msgs_main_permission_background_location_title),
-                                mContext.getString(R.string.msgs_main_permission_background_location_denied_msg),
-                                null);
-                        if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-                    }
-                });
                 requestPermissions(new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION);
             }
 
@@ -2391,10 +2385,16 @@ public class ActivityMain extends AppCompatActivity {
 
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED &&
                 checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
-            mUtil.showCommonDialog(true, "W",
-                    mContext.getString(R.string.msgs_main_permission_background_location_title),
-                    mContext.getString(R.string.msgs_main_permission_background_location_request_msg),
-                    ntfy_bg_location_request);
+            if (Build.VERSION.SDK_INT>=30) {
+                showLocationPermissionMessage(mContext.getString(R.string.msgs_main_permission_background_location_title),
+                        mContext.getString(R.string.msgs_main_permission_background_location_request_msg_api30),
+                        mContext.getString(R.string.msgs_main_location_background_location_permission_screen_shot), ntfy_bg_location_request);
+            } else {
+                mUtil.showCommonDialog(true, "W",
+                        mContext.getString(R.string.msgs_main_permission_background_location_title),
+                        mContext.getString(R.string.msgs_main_permission_background_location_request_msg),
+                        ntfy_bg_location_request);
+            }
         } else {
             if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
         }
@@ -2402,6 +2402,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        mUtil.addDebugMsg(1, "I", "onRequestPermissionsResult="+requestCode);
         if (REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mGp.initStorageStatus(mContext);
@@ -2474,6 +2475,59 @@ public class ActivityMain extends AppCompatActivity {
             }
         }
     }
+
+    private void showLocationPermissionMessage(final String title_text, final String msg_text, String image_fn, final NotifyEvent p_ntfy) {
+        final Dialog dialog=new Dialog(mActivity, mGp.applicationTheme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.dialog_with_image_view_dlg);
+
+        TextView dlg_title=(TextView)dialog.findViewById(R.id.dialog_with_image_view_dlg_title);
+        TextView dlg_msg=(TextView)dialog.findViewById(R.id.dialog_with_image_view_dlg_msg);
+        ImageView dlg_image=(ImageView)dialog.findViewById(R.id.dialog_with_image_view_dlg_image);
+
+        Button dlg_ok=(Button)dialog.findViewById(R.id.dialog_with_image_view_dlg_btn_ok);
+        Button dlg_cancel=(Button)dialog.findViewById(R.id.dialog_with_image_view_dlg_btn_cancel);
+
+        dlg_title.setText(title_text);
+        dlg_msg.setText(msg_text);
+
+        try {
+            InputStream is = mContext.getResources().getAssets().open(image_fn);
+            Bitmap bm = BitmapFactory.decodeStream(is);
+            dlg_image.setImageBitmap(bm);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        dlg_ok.setText(mContext.getString(R.string.msgs_storage_permission_all_file_access_button_text));
+
+        dlg_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                p_ntfy.notifyToListener(true, null);
+                dialog.dismiss();
+            }
+        });
+
+        dlg_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                p_ntfy.notifyToListener(false, null);
+                dialog.dismiss();;
+            }
+        });
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                dlg_cancel.performClick();
+            }
+        });
+
+        dialog.show();
+    }
+
 
     private NotifyEvent mSafSelectActivityNotify = null;
 
