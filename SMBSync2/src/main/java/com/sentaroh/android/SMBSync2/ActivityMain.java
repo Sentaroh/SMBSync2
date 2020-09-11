@@ -2311,7 +2311,8 @@ public class ActivityMain extends AppCompatActivity {
                 mUtil.addDebugMsg(1, "I", "Permission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)+
                         ", Backgrund Location=" + checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)+
                         ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired);
-                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
+                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
+                        (mGp.settingGrantLocationRequired || force_permission)) {
                     NotifyEvent ntfy = new NotifyEvent(mContext);
                     ntfy.setListener(new NotifyEventListener() {
                         @Override
