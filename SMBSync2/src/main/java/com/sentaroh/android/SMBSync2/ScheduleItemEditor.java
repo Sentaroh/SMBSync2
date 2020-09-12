@@ -1386,10 +1386,14 @@ public class ScheduleItemEditor {
 
         @Override
         public boolean isEnabled(int position) {
+            if (lv_sync_list == null) {
+                //shouldn't happen if entered through schedule editor
+                return false;
+            }
             View child  = lv_sync_list.getChildAt(position - lv_sync_list.getFirstVisiblePosition());
             if (child == null) {
                 mUtil.addDebugMsg(1, "I", "child=null, " + "position="+position + ", getFirstVisiblePosition="+lv_sync_list.getFirstVisiblePosition());
-                return true;//false ?
+                return false;
             }
 
             //mUtil.addDebugMsg(1, "I", "first visible item=" + lv_sync_list.getFirstVisiblePosition() + ", position=" + position);
