@@ -2370,34 +2370,36 @@ public class ActivityMain extends AppCompatActivity {
 
     public void checkBackgroundLocationPermission(final NotifyEvent p_ntfy) {
         mUtil.addDebugMsg(1, "I", "Background location permission=" + checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION));
-        NotifyEvent ntfy_bg_location_request = new NotifyEvent(mContext);
-        ntfy_bg_location_request.setListener(new NotifyEventListener() {
-            @Override
-            public void positiveResponse(Context c, Object[] o) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION);
-            }
+        if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
+                (mGp.settingGrantLocationRequired)) {
+            NotifyEvent ntfy_bg_location_request = new NotifyEvent(mContext);
+            ntfy_bg_location_request.setListener(new NotifyEventListener() {
+                @Override
+                public void positiveResponse(Context c, Object[] o) {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION);
+                }
 
-            @Override
-            public void negativeResponse(Context c, Object[] o) {
-                mGp.setSettingGrantCoarseLocationRequired(mContext, true);
+                @Override
+                public void negativeResponse(Context c, Object[] o) {
+                    mGp.setSettingGrantCoarseLocationRequired(mContext, false);
+                    if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
+                }
+            });
+
+            if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT>=30) {
+                    showLocationPermissionMessage(mContext.getString(R.string.msgs_main_permission_background_location_title),
+                            mContext.getString(R.string.msgs_main_permission_background_location_request_msg_api30),
+                            mContext.getString(R.string.msgs_main_location_background_location_permission_screen_shot), ntfy_bg_location_request);
+                } else {
+                    mUtil.showCommonDialog(true, "W",
+                            mContext.getString(R.string.msgs_main_permission_background_location_title),
+                            mContext.getString(R.string.msgs_main_permission_background_location_request_msg),
+                            ntfy_bg_location_request);
+                }
+            } else {
                 if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
             }
-        });
-
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED &&
-                checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT>=30) {
-                showLocationPermissionMessage(mContext.getString(R.string.msgs_main_permission_background_location_title),
-                        mContext.getString(R.string.msgs_main_permission_background_location_request_msg_api30),
-                        mContext.getString(R.string.msgs_main_location_background_location_permission_screen_shot), ntfy_bg_location_request);
-            } else {
-                mUtil.showCommonDialog(true, "W",
-                        mContext.getString(R.string.msgs_main_permission_background_location_title),
-                        mContext.getString(R.string.msgs_main_permission_background_location_request_msg),
-                        ntfy_bg_location_request);
-            }
-        } else {
-            if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
         }
     }
 
