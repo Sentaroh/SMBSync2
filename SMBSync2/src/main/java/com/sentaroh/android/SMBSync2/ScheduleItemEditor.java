@@ -81,7 +81,7 @@ public class ScheduleItemEditor {
     private ArrayList<ScheduleItem> mScheduleList = null;
     private NotifyEvent mNotify = null;
 
-    private ListView lv_sync_list = null;
+//    private ListView lv_sync_list = null;
 
     private boolean mEditMode = true;
 
@@ -956,10 +956,10 @@ public class ScheduleItemEditor {
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_ok);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_cancel);
 
-        lv_sync_list = (ListView) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_sync_prof_list);
+        final ListView lv_sync_list = (ListView) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_sync_prof_list);
 
         final SchedulerAdapterSyncList adapter =
-                new SchedulerAdapterSyncList(mActivity, android.R.layout.simple_list_item_checked);
+                new SchedulerAdapterSyncList(mActivity, android.R.layout.simple_list_item_checked, lv_sync_list);
 
         boolean selected=setSyncTaskListView(true, prof_list, lv_sync_list, adapter);
         CommonDialog.setViewEnabled(mActivity, btn_ok, selected);
@@ -1343,13 +1343,14 @@ public class ScheduleItemEditor {
     private class SchedulerAdapterSyncList extends ArrayAdapter<String> {
         private int layout_id = 0;
         private Context context = null;
-        @SuppressWarnings("unused")
         private int text_color = 0;
+        private ListView mListView=null;
 
-        public SchedulerAdapterSyncList(Context c, int textViewResourceId) {
+        public SchedulerAdapterSyncList(Context c, int textViewResourceId, ListView list_view) {
             super(c, textViewResourceId);
             layout_id = textViewResourceId;
             context = c;
+            mListView=list_view;
         }
 
         @Override
@@ -1386,18 +1387,18 @@ public class ScheduleItemEditor {
 
         @Override
         public boolean isEnabled(int position) {
-            if (lv_sync_list == null) {
+            if (mListView == null) {
                 //shouldn't happen if entered through schedule editor
                 return false;
             }
-            View child  = lv_sync_list.getChildAt(position - lv_sync_list.getFirstVisiblePosition());
+            View child  = mListView.getChildAt(position - mListView.getFirstVisiblePosition());
             if (child == null) {
-                mUtil.addDebugMsg(1, "I", "child=null, " + "position="+position + ", getFirstVisiblePosition="+lv_sync_list.getFirstVisiblePosition());
+                mUtil.addDebugMsg(1, "I", "child=null, " + "position="+position + ", getFirstVisiblePosition="+mListView.getFirstVisiblePosition());
                 return false;
             }
 
             //mUtil.addDebugMsg(1, "I", "first visible item=" + lv_sync_list.getFirstVisiblePosition() + ", position=" + position);
-            String syncTaskState = lv_sync_list.getItemAtPosition(position).toString().substring(0, 1);
+            String syncTaskState = mListView.getItemAtPosition(position).toString().substring(0, 1);
             //mUtil.addDebugMsg(1, "I", "syncTaskState=" + syncTaskState + ", item=" + lv_sync_list.getItemAtPosition(position).toString().substring(1));
 
             CheckedTextView ctv = (CheckedTextView) child;
