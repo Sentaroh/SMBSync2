@@ -279,16 +279,16 @@ public final class CommonUtilities {
             } else {
                 out.add("   No active network");
             }
-
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-                    out.add("   Interface="+intf.getName()+", Address="+inetAddress.getHostAddress()+
-                            ", isSiteLocalAddress="+inetAddress.isSiteLocalAddress());
-                }
-            }
-        } catch (SocketException ex) {
+            out.add("   IF Addr="+getLocalIpAddress());
+//            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+//                NetworkInterface intf = en.nextElement();
+//                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+//                    InetAddress inetAddress = enumIpAddr.nextElement();
+//                    out.add("   Interface="+intf.getName()+", Address="+inetAddress.getHostAddress()+
+//                            ", isSiteLocalAddress="+inetAddress.isSiteLocalAddress());
+//                }
+//            }
+        } catch (Exception ex) {
             out.add("Network address error. error="+ex.getMessage());
         }
 
