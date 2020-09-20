@@ -1,0 +1,622 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=shift_jis">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<title>SMBSync Description</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"MS UI Gothic";
+	panose-1:2 11 6 0 7 2 5 8 2 4;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Gothic";
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"\@MS UI Gothic";
+	panose-1:2 11 6 0 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+h1
+	{mso-style-link:"見出し 1 \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-before:always;
+	page-break-after:avoid;
+	word-break:break-all;
+	font-size:16.0pt;
+	font-family:"Century","serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h2
+	{mso-style-link:"見出し 2 \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h3
+	{mso-style-link:"見出し 3 \(文字\)";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:24.45pt;
+	margin-bottom:.0001pt;
+	text-indent:-24.45pt;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h4
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+h5
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;}
+h6
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:10.5pt;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.0pt;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoListBullet, li.MsoListBullet, div.MsoListBullet
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:18.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-18.0pt;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{mso-style-link:"見出しマップ \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"MS UI Gothic";}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"吹き出し \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Arial","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.148mm, li.148mm, div.148mm
+	{mso-style-name:"スタイル 左 \:  14\.8 mm";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.2Century, li.2Century, div.2Century
+	{mso-style-name:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝";
+	mso-style-link:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝 \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Century","serif";
+	text-decoration:underline;}
+span.2
+	{mso-style-name:"見出し 2 \(文字\)";
+	mso-style-link:"見出し 2";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.2Century0
+	{mso-style-name:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝 \(文字\)";
+	mso-style-link:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.a
+	{mso-style-name:"吹き出し \(文字\)";
+	mso-style-link:吹き出し;
+	font-family:"Arial","sans-serif";}
+span.a0
+	{mso-style-name:"見出しマップ \(文字\)";
+	mso-style-link:見出しマップ;
+	font-family:"MS UI Gothic";}
+span.1
+	{mso-style-name:"見出し 1 \(文字\)";
+	mso-style-link:"見出し 1";
+	text-decoration:underline;}
+span.3
+	{mso-style-name:"見出し 3 \(文字\)";
+	mso-style-link:"見出し 3";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+p.11, li.11, div.11
+	{mso-style-name:"スタイル 見出し 1 + 段落前 \:  1 行";
+	margin-top:5.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	page-break-before:always;
+	page-break-after:avoid;
+	word-break:break-all;
+	font-size:16.0pt;
+	font-family:"Century","serif";
+	text-decoration:underline;}
+p.20mm8261, li.20mm8261, div.20mm8261
+	{mso-style-name:"スタイル 見出し 2 + 左 \:  0 mm ぶら下げインデント \:  8\.26 字 段落前 \:  1 行";
+	margin-top:5.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:41.4pt;
+	margin-bottom:.0001pt;
+	text-indent:-41.4pt;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+p.111, li.111, div.111
+	{mso-style-name:"スタイル 見出し 1 + 段落前 \:  1 行1";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-21.0pt;
+	page-break-before:always;
+	page-break-after:avoid;
+	word-break:break-all;
+	font-size:16.0pt;
+	font-family:"Century","serif";
+	text-decoration:underline;}
+.MsoChpDefault
+	{font-size:10.0pt;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:42.55pt 3.0cm 42.55pt 3.0cm;
+	layout-grid:18.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='text-justify-trim:punctuation'>
+
+<div class=WordSection1 style='layout-grid:18.0pt'>
+
+<p class=MsoToc1><a href="#_Toc39739401">1. Permissions<span style='color:windowtext;
+display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc39739402">1.1.Location<span
+style='color:windowtext;display:none;text-decoration:none'>.. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc39739403">1.2.Photos/Media/Files<span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc39739404">1.3.Storage<span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc39739405">1.4.Wi-Fi
+Connection infomation<span style='color:windowtext;display:none;text-decoration:
+none'>.. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc39739406">1.5.Other<span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc39739407">1.5.1.view
+network connections<span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc39739408">1.5.2.connect
+and disconnect from Wi-Fi<span style='color:windowtext;display:none;text-decoration:
+none'> </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc39739409">1.5.3.full
+network access<span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc39739410">1.5.4.run at
+startup<span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc39739411">1.5.5.control
+vibration<span style='color:windowtext;display:none;text-decoration:none'>.. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc39739412">1.5.6.prevent
+device from sleeping<span style='color:windowtext;display:none;text-decoration:
+none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc3 style='margin-left:24.0pt'><a href="#_Toc39739413">1.5.7.install
+shortcuts<span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></p>
+
+<p class=MsoToc1><a href="#_Toc39739414">2.Data recorded by the app<span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc39739415">2.1.Synchronization
+task list<span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc39739416">2.2.App activity
+record<span style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></p>
+
+<p class=MsoToc2 style='margin-left:12.0pt'><a href="#_Toc39739417">2.3.
+Exported settings and Sync task list<span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></p>
+
+<p class=MsoToc1><a href="#_Toc39739418">3.Send recorded data from the app<span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>5</span></a></p>
+
+<h1 style='margin-top:18.0pt'><a name="_Toc39739401">1. Permissions</a></h1>
+
+<p class=MsoNormal>The app uses the following permissions.</p>
+
+<p class=20mm8261 style='margin-top:18.0pt'><a name="_Toc39739402"></a><a
+name="_Toc8456826">1.1</a>.Location</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>-approximate
+location (network-based)</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>Required
+to obtain the WiFi SSID name on Android 8.1 and 9.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>-precise location (GPS and network-based)</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><a
+name="_Toc39739403">Required to obtain the WiFi SSID name on Android 10 and
+higher.</a></p>
+
+<p class=20mm8261 style='margin-top:18.0pt'>1.2.Photos/Media/Files</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>-read
+the contents of your External SD Card, Internal Storage and USB medias.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>-modify
+or delete the contents of your storage</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>Required
+for file synchronization to internal/external/USB storage and to read/write
+operations on application data files.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=20mm8261 style='margin-top:18.0pt'><a name="_Toc39739404">1.3.Storage</a></p>
+
+<p class=MsoNormal>-read the contents of your External SD Card, Internal
+Storage and USB medias.</p>
+
+<p class=MsoNormal>-modify or delete the contents of your storage</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>Required for file synchronization to internal/external/USB storage
+and to read/write operations on application data files.</p>
+
+<p class=20mm8261 style='margin-top:18.0pt'><a name="_Toc39739405">1.4.Wi-Fi Connection
+infomation</a></p>
+
+<p class=MsoNormal>- view Wi-Fi connections</p>
+
+<p class=MsoNormal>Required to check the status of Wi-Fi (on/off) at the start
+of synchronization.</p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc39739406">1.5.Other</a></h2>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc39739407"></a><a name="_Toc8456827">1.5.1</a>.view
+network connections</h3>
+
+<p class=MsoNormal>Required to confirm that device is connected to the network
+at the start of synchronization.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc39739408">1.5.2.connect and
+disconnect from Wi-Fi</a></h3>
+
+<p class=MsoNormal>Required to turn on / off Wi-Fi before and after a scheduled
+synchronization.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc39739409">1.5.3.full network access</a></h3>
+
+<p class=MsoNormal>Required to perform network synchronization using the SMB
+protocol.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc39739410">1.5.4.run at startup</a></h3>
+
+<p class=MsoNormal>Required to perform scheduled synchronization.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc39739411">1.5.5.control vibration</a></h3>
+
+<p class=MsoNormal>Required to notify the user by vibration at the end of
+synchronization.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc39739412">1.5.6.prevent device from
+sleeping</a></h3>
+
+<p class=MsoNormal>Required to start synchronization from a scheduled or
+external application.</p>
+
+<h3 style='margin-top:18.0pt'><a name="_Toc39739413">1.5.7.install shortcuts</a></h3>
+
+<p class=MsoNormal>Required to add a synchronization task shortcut on the home
+screen.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h1 style='margin-top:18.0pt'><a name="_Toc39739414">2.Data recorded by the app</a></h1>
+
+<p class=MsoNormal><a name="_Toc9071207">No data will be sent outside of the
+app unless the user operates it.</a></p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc39739415"></a><a
+name="_2.1_Synchronization_task"></a>2.1.Synchronization task list</h2>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>The
+app records the necessary data to perform the synchronization.</p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-21.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>Directory name, file name, SMB
+server host name, IP address, port number, account name, password (*1)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-21.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>Wi-Fi SSID name</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-21.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>App password (*1) to protect app
+launch and setting change</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-21.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>App settings</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>*1-
+password is encrypted with a system generated password and stored in the
+Android Keystore.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc39739416">2.2.App activity record</a></h2>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>The
+app needs to record the following data to check the synchronization results and
+for troubleshooting.</p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>Android version, terminal maker,
+terminal name, terminal model, application version</span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>Directory name, file name, file
+size, file last modified time</span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>SMB server host name, IP address,
+port number, account name</span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>Network interface name, IP
+address, Wi-Fi SSID name</span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>System settings</span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>App settings</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h2 style='margin-top:18.0pt'><a name="_Toc39739417">2.3. Exported settings and
+Sync task list</a> </h2>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'>The
+app can export &quot;<a href="#_Synchronization_task_list">2.1 Synchronization
+task list</a>&quot; to a file. You can password protect the file before
+exporting it.</p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>Directory name, file name</span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>SMB server host name, IP address,
+port number, account name, password</span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>Wi-Fi SSID name</span></p>
+
+<p class=MsoNormal style='margin-left:18.0pt;text-align:justify;text-justify:
+inter-ideograph;text-indent:-18.0pt'><span style='font-size:10.5pt;font-family:
+Symbol'><img width=11 height=11 src="SMBSync2_Privacy_EN.files/image001.png"
+alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:10.5pt'>App settings</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h1 style='margin-top:18.0pt'><a name="_Toc39739418">3.Send recorded data from
+the app</a></h1>
+
+<p class=MsoNormal>Data recorded by the app can be sent by following these
+steps:</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Privacy_EN.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Press &quot;Share button&quot; from History tab</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Privacy_EN.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Press the &quot;Send to Developer&quot; button from the “System
+info”</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Privacy_EN.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Press &quot;Share button&quot; or &quot;Send to developer&quot;
+button from “Manage log files”</p>
+
+</div>
+
+</body>
+
+</html>

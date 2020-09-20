@@ -3,8 +3,10 @@
     <!-- About -->
         <string name="msgs_about_dlg_func_btn">Функции</string>
         <string name="msgs_about_dlg_change_btn">Журнал изменений</string>
+        <string name="msgs_about_dlg_privacy_btn">Приватность </string>
         <string name="msgs_dlg_title_about">О программе SMBSync2</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_RU_Short.htm</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_RU.htm</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.htm</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Импорт файла задания</string>
