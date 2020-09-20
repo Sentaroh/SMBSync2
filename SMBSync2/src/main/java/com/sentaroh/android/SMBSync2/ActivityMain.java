@@ -2505,7 +2505,7 @@ public class ActivityMain extends AppCompatActivity {
 
 //        dlg_ok.setText(mContext.getString(R.string.msgs_storage_permission_all_file_access_button_text));
 
-        dlg_ok.setOnClickListener(new View.OnClickListener() {
+        dlg_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 p_ntfy.notifyToListener(true, null);
@@ -2513,7 +2513,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        dlg_cancel.setOnClickListener(new View.OnClickListener() {
+        dlg_cancel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 p_ntfy.notifyToListener(false, null);
@@ -4244,6 +4244,10 @@ public class ActivityMain extends AppCompatActivity {
                                 mGp.syncTaskAdapter.sort();
                                 SyncTaskUtil.saveSyncTaskListToFile(mGp, mContext, mUtil, false, "", "", mGp.syncTaskList, false);
                                 mGp.syncTaskAdapter.notifyDataSetChanged();
+                                //mUtil.addDebugMsg(2, "I", "c_pos="+c_pos + ", first v_pos="+mGp.syncTaskListView.getFirstVisiblePosition() + ", last v_pos="+mGp.syncTaskListView.getLastVisiblePosition() + ", tot="+mGp.syncTaskAdapter.getCount());
+                                int set_pos = c_pos < 3 ? c_pos:c_pos-3;//show the 2 items before (moved item is set at c_pos-1)
+                                //mGp.syncTaskListView.setSelection(c_pos-1);
+                                mGp.syncTaskListView.smoothScrollToPosition(set_pos);
 
                                 if (item.getSyncTaskPosition() == 0) {
                                     mContextSyncTaskViewMoveToUp.setVisibility(ImageButton.INVISIBLE);
@@ -4280,6 +4284,9 @@ public class ActivityMain extends AppCompatActivity {
                                 mGp.syncTaskAdapter.sort();
                                 SyncTaskUtil.saveSyncTaskListToFile(mGp, mContext, mUtil, false, "", "", mGp.syncTaskList, false);
                                 mGp.syncTaskAdapter.notifyDataSetChanged();
+                                int last_pos = mGp.syncTaskAdapter.getCount() - 1;
+                                int set_pos = c_pos > (last_pos - 3) ? c_pos:c_pos+3;//show next 2 items (moved item is set at c_pos+1)
+                                mGp.syncTaskListView.smoothScrollToPosition(set_pos);
 
                                 if (item.getSyncTaskPosition() == 0) {
                                     mContextSyncTaskViewMoveToUp.setVisibility(ImageButton.INVISIBLE);
