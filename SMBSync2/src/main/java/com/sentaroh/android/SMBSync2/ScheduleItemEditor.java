@@ -1323,23 +1323,6 @@ public class ScheduleItemEditor {
         adapter.notifyDataSetChanged();
     }
 
-    ;
-
-//    private void loadScheduleData() {
-//    	mGp.scheduleInfoList = ScheduleUtil.loadScheduleData(mGp);
-//    	mSched=mGp.scheduleInfoList.get(0);
-//
-//    	mUtil.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName()+" type="+mSched.scheduleType+
-//    			", hours="+mSched.scheduleHours+
-//    			", minutes="+mSched.scheduleMinutes+
-//    			", dw="+mSched.scheduleDayOfTheWeek+
-//    			", sync_task="+mSched.syncTaskList+
-//				", Wifi On="+mSched.syncWifiOnBeforeStart+
-//				", Wifi Off="+mSched.syncWifiOffAfterEnd+
-//				", Wifi On dlayed="+mSched.syncDelayAfterWifiOn
-//    			);
-//    };
-
     private class SchedulerAdapterSyncList extends ArrayAdapter<String> {
         private int layout_id = 0;
         private Context context = null;
