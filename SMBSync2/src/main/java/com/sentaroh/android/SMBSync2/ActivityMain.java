@@ -2314,10 +2314,12 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_main_permission_external_storage_title),
                         mContext.getString(R.string.msgs_main_permission_external_storage_request_msg), ntfy);
             } else {
-                checkLocationPermission(false);
+//                Hide location permission at start time
+//                checkLocationPermission(false);
             }
         } else {
-            checkLocationPermission(false);
+//            Hide location permission at start time
+//            checkLocationPermission(false);
         }
     }
 
@@ -2429,7 +2431,8 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void run() {
                         checkStorageStatus();
-                        checkLocationPermission(false);
+//                      Hide location permission at start time
+//                      checkLocationPermission(false);
                     }
                 }, 500);
             } else {
