@@ -3,7 +3,7 @@
     <!-- About -->
         <string name="msgs_about_dlg_func_btn">Fonctions</string>
         <string name="msgs_about_dlg_change_btn">Historique des modifications</string>
-        <string name="msgs_about_dlg_privacy_btn">Vie privée</string>
+        <string name="msgs_about_dlg_privacy_btn">Confidentialité</string>
         <string name="msgs_dlg_title_about">A propos de SMBSync2</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_FR_Short.htm</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_FR.htm</string>
