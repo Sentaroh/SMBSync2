@@ -356,6 +356,8 @@ public class ActivityMain extends AppCompatActivity {
                                         else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
                                         if (mGp.syncThreadActive) {
                                             mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+                                        } else {
+                                            mGp.msgListView.setSelection(mGp.msgListAdapter.getCount() - 1);
                                         }
                                         pd.dismiss();
                                     }
@@ -853,8 +855,6 @@ public class ActivityMain extends AppCompatActivity {
         vsa = null;
     }
 
-    private int newSyncTaskListViewPos = -1;
-
     private ViewSaveArea saveViewContent() {
         ViewSaveArea vsa = new ViewSaveArea();
         vsa.current_tab_pos = mMainTabHost.getCurrentTab();
@@ -1150,26 +1150,22 @@ public class ActivityMain extends AppCompatActivity {
                 setHistoryContextButtonNormalMode();
             }
 
-            if (tabId.equals(SMBSYNC2_TAB_NAME_TASK) && newSyncTaskListViewPos != -1) {
-                mGp.syncTaskListView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mGp.syncTaskListView.setSelection(newSyncTaskListViewPos);
-                        newSyncTaskListViewPos = -1;
+            if (tabId.equals(SMBSYNC2_TAB_NAME_MESSAGE)) {
+                if (!mGp.freezeMessageViewScroll) {
+                    synchronized (mGp.msgList) {
+                        if (mGp.msgListViewMoveToBottomRequired) {
+                            if (mGp!=null && mGp.msgListView!=null && mGp.msgListAdapter!=null) {
+                                mGp.uiHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mGp.msgListView.setSelection(mGp.msgListAdapter.getCount());
+                                    }
+                                });
+                            }
+                            mGp.msgListViewMoveToBottomRequired=false;
+                        }
                     }
-                });
-            } else if (tabId.equals(SMBSYNC2_TAB_NAME_MESSAGE)) {
-//                if (!mGp.freezeMessageViewScroll) {
-//                    mGp.uiHandler.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if (mGp!=null && mGp.msgListView!=null && mGp.msgListAdapter!=null) {
-//                                mGp.msgListView.setItemChecked(mGp.msgListAdapter.getCount() - 1, true);
-//                                mGp.msgListView.setSelection(mGp.msgListAdapter.getCount() - 1);
-//                            }
-//                        }
-//                    });
-//                }
+                }
             }
             mCurrentTab = tabId;
             refreshOptionMenu();

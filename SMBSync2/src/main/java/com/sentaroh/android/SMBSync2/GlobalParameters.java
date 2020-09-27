@@ -214,6 +214,7 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean freezeMessageViewScroll = false;
     public AdapterSyncMessage msgListAdapter = null;
     public ListView msgListView = null;
+    public boolean msgListViewMoveToBottomRequired=false;
 
     public ArrayList<SyncHistoryItem> syncHistoryList = null;
     public AdapterSyncHistory syncHistoryAdapter = null;
