@@ -1168,6 +1168,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
             mCurrentTab = tabId;
+            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_HIST)) mGp.syncHistoryAdapter.notifyDataSetChanged();
             refreshOptionMenu();
         }
     }
