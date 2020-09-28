@@ -27,7 +27,7 @@
         <string name="msgs_import_autosave_dlg_autosave_list">Список задач сохраненный автоматически</string>
         <string name="msgs_import_autosave_dlg_manual_save_list">Список задач сохраненный вручную</string>
         <string name="msgs_import_autosave_dlg_autosave_failed">Автосохранение задачи синхронизации не удалось</string>
-        <string name="msgs_import_autosave_dlg_autosave_completed">Задача синхронизации цспешно сохранилась</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed">Сохраненные настройки</string>
         <string name="msgs_import_autosave_dlg_autosave_completed_path">Путь</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (последний сохраненный файл)</string>

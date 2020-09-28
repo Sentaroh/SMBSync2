@@ -27,7 +27,7 @@
         <string name="msgs_import_autosave_dlg_autosave_list">Fichiers autosauvegardés</string>
         <string name="msgs_import_autosave_dlg_manual_save_list">Sauvegardes par l\'utilisateur</string>
         <string name="msgs_import_autosave_dlg_autosave_failed">L\'autosauvegarde des paramètres de synchronisation a échoué</string>
-        <string name="msgs_import_autosave_dlg_autosave_completed">Les paramètres de synchronisation ont été autosauvegardés</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed">Paramètres sauvegardés</string>
         <string name="msgs_import_autosave_dlg_autosave_completed_path">emplacement</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (dernier fichier sauvegardé)</string>

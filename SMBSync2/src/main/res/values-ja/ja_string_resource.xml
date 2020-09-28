@@ -27,7 +27,7 @@
         <string name="msgs_import_autosave_dlg_autosave_list">自動保存したファイル</string>
         <string name="msgs_import_autosave_dlg_manual_save_list">手動保存したファイル</string>
         <string name="msgs_import_autosave_dlg_autosave_failed">同期タスクリストの自動保存に失敗しました。</string>
-        <string name="msgs_import_autosave_dlg_autosave_completed">同期タスクリストを自動保存しました。</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed">タスクリストを保存した</string>
         <string name="msgs_import_autosave_dlg_autosave_completed_path">パス</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (最後に保存されたファイル)</string>

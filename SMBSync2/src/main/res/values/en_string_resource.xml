@@ -27,7 +27,7 @@
         <string name="msgs_import_autosave_dlg_autosave_list">Autosaved settings files</string>
         <string name="msgs_import_autosave_dlg_manual_save_list">User backed-up settings files</string>
         <string name="msgs_import_autosave_dlg_autosave_failed">An attempt to auto-save the synchronization settings has failed</string>
-        <string name="msgs_import_autosave_dlg_autosave_completed">The synchronization settings were automatically saved</string>
+        <string name="msgs_import_autosave_dlg_autosave_completed">Settings saved</string>
         <string name="msgs_import_autosave_dlg_autosave_completed_path">path</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item">%s</string>
         <string name="msgs_import_autosave_dlg_autosave_enty_item_latest">%s (Last saved file)</string>
