@@ -355,8 +355,8 @@ public class ScheduleUtil {
         }
     }
 
-    final static public void renameSyncTaskFromSchedule(GlobalParameters gp, CommonUtilities cu, ArrayList<ScheduleItem> sl, String rename_task_name, String new_name) {
-        for (ScheduleItem si : sl) {
+    final static public void renameSyncTaskFromSchedule(GlobalParameters gp, CommonUtilities cu, ArrayList<ScheduleItem> schedule_list, String rename_task_name, String new_name) {
+        for (ScheduleItem si : schedule_list) {
             if (!si.syncTaskList.equals("") && si.syncTaskList.contains(rename_task_name)) {
                 if (si.syncTaskList.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {//Multiple entry
                     String[] task_list=si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);

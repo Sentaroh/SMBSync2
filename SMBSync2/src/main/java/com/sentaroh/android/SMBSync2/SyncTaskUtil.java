@@ -1402,7 +1402,7 @@ public class SyncTaskUtil {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 ArrayList<SyncTaskItem> dpItemList = new ArrayList<SyncTaskItem>();
-                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(c, mGp);
+//                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(c, mGp);
                 int pos = mGp.syncTaskListView.getFirstVisiblePosition();
                 for (int i = 0; i < dpnum.length; i++) {
                     if (dpnum[i] != -1)
@@ -1411,11 +1411,12 @@ public class SyncTaskUtil {
                 for (int i = 0; i < dpItemList.size(); i++) {
                     mGp.syncTaskAdapter.remove(dpItemList.get(i));
                     mUtil.addDebugMsg(1,"I","Sync task deleted, name="+dpItemList.get(i).getSyncTaskName());
-                    ScheduleUtil.removeSyncTaskFromSchedule(mGp, mUtil, sl, dpItemList.get(i).getSyncTaskName());
+                    ScheduleUtil.removeSyncTaskFromSchedule(mGp, mUtil, mGp.syncTabScheduleList, dpItemList.get(i).getSyncTaskName());
                 }
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskAdapter.notifyDataSetChanged();
-                ScheduleUtil.saveScheduleData(c, mGp, sl);
+
+                ScheduleUtil.saveScheduleData(c, mGp, mGp.syncTabScheduleList);
                 saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
 
                 mGp.syncTaskListView.setSelection(pos);
@@ -1435,7 +1436,8 @@ public class SyncTaskUtil {
             }
         });
         mUtil.showCommonDialog(true, "W",
-                mContext.getString(R.string.msgs_delete_following_profile), dpmsg, ntfy);
+                mContext.getString(R.string.msgs_delete_following_profile),
+                mContext.getString(R.string.msgs_task_name_remove_with_schedule_group_task_list)+"\n\n"+dpmsg+"\n", ntfy);
     }
 
     public void showSelectSdcardMsg(final NotifyEvent ntfy) {
@@ -1781,7 +1783,7 @@ public class SyncTaskUtil {
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
 
-//		final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
+		final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
         final TextView dlg_cmp = (TextView) dialog.findViewById(R.id.single_item_input_name);
         final Button btn_ok = (Button) dialog.findViewById(R.id.single_item_input_ok_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.single_item_input_cancel_btn);
@@ -1789,13 +1791,16 @@ public class SyncTaskUtil {
 
         title.setText(mContext.getString(R.string.msgs_rename_profile));
 
-        dlg_cmp.setVisibility(TextView.GONE);
-        dlg_cmp.setTextColor(mGp.themeColorList.text_color_error);
-        String e_msg=isValidSyncTaskName(mContext, mGp.syncTaskList, pli.getSyncTaskName());
-        if (!e_msg.equals("")) {
-            dlg_cmp.setText(e_msg);
-            dlg_cmp.setVisibility(TextView.VISIBLE);
-        }
+        dlg_cmp.setVisibility(TextView.VISIBLE);
+        dlg_cmp.setText(mContext.getString(R.string.msgs_task_name_rename_with_schedule_group_task_list));
+
+        dlg_msg.setVisibility(TextView.VISIBLE);
+        dlg_msg.setTextColor(mGp.themeColorList.text_color_error);
+//        String e_msg=isValidSyncTaskName(mContext, mGp.syncTaskList, pli.getSyncTaskName());
+//        if (!e_msg.equals("")) {
+//            dlg_msg.setText(e_msg);
+//            dlg_msg.setVisibility(TextView.VISIBLE);
+//        }
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(pli.getSyncTaskName());
@@ -1806,12 +1811,12 @@ public class SyncTaskUtil {
                 String edit_text=arg0.toString();
                 String error_msg = isValidSyncTaskName(mContext, mGp.syncTaskList, edit_text);
                 if (!error_msg.equals("")) {
-                    dlg_cmp.setText(error_msg);
-                    dlg_cmp.setVisibility(TextView.VISIBLE);
+                    dlg_msg.setText(error_msg);
+                    dlg_msg.setVisibility(TextView.VISIBLE);
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                 } else {
-                    dlg_cmp.setText("");
-                    dlg_cmp.setVisibility(TextView.GONE);
+                    dlg_msg.setText("");
+                    dlg_msg.setVisibility(TextView.GONE);
                     CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 }
             }
@@ -1829,14 +1834,15 @@ public class SyncTaskUtil {
         btn_ok.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
-                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mActivity, mGp);
+//                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mActivity, mGp);
 
                 String new_name = etInput.getText().toString();
                 String prev_name=pli.getSyncTaskName();
                 pli.setSyncTaskName(new_name);
                 mUtil.addDebugMsg(1,"I","Sync task renamed, from="+prev_name+", new="+new_name);
-                ScheduleUtil.renameSyncTaskFromSchedule(mGp, mUtil, sl, prev_name, new_name);
-                ScheduleUtil.saveScheduleData(mActivity, mGp, sl);
+                ScheduleUtil.renameSyncTaskFromSchedule(mGp, mUtil, mGp.syncTabScheduleList, prev_name, new_name);
+                mGp.syncTabScheduleAdapter.notifyDataSetChanged();
+                ScheduleUtil.saveScheduleData(mActivity, mGp, mGp.syncTabScheduleList);
 
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskAdapter.notifyDataSetChanged();

@@ -95,6 +95,8 @@
         <string name="msgs_delete_following_profile">Delete the following task(s)?</string>
         <string name="msgs_dir_empty">Directory could not be found</string>
         <string name="msgs_duplicate_task_name">Duplicate task name.</string>
+        <string name="msgs_task_name_rename_with_schedule_group_task_list">When a task is renamed, the task name in the schedule is also changed.</string>
+        <string name="msgs_task_name_remove_with_schedule_group_task_list">When the task is deleted, the task name in the schedule is also deleted.</string>
         <string name="msgs_task_name_contains_invalid_character">The task name contains invalid characters: \"%s\"</string>
         <string name="msgs_edit_sync_profile">Edit Sync Task</string>
         <string name="msgs_export_prof_fail">Failed to export synchronisation settings.</string>
