@@ -691,7 +691,7 @@
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Выполнить все задачи автосинхронизации</string>
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Укажите профиль для синхронизации, нажав кнопку «Редактировать список синхронизации».</string>
         <string name="msgs_scheduler_info_next_schedule_time">Время следующей синхронизации %s</string>
-        <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Следующая синхронизация: время = %s, имя = (%s)</string>
+        <string name="msgs_scheduler_info_next_schedule_main_info">Следующая синхронизация: %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">Некоторые запланированные задачи содержат ошибки. Вы найдете более подробную информацию во вкладке \"Планирование\".</string>
         <string name="msgs_scheduler_info_schedule_disabled">Расписание синхронизации отключено</string>
         <string name="msgs_scheduler_info_schedule_enabled">Расписание синхронизации включено</string>

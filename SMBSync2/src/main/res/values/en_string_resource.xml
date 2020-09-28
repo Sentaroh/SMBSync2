@@ -691,7 +691,7 @@
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Execute all auto sync tasks</string>
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Please specify the sync tasks to be scheduled by pressing the ‘Sync list...’ button below.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Next sync time is %s</string>
-        <string name="msgs_scheduler_info_next_schedule_main_info" formatted="false">Next sync:  Time=%s, Name= (%s)</string>
+        <string name="msgs_scheduler_info_next_schedule_main_info">Next sync: %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">Some enabled schedules contain errors. Check the \"Schedule\" tab for more details.</string>
         <string name="msgs_scheduler_info_schedule_disabled">Sync schedule disabled</string>
         <string name="msgs_scheduler_info_schedule_enabled">Sync schedule enabled</string>
