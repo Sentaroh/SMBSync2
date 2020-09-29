@@ -3598,9 +3598,11 @@ public class ActivityMain extends AppCompatActivity {
         mContextHistoryButtonMoveTop.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContextButtonEnabled(mContextHistoryButtonMoveTop, false);
-                mGp.syncHistoryListView.setSelection(0);
-                setContextButtonEnabled(mContextHistoryButtonMoveTop, true);
+                int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
+                int up_sel = mGp.syncHistoryListView.getFirstVisiblePosition() - page_items + 1;
+                if (up_sel < 0) up_sel = 0;
+
+                mGp.syncHistoryListView.setSelection(up_sel);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveTop, mContext.getString(R.string.msgs_hist_cont_label_move_top));
@@ -3608,12 +3610,17 @@ public class ActivityMain extends AppCompatActivity {
         mContextHistoryButtonMoveBottom.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContextButtonEnabled(mContextHistoryButtonMoveBottom, false);
-                mGp.syncHistoryListView.setSelection(mGp.syncHistoryAdapter.getCount() - 1);
-                setContextButtonEnabled(mContextHistoryButtonMoveBottom, true);
+                int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
+                int down_sel = mGp.syncHistoryListView.getLastVisiblePosition() + 1;
+//               mUtil.addDebugMsg(1, "I", "############################### page_items="+page_items + " getFirstVisiblePosition="+mGp.syncHistoryListView.getFirstVisiblePosition() + 
+//                                  " getLastVisiblePosition()="+mGp.syncHistoryListView.getLastVisiblePosition() + " down_sel="+down_sel);
+                if (down_sel > mGp.syncHistoryAdapter.getCount() - 1) down_sel = mGp.syncHistoryAdapter.getCount() - 1;
+
+                mGp.syncHistoryListView.setSelection(down_sel);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveBottom, mContext.getString(R.string.msgs_hist_cont_label_move_bottom));
+
         mContextHistoryButtonDeleteHistory.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
