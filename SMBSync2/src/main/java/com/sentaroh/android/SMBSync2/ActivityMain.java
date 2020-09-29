@@ -3622,7 +3622,7 @@ public class ActivityMain extends AppCompatActivity {
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                             isHistoryButtonMoveDownPressed = false;
-                            mContextHistoryButtonMoveHandler.post(mContextHistoryButtonMoveLongPress);
+                            mContextHistoryButtonMoveHandler.postDelayed(mContextHistoryButtonMoveLongPress, 500);
                             break;
                     case MotionEvent.ACTION_MOVE:
                             //mContextHistoryButtonMoveHandler.removeCallbacks(mContextHistoryButtonMoveLongPress);
@@ -3645,7 +3645,7 @@ public class ActivityMain extends AppCompatActivity {
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                             isHistoryButtonMoveDownPressed = true;
-                            mContextHistoryButtonMoveHandler.post(mContextHistoryButtonMoveLongPress);
+                            mContextHistoryButtonMoveHandler.postDelayed(mContextHistoryButtonMoveLongPress, 500);
                             break;
                     case MotionEvent.ACTION_MOVE:
                             //mContextHistoryButtonMoveHandler.removeCallbacks(mContextHistoryButtonMoveLongPress);
