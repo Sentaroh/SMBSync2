@@ -4848,6 +4848,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryAdapter.notifyDataSetChanged();
 
         setUiEnabled();
+        if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
     }
 
     private ISvcCallback mSvcCallbackStub = new ISvcCallback.Stub() {
