@@ -610,7 +610,7 @@
         <string name="msgs_mirror_task_file_replaced">[Fichier remplacé]</string>
         <string name="msgs_mirror_task_file_failed">[Echec]</string>
         <string name="msgs_mirror_task_file_ignored">[Ignoré]</string>
-        <string name="msgs_mirror_task_master_not_found">Fichier ou dossier source non trouvé.</string>
+        <string name="msgs_mirror_task_master_not_found">Fichier ou dossier source non trouvé:</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false"># copié=%s, # supprimé=%s, # ignoré=%s, Durée=%s</string>
         <string name="msgs_mirror_task_result_cancel">Tâche de sync annulée.</string>
         <string name="msgs_mirror_task_result_error_ended">Tâche de sync terminée avec des erreurs.</string>

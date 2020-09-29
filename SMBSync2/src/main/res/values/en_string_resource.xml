@@ -610,7 +610,7 @@
         <string name="msgs_mirror_task_file_replaced">[File overwritten]</string>
         <string name="msgs_mirror_task_file_failed">[Sync Failed]</string>
         <string name="msgs_mirror_task_file_ignored">[Skipped]</string>
-        <string name="msgs_mirror_task_master_not_found">Source file or directory not found.</string>
+        <string name="msgs_mirror_task_master_not_found">Source file or directory not found:</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false"># of copies=%s, # of deletes=%s, # of ignores=%s, Elapsed time=%s</string>
         <string name="msgs_mirror_task_result_cancel">Sync task cancelled.</string>
         <string name="msgs_mirror_task_result_error_ended">Sync task ended with errors.</string>

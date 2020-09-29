@@ -610,7 +610,7 @@
         <string name="msgs_mirror_task_file_replaced">[ファイルを上書きコピーしました]</string>
         <string name="msgs_mirror_task_file_failed">[失敗]</string>
         <string name="msgs_mirror_task_file_ignored">[無視された]</string>
-        <string name="msgs_mirror_task_master_not_found">マスターのファイルまたはディレクトリーが見つかりません。</string>
+        <string name="msgs_mirror_task_master_not_found">マスターのファイルまたはディレクトリーが見つかりません:</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false">コピー=%s, 削除=%s, 無視=%s, 経過時間=%s</string>
         <string name="msgs_mirror_task_result_cancel">同期タスクがキャンセルされました。</string>
         <string name="msgs_mirror_task_result_error_ended">同期タスクはエラーで終了しました。</string>
