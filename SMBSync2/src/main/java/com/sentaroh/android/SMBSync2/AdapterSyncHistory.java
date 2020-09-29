@@ -203,7 +203,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
             if (!o.sync_prof.equals("")) {
 //        		holder.ll_main.setBackgroundDrawable(ll_default);
 
-                holder.tv_seq.setText(String.format("%1$3d", position + 1));
+                holder.tv_seq.setText(String.format("%1$3d)", position + 1));
                 holder.tv_seq.setVisibility(TextView.VISIBLE);
                 holder.tv_date.setVisibility(TextView.VISIBLE);
                 holder.tv_time.setVisibility(TextView.VISIBLE);
