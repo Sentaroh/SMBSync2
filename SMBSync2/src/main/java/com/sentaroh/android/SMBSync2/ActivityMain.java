@@ -3578,8 +3578,8 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-
-    boolean isHistoryButtonMoveDownPressed = true;
+    private boolean isHistoryButtonMoveDownPressed = true;
+    private boolean isAnyHistoryButtonMovePressed = false;
     private void setHistoryContextButtonListener() {
         mContextHistoryButtonSendTo.setOnClickListener(new OnClickListener() {
             @Override
@@ -3598,10 +3598,10 @@ public class ActivityMain extends AppCompatActivity {
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonSendTo, mContext.getString(R.string.msgs_hist_cont_label_share));
 
         // UP/DOWN bottom context buttons: single click to page up/down, long click to fast scroll up/down
-        final Handler mContextHistoryButtonMoveHandler = new Handler(); 
-        Runnable mContextHistoryButtonMoveLongPress = new Runnable() { 
+        final Handler historyButtonMoveHandler = new Handler(); 
+        Runnable historyButtonMoveLongPressRunnable = new Runnable() { 
             public void run() {
-                mContextHistoryButtonMoveHandler.postDelayed(this, 100);
+                historyButtonMoveHandler.postDelayed(this, 100);
                 int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
                 int sel = 0;
                 if (isHistoryButtonMoveDownPressed) sel = mGp.syncHistoryListView.getLastVisiblePosition() + 1;
@@ -3612,6 +3612,10 @@ public class ActivityMain extends AppCompatActivity {
 
                 mGp.syncHistoryListView.setSelection(sel);
                 //mUtil.addDebugMsg(2, "I", "runnable running");
+                if (!isAnyHistoryButtonMovePressed) {
+                    historyButtonMoveHandler.removeCallbacks(this);
+                    //mUtil.addDebugMsg(2, "I", "runnable cancelled");
+                }
             }   
         };
 
@@ -3622,15 +3626,17 @@ public class ActivityMain extends AppCompatActivity {
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                             isHistoryButtonMoveDownPressed = false;
-                            mContextHistoryButtonMoveHandler.postDelayed(mContextHistoryButtonMoveLongPress, 500);
+                            isAnyHistoryButtonMovePressed = true;
+                            historyButtonMoveHandler.postDelayed(historyButtonMoveLongPressRunnable, 500);
                             break;
                     case MotionEvent.ACTION_MOVE:
-                            //mContextHistoryButtonMoveHandler.removeCallbacks(mContextHistoryButtonMoveLongPress);
+                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
                             break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                            //mUtil.addDebugMsg(2, "I", "runnable cancelled");
-                            mContextHistoryButtonMoveHandler.removeCallbacks(mContextHistoryButtonMoveLongPress);
+                            isAnyHistoryButtonMovePressed = false;
+                            historyButtonMoveHandler.post(historyButtonMoveLongPressRunnable);
+                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
                             break;
                 }
                 return false;
@@ -3645,15 +3651,17 @@ public class ActivityMain extends AppCompatActivity {
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                             isHistoryButtonMoveDownPressed = true;
-                            mContextHistoryButtonMoveHandler.postDelayed(mContextHistoryButtonMoveLongPress, 500);
+                            isAnyHistoryButtonMovePressed = true;
+                            historyButtonMoveHandler.postDelayed(historyButtonMoveLongPressRunnable, 500);
                             break;
                     case MotionEvent.ACTION_MOVE:
-                            //mContextHistoryButtonMoveHandler.removeCallbacks(mContextHistoryButtonMoveLongPress);
+                            //mContextHistoryButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
                             break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                            //mUtil.addDebugMsg(2, "I", "runnable cancelled");
-                            mContextHistoryButtonMoveHandler.removeCallbacks(mContextHistoryButtonMoveLongPress);
+                            isAnyHistoryButtonMovePressed = false;
+                            historyButtonMoveHandler.post(historyButtonMoveLongPressRunnable);
+                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
                             break;
                 }
                 return false;
