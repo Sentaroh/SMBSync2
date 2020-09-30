@@ -95,8 +95,8 @@
         <string name="msgs_delete_following_profile">Supprimer les tâches suivantes ?</string>
         <string name="msgs_dir_empty">Dossier non trouvé</string>
         <string name="msgs_duplicate_task_name">Une tâche de synchronisation du même nom existe.</string>
-        <string name="msgs_task_name_rename_with_schedule_group_task_list">Lorsqu\'une tâche est renommée, le nom de la tâche dans l\'horaire est également modifié.</string>
-        <string name="msgs_task_name_remove_with_schedule_group_task_list">Lorsque la tâche est supprimée, le nom de la tâche dans l\'annexe est également supprimé.</string>
+        <string name="msgs_task_name_rename_with_schedule_group_task_list">Lorsqu\'une tâche de synchronisation est renommée, son nom est aussi modifié dans la planification.</string>
+        <string name="msgs_task_name_remove_with_schedule_group_task_list">Lorsqu\'une tâche de synchronisation est supprimée, elle l\'est aussi dans la planification.</string>
         <string name="msgs_task_name_contains_invalid_character">Le nom de la tâche contient des caractères non valides: \"%s\"</string>
         <string name="msgs_edit_sync_profile">Modifier la Tâche de Synchronisation</string>
         <string name="msgs_export_prof_fail">Echec d\'exportation des paramètres de synchronisation.</string>
