@@ -1016,8 +1016,8 @@ public class ActivityMain extends AppCompatActivity {
 
         mGp.syncTabScheduleAdapter = new AdapterScheduleList(mActivity, R.layout.schedule_sync_list_item, mGp.syncTabScheduleList);
         mGp.syncTabScheduleListView.setAdapter(mGp.syncTabScheduleAdapter);
-        mGp.syncTabMessage=(TextView)mScheduleView.findViewById(R.id.main_schedule_list_message);
-        mGp.syncTabMessage.setTextColor(mGp.themeColorList.text_color_warning);
+        mGp.syncTabScheduleMessage =(TextView)mScheduleView.findViewById(R.id.main_schedule_list_message);
+        mGp.syncTabScheduleMessage.setTextColor(mGp.themeColorList.text_color_warning);
         setScheduleTabMessage();
 
         mGp.scheduleInfoView = (TextView) findViewById(R.id.main_schedule_view_info);
@@ -1168,6 +1168,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
             mCurrentTab = tabId;
+            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_HIST)) mGp.syncHistoryAdapter.notifyDataSetChanged();
             refreshOptionMenu();
         }
     }
@@ -3063,16 +3064,16 @@ public class ActivityMain extends AppCompatActivity {
 
     private void setScheduleTabMessage() {
         if (mGp.syncTabScheduleAdapter.getCount() == 0) {
-            mGp.syncTabMessage.setVisibility(TextView.VISIBLE);
-            mGp.syncTabMessage.setText(mContext.getString(R.string.msgs_schedule_list_edit_no_schedule));
+            mGp.syncTabScheduleMessage.setVisibility(TextView.VISIBLE);
+            mGp.syncTabScheduleMessage.setText(mContext.getString(R.string.msgs_schedule_list_edit_no_schedule));
         } else {
             if (mGp.settingScheduleSyncEnabled) {
                 if (mGp.syncTabScheduleAdapter.getCount()!=0) {
-                    mGp.syncTabMessage.setVisibility(TextView.GONE);
+                    mGp.syncTabScheduleMessage.setVisibility(TextView.GONE);
                 }
             } else {
-                mGp.syncTabMessage.setVisibility(TextView.VISIBLE);
-                mGp.syncTabMessage.setText(mContext.getString(R.string.msgs_schedule_list_edit_scheduler_disabled));
+                mGp.syncTabScheduleMessage.setVisibility(TextView.VISIBLE);
+                mGp.syncTabScheduleMessage.setText(mContext.getString(R.string.msgs_schedule_list_edit_scheduler_disabled));
             }
         }
         mGp.syncTabScheduleAdapter.notifyDataSetChanged();
@@ -3149,7 +3150,7 @@ public class ActivityMain extends AppCompatActivity {
                             }
                         }
                         if (mGp.syncTabScheduleAdapter.getCount() == 0) {
-                            mGp.syncTabMessage.setVisibility(TextView.VISIBLE);
+                            mGp.syncTabScheduleMessage.setVisibility(TextView.VISIBLE);
                         }
                         mGp.syncTabScheduleAdapter.setSelectMode(false);
                         mGp.syncTabScheduleAdapter.sort();
