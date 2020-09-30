@@ -427,7 +427,7 @@ public class ActivityMain extends AppCompatActivity {
 //                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
         restartType = RESTART_WITH_OUT_INITIALYZE;
         reshowDialogWindow();
-        if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
+//        if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
     }
 
     @Override
@@ -1592,7 +1592,7 @@ public class ActivityMain extends AppCompatActivity {
         };
         mGp.progressSpinCancel.setOnClickListener(mGp.progressSpinCancelListener);
 
-        mGp.msgListView.setFastScrollEnabled(false);
+//        mGp.msgListView.setFastScrollEnabled(false);
 
         LogUtil.flushLog(mContext, mGp);
     }
@@ -4825,7 +4825,7 @@ public class ActivityMain extends AppCompatActivity {
         };
         mGp.progressSpinCancel.setOnClickListener(mGp.progressSpinCancelListener);
 
-        mGp.msgListView.setFastScrollEnabled(false);
+//        mGp.msgListView.setFastScrollEnabled(false);
 
         ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
 
