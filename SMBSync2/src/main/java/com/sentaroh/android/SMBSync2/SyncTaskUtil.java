@@ -1413,10 +1413,12 @@ public class SyncTaskUtil {
                     mUtil.addDebugMsg(1,"I","Sync task deleted, name="+dpItemList.get(i).getSyncTaskName());
                     ScheduleUtil.removeSyncTaskFromSchedule(mGp, mUtil, mGp.syncTabScheduleList, dpItemList.get(i).getSyncTaskName());
                 }
+                mGp.syncTabScheduleAdapter.notifyDataSetChanged();
+                ScheduleUtil.saveScheduleData(c, mGp, mGp.syncTabScheduleList);
+
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskAdapter.notifyDataSetChanged();
 
-                ScheduleUtil.saveScheduleData(c, mGp, mGp.syncTabScheduleList);
                 saveSyncTaskList(mGp, mContext, mUtil, mGp.syncTaskAdapter.getArrayList());
 
                 mGp.syncTaskListView.setSelection(pos);
@@ -1796,11 +1798,11 @@ public class SyncTaskUtil {
 
         dlg_msg.setVisibility(TextView.VISIBLE);
         dlg_msg.setTextColor(mGp.themeColorList.text_color_error);
-//        String e_msg=isValidSyncTaskName(mContext, mGp.syncTaskList, pli.getSyncTaskName());
-//        if (!e_msg.equals("")) {
-//            dlg_msg.setText(e_msg);
-//            dlg_msg.setVisibility(TextView.VISIBLE);
-//        }
+        String e_msg=isValidSyncTaskName(mContext, mGp.syncTaskList, pli.getSyncTaskName());
+        if (!e_msg.equals("")) {
+            dlg_msg.setText(e_msg);
+            dlg_msg.setVisibility(TextView.VISIBLE);
+        }
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(pli.getSyncTaskName());
