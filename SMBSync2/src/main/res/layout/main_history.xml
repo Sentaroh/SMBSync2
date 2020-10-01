@@ -14,9 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fadeScrollbars="false"
-        android:fastScrollAlwaysVisible="true"
-        android:fastScrollEnabled="false">
+        android:fastScrollEnabled="true"
+        android:fadeScrollbars="false" >
     </ListView>
 
   	<include layout="@layout/context_view_history" />    

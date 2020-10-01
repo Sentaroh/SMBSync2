@@ -184,6 +184,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(id, null);
             holder = new ViewHolder();
+            holder.tv_seq_num = (TextView) v.findViewById(R.id.sync_task_list_view_seq);
             holder.tv_row_name = (TextView) v.findViewById(R.id.sync_task_name);
             holder.tv_row_active = (TextView) v.findViewById(R.id.sync_task_enabled);
             holder.cbv_row_cb1 = (CheckBox) v.findViewById(R.id.sync_task_selected);
@@ -237,6 +238,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 else act = tv_active_test;
             }
             holder.tv_row_active.setText(act);
+            holder.tv_seq_num.setText(String.format("%1$3d)", position + 1));
             holder.tv_row_name.setText(o.getSyncTaskName());
 
             holder.ll_sync.setVisibility(LinearLayout.VISIBLE);
@@ -445,7 +447,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
         CheckBox cbv_row_cb1;
         ImageButton ib_row_sync;
 
-        TextView tv_row_synctype, tv_row_master, tv_row_target;
+        TextView tv_seq_num, tv_row_synctype, tv_row_master, tv_row_target;
         ImageView iv_row_sync_dir_image;
         ImageView iv_row_image_master, iv_row_image_target;
         String tv_mtype_mirror, tv_mtype_move, tv_mtype_copy, tv_mtype_sync, tv_mtype_archive;

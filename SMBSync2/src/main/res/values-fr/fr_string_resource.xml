@@ -118,8 +118,8 @@
         <string name="msgs_filter_list_filter_deleted">Cette entrée a été supprimée.</string>
         <string name="msgs_hist_cont_label_copy">Copier dans le presse-papier</string>
         <string name="msgs_hist_cont_label_delete">Supprimer l\'entrée de l\'historique</string>
-        <string name="msgs_hist_cont_label_move_bottom">Aller en bas</string>
-        <string name="msgs_hist_cont_label_move_top">Aller en haut</string>
+        <string name="msgs_hist_cont_label_move_bottom">Défiler vers le bas\nRester appuyer pour défiler rapidement</string>
+        <string name="msgs_hist_cont_label_move_top">Défiler vers le haut\nRester appuyer pour défiler rapidement</string>
         <string name="msgs_hist_cont_label_select_all">Sélectionner tous les éléments de l\'historique</string>
         <string name="msgs_hist_cont_label_share">Partager</string>
         <string name="msgs_hist_cont_label_unselect_all">Désélectionner tous les éléments de l\'historique</string>
@@ -610,7 +610,7 @@
         <string name="msgs_mirror_task_file_replaced">[Fichier remplacé]</string>
         <string name="msgs_mirror_task_file_failed">[Echec]</string>
         <string name="msgs_mirror_task_file_ignored">[Ignoré]</string>
-        <string name="msgs_mirror_task_master_not_found">Fichier ou dossier source non trouvé.</string>
+        <string name="msgs_mirror_task_master_not_found">Fichier ou dossier source non trouvé:</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false"># copié=%s, # supprimé=%s, # ignoré=%s, Durée=%s</string>
         <string name="msgs_mirror_task_result_cancel">Tâche de sync annulée.</string>
         <string name="msgs_mirror_task_result_error_ended">Tâche de sync terminée avec des erreurs.</string>

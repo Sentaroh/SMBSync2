@@ -118,8 +118,8 @@
         <string name="msgs_filter_list_filter_deleted">This entry was deleted.</string>
         <string name="msgs_hist_cont_label_copy">Copy to clipboard</string>
         <string name="msgs_hist_cont_label_delete">Delete history item</string>
-        <string name="msgs_hist_cont_label_move_bottom">Move to bottom</string>
-        <string name="msgs_hist_cont_label_move_top">Move to top</string>
+        <string name="msgs_hist_cont_label_move_bottom">Scroll down\nLong touch to fast scroll</string>
+        <string name="msgs_hist_cont_label_move_top">Scroll up\nLong touch to fast scroll</string>
         <string name="msgs_hist_cont_label_select_all">Select all history items</string>
         <string name="msgs_hist_cont_label_share">Share</string>
         <string name="msgs_hist_cont_label_unselect_all">Deselect all history items</string>
@@ -610,7 +610,7 @@
         <string name="msgs_mirror_task_file_replaced">[File overwritten]</string>
         <string name="msgs_mirror_task_file_failed">[Sync Failed]</string>
         <string name="msgs_mirror_task_file_ignored">[Skipped]</string>
-        <string name="msgs_mirror_task_master_not_found">Source file or directory not found.</string>
+        <string name="msgs_mirror_task_master_not_found">Source file or directory not found:</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false"># of copies=%s, # of deletes=%s, # of ignores=%s, Elapsed time=%s</string>
         <string name="msgs_mirror_task_result_cancel">Sync task cancelled.</string>
         <string name="msgs_mirror_task_result_error_ended">Sync task ended with errors.</string>

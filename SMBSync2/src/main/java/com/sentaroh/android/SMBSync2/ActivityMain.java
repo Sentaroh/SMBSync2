@@ -61,6 +61,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -427,7 +428,7 @@ public class ActivityMain extends AppCompatActivity {
 //                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
         restartType = RESTART_WITH_OUT_INITIALYZE;
         reshowDialogWindow();
-//        if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
+        if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
     }
 
     @Override
@@ -1016,7 +1017,7 @@ public class ActivityMain extends AppCompatActivity {
 
         mGp.syncTabScheduleAdapter = new AdapterScheduleList(mActivity, R.layout.schedule_sync_list_item, mGp.syncTabScheduleList);
         mGp.syncTabScheduleListView.setAdapter(mGp.syncTabScheduleAdapter);
-        mGp.syncTabScheduleMessage =(TextView)mScheduleView.findViewById(R.id.main_schedule_list_message);
+        mGp.syncTabScheduleMessage=(TextView)mScheduleView.findViewById(R.id.main_schedule_list_message);
         mGp.syncTabScheduleMessage.setTextColor(mGp.themeColorList.text_color_warning);
         setScheduleTabMessage();
 
@@ -1208,7 +1209,7 @@ public class ActivityMain extends AppCompatActivity {
                     v_top_sync_btn.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
-                            if (v.getId()==R.id.menu_top_sync) {
+                            if (v.getId()== R.id.menu_top_sync) {
                                 if (mGp.syncTaskAdapter.isShowCheckBox())  {
                                     CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_main_sync_selected_profiles_toast), 2);
                                 } else {
@@ -1227,7 +1228,7 @@ public class ActivityMain extends AppCompatActivity {
                     v_top_schedule_btn.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
-                            if (v.getId()==R.id.menu_top_scheduler) {
+                            if (v.getId()== R.id.menu_top_scheduler) {
                                 if (mGp.settingScheduleSyncEnabled)  {
                                     CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_schedule_list_edit_scheduler_service_toggle_disable), 2);
                                 } else {
@@ -1592,7 +1593,7 @@ public class ActivityMain extends AppCompatActivity {
         };
         mGp.progressSpinCancel.setOnClickListener(mGp.progressSpinCancelListener);
 
-//        mGp.msgListView.setFastScrollEnabled(false);
+        mGp.msgListView.setFastScrollEnabled(false);
 
         LogUtil.flushLog(mContext, mGp);
     }
@@ -3577,7 +3578,8 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-
+    private boolean isHistoryButtonMoveDownPressed = true;
+    private boolean isAnyHistoryButtonMovePressed = false;
     private void setHistoryContextButtonListener() {
         mContextHistoryButtonSendTo.setOnClickListener(new OnClickListener() {
             @Override
@@ -3595,12 +3597,86 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonSendTo, mContext.getString(R.string.msgs_hist_cont_label_share));
 
+        // UP/DOWN bottom context buttons: single click to page up/down, long click to fast scroll up/down
+        final Handler historyButtonMoveHandler = new Handler(); 
+        Runnable historyButtonMoveLongPressRunnable = new Runnable() { 
+            public void run() {
+                historyButtonMoveHandler.postDelayed(this, 100);
+                int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
+                int sel = 0;
+                if (isHistoryButtonMoveDownPressed) sel = mGp.syncHistoryListView.getLastVisiblePosition() + 1;
+                else sel = mGp.syncHistoryListView.getFirstVisiblePosition() - page_items + 1;
+
+                if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - 1;
+                if (sel < 0) sel = 0;
+
+                mGp.syncHistoryListView.setSelection(sel);
+                //mUtil.addDebugMsg(2, "I", "runnable running");
+                if (!isAnyHistoryButtonMovePressed) {
+                    historyButtonMoveHandler.removeCallbacks(this);
+                    //mUtil.addDebugMsg(2, "I", "runnable cancelled");
+                }
+            }   
+        };
+
+        mContextHistoryButtonMoveTop.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                MotionEvent mCurrentEvent = event;
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                            isHistoryButtonMoveDownPressed = false;
+                            isAnyHistoryButtonMovePressed = true;
+                            historyButtonMoveHandler.postDelayed(historyButtonMoveLongPressRunnable, 500);
+                            break;
+                    case MotionEvent.ACTION_MOVE:
+                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
+                            break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                            isAnyHistoryButtonMovePressed = false;
+                            historyButtonMoveHandler.post(historyButtonMoveLongPressRunnable);
+                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
+                            break;
+                }
+                return false;
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveTop, mContext.getString(R.string.msgs_hist_cont_label_move_top));
+
+        mContextHistoryButtonMoveBottom.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                MotionEvent mCurrentEvent = event;
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                            isHistoryButtonMoveDownPressed = true;
+                            isAnyHistoryButtonMovePressed = true;
+                            historyButtonMoveHandler.postDelayed(historyButtonMoveLongPressRunnable, 500);
+                            break;
+                    case MotionEvent.ACTION_MOVE:
+                            //mContextHistoryButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
+                            break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                            isAnyHistoryButtonMovePressed = false;
+                            historyButtonMoveHandler.post(historyButtonMoveLongPressRunnable);
+                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
+                            break;
+                }
+                return false;
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveBottom, mContext.getString(R.string.msgs_hist_cont_label_move_bottom));
+/*
         mContextHistoryButtonMoveTop.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContextButtonEnabled(mContextHistoryButtonMoveTop, false);
-                mGp.syncHistoryListView.setSelection(0);
-                setContextButtonEnabled(mContextHistoryButtonMoveTop, true);
+                int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
+                int up_sel = mGp.syncHistoryListView.getFirstVisiblePosition() - page_items + 1;
+                if (up_sel < 0) up_sel = 0;
+
+                mGp.syncHistoryListView.setSelection(up_sel);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveTop, mContext.getString(R.string.msgs_hist_cont_label_move_top));
@@ -3608,12 +3684,17 @@ public class ActivityMain extends AppCompatActivity {
         mContextHistoryButtonMoveBottom.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContextButtonEnabled(mContextHistoryButtonMoveBottom, false);
-                mGp.syncHistoryListView.setSelection(mGp.syncHistoryAdapter.getCount() - 1);
-                setContextButtonEnabled(mContextHistoryButtonMoveBottom, true);
+                int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
+                int down_sel = mGp.syncHistoryListView.getLastVisiblePosition() + 1;
+//               mUtil.addDebugMsg(1, "I", "page_items="+page_items + " getFirstVisiblePosition="+mGp.syncHistoryListView.getFirstVisiblePosition() +
+//                                  " getLastVisiblePosition()="+mGp.syncHistoryListView.getLastVisiblePosition() + " down_sel="+down_sel);
+                if (down_sel > mGp.syncHistoryAdapter.getCount() - 1) down_sel = mGp.syncHistoryAdapter.getCount() - 1;
+
+                mGp.syncHistoryListView.setSelection(down_sel);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveBottom, mContext.getString(R.string.msgs_hist_cont_label_move_bottom));
+*/
         mContextHistoryButtonDeleteHistory.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -4825,7 +4906,7 @@ public class ActivityMain extends AppCompatActivity {
         };
         mGp.progressSpinCancel.setOnClickListener(mGp.progressSpinCancelListener);
 
-//        mGp.msgListView.setFastScrollEnabled(false);
+        mGp.msgListView.setFastScrollEnabled(false);
 
         ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
 
@@ -4848,6 +4929,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryAdapter.notifyDataSetChanged();
 
         setUiEnabled();
+        if (isUiEnabled()) mGp.msgListView.setFastScrollEnabled(true);
     }
 
     private ISvcCallback mSvcCallbackStub = new ISvcCallback.Stub() {

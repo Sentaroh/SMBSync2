@@ -118,8 +118,8 @@
         <string name="msgs_filter_list_filter_deleted">Эта запись была удалена.</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
-        <string name="msgs_hist_cont_label_move_bottom">Двигаться вниз</string>
-        <string name="msgs_hist_cont_label_move_top">Переместить наверх</string>
+        <string name="msgs_hist_cont_label_move_bottom">Прокрутить вниз\nУдерживайте для быстрой прокрутки</string>
+        <string name="msgs_hist_cont_label_move_top">Прокрутите вверх\nУдерживайте для быстрой прокрутки</string>
         <string name="msgs_hist_cont_label_select_all">Выбрать все элементы истории</string>
         <string name="msgs_hist_cont_label_share">Общий ресурс</string>
         <string name="msgs_hist_cont_label_unselect_all">Удалить все элементы истории</string>
@@ -610,7 +610,7 @@
         <string name="msgs_mirror_task_file_replaced">[Файл перезаписан]</string>
         <string name="msgs_mirror_task_file_failed">[Не смогли]</string>
         <string name="msgs_mirror_task_file_ignored">[игнорируются]</string>
-        <string name="msgs_mirror_task_master_not_found">Исходный файл или каталог не найден.</string>
+        <string name="msgs_mirror_task_master_not_found">Исходный файл или каталог не найден:</string>
         <string name="msgs_mirror_task_no_of_copy" formatted="false">Количество копий = %s, количество удалений = %s, количество игнорирований = %s, истекшее время = %s</string>
         <string name="msgs_mirror_task_result_cancel">Задача синхронизации отменена.</string>
         <string name="msgs_mirror_task_result_error_ended">Синхронизация задачи завершилась с ошибкой.</string>

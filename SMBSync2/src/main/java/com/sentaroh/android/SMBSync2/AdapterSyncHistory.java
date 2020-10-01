@@ -39,7 +39,6 @@ import android.widget.TextView;
 
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.ThemeColorList;
-import com.sentaroh.android.Utilities.ThemeUtil;
 
 import java.util.ArrayList;
 
@@ -203,7 +202,7 @@ public class AdapterSyncHistory extends ArrayAdapter<SyncHistoryItem> {
             if (!o.sync_prof.equals("")) {
 //        		holder.ll_main.setBackgroundDrawable(ll_default);
 
-                holder.tv_seq.setText(String.format("%1$3d", position + 1));
+                holder.tv_seq.setText(String.format("%1$3d)", position + 1));
                 holder.tv_seq.setVisibility(TextView.VISIBLE);
                 holder.tv_date.setVisibility(TextView.VISIBLE);
                 holder.tv_time.setVisibility(TextView.VISIBLE);
