@@ -120,6 +120,8 @@
         <string name="msgs_hist_cont_label_delete">履歴を削除する</string>
         <string name="msgs_hist_cont_label_move_bottom">最下部に移動</string>
         <string name="msgs_hist_cont_label_move_top">最上部に移動</string>
+        <string name="msgs_hist_cont_label_scroll_down">下に移動</string>
+        <string name="msgs_hist_cont_label_scroll_up">上に移動</string>
         <string name="msgs_hist_cont_label_select_all">全て選択</string>
         <string name="msgs_hist_cont_label_share">共有</string>
         <string name="msgs_hist_cont_label_unselect_all">全ての選択を解除</string>

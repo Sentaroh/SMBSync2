@@ -3578,8 +3578,50 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    private boolean isHistoryButtonMoveDownPressed = true;
-    private boolean isAnyHistoryButtonMovePressed = false;
+    // Scroll UP/DOWN bottom context buttons: single click to scroll up/down, long click to continus scroll up/down
+    private boolean isHistoryButtonScrollDownPressed = true;
+    private boolean isAnyHistoryButtonScrollPressed = false;
+    final private static int HISTORY_SCROLL_AMOUNT=1;
+    final private Handler historyButtonClickHandler = new Handler();
+    final private Runnable historyButtonLongClickRunnable = new Runnable() {
+        public void run() {
+            historyButtonClickHandler.postDelayed(this, 100);
+            int sel=0;
+            if (isHistoryButtonScrollDownPressed) sel = mGp.syncHistoryListView.getFirstVisiblePosition() + HISTORY_SCROLL_AMOUNT;
+            else sel = mGp.syncHistoryListView.getFirstVisiblePosition() - 1;
+            if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - HISTORY_SCROLL_AMOUNT;
+            if (sel < 0) sel = 0;
+
+            mGp.syncHistoryListView.setSelection(sel);
+
+            if (!isAnyHistoryButtonScrollPressed) {
+                historyButtonClickHandler.removeCallbacks(historyButtonLongClickRunnable);
+                historyButtonClickHandler.removeCallbacks(historyButtonShortClickRunnable);
+            }
+        }
+    };
+
+//  Scroll by page
+    final private Runnable historyButtonShortClickRunnable = new Runnable() {
+        public void run() {
+            historyButtonClickHandler.postDelayed(this, 100);
+            int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition();
+            int sel = 0;
+            if (isHistoryButtonScrollDownPressed) sel = mGp.syncHistoryListView.getLastVisiblePosition();// + 1;
+            else sel = mGp.syncHistoryListView.getFirstVisiblePosition() - page_items+1;
+
+            if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - 1;
+            if (sel < 0) sel = 0;
+
+            mGp.syncHistoryListView.setSelection(sel);
+
+            if (!isAnyHistoryButtonScrollPressed) {
+                historyButtonClickHandler.removeCallbacks(historyButtonShortClickRunnable);
+                historyButtonClickHandler.removeCallbacks(historyButtonLongClickRunnable);
+            }
+        }
+    };
+
     private void setHistoryContextButtonListener() {
         mContextHistoryButtonSendTo.setOnClickListener(new OnClickListener() {
             @Override
@@ -3597,86 +3639,57 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonSendTo, mContext.getString(R.string.msgs_hist_cont_label_share));
 
-        // UP/DOWN bottom context buttons: single click to page up/down, long click to fast scroll up/down
-        final Handler historyButtonMoveHandler = new Handler(); 
-        Runnable historyButtonMoveLongPressRunnable = new Runnable() { 
-            public void run() {
-                historyButtonMoveHandler.postDelayed(this, 100);
-                int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
-                int sel = 0;
-                if (isHistoryButtonMoveDownPressed) sel = mGp.syncHistoryListView.getLastVisiblePosition() + 1;
-                else sel = mGp.syncHistoryListView.getFirstVisiblePosition() - page_items + 1;
-
-                if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - 1;
-                if (sel < 0) sel = 0;
-
-                mGp.syncHistoryListView.setSelection(sel);
-                //mUtil.addDebugMsg(2, "I", "runnable running");
-                if (!isAnyHistoryButtonMovePressed) {
-                    historyButtonMoveHandler.removeCallbacks(this);
-                    //mUtil.addDebugMsg(2, "I", "runnable cancelled");
-                }
-            }   
-        };
-
-        mContextHistoryButtonMoveTop.setOnTouchListener(new View.OnTouchListener() {
+        mContextHistoryButtonScrollUp.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 MotionEvent mCurrentEvent = event;
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                            isHistoryButtonMoveDownPressed = false;
-                            isAnyHistoryButtonMovePressed = true;
-                            historyButtonMoveHandler.postDelayed(historyButtonMoveLongPressRunnable, 500);
-                            break;
+                        isHistoryButtonScrollDownPressed = false;
+                        isAnyHistoryButtonScrollPressed = true;
+                        historyButtonClickHandler.postDelayed(historyButtonLongClickRunnable, 500);
+                        break;
                     case MotionEvent.ACTION_MOVE:
-                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
-                            break;
+                        break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                            isAnyHistoryButtonMovePressed = false;
-                            historyButtonMoveHandler.post(historyButtonMoveLongPressRunnable);
-                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
-                            break;
+                        isAnyHistoryButtonScrollPressed = false;
+//                        historyButtonClickHandler.post(historyButtonShortClickRunnable);//For scroll by page
+                        historyButtonClickHandler.post(historyButtonLongClickRunnable);//For scroll by line
+                        break;
                 }
                 return false;
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveTop, mContext.getString(R.string.msgs_hist_cont_label_move_top));
+//        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonScrollUp, mContext.getString(R.string.msgs_hist_cont_label_scroll_up));
 
-        mContextHistoryButtonMoveBottom.setOnTouchListener(new View.OnTouchListener() {
+        mContextHistoryButtonScrollDown.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 MotionEvent mCurrentEvent = event;
                 switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                            isHistoryButtonMoveDownPressed = true;
-                            isAnyHistoryButtonMovePressed = true;
-                            historyButtonMoveHandler.postDelayed(historyButtonMoveLongPressRunnable, 500);
-                            break;
+                        isHistoryButtonScrollDownPressed = true;
+                        isAnyHistoryButtonScrollPressed = true;
+                        historyButtonClickHandler.postDelayed(historyButtonLongClickRunnable, 500);
+                        break;
                     case MotionEvent.ACTION_MOVE:
-                            //mContextHistoryButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
-                            break;
+                        break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                            isAnyHistoryButtonMovePressed = false;
-                            historyButtonMoveHandler.post(historyButtonMoveLongPressRunnable);
-                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
-                            break;
+                        isAnyHistoryButtonScrollPressed = false;
+//                        historyButtonClickHandler.post(historyButtonShortClickRunnable);//For scroll by page
+                        historyButtonClickHandler.post(historyButtonLongClickRunnable);//For scroll by line
+                        break;
                 }
                 return false;
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveBottom, mContext.getString(R.string.msgs_hist_cont_label_move_bottom));
-/*
+
         mContextHistoryButtonMoveTop.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
-                int up_sel = mGp.syncHistoryListView.getFirstVisiblePosition() - page_items + 1;
-                if (up_sel < 0) up_sel = 0;
-
-                mGp.syncHistoryListView.setSelection(up_sel);
+                mGp.syncHistoryListView.setSelection(0);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveTop, mContext.getString(R.string.msgs_hist_cont_label_move_top));
@@ -3684,17 +3697,11 @@ public class ActivityMain extends AppCompatActivity {
         mContextHistoryButtonMoveBottom.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
-                int down_sel = mGp.syncHistoryListView.getLastVisiblePosition() + 1;
-//               mUtil.addDebugMsg(1, "I", "page_items="+page_items + " getFirstVisiblePosition="+mGp.syncHistoryListView.getFirstVisiblePosition() +
-//                                  " getLastVisiblePosition()="+mGp.syncHistoryListView.getLastVisiblePosition() + " down_sel="+down_sel);
-                if (down_sel > mGp.syncHistoryAdapter.getCount() - 1) down_sel = mGp.syncHistoryAdapter.getCount() - 1;
-
-                mGp.syncHistoryListView.setSelection(down_sel);
+                mGp.syncHistoryListView.setSelection(mGp.syncHistoryAdapter.getCount() - 1);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveBottom, mContext.getString(R.string.msgs_hist_cont_label_move_bottom));
-*/
+
         mContextHistoryButtonDeleteHistory.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3815,6 +3822,8 @@ public class ActivityMain extends AppCompatActivity {
             mContextHistiryViewMoveTop.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewMoveTop.setVisibility(ImageButton.VISIBLE);
             mContextHistiryViewMoveBottom.setVisibility(ImageButton.VISIBLE);
+            mContextHistiryViewScrollDown.setVisibility(ImageButton.VISIBLE);
+            mContextHistiryViewScrollUp.setVisibility(ImageButton.VISIBLE);
             mContextHistiryViewDeleteHistory.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewHistoryCopyClipboard.setVisibility(ImageButton.INVISIBLE);
             if (isUiEnabled()) mContextHistiryViewSelectAll.setVisibility(ImageButton.VISIBLE);
@@ -3825,6 +3834,8 @@ public class ActivityMain extends AppCompatActivity {
             mContextHistiryViewShare.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewMoveTop.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewMoveBottom.setVisibility(ImageButton.INVISIBLE);
+            mContextHistiryViewScrollDown.setVisibility(ImageButton.INVISIBLE);
+            mContextHistiryViewScrollUp.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewDeleteHistory.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewHistoryCopyClipboard.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewSelectAll.setVisibility(ImageButton.INVISIBLE);
@@ -4049,8 +4060,10 @@ public class ActivityMain extends AppCompatActivity {
     private LinearLayout mContextSyncTaskViewUnselectAll = null;
 
     private ImageButton mContextHistoryButtonSendTo = null;
-    private ImageButton mContextHistoryButtonMoveTop = null;
     private ImageButton mContextHistoryButtonMoveBottom = null;
+    private ImageButton mContextHistoryButtonMoveTop = null;
+    private ImageButton mContextHistoryButtonScrollDown = null;
+    private ImageButton mContextHistoryButtonScrollUp = null;
     private ImageButton mContextHistoryButtonDeleteHistory = null;
     private ImageButton mContextHistoryButtonHistiryCopyClipboard = null;
     private ImageButton mContextHistiryButtonSelectAll = null;
@@ -4059,6 +4072,8 @@ public class ActivityMain extends AppCompatActivity {
     private LinearLayout mContextHistiryViewShare = null;
     private LinearLayout mContextHistiryViewMoveTop = null;
     private LinearLayout mContextHistiryViewMoveBottom = null;
+    private LinearLayout mContextHistiryViewScrollDown = null;
+    private LinearLayout mContextHistiryViewScrollUp = null;
     private LinearLayout mContextHistiryViewDeleteHistory = null;
     private LinearLayout mContextHistiryViewHistoryCopyClipboard = null;
     private LinearLayout mContextHistiryViewSelectAll = null;
@@ -4180,6 +4195,8 @@ public class ActivityMain extends AppCompatActivity {
         mContextHistoryButtonSendTo = (ImageButton) mHistoryView.findViewById(R.id.context_button_share);
         mContextHistoryButtonMoveTop = (ImageButton) mHistoryView.findViewById(R.id.context_button_move_to_top);
         mContextHistoryButtonMoveBottom = (ImageButton) mHistoryView.findViewById(R.id.context_button_move_to_bottom);
+        mContextHistoryButtonScrollDown = (ImageButton) mHistoryView.findViewById(R.id.context_button_scroll_down);
+        mContextHistoryButtonScrollUp = (ImageButton) mHistoryView.findViewById(R.id.context_button_scroll_up);
         mContextHistoryButtonDeleteHistory = (ImageButton) mHistoryView.findViewById(R.id.context_button_delete);
         mContextHistoryButtonHistiryCopyClipboard = (ImageButton) mHistoryView.findViewById(R.id.context_button_copy_to_clipboard);
         mContextHistiryButtonSelectAll = (ImageButton) mHistoryView.findViewById(R.id.context_button_select_all);
@@ -4188,6 +4205,8 @@ public class ActivityMain extends AppCompatActivity {
         mContextHistiryViewShare = (LinearLayout) mHistoryView.findViewById(R.id.context_button_share_view);
         mContextHistiryViewMoveTop = (LinearLayout) mHistoryView.findViewById(R.id.context_button_move_to_top_view);
         mContextHistiryViewMoveBottom = (LinearLayout) mHistoryView.findViewById(R.id.context_button_move_to_bottom_view);
+        mContextHistiryViewScrollDown = (LinearLayout) mHistoryView.findViewById(R.id.context_button_scroll_down_view);
+        mContextHistiryViewScrollUp = (LinearLayout) mHistoryView.findViewById(R.id.context_button_scroll_up_view);
         mContextHistiryViewDeleteHistory = (LinearLayout) mHistoryView.findViewById(R.id.context_button_delete_view);
         mContextHistiryViewHistoryCopyClipboard = (LinearLayout) mHistoryView.findViewById(R.id.context_button_copy_to_clipboard_view);
         mContextHistiryViewSelectAll = (LinearLayout) mHistoryView.findViewById(R.id.context_button_select_all_view);

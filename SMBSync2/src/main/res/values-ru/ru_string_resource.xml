@@ -118,8 +118,10 @@
         <string name="msgs_filter_list_filter_deleted">Эта запись была удалена.</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
-        <string name="msgs_hist_cont_label_move_bottom">Прокрутить вниз\nУдерживайте для быстрой прокрутки</string>
-        <string name="msgs_hist_cont_label_move_top">Прокрутите вверх\nУдерживайте для быстрой прокрутки</string>
+        <string name="msgs_hist_cont_label_move_bottom">Двигаться вниз</string>
+        <string name="msgs_hist_cont_label_move_top">Переместить наверх</string>
+        <string name="msgs_hist_cont_label_scroll_down">Прокрутить вниз</string>
+        <string name="msgs_hist_cont_label_scroll_up">Прокрутите вверх</string>
         <string name="msgs_hist_cont_label_select_all">Выбрать все элементы истории</string>
         <string name="msgs_hist_cont_label_share">Общий ресурс</string>
         <string name="msgs_hist_cont_label_unselect_all">Удалить все элементы истории</string>
