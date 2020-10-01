@@ -3597,7 +3597,7 @@ public class ActivityMain extends AppCompatActivity {
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonSendTo, mContext.getString(R.string.msgs_hist_cont_label_share));
 
         // UP/DOWN bottom context buttons: single click to page up/down, long click to fast scroll up/down
-        mContextHistoryButtonMoveTop.setOnTouchListener(new RepeatListener(500, 100, new OnClickListener() {
+        mContextHistoryButtonMoveTop.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
@@ -3610,9 +3610,9 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.syncHistoryListView.setSelection(sel);
             }
         }));
-        //ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveTop, mContext.getString(R.string.msgs_hist_cont_label_move_top));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveTop, mContext.getString(R.string.msgs_hist_cont_label_move_top));
 
-        mContextHistoryButtonMoveBottom.setOnTouchListener(new RepeatListener(500, 100, new OnClickListener() {
+        mContextHistoryButtonMoveBottom.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
@@ -3625,7 +3625,7 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.syncHistoryListView.setSelection(sel);
             }
         }));
-        //ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveBottom, mContext.getString(R.string.msgs_hist_cont_label_move_bottom));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonMoveBottom, mContext.getString(R.string.msgs_hist_cont_label_move_bottom));
 
         mContextHistoryButtonDeleteHistory.setOnClickListener(new OnClickListener() {
             @Override
@@ -4586,7 +4586,7 @@ public class ActivityMain extends AppCompatActivity {
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonPinned, mContext.getString(R.string.msgs_msg_cont_label_pinned_inactive));
 
         // UP/DOWN bottom context buttons: single click to page up/down, long click to fast scroll up/down
-        mContextMessageButtonMoveTop.setOnTouchListener(new RepeatListener(500, 100, new OnClickListener() {
+        mContextMessageButtonMoveTop.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int page_items =  mGp.msgListView.getLastVisiblePosition() - mGp.msgListView.getFirstVisiblePosition() + 1;
@@ -4599,9 +4599,9 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.msgListView.setSelection(sel);
             }
         }));
-        //ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveTop, mContext.getString(R.string.msgs_msg_cont_label_move_top));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveTop, mContext.getString(R.string.msgs_msg_cont_label_move_top));
 
-        mContextMessageButtonMoveBottom.setOnTouchListener(new RepeatListener(500, 100, new OnClickListener() {
+        mContextMessageButtonMoveBottom.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int page_items =  mGp.msgListView.getLastVisiblePosition() - mGp.msgListView.getFirstVisiblePosition() + 1;
@@ -4614,7 +4614,7 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.msgListView.setSelection(sel);
             }
         }));
-        //ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveBottom, mContext.getString(R.string.msgs_msg_cont_label_move_bottom));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveBottom, mContext.getString(R.string.msgs_msg_cont_label_move_bottom));
 
         mContextMessageButtonClear.setOnClickListener(new OnClickListener() {
             @Override
@@ -5292,12 +5292,15 @@ public class ActivityMain extends AppCompatActivity {
      * If it runs slow, it does not generate skipped onClicks. Can be rewritten to
      * achieve this.
 */
+    int ANDROID_LONG_PRESS_TIMEOUT = 500;
+    int DEFAULT_LONG_PRESS_REPEAT_INTERVAL = 100;
     private class RepeatListener implements View.OnTouchListener {
 
         private Handler handler = new Handler();
 
         private final int mLongPressTimeout;
         private final int mRepeatInterval;
+        private final boolean mConsumeEvent;
         private final OnClickListener mClickListener;
         private View mTouchedView;
 //      private Rect mRect; // Variable to hold the bounds of the view rectangle
@@ -5320,13 +5323,19 @@ public class ActivityMain extends AppCompatActivity {
         };
 
         /**
-         * @param initialDelay The interval after first click event (500 msec is the default Android onLongClick delay)
+         * @param initialDelay The interval after first click event
          * @param repeatDelay The interval after second and subsequent click 
          *        events (100 msec recommended)
          * @param clickListener The OnClickListener, that will be called
          *        periodically
+         * @param consumeEvent: return value after touch event used
+         *        set to false to be able to use the event by other methods directly by caller listener or to pass to parent view if needed
+         * [@param] speedIncrementDelay: Optional, not implemented here
+                  delay after which the speed is even more incremented
+         *        by default we will increment the speed by a 3x factor
+                  set to 0 to disable
         */
-        public RepeatListener(int initialDelay, int repeatDelay, OnClickListener clickListener) {
+        public RepeatListener(int initialDelay, int repeatDelay, boolean consumeEvent, OnClickListener clickListener) {
             if (clickListener == null)
                 throw new IllegalArgumentException("null runnable");
             if (initialDelay < 0 || repeatDelay < 0)
@@ -5335,6 +5344,7 @@ public class ActivityMain extends AppCompatActivity {
             mLongPressTimeout = initialDelay;
             mRepeatInterval = repeatDelay;
             mClickListener = clickListener;
+            mConsumeEvent = consumeEvent;
         }
 
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -5346,7 +5356,7 @@ public class ActivityMain extends AppCompatActivity {
                         mTouchedView.setPressed(true);
                         mClickListener.onClick(view);
 //                        mRect = new Rect(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
-                        return true;
+                        return mConsumeEvent;
                 case MotionEvent.ACTION_MOVE:
                         break;
 //                      if (!mRect.contains(view.getLeft() + (int) motionEvent.getX(), view.getTop() + (int) motionEvent.getY())) {
@@ -5357,7 +5367,7 @@ public class ActivityMain extends AppCompatActivity {
 //                          handler.removeCallbacks(handlerRunnable);
 //                          mTouchedView.setPressed(false);
 //                          mTouchedView = null;
-//                          return true;
+//                          return mConsumeEvent;
 //                      }
                 case MotionEvent.ACTION_CANCEL:
                         //mUtil.addDebugMsg(2, "I", "runnable cancelled by ACTION_CANCEL");
@@ -5366,7 +5376,7 @@ public class ActivityMain extends AppCompatActivity {
                         handler.removeCallbacks(handlerRunnable);
                         mTouchedView.setPressed(false);
                         mTouchedView = null;
-                        return true;
+                        return mConsumeEvent;
             }
 
             return false;
