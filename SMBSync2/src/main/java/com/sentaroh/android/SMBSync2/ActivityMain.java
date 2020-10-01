@@ -3598,10 +3598,10 @@ public class ActivityMain extends AppCompatActivity {
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonSendTo, mContext.getString(R.string.msgs_hist_cont_label_share));
 
         // UP/DOWN bottom context buttons: single click to page up/down, long click to fast scroll up/down
-        final Handler historyButtonMoveHandler = new Handler(); 
-        Runnable historyButtonMoveLongPressRunnable = new Runnable() { 
+        final Handler contextButtonMoveHandler = new Handler(); 
+        Runnable contextButtonMoveLongPressRunnable = new Runnable() { 
             public void run() {
-                historyButtonMoveHandler.postDelayed(this, 100);
+                contextButtonMoveHandler.postDelayed(this, 100);
                 int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition() + 1;
                 int sel = 0;
                 if (isHistoryButtonMoveDownPressed) sel = mGp.syncHistoryListView.getLastVisiblePosition() + 1;
@@ -3613,7 +3613,7 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.syncHistoryListView.setSelection(sel);
                 //mUtil.addDebugMsg(2, "I", "runnable running");
                 if (!isAnyHistoryButtonMovePressed) {
-                    historyButtonMoveHandler.removeCallbacks(this);
+                    contextButtonMoveHandler.removeCallbacks(this);
                     //mUtil.addDebugMsg(2, "I", "runnable cancelled");
                 }
             }   
@@ -3627,16 +3627,16 @@ public class ActivityMain extends AppCompatActivity {
                     case MotionEvent.ACTION_DOWN:
                             isHistoryButtonMoveDownPressed = false;
                             isAnyHistoryButtonMovePressed = true;
-                            historyButtonMoveHandler.postDelayed(historyButtonMoveLongPressRunnable, 500);
+                            contextButtonMoveHandler.postDelayed(contextButtonMoveLongPressRunnable, 500);
                             break;
                     case MotionEvent.ACTION_MOVE:
-                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
+                            //contextButtonMoveHandler.removeCallbacks(contextButtonMoveLongPressRunnable);
                             break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
                             isAnyHistoryButtonMovePressed = false;
-                            historyButtonMoveHandler.post(historyButtonMoveLongPressRunnable);
-                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
+                            contextButtonMoveHandler.post(contextButtonMoveLongPressRunnable);
+                            //contextButtonMoveHandler.removeCallbacks(contextButtonMoveLongPressRunnable);
                             break;
                 }
                 return false;
@@ -3652,16 +3652,16 @@ public class ActivityMain extends AppCompatActivity {
                     case MotionEvent.ACTION_DOWN:
                             isHistoryButtonMoveDownPressed = true;
                             isAnyHistoryButtonMovePressed = true;
-                            historyButtonMoveHandler.postDelayed(historyButtonMoveLongPressRunnable, 500);
+                            contextButtonMoveHandler.postDelayed(contextButtonMoveLongPressRunnable, 500);
                             break;
                     case MotionEvent.ACTION_MOVE:
-                            //mContextHistoryButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
+                            //mContextcontextButtonMoveHandler.removeCallbacks(contextButtonMoveLongPressRunnable);
                             break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
                             isAnyHistoryButtonMovePressed = false;
-                            historyButtonMoveHandler.post(historyButtonMoveLongPressRunnable);
-                            //historyButtonMoveHandler.removeCallbacks(historyButtonMoveLongPressRunnable);
+                            contextButtonMoveHandler.post(contextButtonMoveLongPressRunnable);
+                            //contextButtonMoveHandler.removeCallbacks(contextButtonMoveLongPressRunnable);
                             break;
                 }
                 return false;
@@ -4630,6 +4630,8 @@ public class ActivityMain extends AppCompatActivity {
         refreshOptionMenu();
     }
 
+    private boolean isMessageButtonMoveDownPressed = false;
+    private boolean isAnyMessageButtonMovePressed = false;
     private void setMessageContextButtonListener() {
         mContextMessageButtonPinned.setOnClickListener(new OnClickListener() {
             @Override
@@ -4653,6 +4655,81 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonPinned, mContext.getString(R.string.msgs_msg_cont_label_pinned_inactive));
 
+        // UP/DOWN bottom context buttons: single click to page up/down, long click to fast scroll up/down
+        final Handler contextButtonMoveHandler = new Handler(); 
+        Runnable contextButtonMoveLongPressRunnable = new Runnable() { 
+            public void run() {
+                contextButtonMoveHandler.postDelayed(this, 100);
+                int page_items =  mGp.msgListView.getLastVisiblePosition() - mGp.msgListView.getFirstVisiblePosition() + 1;
+                int sel = 0;
+                if (isMessageButtonMoveDownPressed) sel = mGp.msgListView.getLastVisiblePosition() + 1;
+                else sel = mGp.msgListView.getFirstVisiblePosition() - page_items + 1;
+
+                if (sel > mGp.msgListAdapter.getCount() - 1) sel = mGp.msgListAdapter.getCount() - 1;
+                if (sel < 0) sel = 0;
+                //mUtil.addDebugMsg(2, "I", "*******************page_items="+page_items + " first="+mGp.msgListView.getFirstVisiblePosition() + " last="+mGp.msgListView.getLastVisiblePosition() + " sel="+sel);
+
+                mGp.msgListView.setItemChecked(sel, true);
+                mGp.msgListView.setSelection(sel);
+
+                //mUtil.addDebugMsg(2, "I", "runnable running");
+                if (!isAnyMessageButtonMovePressed) {
+                    contextButtonMoveHandler.removeCallbacks(this);
+                    //mUtil.addDebugMsg(2, "I", "runnable cancelled");
+                }
+            }   
+        };
+
+        mContextMessageButtonMoveTop.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                MotionEvent mCurrentEvent = event;
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                            isMessageButtonMoveDownPressed = false;
+                            isAnyMessageButtonMovePressed = true;
+                            contextButtonMoveHandler.postDelayed(contextButtonMoveLongPressRunnable, 500);
+                            break;
+                    case MotionEvent.ACTION_MOVE:
+                            //contextButtonMoveHandler.removeCallbacks(contextButtonMoveLongPressRunnable);
+                            break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                            isAnyMessageButtonMovePressed = false;
+                            contextButtonMoveHandler.post(contextButtonMoveLongPressRunnable);
+                            //contextButtonMoveHandler.removeCallbacks(contextButtonMoveLongPressRunnable);
+                            break;
+                }
+                return false;
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveTop, mContext.getString(R.string.msgs_msg_cont_label_move_top));
+
+        mContextMessageButtonMoveBottom.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                MotionEvent mCurrentEvent = event;
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                            isMessageButtonMoveDownPressed = true;
+                            isAnyMessageButtonMovePressed = true;
+                            contextButtonMoveHandler.postDelayed(contextButtonMoveLongPressRunnable, 500);
+                            break;
+                    case MotionEvent.ACTION_MOVE:
+                            //mContextcontextButtonMoveHandler.removeCallbacks(contextButtonMoveLongPressRunnable);
+                            break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                            isAnyMessageButtonMovePressed = false;
+                            contextButtonMoveHandler.post(contextButtonMoveLongPressRunnable);
+                            //contextButtonMoveHandler.removeCallbacks(contextButtonMoveLongPressRunnable);
+                            break;
+                }
+                return false;
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveBottom, mContext.getString(R.string.msgs_msg_cont_label_move_bottom));
+/*
         mContextMessageButtonMoveTop.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -4674,7 +4751,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveBottom, mContext.getString(R.string.msgs_msg_cont_label_move_bottom));
-
+*/
         mContextMessageButtonClear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

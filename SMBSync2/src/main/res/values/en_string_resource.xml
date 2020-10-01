@@ -118,8 +118,8 @@
         <string name="msgs_filter_list_filter_deleted">This entry was deleted.</string>
         <string name="msgs_hist_cont_label_copy">Copy to clipboard</string>
         <string name="msgs_hist_cont_label_delete">Delete history item</string>
-        <string name="msgs_hist_cont_label_move_bottom">Scroll down\nLong touch to fast scroll</string>
-        <string name="msgs_hist_cont_label_move_top">Scroll up\nLong touch to fast scroll</string>
+        <string name="msgs_hist_cont_label_move_bottom">Scroll down</string>
+        <string name="msgs_hist_cont_label_move_top">Scroll up</string>
         <string name="msgs_hist_cont_label_select_all">Select all history items</string>
         <string name="msgs_hist_cont_label_share">Share</string>
         <string name="msgs_hist_cont_label_unselect_all">Deselect all history items</string>
@@ -266,8 +266,8 @@
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">The specified sync task will not be executed because it was ignored.</string>
         <string name="msgs_main_sync_test_mode_warnning">Selected task is configured for test only.  No files will be copied or deleted.  Execute the task?</string>
         <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">Press add button to create new sync task.</string>
-        <string name="msgs_move_to_bottom">Move down</string>
-        <string name="msgs_move_to_top">Move up</string>
+        <string name="msgs_move_to_bottom">Scroll down</string>
+        <string name="msgs_move_to_top">Scroll up</string>
         <string name="msgs_msg_cont_label_clear">Clear message</string>
         <string name="msgs_msg_cont_label_move_bottom">Move to bottom</string>
         <string name="msgs_msg_cont_label_move_top">Move to top</string>

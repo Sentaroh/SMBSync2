@@ -118,8 +118,8 @@
         <string name="msgs_filter_list_filter_deleted">Эта запись была удалена.</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
-        <string name="msgs_hist_cont_label_move_bottom">Прокрутить вниз\nУдерживайте для быстрой прокрутки</string>
-        <string name="msgs_hist_cont_label_move_top">Прокрутите вверх\nУдерживайте для быстрой прокрутки</string>
+        <string name="msgs_hist_cont_label_move_bottom">Прокрутить вниз</string>
+        <string name="msgs_hist_cont_label_move_top">Прокрутите вверх</string>
         <string name="msgs_hist_cont_label_select_all">Выбрать все элементы истории</string>
         <string name="msgs_hist_cont_label_share">Общий ресурс</string>
         <string name="msgs_hist_cont_label_unselect_all">Удалить все элементы истории</string>
@@ -266,8 +266,8 @@
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">Указанная синхронизирующая задача не будет выполняться, потому что она была проигнорирована.</string>
         <string name="msgs_main_sync_test_mode_warnning">Выбранная задача настроена только для теста. Никакие файлы не будут скопированы или удалены. Выполнить задачу?</string>
         <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">Нажатие добавляет кнопку для создания новой синхронизирующей задачи.</string>
-        <string name="msgs_move_to_bottom">Переместить вниз</string>
-        <string name="msgs_move_to_top">Переместить вверх</string>
+        <string name="msgs_move_to_bottom">Прокрутить вниз</string>
+        <string name="msgs_move_to_top">Прокрутите вверх</string>
         <string name="msgs_msg_cont_label_clear">Очистить сообщения</string>
         <string name="msgs_msg_cont_label_move_bottom">Переместиться вниз</string>
         <string name="msgs_msg_cont_label_move_top">Переместиться вверх</string>
