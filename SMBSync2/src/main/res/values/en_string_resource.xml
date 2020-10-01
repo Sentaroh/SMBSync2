@@ -269,8 +269,6 @@
         <string name="msgs_move_to_bottom">Scroll down</string>
         <string name="msgs_move_to_top">Scroll up</string>
         <string name="msgs_msg_cont_label_clear">Clear message</string>
-        <string name="msgs_msg_cont_label_move_bottom">Move to bottom</string>
-        <string name="msgs_msg_cont_label_move_top">Move to top</string>
         <string name="msgs_msg_cont_label_pinned_active">Disable auto-scroll</string>
         <string name="msgs_msg_cont_label_pinned_inactive">Enable auto-scroll</string>
         <string name="msgs_no_profile_entry">No task</string>

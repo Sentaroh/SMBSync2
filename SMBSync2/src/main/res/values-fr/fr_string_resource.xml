@@ -269,8 +269,6 @@
         <string name="msgs_move_to_bottom">Défiler en bas</string>
         <string name="msgs_move_to_top">Défiler en haut</string>
         <string name="msgs_msg_cont_label_clear">Effacer le message</string>
-        <string name="msgs_msg_cont_label_move_bottom">Descendre en dernier</string>
-        <string name="msgs_msg_cont_label_move_top">Monter en premier</string>
         <string name="msgs_msg_cont_label_pinned_active">Désactiver l\'autodéfilement</string>
         <string name="msgs_msg_cont_label_pinned_inactive">Activer l\'autodéfilement</string>
         <string name="msgs_no_profile_entry">Aucune tâche</string>

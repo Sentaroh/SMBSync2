@@ -4599,7 +4599,7 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.msgListView.setSelection(sel);
             }
         }));
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveTop, mContext.getString(R.string.msgs_msg_cont_label_move_top));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveTop, mContext.getString(R.string.msgs_move_to_top));
 
         mContextMessageButtonMoveBottom.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
@@ -4614,7 +4614,7 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.msgListView.setSelection(sel);
             }
         }));
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveBottom, mContext.getString(R.string.msgs_msg_cont_label_move_bottom));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveBottom, mContext.getString(R.string.msgs_move_to_bottom));
 
         mContextMessageButtonClear.setOnClickListener(new OnClickListener() {
             @Override
@@ -5308,7 +5308,7 @@ public class ActivityMain extends AppCompatActivity {
         private Runnable handlerRunnable = new Runnable() {
             @Override
             public void run() {
-                if(mTouchedView.isEnabled()) {
+                if (mTouchedView.isEnabled()) {
                     handler.postDelayed(this, mRepeatInterval);
                     mClickListener.onClick(mTouchedView);
                 } else {

@@ -269,8 +269,6 @@
         <string name="msgs_move_to_bottom">Прокрутить вниз</string>
         <string name="msgs_move_to_top">Прокрутите вверх</string>
         <string name="msgs_msg_cont_label_clear">Очистить сообщения</string>
-        <string name="msgs_msg_cont_label_move_bottom">Переместиться вниз</string>
-        <string name="msgs_msg_cont_label_move_top">Переместиться вверх</string>
         <string name="msgs_msg_cont_label_pinned_active">Отключите автопрокрутку</string>
         <string name="msgs_msg_cont_label_pinned_inactive">Включите автопрокрутку</string>
         <string name="msgs_no_profile_entry">Нет заданий</string>
