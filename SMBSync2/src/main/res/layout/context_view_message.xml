@@ -16,18 +16,35 @@
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_weight="1"
         layout="@layout/context_button_move_to_top" />
 
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_weight="1"
         layout="@layout/context_button_move_to_bottom" />
 
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:layout_weight="1"
+        layout="@layout/context_button_scroll_down" />
+
+    <include
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:layout_weight="1"
+        layout="@layout/context_button_scroll_up" />
+
+    <include
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_weight="1"
         layout="@layout/context_button_delete" />
 
