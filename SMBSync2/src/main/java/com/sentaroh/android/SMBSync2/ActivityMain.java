@@ -358,7 +358,7 @@ public class ActivityMain extends AppCompatActivity {
                                         if (mGp.syncThreadActive) {
                                             mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
                                         } else {
-                                            mGp.syncMessageListView.setSelection(mGp.syncMessageListAdapter.getCount() - 1);
+                                            mGp.messageListViewMoveToBottomRequired=true;
                                         }
                                         pd.dismiss();
                                     }
@@ -900,7 +900,7 @@ public class ActivityMain extends AppCompatActivity {
         return vsa;
     }
 
-    private void restoreViewContent(ViewSaveArea vsa) {
+    private void restoreViewContent(final ViewSaveArea vsa) {
         mMainTabHost.setCurrentTab(vsa.current_tab_pos);
         mMainViewPager.setCurrentItem(vsa.current_pager_pos);
         mGp.syncTaskListView.setSelectionFromTop(vsa.prof_list_view_pos_x, vsa.prof_list_view_pos_y);
@@ -1159,7 +1159,7 @@ public class ActivityMain extends AppCompatActivity {
                                 mGp.uiHandler.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        mGp.syncMessageListView.setSelection(mGp.syncMessageListAdapter.getCount());
+                                        mGp.syncMessageListView.setSelection(mGp.syncMessageListAdapter.getCount()-1);
                                     }
                                 });
                             }
