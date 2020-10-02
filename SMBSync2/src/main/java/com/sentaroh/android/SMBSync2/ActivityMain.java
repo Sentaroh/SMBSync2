@@ -428,7 +428,6 @@ public class ActivityMain extends AppCompatActivity {
 //                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
         restartType = RESTART_WITH_OUT_INITIALYZE;
         reshowDialogWindow();
-        if (isUiEnabled()) mGp.syncMessageListView.setFastScrollEnabled(true);
     }
 
     @Override
@@ -810,8 +809,6 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryAdapter = new AdapterSyncHistory(mActivity, R.layout.sync_history_list_item_view, vsa.sync_hist_list);
         mGp.syncHistoryAdapter.setShowCheckBox(vsa.sync_adapter_show_cb);
         mGp.syncHistoryAdapter.notifyDataSetChanged();
-
-        if (isUiEnabled()) mGp.syncMessageListView.setFastScrollEnabled(true);
 
         mGp.syncScheduleAdapter.setSelectMode(sync_schedule_adapter_select_mode);
 
@@ -1592,8 +1589,6 @@ public class ActivityMain extends AppCompatActivity {
             }
         };
         mGp.progressSpinCancel.setOnClickListener(mGp.progressSpinCancelListener);
-
-        mGp.syncMessageListView.setFastScrollEnabled(false);
 
         LogUtil.flushLog(mContext, mGp);
     }
@@ -4666,20 +4661,19 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        mContextMessageButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
+        mContextMessageButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int sel = mGp.syncMessageListView.getFirstVisiblePosition() - MESSAGE_SCROLL_AMOUNT;
 
                 if (sel > mGp.syncMessageListAdapter.getCount() - 1) sel = mGp.syncMessageListAdapter.getCount() - 1;
                 if (sel < 0) sel = 0;
-                mUtil.addDebugMsg(1, "I", "fvp="+mGp.syncMessageListView.getFirstVisiblePosition()+", sel="+sel);
                 mGp.syncMessageListView.setSelection(sel);
                 setMessageScrollButtonVisibility();
             }
         }));
 
-        mContextMessageButtonScrollDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
+        mContextMessageButtonScrollDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int sel = mGp.syncMessageListView.getFirstVisiblePosition() + MESSAGE_SCROLL_AMOUNT;
@@ -4967,8 +4961,6 @@ public class ActivityMain extends AppCompatActivity {
         };
         mGp.progressSpinCancel.setOnClickListener(mGp.progressSpinCancelListener);
 
-        mGp.syncMessageListView.setFastScrollEnabled(false);
-
         ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
 
         LogUtil.flushLog(mContext, mGp);
@@ -4990,7 +4982,6 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryAdapter.notifyDataSetChanged();
 
         setUiEnabled();
-        if (isUiEnabled()) mGp.syncMessageListView.setFastScrollEnabled(true);
     }
 
     private ISvcCallback mSvcCallbackStub = new ISvcCallback.Stub() {
