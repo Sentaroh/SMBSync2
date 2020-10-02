@@ -3578,50 +3578,6 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    // Scroll UP/DOWN bottom context buttons: single click to scroll up/down, long click to continus scroll up/down
-    private boolean isHistoryButtonScrollDownPressed = true;
-    private boolean isAnyHistoryButtonScrollPressed = false;
-    final private static int HISTORY_SCROLL_AMOUNT=1;
-    final private Handler historyButtonClickHandler = new Handler();
-    final private Runnable historyButtonLongClickRunnable = new Runnable() {
-        public void run() {
-            historyButtonClickHandler.postDelayed(this, 100);
-            int sel=0;
-            if (isHistoryButtonScrollDownPressed) sel = mGp.syncHistoryListView.getFirstVisiblePosition() + HISTORY_SCROLL_AMOUNT;
-            else sel = mGp.syncHistoryListView.getFirstVisiblePosition() - 1;
-            if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - HISTORY_SCROLL_AMOUNT;
-            if (sel < 0) sel = 0;
-
-            mGp.syncHistoryListView.setSelection(sel);
-
-            if (!isAnyHistoryButtonScrollPressed) {
-                historyButtonClickHandler.removeCallbacks(historyButtonLongClickRunnable);
-                historyButtonClickHandler.removeCallbacks(historyButtonShortClickRunnable);
-            }
-        }
-    };
-
-//  Scroll by page
-    final private Runnable historyButtonShortClickRunnable = new Runnable() {
-        public void run() {
-            historyButtonClickHandler.postDelayed(this, 100);
-            int page_items =  mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition();
-            int sel = 0;
-            if (isHistoryButtonScrollDownPressed) sel = mGp.syncHistoryListView.getLastVisiblePosition();// + 1;
-            else sel = mGp.syncHistoryListView.getFirstVisiblePosition() - page_items+1;
-
-            if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - 1;
-            if (sel < 0) sel = 0;
-
-            mGp.syncHistoryListView.setSelection(sel);
-
-            if (!isAnyHistoryButtonScrollPressed) {
-                historyButtonClickHandler.removeCallbacks(historyButtonShortClickRunnable);
-                historyButtonClickHandler.removeCallbacks(historyButtonLongClickRunnable);
-            }
-        }
-    };
-
     private void setHistoryContextButtonListener() {
         mContextHistoryButtonSendTo.setOnClickListener(new OnClickListener() {
             @Override
@@ -3639,52 +3595,65 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonSendTo, mContext.getString(R.string.msgs_hist_cont_label_share));
 
-        mContextHistoryButtonScrollUp.setOnTouchListener(new View.OnTouchListener() {
+        // UP/DOWN bottom context buttons: single click to page up/down, long click to fast scroll up/down
+        mContextHistoryButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                MotionEvent mCurrentEvent = event;
-                switch(event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        isHistoryButtonScrollDownPressed = false;
-                        isAnyHistoryButtonScrollPressed = true;
-                        historyButtonClickHandler.postDelayed(historyButtonLongClickRunnable, 500);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        isAnyHistoryButtonScrollPressed = false;
-//                        historyButtonClickHandler.post(historyButtonShortClickRunnable);//For scroll by page
-                        historyButtonClickHandler.post(historyButtonLongClickRunnable);//For scroll by line
-                        break;
+            public void onClick(View v) {
+/*
+                Scroll up by whole visible list view height in pixels - y_offset
+                 - if first visible item is partially hidden, ensure it will be completely visible on bottom of the list after scroll up by one page
+                 - exception: if first visible item total height exceeds total visible ListView height, scroll by ListView height minus the already view item bottom part
+                   the code is proof tested again a message entry of +4x device size ( > 4 pages)
+                 - first_item_height: total height in pixels of the first visible ListView item (including any non visible part)
+*/
+                int lv_height = mGp.syncHistoryListView.getHeight();
+                //int lv_y_top = mGp.syncHistoryListView.getTop();
+                //int lv_y_padding_top = mGp.syncHistoryListView.getPaddingTop();
+                //ViewGroup.MarginLayoutParams lpListView = (ViewGroup.MarginLayoutParams) mGp.syncHistoryListView.getLayoutParams();
+                //int lv_top_margin = lpListView.topMargin;
+                //int lv_bottom_margin = lpListView.bottomMargin;
+                int first_item_y_top =  mGp.syncHistoryListView.getChildAt(0).getTop();
+                int first_item_y_bottom =  mGp.syncHistoryListView.getChildAt(0).getBottom();
+                int first_item_height = first_item_y_bottom - first_item_y_top;
+                int y_offset = 0;
+                if (first_item_y_top < 0) {
+                    // part of first item is hidden on top
+                    y_offset = first_item_height;
+                    if (y_offset > lv_height) y_offset = first_item_height - first_item_y_bottom;
                 }
-                return false;
-            }
-        });
-//        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonScrollUp, mContext.getString(R.string.msgs_hist_cont_label_scroll_up));
 
-        mContextHistoryButtonScrollDown.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                MotionEvent mCurrentEvent = event;
-                switch(event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        isHistoryButtonScrollDownPressed = true;
-                        isAnyHistoryButtonScrollPressed = true;
-                        historyButtonClickHandler.postDelayed(historyButtonLongClickRunnable, 500);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        isAnyHistoryButtonScrollPressed = false;
-//                        historyButtonClickHandler.post(historyButtonShortClickRunnable);//For scroll by page
-                        historyButtonClickHandler.post(historyButtonLongClickRunnable);//For scroll by line
-                        break;
-                }
-                return false;
+                //mUtil.addDebugMsg(2, "I", "lv_height="+lv_height + " first_item_height="+first_item_height + " first_item_y_top="+first_item_y_top + " first_item_y_bottom="+first_item_y_bottom);
+                mGp.syncHistoryListView.setItemChecked(mGp.syncHistoryListView.getFirstVisiblePosition(), true);//needed on app start to set touch focus
+                mGp.syncHistoryListView.setSelectionFromTop(mGp.syncHistoryListView.getFirstVisiblePosition(), lv_height - y_offset);
             }
-        });
+        }));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonScrollUp, mContext.getString(R.string.msgs_hist_cont_label_scroll_up));
+
+        mContextHistoryButtonScrollDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int last_item_pos = mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition();
+                int lv_height = mGp.syncHistoryListView.getHeight();
+                //int lv_y_bottom = mGp.syncHistoryListView.getBottom();
+                //int first_item_y_top =  mGp.syncHistoryListView.getChildAt(0).getTop();
+                //int first_item_y_bottom =  mGp.syncHistoryListView.getChildAt(0).getBottom();
+                //int first_item_height = first_item_y_bottom - first_item_y_top;
+                int last_item_y_top =  mGp.syncHistoryListView.getChildAt(last_item_pos).getTop();
+                int last_item_y_bottom =  mGp.syncHistoryListView.getChildAt(last_item_pos).getBottom();
+                int last_item_height = last_item_y_bottom - last_item_y_top;
+                int y_offset = 0;
+
+                if (last_item_height > lv_height) {
+                    // multi page entry
+                    y_offset = -(lv_height - last_item_y_top);
+                }
+
+                //mUtil.addDebugMsg(2, "I", "y_offset="+y_offset + " last_item_height="+last_item_height + " last_item_y_top="+last_item_y_top);
+                mGp.syncHistoryListView.setItemChecked(mGp.syncHistoryListView.getLastVisiblePosition(), true);
+                mGp.syncHistoryListView.setSelectionFromTop(mGp.syncHistoryListView.getLastVisiblePosition(), y_offset);
+            }
+        }));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonScrollDown, mContext.getString(R.string.msgs_hist_cont_label_scroll_down));
 
         mContextHistoryButtonMoveTop.setOnClickListener(new OnClickListener() {
             @Override
@@ -4672,6 +4641,66 @@ public class ActivityMain extends AppCompatActivity {
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonPinned, mContext.getString(R.string.msgs_msg_cont_label_pinned_inactive));
 
+        // UP/DOWN bottom context buttons: single click to page up/down, long click to fast scroll up/down
+        mContextMessageButtonMoveTop.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+/*
+                Scroll up by whole visible list view height in pixels - y_offset
+                 - if first visible item is partially hidden, ensure it will be completely visible on bottom of the list after scroll up by one page
+                 - exception: if first visible item total height exceeds total visible ListView height, scroll by ListView height minus the already view item bottom part
+                   the code is proof tested again a message entry of +4x device size ( > 4 pages)
+                 - first_item_height: total height in pixels of the first visible ListView item (including any non visible part)
+*/
+                int lv_height = mGp.msgListView.getHeight();
+                //int lv_y_top = mGp.msgListView.getTop();
+                //int lv_y_padding_top = mGp.msgListView.getPaddingTop();
+                //ViewGroup.MarginLayoutParams lpListView = (ViewGroup.MarginLayoutParams) mGp.msgListView.getLayoutParams();
+                //int lv_top_margin = lpListView.topMargin;
+                //int lv_bottom_margin = lpListView.bottomMargin;
+                int first_item_y_top =  mGp.msgListView.getChildAt(0).getTop();
+                int first_item_y_bottom =  mGp.msgListView.getChildAt(0).getBottom();
+                int first_item_height = first_item_y_bottom - first_item_y_top;
+                int y_offset = 0;
+                if (first_item_y_top < 0) {
+                    // part of first item is hidden on top
+                    y_offset = first_item_height;
+                    if (y_offset > lv_height) y_offset = first_item_height - first_item_y_bottom;
+                }
+
+                //mUtil.addDebugMsg(2, "I", "lv_height="+lv_height + " first_item_height="+first_item_height + " first_item_y_top="+first_item_y_top + " first_item_y_bottom="+first_item_y_bottom);
+                mGp.msgListView.setItemChecked(mGp.msgListView.getFirstVisiblePosition(), true);//needed on app start to set touch focus
+                mGp.msgListView.setSelectionFromTop(mGp.msgListView.getFirstVisiblePosition(), lv_height - y_offset);
+            }
+        }));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveTop, mContext.getString(R.string.msgs_move_to_top));
+
+        mContextMessageButtonMoveBottom.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int last_item_pos = mGp.msgListView.getLastVisiblePosition() - mGp.msgListView.getFirstVisiblePosition();
+                int lv_height = mGp.msgListView.getHeight();
+                //int lv_y_bottom = mGp.msgListView.getBottom();
+                //int first_item_y_top =  mGp.msgListView.getChildAt(0).getTop();
+                //int first_item_y_bottom =  mGp.msgListView.getChildAt(0).getBottom();
+                //int first_item_height = first_item_y_bottom - first_item_y_top;
+                int last_item_y_top =  mGp.msgListView.getChildAt(last_item_pos).getTop();
+                int last_item_y_bottom =  mGp.msgListView.getChildAt(last_item_pos).getBottom();
+                int last_item_height = last_item_y_bottom - last_item_y_top;
+                int y_offset = 0;
+
+                if (last_item_height > lv_height) {
+                    // multi page entry
+                    y_offset = -(lv_height - last_item_y_top);
+                }
+
+                //mUtil.addDebugMsg(2, "I", "y_offset="+y_offset + " last_item_height="+last_item_height + " last_item_y_top="+last_item_y_top);
+                mGp.msgListView.setItemChecked(mGp.msgListView.getLastVisiblePosition(), true);
+                mGp.msgListView.setSelectionFromTop(mGp.msgListView.getLastVisiblePosition(), y_offset);
+            }
+        }));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveBottom, mContext.getString(R.string.msgs_move_to_bottom));
+/*
         mContextMessageButtonMoveTop.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -4693,7 +4722,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonMoveBottom, mContext.getString(R.string.msgs_msg_cont_label_move_bottom));
-
+*/
         mContextMessageButtonClear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -5359,6 +5388,107 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
+/*
+     * A class, that can be used as a TouchListener on any view (e.g. a Button).
+     * It cyclically runs a clickListener, emulating keyboard-like behaviour. First
+     * click is fired immediately, next one after the initialDelay, and subsequent
+     * ones after the repeatDelay.
+     *
+     * Android default onLongClick can be returned by int ViewConfiguration.getLongPressTimeout() : 500 msec default
+     * Interval is scheduled after the onClick completes, so it has to run fast.
+     * If it runs slow, it does not generate skipped onClicks. Can be rewritten to
+     * achieve this.
+*/
+    int ANDROID_LONG_PRESS_TIMEOUT = 500;
+    int DEFAULT_LONG_PRESS_REPEAT_INTERVAL = 100;
+    private class RepeatListener implements View.OnTouchListener {
+
+        private Handler handler = new Handler();
+
+        private final int mLongPressTimeout;
+        private final int mRepeatInterval;
+        private final boolean mConsumeEvent;
+        private final OnClickListener mClickListener;
+        private View mTouchedView;
+//      private Rect mRect; // Variable to hold the bounds of the view rectangle
+
+        private Runnable handlerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (mTouchedView.isEnabled()) {
+                    handler.postDelayed(this, mRepeatInterval);
+                    mClickListener.onClick(mTouchedView);
+                } else {
+                    //view was disabled by the clickListener: remove the callback
+                    //mUtil.addDebugMsg(2, "I", "runnable cancelled by View Removed");
+                    handler.removeCallbacks(handlerRunnable);
+                    mTouchedView.setPressed(false);
+                    mTouchedView = null;
+                }
+                //mUtil.addDebugMsg(2, "I", "runnable running");
+            }
+        };
+
+        /**
+         * @param initialDelay The interval after first click event
+         * @param repeatDelay The interval after second and subsequent click 
+         *        events (100 msec recommended)
+         * @param clickListener The OnClickListener, that will be called
+         *        periodically
+         * @param consumeEvent: return value after touch event used
+         *        set to false to be able to use the event by other methods directly by caller listener or to pass to parent view if needed
+         * [@param] speedIncrementDelay: Optional, not implemented here
+                  delay after which the speed is even more incremented
+         *        by default we will increment the speed by a 3x factor
+                  set to 0 to disable
+        */
+        public RepeatListener(int initialDelay, int repeatDelay, boolean consumeEvent, OnClickListener clickListener) {
+            if (clickListener == null)
+                throw new IllegalArgumentException("null runnable");
+            if (initialDelay < 0 || repeatDelay < 0)
+                throw new IllegalArgumentException("negative interval");
+
+            mLongPressTimeout = initialDelay;
+            mRepeatInterval = repeatDelay;
+            mClickListener = clickListener;
+            mConsumeEvent = consumeEvent;
+        }
+
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                        handler.removeCallbacks(handlerRunnable);
+                        handler.postDelayed(handlerRunnable, mLongPressTimeout);
+                        mTouchedView = view;
+                        mTouchedView.setPressed(true);
+                        mClickListener.onClick(view);
+//                        mRect = new Rect(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+                        return mConsumeEvent;
+                case MotionEvent.ACTION_MOVE:
+                        break;
+//                      if (!mRect.contains(view.getLeft() + (int) motionEvent.getX(), view.getTop() + (int) motionEvent.getY())) {
+//                          // User moved outside view rectangle bounds
+//                          // this part is not needed with the View.onTouch implementation as it is treated as ACTION_UP and ACTION_CANCEL
+//                          // if implemented, we must check for view == null before mTouchedView.setPressed(false);
+//                          mUtil.addDebugMsg(2, "I", "runnable cancelled by Move Outside View");
+//                          handler.removeCallbacks(handlerRunnable);
+//                          mTouchedView.setPressed(false);
+//                          mTouchedView = null;
+//                          return mConsumeEvent;
+//                      }
+                case MotionEvent.ACTION_CANCEL:
+                        //mUtil.addDebugMsg(2, "I", "runnable cancelled by ACTION_CANCEL");
+                case MotionEvent.ACTION_UP:
+                        //mUtil.addDebugMsg(2, "I", "runnable cancelled by Finger UP");
+                        handler.removeCallbacks(handlerRunnable);
+                        mTouchedView.setPressed(false);
+                        mTouchedView = null;
+                        return mConsumeEvent;
+            }
+
+            return false;
+        }
+    }
 }
 
 //class ActivityDataHolder implements Serializable {

@@ -271,8 +271,8 @@
         <string name="msgs_move_to_bottom">最後に移動</string>
         <string name="msgs_move_to_top">最上部に移動</string>
         <string name="msgs_msg_cont_label_clear">メッセージの消去</string>
-        <string name="msgs_msg_cont_label_move_bottom">最下部に移動</string>
-        <string name="msgs_msg_cont_label_move_top">最上部に移動</string>
+        <string name="msgs_msg_cont_label_scroll_down">下に移動</string>
+        <string name="msgs_msg_cont_label_scroll_up">上に移動</string>
         <string name="msgs_msg_cont_label_pinned_active">自動スクロールを有効にする</string>
         <string name="msgs_msg_cont_label_pinned_inactive">自動スクロールを無効にする</string>
         <string name="msgs_no_profile_entry">タスクリストが空です。</string>
