@@ -954,7 +954,6 @@ public class ActivityMain extends AppCompatActivity {
     private void initAdapterAndView() {
         mGp.syncMessageListView.setAdapter(mGp.syncMessageListAdapter);
         mGp.syncMessageListView.setDrawingCacheEnabled(true);
-        mGp.syncMessageListView.setItemChecked(mGp.syncMessageListAdapter.getCount() - 1, true);
         mGp.syncMessageListView.setSelection(mGp.syncMessageListAdapter.getCount() - 1);
 
         mGp.syncTaskListView.setAdapter(mGp.syncTaskAdapter);
@@ -1152,6 +1151,7 @@ public class ActivityMain extends AppCompatActivity {
             }
 
             if (tabId.equals(SMBSYNC2_TAB_NAME_MESSAGE)) {
+                mGp.syncMessageListView.requestFocusFromTouch();
                 if (!mGp.freezeMessageViewScroll) {
                     synchronized (mGp.syncMessageList) {
                         if (mGp.messageListViewMoveToBottomRequired) {
@@ -3644,7 +3644,6 @@ public class ActivityMain extends AppCompatActivity {
                 int sel = mGp.syncHistoryListView.getFirstVisiblePosition() - HISTORY_SCROLL_AMOUNT;
                 if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - 1;
                 if (sel < 0) sel = 0;
-                mGp.syncHistoryListView.requestFocusFromTouch();
                 mGp.syncHistoryListView.setSelection(sel);
                 setHistoryScrollButtonVisibility();
             }
@@ -3656,7 +3655,6 @@ public class ActivityMain extends AppCompatActivity {
                 int sel = mGp.syncHistoryListView.getFirstVisiblePosition() + HISTORY_SCROLL_AMOUNT;
                 if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - 1;
                 if (sel < 0) sel = 0;
-                mGp.syncHistoryListView.requestFocusFromTouch();
                 mGp.syncHistoryListView.setSelection(sel);
                 setHistoryScrollButtonVisibility();
             }
@@ -4676,7 +4674,6 @@ public class ActivityMain extends AppCompatActivity {
                 if (sel > mGp.syncMessageListAdapter.getCount() - 1) sel = mGp.syncMessageListAdapter.getCount() - 1;
                 if (sel < 0) sel = 0;
                 mUtil.addDebugMsg(1, "I", "fvp="+mGp.syncMessageListView.getFirstVisiblePosition()+", sel="+sel);
-                mGp.syncMessageListView.requestFocusFromTouch();
                 mGp.syncMessageListView.setSelection(sel);
                 setMessageScrollButtonVisibility();
             }
@@ -4690,7 +4687,6 @@ public class ActivityMain extends AppCompatActivity {
                 if (sel > mGp.syncMessageListAdapter.getCount() - 1) sel = mGp.syncMessageListAdapter.getCount() - 1;
                 if (sel < 0) sel = 0;
 
-                mGp.syncMessageListView.requestFocusFromTouch();
                 mGp.syncMessageListView.setSelection(sel);
                 setMessageScrollButtonVisibility();
             }
@@ -4722,7 +4718,6 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setContextButtonEnabled(mContextMessageButtonMoveTop, false);
-                mGp.syncMessageListView.setItemChecked(0, true);
                 mGp.syncMessageListView.setSelection(0);
                 setContextButtonEnabled(mContextMessageButtonMoveTop, true);
             }
@@ -4733,7 +4728,6 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setContextButtonEnabled(mContextMessageButtonMoveBottom, false);
-                mGp.syncMessageListView.setItemChecked(mGp.syncMessageListAdapter.getCount() - 1, true);
                 mGp.syncMessageListView.setSelection(mGp.syncMessageListAdapter.getCount() - 1);
                 setContextButtonEnabled(mContextMessageButtonMoveBottom, true);
             }
@@ -5434,7 +5428,7 @@ public class ActivityMain extends AppCompatActivity {
         private Runnable handlerRunnable = new Runnable() {
             @Override
             public void run() {
-                mUtil.addDebugMsg(1, "I", "runnable enterd, enabled="+mTouchedView.isEnabled());
+//                mUtil.addDebugMsg(1, "I", "runnable enterd, enabled="+mTouchedView.isEnabled());
                 if (mTouchedView.isEnabled()) {
                     handler.postDelayed(this, mRepeatInterval);
                     mClickListener.onClick(mTouchedView);
@@ -5477,7 +5471,7 @@ public class ActivityMain extends AppCompatActivity {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    mUtil.addDebugMsg(1, "I", "runnable cancelled by ACTION_DOWN");
+//                    mUtil.addDebugMsg(1, "I", "runnable cancelled by ACTION_DOWN");
                     handler.removeCallbacks(handlerRunnable);
                     handler.postDelayed(handlerRunnable, mLongPressTimeout);
                     mTouchedView = view;
@@ -5487,9 +5481,9 @@ public class ActivityMain extends AppCompatActivity {
                 case MotionEvent.ACTION_MOVE:
                     break;
                 case MotionEvent.ACTION_CANCEL:
-                    mUtil.addDebugMsg(1, "I", "runnable cancelled by ACTION_CANCEL");
+//                    mUtil.addDebugMsg(1, "I", "runnable cancelled by ACTION_CANCEL");
                 case MotionEvent.ACTION_UP:
-                    mUtil.addDebugMsg(1, "I", "runnable cancelled by Finger UP");
+//                    mUtil.addDebugMsg(1, "I", "runnable cancelled by Finger UP");
                     handler.removeCallbacks(handlerRunnable);
                     mTouchedView.setPressed(false);
                     mTouchedView = null;
