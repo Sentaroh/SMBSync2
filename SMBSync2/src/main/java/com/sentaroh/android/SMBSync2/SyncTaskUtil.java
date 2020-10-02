@@ -31,20 +31,16 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -65,7 +61,6 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sentaroh.android.Utilities.Base64Compat;
 import com.sentaroh.android.Utilities.ContextMenu.CustomContextMenu;
@@ -78,7 +73,6 @@ import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import com.sentaroh.android.Utilities.SafFile;
 import com.sentaroh.android.Utilities.StringUtil;
-import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistAdapter;
 import com.sentaroh.android.Utilities.TreeFilelist.TreeFilelistItem;
@@ -1411,10 +1405,10 @@ public class SyncTaskUtil {
                 for (int i = 0; i < dpItemList.size(); i++) {
                     mGp.syncTaskAdapter.remove(dpItemList.get(i));
                     mUtil.addDebugMsg(1,"I","Sync task deleted, name="+dpItemList.get(i).getSyncTaskName());
-                    ScheduleUtil.removeSyncTaskFromSchedule(mGp, mUtil, mGp.syncTabScheduleList, dpItemList.get(i).getSyncTaskName());
+                    ScheduleUtil.removeSyncTaskFromSchedule(mGp, mUtil, mGp.syncScheduleList, dpItemList.get(i).getSyncTaskName());
                 }
-                mGp.syncTabScheduleAdapter.notifyDataSetChanged();
-                ScheduleUtil.saveScheduleData(c, mGp, mGp.syncTabScheduleList);
+                mGp.syncScheduleAdapter.notifyDataSetChanged();
+                ScheduleUtil.saveScheduleData(c, mGp, mGp.syncScheduleList);
 
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskAdapter.notifyDataSetChanged();
@@ -1842,9 +1836,9 @@ public class SyncTaskUtil {
                 String prev_name=pli.getSyncTaskName();
                 pli.setSyncTaskName(new_name);
                 mUtil.addDebugMsg(1,"I","Sync task renamed, from="+prev_name+", new="+new_name);
-                ScheduleUtil.renameSyncTaskFromSchedule(mGp, mUtil, mGp.syncTabScheduleList, prev_name, new_name);
-                mGp.syncTabScheduleAdapter.notifyDataSetChanged();
-                ScheduleUtil.saveScheduleData(mActivity, mGp, mGp.syncTabScheduleList);
+                ScheduleUtil.renameSyncTaskFromSchedule(mGp, mUtil, mGp.syncScheduleList, prev_name, new_name);
+                mGp.syncScheduleAdapter.notifyDataSetChanged();
+                ScheduleUtil.saveScheduleData(mActivity, mGp, mGp.syncScheduleList);
 
                 mGp.syncTaskAdapter.sort();
                 mGp.syncTaskAdapter.notifyDataSetChanged();

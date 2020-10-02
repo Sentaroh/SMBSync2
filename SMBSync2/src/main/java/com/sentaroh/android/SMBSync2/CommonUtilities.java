@@ -376,8 +376,8 @@ public final class CommonUtilities {
             fos=new FileOutputStream(mf);
             PrintWriter bos=new PrintWriter(new BufferedOutputStream(fos, GENERAL_IO_AREA_SIZE));
             StringBuffer sb=new StringBuffer(1024);
-            synchronized (gp.msgList) {
-                for (SyncMessageItem smi:gp.msgList) {
+            synchronized (gp.syncMessageList) {
+                for (SyncMessageItem smi:gp.syncMessageList) {
                     sb.setLength(0);
                     sb.append("\u0001").append(smi.getCategory()).append("\u0000"); //msgCat
                     sb.append("\u0001").append(smi.getDate()).append("\u0000"); //msgDate
@@ -471,16 +471,16 @@ public final class CommonUtilities {
     }
 
     private void putMsgListArray(SyncMessageItem mli) {
-        synchronized (mGp.msgList) {
-            if (mGp.msgList.size() > (MAX_MSG_COUNT + 200)) {
-                for (int i = 0; i < 200; i++) mGp.msgList.remove(0);
+        synchronized (mGp.syncMessageList) {
+            if (mGp.syncMessageList.size() > (MAX_MSG_COUNT + 200)) {
+                for (int i = 0; i < 200; i++) mGp.syncMessageList.remove(0);
             }
-            mGp.msgList.add(mli);
-            if (mGp.msgListAdapter != null) {
-                mGp.msgListAdapter.notifyDataSetChanged();
+            mGp.syncMessageList.add(mli);
+            if (mGp.syncMessageListAdapter != null) {
+                mGp.syncMessageListAdapter.notifyDataSetChanged();
                 if (!mGp.freezeMessageViewScroll) {
-                    mGp.msgListView.setSelection(mGp.msgList.size());
-                    mGp.msgListViewMoveToBottomRequired=true;
+                    mGp.syncMessageListView.setSelection(mGp.syncMessageList.size());
+                    mGp.messageListViewMoveToBottomRequired =true;
                 }
             }
         }

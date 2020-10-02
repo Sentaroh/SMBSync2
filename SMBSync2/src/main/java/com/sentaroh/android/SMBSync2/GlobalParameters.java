@@ -210,20 +210,20 @@ public class GlobalParameters extends CommonGlobalParms {
     public long notificationNextShowedTime = 0;
 //    public Bitmap notificationLargeIcon = null;
 
-    public ArrayList<SyncMessageItem> msgList = null; //new ArrayList<SyncMessageItem>();
+    public ArrayList<SyncMessageItem> syncMessageList = null; //new ArrayList<SyncMessageItem>();
     public boolean freezeMessageViewScroll = false;
-    public AdapterSyncMessage msgListAdapter = null;
-    public ListView msgListView = null;
-    public boolean msgListViewMoveToBottomRequired=false;
+    public AdapterSyncMessage syncMessageListAdapter = null;
+    public ListView syncMessageListView = null;
+    public boolean messageListViewMoveToBottomRequired =false;
 
     public ArrayList<SyncHistoryItem> syncHistoryList = null;
     public AdapterSyncHistory syncHistoryAdapter = null;
     public ListView syncHistoryListView = null;
 
-    public ArrayList<ScheduleItem> syncTabScheduleList = null;
-    public AdapterScheduleList syncTabScheduleAdapter = null;
-    public ListView syncTabScheduleListView = null;
-    public TextView syncTabScheduleMessage =null;
+    public ArrayList<ScheduleItem> syncScheduleList = null;
+    public AdapterScheduleList syncScheduleAdapter = null;
+    public ListView syncScheduleListView = null;
+    public TextView syncScheduleMessage =null;
 
     public ArrayList<SyncTaskItem> syncTaskList = null;
     public AdapterSyncTask syncTaskAdapter = null;
@@ -395,8 +395,8 @@ public class GlobalParameters extends CommonGlobalParms {
         loadSettingsParms(c);
         setLogParms(c, this);
 
-        if (msgList == null) {
-            msgList=CommonUtilities.loadMsgList(this);
+        if (syncMessageList == null) {
+            syncMessageList =CommonUtilities.loadMsgList(this);
         }
 
 //        scheduleInfoList = ScheduleUtil.loadScheduleData(this);

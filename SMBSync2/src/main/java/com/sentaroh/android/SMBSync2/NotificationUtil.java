@@ -265,7 +265,7 @@ public class NotificationUtil {
         } else {
             builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         }
-        if (gwa.callbackStub != null || (gwa.msgList != null && gwa.msgList.size() > 0)) {
+        if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
             Intent activity_intent = new Intent(c, ActivityMain.class);
             PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
@@ -313,7 +313,7 @@ public class NotificationUtil {
             else if (!playback_sound && vibration) builder.setChannelId(NOTIFICATION_CHANNEL_VIBRATE);
             else builder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
         }
-        if (gwa.callbackStub != null || (gwa.msgList != null && gwa.msgList.size() > 0)) {
+        if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
             Intent activity_intent = new Intent(c, ActivityMain.class);
             PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
