@@ -403,9 +403,9 @@ public class GlobalParameters extends CommonGlobalParms {
     }
 
     public void clearParms() {
-//        synchronized (msgList) {
-//            msgList = new ArrayList<SyncMessageItem>();
-//            msgListAdapter = null;
+//        synchronized (syncMessageList) {
+//            syncMessageList = new ArrayList<SyncMessageItem>();
+//            syncMessageListAdapter = null;
 //        }
     }
 
