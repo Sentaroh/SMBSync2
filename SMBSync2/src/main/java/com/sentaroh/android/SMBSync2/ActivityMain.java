@@ -339,7 +339,7 @@ public class ActivityMain extends AppCompatActivity {
                 } else {
                     mUtil.addDebugMsg(1, "I", "Sync task list was already created.");
                 }
-//                    ExportToSMBSync3.saveConfigListToExportFile(mContext, "/sdcard/smbsync2.xml", mGp.syncTaskList, mGp.syncTabScheduleList);
+//                    ExportToSMBSync3.saveConfigListToExportFile(mContext, "/sdcard/smbsync2.xml", mGp.syncTaskList, mGp.syncScheduleList);
                 mUiHandler.post(new Runnable(){
                     @Override
                     public void run() {
@@ -3081,7 +3081,7 @@ public class ActivityMain extends AppCompatActivity {
         ntfy_cb.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
-//                setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
+//                setScheduleContextButtonMode(mGp.syncScheduleAdapter);
             }
 
             @Override
@@ -3328,7 +3328,7 @@ public class ActivityMain extends AppCompatActivity {
         mContextScheduleButtonUnselectAll.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mGp.syncTabScheduleAdapter.setSelectMode(false);
+//                mGp.syncScheduleAdapter.setSelectMode(false);
                 mGp.syncScheduleAdapter.unselectAll();
                 setScheduleContextButtonMode(mGp.syncScheduleAdapter);
             }
@@ -5313,7 +5313,7 @@ public class ActivityMain extends AppCompatActivity {
         if (!isTaskTermination) {
             if (!isTaskDataExisted() || mGp.syncMessageListAdapter.resetDataChanged()) {
 //				ActivityDataHolder data = new ActivityDataHolder();
-//				data.ml=mGp.msgListAdapter.getMessageList();
+//				data.ml=mGp.syncMessageListAdapter.getMessageList();
 //				data.pl=mGp.syncTaskAdapter.getArrayList();
 //				try {
 //				    FileOutputStream fos = openFileOutput(SMBSYNC2_SERIALIZABLE_FILE_NAME, MODE_PRIVATE);
@@ -5355,17 +5355,17 @@ public class ActivityMain extends AppCompatActivity {
 ////			    lf.delete();
 ////
 ////			    ArrayList<SyncMessageItem> o_ml=new ArrayList<SyncMessageItem>();
-////				for (int i=0;i<mGp.msgListAdapter.getCount();i++)
-////					o_ml.add(mGp.msgListAdapter.getItem(i));
+////				for (int i=0;i<mGp.syncMessageListAdapter.getCount();i++)
+////					o_ml.add(mGp.syncMessageListAdapter.getItem(i));
 ////
-////				mGp.msgListAdapter.clear();
+////				mGp.syncMessageListAdapter.clear();
 ////
-////				mGp.msgListAdapter.setMessageList(data.ml);
+////				mGp.syncMessageListAdapter.setMessageList(data.ml);
 ////
-////				for (int i=0;i<o_ml.size();i++) mGp.msgListAdapter.add(o_ml.get(i));
+////				for (int i=0;i<o_ml.size();i++) mGp.syncMessageListAdapter.add(o_ml.get(i));
 ////
-////				mGp.msgListAdapter.notifyDataSetChanged();
-////				mGp.msgListAdapter.resetDataChanged();
+////				mGp.syncMessageListAdapter.notifyDataSetChanged();
+////				mGp.syncMessageListAdapter.resetDataChanged();
 ////
 ////				mGp.syncTaskAdapter.clear();
 ////				mGp.syncTaskAdapter.setArrayList(data.pl);
@@ -5443,9 +5443,9 @@ public class ActivityMain extends AppCompatActivity {
          * @param consumeEvent: return value after touch event used
          *        set to false to be able to use the event by other methods directly by caller listener or to pass to parent view if needed
          * [@param] speedIncrementDelay: Optional, not implemented here
-        delay after which the speed is even more incremented
-         *        by default we will increment the speed by a 3x factor
-        set to 0 to disable
+         *         delay after which the speed is even more incremented
+         *         by default we will increment the speed by a 3x factor
+         *         set to 0 to disable
          */
         public RepeatListener(int initialDelay, int repeatDelay, boolean consumeEvent, OnClickListener clickListener) {
             if (clickListener == null)
