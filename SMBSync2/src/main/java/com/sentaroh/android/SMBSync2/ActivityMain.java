@@ -3574,14 +3574,27 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private boolean canListViewScrollDown(ListView lv) {
-        boolean result=false;
-        if (lv.getLastVisiblePosition()<(lv.getAdapter().getCount()-1)) result=true;
+        if (lv == null) return false;
+        if (lv.getChildAt(lv.getChildCount() - 1) == null) return false;
+
+        boolean result=true;
+        if (lv.getLastVisiblePosition() == lv.getAdapter().getCount()-1 && 
+                lv.getChildAt(lv.getChildCount() - 1).getBottom() <= lv.getHeight()) {
+            result=false;
+        }
+
         return result;
     }
 
     private boolean canListViewScrollUp(ListView lv) {
-        boolean result=false;
-        if (lv.getFirstVisiblePosition()>0) result=true;
+        if (lv == null) return false;
+        if (lv.getChildAt(0) == null) return false;
+
+        boolean result=true;
+        if (lv.getFirstVisiblePosition() == 0 && lv.getChildAt(0).getTop() >= 0) {
+            result=false;
+        }
+
         return result;
     }
 
