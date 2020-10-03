@@ -3621,7 +3621,6 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
-    private final static int HISTORY_SCROLL_AMOUNT=1;
     private void setHistoryContextButtonListener() {
         setHistoryScrollButtonVisibility();
         mGp.syncHistoryListView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -3649,10 +3648,26 @@ public class ActivityMain extends AppCompatActivity {
         mContextHistoryButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int sel = mGp.syncHistoryListView.getFirstVisiblePosition() - HISTORY_SCROLL_AMOUNT;
-                if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - 1;
-                if (sel < 0) sel = 0;
-                mGp.syncHistoryListView.setSelection(sel);
+                int lv_height = mGp.syncHistoryListView.getHeight();
+                int first_item_y_top =  mGp.syncHistoryListView.getChildAt(0).getTop();
+                int first_item_y_bottom =  mGp.syncHistoryListView.getChildAt(0).getBottom();
+                int first_item_height = first_item_y_bottom - first_item_y_top;
+                int y_offset = 0;
+                if (first_item_y_top < 0) {
+                    // part of first item is hidden on top
+                    y_offset = first_item_height;
+                    if (y_offset > lv_height) {
+                        //item is more than one page: position to the bottom, the current top exact last visible position, minus 3 text lines
+                        TextView listTextView = (TextView) mGp.syncHistoryListView.getChildAt(0).findViewById(R.id.sync_history_list_view_date);
+                        int text_context_size = 0;
+                        if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
+                        y_offset = first_item_height - first_item_y_bottom + text_context_size;
+                    }
+                }
+
+                //mUtil.addDebugMsg(2, "I", "lv_height="+lv_height + " first_item_height="+first_item_height + " first_item_y_top="+first_item_y_top + " first_item_y_bottom="+first_item_y_bottom);
+                mGp.syncHistoryListView.setItemChecked(mGp.syncHistoryListView.getFirstVisiblePosition(), true);//needed on app start to set touch focus
+                mGp.syncHistoryListView.setSelectionFromTop(mGp.syncHistoryListView.getFirstVisiblePosition(), lv_height - y_offset);
                 setHistoryScrollButtonVisibility();
             }
         }));
@@ -3660,10 +3675,24 @@ public class ActivityMain extends AppCompatActivity {
         mContextHistoryButtonScrollDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int sel = mGp.syncHistoryListView.getFirstVisiblePosition() + HISTORY_SCROLL_AMOUNT;
-                if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - 1;
-                if (sel < 0) sel = 0;
-                mGp.syncHistoryListView.setSelection(sel);
+                int last_item_pos = mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition();
+                int lv_height = mGp.syncHistoryListView.getHeight();
+                int last_item_y_top =  mGp.syncHistoryListView.getChildAt(last_item_pos).getTop();
+                int last_item_y_bottom =  mGp.syncHistoryListView.getChildAt(last_item_pos).getBottom();
+                int last_item_height = last_item_y_bottom - last_item_y_top;
+                int y_offset = 0;
+
+                if (last_item_height > lv_height) {
+                    //item is more than one page: position to the top, the current bottom exat last visible position, minus 3 text lines
+                    TextView listTextView = (TextView) mGp.syncHistoryListView.getChildAt(last_item_pos).findViewById(R.id.sync_history_list_view_date);
+                    int text_context_size = 0;
+                    if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
+                    y_offset = -(lv_height - last_item_y_top - text_context_size);
+                }
+
+                //mUtil.addDebugMsg(2, "I", "y_offset="+y_offset + " last_item_height="+last_item_height + " last_item_y_top="+last_item_y_top);
+                mGp.syncHistoryListView.setItemChecked(mGp.syncHistoryListView.getLastVisiblePosition(), true);
+                mGp.syncHistoryListView.setSelectionFromTop(mGp.syncHistoryListView.getLastVisiblePosition(), y_offset);
                 setHistoryScrollButtonVisibility();
             }
         }));
@@ -4664,7 +4693,6 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
-    private final static int MESSAGE_SCROLL_AMOUNT=3;
     private void setMessageContextButtonListener() {
         setMessageScrollButtonVisibility();
         mGp.syncMessageListView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -4674,27 +4702,52 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        mContextMessageButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
+        mContextMessageButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int sel = mGp.syncMessageListView.getFirstVisiblePosition() - MESSAGE_SCROLL_AMOUNT;
+                int lv_height = mGp.syncMessageListView.getHeight();
+                int first_item_y_top =  mGp.syncMessageListView.getChildAt(0).getTop();
+                int first_item_y_bottom =  mGp.syncMessageListView.getChildAt(0).getBottom();
+                int first_item_height = first_item_y_bottom - first_item_y_top;
+                int y_offset = 0;
+                if (first_item_y_top < 0) {
+                    // part of first item is hidden on top
+                    y_offset = first_item_height;
+                    if (y_offset > lv_height) {
+                        //item is more than one page: position to the bottom, the current top exact last visible position, minus 3 text lines
+                        TextView listTextView = (TextView) mGp.syncMessageListView.getChildAt(0).findViewById(R.id.msg_list_view_item_date);
+                        int text_context_size = 0;
+                        if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
+                        y_offset = first_item_height - first_item_y_bottom + text_context_size;
+                    }
+                }
 
-                if (sel > mGp.syncMessageListAdapter.getCount() - 1) sel = mGp.syncMessageListAdapter.getCount() - 1;
-                if (sel < 0) sel = 0;
-                mGp.syncMessageListView.setSelection(sel);
+                //mUtil.addDebugMsg(2, "I", "lv_height="+lv_height + " first_item_height="+first_item_height + " first_item_y_top="+first_item_y_top + " first_item_y_bottom="+first_item_y_bottom);
+                mGp.syncMessageListView.setSelectionFromTop(mGp.syncMessageListView.getFirstVisiblePosition(), lv_height - y_offset);
                 setMessageScrollButtonVisibility();
             }
         }));
 
-        mContextMessageButtonScrollDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
+        mContextMessageButtonScrollDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int sel = mGp.syncMessageListView.getFirstVisiblePosition() + MESSAGE_SCROLL_AMOUNT;
+                int last_item_pos = mGp.syncMessageListView.getLastVisiblePosition() - mGp.syncMessageListView.getFirstVisiblePosition();
+                int lv_height = mGp.syncMessageListView.getHeight();
+                int last_item_y_top =  mGp.syncMessageListView.getChildAt(last_item_pos).getTop();
+                int last_item_y_bottom =  mGp.syncMessageListView.getChildAt(last_item_pos).getBottom();
+                int last_item_height = last_item_y_bottom - last_item_y_top;
+                int y_offset = 0;
 
-                if (sel > mGp.syncMessageListAdapter.getCount() - 1) sel = mGp.syncMessageListAdapter.getCount() - 1;
-                if (sel < 0) sel = 0;
+                if (last_item_height > lv_height) {
+                    //item is more than one page: position to the top, the current bottom exat last visible position, minus 3 text lines
+                    TextView listTextView = (TextView) mGp.syncMessageListView.getChildAt(last_item_pos).findViewById(R.id.msg_list_view_item_date);
+                    int text_context_size = 0;
+                    if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
+                    y_offset = -(lv_height - last_item_y_top - text_context_size);
+                }
 
-                mGp.syncMessageListView.setSelection(sel);
+                //mUtil.addDebugMsg(2, "I", "y_offset="+y_offset + " last_item_height="+last_item_height + " last_item_y_top="+last_item_y_top);
+                mGp.syncMessageListView.setSelectionFromTop(mGp.syncMessageListView.getLastVisiblePosition(), y_offset);
                 setMessageScrollButtonVisibility();
             }
         }));
@@ -4711,7 +4764,7 @@ public class ActivityMain extends AppCompatActivity {
                             mContext.getString(R.string.msgs_msg_cont_label_pinned_active));
                 } else {
                     mContextMessageButtonPinned.setImageResource(R.drawable.context_button_pinned_inactive);
-                    mGp.syncMessageListView.setSelection(mGp.syncMessageListAdapter.getCount() - 1);
+                    mGp.syncMessageListView.setSelection(mGp.syncMessageListView.getCount() - 1);
                     CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_log_inactivate_pinned));
                     ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonPinned,
                             mContext.getString(R.string.msgs_msg_cont_label_pinned_inactive));
