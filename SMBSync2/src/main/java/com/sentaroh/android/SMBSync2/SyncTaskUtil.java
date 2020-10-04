@@ -146,6 +146,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_T
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_INT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_LONG;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_STRING;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_MAX_LENGTH;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_UNUSABLE_CHARACTER;
 import static com.sentaroh.android.SMBSync2.Constants.WHOLE_DIRECTORY_FILTER_PREFIX_V1;
 import static com.sentaroh.android.SMBSync2.Constants.WHOLE_DIRECTORY_FILTER_PREFIX_V2;
@@ -4060,14 +4061,14 @@ public class SyncTaskUtil {
         }
     }
 
-    static public String hasSyncTaskNameUnusableCharacter(Context c, String task_name) {
+    static private String hasSyncTaskNameUnusableCharacter(Context c, String task_name) {
         for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
             if (task_name.contains(item)) return c.getString(R.string.msgs_task_name_contains_invalid_character,item);
         }
         return "";
     }
 
-    static public boolean hasSyncTaskNameUnusableCharacter(String task_name) {
+    static private boolean hasSyncTaskNameUnusableCharacter(String task_name) {
         boolean result=false;
         for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
             if (task_name.contains(item)) result=true;
@@ -4075,8 +4076,19 @@ public class SyncTaskUtil {
         return result;
     }
 
+    static private String hasSyncTaskNameInvalidLength(Context c, String task_name) {
+        if (task_name.length() > SYNC_TASK_NAME_MAX_LENGTH) //return c.getString(R.string.msgs_task_name_too_long, SYNC_TASK_NAME_MAX_LENGTH, task_name.length());
+                                                            return "Task name cannot be longer than " + SYNC_TASK_NAME_MAX_LENGTH + " chars. Current: " + task_name.length();
+
+        return "";
+    }
+
+    static private boolean hasSyncTaskNameInvalidLength(String task_name) {
+        return task_name.length() > SYNC_TASK_NAME_MAX_LENGTH;
+    }
+
     //check if an existing task name is already a duplicate in the syncTaskAdapter (could be caused by bug in previous versions or modification to the settings file)
-    static public boolean isSyncTaskNameDuplicate (ArrayList<SyncTaskItem> stl, String t_name) {
+    static private boolean isSyncTaskNameDuplicate (ArrayList<SyncTaskItem> stl, String t_name) {
         int count = 0;
         for (SyncTaskItem sti : stl) {
             if (t_name.equalsIgnoreCase(sti.getSyncTaskName())) count++;
@@ -4085,31 +4097,40 @@ public class SyncTaskUtil {
     }
 
     //check if provided sync task name already exists
-    static public boolean isSyncTasknameExists(ArrayList<SyncTaskItem> stl, String t_name) {
+    static private boolean isSyncTasknameExists(ArrayList<SyncTaskItem> stl, String t_name) {
         return getSyncTaskByName(stl, t_name) != null;
     }
 
-    static public String isValidSyncTaskName(Context c, ArrayList<SyncTaskItem> stl, String t_name) {
+    static private String isValidSyncTaskName(Context c, ArrayList<SyncTaskItem> stl, String t_name) {
         return isValidSyncTaskName(c, stl, t_name, false, false);
     }
 
     //showAllError: show all errors with "\n" separator (for display of all name errors in Sync Task List details)
-    //checkDup==false: check a new sync task name for validity against existing sync tasks (called when rename/create a sync task)
-    //checkDup==true: check if task name is already a duplicate in the syncTaskAdapter (could be caused by bug in previous versions or modification to the settings file)
-    //                        called when editing sync task and in the Sync Task Adapter
-    //WARNING: when first loading Sync Task settings from file, gp.syncTaskAdapter is not init (ActivityMain and SyncService), so check for duplicates will fail
+    //checkDup==false: check a NEW sync task name for validity against existing sync tasks
+    //                 called when rename/create a sync task)
+    //checkDup==true : check if task name is already a duplicate in the syncTaskAdapter (previous versions bug, settings file modification)
+    //                 called when editing sync task and in the Sync Task Adapter
+    //WARNING: on early load of Sync settings from file, gp.syncTaskAdapter/syncTaskList are not init (ActivityMain and SyncService)
+    //         check for duplicates will fail if we pass GlobalParameters as arg
     static public String isValidSyncTaskName(Context c, ArrayList<SyncTaskItem> stl, String t_name, boolean checkDup, boolean showAllError) {
-        String result = "", invalid_chars_msg="", dup_msg="", sep="";
+        String result = "", invalid_length_msg="", invalid_chars_msg="", dup_msg="", sep="";
         if (t_name.length() > 0) {
-            invalid_chars_msg= hasSyncTaskNameUnusableCharacter(c, t_name);
+            result = hasSyncTaskNameInvalidLength(c, t_name);
+            if (!result.equals("")) sep = "\n";
+
+            result += sep+hasSyncTaskNameUnusableCharacter(c, t_name);
+            if (!result.equals("")) sep = "\n";
+
             if (!checkDup && isSyncTasknameExists(stl, t_name)) {
-                dup_msg= c.getString(R.string.msgs_duplicate_task_name);
+                result += sep+c.getString(R.string.msgs_duplicate_task_name);
             } else if (checkDup && isSyncTaskNameDuplicate(stl, t_name)) {
-                dup_msg= c.getString(R.string.msgs_duplicate_task_name);
+                result += sep+c.getString(R.string.msgs_duplicate_task_name);
             }
-            sep= !invalid_chars_msg.equals("") && !dup_msg.equals("") ? "\n":"";
-            if (showAllError) result= invalid_chars_msg + sep + dup_msg;
-            else result= invalid_chars_msg.equals("") ? dup_msg:invalid_chars_msg;
+            if (!result.equals("")) sep = "\n";
+
+            if (!result.equals("") && !showAllError && result.contains(sep)) {
+                result = result.substring(0, result.indexOf(sep));
+            }
         } else {
             result = c.getString(R.string.msgs_specify_task_name);
         }
@@ -4117,10 +4138,13 @@ public class SyncTaskUtil {
         return result;
     }
 
+    //called on early init when we have no gp.syncTaskList to set SyncTaskNameError
     static public boolean isValidSyncTaskName(ArrayList<SyncTaskItem> stl, String t_name, boolean checkDup) {
         boolean result=true;
         if (t_name.length() > 0) {
-            if (hasSyncTaskNameUnusableCharacter(t_name)) {
+            if (hasSyncTaskNameInvalidLength(t_name)) {
+                result = false;
+            } else if (hasSyncTaskNameUnusableCharacter(t_name)) {
                 result = false;
             } else if (!checkDup && isSyncTasknameExists(stl, t_name)) {
                 result = false;
