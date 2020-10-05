@@ -51,6 +51,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SERVICE_HEART_BEA
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_START_SYNC_INTENT;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_START_BY_USER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_TIMER_EXPIRED;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_NAME_KEY;
@@ -119,11 +120,11 @@ public class SyncReceiver extends BroadcastReceiver {
             } else if (action.equals(SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET)) {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
                 if (!isTimerScheduled()) setTimer();
-            } else if (action.equals(SCHEDULER_INTENT_TIMER_EXPIRED)) {
+            } else if (action.equals(SCHEDULER_INTENT_TIMER_EXPIRED) || action.equals(SCHEDULER_INTENT_START_BY_USER)) {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
                 if (received_intent.getExtras().containsKey(SCHEDULER_SCHEDULE_NAME_KEY)) {
                     Intent send_intent = new Intent(mContext, SyncService.class);
-                    send_intent.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
+                    send_intent.setAction(action);
                     send_intent.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, received_intent.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY));
                     try {
                         mContext.startService(send_intent);

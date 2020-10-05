@@ -40,6 +40,7 @@ import java.util.Collections;
 
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_UNUSABLE_CHARACTER;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_START_BY_USER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_DAY_OF_THE_WEEK_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_ENABLED_KEY;
@@ -47,6 +48,7 @@ import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_INTERVAL_FIRST_RUN_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_LAST_EXEC_TIME_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_MINUTES_KEY;
+import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_NAME_KEY;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V2;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V3;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_SAVED_DATA_V4;
@@ -587,6 +589,14 @@ public class ScheduleUtil {
 
     public static void sendTimerRequest(Context c, String act) {
         Intent intent = new Intent(act);
+        intent.setClass(c, SyncReceiver.class);
+        c.sendBroadcast(intent);
+    }
+
+    //Send intent for Schedules manually started by user
+    public static void sendScheduleStartRequestByUser(Context c, String schedule_names) {
+        Intent intent = new Intent(SCHEDULER_INTENT_START_BY_USER);
+        intent.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, schedule_names);
         intent.setClass(c, SyncReceiver.class);
         c.sendBroadcast(intent);
     }

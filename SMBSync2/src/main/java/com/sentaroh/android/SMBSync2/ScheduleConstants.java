@@ -44,6 +44,7 @@ public class ScheduleConstants {
     public static final String SCHEDULER_SCHEDULE_DAY_OF_THE_WEEK_KEY = "scheduler_schedule_day_of_the_week_key";
 
     public static final String SCHEDULER_INTENT_TIMER_EXPIRED = "com.sentaroh.android." + APPLICATION_TAG + ".ACTION_TIMER_EXPIRED";
+    public static final String SCHEDULER_INTENT_START_BY_USER = SCHEDULER_INTENT_TIMER_EXPIRED;
     public static final String SCHEDULER_INTENT_SET_TIMER = "com.sentaroh.android." + APPLICATION_TAG + ".ACTION_SET_TIMER";
     public static final String SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET = "com.sentaroh.android." + APPLICATION_TAG + ".ACTION_SET_TIMER_IF_NOT_SET";
 
