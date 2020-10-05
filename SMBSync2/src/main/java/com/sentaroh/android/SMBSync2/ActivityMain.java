@@ -4709,7 +4709,7 @@ public class ActivityMain extends AppCompatActivity {
                             mContext.getString(R.string.msgs_msg_cont_label_pinned_active));
                 } else {
                     mContextMessageButtonPinned.setImageResource(R.drawable.context_button_pinned_inactive);
-                    mGp.syncMessageListView.setSelection(mGp.syncMessageListView.getCount() - 1);
+                    mGp.syncMessageListView.setSelection(mGp.syncMessageListAdapter.getCount() - 1);
                     CommonUtilities.showToastMessageShort(mActivity, mContext.getString(R.string.msgs_log_inactivate_pinned));
                     ContextButtonUtil.setButtonLabelListener(mActivity, mContextMessageButtonPinned,
                             mContext.getString(R.string.msgs_msg_cont_label_pinned_inactive));
