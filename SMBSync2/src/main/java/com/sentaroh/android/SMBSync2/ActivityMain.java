@@ -3081,7 +3081,6 @@ public class ActivityMain extends AppCompatActivity {
         ntfy_cb.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
-//                setScheduleContextButtonMode(mGp.syncTabScheduleAdapter);
             }
 
             @Override
@@ -3328,7 +3327,6 @@ public class ActivityMain extends AppCompatActivity {
         mContextScheduleButtonUnselectAll.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mGp.syncTabScheduleAdapter.setSelectMode(false);
                 mGp.syncScheduleAdapter.unselectAll();
                 setScheduleContextButtonMode(mGp.syncScheduleAdapter);
             }
@@ -5312,22 +5310,6 @@ public class ActivityMain extends AppCompatActivity {
 
         if (!isTaskTermination) {
             if (!isTaskDataExisted() || mGp.syncMessageListAdapter.resetDataChanged()) {
-//				ActivityDataHolder data = new ActivityDataHolder();
-//				data.ml=mGp.msgListAdapter.getMessageList();
-//				data.pl=mGp.syncTaskAdapter.getArrayList();
-//				try {
-//				    FileOutputStream fos = openFileOutput(SMBSYNC2_SERIALIZABLE_FILE_NAME, MODE_PRIVATE);
-//				    BufferedOutputStream bos=new BufferedOutputStream(fos,4096*256);
-//				    ObjectOutputStream oos = new ObjectOutputStream(bos);
-//				    oos.writeObject(data);
-//				    oos.flush();
-//				    oos.close();
-//				    mUtil.addDebugMsg(1,"I", "Task data was saved.");
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				    mUtil.addLogMsg("E", "saveTaskData error, "+e.toString());
-//				    mUtil.addLogMsg("E","StackTrace element, "+printStackTraceElement(e.getStackTrace()));
-//				}
             }
         }
     }
@@ -5346,35 +5328,6 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered");
         File lf = new File(mGp.applicationRootDirectory + "/" + SMBSYNC2_SERIALIZABLE_FILE_NAME);
         if (lf.exists()) {
-//            try {
-////			    FileInputStream fis = new FileInputStream(lf);
-////			    BufferedInputStream bis=new BufferedInputStream(fis,4096*256);
-////			    ObjectInputStream ois = new ObjectInputStream(bis);
-////			    ActivityDataHolder data = (ActivityDataHolder) ois.readObject();
-////			    ois.close();
-////			    lf.delete();
-////
-////			    ArrayList<SyncMessageItem> o_ml=new ArrayList<SyncMessageItem>();
-////				for (int i=0;i<mGp.msgListAdapter.getCount();i++)
-////					o_ml.add(mGp.msgListAdapter.getItem(i));
-////
-////				mGp.msgListAdapter.clear();
-////
-////				mGp.msgListAdapter.setMessageList(data.ml);
-////
-////				for (int i=0;i<o_ml.size();i++) mGp.msgListAdapter.add(o_ml.get(i));
-////
-////				mGp.msgListAdapter.notifyDataSetChanged();
-////				mGp.msgListAdapter.resetDataChanged();
-////
-////				mGp.syncTaskAdapter.clear();
-////				mGp.syncTaskAdapter.setArrayList(data.pl);
-//                mUtil.addDebugMsg(1, "I", "Task data was restored.");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                mUtil.addLogMsg("E", "restoreTaskData error, " + e.toString());
-//                mUtil.addLogMsg("E", "StackTrace element, " + printStackTraceElement(e.getStackTrace()));
-//            }
         }
     }
 

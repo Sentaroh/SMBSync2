@@ -268,10 +268,8 @@
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">指定された同期タスクは無視されたため実行されません。</string>
         <string name="msgs_main_sync_test_mode_warnning">選択された同期タスクにテストモードの同期タスクが含まれています。テストモードの同期タスクではファイルのコピーや削除が行われません。同期を開始しますか？</string>
         <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">追加ボタンをタップして同期タスクを作成してください。</string>
-        <string name="msgs_move_to_bottom">最後に移動</string>
-        <string name="msgs_move_to_top">最上部に移動</string>
         <string name="msgs_msg_cont_label_clear">メッセージの消去</string>
-        <string name="msgs_msg_cont_label_move_bottom">最下部に移動</string>
+        <string name="msgs_msg_cont_label_move_bottom">最後に移動</string>
         <string name="msgs_msg_cont_label_move_top">最上部に移動</string>
         <string name="msgs_msg_cont_label_pinned_active">自動スクロールを有効にする</string>
         <string name="msgs_msg_cont_label_pinned_inactive">自動スクロールを無効にする</string>

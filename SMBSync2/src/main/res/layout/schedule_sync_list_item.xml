@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/schedule_sync_list_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
     android:layout_marginTop="5dp"
     android:orientation="horizontal"
@@ -78,6 +78,12 @@
             android:layout_gravity="center_vertical"
             android:focusable="false"
             />
+
+<!--        <ImageButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:src="@drawable/ic_32_sync"/>-->
 
         <CheckBox
             android:id="@+id/schedule_sync_list_checked"
