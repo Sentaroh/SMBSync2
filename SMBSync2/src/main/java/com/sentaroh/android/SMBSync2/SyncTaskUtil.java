@@ -4113,7 +4113,7 @@ public class SyncTaskUtil {
     //WARNING: on early load of Sync settings from file, gp.syncTaskAdapter/syncTaskList are not init (ActivityMain and SyncService)
     //         check for duplicates will fail if we pass GlobalParameters as arg
     static public String isValidSyncTaskName(Context c, ArrayList<SyncTaskItem> stl, String t_name, boolean checkDup, boolean showAllError) {
-        String result = "", invalid_length_msg="", invalid_chars_msg="", dup_msg="", sep="";
+        String result = "", sep="";
         if (t_name.length() > 0) {
             result = hasSyncTaskNameInvalidLength(c, t_name);
             if (!result.equals("")) sep = "\n";
