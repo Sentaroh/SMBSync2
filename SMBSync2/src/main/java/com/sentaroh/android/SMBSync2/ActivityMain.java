@@ -1351,7 +1351,11 @@ public class ActivityMain extends AppCompatActivity {
             } else {
                 menu.findItem(R.id.menu_top_scheduler).setVisible(false);
             }
-
+            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK)) {
+                menu.findItem(R.id.menu_top_sync).setVisible(true);
+            } else {
+                menu.findItem(R.id.menu_top_sync).setVisible(false);
+            }
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             if (!mGp.settingLogOption) menu.findItem(R.id.menu_top_browse_log).setVisible(false);
@@ -3466,6 +3470,71 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
+
+        NotifyEvent ntfy_sync=new NotifyEvent(mContext);
+        ntfy_sync.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                boolean error_detected=false;
+                ScheduleItem sched_item=(ScheduleItem)objects[0];
+                if (sched_item.syncOverrideOptionCharge.equals(ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED)) {
+                    if (!CommonUtilities.isCharging(mContext, mUtil)) {
+                        error_detected=true;
+                        mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
+                                mContext.getString(R.string.msgs_mirror_sync_cancelled_battery_option_not_satisfied),null);
+                    }
+                }
+                if (!error_detected) {
+                    ArrayList<SyncTaskItem> sync_task_list=new ArrayList<SyncTaskItem>();
+                    if (sched_item.syncAutoSyncTask) {
+                        for(SyncTaskItem task:mGp.syncTaskList) {
+                            if (!task.isSyncTaskError() && task.isSyncTaskAuto()) {
+                                sync_task_list.add(task);
+                            }
+                        }
+                        if (sync_task_list.size()==0) {
+                            //Error
+                            mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
+                                    mContext.getString(R.string.msgs_active_sync_prof_not_found),null);
+                            error_detected=true;
+                        }
+                    } else {
+                        if (sched_item.syncTaskList.equals("")) {
+                            mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
+                                    mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty),null);
+                            error_detected=true;
+                        } else {
+                            boolean not_found=false;
+                            String[]task_name_array=sched_item.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
+                            for(String name_item:task_name_array) {
+                                SyncTaskItem task_item=SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, name_item);
+                                if (task_item==null) {
+                                    not_found=true;
+                                    mUtil.showCommonDialog(false, "E",
+                                            mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
+                                            mContext.getString(R.string.msgs_schedule_sync_task_not_found, name_item),null);
+                                    break;
+                                }
+                            }
+                            if (not_found) {
+                                error_detected=true;
+                            }
+                        }
+                    }
+                    if (!error_detected) {
+                        try {
+                            mSvcClient.aidlStartSchedule(new String[]{sched_item.scheduleName});
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {}
+        });
+        mGp.syncScheduleAdapter.setSyncButtonNotify(ntfy_sync);
     }
 
     private void setScheduleViewLongClickListener() {

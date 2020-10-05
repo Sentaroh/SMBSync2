@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
     private int text_color = 0;
     private NotifyEvent mCbNotify = null;
     private NotifyEvent mSwNotify = null;
+    private NotifyEvent mSyncButtonNotify = null;
     private ArrayList<ScheduleItem> mScheduleList = null;
     private GlobalParameters mGp=null;
 
@@ -42,6 +44,10 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
 
     public void setSwNotify(NotifyEvent ntfy) {
         mSwNotify = ntfy;
+    }
+
+    public void setSyncButtonNotify(NotifyEvent ntfy) {
+        mSyncButtonNotify = ntfy;
     }
 
     public void sort() {
@@ -111,6 +117,7 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
             holder.tv_error_info.setTextColor(mGp.themeColorList.text_color_warning);
             holder.swEnabled=(Switch)v.findViewById(R.id.schedule_sync_list_switch);
             holder.cbChecked = (CheckBox) v.findViewById(R.id.schedule_sync_list_checked);
+            holder.ib_sync_button=(ImageButton) v.findViewById(R.id.schedule_sync_list_sync);
             text_color = holder.tv_name.getCurrentTextColor();
             v.setTag(holder);
         } else {
@@ -255,6 +262,7 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
                 }
 
                 if (schedule_error) {
+                    holder.ib_sync_button.setVisibility(ImageButton.INVISIBLE);
                     if (o.syncTaskList.equals("")) {
                         error_msg+= sep_msg + mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty);
                     } else {
@@ -303,6 +311,13 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
             });
             holder.swEnabled.setChecked(o.scheduleEnabled);
 
+            holder.ib_sync_button.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     if (mSyncButtonNotify!=null) mSyncButtonNotify.notifyToListener(true, new Object[]{o});
+                 }
+            });
+
         }
         return v;
 
@@ -313,6 +328,7 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
         LinearLayout ll_view;
         CheckBox cbChecked;
         Switch swEnabled;
+        ImageButton ib_sync_button;
     }
 
 }

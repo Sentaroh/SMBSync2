@@ -373,55 +373,57 @@ public class SyncService extends Service {
 
         mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler));
 
-        ArrayList<ScheduleItem> scheduleInfoList = ScheduleUtil.loadScheduleData(mContext, mGp);
         if (in.getExtras().containsKey(SCHEDULER_SCHEDULE_NAME_KEY)) {
             String schedule_name_list = in.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY);
-
             mUtil.addDebugMsg(1,"I", "Schedule information, name=" + schedule_name_list);
-
             String[] schedule_list=schedule_name_list.split(SYNC_TASK_LIST_SEPARATOR);
 
-            for(String schedule_name:schedule_list) {
-                mUtil.addDebugMsg(1, "I", "Schedule start, name=" + schedule_name);
-                ScheduleItem si = getScheduleInformation(scheduleInfoList, schedule_name);
-                if (si!=null) {
-                    if (si.syncAutoSyncTask) {
-                        queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
-                    } else {
-                        if (si.syncTaskList != null && si.syncTaskList.length() > 0) {
-                            String[] pl = si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
-                            String n_tl = "", sep = "";
-                            for (int i = 0; i < pl.length; i++) {
-                                if (getSyncTask(pl[i]) != null) {
-                                    n_tl += sep + pl[i];
-                                    sep = SYNC_TASK_LIST_SEPARATOR;
-                                } else {
-                                    mUtil.addLogMsg("W",
-                                            mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_task_not_found) + pl[i]);
-                                }
-                            }
-                            if (!n_tl.equals("")) {
-                                String[] n_pl = n_tl.split(SYNC_TASK_LIST_SEPARATOR);
-                                queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
-                            } else {
-                                mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
-                            }
-                        } else {
-                            mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
-                        }
-                    }
-                } else {
-                    mUtil.addLogMsg("W","Specified schedule name was not found, name=",schedule_name);
-                }
-            }
-            if (!mGp.syncThreadActive) {
-                sendStartNotificationIntent();
-                startSyncThread();
-            }
+            startSyncByScheduler(schedule_list);
 
         }
 //        mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler));
         if (isServiceToBeStopped()) stopSelf();
+    }
+
+    private void startSyncByScheduler(String[] schedule_list) {
+        ArrayList<ScheduleItem> scheduleInfoList = ScheduleUtil.loadScheduleData(mContext, mGp);
+        for(String schedule_name:schedule_list) {
+            mUtil.addDebugMsg(1, "I", "Schedule start, name=" + schedule_name);
+            ScheduleItem si = getScheduleInformation(scheduleInfoList, schedule_name);
+            if (si!=null) {
+                if (si.syncAutoSyncTask) {
+                    queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
+                } else {
+                    if (si.syncTaskList != null && si.syncTaskList.length() > 0) {
+                        String[] pl = si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
+                        String n_tl = "", sep = "";
+                        for (int i = 0; i < pl.length; i++) {
+                            if (getSyncTask(pl[i]) != null) {
+                                n_tl += sep + pl[i];
+                                sep = SYNC_TASK_LIST_SEPARATOR;
+                            } else {
+                                mUtil.addLogMsg("W", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_task_not_found) + pl[i]);
+                            }
+                        }
+                        if (!n_tl.equals("")) {
+                            String[] n_pl = n_tl.split(SYNC_TASK_LIST_SEPARATOR);
+                            queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
+                        } else {
+                            mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
+                        }
+                    } else {
+                        mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
+                    }
+                }
+            } else {
+                mUtil.addLogMsg("W","Specified schedule name was not found, name=",schedule_name);
+            }
+        }
+        if (!mGp.syncThreadActive) {
+            sendStartNotificationIntent();
+            startSyncThread();
+        }
+
     }
 
     private void startSyncByAnotherAppl(Intent in) {
@@ -521,12 +523,12 @@ public class SyncService extends Service {
 
         @Override
         public void aidlStartSpecificSyncTask(String[] job_name) throws RemoteException {
-//            Thread.dumpStack();
             queueSpecificSyncTask(job_name, SMBSYNC2_SYNC_REQUEST_ACTIVITY);
-//            if (!mGp.syncThreadActive) {
-//                sendStartNotificationIntent();
-//                startSyncThread();
-//            }
+        }
+
+        @Override
+        public void aidlStartSchedule(String[] schedule_name_array) throws RemoteException {
+            startSyncByScheduler(schedule_name_array);
         }
 
         @Override

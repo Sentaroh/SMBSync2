@@ -7,6 +7,7 @@
     android:layout_marginBottom="5dp"
     android:layout_marginTop="5dp"
     android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants"
     tools:ignore="HardcodedText,ContentDescription,DisableBaselineAlignment,UseCompoundDrawables,UselessParent,RtlHardcoded" >
 
     <LinearLayout
@@ -79,11 +80,12 @@
             android:focusable="false"
             />
 
-<!--        <ImageButton-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_vertical"-->
-<!--            android:src="@drawable/ic_32_sync"/>-->
+        <ImageButton
+            android:id="@+id/schedule_sync_list_sync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_32_sync"/>
 
         <CheckBox
             android:id="@+id/schedule_sync_list_checked"

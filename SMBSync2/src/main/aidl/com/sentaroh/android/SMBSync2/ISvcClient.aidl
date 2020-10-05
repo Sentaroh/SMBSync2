@@ -9,7 +9,9 @@ interface ISvcClient{
 
 	void aidlStartSpecificSyncTask(in String[] task_name) ;
 	void aidlStartAutoSyncTask() ;
-	
+
+	void aidlStartSchedule(in String[] schedule_name_array) ;
+
 	void aidlCancelSyncTask() ;
 
 	void aidlReloadTaskList() ;

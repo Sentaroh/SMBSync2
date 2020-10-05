@@ -727,6 +727,8 @@
         <string name="msgs_schedule_confirm_msg_rename_warning">Change the schedule name? The results are immediately reflected and cannot be undone.</string>
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Duplicate schedule name.</string>
         <string name="msgs_schedule_confirm_msg_nosave">The schedule has changed. Exit without saving?</string>
+        <string name="msgs_schedule_sync_task_dialog_title">Task start error</string>
+        <string name="msgs_schedule_sync_task_not_found">Could not find the specified task. Task=%s</string>
         <string name="msgs_schedule_rename_schedule">Rename schedule</string>
         <string name="msgs_schedule_list_edit_no_schedule">Press add button to create new schedule.</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">Scheduled tasks will not be executed because the scheduling service is disabled. To enable the scheduling service, tap the calendar icon in the top right corner of this window. You must  also enable the toggle switch in front of each sync plan to execute.</string>
