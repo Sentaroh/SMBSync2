@@ -3573,7 +3573,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private boolean canListViewScrollDown(ListView lv) {
         boolean result=false;
-        if (lv.getLastVisiblePosition()<(lv.getCount()-1)) result=true;
+        if (lv.getLastVisiblePosition()<(lv.getAdapter().getCount()-1)) result=true;
         return result;
     }
 
