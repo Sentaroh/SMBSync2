@@ -1237,6 +1237,25 @@ public class ActivityMain extends AppCompatActivity {
                         }
                     });
                 }
+
+                //display toast info message for top action execute button
+                View v_top_execute_btn = findViewById(R.id.menu_top_exec_schedule);
+                if (v_top_execute_btn != null) {
+                    v_top_execute_btn.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            if (v.getId()== R.id.menu_top_exec_schedule) {
+                                if (mGp.syncScheduleAdapter.isSelectMode())  {
+                                    CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_schedule_list_edit_execute_selected_schedule), 2);
+                                } else {
+                                    CommonDialog.showPopupMessageAsDownAnchorView(mActivity, v, mContext.getString(R.string.msgs_schedule_list_edit_execute_all_enabled_schedule), 2);
+                                }
+                                return true;// notify long touch event is consumed
+                            }
+                            return false;
+                        }
+                    });
+                }
             }
         });
         return super.onCreateOptionsMenu(menu);
@@ -1348,8 +1367,10 @@ public class ActivityMain extends AppCompatActivity {
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_list_storage), true);
             if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_SCHEDULE)) {
                 menu.findItem(R.id.menu_top_scheduler).setVisible(true);
+                menu.findItem(R.id.menu_top_exec_schedule).setVisible(true);
             } else {
                 menu.findItem(R.id.menu_top_scheduler).setVisible(false);
+                menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
             }
             if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK)) {
                 menu.findItem(R.id.menu_top_sync).setVisible(true);
@@ -1418,7 +1439,23 @@ public class ActivityMain extends AppCompatActivity {
                     SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
                     setSyncTaskContextButtonNormalMode();
                 }
-
+                return true;
+            case R.id.menu_top_exec_schedule:
+                if (isUiEnabled()) {
+                    if (mGp.syncScheduleAdapter.isSelectMode()) {
+                        if (mGp.syncScheduleAdapter.getSelectedItemCount() > 0) {
+                            executeSelectedSchedule();
+                        } else {
+                            //no sync task is selected
+                            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
+                            return true;//do not reset to normal view to let user select a task
+                        }
+                    } else {
+                        executeAllEnabledSchedule();
+                    }
+                    SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
+                    setScheduleContextButtonNormalMode();
+                }
                 return true;
             case R.id.menu_top_browse_log:
                 invokeLogFileBrowser();
@@ -3475,59 +3512,16 @@ public class ActivityMain extends AppCompatActivity {
         ntfy_sync.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
-                boolean error_detected=false;
                 ScheduleItem sched_item=(ScheduleItem)objects[0];
-                if (sched_item.syncOverrideOptionCharge.equals(ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED)) {
-                    if (!CommonUtilities.isCharging(mContext, mUtil)) {
-                        error_detected=true;
-                        mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
-                                mContext.getString(R.string.msgs_mirror_sync_cancelled_battery_option_not_satisfied),null);
+                String e_msg= checkExecuteSchedule(sched_item);
+                if (e_msg.equals("")) {
+                    try {
+                        mSvcClient.aidlStartSchedule(new String[]{sched_item.scheduleName});
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
                     }
-                }
-                if (!error_detected) {
-                    ArrayList<SyncTaskItem> sync_task_list=new ArrayList<SyncTaskItem>();
-                    if (sched_item.syncAutoSyncTask) {
-                        for(SyncTaskItem task:mGp.syncTaskList) {
-                            if (!task.isSyncTaskError() && task.isSyncTaskAuto()) {
-                                sync_task_list.add(task);
-                            }
-                        }
-                        if (sync_task_list.size()==0) {
-                            //Error
-                            mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
-                                    mContext.getString(R.string.msgs_active_sync_prof_not_found),null);
-                            error_detected=true;
-                        }
-                    } else {
-                        if (sched_item.syncTaskList.equals("")) {
-                            mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
-                                    mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty),null);
-                            error_detected=true;
-                        } else {
-                            boolean not_found=false;
-                            String[]task_name_array=sched_item.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
-                            for(String name_item:task_name_array) {
-                                SyncTaskItem task_item=SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, name_item);
-                                if (task_item==null) {
-                                    not_found=true;
-                                    mUtil.showCommonDialog(false, "E",
-                                            mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
-                                            mContext.getString(R.string.msgs_schedule_sync_task_not_found, name_item),null);
-                                    break;
-                                }
-                            }
-                            if (not_found) {
-                                error_detected=true;
-                            }
-                        }
-                    }
-                    if (!error_detected) {
-                        try {
-                            mSvcClient.aidlStartSchedule(new String[]{sched_item.scheduleName});
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                } else {
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title), e_msg, null);
                 }
             }
 
@@ -3536,6 +3530,111 @@ public class ActivityMain extends AppCompatActivity {
         });
         mGp.syncScheduleAdapter.setSyncButtonNotify(ntfy_sync);
     }
+
+    private void executeSelectedSchedule() {
+        ArrayList<String>sched_list=new ArrayList<String>();
+        String e_msg="";
+        for(ScheduleItem si:mGp.syncScheduleList) {
+            if (si.isChecked) {
+                e_msg=mGp.syncScheduleAdapter.isValidScheduleItem(si, null);
+                if (e_msg.equals("")) {
+                    e_msg=checkExecuteSchedule(si);
+                    if (e_msg.equals("")) sched_list.add(si.scheduleName);
+                    else {
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        if (e_msg.equals("")) {
+            String[]start_array=sched_list.toArray(new String[sched_list.size()]);
+            try {
+                mSvcClient.aidlStartSchedule(start_array);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        } else {
+            mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title), e_msg, null);
+        }
+    }
+
+    private void executeAllEnabledSchedule() {
+        ArrayList<String>sched_list=new ArrayList<String>();
+        String e_msg="";
+        for(ScheduleItem si:mGp.syncScheduleList) {
+            if (si.scheduleEnabled) {
+                e_msg=mGp.syncScheduleAdapter.isValidScheduleItem(si, null);
+                if (e_msg.equals("")) {
+                    e_msg=checkExecuteSchedule(si);
+                    if (e_msg.equals("")) sched_list.add(si.scheduleName);
+                    else {
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        if (e_msg.equals("")) {
+            if (sched_list.size()>0) {
+                String[]start_array=sched_list.toArray(new String[sched_list.size()]);
+                try {
+                    mSvcClient.aidlStartSchedule(start_array);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
+                        mContext.getString(R.string.msgs_schedule_sync_enabled_schedule_not_found), null);
+            }
+        } else {
+            mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title), e_msg, null);
+        }
+    }
+
+    private String checkExecuteSchedule(ScheduleItem sched_item) {
+        String e_msg="";
+        if (sched_item.syncOverrideOptionCharge.equals(ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED)) {
+            if (!CommonUtilities.isCharging(mContext, mUtil)) {
+                e_msg=mContext.getString(R.string.msgs_mirror_sync_cancelled_battery_option_not_satisfied);
+            }
+        }
+        if (!e_msg.equals("")) {
+            ArrayList<SyncTaskItem> sync_task_list=new ArrayList<SyncTaskItem>();
+            if (sched_item.syncAutoSyncTask) {
+                for(SyncTaskItem task:mGp.syncTaskList) {
+                    if (!task.isSyncTaskError() && task.isSyncTaskAuto()) {
+                        sync_task_list.add(task);
+                    }
+                }
+                if (sync_task_list.size()==0) {
+                    //Error
+                    e_msg=mContext.getString(R.string.msgs_active_sync_prof_not_found);
+                }
+            } else {
+                if (sched_item.syncTaskList.equals("")) {
+                    e_msg=mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty);
+                } else {
+                    boolean not_found=false;
+                    String[]task_name_array=sched_item.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
+                    for(String name_item:task_name_array) {
+                        SyncTaskItem task_item=SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, name_item);
+                        if (task_item==null) {
+                            not_found=true;
+                            e_msg=mContext.getString(R.string.msgs_schedule_sync_task_not_found, name_item);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return e_msg;
+    }
+
 
     private void setScheduleViewLongClickListener() {
         mGp.syncScheduleListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

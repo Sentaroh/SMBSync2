@@ -529,6 +529,7 @@
         <string name="msgs_maintenance_result_log_list_del_title">履歴に登録されていないディレクトリ/ファイルが見つかりました、削除しますか？</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">同期実行</string>
+        <string name="msgs_menu_exec_schedule">スケジュール実行</string>
         <string name="msgs_menu_browse_logfile">ログ表示</string>
         <string name="msgs_menu_export">タスクリスト保存</string>
         <string name="msgs_menu_import">タスクリスト取込み</string>
@@ -729,9 +730,13 @@
         <string name="msgs_schedule_confirm_msg_nosave">スケジュールが変更されています、保存せず終了しますか。</string>
         <string name="msgs_schedule_sync_task_dialog_title">タスク開始エラー</string>
         <string name="msgs_schedule_sync_task_not_found">指定されたタスクが見つかりません。タスク=%s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_not_found">有効なスケジュールが見つかりません。</string>
         <string name="msgs_schedule_rename_schedule">スケジュールの改名</string>
         <string name="msgs_schedule_list_edit_no_schedule">追加ボタンを押してスケジュールを作成してください。</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">スケジュールが無効になっているためスケジュール同期は実行されません。スケジュール同期を行うには画面上部のスケジュールアイコンをタップして有効にしてください。</string>
+        <string name="msgs_schedule_list_edit_execute_selected_schedule">選択されたスケジュールを実行する</string>
+        <string name="msgs_schedule_list_edit_execute_all_enabled_schedule">全ての有効なスケジュールを実行する</string>
+        <string name="msgs_schedule_list_edit_execute_selected_schedule_with_schedule_name">スケジュールを実行する(%s)</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">スケジュールを有効にしますか？</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">スケジュールを無効にしますか？</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">スケジュールを有効にする</string>

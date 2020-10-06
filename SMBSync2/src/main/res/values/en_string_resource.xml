@@ -529,6 +529,7 @@
         <string name="msgs_maintenance_result_log_list_del_title">Files and directories not related to history logs have been found in the history log directory. Remove these files?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Sync</string>
+        <string name="msgs_menu_exec_schedule">Execute schedule</string>
         <string name="msgs_menu_browse_logfile">Show log</string>
         <string name="msgs_menu_export">Export settings</string>
         <string name="msgs_menu_import">Import settings</string>
@@ -729,9 +730,13 @@
         <string name="msgs_schedule_confirm_msg_nosave">The schedule has changed. Exit without saving?</string>
         <string name="msgs_schedule_sync_task_dialog_title">Task start error</string>
         <string name="msgs_schedule_sync_task_not_found">Could not find the specified task. Task=%s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_not_found">Can\'t find a enabled schedule.</string>
         <string name="msgs_schedule_rename_schedule">Rename schedule</string>
         <string name="msgs_schedule_list_edit_no_schedule">Press add button to create new schedule.</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">Scheduled tasks will not be executed because the scheduling service is disabled. To enable the scheduling service, tap the calendar icon in the top right corner of this window. You must  also enable the toggle switch in front of each sync plan to execute.</string>
+        <string name="msgs_schedule_list_edit_execute_selected_schedule">Execute the selected schedule</string>
+        <string name="msgs_schedule_list_edit_execute_all_enabled_schedule">Execute all enabled schedules</string>
+        <string name="msgs_schedule_list_edit_execute_selected_schedule_with_schedule_name">Execute the schedule(%s)</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Do you want to enable the schedule?</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Do you want to disable the schedule?</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Enable schedule service</string>
