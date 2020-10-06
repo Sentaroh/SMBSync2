@@ -65,6 +65,7 @@ import com.sentaroh.android.Utilities.Widget.CustomSpinnerAdapter;
 import java.util.ArrayList;
 
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_MAX_LENGTH;
 
 public class ScheduleItemEditor {
 //    private CommonDialog commonDlg = null;
@@ -343,7 +344,12 @@ public class ScheduleItemEditor {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                setScheduleWasChanged(dialog, mSched);
+                if (editable.length()>SYNC_TASK_NAME_MAX_LENGTH) {
+                    tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_too_long, SYNC_TASK_NAME_MAX_LENGTH, editable.length()));
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                } else {
+                    setScheduleWasChanged(dialog, mSched);
+                }
             }
         });
         ctv_first_time.setOnClickListener(new OnClickListener() {

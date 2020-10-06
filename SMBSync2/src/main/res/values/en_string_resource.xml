@@ -710,6 +710,7 @@
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Schedule name already exists. Use a different name.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Schedule name not specified.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Invalid character in schedule name: \"%s\"</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">Schedule name cannot be longer than %1$s chars. Current: %2$s </string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">Sync task have errors that must be fixed.</string>
         <string name="msgs_schedule_cont_label_add">Add schedule</string>
         <string name="msgs_schedule_cont_label_activate">Enable</string>

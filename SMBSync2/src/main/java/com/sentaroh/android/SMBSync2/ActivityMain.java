@@ -131,6 +131,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_MESSAGE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_SCHEDULE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_MAX_LENGTH;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET;
 
@@ -3419,6 +3420,11 @@ public class ActivityMain extends AppCompatActivity {
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
+                if (arg0.length()>SYNC_TASK_NAME_MAX_LENGTH) {
+                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_too_long, SYNC_TASK_NAME_MAX_LENGTH, arg0.length()));
+                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    return;
+                }
                 String edit_text = arg0.toString();
                 String invalid_chars_msg=ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, edit_text);
                 ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mActivity, mGp);

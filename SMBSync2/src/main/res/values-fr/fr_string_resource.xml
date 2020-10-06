@@ -710,6 +710,7 @@
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Une planification avec ce nom existe déjà.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Nom de la planification non spécifié.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Le nom de la tâche de planification contient un caractère non valide: \"%s\"</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">Le nom de l\'horaire ne peut pas être plus long que %1$s chars. Courant : %2$s </string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">La tâche de synchronisation contient des erreurs qui doivent être corrigées.</string>
         <string name="msgs_schedule_cont_label_add">Ajouter une planification</string>
         <string name="msgs_schedule_cont_label_activate">Activer</string>
