@@ -138,7 +138,7 @@ public class Constants {
     final public static String[] SMBSYNC2_PROF_FILTER_FILE_INVALID_CHARS=new String[]{"\"", ":", ">", "<", "|", "//", "**", "\\"};
     final public static String[] SMBSYNC2_PROF_FILTER_DIR_INVALID_CHARS=new String[] {"\"", ":", ">", "<", "|", "//", "**"};
     final public static String[] SYNC_TASK_NAME_UNUSABLE_CHARACTER=new String[]{","};
-    final public static int SYNC_TASK_NAME_MAX_LENGTH=150;
+    final public static int SYNC_TASK_NAME_MAX_LENGTH=64;
 
     final public static String SYNC_TASK_LIST_SEPARATOR=",";
 

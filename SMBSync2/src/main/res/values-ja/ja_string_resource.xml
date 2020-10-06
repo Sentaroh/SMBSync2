@@ -98,6 +98,7 @@
         <string name="msgs_task_name_rename_with_schedule_group_task_list">タスク名を変更するとスケジュール内のタスク名も変更されます。</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">タスクを削除するとスケジュール内のタスク名も削除されます。</string>
         <string name="msgs_task_name_contains_invalid_character">タスク名に無効な文字が含まれています: \"%s\"</string>
+        <string name="msgs_task_name_too_long">タスク名は%1$s文字以内にしてください。 長さ: %2$s </string>
         <string name="msgs_edit_sync_profile">同期タスクの編集</string>
         <string name="msgs_export_prof_fail">タスクリスト保存が失敗しました。</string>
         <string name="msgs_export_prof_success">タスクリストが保存されました。</string>

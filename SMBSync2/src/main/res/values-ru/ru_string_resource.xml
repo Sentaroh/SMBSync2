@@ -98,6 +98,7 @@
         <string name="msgs_task_name_rename_with_schedule_group_task_list">При переименовании задачи имя задачи в расписании также изменяется.</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">При удалении задачи имя задачи в расписании удаляется.</string>
         <string name="msgs_task_name_contains_invalid_character">Имя задачи содержит недопустимые символы: \"%s\"</string>
+        <string name="msgs_task_name_too_long">Имя задачи не может быть длиннее символов %1$s. Текущие: %2$s </string>
         <string name="msgs_edit_sync_profile">Изменить задачу синхронизации</string>
         <string name="msgs_export_prof_fail">Не удалось экспортировать список задач.</string>
         <string name="msgs_export_prof_success">Список задач успешно экспортирован.</string>

@@ -98,6 +98,7 @@
         <string name="msgs_task_name_rename_with_schedule_group_task_list">Lorsqu\'une tâche de synchronisation est renommée, son nom est aussi modifié dans la planification.</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">Lorsqu\'une tâche de synchronisation est supprimée, elle l\'est aussi dans la planification.</string>
         <string name="msgs_task_name_contains_invalid_character">Le nom de la tâche contient des caractères non valides: \"%s\"</string>
+        <string name="msgs_task_name_too_long">Le nom de la tâche ne peut pas être plus long que %1$s chars. Courant : %2$s </string>
         <string name="msgs_edit_sync_profile">Modifier la Tâche de Synchronisation</string>
         <string name="msgs_export_prof_fail">Echec d\'exportation des paramètres de synchronisation.</string>
         <string name="msgs_export_prof_success">Paramètres de synchronisation exportés avec succès.</string>

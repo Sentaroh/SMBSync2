@@ -4077,9 +4077,8 @@ public class SyncTaskUtil {
     }
 
     static private String hasSyncTaskNameInvalidLength(Context c, String task_name) {
-        if (task_name.length() > SYNC_TASK_NAME_MAX_LENGTH) //return c.getString(R.string.msgs_task_name_too_long, SYNC_TASK_NAME_MAX_LENGTH, task_name.length());
-                                                            return "Task name cannot be longer than " + SYNC_TASK_NAME_MAX_LENGTH + " chars. Current: " + task_name.length();
-
+        if (task_name.length() > SYNC_TASK_NAME_MAX_LENGTH)
+            return c.getString(R.string.msgs_task_name_too_long, SYNC_TASK_NAME_MAX_LENGTH, task_name.length());
         return "";
     }
 
