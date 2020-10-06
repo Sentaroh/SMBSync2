@@ -3672,17 +3672,21 @@ public class ActivityMain extends AppCompatActivity {
             public void run() {
                 if (canListViewScrollDown(mGp.syncHistoryListView)) {
                     mContextHistoryButtonScrollDown.setVisibility(LinearLayout.VISIBLE);
-                    mContextHistoryButtonMoveBottom.setVisibility(LinearLayout.VISIBLE);
+                    mContextHistoryButtonPageDown.setVisibility(LinearLayout.VISIBLE);
+//                    mContextHistoryButtonMoveBottom.setVisibility(LinearLayout.VISIBLE);
                 } else {
                     mContextHistoryButtonScrollDown.setVisibility(LinearLayout.INVISIBLE);
-                    mContextHistoryButtonMoveBottom.setVisibility(LinearLayout.INVISIBLE);
+                    mContextHistoryButtonPageDown.setVisibility(LinearLayout.INVISIBLE);
+//                    mContextHistoryButtonMoveBottom.setVisibility(LinearLayout.INVISIBLE);
                 }
                 if (canListViewScrollUp(mGp.syncHistoryListView)) {
                     mContextHistoryButtonScrollUp.setVisibility(LinearLayout.VISIBLE);
-                    mContextHistoryButtonMoveTop.setVisibility(LinearLayout.VISIBLE);
+                    mContextHistoryButtonPageUp.setVisibility(LinearLayout.VISIBLE);
+//                    mContextHistoryButtonMoveTop.setVisibility(LinearLayout.VISIBLE);
                 } else {
                     mContextHistoryButtonScrollUp.setVisibility(LinearLayout.INVISIBLE);
-                    mContextHistoryButtonMoveTop.setVisibility(LinearLayout.INVISIBLE);
+                    mContextHistoryButtonPageUp.setVisibility(LinearLayout.INVISIBLE);
+//                    mContextHistoryButtonMoveTop.setVisibility(LinearLayout.INVISIBLE);
                 }
             }
         });
@@ -3731,6 +3735,58 @@ public class ActivityMain extends AppCompatActivity {
                 if (sel > mGp.syncHistoryAdapter.getCount() - 1) sel = mGp.syncHistoryAdapter.getCount() - 1;
                 if (sel < 0) sel = 0;
                 mGp.syncHistoryListView.setSelection(sel);
+                setHistoryScrollButtonVisibility();
+            }
+        }));
+
+        mContextHistoryButtonPageUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int lv_height = mGp.syncHistoryListView.getHeight();
+                int first_item_y_top =  mGp.syncHistoryListView.getChildAt(0).getTop();
+                int first_item_y_bottom =  mGp.syncHistoryListView.getChildAt(0).getBottom();
+                int first_item_height = first_item_y_bottom - first_item_y_top;
+                int y_offset = 0;
+                if (first_item_y_top < 0) {
+                    // part of first item is hidden on top
+                    y_offset = first_item_height;
+                    if (y_offset > lv_height) {
+                        //item is more than one page: position to the bottom, the current top exact last visible position, minus 3 text lines
+                        TextView listTextView = (TextView) mGp.syncHistoryListView.getChildAt(0).findViewById(R.id.sync_history_list_view_date);
+                        int text_context_size = 0;
+                        if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
+                        y_offset = first_item_height - first_item_y_bottom + text_context_size;
+                    }
+                }
+
+                //mUtil.addDebugMsg(2, "I", "lv_height="+lv_height + " first_item_height="+first_item_height + " first_item_y_top="+first_item_y_top + " first_item_y_bottom="+first_item_y_bottom);
+                mGp.syncHistoryListView.setItemChecked(mGp.syncHistoryListView.getFirstVisiblePosition(), true);//needed on app start to set touch focus
+                mGp.syncHistoryListView.setSelectionFromTop(mGp.syncHistoryListView.getFirstVisiblePosition(), lv_height - y_offset);
+                setHistoryScrollButtonVisibility();
+            }
+        }));
+
+        mContextHistoryButtonPageDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int last_item_pos = mGp.syncHistoryListView.getLastVisiblePosition() - mGp.syncHistoryListView.getFirstVisiblePosition();
+                int lv_height = mGp.syncHistoryListView.getHeight();
+                int last_item_y_top =  mGp.syncHistoryListView.getChildAt(last_item_pos).getTop();
+                int last_item_y_bottom =  mGp.syncHistoryListView.getChildAt(last_item_pos).getBottom();
+                int last_item_height = last_item_y_bottom - last_item_y_top;
+                int y_offset = 0;
+
+                if (last_item_height > lv_height) {
+                    //item is more than one page: position to the top, the current bottom exat last visible position, minus 3 text lines
+                    TextView listTextView = (TextView) mGp.syncHistoryListView.getChildAt(last_item_pos).findViewById(R.id.sync_history_list_view_date);
+                    int text_context_size = 0;
+                    if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
+                    y_offset = -(lv_height - last_item_y_top - text_context_size);
+                }
+
+                //mUtil.addDebugMsg(2, "I", "y_offset="+y_offset + " last_item_height="+last_item_height + " last_item_y_top="+last_item_y_top);
+                mGp.syncHistoryListView.setItemChecked(mGp.syncHistoryListView.getLastVisiblePosition(), true);
+                mGp.syncHistoryListView.setSelectionFromTop(mGp.syncHistoryListView.getLastVisiblePosition(), y_offset);
                 setHistoryScrollButtonVisibility();
             }
         }));
@@ -3843,8 +3899,8 @@ public class ActivityMain extends AppCompatActivity {
         int tot_cnt = mGp.syncHistoryAdapter.getCount();
         setActionBarSelectMode(sel_cnt, tot_cnt);
 
-        mContextHistiryViewMoveTop.setVisibility(ImageButton.VISIBLE);
-        mContextHistiryViewMoveBottom.setVisibility(ImageButton.VISIBLE);
+//        mContextHistiryViewMoveTop.setVisibility(ImageButton.VISIBLE);
+//        mContextHistiryViewMoveBottom.setVisibility(ImageButton.VISIBLE);
 
 //		if (sel_cnt==1) ll_show_log.setVisibility(ImageButton.VISIBLE);
 //		else ll_show_log.setVisibility(ImageButton.INVISIBLE);
@@ -3870,9 +3926,8 @@ public class ActivityMain extends AppCompatActivity {
 
         if (!mGp.syncHistoryAdapter.isEmptyAdapter()) {
             mContextHistiryViewShare.setVisibility(ImageButton.INVISIBLE);
-            mContextHistiryViewMoveTop.setVisibility(ImageButton.INVISIBLE);
-            mContextHistiryViewMoveTop.setVisibility(ImageButton.VISIBLE);
-            mContextHistiryViewMoveBottom.setVisibility(ImageButton.VISIBLE);
+//            mContextHistiryViewMoveTop.setVisibility(ImageButton.INVISIBLE);
+//            mContextHistiryViewMoveBottom.setVisibility(ImageButton.VISIBLE);
             mContextHistiryViewScrollDown.setVisibility(ImageButton.VISIBLE);
             mContextHistiryViewScrollUp.setVisibility(ImageButton.VISIBLE);
             mContextHistiryViewDeleteHistory.setVisibility(ImageButton.INVISIBLE);
@@ -3883,8 +3938,8 @@ public class ActivityMain extends AppCompatActivity {
         } else {
             mContextHistiryViewShare.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewShare.setVisibility(ImageButton.INVISIBLE);
-            mContextHistiryViewMoveTop.setVisibility(ImageButton.INVISIBLE);
-            mContextHistiryViewMoveBottom.setVisibility(ImageButton.INVISIBLE);
+//            mContextHistiryViewMoveTop.setVisibility(ImageButton.INVISIBLE);
+//            mContextHistiryViewMoveBottom.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewScrollDown.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewScrollUp.setVisibility(ImageButton.INVISIBLE);
             mContextHistiryViewDeleteHistory.setVisibility(ImageButton.INVISIBLE);
@@ -4115,6 +4170,8 @@ public class ActivityMain extends AppCompatActivity {
     private ImageButton mContextHistoryButtonMoveTop = null;
     private ImageButton mContextHistoryButtonScrollDown = null;
     private ImageButton mContextHistoryButtonScrollUp = null;
+    private ImageButton mContextHistoryButtonPageDown = null;
+    private ImageButton mContextHistoryButtonPageUp = null;
     private ImageButton mContextHistoryButtonDeleteHistory = null;
     private ImageButton mContextHistoryButtonHistiryCopyClipboard = null;
     private ImageButton mContextHistiryButtonSelectAll = null;
@@ -4125,6 +4182,8 @@ public class ActivityMain extends AppCompatActivity {
     private LinearLayout mContextHistiryViewMoveBottom = null;
     private LinearLayout mContextHistiryViewScrollDown = null;
     private LinearLayout mContextHistiryViewScrollUp = null;
+    private LinearLayout mContextHistiryViewPageDown = null;
+    private LinearLayout mContextHistiryViewPageUp = null;
     private LinearLayout mContextHistiryViewDeleteHistory = null;
     private LinearLayout mContextHistiryViewHistoryCopyClipboard = null;
     private LinearLayout mContextHistiryViewSelectAll = null;
@@ -4156,6 +4215,8 @@ public class ActivityMain extends AppCompatActivity {
     private ImageButton mContextMessageButtonMoveBottom = null;
     private ImageButton mContextMessageButtonScrollDown = null;
     private ImageButton mContextMessageButtonScrollUp = null;
+    private ImageButton mContextMessageButtonPageDown = null;
+    private ImageButton mContextMessageButtonPageUp = null;
     private ImageButton mContextMessageButtonClear = null;
 
     private LinearLayout mContextMessageViewMoveTop = null;
@@ -4163,6 +4224,8 @@ public class ActivityMain extends AppCompatActivity {
     private LinearLayout mContextMessageViewMoveBottom = null;
     private LinearLayout mContextMessageViewScrollDown = null;
     private LinearLayout mContextMessageViewScrollUp = null;
+    private LinearLayout mContextMessageViewPageDown = null;
+    private LinearLayout mContextMessageViewPageUp = null;
     private LinearLayout mContextMessageViewClear = null;
 
     private void releaseImageResource() {
@@ -4252,6 +4315,8 @@ public class ActivityMain extends AppCompatActivity {
         mContextHistoryButtonMoveBottom = (ImageButton) mHistoryView.findViewById(R.id.context_button_move_to_bottom);
         mContextHistoryButtonScrollDown = (ImageButton) mHistoryView.findViewById(R.id.context_button_scroll_down);
         mContextHistoryButtonScrollUp = (ImageButton) mHistoryView.findViewById(R.id.context_button_scroll_up);
+        mContextHistoryButtonPageDown = (ImageButton) mHistoryView.findViewById(R.id.context_button_page_down);
+        mContextHistoryButtonPageUp = (ImageButton) mHistoryView.findViewById(R.id.context_button_page_up);
         mContextHistoryButtonDeleteHistory = (ImageButton) mHistoryView.findViewById(R.id.context_button_delete);
         mContextHistoryButtonHistiryCopyClipboard = (ImageButton) mHistoryView.findViewById(R.id.context_button_copy_to_clipboard);
         mContextHistiryButtonSelectAll = (ImageButton) mHistoryView.findViewById(R.id.context_button_select_all);
@@ -4259,9 +4324,13 @@ public class ActivityMain extends AppCompatActivity {
 
         mContextHistiryViewShare = (LinearLayout) mHistoryView.findViewById(R.id.context_button_share_view);
         mContextHistiryViewMoveTop = (LinearLayout) mHistoryView.findViewById(R.id.context_button_move_to_top_view);
+        mContextHistiryViewMoveTop.setVisibility(LinearLayout.GONE);
         mContextHistiryViewMoveBottom = (LinearLayout) mHistoryView.findViewById(R.id.context_button_move_to_bottom_view);
+        mContextHistiryViewMoveBottom.setVisibility(LinearLayout.GONE);
         mContextHistiryViewScrollDown = (LinearLayout) mHistoryView.findViewById(R.id.context_button_scroll_down_view);
         mContextHistiryViewScrollUp = (LinearLayout) mHistoryView.findViewById(R.id.context_button_scroll_up_view);
+        mContextHistiryViewPageDown = (LinearLayout) mHistoryView.findViewById(R.id.context_button_page_down_view);
+        mContextHistiryViewPageUp = (LinearLayout) mHistoryView.findViewById(R.id.context_button_page_up_view);
         mContextHistiryViewDeleteHistory = (LinearLayout) mHistoryView.findViewById(R.id.context_button_delete_view);
         mContextHistiryViewHistoryCopyClipboard = (LinearLayout) mHistoryView.findViewById(R.id.context_button_copy_to_clipboard_view);
         mContextHistiryViewSelectAll = (LinearLayout) mHistoryView.findViewById(R.id.context_button_select_all_view);
@@ -4272,6 +4341,8 @@ public class ActivityMain extends AppCompatActivity {
         mContextMessageButtonMoveBottom = (ImageButton) mMessageView.findViewById(R.id.context_button_move_to_bottom);
         mContextMessageButtonScrollDown = (ImageButton) mMessageView.findViewById(R.id.context_button_scroll_down);
         mContextMessageButtonScrollUp = (ImageButton) mMessageView.findViewById(R.id.context_button_scroll_up);
+        mContextMessageButtonPageDown = (ImageButton) mMessageView.findViewById(R.id.context_button_page_down);
+        mContextMessageButtonPageUp = (ImageButton) mMessageView.findViewById(R.id.context_button_page_up);
         mContextMessageButtonClear = (ImageButton) mMessageView.findViewById(R.id.context_button_delete);
 
         mContextMessageViewPinned = (LinearLayout) mMessageView.findViewById(R.id.context_button_pinned_view);
@@ -4279,6 +4350,8 @@ public class ActivityMain extends AppCompatActivity {
         mContextMessageViewMoveBottom = (LinearLayout) mMessageView.findViewById(R.id.context_button_move_to_bottom_view);
         mContextMessageViewScrollDown = (LinearLayout) mMessageView.findViewById(R.id.context_button_scroll_down_view);
         mContextMessageViewScrollUp = (LinearLayout) mMessageView.findViewById(R.id.context_button_scroll_up_view);
+        mContextMessageViewPageDown = (LinearLayout) mMessageView.findViewById(R.id.context_button_page_down_view);
+        mContextMessageViewPageUp = (LinearLayout) mMessageView.findViewById(R.id.context_button_page_up_view);
         mContextMessageViewClear = (LinearLayout) mMessageView.findViewById(R.id.context_button_delete_view);
     }
 
@@ -4715,23 +4788,27 @@ public class ActivityMain extends AppCompatActivity {
             public void run() {
                 if (canListViewScrollDown(mGp.syncMessageListView)) {
                     mContextMessageButtonScrollDown.setVisibility(LinearLayout.VISIBLE);
+                    mContextMessageButtonPageDown.setVisibility(LinearLayout.VISIBLE);
                     mContextMessageButtonMoveBottom.setVisibility(LinearLayout.VISIBLE);
                 } else {
                     mContextMessageButtonScrollDown.setVisibility(LinearLayout.INVISIBLE);
+                    mContextMessageButtonPageDown.setVisibility(LinearLayout.INVISIBLE);
                     mContextMessageButtonMoveBottom.setVisibility(LinearLayout.INVISIBLE);
                 }
                 if (canListViewScrollUp(mGp.syncMessageListView)) {
                     mContextMessageButtonScrollUp.setVisibility(LinearLayout.VISIBLE);
+                    mContextMessageButtonPageUp.setVisibility(LinearLayout.VISIBLE);
                     mContextMessageButtonMoveTop.setVisibility(LinearLayout.VISIBLE);
                 } else {
                     mContextMessageButtonScrollUp.setVisibility(LinearLayout.INVISIBLE);
+                    mContextMessageButtonPageUp.setVisibility(LinearLayout.INVISIBLE);
                     mContextMessageButtonMoveTop.setVisibility(LinearLayout.INVISIBLE);
                 }
             }
         });
     }
 
-    private final static int MESSAGE_SCROLL_AMOUNT=3;
+    private final static int MESSAGE_SCROLL_AMOUNT=1;
     private void setMessageContextButtonListener() {
         setMessageScrollButtonVisibility();
         mGp.syncMessageListView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -4762,6 +4839,56 @@ public class ActivityMain extends AppCompatActivity {
                 if (sel < 0) sel = 0;
 
                 mGp.syncMessageListView.setSelection(sel);
+                setMessageScrollButtonVisibility();
+            }
+        }));
+
+        mContextMessageButtonPageUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int lv_height = mGp.syncMessageListView.getHeight();
+                int first_item_y_top =  mGp.syncMessageListView.getChildAt(0).getTop();
+                int first_item_y_bottom =  mGp.syncMessageListView.getChildAt(0).getBottom();
+                int first_item_height = first_item_y_bottom - first_item_y_top;
+                int y_offset = 0;
+                if (first_item_y_top < 0) {
+                    // part of first item is hidden on top
+                    y_offset = first_item_height;
+                    if (y_offset > lv_height) {
+                        //item is more than one page: position to the bottom, the current top exact last visible position, minus 3 text lines
+                        TextView listTextView = (TextView) mGp.syncMessageListView.getChildAt(0).findViewById(R.id.msg_list_view_item_date);
+                        int text_context_size = 0;
+                        if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
+                        y_offset = first_item_height - first_item_y_bottom + text_context_size;
+                    }
+                }
+
+                //mUtil.addDebugMsg(2, "I", "lv_height="+lv_height + " first_item_height="+first_item_height + " first_item_y_top="+first_item_y_top + " first_item_y_bottom="+first_item_y_bottom);
+                mGp.syncMessageListView.setSelectionFromTop(mGp.syncMessageListView.getFirstVisiblePosition(), lv_height - y_offset);
+                setMessageScrollButtonVisibility();
+            }
+        }));
+
+        mContextMessageButtonPageDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int last_item_pos = mGp.syncMessageListView.getLastVisiblePosition() - mGp.syncMessageListView.getFirstVisiblePosition();
+                int lv_height = mGp.syncMessageListView.getHeight();
+                int last_item_y_top =  mGp.syncMessageListView.getChildAt(last_item_pos).getTop();
+                int last_item_y_bottom =  mGp.syncMessageListView.getChildAt(last_item_pos).getBottom();
+                int last_item_height = last_item_y_bottom - last_item_y_top;
+                int y_offset = 0;
+
+                if (last_item_height > lv_height) {
+                    //item is more than one page: position to the top, the current bottom exat last visible position, minus 3 text lines
+                    TextView listTextView = (TextView) mGp.syncMessageListView.getChildAt(last_item_pos).findViewById(R.id.msg_list_view_item_date);
+                    int text_context_size = 0;
+                    if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
+                    y_offset = -(lv_height - last_item_y_top - text_context_size);
+                }
+
+                //mUtil.addDebugMsg(2, "I", "y_offset="+y_offset + " last_item_height="+last_item_height + " last_item_y_top="+last_item_y_top);
+                mGp.syncMessageListView.setSelectionFromTop(mGp.syncMessageListView.getLastVisiblePosition(), y_offset);
                 setMessageScrollButtonVisibility();
             }
         }));

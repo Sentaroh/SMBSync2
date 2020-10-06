@@ -32,6 +32,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="1dp"
         android:layout_weight="1"
+        layout="@layout/context_button_scroll_up" />
+
+    <include
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:layout_weight="1"
         layout="@layout/context_button_scroll_down" />
 
     <include
@@ -39,7 +46,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="1dp"
         android:layout_weight="1"
-        layout="@layout/context_button_scroll_up" />
+        layout="@layout/context_button_page_up" />
+
+    <include
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:layout_weight="1"
+        layout="@layout/context_button_page_down" />
 
     <include
         android:layout_width="0dp"
