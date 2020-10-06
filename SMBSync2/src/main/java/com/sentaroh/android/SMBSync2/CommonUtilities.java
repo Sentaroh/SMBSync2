@@ -898,6 +898,9 @@ public final class CommonUtilities {
         return hl;
     }
 
+    //source: https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+    final private static String[] SMBSYNC2_PROF_SYNC_LOG_FILE_INVALID_CHARS=new String[]{"<", ">", ":", "\"", "/", "\\", "|", "?", "*", " "};
+    final private static String[] SMBSYNC2_PROF_SYNC_LOG_FILE_INVALID_CHARS_TAIL=new String[]{".", " "};
     final public String createSyncResultFilePath(String syncProfName) {
         String dir = mGp.settingMgtFileDir + "/result_log";
         File tlf = new File(dir);
@@ -906,9 +909,23 @@ public final class CommonUtilities {
 //            Log.v("","create="+create);
         }
 //		Log.v("","fp="+dir+", exists="+tlf.exists());
-        String dt = StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis());
-        String fn = "result_" + syncProfName + "_" + dt + ".txt";
-        String fp = dir + "/" + fn.replaceAll("/", "-").replaceAll(":", "").replaceAll(" ", "_");
+        String dt = StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis()).replaceAll("/", "-").replaceAll(":", "").replaceAll(" ", "_");
+        String fn = "result_" + syncProfName;
+        if ((fn.length() + dt.length()) > 250) {//250 = 255-5 for "_" and ".txt" appended at end of file name
+            fn = fn.substring(0, 250 - dt.length());
+        }
+
+        fn += "_" + dt;
+        for(String invalid_str:SMBSYNC2_PROF_SYNC_LOG_FILE_INVALID_CHARS) {
+            fn = fn.replaceAll(Pattern.quote(invalid_str), "_");
+        }
+        for(String invalid_str:SMBSYNC2_PROF_SYNC_LOG_FILE_INVALID_CHARS_TAIL) {
+            if (fn.startsWith(invalid_str))
+                fn = fn.replaceFirst(Pattern.quote(invalid_str), "_");
+        }
+
+        fn+=".txt";
+        String fp = dir + "/" + fn;
         return fp;
     }
 
