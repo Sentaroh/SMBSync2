@@ -70,8 +70,8 @@
         <string name="msgs_log_management_dlg_send_zip_file_creating">创建ZIP文件</string>
         <string name="msgs_log_management_dlg_send_zip_file_cancelled">ZIP文件创建已取消</string>
         <string name="msgs_log_management_log_file_switched">日志文件已切换。</string>
-        <string name="msgs_log_management_enable_log_file_warning">如果继续，则会在日志文件中记录以下数据：\ nAndroid版本，设备名称，目录名称，文件名，SMB帐户名称，IP地址，网络接口名称，系统设置，应用程序信息</string>
-        <string name="msgs_log_management_send_log_file_warning">通过电子邮件将日志文件发送给开发人员。日志文件包含Android版本，设备名称，目录名称，文件名称，SMB帐户名称，IP地址，网络接口名称，系统设置和应用程序信息。\ n1。按"预览"按钮检查temp_log.txt文件的内容\ n2。在读取完要发送的文件后，在"电子邮件选择"对话框中选择"电子邮件"。结束后，将发送该文件（如果显示了应用程序的选择屏幕，则选择FAVORIT应用程序以显示文本文件。） \ n3。请在电子邮件正文中输入问题/问题并发送电子邮件（日志文件以zip格式附加）</string>
+        <string name="msgs_log_management_enable_log_file_warning">如果继续，则会在日志文件中记录以下数据：\nAndroid版本，设备名称，目录名称，文件名，SMB帐户名称，IP地址，网络接口名称，系统设置，应用程序信息</string>
+        <string name="msgs_log_management_send_log_file_warning">通过电子邮件将日志文件发送给开发人员。日志文件包含Android版本，设备名称，目录名称，文件名称，SMB帐户名称，IP地址，网络接口名称，系统设置和应用程序信息。\n1。按"预览"按钮检查temp_log.txt文件的内容\n2。在读取完要发送的文件后，在"电子邮件选择"对话框中选择"电子邮件"。结束后，将发送该文件（如果显示了应用程序的选择屏幕，则选择FAVORIT应用程序以显示文本文件。） \n3。请在电子邮件正文中输入问题/问题并发送电子邮件（日志文件以zip格式附加）</string>
     <!-- Main -->
         <string name="msgs_active_sync_prof_not_found">找不到自动同步任务。</string>
         <string name="msgs_add_sync_profile">添加同步任务</string>
@@ -156,8 +156,8 @@
         <string name="msgs_main_external_sdcard_mp_changed_title">SD卡</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">无法启动活动以允许SDCARD写入权限。</string>
         <string name="msgs_main_external_sdcard_select_required_cancel_msg">在允许写入SDCARD之前，您无法同步。任务=%s</string>
-        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">要访问SDCARD：点击\" SDCARD \"（1），然后点击\"选择\"（2）。\ n \ n如果未显示"打开自"面板，请点击左上角的菜单按钮。</string>
-        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">要访问SDCARD：点击\" SDCARD \"（1），然后点击\"选择\"（2）。\ n \ n如果未显示"打开自"面板，请点击左上角的菜单按钮。</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api21">要访问SDCARD：点击\" SDCARD \"（1），然后点击\"选择\"（2）。\n \n如果未显示"打开自"面板，请点击左上角的菜单按钮。</string>
+        <string name="msgs_main_external_sdcard_select_required_select_msg_api23">要访问SDCARD：点击\" SDCARD \"（1），然后点击\"选择\"（2）。\n \n如果未显示"打开自"面板，请点击左上角的菜单按钮。</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api21">SMBSync_SD_CARD_5.0_EN.png</string>
         <string name="msgs_main_external_sdcard_select_required_select_msg_file_api23">SMBSync_SD_CARD_6.0_EN.png</string>
         <string name="msgs_main_external_sdcard_select_required_title">允许写入SDCARD</string>
@@ -167,22 +167,22 @@
         <string name="msgs_main_external_usb_mp_changed_title">USB媒体</string>
         <string name="msgs_main_external_usb_select_activity_not_found_msg">无法启动活动以允许USB媒体写入权限。</string>
         <string name="msgs_main_external_usb_drive_not_found_msg">未安装USB介质。关闭屏幕，然后安装USB介质以执行操作。</string>
-        <string name="msgs_main_external_usb_select_path_not_available_msg">找不到安装点/ storage /%s。 SMBSync2无法使用此USB介质。</string>
+        <string name="msgs_main_external_usb_select_path_not_available_msg">找不到安装点/storage/%s。 SMBSync2无法使用此USB介质。</string>
         <string name="msgs_main_external_usb_select_required_cancel_msg">您无法同步%s，直到您允许写入USB介质。</string>
-        <string name="msgs_main_external_usb_select_required_select_msg_api23">要访问USB介质：点击\" USB \"（1），然后点击\"选择\"（2）。\ n \ n如果未显示"打开自"面板，请点击左上角的菜单按钮。</string>
+        <string name="msgs_main_external_usb_select_required_select_msg_api23">要访问USB介质：点击\" USB \"（1），然后点击\"选择\"（2）。\n \n如果未显示"打开自"面板，请点击左上角的菜单按钮。</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api21">SMBSync_USB_MEDIA_8.0_EN.png</string>
         <string name="msgs_main_external_usb_select_required_select_msg_file_api23">SMBSync_USB_MEDIA_8.0_EN.png</string>
         <string name="msgs_main_external_usb_select_required_title">允许写入USB介质</string>
         <string name="msgs_main_external_usb_select_retry_select_msg">未选择USB介质的根目录。您要重新选择吗？</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">选择了SDCARD。您要重新选择USB存储器吗？</string>
         <string name="msgs_main_permission_coarse_location_denied_msg">If you specify \"Access point list\" in the task settings, the synchronisation will fail if you don\'t grant permission to Location service. Please allow \"Location Permission\" from the menu.</string>
-        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2需要位置权限才能读取WiFi的SSID。 \ n如果指定\"访问点列表\"，则除非授予该权限，否则同步任务将失败。\ n是否要立即请求"位置"权限？</string>
-        <string name="msgs_main_permission_coarse_location_request_msg_api29">SMBSync2需要位置权限才能读取WiFi的SSID。 \ n如果指定\"访问点列表\"，则除非授予权限，否则同步任务将失败。请在下一个屏幕上选择\"仅在使用该应用程序时允许\"。</string>
-        <string name="msgs_main_permission_coarse_location_request_msg_api30">SMBSync2需要位置权限才能读取WiFi的SSID。 \ n如果指定\"访问点列表\"，则除非授予权限，否则同步任务将失败。请在下一个屏幕上选择\"使用应用程序时\"。</string>
+        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2需要位置权限才能读取WiFi的SSID。 \n如果指定\"访问点列表\"，则除非授予该权限，否则同步任务将失败。\n是否要立即请求"位置"权限？</string>
+        <string name="msgs_main_permission_coarse_location_request_msg_api29">SMBSync2需要位置权限才能读取WiFi的SSID。 \n如果指定\"访问点列表\"，则除非授予权限，否则同步任务将失败。请在下一个屏幕上选择\"仅在使用该应用程序时允许\"。</string>
+        <string name="msgs_main_permission_coarse_location_request_msg_api30">SMBSync2需要位置权限才能读取WiFi的SSID。 \n如果指定\"访问点列表\"，则除非授予权限，否则同步任务将失败。请在下一个屏幕上选择\"使用应用程序时\"。</string>
         <string name="msgs_main_permission_background_location_title">后台位置权限</string>
         <string name="msgs_main_permission_background_location_denied_msg">If you specify \"Access point list\" in the task settings, the synchronisation will fail if you don\'t grant permission to Location service. Please allow \"Location Permission\" from the menu.</string>
-        <string name="msgs_main_permission_background_location_request_msg">要读取SMBSync2中的WiFi SSID，必须具有此权限。\ n在授予该权限之前，如果在"同步"任务中指定了\" Access Point List \"，则SMBSync2将退出并显示错误。\ n在"位置权限"下，选择" \"允许所有时间\"。</string>
-        <string name="msgs_main_permission_background_location_request_msg_api30">要读取SMBSync2中的WiFi SSID，必须具有此权限。\ n在授予该权限之前，如果在"同步"任务中指定了\" Access Point List \"，则SMBSync2将退出并显示错误。\ n在"位置权限"下，选择" \"允许所有时间\"。</string>
+        <string name="msgs_main_permission_background_location_request_msg">要读取SMBSync2中的WiFi SSID，必须具有此权限。\n在授予该权限之前，如果在"同步"任务中指定了\" Access Point List \"，则SMBSync2将退出并显示错误。\n在"位置权限"下，选择" \"允许所有时间\"。</string>
+        <string name="msgs_main_permission_background_location_request_msg_api30">要读取SMBSync2中的WiFi SSID，必须具有此权限。\n在授予该权限之前，如果在"同步"任务中指定了\" Access Point List \"，则SMBSync2将退出并显示错误。\n在"位置权限"下，选择" \"允许所有时间\"。</string>
         <string name="msgs_main_permission_coarse_location_title">位置权限</string>
         <string name="msgs_main_permission_external_storage_denied_msg">无法启动该应用程序，因为尚未授予您访问内部存储器的权限。</string>
         <string name="msgs_main_permission_external_storage_request_msg">授予访问内部存储的权限，以便能够读取和写入同步的数据以及管理应用程序设置。</string>
@@ -307,7 +307,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_port">端口号</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_server">服务器主机名/ IP地址</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share">共用名</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">列出股份</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_share_list">共享列表</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_use_port_number">指定端口号</string>
         <string name="msgs_profile_edit_sync_folder_dlg_remote_smb_username">用户名</string>
         <string name="msgs_profile_edit_sync_folder_dlg_search_remote_server">搜索SMB服务器</string>
@@ -356,11 +356,11 @@
         <string name="msgs_profile_sync_task_dlg_active">自动同步</string>
         <string name="msgs_profile_sync_task_dlg_change_master_and_target">交换源和目标</string>
         <string name="msgs_profile_sync_task_dlg_swap_warning_title">交换源和目标</string>
-        <string name="msgs_profile_sync_task_dlg_swap_warning_message">反转同步方向可能会导致文件和目录的意外删除。\ n强烈建议您启用"测试"模式，并确保没有意外删除或替换任何文件或目录。</string>
+        <string name="msgs_profile_sync_task_dlg_swap_warning_message">反转同步方向可能会导致文件和目录的意外删除。\n强烈建议您启用"测试"模式，并确保没有意外删除或替换任何文件或目录。</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">未指定目录过滤器</string>
-        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">从指定的目录名称（\"，：，\\，*，＆lt;，＆gt; \ |）中删除了无效字符</string>
+        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">从指定的目录名称（\"，：，\\，*，&lt;，&gt; \ |）中删除了无效字符</string>
         <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">未指定文件过滤器</string>
-        <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">从指定的文件名中删除了无效字符（/，\"，：，\\，*，＆lt;，＆gt; \ |）</string>
+        <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">从指定的文件名中删除了无效字符（/，\"，：，\\，*，&lt;，&gt; \ |）</string>
         <string name="msgs_profile_sync_task_dlg_file_directory_name_first_char_has_invalid_char">您必须指定相对路径。起始\" / \"字符已从路径名中删除。</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">将同步时间/日期追加到目录名称（关键字将由执行同步的日期和时间替换）</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">将同步时间/日期追加到文件名（关键字将被执行同步的日期和时间代替）</string>
@@ -402,8 +402,8 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">删除</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">目录清单</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">排除</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">-包括exp：缓存/温度; / my * / foder \ n-排除所有缓存/温度文件夹：\\ cache / temp \ n-可以在同一行中输入过滤器，并以\"; \" \ n分隔-排除过滤器获胜</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-过滤所有具有特定名称的文件：file1; *。txt; *。jpg; file * \ n-过滤器也可以在同一行中输入，并以\"; \" \ n分隔-排除过滤器胜出</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">-包括exp：缓存/温度; /my * /foder \n-排除所有缓存/温度文件夹：\\cache/temp \n-可以在同一行中输入过滤器，并以\"; \" \n分隔-排除过滤器获胜</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-过滤所有具有特定名称的文件：file1; *。txt; *。jpg; file * \n-过滤器也可以在同一行中输入，并以\"; \" \n分隔-排除过滤器胜出</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">启用了选项"删除过滤器排除的目录和文件"：过滤器不包括的所有文件和目录以及源目录中不存在的所有文件和目录将从目标目录中删除。</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">文件过滤器</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">过滤</string>
@@ -425,7 +425,7 @@
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">允许与所有IP地址同步（包括公用）</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">覆盖/删除之前确认</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">删除过滤器排除的目录和文件</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">警告："源"目录中不存在的所有文件和文件夹以及定义的过滤器未包含的所有文件和文件夹都将从目标目录中删除！\ n强烈建议您启用"测试"模式，并确保没有意外的文件或目录被删除或替换。</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">警告："源"目录中不存在的所有文件和文件夹以及定义的过滤器未包含的所有文件和文件夹都将从目标目录中删除！\n强烈建议您启用"测试"模式，并确保没有意外的文件或目录被删除或替换。</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">删除过滤器排除的目录和文件</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">同步之前删除文件（仅镜像模式）</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">仅大小比较（仅当源大小大于目标大小时，文件才被视为不同）</string>
@@ -435,10 +435,10 @@
         <string name="msgs_profile_sync_task_sync_option_hidden_directory">包括隐藏目录</string>
         <string name="msgs_profile_sync_task_sync_option_hidden_file">包括隐藏文件</string>
         <string name="msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled">跳过了文件同步，因为启用了"如果目标文件比源文件新，请不要覆盖目标文件"选项。</string>
-        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">跳过包含无效字符（\"，：，\\，*，＆lt;，＆gt; \ |）的目录和文件名</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">跳过包含无效字符（\"，：，\\，*，&lt;，&gt; \ |）的目录和文件名</string>
         <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">从SMBSync2应用程序自定义列表中获取文件的最后修改时间</string>
         <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">同步主目录根目录中的文件（如果未选中，则仅同步文件夹及其文件/子文件夹）。</string>
-        <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning">警告：可能出现意外结果！\ n如果您居住在具有DST的区域中，或者切换了TimeZones，则如果在DST / TimeZone间隔更改内对其进行了修改，则目标文件可能会显示比源时间更早的时间。强烈建议启用\"覆盖/删除前确认\"选项。请先核实文件的内容，然后再忽略它。</string>
+        <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning">警告：可能出现意外结果！\n如果您居住在具有DST的区域中，或者切换了TimeZones，则如果在DST/TimeZone间隔更改内对其进行了修改，则目标文件可能会显示比源时间更早的时间。强烈建议启用\"覆盖/删除前确认\"选项。请先核实文件的内容，然后再忽略它。</string>
         <string name="msgs_profile_sync_task_sync_option_copy_no_compare_title">目标文件覆盖警告</string>
         <string name="msgs_profile_sync_task_sync_option_copy_no_compare_warning">警告：均未选择"使用文件大小确定文件是否不同"和"使用上次修改时间确定文件是否不同"选项。这将强制在每次同步时复制源文件并覆盖目标文件。</string>
         <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file">如果目标文件比源文件新，请不要覆盖</string>
@@ -446,7 +446,7 @@
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value">夏令时与标准时间之间的时差（分钟）</string>
         <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">选择夏令时偏移量（分钟）</string>
         <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">不要将目标文件的最后修改时间设置为与源文件匹配</string>
-        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified_warning">启用后，无法将目标文件的上次修改时间设置为与源文件相同。目标文件将始终显示为比源文件新。当目标无法设置上次修改时间时，此选项很有用。\ n如果启用此选项，则可以通过禁用\"使用上次修改时间来确定文件是否不同\"或通过启用来防止每次复制文件\"如果目标文件比源文件新，请勿覆盖目标文件\"。</string>
+        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified_warning">启用后，无法将目标文件的上次修改时间设置为与源文件相同。目标文件将始终显示为比源文件新。当目标无法设置上次修改时间时，此选项很有用。\n如果启用此选项，则可以通过禁用\"使用上次修改时间来确定文件是否不同\"或通过启用来防止每次复制文件\"如果目标文件比源文件新，请勿覆盖目标文件\"。</string>
         <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">覆盖目标文件</string>
         <string name="msgs_profile_sync_task_sync_option_network_adv_options">网络高级选项：</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">重试网络错误</string>
@@ -457,17 +457,17 @@
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">使用增强的目录选择过滤器</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">使用新的过滤器版本2</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">更改目录过滤器版本可能会导致意外的文件删除或覆盖，这可能会更改同步的文件。强烈建议您在测试模式下运行它以进行检查，或创建一个测试文件夹以检查同步结果。</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error" formatted="false">包含目录过滤器必须以" Master"作为根路径。将过滤器更改为\"排除\"，或从以下过滤器中删除所有前导\"%s \"字符：\ n%s。</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error" formatted="false">包含目录过滤器必须以" Master"作为根路径。将过滤器更改为\"排除\"，或从以下过滤器中删除所有前导\"%s \"字符：\n%s。</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error" formatted="false">包含目录过滤器%s必须以" Master"作为根路径。将过滤器更改为\"排除\"或删除前导\"%s \"。</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error" formatted="false">整个目录前缀\"%s \"不再有效。在以下过滤器中将其替换为\"%s \"：\ n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error" formatted="false">整个目录前缀\"%s \"不再有效。在以下过滤器中将其替换为\"%s \"：\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error" formatted="false">筛选器%s具有旧的整个目录前缀\"%s \"。将其替换为\"%s \"字符（例如%s）。</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error" formatted="false">存在无效字符（%s），必须将其从以下过滤器中删除：\ n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error" formatted="false">存在无效字符（%s），必须将其从以下过滤器中删除：\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error" formatted="false">筛选器%s包含无效字符（%s），必须将其删除</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error" formatted="false">无效的\"%s \"仅路径必须从以下过滤器中删除：\ n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error" formatted="false">无效的\"%s \"仅路径必须从以下过滤器中删除：\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error" formatted="false">筛选器%s包含仅通用路径部分。请删除无效的\"%s \"字符。</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_error">请删除以下重复的过滤器条目：%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error">请删除以下重复的过滤器条目：%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">在文件名之外，不支持在文件过滤器中使用星号字符。请从以下过滤器的路径中删除所有" *"字符：\ n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">在文件名之外，不支持在文件过滤器中使用星号字符。请从以下过滤器的路径中删除所有" *"字符：\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_edit_dlg_error">仅在文件名中允许在文件过滤器中使用* char。从以下过滤器的路径中删除*字符：%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_file_option_warning">筛选器%s包含隐藏文件，但是选项"包括隐藏文件"已禁用。除非您在"高级选项"中启用了隐藏文件并保存了"同步任务"，否则不会处理任何隐藏文件。</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_directory_option_warning">筛选器%s包含隐藏目录，但是选项"包括隐藏目录"已禁用。除非您在"高级选项"中启用了隐藏目录并保存了"同步任务"，否则不会处理任何隐藏目录。</string>
@@ -477,7 +477,7 @@
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">未指定目录过滤器。</string>
         <string name="msgs_profile_sync_task_option_remove_directory_if_empty_when_move">空的主目录（仅当"同步"选项为"移动"时）删除</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">选择子目录</string>
-        <string name="msgs_profile_sync_task_sync_use_small_ioarea">将SMB I / O写缓冲区限制为16 KB</string>
+        <string name="msgs_profile_sync_task_sync_use_small_ioarea">将SMB I/O写缓冲区限制为16 KB</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">取消</string>
         <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">在双向同步中，如果发生冲突，请保留覆盖文件的副本</string>
         <string name="msgs_profile_twoway_sync_conflict_copy_rurle">文件冲突时的双向同步规则</string>
@@ -497,9 +497,9 @@
         <string name="msgs_select_usb_dir">选择USB媒体目录</string>
         <string name="msgs_select_remote_dir">选择SMB目录</string>
         <string name="msgs_select_remote_share">选择SMB共享</string>
-        <string name="msgs_share_list_not_obtained">无法获取SMB共享列表。请检查：\ n- SMB服务器端的共享配置\ n-提供了服务器所需的正确用户名/密码</string>
+        <string name="msgs_share_list_not_obtained">无法获取SMB共享列表。请检查：\n- SMB服务器端的共享配置\n-提供了服务器所需的正确用户名/密码</string>
         <string name="msgs_smbsync_main_private_key_corrupted_title">内部加密密钥错误</string>
-        <string name="msgs_smbsync_main_private_key_corrupted_msg">由于内部加密密钥无效，因此无法保存同步设置。\ n重新创建内部加密密钥吗？</string>
+        <string name="msgs_smbsync_main_private_key_corrupted_msg">由于内部加密密钥无效，因此无法保存同步设置。\n重新创建内部加密密钥吗？</string>
         <string name="msgs_smbsync_main_no_external_storage">未安装外部存储。某些功能将不可用。</string>
         <string name="msgs_smbsync_main_restart_by_destroyed">应用程序被杀死后重新启动。要禁用重新启动，请在"设置">"开发人员选项"中启用"不保留活动"。</string>
         <string name="msgs_smbsync_main_restart_by_killed">重新启动了应用程序，因为它在移到后台时被杀死了。</string>
@@ -507,8 +507,8 @@
         <string name="msgs_smbsync_ui_settings_language_changed_restart">建议更改主题或语言后重新启动应用程序。单击\"重新启动\"立即重新启动。如果要稍后重新启动，请单击"以后"</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_later">后来</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">重新开始</string>
-        <string name="msgs_smbsync_main_start">应用程序已启动。</string>
-        <string name="msgs_smnsync_main_kill_application">退出程序吗？</string>
+        <string name="msgs_smbsync_main_start">程序已启动。</string>
+        <string name="msgs_smnsync_main_kill_application">退出程序？</string>
         <string name="msgs_specify_task_name">请指定任务名称</string>
         <string name="msgs_tab_name_history">历史</string>
         <string name="msgs_tab_name_schedule">计划</string>
@@ -519,7 +519,7 @@
         <string name="msgs_progress_spin_dlg_housekeep_running">执行应用程序数据文件的维护</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">取消维护</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel_confirm">确认取消维护应用程序数据文件？</string>
-        <string name="msgs_maintenance_last_mod_list_confirm_start_msg">维护应用程序数据文件。\ n运行维护应用程序数据文件时无法执行同步任务。运行维护操作？</string>
+        <string name="msgs_maintenance_last_mod_list_confirm_start_msg">维护应用程序数据文件。\n运行维护应用程序数据文件时无法执行同步任务。运行维护操作？</string>
         <string name="msgs_maintenance_last_mod_list_can_not_start_msg">同步任务运行时，无法执行应用程序数据文件的维护。</string>
         <string name="msgs_maintenance_last_mod_list_cancel_msg">应用数据文件的维护已取消。</string>
         <string name="msgs_maintenance_last_mod_list_del_count">从上次修改的文件列表中删除了%s个项目。</string>
@@ -546,14 +546,14 @@
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[已取消存档]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">无法从EXIF数据获得图像拍摄时间和日期。改用文件更新时间和日期？ （为此同步任务禁用\" Confirm \"存档选项，以避免将来出现此消息）</string>
         <string name="msgs_mirror_confirm_copy_cancel">[复制已取消]</string>
-        <string name="msgs_mirror_confirm_copy_confirm">确认文件\ n%s \ n的覆盖（为此同步任务禁用\"覆盖/删除之前确认"选项，以避免将来再次出现此消息）</string>
+        <string name="msgs_mirror_confirm_copy_confirm">确认文件\n%s \n的覆盖（为此同步任务禁用\"覆盖/删除之前确认"选项，以避免将来再次出现此消息）</string>
         <string name="msgs_mirror_confirm_delete_cancel">[删除已取消]</string>
-        <string name="msgs_mirror_confirm_delete_dir_confirm">确认删除目录\ n%s \ n（为此同步任务禁用\"覆盖/删除之前确认"选项，以避免将来出现此消息）</string>
-        <string name="msgs_mirror_confirm_delete_file_confirm">确认删除文件\ n%s \ n（为此同步任务禁用\"覆盖/删除之前确认\"选项，以避免将来再次出现此消息）</string>
+        <string name="msgs_mirror_confirm_delete_dir_confirm">确认删除目录\n%s \n（为此同步任务禁用\"覆盖/删除之前确认"选项，以避免将来出现此消息）</string>
+        <string name="msgs_mirror_confirm_delete_file_confirm">确认删除文件\n%s \n（为此同步任务禁用\"覆盖/删除之前确认\"选项，以避免将来再次出现此消息）</string>
         <string name="msgs_mirror_confirm_move_cancel">[取消移动]</string>
-        <string name="msgs_mirror_confirm_move_confirm">确认文件\ n%s \ n的移动（为此同步任务禁用\"覆盖/删除之前确认"选项，以避免将来再次出现此消息）</string>
-        <string name="msgs_mirror_confirm_no_btn">没有</string>
-        <string name="msgs_mirror_confirm_noall_btn">不全是</string>
+        <string name="msgs_mirror_confirm_move_confirm">确认文件\n%s \n的移动（为此同步任务禁用\"覆盖/删除之前确认"选项，以避免将来再次出现此消息）</string>
+        <string name="msgs_mirror_confirm_no_btn">否</string>
+        <string name="msgs_mirror_confirm_noall_btn">全否</string>
         <string name="msgs_mirror_confirm_please_check_confirm_msg_archive">点按此处以确认文件存档。</string>
         <string name="msgs_mirror_confirm_please_check_confirm_msg_copy">点击此处以确认文件覆盖。</string>
         <string name="msgs_mirror_confirm_please_check_confirm_msg_delete_dir">点击此处确认目录删除。</string>
@@ -673,9 +673,9 @@
         <string name="msgs_scheduler_main_dlg_hdr_wifi_off">完成预定任务后，请关闭Wifi。</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option">更改同步任务选项</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">同步仅在充电时开始。</string>
-        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">不要换</string>
-        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">已启用</string>
-        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">残障人士</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">不变</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">启用</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">禁用</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">第一次同步将在下一分钟开始。</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">将间隔启动时间重置为上一次同步事件。</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_time">计划时间：%s</string>
@@ -752,7 +752,7 @@
         <string name="msgs_send_logcat_btn_preview_logcat">预览LogCat</string>
         <string name="msgs_send_logcat_btn_preview_applog">预览AppLog</string>
         <string name="msgs_send_logcat_title">发送Logcat和AppLog</string>
-        <string name="msgs_send_logcat_message">通过电子邮件将LogCat和AppLog发送给开发人员\ n1。请通过按LogCat显示按钮和AppLog显示按钮检查内容（显示应用程序选择屏幕时选择一个应用程序）。\ n2。确认要发送的内容后，按发送按钮，然后在电子邮件选择对话框中选择电子邮件。\ n3。如有必要，请在电子邮件正文中输入一条消息，然后发送电子邮件（日志被压缩为zip格式并附加到电子邮件中）。</string>
+        <string name="msgs_send_logcat_message">通过电子邮件将LogCat和AppLog发送给开发人员\n1。请通过按LogCat显示按钮和AppLog显示按钮检查内容（显示应用程序选择屏幕时选择一个应用程序）。\n2。确认要发送的内容后，按发送按钮，然后在电子邮件选择对话框中选择电子邮件。\n3。如有必要，请在电子邮件正文中输入一条消息，然后发送电子邮件（日志被压缩为zip格式并附加到电子邮件中）。</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">由于同步任务已禁用，因此无法启动它。</string>
         <string name="msgs_svc_received_start_request_from_scheduler">从SMBSync2调度程序收到的同步请求。</string>
