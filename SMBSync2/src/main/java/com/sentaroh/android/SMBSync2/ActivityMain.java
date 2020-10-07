@@ -4943,7 +4943,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        mContextMessageButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
+        mContextMessageButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int sel = mGp.syncMessageListView.getFirstVisiblePosition() - MESSAGE_SCROLL_AMOUNT;
@@ -4955,7 +4955,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         }));
 
-        mContextMessageButtonScrollDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
+        mContextMessageButtonScrollDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int sel = mGp.syncMessageListView.getFirstVisiblePosition() + MESSAGE_SCROLL_AMOUNT;
