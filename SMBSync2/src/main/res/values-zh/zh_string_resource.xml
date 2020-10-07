@@ -508,7 +508,7 @@
         <string name="msgs_smbsync_ui_settings_language_changed_restart_later">后来</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">重新开始</string>
         <string name="msgs_smbsync_main_start">应用程序已启动。</string>
-        <string name="msgs_smnsync_main_kill_application">取消申请？</string>
+        <string name="msgs_smnsync_main_kill_application">退出程序吗？</string>
         <string name="msgs_specify_task_name">请指定任务名称</string>
         <string name="msgs_tab_name_history">历史</string>
         <string name="msgs_tab_name_schedule">计划</string>
