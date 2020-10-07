@@ -1415,7 +1415,7 @@ public class ActivityMain extends AppCompatActivity {
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_show_battery_optimization), false);
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_list_storage), false);
             menu.findItem(R.id.menu_top_scheduler).setVisible(false);
-
+            menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
         }
         menu.findItem(R.id.menu_top_add_shortcut).setVisible(false);
         if (Build.VERSION.SDK_INT>=30) menu.findItem(R.id.menu_top_select_storage).setVisible(false);
