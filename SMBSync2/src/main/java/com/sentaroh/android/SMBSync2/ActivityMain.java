@@ -4923,7 +4923,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        mContextMessageButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
+        mContextMessageButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int sel = mGp.syncMessageListView.getFirstVisiblePosition() - MESSAGE_SCROLL_AMOUNT;
@@ -4935,7 +4935,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         }));
 
-        mContextMessageButtonScrollDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
+        mContextMessageButtonScrollDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int sel = mGp.syncMessageListView.getFirstVisiblePosition() + MESSAGE_SCROLL_AMOUNT;
@@ -4948,7 +4948,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         }));
 
-        mContextMessageButtonPageUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
+        mContextMessageButtonPageUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int lv_height = mGp.syncMessageListView.getHeight();
@@ -4974,7 +4974,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         }));
 
-        mContextMessageButtonPageDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, 50, false, new OnClickListener() {
+        mContextMessageButtonPageDown.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int last_item_pos = mGp.syncMessageListView.getLastVisiblePosition() - mGp.syncMessageListView.getFirstVisiblePosition();
