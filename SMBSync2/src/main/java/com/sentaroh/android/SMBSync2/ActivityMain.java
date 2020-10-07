@@ -67,6 +67,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -3800,12 +3801,16 @@ public class ActivityMain extends AppCompatActivity {
     private final static int HISTORY_SCROLL_AMOUNT=1;
     private void setHistoryContextButtonListener() {
         setHistoryScrollButtonVisibility();
-        mGp.syncHistoryListView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        mGp.syncHistoryListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public void onScrollStateChanged(AbsListView view, int scrollState) {}
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 setHistoryScrollButtonVisibility();
             }
         });
+
         mContextHistoryButtonSendTo.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -4916,9 +4921,12 @@ public class ActivityMain extends AppCompatActivity {
     private final static int MESSAGE_SCROLL_AMOUNT=1;
     private void setMessageContextButtonListener() {
         setMessageScrollButtonVisibility();
-        mGp.syncMessageListView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        mGp.syncMessageListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            public void onScrollStateChanged(AbsListView view, int scrollState) {}
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 setMessageScrollButtonVisibility();
             }
         });
