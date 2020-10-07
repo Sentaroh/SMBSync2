@@ -1367,9 +1367,20 @@ public class ActivityMain extends AppCompatActivity {
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_about), true);
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_show_battery_optimization), true);
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_list_storage), true);
+
             if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_SCHEDULE)) {
                 menu.findItem(R.id.menu_top_scheduler).setVisible(true);
                 menu.findItem(R.id.menu_top_exec_schedule).setVisible(true);
+                if (mGp.syncScheduleAdapter.isSelectMode()) {
+                    for(ScheduleItem si:mGp.syncScheduleList) {
+                        if (si.isChecked) {
+                            if (!mGp.syncScheduleAdapter.isValidScheduleItem(si, null).equals("")) {
+                                menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
+                                break;
+                            }
+                        }
+                    }
+                }
             } else {
                 menu.findItem(R.id.menu_top_scheduler).setVisible(false);
                 menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
@@ -3120,35 +3131,6 @@ public class ActivityMain extends AppCompatActivity {
 
     //action when bottom buttons are pressed in schedule view when a schedule task is selected
     private void setScheduleContextButtonListener() {
-        NotifyEvent ntfy_cb = new NotifyEvent(mContext);
-        ntfy_cb.setListener(new NotifyEventListener() {
-            @Override
-            public void positiveResponse(Context context, Object[] objects) {
-            }
-
-            @Override
-            public void negativeResponse(Context context, Object[] objects) {
-            }
-        });
-        mGp.syncScheduleAdapter.setCbNotify(ntfy_cb);
-
-        NotifyEvent ntfy_sw = new NotifyEvent(mContext);
-        ntfy_sw.setListener(new NotifyEventListener() {
-            @Override
-            public void positiveResponse(Context context, Object[] objects) {
-                int pos=(int)objects[0];
-                if (mGp.syncScheduleAdapter.getItem(pos).scheduleEnabled) {
-                    mGp.syncScheduleAdapter.getItem(pos).scheduleLastExecTime = System.currentTimeMillis();
-                }
-                saveScheduleList();
-            }
-
-            @Override
-            public void negativeResponse(Context context, Object[] objects) {
-            }
-        });
-        mGp.syncScheduleAdapter.setSwNotify(ntfy_sw);
-
         mContextScheduleButtonAdd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3515,6 +3497,23 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
+        NotifyEvent ntfy_sw = new NotifyEvent(mContext);
+        ntfy_sw.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                int pos=(int)objects[0];
+                if (mGp.syncScheduleAdapter.getItem(pos).scheduleEnabled) {
+                    mGp.syncScheduleAdapter.getItem(pos).scheduleLastExecTime = System.currentTimeMillis();
+                }
+                saveScheduleList();
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {
+            }
+        });
+        mGp.syncScheduleAdapter.setSwNotify(ntfy_sw);
+
         NotifyEvent ntfy_sync=new NotifyEvent(mContext);
         ntfy_sync.setListener(new NotifyEventListener() {
             @Override
@@ -3536,6 +3535,19 @@ public class ActivityMain extends AppCompatActivity {
             public void negativeResponse(Context context, Object[] objects) {}
         });
         mGp.syncScheduleAdapter.setSyncButtonNotify(ntfy_sync);
+
+        NotifyEvent ntfy_check=new NotifyEvent(mContext);
+        ntfy_check.setListener(new NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                refreshOptionMenu();
+                setScheduleContextButtonNormalMode();
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {}
+        });
+        mGp.syncScheduleAdapter.setCbNotify(ntfy_check);
     }
 
     private void executeSelectedSchedule() {

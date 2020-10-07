@@ -16,42 +16,49 @@
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_weight="1"
         layout="@layout/context_button_inactivate" />
 
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_weight="1"
         layout="@layout/context_button_add" />
 
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_weight="1"
         layout="@layout/context_button_copy" />
 
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_weight="1"
         layout="@layout/context_button_rename" />
 
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_weight="1"
         layout="@layout/context_button_delete" />
 
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_weight="1"
         layout="@layout/context_button_select_all" />
 
     <include
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
         android:layout_weight="1"
         layout="@layout/context_button_unselect_all" />
 
