@@ -1021,6 +1021,7 @@
             <item>Français (fr)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
+            <item>中文(zh)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1028,6 +1029,7 @@
             <item>2</item>
             <item>3</item>
             <item>4</item>
+            <item>5</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Thème d\'Affichage</string>
