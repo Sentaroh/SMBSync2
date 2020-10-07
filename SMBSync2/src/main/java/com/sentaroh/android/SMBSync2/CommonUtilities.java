@@ -920,7 +920,7 @@ public final class CommonUtilities {
             fn = fn.replaceAll(Pattern.quote(invalid_str), "_");
         }
         for(String invalid_str:SMBSYNC2_PROF_SYNC_LOG_FILE_INVALID_CHARS_TAIL) {
-            if (fn.startsWith(invalid_str))
+            if (fn.endsWith(invalid_str))
                 fn = fn.replaceFirst(Pattern.quote(invalid_str), "_");
         }
 
