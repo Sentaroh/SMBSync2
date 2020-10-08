@@ -1374,7 +1374,7 @@ public class ActivityMain extends AppCompatActivity {
                 if (mGp.syncScheduleAdapter.isSelectMode()) {
                     for(ScheduleItem si:mGp.syncScheduleList) {
                         if (si.isChecked) {
-                            if (!mGp.syncScheduleAdapter.isValidScheduleItem(si, null).equals("")) {
+                            if (!ScheduleUtil.isValidScheduleItem(mContext, mGp, mGp.syncScheduleList, si).equals("")) {
                                 menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
                                 break;
                             }
@@ -3555,7 +3555,7 @@ public class ActivityMain extends AppCompatActivity {
         String e_msg="";
         for(ScheduleItem si:mGp.syncScheduleList) {
             if (si.isChecked) {
-                e_msg=mGp.syncScheduleAdapter.isValidScheduleItem(si, null);
+                e_msg=ScheduleUtil.isValidScheduleItem(mContext, mGp, mGp.syncScheduleList, si);
                 if (e_msg.equals("")) {
                     e_msg=checkExecuteSchedule(si);
                     if (e_msg.equals("")) sched_list.add(si.scheduleName);
@@ -3585,7 +3585,7 @@ public class ActivityMain extends AppCompatActivity {
         String e_msg="";
         for(ScheduleItem si:mGp.syncScheduleList) {
             if (si.scheduleEnabled) {
-                e_msg=mGp.syncScheduleAdapter.isValidScheduleItem(si, null);
+                e_msg=ScheduleUtil.isValidScheduleItem(mContext, mGp, mGp.syncScheduleList, si);
                 if (e_msg.equals("")) {
                     e_msg=checkExecuteSchedule(si);
                     if (e_msg.equals("")) sched_list.add(si.scheduleName);

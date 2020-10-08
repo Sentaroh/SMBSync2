@@ -608,6 +608,79 @@ public class ScheduleUtil {
         return result;
     }
 
+    public static String isValidScheduleItem(Context c, GlobalParameters gp, ArrayList<ScheduleItem> sl, ScheduleItem si) {
+        String error_msg="";
+        String sep_msg="";
+
+        //check for schedule name errors
+        if (si.scheduleName.equals("")) {
+            error_msg = c.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified);
+            sep_msg = "\n";
+        } else {
+            if (isScheduleDuplicate(sl, si.scheduleName)) {
+                error_msg = c.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name);
+                sep_msg = "\n";
+            }
+
+            String invalid_chars_msg = hasScheduleNameContainsUnusableCharacter(c, si.scheduleName);
+            if (!invalid_chars_msg.equals("")) {
+                error_msg += sep_msg + invalid_chars_msg;
+                sep_msg = "\n";
+            }
+        }
+
+        if (!si.syncAutoSyncTask) {
+            boolean schedule_error=false;
+            String error_not_found_item_name="";
+            String error_item_name="";
+            if (si.syncTaskList.equals("")) {
+                schedule_error=true;
+            } else {
+                if (si.syncTaskList.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {
+                    String[] stl=si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
+                    String sep_not_found="", sep_error="";
+                    for(String stn:stl) {
+                        SyncTaskItem sti = getSyncTask(gp, stn);
+                        if (sti==null) {
+                            schedule_error=true;
+                            error_not_found_item_name+=sep_not_found+stn;//display all not found sync tasks in Schedule Tab entries
+                            sep_not_found=",";
+                        } else if (sti.isSyncTaskError()) {//display sync tasks with errors (invalid name, duplicate, error in master/target folder...)
+                            schedule_error=true;
+                            error_item_name+=sep_error+stn;
+                            sep_error=",";
+                        }
+                    }
+                } else {
+                    SyncTaskItem sti = ScheduleUtil.getSyncTask(gp, si.syncTaskList);
+                    if (sti==null) {
+                        schedule_error=true;
+                        error_not_found_item_name=si.syncTaskList;
+                    } else if (sti.isSyncTaskError()) {
+                        schedule_error=true;
+                        error_item_name=si.syncTaskList;
+                    }
+                }
+            }
+
+            if (schedule_error) {
+                if (si.syncTaskList.equals("")) {
+                    error_msg+= sep_msg + c.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty);
+                } else {
+                    if (!error_not_found_item_name.equals("")) {
+                        error_msg+= sep_msg + String.format(c.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_not_found_item_name);
+                        sep_msg = "\n";
+                    }
+                    if (!error_item_name.equals("")) {
+                        error_msg+= sep_msg + String.format(c.getString(R.string.msgs_scheduler_info_sync_task_in_error), error_item_name);
+                        sep_msg = "\n";
+                    }
+                }
+            }
+        }
+        return error_msg;
+    }
+
     static public SyncTaskItem getSyncTask(GlobalParameters gp, String job_name) {
         for (SyncTaskItem sji : gp.syncTaskList) {
             if (sji.getSyncTaskName().equals(job_name)) {
