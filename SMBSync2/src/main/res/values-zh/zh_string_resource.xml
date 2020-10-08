@@ -263,6 +263,7 @@
         <string name="msgs_main_sync_selected_profiles_checked_boxes">执行所有选定的同步任务</string>
         <string name="msgs_main_sync_selected_profiles_toast">执行所有选定的同步任务</string>
         <string name="msgs_main_sync_auto_profiles_toast">执行所有自动同步任务</string>
+        <string name="msgs_main_sync_selected_task_has_error">One of the selected tasks is invalid and cannot be executed. Please uncheck it and try again. Task name=%s</string>
         <string name="msgs_main_sync_selected_task_not_found">所选任务不存在：</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">由于忽略了指定的同步任务，因此不会执行。</string>
         <string name="msgs_main_sync_test_mode_warnning">所选任务仅配置为测试。没有文件将被复制或删除。执行任务？</string>
@@ -287,8 +288,9 @@
         <string name="msgs_prof_cont_label_sync">开始同步</string>
         <string name="msgs_prof_cont_label_unselect_all">取消选择所有任务</string>
         <string name="msgs_prof_cont_label_up">上移</string>
-        <string name="msgs_prof_cont_to_activate_profile">设置以下任务以自动启动</string>
-        <string name="msgs_prof_cont_to_inactivate_profile">设置以下任务以按需启动</string>
+        <string name="msgs_prof_cont_to_activate_profile">设置以下任务以自动启动 ?</string>
+        <string name="msgs_prof_cont_to_inactivate_profile">设置以下任务以按需启动 ?</string>
+        <string name="msgs_prof_cont_to_activate_inactivate_profile_error">One of the selected sync tasks is invalid. You cannot toggle its Auto-Start mode until it is fixed. Task name=%s</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">如果源或目标位于SMB服务器上：将"仅在指定的Wifi条件下开始同步"设置为"连接任何AP"？</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">如果源或目标位于SMB服务器上：将"仅在指定的Wifi条件下开始同步"设置为"具有私有地址"吗？</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">当目标文件夹设置为ZIP时，主文件夹必须是内部存储。主文件夹已还原到内部存储。</string>

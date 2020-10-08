@@ -263,6 +263,7 @@
         <string name="msgs_main_sync_selected_profiles_checked_boxes">Executing all selected sync tasks</string>
         <string name="msgs_main_sync_selected_profiles_toast">Execute all selected sync tasks</string>
         <string name="msgs_main_sync_auto_profiles_toast">Execute all auto sync tasks</string>
+        <string name="msgs_main_sync_selected_task_has_error">One of the selected tasks is invalid and cannot be executed. Please uncheck it and try again. Task name=%s</string>
         <string name="msgs_main_sync_selected_task_not_found">Selected task does not exist:</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">The specified sync task will not be executed because it was ignored.</string>
         <string name="msgs_main_sync_test_mode_warnning">Selected task is configured for test only.  No files will be copied or deleted.  Execute the task?</string>
@@ -287,8 +288,9 @@
         <string name="msgs_prof_cont_label_sync">Start sync</string>
         <string name="msgs_prof_cont_label_unselect_all">Deselect all tasks</string>
         <string name="msgs_prof_cont_label_up">Move up</string>
-        <string name="msgs_prof_cont_to_activate_profile">Set the following tasks to auto-start</string>
-        <string name="msgs_prof_cont_to_inactivate_profile">Set the following tasks to start on-demand</string>
+        <string name="msgs_prof_cont_to_activate_profile">Set the following tasks to auto-start ?</string>
+        <string name="msgs_prof_cont_to_inactivate_profile">Set the following tasks to start on-demand ?</string>
+        <string name="msgs_prof_cont_to_activate_inactivate_profile_error">One of the selected sync tasks is invalid. You cannot toggle its Auto-Start mode until it is fixed. Task name=%s</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">If source or destination are located on SMB server: set Start sync only in specified Wifi condition to \"Conn any AP\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">If source or destination are located on SMB server: set Start sync only in specified Wifi condition to \"Has private address\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">When target folder is set to ZIP, the master folder must be internal storage. Master folder was reverted to internal storage.</string>

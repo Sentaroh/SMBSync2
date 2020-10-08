@@ -4702,56 +4702,80 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void confirmActivate(AdapterSyncTask pa, final NotifyEvent p_ntfy) {
+        boolean is_task_error_tmp = false;
+        String msg = "";
+        String sep = "";
+        for (int i = 0; i < pa.getCount(); i++) {
+            if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskError()) {
+                is_task_error_tmp = true;
+                msg = pa.getItem(i).getSyncTaskName();
+                break;
+            } else if (pa.getItem(i).isChecked() && !pa.getItem(i).isSyncTaskAuto()) {
+                msg += sep + pa.getItem(i).getSyncTaskName();
+                sep = "\n";
+            }
+        }
+
+        final boolean is_task_error = is_task_error_tmp;
+        final String e_msg = msg;
         NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                mTaskUtil.setSyncTaskToAuto(mGp);
-                SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
-                p_ntfy.notifyToListener(true, null);
+                if (is_task_error) {
+                    mUtil.addLogMsg("E", mContext.getString(R.string.msgs_prof_cont_to_activate_inactivate_profile_error));
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_prof_cont_to_activate_inactivate_profile_error, e_msg), "", null);
+                } else {
+                    mTaskUtil.setSyncTaskToAuto(mGp);
+                    SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
+                    p_ntfy.notifyToListener(true, null);
+                }
             }
 
             @Override
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        String msg = "";
-        String sep = "";
-        for (int i = 0; i < pa.getCount(); i++) {
-            if (pa.getItem(i).isChecked() && !pa.getItem(i).isSyncTaskAuto()) {
-                msg += sep + pa.getItem(i).getSyncTaskName();
-                sep = "\n";
-            }
-        }
-//		msg+="\n";
         mUtil.showCommonDialog(true, "W",
                 mContext.getString(R.string.msgs_prof_cont_to_activate_profile),
                 msg, ntfy);
     }
 
     private void confirmInactivate(AdapterSyncTask pa, final NotifyEvent p_ntfy) {
+        boolean is_task_error_tmp = false;
+        String msg = "";
+        String sep = "";
+        for (int i = 0; i < pa.getCount(); i++) {
+            if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskError()) {
+                is_task_error_tmp = true;
+                msg = pa.getItem(i).getSyncTaskName();
+                break;
+            } else if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskAuto()) {
+                msg += sep + pa.getItem(i).getSyncTaskName();
+                sep = "\n";
+            }
+        }
+
+        final boolean is_task_error = is_task_error_tmp;
+        final String e_msg = msg;
         NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                mTaskUtil.setSyncTaskToManual();
-                SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
-                p_ntfy.notifyToListener(true, null);
+                if (is_task_error) {
+                    mUtil.addLogMsg("E", mContext.getString(R.string.msgs_prof_cont_to_activate_inactivate_profile_error));
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_prof_cont_to_activate_inactivate_profile_error, e_msg), "", null);
+                } else {
+                    mTaskUtil.setSyncTaskToManual();
+                    SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
+                    p_ntfy.notifyToListener(true, null);
+                }
             }
 
             @Override
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        String msg = "";
-        String sep = "";
-        for (int i = 0; i < pa.getCount(); i++) {
-            if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskAuto()) {
-                msg += sep + pa.getItem(i).getSyncTaskName();
-                sep = "\n";
-            }
-        }
-//		msg+="\n";
         mUtil.showCommonDialog(true, "W",
                 mContext.getString(R.string.msgs_prof_cont_to_inactivate_profile),
                 msg, ntfy);
@@ -5131,22 +5155,31 @@ public class ActivityMain extends AppCompatActivity {
         String sync_list_tmp = "";
         String sep = "";
         boolean test_sync_task_found = false;
+        boolean error_sync_task_found_tmp = false;
         for (int i = 0; i < mGp.syncTaskAdapter.getCount(); i++) {
             item = mGp.syncTaskAdapter.getItem(i);
-            if (item.isChecked()  && !item.isSyncTaskError()) {
+            if (item.isChecked() && !item.isSyncTaskError()) {
                 t_list.add(item);
                 sync_list_tmp += sep + item.getSyncTaskName();
                 sep = SYNC_TASK_LIST_SEPARATOR;
                 if (item.isSyncTestMode()) test_sync_task_found = true;
+            } else if (item.isChecked() && item.isSyncTaskError()) {
+                error_sync_task_found_tmp = true;
+                sync_list_tmp = item.getSyncTaskName();
+                break;//fail start sync
             }
         }
         final String sync_list = sync_list_tmp;
+        final boolean error_sync_task_found = error_sync_task_found_tmp;
 
         NotifyEvent ntfy_test_mode = new NotifyEvent(mContext);
         ntfy_test_mode.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (t_list.isEmpty()) {
+                if (error_sync_task_found) {
+                    mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_selected_task_has_error));
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_main_sync_selected_task_has_error, sync_list), "", null);
+                } else if (t_list.isEmpty()) {
                     mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile));
                     mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
                 } else {

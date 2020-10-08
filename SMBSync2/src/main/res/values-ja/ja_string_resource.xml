@@ -263,6 +263,7 @@
         <string name="msgs_main_sync_selected_profiles_checked_boxes">選択された同期タスクを同期します。</string>
         <string name="msgs_main_sync_selected_profiles_toast">選択された同期タスクを同期します。</string>
         <string name="msgs_main_sync_auto_profiles_toast">自動同期タスクだけを同期する</string>
+        <string name="msgs_main_sync_selected_task_has_error">One of the selected tasks is invalid and cannot be executed. Please uncheck it and try again. Task name=%s</string>
         <string name="msgs_main_sync_selected_task_not_found">選択されたタスクは存在しません。タスク=</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">指定された同期タスクは無視されたため実行されません。</string>
         <string name="msgs_main_sync_test_mode_warnning">選択された同期タスクにテストモードの同期タスクが含まれています。テストモードの同期タスクではファイルのコピーや削除が行われません。同期を開始しますか？</string>
@@ -287,8 +288,9 @@
         <string name="msgs_prof_cont_label_sync">同期を開始する</string>
         <string name="msgs_prof_cont_label_unselect_all">全ての選択を解除する</string>
         <string name="msgs_prof_cont_label_up">上に移動</string>
-        <string name="msgs_prof_cont_to_activate_profile">下記プロフィルを自動にします</string>
-        <string name="msgs_prof_cont_to_inactivate_profile">下記プロフィルを手動にします</string>
+        <string name="msgs_prof_cont_to_activate_profile">下記プロフィルを自動にします ?</string>
+        <string name="msgs_prof_cont_to_inactivate_profile">下記プロフィルを手動にします ?</string>
+        <string name="msgs_prof_cont_to_activate_inactivate_profile_error">One of the selected sync tasks is invalid. You cannot toggle its Auto-Start mode until it is fixed. Task name=%s</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">ターゲットとマスターのいずれかがSMBのため無線LANの条件を「APに接続されている時」に変更しますか？</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">ターゲットとマスターのいずれかがSMBのため無線LANの条件を「プライベートアドレス」に変更しますか？</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">対象フォルダがZIPに設定されている場合、マスターフォルダは内部ストレージである必要があります。マスターフォルダを内部ストレージに変更しました。</string>

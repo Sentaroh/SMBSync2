@@ -263,6 +263,7 @@
         <string name="msgs_main_sync_selected_profiles_checked_boxes">Exécution de toutes les tâches de synchronisation sélectionnées</string>
         <string name="msgs_main_sync_selected_profiles_toast">Exécuter toutes les tâches de synchronisation sélectionnées</string>
         <string name="msgs_main_sync_auto_profiles_toast">Exécuter toutes les tâches configurées en mode Auto</string>
+        <string name="msgs_main_sync_selected_task_has_error">Une tâche de synchronisation invalide a été sélectionnée. Merci de la désélectionner et d\'essayer à nouveau. Nom de la tâche=%s</string>
         <string name="msgs_main_sync_selected_task_not_found">La tâche sélectionnée n\'existe pas:</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">La tâche sélectionnée ne sera pas exécutée, car elle a été ignorée.</string>
         <string name="msgs_main_sync_test_mode_warnning">La tâche sélectionnée est configurée en mode Test. Aucun fichier ne sera copié ou effacé. Exécuter la tâche ?</string>
@@ -287,8 +288,9 @@
         <string name="msgs_prof_cont_label_sync">Démarrer la synchro</string>
         <string name="msgs_prof_cont_label_unselect_all">Désélectionner tout</string>
         <string name="msgs_prof_cont_label_up">Monter</string>
-        <string name="msgs_prof_cont_to_activate_profile">Démarrer les tâches suivantes en mode auto</string>
-        <string name="msgs_prof_cont_to_inactivate_profile">Démarrer les tâches suivantes sur demande</string>
+        <string name="msgs_prof_cont_to_activate_profile">Mettre les tâches suivantes sur mode auto ?</string>
+        <string name="msgs_prof_cont_to_inactivate_profile">Mettre les tâches suivantes sur mode manuel ?</string>
+        <string name="msgs_prof_cont_to_activate_inactivate_profile_error">Une des tâches sélectionnées est invalide. Vous ne pouvez pas modifier son mode de synchronisation. Merci de la désélectionner avant de réessayer. Tache=%s</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">Si la source ou la destination sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Tous les réseaux\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">Si la source ou la destination sont sur un serveur SMB: activer Démarrer la synchro selon la connexion Wifi \"Wifi avec IP privée\"?</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">Lorsque ZIP est sélectionné comme destination, la source doit être située sur le stockage interne. La sélection de la source a donc été changée en stockage interne.</string>
