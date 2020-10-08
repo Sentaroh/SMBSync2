@@ -608,6 +608,13 @@ public class ScheduleUtil {
         return result;
     }
 
+    public static String hasScheduleNameContainsUnusableCharacter(Context c, String name) {
+        for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
+            if (name.contains(item)) return c.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character,item);
+        }
+        return "";
+    }
+
     public static String isValidScheduleItem(Context c, GlobalParameters gp, ArrayList<ScheduleItem> sl, ScheduleItem si) {
         String error_msg="";
         String sep_msg="";
@@ -823,13 +830,6 @@ public class ScheduleUtil {
             result = c.getString(R.string.msgs_scheduler_info_schedule_disabled);
         }
         return result;
-    }
-
-    static public String hasScheduleNameContainsUnusableCharacter(Context c, String name) {
-        for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
-            if (name.contains(item)) return c.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character,item);
-        }
-        return "";
     }
 
 }
