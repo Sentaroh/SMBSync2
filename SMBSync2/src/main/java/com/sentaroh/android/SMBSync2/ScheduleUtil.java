@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
+import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_MAX_LENGTH;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_UNUSABLE_CHARACTER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_LAST_SCHEDULED_UTC_TIME_KEY;
@@ -592,7 +593,7 @@ public class ScheduleUtil {
     }
 
     //check if schedule name is duplicate in Schedule List
-    public static boolean isScheduleDuplicate(ArrayList<ScheduleItem> sl, String name) {
+    private static boolean isScheduleDuplicate(ArrayList<ScheduleItem> sl, String name) {
         int count = 0;
         for (ScheduleItem si : sl) {
             if (si.scheduleName.equalsIgnoreCase(name)) count++;
@@ -600,6 +601,9 @@ public class ScheduleUtil {
         return count > 1;
     }
 
+    //check if schedule name already exists in the ScheduleList
+    //  - called when renaming or copying an existing schedule
+    //  - on create a new schedule: called directly to set a unique default new name
     public static boolean isScheduleExists(ArrayList<ScheduleItem> sl, String name) {
         boolean result = false;
         for (ScheduleItem si : sl) {
@@ -608,83 +612,143 @@ public class ScheduleUtil {
         return result;
     }
 
-    public static String hasScheduleNameContainsUnusableCharacter(Context c, String name) {
+    private static boolean hasScheduleNameInvalidLength(String name) {
+        return name.length() > SYNC_TASK_NAME_MAX_LENGTH;
+    }
+
+    private static String hasScheduleNameUnusableCharacter(Context c, String name) {
         for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
             if (name.contains(item)) return c.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character,item);
         }
         return "";
     }
 
-    public static String isValidScheduleItem(Context c, GlobalParameters gp, ArrayList<ScheduleItem> sl, ScheduleItem si) {
+    //showAllErrors [true]: show all errors with "\n" separator
+    //  - called by ScheduleAdapter for display of all name errors in Schedule TAB
+    //  - else return error message of first error found in schedule
+    //checkDup [false]: Check a NEW schedule name for validity against existing Schedules
+    //  - called when rename/dupliacte/create a new schedule
+    //checkDup [true]: Check if schedule name is already a duplicate in the ScheduleAdapter (previous versions bug, settings file modification)
+    //  - called when editing an existing schedule
+    //  - called in the Schedule Adapter to show duplicate entries in Schedule TAB
+    //  - called to display/hide the start schedule button
+    public static String isValidScheduleName(Context c, GlobalParameters gp, ArrayList<ScheduleItem> sl, String shedule_name, boolean checkDup, boolean showAllErrors) {
+        String error_msg="";
+        String sep_msg="";
+
+        if (shedule_name.equals("")) {
+            error_msg = c.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified);
+            sep_msg = "\n";
+            if (!showAllErrors && !error_msg.equals("")) return error_msg;
+        } else {
+            if (hasScheduleNameInvalidLength(shedule_name)) {
+                error_msg = c.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_too_long, SYNC_TASK_NAME_MAX_LENGTH, shedule_name.length());
+                sep_msg = "\n";
+                if (!showAllErrors && !error_msg.equals("")) return error_msg;
+            }
+
+            if (checkDup && isScheduleDuplicate(sl, shedule_name)) {
+                error_msg += sep_msg + c.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name);
+                sep_msg = "\n";
+                if (!showAllErrors && !error_msg.equals("")) return error_msg;
+            } else if (!checkDup && isScheduleExists(sl, shedule_name)) {
+                error_msg += sep_msg + c.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name);
+                sep_msg = "\n";
+                if (!showAllErrors && !error_msg.equals("")) return error_msg;
+            }
+
+            String invalid_chars_msg = hasScheduleNameUnusableCharacter(c, shedule_name);
+            if (!invalid_chars_msg.equals("")) {
+                error_msg += sep_msg + invalid_chars_msg;
+                sep_msg = "\n";
+                if (!showAllErrors && !error_msg.equals("")) return error_msg;
+            }
+        }
+
+        return error_msg;
+    }
+
+    public static String isValidScheduleItem(Context c, GlobalParameters gp, ArrayList<ScheduleItem> sl, ScheduleItem si, boolean checkDup, boolean showAllErrors) {
         String error_msg="";
         String sep_msg="";
 
         //check for schedule name errors
-        if (si.scheduleName.equals("")) {
-            error_msg = c.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified);
+        error_msg = isValidScheduleName(c, gp, sl, si.scheduleName, checkDup, showAllErrors);
+        if (!error_msg.equals("")) {
             sep_msg = "\n";
-        } else {
-            if (isScheduleDuplicate(sl, si.scheduleName)) {
-                error_msg = c.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name);
-                sep_msg = "\n";
-            }
-
-            String invalid_chars_msg = hasScheduleNameContainsUnusableCharacter(c, si.scheduleName);
-            if (!invalid_chars_msg.equals("")) {
-                error_msg += sep_msg + invalid_chars_msg;
-                sep_msg = "\n";
-            }
+            if (!showAllErrors && !error_msg.equals("")) return error_msg;
         }
 
-        if (!si.syncAutoSyncTask) {
-            boolean schedule_error=false;
-            String error_not_found_item_name="";
-            String error_item_name="";
-            if (si.syncTaskList.equals("")) {
-                schedule_error=true;
+        //check for schedule sync tasks validity
+        boolean schedule_error=false;
+        String error_not_found_sync_task_name="";
+        String error_sync_task_name="";
+        if (si.syncAutoSyncTask) {
+            //check if there is at least one autosync task
+            if (gp.syncTaskList == null || gp.syncTaskList.size()==0) {
+                schedule_error = true;
             } else {
-                if (si.syncTaskList.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {
-                    String[] stl=si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
-                    String sep_not_found="", sep_error="";
-                    for(String stn:stl) {
-                        SyncTaskItem sti = getSyncTask(gp, stn);
-                        if (sti==null) {
-                            schedule_error=true;
-                            error_not_found_item_name+=sep_not_found+stn;//display all not found sync tasks in Schedule Tab entries
-                            sep_not_found=",";
-                        } else if (sti.isSyncTaskError()) {//display sync tasks with errors (invalid name, duplicate, error in master/target folder...)
-                            schedule_error=true;
-                            error_item_name+=sep_error+stn;
-                            sep_error=",";
-                        }
-                    }
-                } else {
-                    SyncTaskItem sti = ScheduleUtil.getSyncTask(gp, si.syncTaskList);
-                    if (sti==null) {
-                        schedule_error=true;
-                        error_not_found_item_name=si.syncTaskList;
-                    } else if (sti.isSyncTaskError()) {
-                        schedule_error=true;
-                        error_item_name=si.syncTaskList;
+                for(SyncTaskItem sti:gp.syncTaskList) {
+                    if (sti.isSyncTaskAuto() && !sti.isSyncTestMode() && !sti.isSyncTaskError()) {
+                        schedule_error = false;
+                        break;
+                    } else {
+                        schedule_error = true;
                     }
                 }
             }
+        } else if (si.syncTaskList.equals("")) {
+                //Schedule sync task list is empty
+                schedule_error=true;
+        } else if (si.syncTaskList.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {
+            //Schedule has multiple sync task names
+            String[] stl=si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
+            String sep_not_found="", sep_error="";
+            for(String stn:stl) {
+                SyncTaskItem sti = getSyncTask(gp, stn);
+                if (sti==null) {
+                    schedule_error=true;
+                    error_not_found_sync_task_name+=sep_not_found+stn;//display all not found sync tasks in Schedule Tab entries
+                    sep_not_found=",";
+                } else if (sti.isSyncTaskError()) {//display sync tasks with errors (invalid name, duplicate, error in master/target folder...)
+                    schedule_error=true;
+                    error_sync_task_name+=sep_error+stn;
+                    sep_error=",";
+                }
+            }
+        } else {
+            //schedule has only one sync task name
+            SyncTaskItem sti = ScheduleUtil.getSyncTask(gp, si.syncTaskList);
+            if (sti==null) {
+                schedule_error=true;
+                error_not_found_sync_task_name=si.syncTaskList;
+            } else if (sti.isSyncTaskError()) {
+                schedule_error=true;
+                error_sync_task_name=si.syncTaskList;
+            }
+        }
 
-            if (schedule_error) {
-                if (si.syncTaskList.equals("")) {
-                    error_msg+= sep_msg + c.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty);
-                } else {
-                    if (!error_not_found_item_name.equals("")) {
-                        error_msg+= sep_msg + String.format(c.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_not_found_item_name);
-                        sep_msg = "\n";
-                    }
-                    if (!error_item_name.equals("")) {
-                        error_msg+= sep_msg + String.format(c.getString(R.string.msgs_scheduler_info_sync_task_in_error), error_item_name);
-                        sep_msg = "\n";
-                    }
+        if (schedule_error) {
+            if (si.syncAutoSyncTask) {
+                error_msg+= sep_msg + String.format(c.getString(R.string.msgs_active_sync_prof_not_found));
+                if (!showAllErrors && !error_msg.equals("")) return error_msg;
+            } else if (si.syncTaskList.equals("")) {
+                error_msg+= sep_msg + c.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty);
+                if (!showAllErrors && !error_msg.equals("")) return error_msg;
+            } else {
+                if (!error_not_found_sync_task_name.equals("")) {
+                    error_msg+= sep_msg + String.format(c.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_not_found_sync_task_name);
+                    sep_msg = "\n";
+                    if (!showAllErrors && !error_msg.equals("")) return error_msg;
+                }
+                if (!error_sync_task_name.equals("")) {
+                    error_msg+= sep_msg + String.format(c.getString(R.string.msgs_scheduler_info_sync_task_in_error), error_sync_task_name);
+                    sep_msg = "\n";
+                    if (!showAllErrors && !error_msg.equals("")) return error_msg;
                 }
             }
         }
+
         return error_msg;
     }
 
@@ -737,7 +801,7 @@ public class ScheduleUtil {
                             schedule_error=true;
                             cu.addDebugMsg(1, "I", "setSchedulerInfo Error: schedule name is duplicate, schedule name=" + "\"" + si.scheduleName + "\"");
                         }
-                        if (!hasScheduleNameContainsUnusableCharacter(c, si.scheduleName).equals("")) {
+                        if (!hasScheduleNameUnusableCharacter(c, si.scheduleName).equals("")) {
                             schedule_error=true;
                             cu.addDebugMsg(1, "I", "setSchedulerInfo Error: schedule name has non valid chars, schedule name=" + "\"" + si.scheduleName + "\"");
                         }
@@ -804,7 +868,7 @@ public class ScheduleUtil {
                 gp.scheduleErrorText="";
                 gp.scheduleErrorView.setVisibility(TextView.GONE);
             }
-            sched_info = String.format(c.getString(R.string.msgs_scheduler_info_next_schedule_main_info), key[0], sched_list);
+            sched_info = c.getString(R.string.msgs_scheduler_info_next_schedule_main_info, key[0], sched_list);
             gp.scheduleInfoText = sched_info;
             gp.scheduleInfoView.setText(gp.scheduleInfoText);
         } else {

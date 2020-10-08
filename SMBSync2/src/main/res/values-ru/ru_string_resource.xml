@@ -121,8 +121,6 @@
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
         <string name="msgs_hist_cont_label_move_bottom">Двигаться вниз</string>
         <string name="msgs_hist_cont_label_move_top">Переместить наверх</string>
-        <string name="msgs_hist_cont_label_scroll_down">Прокрутить вниз</string>
-        <string name="msgs_hist_cont_label_scroll_up">Прокрутите вверх</string>
         <string name="msgs_hist_cont_label_select_all">Выбрать все элементы истории</string>
         <string name="msgs_hist_cont_label_share">Общий ресурс</string>
         <string name="msgs_hist_cont_label_unselect_all">Удалить все элементы истории</string>
@@ -710,7 +708,7 @@
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Задача планирования с таким именем уже существует.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Имя синхронизации не указано.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Недействительный символ в названии расписания: \"%s\"</string>
-        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">Название расписания не может быть длиннее, чем %1$s chars. Текущие: %2$s</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">Название задачи превышает %1$d символов (%2$d)</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">Задача синхронизации содержит ошибки, которые необходимо исправить.</string>
         <string name="msgs_schedule_cont_label_add">Добавить расписание</string>
         <string name="msgs_schedule_cont_label_activate">Включить</string>
@@ -731,14 +729,18 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Дубликат названия расписания.</string>
         <string name="msgs_schedule_confirm_msg_nosave">Расписание изменилось. Выход без сохранения?</string>
         <string name="msgs_schedule_sync_task_dialog_title">Ошибка запуска задачи</string>
-        <string name="msgs_schedule_sync_task_not_found">Не смог найти указанную задачу. Задача=%</string>
-        <string name="msgs_schedule_sync_enabled_schedule_not_found">Не могу найти включенное расписание.</string>
+        <string name="msgs_schedule_sync_selected_schedule_not_found">Не выбрано ни одной допустимой задачи планирования.</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">Вы не можете запускать задачи с недопустимым расписанием. Снимите отметку со следующей задачи и повторите попытку: %s</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">Одна из выбранных задач планирования не может быть выполнена, поскольку ее параметры не позволяют этого. Задача=%1$s, Ошибка=%2$s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_not_found">Вы должны активировать хотя бы одну допустимую задачу планирования.</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_error">Одна из включенных задач расписания недействительна и не может быть выполнена. Пожалуйста, отключите его и попробуйте еще раз. Расписание=%s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error">Одна из включенных задач планирования не может быть выполнена, потому что ее настройки не позволяют этого. Задача =%1$s, Ошибка=%2$s</string>
         <string name="msgs_schedule_rename_schedule">Переименовать расписание</string>
         <string name="msgs_schedule_list_edit_no_schedule">Нажмите кнопку Добавить, чтобы создать новое расписание.</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">Запланированные задачи не будут выполняться, так как служба планирования отключена. Чтобы включить службу планирования, нажмите значок календаря в правом верхнем углу этого окна. Также необходимо включить тумблер перед каждым планом синхронизации для его выполнения.</string>
         <string name="msgs_schedule_list_edit_execute_selected_schedule">Выполнить выбранное расписание</string>
         <string name="msgs_schedule_list_edit_execute_all_enabled_schedule">Выполнить все включенные расписания</string>
-        <string name="msgs_schedule_list_edit_execute_selected_schedule_with_schedule_name">Выполнить график(%s)</string>
+        <string name="msgs_schedule_list_edit_execute_selected_schedule_with_schedule_name">Выполнить график (%s)</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Вы хотите включить расписание?</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Вы хотите отключить расписание?</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Активировать услугу планирования</string>

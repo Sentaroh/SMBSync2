@@ -98,7 +98,7 @@
         <string name="msgs_task_name_rename_with_schedule_group_task_list">Lorsqu\'une tâche de synchronisation est renommée, son nom est aussi modifié dans la planification.</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">Lorsqu\'une tâche de synchronisation est supprimée, elle l\'est aussi dans la planification.</string>
         <string name="msgs_task_name_contains_invalid_character">Le nom de la tâche contient des caractères non valides: \"%s\"</string>
-        <string name="msgs_task_name_too_long">Le nom de la tâche ne peut pas être plus long que %1$s chars. Courant : %2$s </string>
+        <string name="msgs_task_name_too_long">Le nom de la tâche dépasse %1$s caractères (%2$s)</string>
         <string name="msgs_edit_sync_profile">Modifier la Tâche de Synchronisation</string>
         <string name="msgs_export_prof_fail">Echec d\'exportation des paramètres de synchronisation.</string>
         <string name="msgs_export_prof_success">Paramètres de synchronisation exportés avec succès.</string>
@@ -119,10 +119,8 @@
         <string name="msgs_filter_list_filter_deleted">Cette entrée a été supprimée.</string>
         <string name="msgs_hist_cont_label_copy">Copier dans le presse-papier</string>
         <string name="msgs_hist_cont_label_delete">Supprimer l\'entrée de l\'historique</string>
-        <string name="msgs_hist_cont_label_move_bottom">Aller en bas</string>
-        <string name="msgs_hist_cont_label_move_top">Aller en haut</string>
-        <string name="msgs_hist_cont_label_scroll_down">Défiler vers le bas</string>
-        <string name="msgs_hist_cont_label_scroll_up">Défiler vers le haut</string>
+        <string name="msgs_hist_cont_label_move_bottom">Aller à la fin</string>
+        <string name="msgs_hist_cont_label_move_top">Aller au début</string>
         <string name="msgs_hist_cont_label_select_all">Sélectionner tous les éléments de l\'historique</string>
         <string name="msgs_hist_cont_label_share">Partager</string>
         <string name="msgs_hist_cont_label_unselect_all">Désélectionner tous les éléments de l\'historique</string>
@@ -530,7 +528,7 @@
         <string name="msgs_maintenance_result_log_list_del_title">Des fichiers et dossiers sans rapport avec les fichiers journaux ont été trouvés dans le dossier des historiques. Supprimer ces fichiers ?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Sync</string>
-        <string name="msgs_menu_exec_schedule">Exécution du calendrier</string>
+        <string name="msgs_menu_exec_schedule">Exécuter la planification</string>
         <string name="msgs_menu_browse_logfile">Montrer le journal</string>
         <string name="msgs_menu_export">Exporter la configuration</string>
         <string name="msgs_menu_import">Importer la configuration</string>
@@ -710,7 +708,7 @@
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Une planification avec ce nom existe déjà.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Nom de la planification non spécifié.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Le nom de la tâche de planification contient un caractère non valide: \"%s\"</string>
-        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">Le nom de l\'horaire ne peut pas être plus long que %1$s chars. Courant : %2$s </string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">Le nom de la tâche dépasse %1$d caractères (%2$d)</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">La tâche de synchronisation contient des erreurs qui doivent être corrigées.</string>
         <string name="msgs_schedule_cont_label_add">Ajouter une planification</string>
         <string name="msgs_schedule_cont_label_activate">Activer</string>
@@ -730,15 +728,19 @@
         <string name="msgs_schedule_confirm_msg_rename_warning">Renommer la tâche de planification? Ceci ne pourra pas être annulé.</string>
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Dupliquer la tâche de planification.</string>
         <string name="msgs_schedule_confirm_msg_nosave">La planification a été modifiée. Quitter sans sauvegarder?</string>
-        <string name="msgs_schedule_sync_task_dialog_title">Erreur de démarrage de la tâche</string>
-        <string name="msgs_schedule_sync_task_not_found">Impossible de trouver la tâche spécifiée. Tâche=%s</string>
-        <string name="msgs_schedule_sync_enabled_schedule_not_found">Impossible de trouver un horaire activé.</string>
+        <string name="msgs_schedule_sync_task_dialog_title">Erreur d\'exécution de la planification</string>
+        <string name="msgs_schedule_sync_selected_schedule_not_found">Aucune tâche de planification valide n\'a été sélectionnée.</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">Vous ne pouvez pas exécuter des tâches de planifications non valides. Décochez la tâche suivante et essayez à nouveau: %s</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">Une des tâches de planification sélectionnées ne peut pas être exécutée, car ses paramètres ne le permettent pas. Tâche=%1$s, Erreur=%2$s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_not_found">Vous devez activer au moins une tâche de planification valide.</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_error">Une des tâches de planification activées contient des erreurs et ne peut pas être exécutée. Merci de la désactiver et d\'essayer à nouveau. Tâche=%s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error">Une des tâches de planification activées ne peut pas être exécutée, car ses paramètres ne le permettent pas. Tâche=%1$s, Erreur=%2$s</string>
         <string name="msgs_schedule_rename_schedule">Renommer la planification</string>
         <string name="msgs_schedule_list_edit_no_schedule">Appuyer sur ajouter pour créer une nouvelle planification.</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">Les tâches planifiées ne seront pas exécutées, car le service de planification est désactivé. Pour l\'activer, appuyer sur l\'icône du calendrier dans le coin supérieur droit de cet écran. Vous devez aussi activer l\'interrupteur en face de chacun des plans à exécuter.</string>
-        <string name="msgs_schedule_list_edit_execute_selected_schedule">Exécuter le programme sélectionné</string>
-        <string name="msgs_schedule_list_edit_execute_all_enabled_schedule">Exécuter tous les horaires activés</string>
-        <string name="msgs_schedule_list_edit_execute_selected_schedule_with_schedule_name">Exécuter le calendrier(%s)</string>
+        <string name="msgs_schedule_list_edit_execute_selected_schedule">Exécuter les planifications sélectionnées</string>
+        <string name="msgs_schedule_list_edit_execute_all_enabled_schedule">Exéuter toutes les plânification activées</string>
+        <string name="msgs_schedule_list_edit_execute_selected_schedule_with_schedule_name">Exécuter la tâche planifiée (%s)</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Voulez-vous activer la planification?</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Voulez-vous désactiver la planification?</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Activer le service de planification</string>

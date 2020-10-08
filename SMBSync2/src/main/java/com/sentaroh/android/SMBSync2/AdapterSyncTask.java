@@ -226,7 +226,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
             boolean sync_btn_disable=false;
 
             holder.ll_view.setBackgroundDrawable(ll_default);
-            //Do not change the background to make it clear that it is a button.
+            //Do not change the background of sync button on right of sync task to make it clear that it is a button.
 //            holder.ib_row_sync.setBackgroundDrawable(ll_default);
 
             String act = "";

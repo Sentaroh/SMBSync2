@@ -98,7 +98,7 @@
         <string name="msgs_task_name_rename_with_schedule_group_task_list">When a task is renamed, the task name in the schedule is also changed.</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">When the task is deleted, the task name in the schedule is also deleted.</string>
         <string name="msgs_task_name_contains_invalid_character">The task name contains invalid characters: \"%s\"</string>
-        <string name="msgs_task_name_too_long">Task name cannot be longer than %1$s chars. Current: %2$s </string>
+        <string name="msgs_task_name_too_long">Task name is longer than %1$s chars (%2$s)</string>
         <string name="msgs_edit_sync_profile">Edit Sync Task</string>
         <string name="msgs_export_prof_fail">Failed to export synchronisation settings.</string>
         <string name="msgs_export_prof_success">Successfully exported synchronisation settings.</string>
@@ -121,8 +121,6 @@
         <string name="msgs_hist_cont_label_delete">Delete history item</string>
         <string name="msgs_hist_cont_label_move_bottom">Move to bottom</string>
         <string name="msgs_hist_cont_label_move_top">Move to top</string>
-        <string name="msgs_hist_cont_label_scroll_down">Scroll down</string>
-        <string name="msgs_hist_cont_label_scroll_up">Scroll up</string>
         <string name="msgs_hist_cont_label_select_all">Select all history items</string>
         <string name="msgs_hist_cont_label_share">Share</string>
         <string name="msgs_hist_cont_label_unselect_all">Deselect all history items</string>
@@ -710,7 +708,7 @@
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Schedule name already exists. Use a different name.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Schedule name not specified.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Invalid character in schedule name: \"%s\"</string>
-        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">Schedule name cannot be longer than %1$s chars. Current: %2$s </string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">Schedule name is longer than %1$d chars (%2$d)</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">Sync task have errors that must be fixed.</string>
         <string name="msgs_schedule_cont_label_add">Add schedule</string>
         <string name="msgs_schedule_cont_label_activate">Enable</string>
@@ -730,15 +728,19 @@
         <string name="msgs_schedule_confirm_msg_rename_warning">Change the schedule name? The results are immediately reflected and cannot be undone.</string>
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Duplicate schedule name.</string>
         <string name="msgs_schedule_confirm_msg_nosave">The schedule has changed. Exit without saving?</string>
-        <string name="msgs_schedule_sync_task_dialog_title">Task start error</string>
-        <string name="msgs_schedule_sync_task_not_found">Could not find the specified task. Task=%s</string>
-        <string name="msgs_schedule_sync_enabled_schedule_not_found">Can\'t find a enabled schedule.</string>
+        <string name="msgs_schedule_sync_task_dialog_title">Schedule execution error</string>
+        <string name="msgs_schedule_sync_selected_schedule_not_found">You must select at least one valid schedule.</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">You cannot execute invalid schedules. Please uncheck the following schedule and try again: %s</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">One of the selected schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_not_found">You must enable at least one valid schedule</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_error">One of the enabled schedules is invalid and cannot be executed. Please disable it and try again. Schedule=%s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error">One of the enabled schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>
         <string name="msgs_schedule_rename_schedule">Rename schedule</string>
         <string name="msgs_schedule_list_edit_no_schedule">Press add button to create new schedule.</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">Scheduled tasks will not be executed because the scheduling service is disabled. To enable the scheduling service, tap the calendar icon in the top right corner of this window. You must  also enable the toggle switch in front of each sync plan to execute.</string>
-        <string name="msgs_schedule_list_edit_execute_selected_schedule">Execute the selected schedule</string>
+        <string name="msgs_schedule_list_edit_execute_selected_schedule">Execute the selected schedules</string>
         <string name="msgs_schedule_list_edit_execute_all_enabled_schedule">Execute all enabled schedules</string>
-        <string name="msgs_schedule_list_edit_execute_selected_schedule_with_schedule_name">Execute the schedule(%s)</string>
+        <string name="msgs_schedule_list_edit_execute_selected_schedule_with_schedule_name">Execute the schedule (%s)</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Do you want to enable the schedule?</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_disabled">Do you want to disable the schedule?</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Enable schedule service</string>

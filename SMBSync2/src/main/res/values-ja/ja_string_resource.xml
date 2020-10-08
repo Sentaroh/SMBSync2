@@ -121,8 +121,6 @@
         <string name="msgs_hist_cont_label_delete">履歴を削除する</string>
         <string name="msgs_hist_cont_label_move_bottom">最下部に移動</string>
         <string name="msgs_hist_cont_label_move_top">最上部に移動</string>
-        <string name="msgs_hist_cont_label_scroll_down">下に移動</string>
-        <string name="msgs_hist_cont_label_scroll_up">上に移動</string>
         <string name="msgs_hist_cont_label_select_all">全て選択</string>
         <string name="msgs_hist_cont_label_share">共有</string>
         <string name="msgs_hist_cont_label_unselect_all">全ての選択を解除</string>
@@ -710,7 +708,7 @@
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">スケジュール名が指定されていません。</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">スケジュール名に無効な文字が含まれています: \"%s\"</string>
-        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">スケジュール名は%1$s以内にしてください。長さ=%2$s</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">スケジュール名は%1$d以内にしてください。長さ=%2$d</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">同期タスクに修正が必要なエラーが含まれています。</string>
         <string name="msgs_schedule_cont_label_add">スケジュールの追加</string>
         <string name="msgs_schedule_cont_label_activate">スケジュールの有効化</string>
@@ -731,8 +729,12 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_confirm_msg_nosave">スケジュールが変更されています、保存せず終了しますか。</string>
         <string name="msgs_schedule_sync_task_dialog_title">タスク開始エラー</string>
-        <string name="msgs_schedule_sync_task_not_found">指定されたタスクが見つかりません。タスク=%s</string>
+        <string name="msgs_schedule_sync_selected_schedule_not_found">You must select at least one valid schedule.</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">You cannot execute invalid schedules. Please uncheck the following schedules and try again: %s</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">One of the selected schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>
         <string name="msgs_schedule_sync_enabled_schedule_not_found">有効なスケジュールが見つかりません。</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_error">One of the enabled schedules is invalid and cannot be executed. Please disable it and try again. Schedule=%s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error">One of the enabled schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>
         <string name="msgs_schedule_rename_schedule">スケジュールの改名</string>
         <string name="msgs_schedule_list_edit_no_schedule">追加ボタンを押してスケジュールを作成してください。</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">スケジュールが無効になっているためスケジュール同期は実行されません。スケジュール同期を行うには画面上部のスケジュールアイコンをタップして有効にしてください。</string>

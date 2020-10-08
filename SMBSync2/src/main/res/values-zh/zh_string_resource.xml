@@ -121,8 +121,6 @@
         <string name="msgs_hist_cont_label_delete">删除历史记录项</string>
         <string name="msgs_hist_cont_label_move_bottom">移至底部</string>
         <string name="msgs_hist_cont_label_move_top">移至顶部</string>
-        <string name="msgs_hist_cont_label_scroll_down">向下滚动</string>
-        <string name="msgs_hist_cont_label_scroll_up">向上滚动</string>
         <string name="msgs_hist_cont_label_select_all">选择所有历史记录项</string>
         <string name="msgs_hist_cont_label_share">分享</string>
         <string name="msgs_hist_cont_label_unselect_all">取消选择所有历史记录项</string>
@@ -695,7 +693,7 @@
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">执行所有自动同步任务</string>
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">请按下面的"同步列表..."按钮，指定要安排的同步任务。</string>
         <string name="msgs_scheduler_info_next_schedule_time">下一次同步时间是%s</string>
-        <string name="msgs_scheduler_info_next_schedule_main_info">下次同步：%1 $s，（%2 $s）</string>
+        <string name="msgs_scheduler_info_next_schedule_main_info">下次同步：%1$s，（%2$s）</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">某些已启用的计划包含错误。查看"计划"标签以了解更多详细信息。</string>
         <string name="msgs_scheduler_info_schedule_disabled">同步计划已停用</string>
         <string name="msgs_scheduler_info_schedule_enabled">同步计划已启用</string>
@@ -710,7 +708,7 @@
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">计划名称已存在。使用其他名称。</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">未指定计划名称。</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">计划名称中的无效字符：\"%s \"</string>
-        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">计划名称不能超过 %1$s 字符. 当前: %2$s</string>
+        <string name="msgs_schedule_list_edit_dlg_error_schedule_name_too_long">计划名称不能超过 %1$d 字符. 当前: %2$d</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error">同步任务存在必须修复的错误。</string>
         <string name="msgs_schedule_cont_label_add">新增计划</string>
         <string name="msgs_schedule_cont_label_activate">启用</string>
@@ -731,8 +729,12 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">计划名称重复。</string>
         <string name="msgs_schedule_confirm_msg_nosave">计划已更改。不保存就退出吗？</string>
         <string name="msgs_schedule_sync_task_dialog_title">任务启动错误</string>
-        <string name="msgs_schedule_sync_task_not_found">找不到指定的任务。任务=%s</string>
+        <string name="msgs_schedule_sync_selected_schedule_not_found">You must select at least one valid schedule.</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">You cannot execute invalid schedules. Please uncheck the following schedules and try again: %s</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">One of the selected schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>
         <string name="msgs_schedule_sync_enabled_schedule_not_found">没有找到启用的任务.</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_error">One of the enabled schedules is invalid and cannot be executed. Please disable it and try again. Schedule=%s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error">One of the enabled schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>
         <string name="msgs_schedule_rename_schedule">重命名计划</string>
         <string name="msgs_schedule_list_edit_no_schedule">按添加按钮创建新计划。</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">由于禁用了计划服务，因此不会执行计划任务。要启用计划服务，请点击此窗口右上角的日历图标。您还必须启用每个同步计划前面的切换开关才能执行。</string>

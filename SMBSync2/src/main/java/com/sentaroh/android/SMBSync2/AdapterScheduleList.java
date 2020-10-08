@@ -210,15 +210,12 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
                         mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_minute);
             }
 
-            String sync_prof = "";
-            String error_msg = "";
-            String sep_msg = "";
-            holder.tv_error_info.setVisibility(TextView.GONE);
-
             if (isSelectMode()) holder.ib_sync_button.setVisibility(ImageButton.INVISIBLE);
             else holder.ib_sync_button.setVisibility(ImageButton.VISIBLE);
 
-            error_msg+=ScheduleUtil.isValidScheduleItem(mContext, mGp, mScheduleList, o);
+            String sync_prof = "", error_msg = "";
+            holder.tv_error_info.setVisibility(TextView.GONE);
+            error_msg=ScheduleUtil.isValidScheduleItem(mContext, mGp, mScheduleList, o, true, true);
 
             if (o.syncAutoSyncTask) {
                 sync_prof = mContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);

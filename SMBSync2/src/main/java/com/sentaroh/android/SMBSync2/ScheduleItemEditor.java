@@ -246,7 +246,7 @@ public class ScheduleItemEditor {
             String new_name="";
             for(int i=1;i<1000;i++) {
                 new_name="NONAME"+i;
-                if (!ScheduleUtil.isScheduleExists(mScheduleList,new_name)) {
+                if (!ScheduleUtil.isScheduleExists(mScheduleList, new_name)) {
                     et_name.setText(new_name);
                     break;
                 }
@@ -344,12 +344,7 @@ public class ScheduleItemEditor {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.length()>SYNC_TASK_NAME_MAX_LENGTH) {
-                    tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_too_long, SYNC_TASK_NAME_MAX_LENGTH, editable.length()));
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                } else {
-                    setScheduleWasChanged(dialog, mSched);
-                }
+                setScheduleWasChanged(dialog, mSched);//will call setOkButtonEnabledDisabled() to check for item validity
             }
         });
         ctv_first_time.setOnClickListener(new OnClickListener() {
@@ -715,42 +710,29 @@ public class ScheduleItemEditor {
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_msg);
         final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
+        final CheckedTextView ctv_sync_all_prof = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_sync_all_sync_task);
         CommonDialog.setButtonEnabled(mActivity, btn_ok, !mEditMode);
-        if (et_name.getText().length() == 0) {//empty schedule name
-            tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
-            CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
+
+        String error_msg = "";
+        ScheduleItem si = mSched;
+        si.scheduleName = et_name.getText().toString();
+        if (ctv_sync_all_prof.isChecked()) {
+            si.syncTaskList = "";
+            si.syncAutoSyncTask=true;
         } else {
-            String e_msg=ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, et_name.getText().toString());
-            if (!e_msg.equals("")) {
-                tv_msg.setText(e_msg);
-                CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
-            } else if (mEditMode && ScheduleUtil.isScheduleDuplicate(mScheduleList, et_name.getText().toString())) {//edit an existing schedule
-                    //edited schedule is a duplicate, it must first be renamed
-                    tv_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
-                    CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
-            } else if (!mEditMode && ScheduleUtil.isScheduleExists(mScheduleList, et_name.getText().toString())) {//create or copy a schedule
-                    //schedule name alread exists
-                    tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists));
-                    CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
-            } else {
-                //schedule name is valid
-                if (!mSched.syncAutoSyncTask) {
-                    String error_task_name=getNotExistsSyncTaskName(tv_sync_prof.getText().toString());
-                    if (!error_task_name.equals("")) {
-                        tv_msg.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_task_name));
-                    } else {
-                        tv_msg.setText("");
-                        CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
-                    }
-                } else {
-                    tv_msg.setText("");
-                    CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
-                }
-                if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
-                else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
-            }
+            si.syncTaskList = tv_sync_prof.getText().toString();
+            si.syncAutoSyncTask=false;
         }
 
+        error_msg = ScheduleUtil.isValidScheduleItem(mContext, mGp, mScheduleList, si, mEditMode, false);
+        if (!error_msg.equals("")) {
+            tv_msg.setText(error_msg);
+            CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
+        } else {
+            tv_msg.setText("");
+            if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
+            else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
+        }
     }
 
     private void checkDayOfTheWeekSetting(Dialog dialog, ScheduleItem sp) {
