@@ -227,6 +227,7 @@ class AdapterScheduleList extends ArrayAdapter<ScheduleItem> {
             }
 
             if (!error_msg.equals("")) {
+                holder.ib_sync_button.setVisibility(ImageButton.INVISIBLE);
                 holder.tv_error_info.setText(error_msg);
                 holder.tv_error_info.setVisibility(TextView.VISIBLE);
             }
