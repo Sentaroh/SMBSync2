@@ -104,7 +104,7 @@ class ScheduleItem implements Serializable, Cloneable {
                 this.syncWifiOffAfterEnd==new_item.syncWifiOffAfterEnd &&
                 this.syncDelayAfterWifiOn==new_item.syncDelayAfterWifiOn &&
 
-                this.syncOverrideOptionCharge==new_item.syncOverrideOptionCharge
+                this.syncOverrideOptionCharge.equals(new_item.syncOverrideOptionCharge)
 
                 ) {
             return true;
