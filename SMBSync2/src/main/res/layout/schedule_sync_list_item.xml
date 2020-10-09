@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         android:orientation="horizontal" >
 
         <LinearLayout
@@ -85,7 +86,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:paddingRight="7dp"
-            android:layout_marginRight="10dp"
             android:scaleType="fitXY"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_32_execute_schedule"/>
