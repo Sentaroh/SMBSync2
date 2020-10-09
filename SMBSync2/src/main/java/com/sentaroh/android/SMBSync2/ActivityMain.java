@@ -341,7 +341,7 @@ public class ActivityMain extends AppCompatActivity {
                 } else {
                     mUtil.addDebugMsg(1, "I", "Sync task list was already created.");
                 }
-//                    ExportToSMBSync3.saveConfigListToExportFile(mContext, "/sdcard/smbsync2.xml", mGp.syncTaskList, mGp.syncTabScheduleList);
+//                    ExportToSMBSync3.saveConfigListToExportFile(mContext, "/sdcard/smbsync2.xml", mGp.syncTaskList, mGp.syncScheduleList);
                 mUiHandler.post(new Runnable(){
                     @Override
                     public void run() {
@@ -1240,6 +1240,7 @@ public class ActivityMain extends AppCompatActivity {
                     });
                 }
 
+                //start schedules top button
                 //display toast info message for top action execute button
                 View v_top_execute_btn = findViewById(R.id.menu_top_exec_schedule);
                 if (v_top_execute_btn != null) {
@@ -1311,12 +1312,15 @@ public class ActivityMain extends AppCompatActivity {
             if (mGp.syncThreadActive) menu.findItem(R.id.menu_top_housekeep).setVisible(false);
             else menu.findItem(R.id.menu_top_housekeep).setVisible(true);
 
-            if (mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
+            //only show top sync button if there is at least one auto and valid sync task
+            //in sync task select mode: always show the top sync button if there is at least one valid sync task
+            //if we select non valid sync tasks, on start, a proper message is shown to help user understand the way button works
+            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK) && mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
                 menu.findItem(R.id.menu_top_sync).setVisible(false);
                 for(SyncTaskItem sti:mGp.syncTaskList) {
                     if ((sti.isSyncTaskAuto() && !sti.isSyncTestMode()) ||
                             mGp.syncTaskAdapter.isShowCheckBox()) {
-                        if (!sti.isSyncTaskError()) {//invalid sync task with error in master/target name, etc...
+                        if (!sti.isSyncTaskError()) {//check for invalid sync task with error in master/target name, etc...
                             menu.findItem(R.id.menu_top_sync).setVisible(true);
                             break;
                         }
@@ -1324,6 +1328,25 @@ public class ActivityMain extends AppCompatActivity {
                 }
             } else {
                 menu.findItem(R.id.menu_top_sync).setVisible(false);
+            }
+
+            //only show top start schedule button if there is at least one enabled and valid schedule
+            //in schedule select mode: always show the start schedule button if there is at least one valid schedule
+            //if we select non valid schedules, on start, a proper message is shown to help user understand the way button works
+            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_SCHEDULE)) {
+                menu.findItem(R.id.menu_top_scheduler).setVisible(true);
+                menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
+                for(ScheduleItem si:mGp.syncScheduleList) {
+                    if (si.scheduleEnabled || mGp.syncScheduleAdapter.isSelectMode()) {
+                        if (ScheduleUtil.isValidScheduleItem(mContext, mGp, mGp.syncScheduleList, si, true, false).equals("")) {//invalid schedule name or invalid schedule sync list
+                            menu.findItem(R.id.menu_top_exec_schedule).setVisible(true);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                menu.findItem(R.id.menu_top_scheduler).setVisible(false);
+                menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
             }
 /*
             //issue: toast message state not updated on start
@@ -1367,29 +1390,6 @@ public class ActivityMain extends AppCompatActivity {
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_about), true);
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_show_battery_optimization), true);
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_list_storage), true);
-
-            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_SCHEDULE)) {
-                menu.findItem(R.id.menu_top_scheduler).setVisible(true);
-                menu.findItem(R.id.menu_top_exec_schedule).setVisible(true);
-                if (mGp.syncScheduleAdapter.isSelectMode()) {
-                    for(ScheduleItem si:mGp.syncScheduleList) {
-                        if (si.isChecked) {
-                            if (!mGp.syncScheduleAdapter.isValidScheduleItem(si, null).equals("")) {
-                                menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
-                                break;
-                            }
-                        }
-                    }
-                }
-            } else {
-                menu.findItem(R.id.menu_top_scheduler).setVisible(false);
-                menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
-            }
-            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK)) {
-                menu.findItem(R.id.menu_top_sync).setVisible(true);
-            } else {
-                menu.findItem(R.id.menu_top_sync).setVisible(false);
-            }
         } else {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             if (!mGp.settingLogOption) menu.findItem(R.id.menu_top_browse_log).setVisible(false);
@@ -1459,9 +1459,9 @@ public class ActivityMain extends AppCompatActivity {
                         if (mGp.syncScheduleAdapter.getSelectedItemCount() > 0) {
                             executeSelectedSchedule();
                         } else {
-                            //no sync task is selected
-                            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
-                            return true;//do not reset to normal view to let user select a task
+                            //no schedule is selected
+                            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_schedule_sync_selected_schedule_not_found), "", null);
+                            return true;//do not reset to normal view to let user select a schedule
                         }
                     } else {
                         executeAllEnabledSchedule();
@@ -3144,6 +3144,7 @@ public class ActivityMain extends AppCompatActivity {
                         mGp.syncScheduleAdapter.notifyDataSetChanged();
                         setScheduleContextButtonMode(mGp.syncScheduleAdapter);
                         saveScheduleList();
+                        refreshOptionMenu();
                         setScheduleTabMessage();
                     }
 
@@ -3178,6 +3179,7 @@ public class ActivityMain extends AppCompatActivity {
                         setScheduleContextButtonMode(mGp.syncScheduleAdapter);
                         mGp.syncScheduleAdapter.notifyDataSetChanged();
                         saveScheduleList();
+                        refreshOptionMenu();
                         setScheduleTabMessage();
                     }
 
@@ -3216,6 +3218,8 @@ public class ActivityMain extends AppCompatActivity {
                         mGp.syncScheduleAdapter.unselectAll();
                         setScheduleContextButtonMode(mGp.syncScheduleAdapter);
                         saveScheduleList();
+                        mGp.syncScheduleAdapter.notifyDataSetChanged();
+                        refreshOptionMenu();
                     }
 
                     @Override
@@ -3252,6 +3256,8 @@ public class ActivityMain extends AppCompatActivity {
                         mGp.syncScheduleAdapter.unselectAll();
                         setScheduleContextButtonMode(mGp.syncScheduleAdapter);
                         saveScheduleList();
+                        mGp.syncScheduleAdapter.notifyDataSetChanged();
+                        refreshOptionMenu();
                     }
 
                     @Override
@@ -3283,6 +3289,8 @@ public class ActivityMain extends AppCompatActivity {
                         mGp.syncScheduleAdapter.unselectAll();
                         setScheduleContextButtonMode(mGp.syncScheduleAdapter);
                         saveScheduleList();
+                        mGp.syncScheduleAdapter.notifyDataSetChanged();
+                        refreshOptionMenu();
                     }
 
                     @Override
@@ -3319,6 +3327,8 @@ public class ActivityMain extends AppCompatActivity {
                         mGp.syncScheduleAdapter.unselectAll();
                         mGp.syncScheduleAdapter.sort();
                         saveScheduleList();
+                        mGp.syncScheduleAdapter.notifyDataSetChanged();
+                        refreshOptionMenu();
                     }
 
                     @Override
@@ -3382,7 +3392,6 @@ public class ActivityMain extends AppCompatActivity {
         title.setTextColor(mGp.themeColorList.title_text_color);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
-        dlg_msg.setVisibility(TextView.VISIBLE);
         final TextView dlg_cmp = (TextView) dialog.findViewById(R.id.single_item_input_name);
         final Button btn_ok = (Button) dialog.findViewById(R.id.single_item_input_ok_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.single_item_input_cancel_btn);
@@ -3390,39 +3399,33 @@ public class ActivityMain extends AppCompatActivity {
 
         title.setText(mContext.getString(R.string.msgs_schedule_rename_schedule));
 
-        dlg_cmp.setVisibility(TextView.GONE);
+        dlg_cmp.setVisibility(TextView.VISIBLE);
+        dlg_cmp.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_warning));
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(si.scheduleName);
 
-        String e_msg=ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, si.scheduleName);
-        if (si.scheduleName.equals("")) dlg_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
-        else if (!e_msg.equals("")) dlg_msg.setText(e_msg);
-        else dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));//by default it is the original name
+        //do not check for whole schedule item validity, but only for schedule name
+        //this is to allow renaming a schedule that has an invalid AND an invalid sync task list
+        //else the schedule can no more be edited: EditSchedule cannot change name
+        String e_msg=ScheduleUtil.isValidScheduleName(mContext, mGp, mGp.syncScheduleList, si.scheduleName, false, false);
+        dlg_msg.setText(e_msg);
+        if (!e_msg.equals("")) dlg_msg.setVisibility(TextView.VISIBLE);
 
         btn_ok.setEnabled(false);
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                if (arg0.length()>SYNC_TASK_NAME_MAX_LENGTH) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_schedule_name_too_long, SYNC_TASK_NAME_MAX_LENGTH, arg0.length()));
+                String error_msg = ScheduleUtil.isValidScheduleName(mContext, mGp, mGp.syncScheduleList, arg0.toString(), false, false);
+                if (!error_msg.equals("")) {
+                    dlg_msg.setVisibility(TextView.VISIBLE);
+                    dlg_msg.setText(error_msg);
+                    dlg_msg.setTextColor(mGp.themeColorList.text_color_error);
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                     return;
-                }
-                String edit_text = arg0.toString();
-                String invalid_chars_msg=ScheduleUtil.hasScheduleNameContainsUnusableCharacter(mContext, edit_text);
-                ArrayList<ScheduleItem>sl=ScheduleUtil.loadScheduleData(mActivity, mGp);
-                if (edit_text.equals("")) {
-                    btn_ok.setEnabled(false);
-                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
-                } else if (!invalid_chars_msg.equals("")) {
-                    btn_ok.setEnabled(false);
-                    dlg_msg.setText(invalid_chars_msg);
-                } else if (ScheduleUtil.isScheduleExists(sl, edit_text)) {
-                    btn_ok.setEnabled(false);
-                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
                 } else {
                     btn_ok.setEnabled(true);
-                    dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_warning));
+                    dlg_msg.setVisibility(TextView.GONE);
+                    dlg_msg.setText("");
                 }
             }
 
@@ -3463,6 +3466,7 @@ public class ActivityMain extends AppCompatActivity {
         dialog.show();
 
     }
+
     private void setScheduleViewItemClickListener() {
         mGp.syncScheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -3497,6 +3501,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
+        //toggle switch to enable/disable schedule item in Schedule TAB
         NotifyEvent ntfy_sw = new NotifyEvent(mContext);
         ntfy_sw.setListener(new NotifyEventListener() {
             @Override
@@ -3506,6 +3511,8 @@ public class ActivityMain extends AppCompatActivity {
                     mGp.syncScheduleAdapter.getItem(pos).scheduleLastExecTime = System.currentTimeMillis();
                 }
                 saveScheduleList();
+                mGp.syncScheduleAdapter.notifyDataSetChanged();
+                refreshOptionMenu();
             }
 
             @Override
@@ -3514,12 +3521,13 @@ public class ActivityMain extends AppCompatActivity {
         });
         mGp.syncScheduleAdapter.setSwNotify(ntfy_sw);
 
+        //start schedule button in front of each schedule item
         NotifyEvent ntfy_sync=new NotifyEvent(mContext);
         ntfy_sync.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
                 ScheduleItem sched_item=(ScheduleItem)objects[0];
-                String e_msg= checkExecuteSchedule(sched_item);
+                String e_msg= checkExecuteScheduleConditions(sched_item);
                 if (e_msg.equals("")) {
                     try {
                         mSvcClient.aidlStartSchedule(new String[]{sched_item.scheduleName});
@@ -3555,28 +3563,35 @@ public class ActivityMain extends AppCompatActivity {
         String e_msg="";
         for(ScheduleItem si:mGp.syncScheduleList) {
             if (si.isChecked) {
-                e_msg=mGp.syncScheduleAdapter.isValidScheduleItem(si, null);
+                e_msg=ScheduleUtil.isValidScheduleItem(mContext, mGp, mGp.syncScheduleList, si, true, false);
                 if (e_msg.equals("")) {
-                    e_msg=checkExecuteSchedule(si);
-                    if (e_msg.equals("")) sched_list.add(si.scheduleName);
-                    else {
+                    e_msg=checkExecuteScheduleConditions(si);
+                    if (e_msg.equals("")) {
+                        sched_list.add(si.scheduleName);
+                    } else {
+                        mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
+                                mContext.getString(R.string.msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error, si.scheduleName, e_msg), null);
                         break;
                     }
-                }
-                else {
+                } else {
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
+                            mContext.getString(R.string.msgs_schedule_sync_selected_schedule_invalid_schedule_error, si.scheduleName), null);
                     break;
                 }
             }
         }
         if (e_msg.equals("")) {
-            String[]start_array=sched_list.toArray(new String[sched_list.size()]);
-            try {
-                mSvcClient.aidlStartSchedule(start_array);
-            } catch (RemoteException e) {
-                e.printStackTrace();
+            if (sched_list.size() > 0) {
+                String[]start_array=sched_list.toArray(new String[sched_list.size()]);
+                try {
+                    mSvcClient.aidlStartSchedule(start_array);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
+                        mContext.getString(R.string.msgs_schedule_sync_selected_schedule_not_found), null);
             }
-        } else {
-            mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title), e_msg, null);
         }
     }
 
@@ -3585,15 +3600,19 @@ public class ActivityMain extends AppCompatActivity {
         String e_msg="";
         for(ScheduleItem si:mGp.syncScheduleList) {
             if (si.scheduleEnabled) {
-                e_msg=mGp.syncScheduleAdapter.isValidScheduleItem(si, null);
+                e_msg=ScheduleUtil.isValidScheduleItem(mContext, mGp, mGp.syncScheduleList, si, true, false);
                 if (e_msg.equals("")) {
-                    e_msg=checkExecuteSchedule(si);
-                    if (e_msg.equals("")) sched_list.add(si.scheduleName);
-                    else {
+                    e_msg=checkExecuteScheduleConditions(si);
+                    if (e_msg.equals("")) {
+                        sched_list.add(si.scheduleName);
+                    } else {
+                        mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
+                                mContext.getString(R.string.msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error, si.scheduleName, e_msg), null);
                         break;
                     }
-                }
-                else {
+                } else {
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
+                            mContext.getString(R.string.msgs_schedule_sync_enabled_schedule_invalid_schedule_error, si.scheduleName), null);
                     break;
                 }
             }
@@ -3610,47 +3629,17 @@ public class ActivityMain extends AppCompatActivity {
                 mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title),
                         mContext.getString(R.string.msgs_schedule_sync_enabled_schedule_not_found), null);
             }
-        } else {
-            mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_dialog_title), e_msg, null);
         }
     }
 
-    private String checkExecuteSchedule(ScheduleItem sched_item) {
+    private String checkExecuteScheduleConditions(ScheduleItem sched_item) {
         String e_msg="";
         if (sched_item.syncOverrideOptionCharge.equals(ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED)) {
             if (!CommonUtilities.isCharging(mContext, mUtil)) {
                 e_msg=mContext.getString(R.string.msgs_mirror_sync_cancelled_battery_option_not_satisfied);
             }
         }
-        if (!e_msg.equals("")) {
-            ArrayList<SyncTaskItem> sync_task_list=new ArrayList<SyncTaskItem>();
-            if (sched_item.syncAutoSyncTask) {
-                for(SyncTaskItem task:mGp.syncTaskList) {
-                    if (!task.isSyncTaskError() && task.isSyncTaskAuto()) {
-                        sync_task_list.add(task);
-                    }
-                }
-                if (sync_task_list.size()==0) {
-                    //Error
-                    e_msg=mContext.getString(R.string.msgs_active_sync_prof_not_found);
-                }
-            } else {
-                if (sched_item.syncTaskList.equals("")) {
-                    e_msg=mContext.getString(R.string.msgs_scheduler_info_sync_task_list_was_empty);
-                } else {
-                    boolean not_found=false;
-                    String[]task_name_array=sched_item.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
-                    for(String name_item:task_name_array) {
-                        SyncTaskItem task_item=SyncTaskUtil.getSyncTaskByName(mGp.syncTaskList, name_item);
-                        if (task_item==null) {
-                            not_found=true;
-                            e_msg=mContext.getString(R.string.msgs_schedule_sync_task_not_found, name_item);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+
         return e_msg;
     }
 
@@ -4713,56 +4702,84 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void confirmActivate(AdapterSyncTask pa, final NotifyEvent p_ntfy) {
+        boolean is_task_error_tmp = false;
+        String msg = "";
+        String sep = "";
+        for (int i = 0; i < pa.getCount(); i++) {
+            if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskError()) {
+                is_task_error_tmp = true;
+                msg = pa.getItem(i).getSyncTaskName();
+                break;
+            } else if (pa.getItem(i).isChecked() && !pa.getItem(i).isSyncTaskAuto()) {
+                msg += sep + pa.getItem(i).getSyncTaskName();
+                sep = "\n";
+            }
+        }
+
+        final boolean is_task_error = is_task_error_tmp;
+        final String e_msg = msg;
         NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                mTaskUtil.setSyncTaskToAuto(mGp);
-                SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
-                p_ntfy.notifyToListener(true, null);
+                if (is_task_error) {
+                    mUtil.addLogMsg("E", mContext.getString(R.string.msgs_prof_cont_to_activate_inactivate_profile_error));
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_prof_cont_to_activate_inactivate_profile_error, e_msg), "", null);
+                } else {
+                    mTaskUtil.setSyncTaskToAuto(mGp);
+                    SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
+                    mGp.syncScheduleAdapter.notifyDataSetChanged();
+                    refreshOptionMenu();
+                    p_ntfy.notifyToListener(true, null);
+                }
             }
 
             @Override
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        String msg = "";
-        String sep = "";
-        for (int i = 0; i < pa.getCount(); i++) {
-            if (pa.getItem(i).isChecked() && !pa.getItem(i).isSyncTaskAuto()) {
-                msg += sep + pa.getItem(i).getSyncTaskName();
-                sep = "\n";
-            }
-        }
-//		msg+="\n";
         mUtil.showCommonDialog(true, "W",
                 mContext.getString(R.string.msgs_prof_cont_to_activate_profile),
                 msg, ntfy);
     }
 
     private void confirmInactivate(AdapterSyncTask pa, final NotifyEvent p_ntfy) {
+        boolean is_task_error_tmp = false;
+        String msg = "";
+        String sep = "";
+        for (int i = 0; i < pa.getCount(); i++) {
+            if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskError()) {
+                is_task_error_tmp = true;
+                msg = pa.getItem(i).getSyncTaskName();
+                break;
+            } else if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskAuto()) {
+                msg += sep + pa.getItem(i).getSyncTaskName();
+                sep = "\n";
+            }
+        }
+
+        final boolean is_task_error = is_task_error_tmp;
+        final String e_msg = msg;
         NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                mTaskUtil.setSyncTaskToManual();
-                SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
-                p_ntfy.notifyToListener(true, null);
+                if (is_task_error) {
+                    mUtil.addLogMsg("E", mContext.getString(R.string.msgs_prof_cont_to_activate_inactivate_profile_error));
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_prof_cont_to_activate_inactivate_profile_error, e_msg), "", null);
+                } else {
+                    mTaskUtil.setSyncTaskToManual();
+                    SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
+                    mGp.syncScheduleAdapter.notifyDataSetChanged();
+                    refreshOptionMenu();
+                    p_ntfy.notifyToListener(true, null);
+                }
             }
 
             @Override
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        String msg = "";
-        String sep = "";
-        for (int i = 0; i < pa.getCount(); i++) {
-            if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskAuto()) {
-                msg += sep + pa.getItem(i).getSyncTaskName();
-                sep = "\n";
-            }
-        }
-//		msg+="\n";
         mUtil.showCommonDialog(true, "W",
                 mContext.getString(R.string.msgs_prof_cont_to_inactivate_profile),
                 msg, ntfy);
@@ -5142,22 +5159,31 @@ public class ActivityMain extends AppCompatActivity {
         String sync_list_tmp = "";
         String sep = "";
         boolean test_sync_task_found = false;
+        boolean error_sync_task_found_tmp = false;
         for (int i = 0; i < mGp.syncTaskAdapter.getCount(); i++) {
             item = mGp.syncTaskAdapter.getItem(i);
-            if (item.isChecked()  && !item.isSyncTaskError()) {
+            if (item.isChecked() && !item.isSyncTaskError()) {
                 t_list.add(item);
                 sync_list_tmp += sep + item.getSyncTaskName();
                 sep = SYNC_TASK_LIST_SEPARATOR;
                 if (item.isSyncTestMode()) test_sync_task_found = true;
+            } else if (item.isChecked() && item.isSyncTaskError()) {
+                error_sync_task_found_tmp = true;
+                sync_list_tmp = item.getSyncTaskName();
+                break;//fail start sync
             }
         }
         final String sync_list = sync_list_tmp;
+        final boolean error_sync_task_found = error_sync_task_found_tmp;
 
         NotifyEvent ntfy_test_mode = new NotifyEvent(mContext);
         ntfy_test_mode.setListener(new NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                if (t_list.isEmpty()) {
+                if (error_sync_task_found) {
+                    mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_selected_task_has_error));
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_main_sync_selected_task_has_error, sync_list), "", null);
+                } else if (t_list.isEmpty()) {
                     mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile));
                     mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
                 } else {
@@ -5730,9 +5756,9 @@ public class ActivityMain extends AppCompatActivity {
          * @param consumeEvent: return value after touch event used
          *        set to false to be able to use the event by other methods directly by caller listener or to pass to parent view if needed
          * [@param] speedIncrementDelay: Optional, not implemented here
-        delay after which the speed is even more incremented
-         *        by default we will increment the speed by a 3x factor
-        set to 0 to disable
+         *         delay after which the speed is even more incremented
+         *         by default we will increment the speed by a 3x factor
+         *         set to 0 to disable
          */
         public RepeatListener(int initialDelay, int repeatDelay, boolean consumeEvent, OnClickListener clickListener) {
             if (clickListener == null)
