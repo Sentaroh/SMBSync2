@@ -1021,6 +1021,14 @@ public class ActivityMain extends AppCompatActivity {
 
         mGp.scheduleInfoView = (TextView) findViewById(R.id.main_schedule_view_info);
 //        mGp.scheduleInfoView.setTextColor(mGp.themeColorList.text_color_primary);
+        mGp.scheduleInfoView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CommonDialog.showPopupMessageAsUpAnchorView(mActivity, mGp.scheduleInfoView, mGp.scheduleInfoView.getText().toString(), 2,
+                        -(int)CommonDialog.toPixel(mContext.getResources(), 50));
+                return true;
+            }
+        });
         mGp.scheduleErrorView = (TextView) findViewById(R.id.main_schedule_view_error);
         mGp.scheduleErrorView.setText(mGp.scheduleErrorText);
         mGp.scheduleErrorView.setTextColor(mGp.themeColorList.text_color_warning);
