@@ -82,8 +82,9 @@
 
         <ImageButton
             android:id="@+id/schedule_sync_list_sync"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_32_execute_schedule"/>
 
