@@ -263,7 +263,7 @@ public class ScheduleItemEditor {
         ctv_sched_enabled.setChecked(mSched.scheduleEnabled);
 
         ctv_last_day.setChecked(mSched.scheduleDay.equals("99"));
-        if(ctv_last_day.isChecked()) {
+        if (ctv_last_day.isChecked()) {
             CommonDialog.setViewEnabled(mActivity, sp_sched_day, false);
         } else {
             CommonDialog.setViewEnabled(mActivity, sp_sched_day, true);
@@ -347,6 +347,7 @@ public class ScheduleItemEditor {
                 setScheduleWasChanged(dialog, mSched);//will call setOkButtonEnabledDisabled() to check for item validity
             }
         });
+
         ctv_first_time.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -383,6 +384,7 @@ public class ScheduleItemEditor {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
         setWarningMessageLastDay(dialog);
         sp_sched_day.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -395,6 +397,7 @@ public class ScheduleItemEditor {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
         sp_sched_hours.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -660,7 +663,7 @@ public class ScheduleItemEditor {
                 btn_cancel.performClick();
             }
         });
-
+/*
         Handler hndl = new Handler();
         hndl.postDelayed(new Runnable() {
             @Override
@@ -669,7 +672,7 @@ public class ScheduleItemEditor {
                 CommonDialog.setButtonEnabled(mActivity, btn_ok, !mEditMode);
             }
         }, 500);
-
+*/
         dialog.show();
     }
 
