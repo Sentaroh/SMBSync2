@@ -4728,6 +4728,8 @@ public class ActivityMain extends AppCompatActivity {
                 } else {
                     mTaskUtil.setSyncTaskToAuto(mGp);
                     SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
+                    mGp.syncScheduleAdapter.notifyDataSetChanged();
+                    refreshOptionMenu();
                     p_ntfy.notifyToListener(true, null);
                 }
             }
@@ -4768,6 +4770,8 @@ public class ActivityMain extends AppCompatActivity {
                 } else {
                     mTaskUtil.setSyncTaskToManual();
                     SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
+                    mGp.syncScheduleAdapter.notifyDataSetChanged();
+                    refreshOptionMenu();
                     p_ntfy.notifyToListener(true, null);
                 }
             }
