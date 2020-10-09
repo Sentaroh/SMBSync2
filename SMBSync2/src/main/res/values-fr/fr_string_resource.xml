@@ -121,6 +121,8 @@
         <string name="msgs_hist_cont_label_delete">Supprimer l\'entrée de l\'historique</string>
         <string name="msgs_hist_cont_label_move_bottom">Aller à la fin</string>
         <string name="msgs_hist_cont_label_move_top">Aller au début</string>
+        <string name="deleted_msgs_hist_cont_label_scroll_down">Défiler vers le bas</string>
+        <string name="deleted_msgs_hist_cont_label_scroll_up">Défiler vers le haut</string>
         <string name="msgs_hist_cont_label_select_all">Sélectionner tous les éléments de l\'historique</string>
         <string name="msgs_hist_cont_label_share">Partager</string>
         <string name="msgs_hist_cont_label_unselect_all">Désélectionner tous les éléments de l\'historique</string>
@@ -731,6 +733,7 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Dupliquer la tâche de planification.</string>
         <string name="msgs_schedule_confirm_msg_nosave">La planification a été modifiée. Quitter sans sauvegarder?</string>
         <string name="msgs_schedule_sync_task_dialog_title">Erreur de démarrage de la tâche</string>
+        <string name="deleted_msgs_schedule_sync_task_not_found">Impossible de trouver la tâche spécifiée. Tâche=%s</string>
         <string name="msgs_schedule_sync_selected_schedule_not_found">Aucune tâche de planification valide n\'a été sélectionnée.</string>
         <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">Vous ne pouvez pas exécuter des tâches de planifications non valides. Décochez la tâche suivante et essayez à nouveau: %s</string>
         <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">Une des tâches de planification sélectionnées ne peut pas être exécutée, car ses paramètres ne le permettent pas. Tâche=%1$s, Erreur=%2$s</string>

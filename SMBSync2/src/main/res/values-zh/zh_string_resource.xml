@@ -121,6 +121,8 @@
         <string name="msgs_hist_cont_label_delete">删除历史记录项</string>
         <string name="msgs_hist_cont_label_move_bottom">移至底部</string>
         <string name="msgs_hist_cont_label_move_top">移至顶部</string>
+        <string name="deleted_msgs_hist_cont_label_scroll_down">向下滚动</string>
+        <string name="deleted_msgs_hist_cont_label_scroll_up">向上滚动</string>
         <string name="msgs_hist_cont_label_select_all">选择所有历史记录项</string>
         <string name="msgs_hist_cont_label_share">分享</string>
         <string name="msgs_hist_cont_label_unselect_all">取消选择所有历史记录项</string>
@@ -263,7 +265,7 @@
         <string name="msgs_main_sync_selected_profiles_checked_boxes">执行所有选定的同步任务</string>
         <string name="msgs_main_sync_selected_profiles_toast">执行所有选定的同步任务</string>
         <string name="msgs_main_sync_auto_profiles_toast">执行所有自动同步任务</string>
-        <string name="msgs_main_sync_selected_task_has_error">One of the selected tasks is invalid and cannot be executed. Please uncheck it and try again. Task name=%s</string>
+        <string name="msgs_main_sync_selected_task_has_error">其中一个选定的任务无法执行。 请取消勾选后再试。 任务名称=%s</string>
         <string name="msgs_main_sync_selected_task_not_found">所选任务不存在：</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">由于忽略了指定的同步任务，因此不会执行。</string>
         <string name="msgs_main_sync_test_mode_warnning">所选任务仅配置为测试。没有文件将被复制或删除。执行任务？</string>
@@ -290,7 +292,7 @@
         <string name="msgs_prof_cont_label_up">上移</string>
         <string name="msgs_prof_cont_to_activate_profile">设置以下任务以自动启动 ?</string>
         <string name="msgs_prof_cont_to_inactivate_profile">设置以下任务以按需启动 ?</string>
-        <string name="msgs_prof_cont_to_activate_inactivate_profile_error">One of the selected sync tasks is invalid. You cannot toggle its Auto-Start mode until it is fixed. Task name=%s</string>
+        <string name="msgs_prof_cont_to_activate_inactivate_profile_error">所选同步任务之一无效。在修复之前，您无法切换其自动启动模式。任务名称=%s</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">如果源或目标位于SMB服务器上：将"仅在指定的Wifi条件下开始同步"设置为"连接任何AP"？</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">如果源或目标位于SMB服务器上：将"仅在指定的Wifi条件下开始同步"设置为"具有私有地址"吗？</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">当目标文件夹设置为ZIP时，主文件夹必须是内部存储。主文件夹已还原到内部存储。</string>
@@ -731,12 +733,13 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">计划名称重复。</string>
         <string name="msgs_schedule_confirm_msg_nosave">计划已更改。不保存就退出吗？</string>
         <string name="msgs_schedule_sync_task_dialog_title">任务启动错误</string>
-        <string name="msgs_schedule_sync_selected_schedule_not_found">You must select at least one valid schedule.</string>
-        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">You cannot execute invalid schedules. Please uncheck the following schedules and try again: %s</string>
-        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">One of the selected schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>
+        <string name="deleted_msgs_schedule_sync_task_not_found">找不到指定的任务。任务=%s</string>
+        <string name="msgs_schedule_sync_selected_schedule_not_found">你必须选择至少一个有效的时间表。</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">你不能执行无效的计划表。请取消勾选以下计划表并重试：%s</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">所选的其中一个计划由于其配置的设置而无法执行。Schedule=%1$s, Error=%2$s。</string>
         <string name="msgs_schedule_sync_enabled_schedule_not_found">没有找到启用的任务.</string>
-        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_error">One of the enabled schedules is invalid and cannot be executed. Please disable it and try again. Schedule=%s</string>
-        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error">One of the enabled schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_error">其中一个启用的计划无效，无法执行。请禁用它并再次尝试。计划表=%s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error">其中一个已启用的计划由于其配置的设置而无法执行。Schedule=%1$s, Error=%2$s。</string>
         <string name="msgs_schedule_rename_schedule">重命名计划</string>
         <string name="msgs_schedule_list_edit_no_schedule">按添加按钮创建新计划。</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">由于禁用了计划服务，因此不会执行计划任务。要启用计划服务，请点击此窗口右上角的日历图标。您还必须启用每个同步计划前面的切换开关才能执行。</string>

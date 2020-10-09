@@ -121,6 +121,8 @@
         <string name="msgs_hist_cont_label_delete">履歴を削除する</string>
         <string name="msgs_hist_cont_label_move_bottom">最下部に移動</string>
         <string name="msgs_hist_cont_label_move_top">最上部に移動</string>
+        <string name="deleted_msgs_hist_cont_label_scroll_down">下に移動</string>
+        <string name="deleted_msgs_hist_cont_label_scroll_up">上に移動</string>
         <string name="msgs_hist_cont_label_select_all">全て選択</string>
         <string name="msgs_hist_cont_label_share">共有</string>
         <string name="msgs_hist_cont_label_unselect_all">全ての選択を解除</string>
@@ -263,7 +265,7 @@
         <string name="msgs_main_sync_selected_profiles_checked_boxes">選択された同期タスクを同期します。</string>
         <string name="msgs_main_sync_selected_profiles_toast">選択された同期タスクを同期します。</string>
         <string name="msgs_main_sync_auto_profiles_toast">自動同期タスクだけを同期する</string>
-        <string name="msgs_main_sync_selected_task_has_error">One of the selected tasks is invalid and cannot be executed. Please uncheck it and try again. Task name=%s</string>
+        <string name="msgs_main_sync_selected_task_has_error">選択したタスクのいずれか実行できません。チェックを外して再度お試しください。タスク名=%s</string>
         <string name="msgs_main_sync_selected_task_not_found">選択されたタスクは存在しません。タスク=</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">指定された同期タスクは無視されたため実行されません。</string>
         <string name="msgs_main_sync_test_mode_warnning">選択された同期タスクにテストモードの同期タスクが含まれています。テストモードの同期タスクではファイルのコピーや削除が行われません。同期を開始しますか？</string>
@@ -290,7 +292,7 @@
         <string name="msgs_prof_cont_label_up">上に移動</string>
         <string name="msgs_prof_cont_to_activate_profile">下記プロフィルを自動にします ?</string>
         <string name="msgs_prof_cont_to_inactivate_profile">下記プロフィルを手動にします ?</string>
-        <string name="msgs_prof_cont_to_activate_inactivate_profile_error">One of the selected sync tasks is invalid. You cannot toggle its Auto-Start mode until it is fixed. Task name=%s</string>
+        <string name="msgs_prof_cont_to_activate_inactivate_profile_error">選択した同期タスクの一つが無効です。修正されるまで自動同期に切り替えることはできません。タスク名=%s</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any">ターゲットとマスターのいずれかがSMBのため無線LANの条件を「APに接続されている時」に変更しますか？</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private">ターゲットとマスターのいずれかがSMBのため無線LANの条件を「プライベートアドレス」に変更しますか？</string>
         <string name="msgs_profile_edit_sync_folder_dlg_change_master_folder_to_internal">対象フォルダがZIPに設定されている場合、マスターフォルダは内部ストレージである必要があります。マスターフォルダを内部ストレージに変更しました。</string>
@@ -731,12 +733,13 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_confirm_msg_nosave">スケジュールが変更されています、保存せず終了しますか。</string>
         <string name="msgs_schedule_sync_task_dialog_title">タスク開始エラー</string>
-        <string name="msgs_schedule_sync_selected_schedule_not_found">You must select at least one valid schedule.</string>
-        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">You cannot execute invalid schedules. Please uncheck the following schedules and try again: %s</string>
-        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">One of the selected schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>
+        <string name="deleted_msgs_schedule_sync_task_not_found">指定されたタスクが見つかりません。タスク=%s</string>
+        <string name="msgs_schedule_sync_selected_schedule_not_found">最低一つの有効なタスクを選択してください。</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">無効なスケジュールは実行できません。下記のスケジュールを除外してください。 : %s</string>
+        <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">スケジュールにエラーがあるため実行できません。 スケジュール=%1$s, エラー=%2$s</string>
         <string name="msgs_schedule_sync_enabled_schedule_not_found">有効なスケジュールが見つかりません。</string>
-        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_error">One of the enabled schedules is invalid and cannot be executed. Please disable it and try again. Schedule=%s</string>
-        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error">One of the enabled schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_error">スケジュールにエラーがあるため実行できません、無効にしてください。 スケジュール=%1$s</string>
+        <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error">スケジュールにエラーがあるため実行できません。 スケジュール=%1$s, エラー=%2$s</string>
         <string name="msgs_schedule_rename_schedule">スケジュールの改名</string>
         <string name="msgs_schedule_list_edit_no_schedule">追加ボタンを押してスケジュールを作成してください。</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">スケジュールが無効になっているためスケジュール同期は実行されません。スケジュール同期を行うには画面上部のスケジュールアイコンをタップして有効にしてください。</string>

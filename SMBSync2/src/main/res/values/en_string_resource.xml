@@ -121,6 +121,8 @@
         <string name="msgs_hist_cont_label_delete">Delete history item</string>
         <string name="msgs_hist_cont_label_move_bottom">Move to bottom</string>
         <string name="msgs_hist_cont_label_move_top">Move to top</string>
+        <string name="deleted_msgs_hist_cont_label_scroll_down">Scroll down</string>
+        <string name="deleted_msgs_hist_cont_label_scroll_up">Scroll up</string>
         <string name="msgs_hist_cont_label_select_all">Select all history items</string>
         <string name="msgs_hist_cont_label_share">Share</string>
         <string name="msgs_hist_cont_label_unselect_all">Deselect all history items</string>
@@ -731,6 +733,7 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Duplicate schedule name.</string>
         <string name="msgs_schedule_confirm_msg_nosave">The schedule has changed. Exit without saving?</string>
         <string name="msgs_schedule_sync_task_dialog_title">Task start error</string>
+        <string name="deleted_msgs_schedule_sync_task_not_found">Could not find the specified task. Task=%s</string>
         <string name="msgs_schedule_sync_selected_schedule_not_found">You must select at least one valid schedule.</string>
         <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">You cannot execute invalid schedules. Please uncheck the following schedule and try again: %s</string>
         <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">One of the selected schedules cannot be executed because of its configured settings. Schedule=%1$s, Error=%2$s</string>

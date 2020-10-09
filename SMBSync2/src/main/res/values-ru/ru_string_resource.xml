@@ -121,6 +121,8 @@
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
         <string name="msgs_hist_cont_label_move_bottom">Двигаться вниз</string>
         <string name="msgs_hist_cont_label_move_top">Переместить наверх</string>
+        <string name="deleted_msgs_hist_cont_label_scroll_down">Прокрутить вниз</string>
+        <string name="deleted_msgs_hist_cont_label_scroll_up">Прокрутите вверх</string>
         <string name="msgs_hist_cont_label_select_all">Выбрать все элементы истории</string>
         <string name="msgs_hist_cont_label_share">Общий ресурс</string>
         <string name="msgs_hist_cont_label_unselect_all">Удалить все элементы истории</string>
@@ -731,6 +733,7 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Дубликат названия расписания.</string>
         <string name="msgs_schedule_confirm_msg_nosave">Расписание изменилось. Выход без сохранения?</string>
         <string name="msgs_schedule_sync_task_dialog_title">Ошибка запуска задачи</string>
+        <string name="deleted_msgs_schedule_sync_task_not_found">Не смог найти указанную задачу. Задача=%</string>
         <string name="msgs_schedule_sync_selected_schedule_not_found">Не выбрано ни одной допустимой задачи планирования.</string>
         <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">Вы не можете запускать задачи с недопустимым расписанием. Снимите отметку со следующей задачи и повторите попытку: %s</string>
         <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">Одна из выбранных задач планирования не может быть выполнена, поскольку ее параметры не позволяют этого. Задача=%1$s, Ошибка=%2$s</string>
