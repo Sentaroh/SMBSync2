@@ -84,6 +84,8 @@
             android:id="@+id/schedule_sync_list_sync"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:paddingRight="7dp"
+            android:layout_marginRight="10dp"
             android:scaleType="fitXY"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_32_execute_schedule"/>
