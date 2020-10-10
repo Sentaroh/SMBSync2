@@ -651,7 +651,7 @@
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">计划</string>
         <string name="msgs_scheduler_main_dlg_hdr_title">编辑计划</string>
-        <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">New schedule name</string>
+        <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">新时间表</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">启用计划</string>
         <string name="msgs_scheduler_main_dlg_hdr_edit_prof">同步清单...</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">周日</string>
