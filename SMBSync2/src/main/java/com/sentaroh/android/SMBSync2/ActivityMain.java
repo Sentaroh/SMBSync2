@@ -1341,12 +1341,12 @@ public class ActivityMain extends AppCompatActivity {
             //only show top start schedule button if there is at least one enabled and valid schedule
             //in schedule select mode: always show the start schedule button if there is at least one valid schedule
             //if we select non valid schedules, on start, a proper message is shown to help user understand the way button works
-            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_SCHEDULE)) {
+            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_SCHEDULE) && mGp.syncScheduleList!=null && mGp.syncScheduleList.size()>0) {
                 menu.findItem(R.id.menu_top_scheduler).setVisible(true);
                 menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
                 for(ScheduleItem si:mGp.syncScheduleList) {
                     if (si.scheduleEnabled || mGp.syncScheduleAdapter.isSelectMode()) {
-                        if (ScheduleUtil.isValidScheduleItem(mContext, mGp, mGp.syncScheduleList, si, true, false).equals("")) {//invalid schedule name or invalid schedule sync list
+                        if (ScheduleUtil.isValidScheduleItem(mContext, mGp, mGp.syncScheduleList, si, true, false).equals("")) {//check for invalid schedule (name, sync list)
                             menu.findItem(R.id.menu_top_exec_schedule).setVisible(true);
                             break;
                         }
@@ -3312,7 +3312,7 @@ public class ActivityMain extends AppCompatActivity {
                         break;
                     }
                 }
-                if (si==null) {
+                if (si==null || si.scheduleName==null) {
                     mUtil.addLogMsg("E","renameSchedule error, schedule item can not be found.");
                     mUtil.showCommonDialog(false, "E", "renameSchedule error, schedule item can not be found.", "", null);
                 } else {
@@ -3413,7 +3413,7 @@ public class ActivityMain extends AppCompatActivity {
         etInput.setText(si.scheduleName);
 
         //do not check for whole schedule item validity, but only for schedule name
-        //this is to allow renaming a schedule that has an invalid AND an invalid sync task list
+        //this is to allow renaming a schedule that has an invalid name AND an invalid sync task list
         //else the schedule can no more be edited: EditSchedule cannot change name
         String e_msg=ScheduleUtil.isValidScheduleName(mContext, mGp, mGp.syncScheduleList, si.scheduleName, false, false);
         dlg_msg.setText(e_msg);

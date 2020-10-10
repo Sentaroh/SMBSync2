@@ -1764,7 +1764,13 @@ public class SyncTaskUtil {
 
     public void renameSyncTask(final SyncTaskItem pli, final NotifyEvent p_ntfy) {
 
-        // カスタムダイアログの生成
+        if (pli==null || pli.getSyncTaskName()==null) {
+            mUtil.addLogMsg("E","renameSyncTask error, SyncTask item can not be found.");
+            mUtil.showCommonDialog(false, "E", "renameSyncTask error, SyncTask item can not be found.", "", null);
+            return;
+        }
+
+        //Generate custom dialog
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
