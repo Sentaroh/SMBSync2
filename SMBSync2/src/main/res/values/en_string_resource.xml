@@ -651,6 +651,7 @@
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_title">Edit Schedule</string>
+        <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">New schedule name</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Enable schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Sync List...</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">Sun</string>

@@ -651,6 +651,7 @@
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Расписание</string>
         <string name="msgs_scheduler_main_dlg_hdr_title">Изменить расписание</string>
+        <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">Новое название расписания</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Включить расписание</string>
         <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Изменить список синхронизации</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">Вс</string>

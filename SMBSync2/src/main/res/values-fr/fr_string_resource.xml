@@ -651,6 +651,7 @@
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Planifier</string>
         <string name="msgs_scheduler_main_dlg_hdr_title">Modifier la planification</string>
+        <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">Nouveau nom de planification</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Activer la planification </string>
         <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Tâches de sync...</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">Di</string>

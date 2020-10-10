@@ -242,22 +242,32 @@ public class ScheduleItemEditor {
 
         setViewVisibility(dialog);
 
-        if (mSched.scheduleName.equals("")) {
-            String new_name="";
-            for(int i=1;i<1000;i++) {
-                new_name="NONAME"+i;
+        if (mEditMode) {
+            String sched_name = mSched.scheduleName;
+            if (sched_name == null) {
+                //exception: settings file corruption !
+                mUtil.addDebugMsg(1, "E", "Edited schedule name is null");
+                sched_name="[,null,]";//will show an error "name with comma invalid char" and schedule cannot be edited/saved
+            }
+            //if name is empty (previous versiosn bug), it will display an error and user must rename first
+            et_name.setText(sched_name);
+            et_name.setVisibility(EditText.GONE);
+            String title=dlg_title.getText().toString()+" ("+mSched.scheduleName+")";
+            dlg_title.setText(title);
+        } else if (mSched.scheduleName == null || mSched.scheduleName.equals("")) {
+            //new schedule creation
+            String new_name=mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_new_schedule_name);
+            for(int i=1; i<1000; i++) {
                 if (!ScheduleUtil.isScheduleExists(mScheduleList, new_name)) {
-                    et_name.setText(new_name);
                     break;
+                } else {
+                    new_name=mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_new_schedule_name) + " ("+i+")";
                 }
             }
+            et_name.setText(new_name);
         } else {
+            //should never reach here
             et_name.setText(mSched.scheduleName);
-        }
-        if (mEditMode) {
-            et_name.setVisibility(EditText.GONE);
-            String title=dlg_title.getText().toString()+"("+mSched.scheduleName+")";
-            dlg_title.setText(title);
         }
 
         ctv_sched_enabled.setChecked(mSched.scheduleEnabled);

@@ -651,6 +651,7 @@
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">スケジュール</string>
         <string name="msgs_scheduler_main_dlg_hdr_title">スケジュールの編集</string>
+        <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">New schedule name</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">スケジュールを有効にする</string>
         <string name="msgs_scheduler_main_dlg_hdr_edit_prof">同期リストの編集</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">日</string>

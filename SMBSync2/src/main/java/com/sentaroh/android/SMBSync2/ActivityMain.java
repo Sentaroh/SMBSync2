@@ -3312,7 +3312,7 @@ public class ActivityMain extends AppCompatActivity {
                         break;
                     }
                 }
-                if (si==null) {
+                if (si==null || si.scheduleName==null) {
                     mUtil.addLogMsg("E","renameSchedule error, schedule item can not be found.");
                     mUtil.showCommonDialog(false, "E", "renameSchedule error, schedule item can not be found.", "", null);
                 } else {
