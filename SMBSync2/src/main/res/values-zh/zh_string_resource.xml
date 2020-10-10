@@ -121,8 +121,6 @@
         <string name="msgs_hist_cont_label_delete">删除历史记录项</string>
         <string name="msgs_hist_cont_label_move_bottom">移至底部</string>
         <string name="msgs_hist_cont_label_move_top">移至顶部</string>
-        <string name="deleted_msgs_hist_cont_label_scroll_down">向下滚动</string>
-        <string name="deleted_msgs_hist_cont_label_scroll_up">向上滚动</string>
         <string name="msgs_hist_cont_label_select_all">选择所有历史记录项</string>
         <string name="msgs_hist_cont_label_share">分享</string>
         <string name="msgs_hist_cont_label_unselect_all">取消选择所有历史记录项</string>
@@ -697,7 +695,7 @@
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">执行所有自动同步任务</string>
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">请按下面的"同步列表..."按钮，指定要安排的同步任务。</string>
         <string name="msgs_scheduler_info_next_schedule_time">下一次同步时间是%s</string>
-        <string name="msgs_scheduler_info_next_schedule_main_info">下次同步：%1 $s，（%2 $s）</string>
+        <string name="msgs_scheduler_info_next_schedule_main_info">下次同步：%1$s，（%2$s）</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">某些已启用的计划包含错误。查看"计划"标签以了解更多详细信息。</string>
         <string name="msgs_scheduler_info_schedule_disabled">同步计划已停用</string>
         <string name="msgs_scheduler_info_schedule_enabled">同步计划已启用</string>
@@ -733,7 +731,6 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">计划名称重复。</string>
         <string name="msgs_schedule_confirm_msg_nosave">计划已更改。不保存就退出吗？</string>
         <string name="msgs_schedule_sync_task_dialog_title">任务启动错误</string>
-        <string name="deleted_msgs_schedule_sync_task_not_found">找不到指定的任务。任务=%s</string>
         <string name="msgs_schedule_sync_selected_schedule_not_found">你必须选择至少一个有效的时间表。</string>
         <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">你不能执行无效的计划表。请取消勾选以下计划表并重试：%s</string>
         <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">所选的其中一个计划由于其配置的设置而无法执行。Schedule=%1$s, Error=%2$s。</string>

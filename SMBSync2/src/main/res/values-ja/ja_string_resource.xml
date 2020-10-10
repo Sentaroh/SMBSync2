@@ -121,8 +121,6 @@
         <string name="msgs_hist_cont_label_delete">履歴を削除する</string>
         <string name="msgs_hist_cont_label_move_bottom">最下部に移動</string>
         <string name="msgs_hist_cont_label_move_top">最上部に移動</string>
-        <string name="deleted_msgs_hist_cont_label_scroll_down">下に移動</string>
-        <string name="deleted_msgs_hist_cont_label_scroll_up">上に移動</string>
         <string name="msgs_hist_cont_label_select_all">全て選択</string>
         <string name="msgs_hist_cont_label_share">共有</string>
         <string name="msgs_hist_cont_label_unselect_all">全ての選択を解除</string>
@@ -733,7 +731,6 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_confirm_msg_nosave">スケジュールが変更されています、保存せず終了しますか。</string>
         <string name="msgs_schedule_sync_task_dialog_title">タスク開始エラー</string>
-        <string name="deleted_msgs_schedule_sync_task_not_found">指定されたタスクが見つかりません。タスク=%s</string>
         <string name="msgs_schedule_sync_selected_schedule_not_found">最低一つの有効なタスクを選択してください。</string>
         <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_error">無効なスケジュールは実行できません。下記のスケジュールを除外してください。 : %s</string>
         <string name="msgs_schedule_sync_selected_schedule_invalid_schedule_conditions_error">スケジュールにエラーがあるため実行できません。 スケジュール=%1$s, エラー=%2$s</string>
