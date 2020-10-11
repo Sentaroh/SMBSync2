@@ -3847,7 +3847,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 MotionEvent mCurrentEvent = event;
-                if (mCurrentEvent.getAction() == MotionEvent.ACTION_UP){//finger up
+                if (mCurrentEvent.getAction() == MotionEvent.ACTION_UP || mCurrentEvent.getAction() == MotionEvent.ACTION_CANCEL){//finger up
                     mGp.syncHistoryListView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -5046,7 +5046,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 MotionEvent mCurrentEvent = event;
-                if (mCurrentEvent.getAction() == MotionEvent.ACTION_UP){//finger up
+                if (mCurrentEvent.getAction() == MotionEvent.ACTION_UP || mCurrentEvent.getAction() == MotionEvent.ACTION_CANCEL){//finger up
                     mGp.syncMessageListView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
