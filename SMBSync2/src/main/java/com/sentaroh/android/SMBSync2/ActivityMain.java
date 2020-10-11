@@ -3807,18 +3807,10 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
+    private long timeLastHistoryTouchEvent = System.currentTimeMillis();
+    private final static int fastScrollBarDisableTimeout=3000;
     private final static int HISTORY_SCROLL_AMOUNT=1;
     private void setHistoryContextButtonListener() {
-        setHistoryScrollButtonVisibility();
-        mGp.syncHistoryListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {}
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                setHistoryScrollButtonVisibility();
-            }
-        });
 
         mContextHistoryButtonSendTo.setOnClickListener(new OnClickListener() {
             @Override
@@ -3835,6 +3827,82 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextHistoryButtonSendTo, mContext.getString(R.string.msgs_hist_cont_label_share));
+
+        // syncHistoryListView scroll mod:
+        //  - show the classic scroll bar at rest because:
+        //    + fastScroll bar is too large if kept always on
+        //    + fastScroll bar has large zone at left of the bar area where touch will fast scroll instead of select the list view
+        //    + fastScroll bar will always fade completely, unless always kept active (will be shown even if no scroll view is present)
+        //    + fastScroll bar fading timeout cannot be changed from the 1500 msec default
+        //    + by the presence of the classic scroll bar, we know the view is scrollable
+        //  - on any MOVE action, enable the fastScroll bar for a fastScrollBarDisableTimeout duration after last touch event
+        //  - [fastScrollBarDisableTimeout]:
+        //    + set timer to 1500 to have the classic scroll bar appear immeadiately when fast scrollbar fades
+        //    + default is 3000 msec: lets the fastScroll bar active after it faded out. This makes it possible to fast scroll on touch between touch events
+        //  - toggle fastScroll on/off on start to avoid quick appearance of the fast scrollbar on start
+        //    alternative is to set enabled in xml and toggle it off only here
+        //mGp.syncHistoryListView.setFastScrollEnabled(true);
+        mGp.syncHistoryListView.setFastScrollEnabled(false);
+        setHistoryScrollButtonVisibility();
+        mGp.syncHistoryListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                MotionEvent mCurrentEvent = event;
+                if (mCurrentEvent.getAction() == MotionEvent.ACTION_UP){//finger up
+                    mGp.syncHistoryListView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if ((mCurrentEvent.getAction() == MotionEvent.ACTION_UP || mCurrentEvent.getAction() == MotionEvent.ACTION_CANCEL) &&
+                                    mGp.syncHistoryListView.isFastScrollEnabled() &&
+                                    System.currentTimeMillis() - timeLastHistoryTouchEvent > fastScrollBarDisableTimeout) {
+                                mGp.syncHistoryListView.setFastScrollEnabled(false);
+                                mGp.syncHistoryAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    },fastScrollBarDisableTimeout);
+                    //return true; //consume touch event
+                } else if (mCurrentEvent.getAction() == MotionEvent.ACTION_MOVE) {//finger moving
+                    setHistoryScrollButtonVisibility();
+                    mGp.syncHistoryListView.setFastScrollEnabled(true);
+                }
+                timeLastHistoryTouchEvent = System.currentTimeMillis();
+                return false;
+            }
+        });
+
+        mGp.syncHistoryListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int mCurrentState = 0;
+            int last_item = 0;
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                mCurrentState = scrollState;
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                setHistoryScrollButtonVisibility();
+                if (last_item != firstVisibleItem || mCurrentState == SCROLL_STATE_TOUCH_SCROLL) {
+                    //last_item != firstVisibleItem: list is scrolling. Detects ListView ongoing fast scrolls while finger was lifted up
+                    //avoids fading out the fastScroll bar and classic bar shown while view is scrolling for more the hardcoded fade out duration of 1500 msec
+                    if (!mGp.syncHistoryListView.isFastScrollEnabled()) {
+                        mGp.syncHistoryListView.setFastScrollEnabled(true);
+                    }
+                    timeLastHistoryTouchEvent = System.currentTimeMillis();
+                } else {
+                    mGp.syncHistoryListView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (last_item == firstVisibleItem && mGp.syncHistoryListView.isFastScrollEnabled() &&
+                                    System.currentTimeMillis() - timeLastHistoryTouchEvent > fastScrollBarDisableTimeout) {
+                                mGp.syncHistoryListView.setFastScrollEnabled(false);
+                                mGp.syncHistoryAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    },fastScrollBarDisableTimeout);
+                }
+                last_item = firstVisibleItem;
+            }
+        });
 
         mContextHistoryButtonScrollUp.setOnTouchListener(new RepeatListener(ANDROID_LONG_PRESS_TIMEOUT, DEFAULT_LONG_PRESS_REPEAT_INTERVAL, false, new OnClickListener() {
             @Override
@@ -4955,16 +5023,81 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
+    private long timeLastMessagesTouchEvent = System.currentTimeMillis();
     private final static int MESSAGE_SCROLL_AMOUNT=1;
     private void setMessageContextButtonListener() {
+        // syncMessageListView scroll mod:
+        //  - show the classic scroll bar at rest because:
+        //    + fastScroll bar is too large if kept always on
+        //    + fastScroll bar has large zone at left of the bar area where touch will fast scroll instead of select the list view
+        //    + fastScroll bar will always fade completely, unless always kept active (will be shown even if no scroll view is present)
+        //    + fastScroll bar fading timeout cannot be changed from the 1500 msec default
+        //    + by the presence of the classic scroll bar, we know the view is scrollable
+        //  - on any MOVE action, enable the fastScroll bar for a fastScrollBarDisableTimeout duration after last touch event
+        //  - [fastScrollBarDisableTimeout]:
+        //    + set timer to 1500 to have the classic scroll bar appear immeadiately when fast scrollbar fades
+        //    + default is 3000 msec: lets the fastScroll bar active after it faded out. This makes it possible to fast scroll on touch between touch events
+        //  - toggle fastScroll on/off on start to avoid quick appearance of the fast scrollbar on start
+        //    alternative is to set enabled in xml and toggle it off only here
+        //mGp.syncMessageListView.setFastScrollEnabled(true);
+        mGp.syncMessageListView.setFastScrollEnabled(false);
         setMessageScrollButtonVisibility();
-        mGp.syncMessageListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        mGp.syncMessageListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {}
+            public boolean onTouch(View v, MotionEvent event) {
+                MotionEvent mCurrentEvent = event;
+                if (mCurrentEvent.getAction() == MotionEvent.ACTION_UP){//finger up
+                    mGp.syncMessageListView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if ((mCurrentEvent.getAction() == MotionEvent.ACTION_UP || mCurrentEvent.getAction() == MotionEvent.ACTION_CANCEL) &&
+                                    mGp.syncMessageListView.isFastScrollEnabled() &&
+                                    System.currentTimeMillis() - timeLastMessagesTouchEvent > fastScrollBarDisableTimeout) {
+                                mGp.syncMessageListView.setFastScrollEnabled(false);
+                                mGp.syncMessageListAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    },fastScrollBarDisableTimeout);
+                    //return true; //consume touch event
+                } else if (mCurrentEvent.getAction() == MotionEvent.ACTION_MOVE) {//finger moving
+                    setMessageScrollButtonVisibility();
+                    mGp.syncMessageListView.setFastScrollEnabled(true);
+                }
+                timeLastMessagesTouchEvent = System.currentTimeMillis();
+                return false;
+            }
+        });
+
+        mGp.syncMessageListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int mCurrentState = 0;
+            int last_item = 0;
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                mCurrentState = scrollState;
+            }
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 setMessageScrollButtonVisibility();
+                if (last_item != firstVisibleItem || mCurrentState == SCROLL_STATE_TOUCH_SCROLL) {
+                    //last_item != firstVisibleItem: list is scrolling. Detects ListView ongoing fast scrolls while finger was lifted up
+                    //avoids fading out the fastScroll bar and classic bar shown while view is scrolling for more the hardcoded fade out duration of 1500 msec
+                    if (!mGp.syncMessageListView.isFastScrollEnabled()) {
+                        mGp.syncMessageListView.setFastScrollEnabled(true);
+                    }
+                    timeLastMessagesTouchEvent = System.currentTimeMillis();
+                } else {
+                    mGp.syncMessageListView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (last_item == firstVisibleItem && mGp.syncMessageListView.isFastScrollEnabled() && System.currentTimeMillis() - timeLastMessagesTouchEvent > fastScrollBarDisableTimeout) {
+                                mGp.syncMessageListView.setFastScrollEnabled(false);
+                                mGp.syncMessageListAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    },fastScrollBarDisableTimeout);
+                }
+                last_item = firstVisibleItem;
             }
         });
 
