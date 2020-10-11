@@ -132,7 +132,6 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_MESSAGE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_SCHEDULE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
-import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_NAME_MAX_LENGTH;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET;
 
@@ -3808,7 +3807,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private long timeLastHistoryTouchEvent = System.currentTimeMillis();
-    private final static int fastScrollBarDisableTimeout=3000;
+    private final static int FAST_SCROLL_BAR_DISABLE_TIMEOUT =3000;
     private final static int HISTORY_SCROLL_AMOUNT=1;
     private void setHistoryContextButtonListener() {
 
@@ -3854,12 +3853,12 @@ public class ActivityMain extends AppCompatActivity {
                         public void run() {
                             if ((mCurrentEvent.getAction() == MotionEvent.ACTION_UP || mCurrentEvent.getAction() == MotionEvent.ACTION_CANCEL) &&
                                     mGp.syncHistoryListView.isFastScrollEnabled() &&
-                                    System.currentTimeMillis() - timeLastHistoryTouchEvent > fastScrollBarDisableTimeout) {
+                                    System.currentTimeMillis() - timeLastHistoryTouchEvent > FAST_SCROLL_BAR_DISABLE_TIMEOUT) {
                                 mGp.syncHistoryListView.setFastScrollEnabled(false);
                                 mGp.syncHistoryAdapter.notifyDataSetChanged();
                             }
                         }
-                    },fastScrollBarDisableTimeout);
+                    }, FAST_SCROLL_BAR_DISABLE_TIMEOUT);
                     //return true; //consume touch event
                 } else if (mCurrentEvent.getAction() == MotionEvent.ACTION_MOVE) {//finger moving
                     setHistoryScrollButtonVisibility();
@@ -3893,12 +3892,12 @@ public class ActivityMain extends AppCompatActivity {
                         @Override
                         public void run() {
                             if (last_item == firstVisibleItem && mGp.syncHistoryListView.isFastScrollEnabled() &&
-                                    System.currentTimeMillis() - timeLastHistoryTouchEvent > fastScrollBarDisableTimeout) {
+                                    System.currentTimeMillis() - timeLastHistoryTouchEvent > FAST_SCROLL_BAR_DISABLE_TIMEOUT) {
                                 mGp.syncHistoryListView.setFastScrollEnabled(false);
                                 mGp.syncHistoryAdapter.notifyDataSetChanged();
                             }
                         }
-                    },fastScrollBarDisableTimeout);
+                    }, FAST_SCROLL_BAR_DISABLE_TIMEOUT);
                 }
                 last_item = firstVisibleItem;
             }
@@ -5052,12 +5051,12 @@ public class ActivityMain extends AppCompatActivity {
                         public void run() {
                             if ((mCurrentEvent.getAction() == MotionEvent.ACTION_UP || mCurrentEvent.getAction() == MotionEvent.ACTION_CANCEL) &&
                                     mGp.syncMessageListView.isFastScrollEnabled() &&
-                                    System.currentTimeMillis() - timeLastMessagesTouchEvent > fastScrollBarDisableTimeout) {
+                                    System.currentTimeMillis() - timeLastMessagesTouchEvent > FAST_SCROLL_BAR_DISABLE_TIMEOUT) {
                                 mGp.syncMessageListView.setFastScrollEnabled(false);
                                 mGp.syncMessageListAdapter.notifyDataSetChanged();
                             }
                         }
-                    },fastScrollBarDisableTimeout);
+                    }, FAST_SCROLL_BAR_DISABLE_TIMEOUT);
                     //return true; //consume touch event
                 } else if (mCurrentEvent.getAction() == MotionEvent.ACTION_MOVE) {//finger moving
                     setMessageScrollButtonVisibility();
@@ -5090,12 +5089,12 @@ public class ActivityMain extends AppCompatActivity {
                     mGp.syncMessageListView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            if (last_item == firstVisibleItem && mGp.syncMessageListView.isFastScrollEnabled() && System.currentTimeMillis() - timeLastMessagesTouchEvent > fastScrollBarDisableTimeout) {
+                            if (last_item == firstVisibleItem && mGp.syncMessageListView.isFastScrollEnabled() && System.currentTimeMillis() - timeLastMessagesTouchEvent > FAST_SCROLL_BAR_DISABLE_TIMEOUT) {
                                 mGp.syncMessageListView.setFastScrollEnabled(false);
                                 mGp.syncMessageListAdapter.notifyDataSetChanged();
                             }
                         }
-                    },fastScrollBarDisableTimeout);
+                    }, FAST_SCROLL_BAR_DISABLE_TIMEOUT);
                 }
                 last_item = firstVisibleItem;
             }
