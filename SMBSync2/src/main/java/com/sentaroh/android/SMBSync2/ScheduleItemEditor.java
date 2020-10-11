@@ -252,7 +252,7 @@ public class ScheduleItemEditor {
             //if name is empty (previous versiosn bug), it will display an error and user must rename first
             et_name.setText(sched_name);
             et_name.setVisibility(EditText.GONE);
-            String title=dlg_title.getText().toString()+" ("+mSched.scheduleName+")";
+            String title=dlg_title.getText().toString()+" ("+sched_name+")";
             dlg_title.setText(title);
         } else if (mSched.scheduleName == null || mSched.scheduleName.equals("")) {
             //new schedule creation
