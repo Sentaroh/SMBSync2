@@ -5089,7 +5089,7 @@ public class ActivityMain extends AppCompatActivity {
                     //mLastVisibleItem!=firstVisibleItem: list is scrolling. Detects ListView ongoing fast scrolls while finger was lifted up
                     // - avoids fading out the fastScroll bar and classic bar shown while view is scrolling for more the hardcoded fade out duration of 1500 msec
                     //mCurrentState==SCROLL_STATE_TOUCH_SCROLL: ensure we're scrolling by touch and not by code (scroll and page-up/down buttons)
-                    if (!mGp.syncMessageListView.isFastScrollEnabled()) {
+                    if (!mGp.syncMessageListView.isFastScrollEnabled() && mGp.messageListViewMoveToBottomRequired) {
                         handler.removeCallbacks(scrollMessagesHandlerRunnable);
                         handler.post(scrollMessagesHandlerRunnable);
                     }
