@@ -479,7 +479,7 @@ public final class CommonUtilities {
             if (mGp.syncMessageListAdapter != null) {
                 mGp.syncMessageListAdapter.notifyDataSetChanged();
                 if (!mGp.freezeMessageViewScroll) {
-                    mGp.syncMessageListView.setSelection(mGp.syncMessageList.size());
+                    mGp.syncMessageListView.setSelection(mGp.syncMessageList.size()-1);
                     mGp.messageListViewMoveToBottomRequired =true;
                 }
             }
