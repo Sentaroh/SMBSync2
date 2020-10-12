@@ -3888,7 +3888,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 setHistoryScrollButtonVisibility();
-                if (mLastVisibleItem != firstVisibleItem && mCurrentState == SCROLL_STATE_TOUCH_SCROLL) {
+                if (mLastVisibleItem != firstVisibleItem || mCurrentState == SCROLL_STATE_TOUCH_SCROLL) {
                     //mLastVisibleItem!=firstVisibleItem: list is scrolling. Detects ListView ongoing fast scrolls while finger was lifted up
                     // - avoids fading out the fastScroll bar and classic bar shown while view is scrolling for more the hardcoded fade out duration of 1500 msec
                     //mCurrentState==SCROLL_STATE_TOUCH_SCROLL: ensure we're scrolling by touch and not by code (scroll and page-up/down buttons)
