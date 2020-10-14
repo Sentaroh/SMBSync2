@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:ignore="HardcodedText,DisableBaselineAlignment" >
 
-    <include layout="@layout/divider_line3" />
+<!--    <include layout="@layout/divider_line3" />-->
 
     <TextView
         android:id="@+id/main_sync_task_view_empty_message"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <include layout="@layout/divider_line3" />
+<!--    <include layout="@layout/divider_line3" />-->
 
     <ListView
         android:id="@+id/main_message_list_view"

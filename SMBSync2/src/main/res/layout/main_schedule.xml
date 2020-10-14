@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:ignore="DisableBaselineAlignment" >
 
-    <include layout="@layout/divider_line3" />
+<!--    <include layout="@layout/divider_line3" />-->
 
     <TextView
         android:id="@+id/main_schedule_list_message"
