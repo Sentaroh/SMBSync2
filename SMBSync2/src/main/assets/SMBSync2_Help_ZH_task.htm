@@ -1,0 +1,1329 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=shift_jis">
+<meta name=Generator content="Microsoft Word 12 (filtered)">
+<title>SMBSync Description</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"ＭＳ ゴシック";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:Century;
+	panose-1:2 4 6 4 5 5 5 2 3 4;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"MS UI Gothic";
+	panose-1:2 11 6 0 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@SimSun";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@ＭＳ 明朝";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:"\@ＭＳ ゴシック";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@MS UI Gothic";
+	panose-1:2 11 6 0 7 2 5 8 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+h1
+	{mso-style-link:"見出し 1 \(文字\)";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.25pt;
+	margin-bottom:.0001pt;
+	text-indent:-21.25pt;
+	page-break-before:always;
+	page-break-after:avoid;
+	word-break:break-all;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h2
+	{mso-style-link:"見出し 2 \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h3
+	{mso-style-link:"見出し 3 \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;
+	text-decoration:underline;}
+h4
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+h5
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:normal;}
+h6
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:10.5pt;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.0pt;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{mso-style-link:"見出しマップ \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"MS UI Gothic";}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"吹き出し \(文字\)";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:9.0pt;
+	font-family:"Arial","sans-serif";}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	font-size:10.5pt;
+	font-family:"Century","serif";}
+p.148mm, li.148mm, div.148mm
+	{mso-style-name:"スタイル 左 \:  14\.8 mm";
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Century","serif";}
+p.2Century, li.2Century, div.2Century
+	{mso-style-name:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝";
+	mso-style-link:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝 \(文字\)";
+	margin-top:18.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Century","serif";
+	text-decoration:underline;}
+span.2
+	{mso-style-name:"見出し 2 \(文字\)";
+	mso-style-link:"見出し 2";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.2Century0
+	{mso-style-name:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝 \(文字\)";
+	mso-style-link:"スタイル 見出し 2 + \(英数字\) Century \(日\) ＭＳ 明朝";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.a
+	{mso-style-name:"吹き出し \(文字\)";
+	mso-style-link:吹き出し;
+	font-family:"Arial","sans-serif";}
+span.a0
+	{mso-style-name:"見出しマップ \(文字\)";
+	mso-style-link:見出しマップ;
+	font-family:"MS UI Gothic";}
+span.1
+	{mso-style-name:"見出し 1 \(文字\)";
+	mso-style-link:"見出し 1";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+span.3
+	{mso-style-name:"見出し 3 \(文字\)";
+	mso-style-link:"見出し 3";
+	font-family:"Arial","sans-serif";
+	text-decoration:underline;}
+.MsoChpDefault
+	{font-size:10.0pt;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:42.55pt 3.0cm 42.55pt 3.0cm;
+	layout-grid:18.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='text-justify-trim:punctuation'>
+
+<div class=WordSection1 style='layout-grid:18.0pt'>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:SimSun'>&#27979;&#35797;</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>模式（</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#35831;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>勿&#22797;制或</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#21024;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>除文件）</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，将不会</span><span lang=JA
+style='font-family:SimSun'>&#21024;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>除和&#22797;制任何文件。</span><span
+lang=JA> </span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>使用此功能可</span><span
+lang=JA style='font-family:SimSun'>&#26597;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>看与同&#27493;任</span><span lang=JA style='font-family:SimSun'>&#21153;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>同&#27493;</span><span lang=JA
+style='font-family:SimSun'>&#26102;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>将&#22797;制或</span><span
+lang=JA style='font-family:SimSun'>&#21024;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>除&#21738;些文件。&#20320;可以在</span><span lang=JA style='font-family:SimSun'>&#21382;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>史</span><span lang=JA
+style='font-family:SimSun'>&#35760;&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>和信息中看到要&#22797;制或</span><span
+lang=JA style='font-family:SimSun'>&#21024;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>除的文件。</span><span lang=JA> </span><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>&#24744;不能将其</span><span lang=JA style='font-family:
+SimSun'>&#35774;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>置</span><span
+lang=JA style='font-family:SimSun'>&#20026;&#27979;&#35797;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>模式下的自</span><span lang=JA style='font-family:SimSun'>&#21160;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>同&#27493;任</span><span lang=JA
+style='font-family:SimSun'>&#21153;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>自</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#21160;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>同&#27493;</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果&#24744;在没有</span><span lang=JA style='font-family:SimSun'>&#36873;&#25321;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>任</span><span lang=JA
+style='font-family:SimSun'>&#21153;&#26102;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>按下同&#27493;按</span><span
+lang=JA style='font-family:SimSun'>&#38062;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，任</span><span lang=JA style='font-family:SimSun'>&#21153;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>将&#24320;始同&#27493;。</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>同&#27493;任</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#21153;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>名称</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>同&#27493;任</span><span lang=JA style='font-family:SimSun'>&#21153;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>的名称。</span><span lang=JA> </span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>名称不区分大小写。</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>同&#27493;</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#31867;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>型</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>从</span><span lang=JA style='font-family:SimSun'>&#38236;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>像、&#22797;制、移</span><span lang=JA
+style='font-family:SimSun'>&#21160;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>或存档中</span><span
+lang=JA style='font-family:SimSun'>&#36873;&#25321;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>一&#31181;方法。</span><span lang=JA> </span><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>同&#27493;是在一个方向上</span><span lang=JA
+style='font-family:SimSun'>&#36827;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>行的，从主站到目</span><span
+lang=JA style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>站。</span></p>
+
+<p class=MsoNormal style='margin-left:40.05pt;text-indent:-28.05pt'><span
+style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-family:SimSun'>&#38236;</span><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>像</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>将主站</span><span lang=JA style='font-family:SimSun'>&#20391;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>的目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>和文件</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>差</span><span lang=JA
+style='font-family:SimSun'>&#39069;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>拷</span><span
+lang=JA style='font-family:SimSun'>&#36125;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>（</span>*1<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>）到目</span><span
+lang=JA style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>站</span><span lang=JA style='font-family:SimSun'>&#20391;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，&#22797;制完成后，从目</span><span lang=JA
+style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>站</span><span
+lang=JA style='font-family:SimSun'>&#20391;&#21024;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>除主站</span><span lang=JA style='font-family:SimSun'>&#20391;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>不存在的文件和目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span></p>
+
+<p class=MsoNormal style='margin-left:14.65pt;text-indent:-2.65pt'><span
+style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>移</span><span
+lang=JA style='font-family:SimSun'>&#21160;</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>将主控端目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>和文件差</span><span lang=JA
+style='font-family:SimSun'>&#39069;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>&#22797;制到目</span><span
+lang=JA style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>端，</span><span lang=JA style='font-family:SimSun'>&#21024;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>除主控端被&#22797;制到目</span><span lang=JA
+style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>端的文件。</span><span
+lang=JA> </span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>但是，如果主文件和目</span><span
+lang=JA style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>文件的名称、文件大小和修改日期相同，</span><span lang=JA style='font-family:
+SimSun'>&#21017;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>主文件会被</span><span
+lang=JA style='font-family:SimSun'>&#21024;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>除，而不会被&#22797;制。</span></p>
+
+<p class=MsoNormal style='margin-left:14.65pt;text-indent:-2.65pt'><span
+style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>&#22797;制</span></p>
+
+<p class=MsoNormal style='margin-left:44.5pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>差分将主目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>中的文件&#22797;制到目</span><span lang=JA
+style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>目</span><span
+lang=JA style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>中。</span></p>
+
+<p class=MsoNormal style='margin-left:14.65pt;text-indent:-2.65pt'><span
+style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>封存</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果主目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>中的照片和</span><span lang=JA
+style='font-family:SimSun'>&#35270;&#39057;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>是在</span><span
+lang=JA style='font-family:SimSun'>&#25191;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>行存档前</span>7<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>天或</span>30<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>天之前拍</span><span lang=JA
+style='font-family:SimSun'>&#25668;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>的，</span><span
+lang=JA style='font-family:SimSun'>&#21017;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>将其移</span><span lang=JA style='font-family:SimSun'>&#21160;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>到目</span><span lang=JA
+style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>目</span><span
+lang=JA style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>中。</span><span lang=JA> </span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>但是，&#20320;不能使用</span>ZIP<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>来&#30596;准。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:12.0pt'>*1 <span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>当</span><span lang=JA style='font-family:
+SimSun'>&#28385;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>足以下三个条件中的任何一个</span><span
+lang=JA style='font-family:SimSun'>&#26102;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，</span><span lang=JA style='font-family:SimSun'>&#35813;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>文件将被判定</span><span lang=JA
+style='font-family:SimSun'>&#20026;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>差&#24322;文件，并将被&#22797;制或移</span><span
+lang=JA style='font-family:SimSun'>&#21160;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>。</span><span lang=JA> </span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>但是，文件大小和最后修改</span><span lang=JA style='font-family:SimSun'>&#26102;&#38388;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>可以被同&#27493;任</span><span lang=JA
+style='font-family:SimSun'>&#21153;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>的</span><span
+lang=JA style='font-family:SimSun'>&#36873;&#39033;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>忽略。</span></p>
+
+<p class=MsoListParagraph style='margin-left:48.0pt;text-indent:-18.0pt'><span
+style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><span lang=JA style='font-family:SimSun'>&#35813;</span><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>文件不存在。</span></p>
+
+<p class=MsoListParagraph style='margin-left:48.0pt;text-indent:-18.0pt'><span
+style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>不同的文件大小。</span></p>
+
+<p class=MsoListParagraph style='margin-left:48.0pt;text-indent:-18.0pt'><span
+style='font-family:Wingdings'>§<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>最后修改的日期和</span><span
+lang=JA style='font-family:SimSun'>&#26102;&#38388;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>相差</span>3<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>秒以上（秒数可以通</span><span
+lang=JA style='font-family:SimSun'>&#36807;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>同&#27493;任</span><span lang=JA style='font-family:SimSun'>&#21153;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>中的</span><span lang=JA
+style='font-family:SimSun'>&#36873;&#39033;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>更改）。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>交</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#25442;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>源和目</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#26631;</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt;text-indent:9.0pt'><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>替</span><span lang=JA style='font-family:
+SimSun'>&#25442;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>主文件</span><span
+lang=JA style='font-family:SimSun'>&#22841;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>和目</span><span lang=JA style='font-family:SimSun'>&#26631;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>文件</span><span lang=JA
+style='font-family:SimSun'>&#22841;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>的内容。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>主文件</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#22841;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>（源）</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>指定同&#27493;的源目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span><span lang=JA> </span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>点</span><span lang=JA
+style='font-family:SimSun'>&#20987;&#22270;&#26631;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>，</span><span
+lang=JA style='font-family:SimSun'>&#26174;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>示文件</span><span lang=JA style='font-family:SimSun'>&#22841;&#32534;&#36753;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>界面。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>目</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#26631;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>文件</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#22841;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>（目</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#26631;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>）</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>&#24744;可以指定目</span><span lang=JA style='font-family:SimSun'>&#26631;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span><span
+lang=JA> </span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>点</span><span
+lang=JA style='font-family:SimSun'>&#20987;&#22270;&#26631;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，</span><span lang=JA style='font-family:SimSun'>&#26174;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>示</span> &quot;<span lang=JA
+style='font-family:SimSun'>&#32534;&#36753;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>目</span><span
+lang=JA style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>文件</span><span lang=JA style='font-family:SimSun'>&#22841;</span>
+&quot;<span lang=JA style='font-family:SimSun'>&#39029;</span><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>面。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:SimSun'>&#36873;&#25321;</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>要同&#27493;的文件</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果未</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>中，所有文件将被同&#27493;。</span><span lang=JA> </span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果</span><span lang=JA
+style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>中，可以</span><span
+lang=JA style='font-family:SimSun'>&#36873;&#25321;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>要同&#27493;的文件。</span></p>
+
+<p class=MsoNormal style='margin-left:33.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>同&#27493;音</span><span
+lang=JA style='font-family:SimSun'>&#39057;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>文件</span></p>
+
+<p class=MsoNormal style='margin-left:12.3pt;text-indent:20.7pt'><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>如果</span><span lang=JA style='font-family:
+SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>中，以下文件</span><span
+lang=JA style='font-family:SimSun'>&#25193;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>展名将被同&#27493;。</span></p>
+
+<p class=MsoNormal style='margin-left:33.0pt'>aac, aif, aifc, aiff, flac, kar,
+m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav</p>
+
+<p class=MsoNormal style='margin-left:33.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>同&#27493;</span><span
+lang=JA style='font-family:SimSun'>&#22270;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>像文件</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt;text-indent:21.0pt'><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>如果</span><span lang=JA style='font-family:
+SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>中，以下文件</span><span
+lang=JA style='font-family:SimSun'>&#25193;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>展名将被同&#27493;。</span></p>
+
+<p class=MsoNormal style='margin-left:33.0pt'>bmp, cgm, djv, djvu, gif, ico,
+ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp,
+xbm, xpm, xwd</p>
+
+<p class=MsoNormal style='margin-left:33.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>同&#27493;</span><span
+lang=JA style='font-family:SimSun'>&#35270;&#39057;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>文件</span></p>
+
+<p class=MsoNormal style='margin-left:12.3pt;text-indent:20.7pt'><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>如果</span><span lang=JA style='font-family:
+SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>中，以下文件</span><span
+lang=JA style='font-family:SimSun'>&#25193;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>展名将被同&#27493;。</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt;text-indent:21.0pt'>avi, m4u, mov,
+mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv</p>
+
+<p class=MsoNormal style='margin-left:33.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>档案</span><span
+lang=JA style='font-family:SimSun'>&#36807;&#28388;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>器</span></p>
+
+<p class=MsoNormal style='margin-left:12.3pt;text-indent:20.7pt'><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>&#20320;也可以</span><span lang=JA style='font-family:
+SimSun'>&#36873;&#25321;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>&#20320;要同&#27493;的文件的名称和</span><span
+lang=JA style='font-family:SimSun'>&#25193;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>展名，除了上述的</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:SimSun'>&#36873;&#25321;</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>子目</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#24405;</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果不勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，所有子目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>将被同&#27493;。</span><span
+lang=JA> </span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果勾</span><span
+lang=JA style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，</span><span lang=JA style='font-family:SimSun'>&#21017;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>会出</span><span lang=JA
+style='font-family:SimSun'>&#29616;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>一个目</span><span
+lang=JA style='font-family:SimSun'>&#24405;&#36807;&#28388;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>按</span><span lang=JA style='font-family:SimSun'>&#38062;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span></p>
+
+<p class=MsoNormal style='margin-left:33.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image002.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>目</span><span
+lang=JA style='font-family:SimSun'>&#24405;&#36807;&#28388;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>器</span></p>
+
+<p class=MsoNormal style='margin-left:33.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>&#24744;可以</span><span lang=JA style='font-family:SimSun'>&#36873;&#25321;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>要同&#27493;的目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span><span
+lang=JA> </span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>点</span><span
+lang=JA style='font-family:SimSun'>&#20987;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>此按</span><span lang=JA style='font-family:SimSun'>&#38062;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，</span><span lang=JA
+style='font-family:SimSun'>&#26174;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>示目</span><span
+lang=JA style='font-family:SimSun'>&#24405;&#31579;&#36873;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>器的</span><span lang=JA style='font-family:SimSun'>&#32534;&#36753;&#39029;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>面。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:SimSun'>&#20165;</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>在充</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#30005;&#26102;&#25191;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>行同&#27493;任</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#21153;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>只有在充</span><span lang=JA style='font-family:SimSun'>&#30005;&#26102;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>才能&#24320;始同&#27493;。</span><span lang=JA> </span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果&#24744;在</span><span lang=JA
+style='font-family:SimSun'>&#30005;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>池未充</span><span
+lang=JA style='font-family:SimSun'>&#30005;&#26102;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>&#21551;</span><span lang=JA style='font-family:SimSun'>&#21160;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>同&#27493;，</span><span lang=JA
+style='font-family:SimSun'>&#21017;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>会出</span><span
+lang=JA style='font-family:SimSun'>&#29616;&#38169;&#35823;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，并且不会&#21551;</span><span lang=JA style='font-family:SimSun'>&#21160;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>后</span><span lang=JA
+style='font-family:SimSun'>&#32493;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>同&#27493;任</span><span
+lang=JA style='font-family:SimSun'>&#21153;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>同&#27493;主目</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#24405;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>根目</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#24405;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>中的文件（如果未</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#36873;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>中，</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#21017;&#20165;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>同&#27493;文件</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#22841;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>及其文件</span><span
+style='font-size:12.0pt'>/</span><span lang=JA style='font-size:12.0pt;
+font-family:"ＭＳ 明朝","serif"'>子文件</span><span lang=JA style='font-size:12.0pt;
+font-family:SimSun'>&#22841;</span><span lang=JA style='font-size:12.0pt;font-family:
+"ＭＳ 明朝","serif"'>）。</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，</span><span lang=JA
+style='font-family:SimSun'>&#21017;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>只</span><span
+lang=JA style='font-family:SimSun'>&#22788;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>理主文件</span><span lang=JA style='font-family:SimSun'>&#22841;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>中指定目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>中的文件和子目</span><span
+lang=JA style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>及子目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>中的文件。</span><span lang=JA> </span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果不勾</span><span lang=JA
+style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>，</span><span
+lang=JA style='font-family:SimSun'>&#21017;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>只</span><span lang=JA style='font-family:SimSun'>&#22788;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>理主文件</span><span lang=JA
+style='font-family:SimSun'>&#22841;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>中指定目</span><span
+lang=JA style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>下的子目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>和子目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>中的文件。</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>例如，如果内部存</span><span lang=JA style='font-family:SimSun'>&#20648;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>的根目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>是主目</span><span
+lang=JA style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，并且要同&#27493;的目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>是由目</span><span lang=JA
+style='font-family:SimSun'>&#24405;&#36873;&#25321;&#36807;&#28388;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>器指定的，不勾</span><span
+lang=JA style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，根目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>下的文件将被排除在外。</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
+page-break-after:avoid'><span style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>覆盖</span><span
+style='font-size:12.0pt'>/</span><span lang=JA style='font-size:12.0pt;
+font-family:SimSun'>&#21024;</span><span lang=JA style='font-size:12.0pt;font-family:
+"ＭＳ 明朝","serif"'>除之前&#30830;</span><span lang=JA style='font-size:12.0pt;font-family:
+SimSun'>&#35748;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;page-break-after:avoid'><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA
+style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>，在</span><span
+lang=JA style='font-family:SimSun'>&#21024;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>除和覆盖文件之前，将</span><span lang=JA style='font-family:SimSun'>&#26174;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>示一个&#30830;</span><span lang=JA
+style='font-family:SimSun'>&#35748;&#23545;&#35805;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>框。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:12.0pt'>Wifi AP</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#36873;&#39033;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>：</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果没有</span><span lang=JA style='font-family:SimSun'>&#36830;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>接到接入点，</span>&quot;<span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>与</span>AP<span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>同&#27493;</span> &quot;<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>将以</span><span
+lang=JA style='font-family:SimSun'>&#38169;&#35823;&#32456;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>止。</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>接入点列表</span> &quot;<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>允</span><span
+lang=JA style='font-family:SimSun'>&#35768;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>&#24744;在</span><span lang=JA style='font-family:SimSun'>&#36830;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>接到特定接入点</span><span lang=JA
+style='font-family:SimSun'>&#26102;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>&#24320;始同&#27493;。</span><span
+lang=JA> </span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>点</span><span
+lang=JA style='font-family:SimSun'>&#20987;</span> &quot;<span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>无</span><span lang=JA style='font-family:
+SimSun'>&#32447;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>局域网接入点列表</span>
+&quot;<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>按</span><span lang=JA
+style='font-family:SimSun'>&#38062;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>，</span><span
+lang=JA style='font-family:SimSun'>&#36755;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>入接入点名称。</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
+page-break-after:avoid'><span style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>如果</span><span
+style='font-size:12.0pt'>WLAN</span><span lang=JA style='font-size:12.0pt;
+font-family:"ＭＳ 明朝","serif"'>未</span><span lang=JA style='font-size:12.0pt;
+font-family:SimSun'>&#36830;</span><span lang=JA style='font-size:12.0pt;font-family:
+"ＭＳ 明朝","serif"'>接到指定的接入点，或者</span><span style='font-size:12.0pt'>WLAN IP</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>与指定的</span><span
+style='font-size:12.0pt'>IP</span><span lang=JA style='font-size:12.0pt;
+font-family:"ＭＳ 明朝","serif"'>地址不匹配，</span><span lang=JA style='font-size:12.0pt;
+font-family:SimSun'>&#21017;</span><span lang=JA style='font-size:12.0pt;font-family:
+"ＭＳ 明朝","serif"'>跳</span><span lang=JA style='font-size:12.0pt;font-family:
+SimSun'>&#36807;</span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>任</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#21153;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>。</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;page-break-after:avoid'><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>勾</span><span lang=JA
+style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>后，如果不</span><span
+lang=JA style='font-family:SimSun'>&#28385;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>足条件，</span><span lang=JA style='font-family:SimSun'>&#21017;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>不作</span><span lang=JA
+style='font-family:SimSun'>&#20026;&#38169;&#35823;&#22788;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>理，&#21551;</span><span
+lang=JA style='font-family:SimSun'>&#21160;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>后</span><span lang=JA style='font-family:SimSun'>&#32493;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>任</span><span lang=JA
+style='font-family:SimSun'>&#21153;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;page-break-after:avoid'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
+page-break-after:avoid'><span style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>允</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#35768;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>与所有</span><span
+style='font-size:12.0pt'>IP</span><span lang=JA style='font-size:12.0pt;
+font-family:"ＭＳ 明朝","serif"'>地址同&#27493;（包括公用）</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;page-break-after:avoid'><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>勾</span><span lang=JA
+style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>此</span><span
+lang=JA style='font-family:SimSun'>&#36873;&#39033;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，&#24744;可以与私人地址以外的地址同&#27493;。</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:SimSun'>&#26174;</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>示高</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#32423;&#36873;&#39033;</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt;text-indent:9.0pt'><b><u><span
+lang=JA style='font-family:SimSun;color:red'>&#20165;</span></u></b><b><u><span
+lang=JA style='font-family:"ＭＳ 明朝","serif";color:red'>在</span></u></b><b><u><span
+lang=JA style='font-family:SimSun;color:red'>&#35774;</span></u></b><b><u><span
+lang=JA style='font-family:"ＭＳ 明朝","serif";color:red'>置</span></u></b><b><u><span
+lang=JA style='font-family:SimSun;color:red'>&#35814;</span></u></b><b><u><span
+lang=JA style='font-family:"ＭＳ 明朝","serif";color:red'>情</span></u></b><b><u><span
+lang=JA style='font-family:SimSun;color:red'>&#26102;</span></u></b><b><u><span
+lang=JA style='font-family:"ＭＳ 明朝","serif";color:red'>使用以下</span></u></b><b><u><span
+lang=JA style='font-family:SimSun;color:red'>&#36873;&#39033;</span></u></b><b><u><span
+lang=JA style='font-family:"ＭＳ 明朝","serif";color:red'>。</span></u></b></p>
+
+<p class=MsoNormal><b><u><span style='color:red'><span style='text-decoration:
+ none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
+page-break-after:avoid'><span style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>包括子目</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#24405;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;page-break-after:avoid'><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA
+style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>，同&#27493;</span><span
+lang=JA style='font-family:SimSun'>&#36807;&#28388;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>器中</span><span lang=JA style='font-family:SimSun'>&#36873;&#25321;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>的子目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>将被同&#27493;。</span><span
+lang=JA> </span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果不勾</span><span
+lang=JA style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，子目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>将不会被同&#27493;。</span></p>
+
+<p class=MsoNormal style='page-break-after:avoid'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
+page-break-after:avoid'><span style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>包括空目</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#24405;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;page-break-after:avoid'><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA
+style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>，它将同&#27493;空目</span><span
+lang=JA style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>。</span> (<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>在目</span><span
+lang=JA style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>上</span><span lang=JA style='font-family:SimSun'>&#21019;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>建空目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span>)</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>包括</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#38544;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>藏目</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#24405;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>此框，将同&#27493;</span><span lang=JA
+style='font-family:SimSun'>&#38544;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>藏目</span><span
+lang=JA style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>。</span> (<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>在安卓系</span><span
+lang=JA style='font-family:SimSun'>&#32479;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>中，</span><span lang=JA style='font-family:SimSun'>&#38544;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>藏目</span><span lang=JA
+style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>的名称是</span>&quot;<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span> (<span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>注意，同&#27493;</span><span lang=JA style='font-family:
+SimSun'>&#21019;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>建的目</span><span
+lang=JA style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>不会被</span><span lang=JA style='font-family:SimSun'>&#38544;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>藏，因</span><span lang=JA
+style='font-family:SimSun'>&#20026;</span>Windows<span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>和</span>Samba<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>使用的是目</span><span
+lang=JA style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>位而不是目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>名。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>包括</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#38544;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>藏文件</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>此框，可以同&#27493;</span><span lang=JA
+style='font-family:SimSun'>&#38544;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>藏的文件。</span>
+(<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>在安卓系</span><span lang=JA
+style='font-family:SimSun'>&#32479;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>中，</span><span
+lang=JA style='font-family:SimSun'>&#38544;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>藏文件的名字是</span>&quot;<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span><span
+lang=JA> </span><span lang=JA style='font-family:SimSun'>&#34429;</span><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>然它以</span> &quot;*&quot;<span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>&#24320;</span><span lang=JA style='font-family:
+SimSun'>&#22836;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>，但同&#27493;</span><span
+lang=JA style='font-family:SimSun'>&#21019;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>建的文件不会被</span><span lang=JA style='font-family:SimSun'>&#38544;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>藏，因</span><span lang=JA
+style='font-family:SimSun'>&#20026;</span>Windows<span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>和</span>Samba<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>使用目</span><span
+lang=JA style='font-family:SimSun'>&#24405;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>位而不是文件名。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>重</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#35797;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>网</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#32476;&#38169;&#35823;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+SimSun'>&#20165;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>在</span>SMB<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>服</span><span lang=JA
+style='font-family:SimSun'>&#21153;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>器出</span><span
+lang=JA style='font-family:SimSun'>&#38169;&#26102;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>重</span><span lang=JA style='font-family:SimSun'>&#35797;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>同&#27493;。</span><span lang=JA> </span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>最多重</span><span lang=JA
+style='font-family:SimSun'>&#35797;</span>3<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>次，&#27599;次重</span><span
+lang=JA style='font-family:SimSun'>&#35797;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>都是在出</span><span lang=JA style='font-family:SimSun'>&#38169;</span>30<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>秒后</span><span lang=JA
+style='font-family:SimSun'>&#36827;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>行。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>使用增</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#24378;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>的目</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#24405;&#36873;&#25321;&#36807;&#28388;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>器</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果在排除上</span><span lang=JA style='font-family:SimSun'>&#32423;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>目</span><span lang=JA
+style='font-family:SimSun'>&#24405;&#26102;&#36873;&#25321;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>了下</span><span
+lang=JA style='font-family:SimSun'>&#32423;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，</span><span lang=JA
+style='font-family:SimSun'>&#21017;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>下</span><span
+lang=JA style='font-family:SimSun'>&#32423;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>将成</span><span lang=JA
+style='font-family:SimSun'>&#20026;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>同&#27493;的目</span><span
+lang=JA style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>使用新的</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#36807;&#28388;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>器版本</span><span
+style='font-size:12.0pt'>2</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>勾</span><span lang=JA style='font-family:SimSun'>&#36873;&#35813;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>框以使用新的</span><span lang=JA
+style='font-family:SimSun'>&#36807;&#28388;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>器。</span><span
+lang=JA> </span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>可能会与旧版</span><span
+lang=JA style='font-family:SimSun'>&#28388;&#38236;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>有不同的表</span><span lang=JA style='font-family:SimSun'>&#29616;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，所以</span><span lang=JA
+style='font-family:SimSun'>&#35831;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>在使用前</span><span
+lang=JA style='font-family:SimSun'>&#24443;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>底</span><span lang=JA style='font-family:SimSun'>&#27979;&#35797;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:SimSun'>&#21024;</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>除</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#36807;&#28388;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>器排除的目</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#24405;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>和文件</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>中，</span><span lang=JA
+style='font-family:SimSun'>&#36807;&#28388;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>器将</span><span
+lang=JA style='font-family:SimSun'>&#21024;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>除被排除的目</span><span lang=JA style='font-family:SimSun'>&#24405;</span>/<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>文件。</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>同&#27493;之前</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#21024;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>除文件（</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#20165;&#38236;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>像模式）</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>后，首先</span><span lang=JA
+style='font-family:SimSun'>&#21024;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>除主文件</span><span
+lang=JA style='font-family:SimSun'>&#22841;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>中不存在的目</span><span lang=JA style='font-family:SimSun'>&#24405;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>和文件，然后&#22797;制主文件</span><span lang=JA
+style='font-family:SimSun'>&#22841;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>和不同文件大小、最后修改</span><span
+lang=JA style='font-family:SimSun'>&#26102;&#38388;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>的文</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>件。</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果主文件</span><span lang=JA style='font-family:SimSun'>&#22841;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>是</span>SMB<span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>，</span><span lang=JA style='font-family:
+SimSun'>&#21017;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>会通</span><span
+lang=JA style='font-family:SimSun'>&#36807;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>网</span><span lang=JA style='font-family:SimSun'>&#32476;&#25195;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>描文件，从而增加</span><span lang=JA
+style='font-family:SimSun'>&#22788;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>理</span><span
+lang=JA style='font-family:SimSun'>&#26102;&#38388;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>。</span><span lang=JA> </span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果可能的</span><span lang=JA style='font-family:SimSun'>&#35805;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，</span>SMB<span lang=JA
+style='font-family:SimSun'>&#21327;&#35758;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>使用</span>
+&quot;SMBv2/3&quot;<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
+page-break-after:avoid'><span style='font-size:12.0pt;font-family:Symbol'><img
+width=13 height=13 src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>不要将目</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#26631;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>文件的最后修改</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#26102;&#38388;&#35774;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>置</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#20026;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>与源文件匹配</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;page-break-after:avoid'><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果</span>SmbFile#setLastModified()<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>或</span>File#setLastModified()<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>失</span><span lang=JA
+style='font-family:SimSun'>&#36133;&#21017;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>&#21551;用。</span><span
+lang=JA> </span><span lang=JA style='font-family:SimSun'>&#36825;</span><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>将决定一个文件的差&#24322;是否存在以及文件的大小。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>从</span><span
+style='font-size:12.0pt'>SMBSync2</span><span lang=JA style='font-size:12.0pt;
+font-family:SimSun'>&#24212;</span><span lang=JA style='font-size:12.0pt;font-family:
+"ＭＳ 明朝","serif"'>用程序自定</span><span lang=JA style='font-size:12.0pt;font-family:
+SimSun'>&#20041;</span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>列表中</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#33719;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>取文件的最后修改</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#26102;&#38388;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果&#27599;次都是&#22797;制所有的文件，可以</span><span lang=JA style='font-family:SimSun'>&#23581;&#35797;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>一下，用</span>SMBSync2<span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>自己的方式</span><span lang=JA style='font-family:
+SimSun'>&#32500;&#25252;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>本地文件的最后修改日期，</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>而不使用</span>Java
+File#setLastModified()<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>将</span><span
+style='font-size:12.0pt'>SMB I / O</span><span lang=JA style='font-size:12.0pt;
+font-family:"ＭＳ 明朝","serif"'>写</span><span lang=JA style='font-size:12.0pt;
+font-family:SimSun'>&#32531;</span><span lang=JA style='font-size:12.0pt;font-family:
+"ＭＳ 明朝","serif"'>冲区限制</span><span lang=JA style='font-size:12.0pt;font-family:
+SimSun'>&#20026;</span><span style='font-size:12.0pt'>16 KB</span></p>
+
+<p class=MsoNormal style='margin-left:12.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果&#20320;在写入</span>PC/NAS<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>文件</span><span
+lang=JA style='font-family:SimSun'>&#22841;&#26102;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>出</span><span lang=JA style='font-family:SimSun'>&#29616;</span>
+&quot;<span lang=JA style='font-family:SimSun'>&#35775;&#38382;</span><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>被拒</span><span lang=JA style='font-family:
+SimSun'>&#32477;</span> &quot;<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>的</span><span
+lang=JA style='font-family:SimSun'>&#38169;&#35823;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，</span><span lang=JA style='font-family:SimSun'>&#35831;&#23581;&#35797;&#36825;&#26679;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>做。</span><span lang=JA> </span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA
+style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>，</span><span
+lang=JA style='font-family:SimSun'>&#21017;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>限制</span>IO<span lang=JA style='font-family:SimSun'>&#32531;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>冲区</span><span lang=JA
+style='font-family:SimSun'>&#20026;</span>16KB<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>，用于</span><span
+lang=JA style='font-family:SimSun'>&#36828;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>程文件写入。</span><span lang=JA> </span><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>但是，性能会有所下降。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>使用文件大小&#30830;定文件是否不同</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果</span><span lang=JA style='font-family:SimSun'>&#26816;&#26597;&#26102;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>文件大小不同，</span><span lang=JA
+style='font-family:SimSun'>&#21017;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>判断</span><span
+lang=JA style='font-family:SimSun'>&#20026;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>差&#24322;文件。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:SimSun'>&#20165;</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>大小比</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#36739;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>（</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#20165;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>当源大小大于目</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#26631;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>大小</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#26102;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>，文件才被</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#35270;&#20026;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>不同）</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，</span><span lang=JA
+style='font-family:SimSun'>&#21017;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>只有在主文件大小</span><span
+lang=JA style='font-family:SimSun'>&#36739;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>大</span><span lang=JA style='font-family:SimSun'>&#26102;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>才会同&#27493;。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>使用上次修改</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#26102;&#38388;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>来&#30830;定文件是否不同</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，如果文件的最后修改</span><span lang=JA
+style='font-family:SimSun'>&#26102;&#38388;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>不同，</span><span
+lang=JA style='font-family:SimSun'>&#21017;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>判断</span><span lang=JA style='font-family:SimSun'>&#20026;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>差分文件。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>源文件和目</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#26631;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>文件之</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#38388;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>的最小允</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#35768;&#26102;&#38388;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>差（以秒</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#20026;&#21333;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>位）</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>在</span>1<span lang=JA style='font-family:"ＭＳ 明朝","serif"'>秒、</span>3<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>秒和</span>10<span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>秒之</span><span lang=JA style='font-family:
+SimSun'>&#38388;&#36873;&#25321;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>。</span> (<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>如果文件最后修改的</span><span lang=JA
+style='font-family:SimSun'>&#26102;&#38388;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>差在</span><span
+lang=JA style='font-family:SimSun'>&#36873;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>定的</span><span lang=JA style='font-family:SimSun'>&#26102;&#38388;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>差内，</span><span lang=JA
+style='font-family:SimSun'>&#21017;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>不做修改。</span>)</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>如果目</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#26631;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>文件比源文件新，</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#35831;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>不要覆盖</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>，只有当主文</span><span lang=JA
+style='font-family:"ＭＳ 明朝","serif"'>件比目</span><span lang=JA style='font-family:
+SimSun'>&#26631;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>文件新</span><span
+lang=JA style='font-family:SimSun'>&#26102;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>，才会覆盖文件，</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>即使文件大小和最后修改</span><span
+lang=JA style='font-family:SimSun'>&#26102;&#38388;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>不同。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>忽略文件之</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#38388;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>的夏令</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#26102;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>差&#24322;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>它会忽略夏令</span><span lang=JA
+style='font-family:SimSun'>&#26102;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>和</span><span
+lang=JA style='font-family:SimSun'>&#26631;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>准</span><span lang=JA style='font-family:SimSun'>&#26102;&#38388;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>的</span><span lang=JA
+style='font-family:SimSun'>&#26102;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>差。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:SimSun'>&#36873;&#25321;</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>夏令</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#26102;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>偏移量（分</span><span lang=JA
+style='font-size:12.0pt;font-family:SimSun'>&#38047;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>）</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>指定要忽略的</span><span lang=JA style='font-family:SimSun'>&#26102;&#38388;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>差。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-size:12.0pt;font-family:Symbol'><img width=13 height=13
+src="SMBSync2_Help_ZH_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>跳</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#36807;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>包含无效字符（</span><span
+style='font-size:12.0pt'>&quot;</span><span lang=JA style='font-size:12.0pt;
+font-family:"ＭＳ 明朝","serif"'>，</span><span style='font-size:12.0pt'>:</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>，</span><span
+style='font-size:12.0pt'>\</span><span lang=JA style='font-size:12.0pt;
+font-family:"ＭＳ 明朝","serif"'>，</span><span style='font-size:12.0pt'>*</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>，</span><span
+style='font-size:12.0pt'>&lt;</span><span lang=JA style='font-size:12.0pt;
+font-family:"ＭＳ 明朝","serif"'>，</span><span style='font-size:12.0pt'>&gt;, |</span><span
+lang=JA style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>）的目</span><span
+lang=JA style='font-size:12.0pt;font-family:SimSun'>&#24405;</span><span lang=JA
+style='font-size:12.0pt;font-family:"ＭＳ 明朝","serif"'>和文件名</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>如果勾</span><span lang=JA style='font-family:SimSun'>&#36873;</span><span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>此框，系</span><span lang=JA
+style='font-family:SimSun'>&#32479;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>将不会</span><span
+lang=JA style='font-family:SimSun'>&#22788;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>理包含不可用字符的目</span><span lang=JA style='font-family:SimSun'>&#24405;</span>/<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>文件，而是</span><span lang=JA
+style='font-family:SimSun'>&#26174;</span><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>示一条警告信息，并</span><span
+lang=JA style='font-family:SimSun'>&#22788;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>理下一个目</span><span lang=JA style='font-family:SimSun'>&#24405;</span>/<span
+lang=JA style='font-family:"ＭＳ 明朝","serif"'>文件。</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><span lang=JA style='font-family:"ＭＳ 明朝","serif"'>更多信息，</span><span
+lang=JA style='font-family:SimSun'>&#35831;</span><span lang=JA style='font-family:
+"ＭＳ 明朝","serif"'>看下文。</span></p>
+
+<p class=MsoNormal><a
+href="https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing">https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing</a></p>
+
+</div>
+
+</body>
+
+</html>
