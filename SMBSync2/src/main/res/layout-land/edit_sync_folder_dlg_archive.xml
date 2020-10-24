@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="*.gif, *.jpg, *.png, *.mp4, *.mov"
+                android:text="*.dng, *.gif, *.jpg, *.png, *.mp4, *.mov"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
             <!--android:checkMark="?android:attr/listChoiceIndicatorMultiple"-->
 

@@ -544,14 +544,17 @@ public class SyncThreadArchiveFile {
             if (!sti.isArchiveUseRename()) {//Renameしない
                 JcifsFile jf=new JcifsFile(converted_to_path+"/"+item.file_name, stwa.targetAuth);
                 if (jf.exists()) {
-                    String new_name=createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
-                    if (new_name.equals("")) {
-                        stwa.util.addLogMsg("E","Archive sequence number overflow error.");
-                        sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
-                        break;
-                    } else {
-                        jf=new JcifsFile(new_name, stwa.targetAuth);
-                        sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath());
+                    if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, (File)item.file, jf, stwa.ALL_COPY) &&
+                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, ((File)item.file).getAbsolutePath(), ((File)item.file).lastModified(), jf.getLastModified())) {
+                        String new_name = createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path + "/" + to_file_name, to_file_ext);
+                        if (new_name.equals("")) {
+                            stwa.util.addLogMsg("E", "Archive sequence number overflow error.");
+                            sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                            break;
+                        } else {
+                            jf = new JcifsFile(new_name, stwa.targetAuth);
+                            sync_result = moveFileInternalToSmb(stwa, sti, item.full_path, (File) item.file, jf, jf.getPath());
+                        }
                     }
                 } else {
                     sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath());
@@ -562,14 +565,17 @@ public class SyncThreadArchiveFile {
 
                 JcifsFile jf=new JcifsFile(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext, stwa.targetAuth);
                 if (jf.exists()) {
-                    String new_name=createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
-                    if (new_name.equals("")) {
-                        stwa.util.addLogMsg("E","Archive sequence number overflow error.");
-                        sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
-                        break;
-                    } else {
-                        jf=new JcifsFile(new_name, stwa.targetAuth);
-                        sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath());
+                    if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, (File)item.file, jf, stwa.ALL_COPY) &&
+                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, ((File)item.file).getAbsolutePath(), ((File)item.file).lastModified(), jf.getLastModified())) {
+                        String new_name = createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path + "/" + temp_dir + to_file_name + to_file_seqno, to_file_ext);
+                        if (new_name.equals("")) {
+                            stwa.util.addLogMsg("E", "Archive sequence number overflow error.");
+                            sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                            break;
+                        } else {
+                            jf = new JcifsFile(new_name, stwa.targetAuth);
+                            sync_result = moveFileInternalToSmb(stwa, sti, item.full_path, (File) item.file, jf, jf.getPath());
+                        }
                     }
                 } else {
                     sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath());
@@ -1976,14 +1982,17 @@ public class SyncThreadArchiveFile {
             if (!sti.isArchiveUseRename()) {
                 JcifsFile tf=new JcifsFile(converted_to_path+"/"+item.file_name, stwa.targetAuth);
                 if (tf.exists()) {
-                    String new_name=createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
-                    if (new_name.equals("")) {
-                        stwa.util.addLogMsg("E","Archive sequence number overflow error.");
-                        sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
-                        break;
-                    } else {
-                        tf=new JcifsFile(new_name, stwa.targetAuth);
-                        sync_result= moveFileSmbToSmb(stwa, sti, item.full_path, (JcifsFile)item.file, tf, tf.getPath(), new_name);
+                    if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, (File)item.file, tf, stwa.ALL_COPY) &&
+                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, ((File)item.file).getAbsolutePath(), ((File)item.file).lastModified(), tf.getLastModified())) {
+                        String new_name = createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path + "/" + to_file_name, to_file_ext);
+                        if (new_name.equals("")) {
+                            stwa.util.addLogMsg("E", "Archive sequence number overflow error.");
+                            sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                            break;
+                        } else {
+                            tf = new JcifsFile(new_name, stwa.targetAuth);
+                            sync_result = moveFileSmbToSmb(stwa, sti, item.full_path, (JcifsFile) item.file, tf, tf.getPath(), new_name);
+                        }
                     }
                 } else {
                     sync_result= moveFileSmbToSmb(stwa, sti, item.full_path, (JcifsFile)item.file, tf, tf.getPath(), to_file_name);
@@ -1994,14 +2003,17 @@ public class SyncThreadArchiveFile {
 
                 JcifsFile tf=new JcifsFile(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext, stwa.targetAuth);
                 if (tf.exists()) {
-                    String new_name=createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
-                    if (new_name.equals("")) {
-                        stwa.util.addLogMsg("E","Archive sequence number overflow error.");
-                        sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
-                        break;
-                    } else {
-                        tf=new JcifsFile(new_name, stwa.targetAuth);
-                        sync_result= moveFileSmbToSmb(stwa, sti, item.full_path, (JcifsFile)item.file, tf, tf.getPath(), new_name);
+                    if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, (File)item.file, tf, stwa.ALL_COPY) &&
+                            SyncThread.checkMasterFileNewerThanTargetFile(stwa, sti, ((File)item.file).getAbsolutePath(), ((File)item.file).lastModified(), tf.getLastModified())) {
+                        String new_name = createArchiveSmbNewFilePath(stwa, sti, converted_to_path, converted_to_path + "/" + temp_dir + to_file_name + to_file_seqno, to_file_ext);
+                        if (new_name.equals("")) {
+                            stwa.util.addLogMsg("E", "Archive sequence number overflow error.");
+                            sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
+                            break;
+                        } else {
+                            tf = new JcifsFile(new_name, stwa.targetAuth);
+                            sync_result = moveFileSmbToSmb(stwa, sti, item.full_path, (JcifsFile) item.file, tf, tf.getPath(), new_name);
+                        }
                     }
                 } else {
                     sync_result= moveFileSmbToSmb(stwa, sti, item.full_path, (JcifsFile)item.file, tf, tf.getPath(),
