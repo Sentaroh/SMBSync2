@@ -486,6 +486,13 @@ public class SyncThread extends Thread {
                         ", MountPoint=" + sti.getTargetLocalMountPoint() +
                         ", UseTakenDateTime=" + sti.isTargetUseTakenDateTimeToDirectoryNameKeyword(),
                 "");
+        mStwa.util.addDebugMsg(1, "I", "   Archive Suffix=" + sti.getArchiveSuffixOption() +
+                ", Rename file template=" + sti.getArchiveRenameFileTemplate() +
+                ", Rename directory template=" + sti.getArchiveCreateDirectoryTemplate() +
+                ", Use rename=" + sti.isArchiveUseRename() +
+                ", Retntion period=" + sti.getArchiveRetentionPeriod() +
+                ", Create directory=" + sti.isArchiveCreateDirectory() +
+                "");
         mStwa.util.addDebugMsg(1, "I", "   File filter Audio=" + sti.isSyncFileTypeAudio() +
                 ", Image=" + sti.isSyncFileTypeImage() +
                 ", Video=" + sti.isSyncFileTypeVideo() +
