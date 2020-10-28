@@ -160,7 +160,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public String settingNoCompressFileType = DEFAULT_NOCOMPRESS_FILE_TYPE;
     static final public String DEFAULT_NOCOMPRESS_FILE_TYPE =
-            "aac;apk;avi;gif;ico;gz;jar;jpe;jpeg;jpg;m3u;m4a;m4u;mov;movie;mp2;mp3;mpe;mpeg;mpg;mpga;png;qt;ra;ram;svg;tgz;wmv;zip;";
+            "aac;apk;avi;dng;gif;ico;gz;jar;jpe;jpeg;jpg;m3u;m4a;m4u;mov;movie;mp2;mp3;mpe;mpeg;mpg;mpga;png;qt;ra;ram;svg;tgz;wmv;zip;";
 
     public boolean settingSupressAppSpecifiDirWarning = false;
     public boolean settingSupressLocationServiceWarning =false;
