@@ -179,8 +179,8 @@
         <string name="msgs_main_permission_coarse_location_request_msg_api30">SMBSync2需要位置权限才能读取WiFi的SSID。 \n如果指定\"访问点列表\"，则除非授予权限，否则同步任务将失败。请在下一个屏幕上选择\"使用应用程序时\"。</string>
         <string name="msgs_main_permission_background_location_title">后台位置权限</string>
         <string name="msgs_main_permission_background_location_denied_msg">If you specify \"Access point list\" in the task settings, the synchronisation will fail if you don\'t grant permission to Location service. Please allow \"Location Permission\" from the menu.</string>
-        <string name="msgs_main_permission_background_location_request_msg">要读取SMBSync2中的WiFi SSID，必须具有此权限。\n在授予该权限之前，如果在"同步"任务中指定了\" Access Point List \"，则SMBSync2将退出并显示错误。\n在"位置权限"下，选择" \"允许所有时间\"。</string>
-        <string name="msgs_main_permission_background_location_request_msg_api30">要读取SMBSync2中的WiFi SSID，必须具有此权限。\n在授予该权限之前，如果在"同步"任务中指定了\" Access Point List \"，则SMBSync2将退出并显示错误。\n在"位置权限"下，选择" \"允许所有时间\"。</string>
+        <string name="msgs_main_permission_background_location_request_msg">当SMBSync2在外部应用程序或日程表中启动时，需要该权限来读取WiFi SSID。\n在授予该权限之前，如果在"同步"任务中指定了\" Access Point List \"，则SMBSync2将退出并显示错误。\n在"位置权限"下，选择" \"允许所有时间\"。</string>
+        <string name="msgs_main_permission_background_location_request_msg_api30">当SMBSync2在外部应用程序或日程表中启动时，需要该权限来读取WiFi SSID。\n在授予该权限之前，如果在"同步"任务中指定了\" Access Point List \"，则SMBSync2将退出并显示错误。\n在"位置权限"下，选择" \"允许所有时间\"。</string>
         <string name="msgs_main_permission_coarse_location_title">位置权限</string>
         <string name="msgs_main_permission_external_storage_denied_msg">无法启动该应用程序，因为尚未授予您访问内部存储器的权限。</string>
         <string name="msgs_main_permission_external_storage_request_msg">授予访问内部存储的权限，以便能够读取和写入同步的数据以及管理应用程序设置。</string>

@@ -179,8 +179,8 @@
         <string name="msgs_main_permission_coarse_location_request_msg_api30">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。次の画面で「アプリの使用時のみ」を選択してください。</string>
         <string name="msgs_main_permission_background_location_title">背景ロケーション許可</string>
         <string name="msgs_main_permission_background_location_denied_msg">権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。許可を与える場合はメニューから「低精度ロケーション許可」を実行してください。</string>
-        <string name="msgs_main_permission_background_location_request_msg">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\nロケーション許可で「常に許可」を選択してください。</string>
-        <string name="msgs_main_permission_background_location_request_msg_api30">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\n次の画面で「設定で許可してください」をタップして、「常に許可」を選択してください。</string>
+        <string name="msgs_main_permission_background_location_request_msg">外部アプリまたはスケジュールでSMBSync2が起動された際にWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\nロケーション許可で「常に許可」を選択してください。</string>
+        <string name="msgs_main_permission_background_location_request_msg_api30">外部アプリまたはスケジュールでSMBSync2が起動された際にWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\n次の画面で「設定で許可してください」をタップして、「常に許可」を選択してください。</string>
         <string name="msgs_main_permission_coarse_location_title">ロケーション許可</string>
         <string name="msgs_main_permission_external_storage_denied_msg">内部ストレージにアクセスする許可が与えられていないためアプリケーションを起動できません。</string>
         <string name="msgs_main_permission_external_storage_request_msg">内部ストレージに同期するデータや管理用データの読み書きを行うために、内部ストレージにアクセスする許可を与えてください。</string>
