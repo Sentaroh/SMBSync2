@@ -5,8 +5,8 @@
         <string name="msgs_about_dlg_change_btn">Log cambiamenti</string>
         <string name="msgs_about_dlg_privacy_btn">Privacy</string>
         <string name="msgs_dlg_title_about">A proposito di SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_EN_Short.htm</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_EN.htm</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_IT_Short.htm</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_IT.htm</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.htm</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Seleziona impostazioni e task da importare</string>
@@ -44,22 +44,22 @@
         <string name="msgs_export_import_pswd_hint_confirm">Conferma password</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Le password non coincidono.</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync2_Help_EN_task.htm</string>
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_IT_task.htm</string>
         <string name="msgs_help_sync_task_title">Sync Task Help</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_EN_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_IT_folder_internal.htm</string>
         <string name="msgs_help_sync_folder_internal_title">Memoria Interna Help</string>
-        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_EN_folder_sdcard.htm</string>
+        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_IT_folder_sdcard.htm</string>
         <string name="msgs_help_sync_folder_sdcard_title">SDCARD Help</string>
-        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_EN_folder_usb.htm</string>
+        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_IT_folder_usb.htm</string>
         <string name="msgs_help_sync_folder_usb_title">Media USB Help</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_EN_folder_smb.htm</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_IT_folder_smb.htm</string>
         <string name="msgs_help_sync_folder_smb_title">SMB Server Help</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_EN_folder_zip.htm</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_IT_folder_zip.htm</string>
         <string name="msgs_help_sync_folder_zip_title">file ZIP Help</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_EN_task_picture.htm</string>
+        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_IT_task_picture.htm</string>
         <string name="msgs_help_sync_task_picture_title">Sync Task Picture Help</string>
     <!-- Log management -->
-        <string name="msgs_log_management_title">Manage Log Files</string>
+        <string name="msgs_log_management_title">Gestire i file di registro</string>
         <string name="msgs_log_management_label_delete">Elimina log file</string>
         <string name="msgs_log_management_label_share">Condividi log file</string>
         <string name="msgs_log_management_label_select_all">Seleziona tutti log files</string>
@@ -181,7 +181,7 @@
         <string name="msgs_main_permission_background_location_denied_msg">If you specify \"Lista Access point\" in the task impostazioni, the synchronisation will fail if you don\'t grant permission su Location service. Please permetti \"Location Permission\" from the menu.</string>
         <string name="msgs_main_permission_background_location_request_msg">This permission is required su read the WiFi SSID in SMBSync2.\nUntil the permission is granted, SMBSync2 will exit with an error if \"Lista Access point\" is specified in the Sync task.\nUnder Location Permissions, select \"Allow tutti the time\".</string>
         <string name="msgs_main_permission_background_location_request_msg_api30">This permission is required su read the WiFi SSID in SMBSync2.\nUntil the permission is granted, SMBSync2 will exit with an error if \"Lista Access point\" is specified in the Sync task.\nUnder Location Permissions, select \"Allow tutti the time\".</string>
-        <string name="msgs_main_permission_coarse_location_title">Location Permission</string>
+        <string name="msgs_main_permission_coarse_location_title">Autorizzazione di posizione</string>
         <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be avviato a causa you have not been granted permission su access the Memoria Interna.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Grant permission su access Memoria Interna su be able su read e write data that is synchronized e for the management of application impostazioni.</string>
         <string name="msgs_main_permission_external_storage_title">Memoria Interna Permission</string>
@@ -1026,8 +1026,8 @@
             <item>Français (fr)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
-            <item>中文(zh)</item>
-            <item>Italiano(it)</item>
+            <item>中文 (zh)</item>
+            <item>Italiano (it)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1039,12 +1039,12 @@
             <item>6</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
-        <string name="settings_screen_theme_title">Screen Theme</string>
-        <string name="settings_screen_theme_dialog_title">Screen tema</string>
+        <string name="settings_screen_theme_title">Tema schermo</string>
+        <string name="settings_screen_theme_dialog_title">Tema schermo</string>
         <string-array name="settings_screen_theme_list_entries">
-            <item>Standard</item>
-            <item>Light tema</item>
-            <item>Black tema</item>
+            <item>Tema dark</item>
+            <item>Tema di luce</item>
+            <item>Tema nero</item>
         </string-array >
         <string-array name="settings_screen_theme_list_values">
             <item>0</item>
