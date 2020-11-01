@@ -179,8 +179,8 @@
         <string name="msgs_main_permission_coarse_location_request_msg_api30">SMBSync2 привилегии, необходимые для чтения SSID WiFi. \nЕсли вы укажете \"Список точек доступа\" в задаче синхронизации, пока не будет предоставлено разрешение, завершится с ошибкой. Пожалуйста, выберите "Во время использования приложения" на следующем экране.</string>
         <string name="msgs_main_permission_background_location_title">Разрешение на фоновое расположение</string>
         <string name="msgs_main_permission_background_location_denied_msg">Если в настройках задания указать \"Список точек доступа\", то синхронизация будет неудачной, если вы не разрешите Службе Местоположения. Пожалуйста, разрешите \"Разрешение на грубое расположение\" из меню.</string>
-        <string name="msgs_main_permission_background_location_request_msg">Это разрешение необходимо для чтения WiFi SSID в SMBSync2.\nДо тех пор пока разрешение не будет предоставлено, SMBSync2 выйдет с ошибкой, если в задаче синхронизации указан \"Список точек доступа\".\nВ разделе Разрешения на местоположение выберите \"Всегда разрешать\".</string>
-        <string name="msgs_main_permission_background_location_request_msg_api30">Это разрешение необходимо для чтения WiFi SSID в SMBSync2.\nДо тех пор пока разрешение не будет предоставлено, SMBSync2 выйдет с ошибкой, если в задаче синхронизации указан \"Список точек доступа\".\nВ разделе Разрешения на местоположение выберите \"Всегда разрешать\".</string>
+        <string name="msgs_main_permission_background_location_request_msg">Это разрешение требуется для чтения WiFi SSID при запуске SMBSync2 во внешнем приложении или расписании.\nДо тех пор пока разрешение не будет предоставлено, SMBSync2 выйдет с ошибкой, если в задаче синхронизации указан \"Список точек доступа\".\nВ разделе Разрешения на местоположение выберите \"Всегда разрешать\".</string>
+        <string name="msgs_main_permission_background_location_request_msg_api30">Это разрешение требуется для чтения WiFi SSID при запуске SMBSync2 во внешнем приложении или расписании.\nДо тех пор пока разрешение не будет предоставлено, SMBSync2 выйдет с ошибкой, если в задаче синхронизации указан \"Список точек доступа\".\nВ разделе Разрешения на местоположение выберите \"Всегда разрешать\".</string>
         <string name="msgs_main_permission_coarse_location_title">Разрешение на неточное местоположение</string>
         <string name="msgs_main_permission_external_storage_denied_msg">Невозможно запустить приложение, так как вам не было предоставлено разрешение на доступ к внутренней памяти.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Предоставьте разрешение на доступ к внутреннему хранилищу для чтения и записи данных, которые синхронизированы с внутренним хранилищем и для административных данных.</string>
@@ -1026,7 +1026,8 @@
             <item>Français (fr)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
-            <item>中文(zh)</item>
+            <item>中文 (zh)</item>
+            <item>Italiano (it)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1035,6 +1036,7 @@
             <item>3</item>
             <item>4</item>
             <item>5</item>
+            <item>6</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Тема экрана</string>
