@@ -514,7 +514,7 @@
         <string name="msgs_tab_name_schedule">Schedule</string>
         <string name="msgs_tab_name_msg">Messages</string>
         <string name="msgs_tab_name_prof">Tasks</string>
-        <string name="msgs_terminate_application">Exit SMBSync2.</string>
+        <string name="msgs_terminate_application">Exit SMBSync2</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Performing maintenance of app data files</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Cancel maintenance</string>
@@ -707,7 +707,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Empty sync task list</string>
         <string name="msgs_scheduler_info_sync_task_in_error">The following sync tasks have errors: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">Please select at least one day of the week.</string>
-        <string name="msgs_schedule_list_edit_dlg_title">Edit schedule list</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Schedule name already exists. Use a different name.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Schedule name not specified.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Invalid character in schedule name: \"%s\"</string>

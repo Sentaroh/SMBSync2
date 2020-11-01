@@ -514,7 +514,7 @@
         <string name="msgs_tab_name_schedule">计划</string>
         <string name="msgs_tab_name_msg">消息</string>
         <string name="msgs_tab_name_prof">任务</string>
-        <string name="msgs_terminate_application">退出SMBSync2。</string>
+        <string name="msgs_terminate_application">退出SMBSync2</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">执行应用程序数据文件的维护</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">取消维护</string>
@@ -707,7 +707,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">空同步任务列表</string>
         <string name="msgs_scheduler_info_sync_task_in_error">以下同步任务有错误：%s</string>
         <string name="msgs_scheduler_main_dw_not_selected">请选择一周中的至少一天。</string>
-        <string name="msgs_schedule_list_edit_dlg_title">编辑计划清单</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">计划名称已存在。使用其他名称。</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">未指定计划名称。</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">计划名称中的无效字符：\"%s \"</string>

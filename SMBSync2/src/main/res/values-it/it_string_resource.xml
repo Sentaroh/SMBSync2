@@ -511,10 +511,10 @@
         <string name="msgs_smnsync_main_kill_application">Chiudere Applicazione?</string>
         <string name="msgs_specify_task_name">Specifica il nome della task</string>
         <string name="msgs_tab_name_history">Cronologia</string>
-        <string name="msgs_tab_name_schedule">Pianificazione</string>
+        <string name="msgs_tab_name_schedule">Piani</string>
         <string name="msgs_tab_name_msg">Messaggi</string>
         <string name="msgs_tab_name_prof">Tasks</string>
-        <string name="msgs_terminate_application">Chiudi SMBSync2.</string>
+        <string name="msgs_terminate_application">Chiudi SMBSync2</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Esegui manutenzione dei dati dell\'app</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Cancella manutenzione</string>
@@ -534,7 +534,7 @@
         <string name="msgs_menu_browse_logfile">Mostra log</string>
         <string name="msgs_menu_export">Esporta impostazioni</string>
         <string name="msgs_menu_import">Importa impostazioni</string>
-        <string name="msgs_menu_log_management">Manage log files</string>
+        <string name="msgs_menu_log_management">Gestire i file di registro</string>
         <string name="msgs_menu_about">About SMBSync2</string>
         <string name="msgs_menu_settings">Impostazioni</string>
         <string name="msgs_menu_housekeep">Database manutenzione</string>
@@ -649,7 +649,7 @@
         <string name="msgs_progress_spin_dlg_test_logon">Logon su server SMB</string>
         <string name="msgs_progress_spin_dlg_test_logon_cancel">Cancella logon</string>
     <!-- Scheduler -->
-        <string name="msgs_menu_scheduler">Pianificazione</string>
+        <string name="msgs_menu_scheduler">Piani</string>
         <string name="msgs_scheduler_main_dlg_hdr_title">Modifica Pianificazione</string>
         <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">Nuovo nome pianificazione</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Abilita pianificazione</string>
@@ -707,7 +707,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Lista task sync vuota</string>
         <string name="msgs_scheduler_info_sync_task_in_error">Le seguenti task sync contengono errori: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">Please select at least one giorno of the week.</string>
-        <string name="msgs_schedule_list_edit_dlg_title">Modifica pianificazione list</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Nome pianificazione esiste già. Usa un nome differente.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Nome pianificazione not specified.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Invalid character in nome pianificazione: \"%s\"</string>
