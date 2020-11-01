@@ -2000,47 +2000,48 @@ public class SyncThread extends Thread {
                     if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP)) {
                         if (!isConnectedToAnyWifiAP()) result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
                     } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
-                        if (!isConnectedToAnyWifiAP()) result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
-                        else {
-                            ArrayList<String> wl = sti.getSyncOptionWifiConnectedAccessPointWhiteList();
-                            ArrayList<Pattern> inc = new ArrayList<Pattern>();
-                            int flags = Pattern.CASE_INSENSITIVE;
-                            for (String apl : wl) {
-                                if (apl.startsWith("I")) {
-                                    String prefix = "", suffix = "";
-                                    if (apl.substring(1).endsWith("*")) suffix = "$";
-                                    inc.add(Pattern.compile(prefix + MiscUtil.convertRegExp(apl.substring(1)) + suffix, flags));
-                                    mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied AP include added=" + inc.get(inc.size() - 1).toString());
-                                }
-                            }
-                            if (!getWifiConnectedAP().equals("")) {
-                                if (inc.size() > 0) {
-                                    Matcher mt;
-                                    boolean found = false;
-                                    for (Pattern pat : inc) {
-                                        if (Build.VERSION.SDK_INT>=27) {
-                                            mt = pat.matcher(getWifiConnectedAP());
-                                        } else {
-                                            mt = pat.matcher(mGp.wifiSsid);
-                                        }
-                                        if (mt.find()) {
-                                            found = true;
-                                            mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied AP include matched=" + pat.toString());
-                                            break;
-                                        }
-                                    }
-                                    if (!found) {
-                                        if (sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid()) {
-                                            result = mStwa.context.getString(R.string.msgs_mirror_sync_skipped_wifi_ap_conn_other);
-                                        } else {
-                                            result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_conn_other);
-                                        }
-                                    }
-                                }
-                            } else {
-                                result=getWiFiAPNameErrorReason(sti);
-                            }
-                        }
+                        result = mStwa.context.getString(R.string.msgs_main_permission_ap_list_no_longer_available_sync_msg);
+//                        if (!isConnectedToAnyWifiAP()) result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
+//                        else {
+//                            ArrayList<String> wl = sti.getSyncOptionWifiConnectedAccessPointWhiteList();
+//                            ArrayList<Pattern> inc = new ArrayList<Pattern>();
+//                            int flags = Pattern.CASE_INSENSITIVE;
+//                            for (String apl : wl) {
+//                                if (apl.startsWith("I")) {
+//                                    String prefix = "", suffix = "";
+//                                    if (apl.substring(1).endsWith("*")) suffix = "$";
+//                                    inc.add(Pattern.compile(prefix + MiscUtil.convertRegExp(apl.substring(1)) + suffix, flags));
+//                                    mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied AP include added=" + inc.get(inc.size() - 1).toString());
+//                                }
+//                            }
+//                            if (!getWifiConnectedAP().equals("")) {
+//                                if (inc.size() > 0) {
+//                                    Matcher mt;
+//                                    boolean found = false;
+//                                    for (Pattern pat : inc) {
+//                                        if (Build.VERSION.SDK_INT>=27) {
+//                                            mt = pat.matcher(getWifiConnectedAP());
+//                                        } else {
+//                                            mt = pat.matcher(mGp.wifiSsid);
+//                                        }
+//                                        if (mt.find()) {
+//                                            found = true;
+//                                            mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied AP include matched=" + pat.toString());
+//                                            break;
+//                                        }
+//                                    }
+//                                    if (!found) {
+//                                        if (sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid()) {
+//                                            result = mStwa.context.getString(R.string.msgs_mirror_sync_skipped_wifi_ap_conn_other);
+//                                        } else {
+//                                            result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_conn_other);
+//                                        }
+//                                    }
+//                                }
+//                            } else {
+//                                result=getWiFiAPNameErrorReason(sti);
+//                            }
+//                        }
                     }
                 }
             }

@@ -144,6 +144,10 @@
         <string name="msgs_main_location_service_warning_msg_location">Android 8.1から下記のタスクは位置情報サービスが無効のため、同期はエラーで終了します。 システム設定でロケーションサービスを有効にするか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
         <string name="msgs_main_location_service_warning_msg_coarse">Android 8.1から下記のタスクは「ロケーション許可」が与えられていないため、同期はエラーで終了します。 メニューから許可を与えるか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
         <string name="msgs_main_location_service_warning_msg_both">Android 8.1から下記のタスクは位置情報サービスとロケーションが無効なため同期はエラーで終了します。 以下の何れかの対応を行ってください。\n1.システム設定でロケーションサービスを有効にし、その後にアプリメニューから「ロケーション許可」与える。\n2.同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更する。</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">アクセスポイントリストは使用できません</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">アクセスポイントリストは使用できません</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">GooglePlayプライバシーポリシーに準拠するためアクセスポイントリストは使用できなくなりました、このためワイヤレスAPオプションを「プライベートアドレス」に変更しました。</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">GooglePlayプライバシーポリシーに準拠するため、アクセスポイントリストは使用できなくなりました。同期タスクを編集して「プライベートアドレスリスト」等に変更してください。</string>
         <string name="msgs_main_location_error_location_service_is_disabled">ロケーションサービスが有効になっていないためWiFi AP名を取得できません。設定からロケーションを有効にしてください。</string>
         <string name="msgs_main_location_error_location_permission_not_granted">ロケーションが許可されていないためWiFi AP名を取得できません。メニューからロケーションを許可してください。</string>
         <string name="msgs_main_location_error_background_location_permission_not_granted">ロケーション許可が「アプリの使用中のみ許可」になっているためWiFi AP名を取得できません。メニューからロケーション許可を「常に許可」に変更してください。</string>
@@ -707,7 +711,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">同期タスクが指定されていません</string>
         <string name="msgs_scheduler_info_sync_task_in_error">次の同期タスクにはエラーが含まれています: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">少なくても一つの曜日を選択してください</string>
-        <string name="msgs_schedule_list_edit_dlg_title">スケジュールリストの編集</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">スケジュール名が指定されていません。</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">スケジュール名に無効な文字が含まれています: \"%s\"</string>
@@ -1027,6 +1030,7 @@
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
             <item>中文(zh)</item>
+            <item>Italiano(it)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1035,12 +1039,13 @@
             <item>3</item>
             <item>4</item>
             <item>5</item>
+            <item>6</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">画面テーマ</string>
         <string name="settings_screen_theme_dialog_title">画面テーマ</string>
         <string-array name="settings_screen_theme_list_entries">
-            <item>標準</item>
+            <item>ダーク</item>
             <item>ライトテーマ</item>
             <item>ブラックテーマ</item>
         </string-array >

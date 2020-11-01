@@ -144,6 +144,10 @@
         <string name="msgs_main_location_service_warning_msg_location">Начиная с Android 8.1, следующая задача будет завершена с ошибкой, поскольку служба определения местоположения отключена. Пожалуйста, включите службу определения местоположения в настройках системы или измените параметр синхронизации на «при подключении к точке доступа», «частный адрес» или «список IP-адресов».</string>
         <string name="msgs_main_location_service_warning_msg_coarse">Начиная с Android 8.1, следующие задачи не имеют «Разрешение определения низкой точности», поэтому синхронизация завершается с ошибкой. Пожалуйста, дайте разрешение из меню или измените на «Частный адрес» или «Список IP-адресов», если «Подключен к точке доступа» в опции синхронизации.</string>
         <string name="msgs_main_location_service_warning_msg_both">«В Android 8.1 следующие задачи будут завершены с ошибкой, поскольку служба определения местоположения и местоположение с низкой точностью недоступны. Выполните одно из следующих действий: \n1. Включите службу определения местоположения в настройках системы, После этого дайте «разрешение на локацию низкой точности» из меню приложения. \n2 Измените на «Частный адрес» или «Список IP-адресов», когда «Подключен к точке доступа» в опции синхронизации.</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">Списки точек доступа недоступны</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">Списки точек доступа недоступны</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Списки точек доступа больше не доступны из-за соответствия политике конфиденциальности Google Play, поэтому опция беспроводной точки доступа была изменена на \"Частный адрес\".</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">Список точек доступа больше не доступен в соответствии с политикой конфиденциальности Google Play. Пожалуйста, отредактируйте задание синхронизации и измените его на \"Список личных адресов\" и т. д.</string>
         <string name="msgs_main_location_error_location_service_is_disabled">Не удается получить имя точки доступа WiFi, поскольку служба определения местоположения не включена. Пожалуйста, включите местоположение в настроек.</string>
         <string name="msgs_main_location_error_location_permission_not_granted">Невозможно получить имя точки доступа WiFi, поскольку местоположение с низкой точностью не доступно. Пожалуйста, выберите местоположение низкой точности в меню.</string>
         <string name="msgs_main_location_error_background_location_permission_not_granted">Невозможно получить имя точки доступа WiFi, поскольку определение местоположения с низкой точностью - «Разрешено только при использовании приложения». Пожалуйста, измените местоположение низкой точности в меню на «Всегда разрешать».</string>
@@ -514,7 +518,7 @@
         <string name="msgs_tab_name_schedule">Расписание</string>
         <string name="msgs_tab_name_msg">Сообщения</string>
         <string name="msgs_tab_name_prof">Задача</string>
-        <string name="msgs_terminate_application">Выход из SMBSync2.</string>
+        <string name="msgs_terminate_application">Выход из SMBSync2</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Выполнение управления файлами обслуживания.</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Отмена обслуживания</string>
@@ -707,7 +711,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Пустой список задач синхронизации</string>
         <string name="msgs_scheduler_info_sync_task_in_error">Следующие задачи синхронизации содержат ошибки: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">Пожалуйста, выберите хотя бы один день недели.</string>
-        <string name="msgs_schedule_list_edit_dlg_title">Изменить список расписаний</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Задача планирования с таким именем уже существует.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Имя синхронизации не указано.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Недействительный символ в названии расписания: \"%s\"</string>
@@ -1026,7 +1029,8 @@
             <item>Français (fr)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
-            <item>中文(zh)</item>
+            <item>中文 (zh)</item>
+            <item>Italiano (it)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1035,6 +1039,7 @@
             <item>3</item>
             <item>4</item>
             <item>5</item>
+            <item>6</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Тема экрана</string>

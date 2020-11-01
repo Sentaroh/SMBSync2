@@ -144,6 +144,10 @@
         <string name="msgs_main_location_service_warning_msg_location">由于禁用了"位置服务"，因此以下同步任务失败。从Android 8.1开始，需要定位服务才能连接到特定的Wifi AP名称（SSID）。在系统设置中启用定位服务，或在同步选项中启用\"连接到任何Wifi SSID \"，\"私有地址\"或\" IP地址列表\"。</string>
         <string name="msgs_main_location_service_warning_msg_coarse">以下同步任务失败，因为不允许\"位置权限\"。从Android 8.1开始，需要访问位置服务的权限才能连接到特定的Wifi AP名称（SSID）。授予应用程序访问位置服务的权限，或在同步选项中启用\"连接到任何Wifi SSID \"，\"私有地址\"或\" IP地址列表\"。</string>
         <string name="msgs_main_location_service_warning_msg_both">以下同步任务失败，因为禁用了"位置服务"和"位置权限"。从Android 8.1开始，需要定位服务才能连接到特定的Wifi AP名称（SSID）。在系统设置中启用位置服务，然后允许应用程序访问位置，或者在同步选项中启用\"连接到任何Wifi SSID \"，\"私有地址\"或\" IP地址列表\"。</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">不提供接入点清单</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">不提供接入点清单</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">由于符合Google Play隐私政策，不再提供接入点列表，因此无线AP选项已改为 \"私人地址\"。</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">由于符合Google Play隐私政策，接入点列表已不可用，因此无线AP选项已改为\'私人地址列表\'。请编辑同步任务，并将其改为\'私人地址列表\'等。</string>
         <string name="msgs_main_location_error_location_service_is_disabled">由于未启用位置服务，因此无法获取WiFi AP名称。请在设置中启用该位置。</string>
         <string name="msgs_main_location_error_location_permission_not_granted">无法获取WiFi AP名称，因为位置不正确。请从菜单中允许位置。</string>
         <string name="msgs_main_location_error_background_location_permission_not_granted">无法获取WiFi AP名称，因为该位置设置为"仅在使用该应用程序时允许"。从菜单中将位置更改为"始终允许"（在后台使用）。</string>
@@ -514,7 +518,7 @@
         <string name="msgs_tab_name_schedule">计划</string>
         <string name="msgs_tab_name_msg">消息</string>
         <string name="msgs_tab_name_prof">任务</string>
-        <string name="msgs_terminate_application">退出SMBSync2。</string>
+        <string name="msgs_terminate_application">退出SMBSync2</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">执行应用程序数据文件的维护</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">取消维护</string>
@@ -707,7 +711,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">空同步任务列表</string>
         <string name="msgs_scheduler_info_sync_task_in_error">以下同步任务有错误：%s</string>
         <string name="msgs_scheduler_main_dw_not_selected">请选择一周中的至少一天。</string>
-        <string name="msgs_schedule_list_edit_dlg_title">编辑计划清单</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">计划名称已存在。使用其他名称。</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">未指定计划名称。</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">计划名称中的无效字符：\"%s \"</string>
@@ -1026,7 +1029,8 @@
             <item>Français (fr)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
-            <item>中文(zh)</item>
+            <item>中文 (zh)</item>
+            <item>Italiano (it)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1035,6 +1039,7 @@
             <item>3</item>
             <item>4</item>
             <item>5</item>
+            <item>6</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">屏幕主题</string>

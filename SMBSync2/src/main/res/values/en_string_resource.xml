@@ -144,6 +144,10 @@
         <string name="msgs_main_location_service_warning_msg_location">The following sync tasks failed because "Location service" is disabled. Since Android 8.1, location service is requiered to connect to a specific Wifi AP name (SSID). Either enable location service in system settings or enable \"Conn to any Wifi SSID\", \"Private address\" or \"IP Address List\"  in the synchronization options.</string>
         <string name="msgs_main_location_service_warning_msg_coarse">The following sync tasks failed because \"Location permission\" was not allowed. Since Android 8.1, permission to access location service is requiered to connect to a specific Wifi AP name (SSID). Either give permission to the application to access location service or enable \"Conn to any Wifi SSID\", \"Private address\" or \"IP Address List\" in the synchronization options.</string>
         <string name="msgs_main_location_service_warning_msg_both">The following sync tasks failed because "Location service" and \"Location permission\" are disabled. Since Android 8.1, location service is requiered to connect to a specific Wifi AP name (SSID). Either enable location service in system settings then allow the application to access location, or enable \"Conn to any Wifi SSID\", \"Private address\" or \"IP Address List\" in the synchronization options.</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">Access point lists are not available</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">Access point lists are not available</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Access point lists are no longer available due to compliance with the Google Play privacy policy, hence the wireless AP option has been changed to \'Private Address\'.</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">Access point list is no longer available to comply with the Google Play Privacy Policy. Please edit the sync task and change it to \'Private Address List\' etc.</string>
         <string name="msgs_main_location_error_location_service_is_disabled">Cannot get WiFi AP name because location service is not enabled. Please enable the location in the settings.</string>
         <string name="msgs_main_location_error_location_permission_not_granted">Cannot get WiFi AP name because location is not allowed. Please allow location from the menu.</string>
         <string name="msgs_main_location_error_background_location_permission_not_granted">Cannot get WiFi AP names because the location is set to "Allow only while using the app". Change the Location to "Always Allowed" from the menu (use while in background).</string>
@@ -514,7 +518,7 @@
         <string name="msgs_tab_name_schedule">Schedule</string>
         <string name="msgs_tab_name_msg">Messages</string>
         <string name="msgs_tab_name_prof">Tasks</string>
-        <string name="msgs_terminate_application">Exit SMBSync2.</string>
+        <string name="msgs_terminate_application">Exit SMBSync2</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Performing maintenance of app data files</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Cancel maintenance</string>
@@ -707,7 +711,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Empty sync task list</string>
         <string name="msgs_scheduler_info_sync_task_in_error">The following sync tasks have errors: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">Please select at least one day of the week.</string>
-        <string name="msgs_schedule_list_edit_dlg_title">Edit schedule list</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Schedule name already exists. Use a different name.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Schedule name not specified.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Invalid character in schedule name: \"%s\"</string>
@@ -1026,7 +1029,8 @@
             <item>Français (fr)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
-            <item>中文(zh)</item>
+            <item>中文 (zh)</item>
+            <item>Italiano (it)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1035,6 +1039,7 @@
             <item>3</item>
             <item>4</item>
             <item>5</item>
+            <item>6</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Screen Theme</string>

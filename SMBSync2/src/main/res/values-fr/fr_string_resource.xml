@@ -144,6 +144,10 @@
         <string name="msgs_main_location_service_warning_msg_location">Les tâches de synchronisation suivantes ont échoué, car le service de localisation est désactivé. La localisation (GPS) est requise depuis Android 8.1 pour pouvoir identifier le nom (SSID) de l\'interface Wifi. Vous devez soit activer la localisation dans les paramètres système soit modifier vos options de synchronisation dans l\'application en sélectionnant "Tous les réseaux", "Wifi avec IP privée" ou "Liste d\'adresse IP".</string>
         <string name="msgs_main_location_service_warning_msg_coarse">Les tâches de synchronisation suivantes ont échoué, car l\'application ne dispose pas des permissions pour accéder au service de localisation. La localisation (GPS) est requise depuis Android 8.1 pour pouvoir identifier le nom (SSID) de l\'interface Wifi. Vous devez soit autoriser l\'accès au service de localisation soit modifier vos options de synchronisation dans l\'application en sélectionnant "Tous les réseaux", "Wifi avec IP privée" ou "Liste d\'adresse IP".</string>
         <string name="msgs_main_location_service_warning_msg_both">Les tâches de synchronisation suivantes ont échoué, car l\'accès aux services de localisation est désactivé. La localisation (GPS) est requise depuis Android 8.1 pour pouvoir identifier le nom (SSID) de l\'interface Wifi. Vous devez soit activer la localisation dans les paramètres système ainsi qu\'autoriser l\'application à y accéder, soit modifier vos options de synchronisation dans l\'application en sélectionnant "Tous les réseaux", "Wifi avec IP privée" ou "Liste d\'adresse IP".</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">Les listes de points d\'accès ne sont pas disponibles</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">Les listes de points d\'accès ne sont pas disponibles</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Les listes de points d\'accès ne sont plus disponibles en raison de la conformité avec la politique de confidentialité de Google Play, c\'est pourquoi l\'option de point d\'accès sans fil a été modifiée en \"Adresse privée\".</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">La liste des points d\'accès n\'est plus disponible en raison de la conformité avec les règles de confidentialité de Google Play. Veuillez modifier la tâche de synchronisation et la remplacer par \"Liste d\'adresses privées\", etc.</string>
         <string name="msgs_main_location_error_location_service_is_disabled">Impossible d\'identifier le nom du réseau Wifi, car le service de localisation est désactivé. Merci de l\'activer dans les paramètres système.</string>
         <string name="msgs_main_location_error_location_permission_not_granted">Impossible d\'identifier le nom du réseau Wifi, car l\'application ne dispose pas des permissions d\'accès à la localisation. Merci d\'autoriser l\'accès à la localisation dans le menu.</string>
         <string name="msgs_main_location_error_background_location_permission_not_granted">Impossible d\'identifier le nom du réseau Wifi, car la localisation n\'est autorisée que pendant l\'utilisation de l\'application. Autorisez l\'accès au service de localisation en arrière-plan (toujours autoriser).</string>
@@ -707,7 +711,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Liste des tâches de sync vide.</string>
         <string name="msgs_scheduler_info_sync_task_in_error">Les tâches de synchronisation suivantes contiennent des erreurs: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">Sélectionner au moins un jour de la semaine.</string>
-        <string name="msgs_schedule_list_edit_dlg_title">Modifier la liste de planification</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Une planification avec ce nom existe déjà.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Nom de la planification non spécifié.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Le nom de la tâche de planification contient un caractère non valide: \"%s\"</string>
@@ -1026,7 +1029,8 @@
             <item>Français (fr)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
-            <item>中文(zh)</item>
+            <item>中文 (zh)</item>
+            <item>Italiano (it)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1035,6 +1039,7 @@
             <item>3</item>
             <item>4</item>
             <item>5</item>
+            <item>6</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Thème d\'Affichage</string>
