@@ -260,9 +260,7 @@ public final class CommonUtilities {
 
             WifiManager wm=(WifiManager)c.getSystemService(Context.WIFI_SERVICE);
             try {
-                String ssid="";
-                if (wm.isWifiEnabled() && wm.getConnectionInfo()!=null) ssid=wm.getConnectionInfo().getSSID();
-                out.add("   WiFi="+wm.isWifiEnabled()+", SSID="+ssid);
+                out.add("   WiFi Enabled="+wm.isWifiEnabled());
             } catch(Exception e) {
                 out.add("   WiFi status obtain error, error="+e.getMessage());
             }
