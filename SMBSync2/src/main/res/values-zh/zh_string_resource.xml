@@ -144,6 +144,10 @@
         <string name="msgs_main_location_service_warning_msg_location">由于禁用了"位置服务"，因此以下同步任务失败。从Android 8.1开始，需要定位服务才能连接到特定的Wifi AP名称（SSID）。在系统设置中启用定位服务，或在同步选项中启用\"连接到任何Wifi SSID \"，\"私有地址\"或\" IP地址列表\"。</string>
         <string name="msgs_main_location_service_warning_msg_coarse">以下同步任务失败，因为不允许\"位置权限\"。从Android 8.1开始，需要访问位置服务的权限才能连接到特定的Wifi AP名称（SSID）。授予应用程序访问位置服务的权限，或在同步选项中启用\"连接到任何Wifi SSID \"，\"私有地址\"或\" IP地址列表\"。</string>
         <string name="msgs_main_location_service_warning_msg_both">以下同步任务失败，因为禁用了"位置服务"和"位置权限"。从Android 8.1开始，需要定位服务才能连接到特定的Wifi AP名称（SSID）。在系统设置中启用位置服务，然后允许应用程序访问位置，或者在同步选项中启用\"连接到任何Wifi SSID \"，\"私有地址\"或\" IP地址列表\"。</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">不提供接入点清单</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">不提供接入点清单</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">由于符合Google Play隐私政策，不再提供接入点列表，因此无线AP选项已改为 \"私人地址\"。</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">由于符合Google Play隐私政策，接入点列表已不可用，因此无线AP选项已改为\'私人地址列表\'。请编辑同步任务，并将其改为\'私人地址列表\'等。</string>
         <string name="msgs_main_location_error_location_service_is_disabled">由于未启用位置服务，因此无法获取WiFi AP名称。请在设置中启用该位置。</string>
         <string name="msgs_main_location_error_location_permission_not_granted">无法获取WiFi AP名称，因为位置不正确。请从菜单中允许位置。</string>
         <string name="msgs_main_location_error_background_location_permission_not_granted">无法获取WiFi AP名称，因为该位置设置为"仅在使用该应用程序时允许"。从菜单中将位置更改为"始终允许"（在后台使用）。</string>

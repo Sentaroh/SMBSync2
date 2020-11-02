@@ -65,8 +65,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
 
     private ColorStateList mTextColor=null;
 
-    public AdapterSyncTask(Context c, int textViewResourceId,
-                           ArrayList<SyncTaskItem> objects, GlobalParameters gp) {
+    public AdapterSyncTask(Context c, int textViewResourceId, ArrayList<SyncTaskItem> objects, GlobalParameters gp) {
         super(c, textViewResourceId, objects);
         mContext = c;
         id = textViewResourceId;
@@ -298,15 +297,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_warning);
             }
 
-            if (!o.isSyncTaskError()) {
-                if (o.isSyncTestMode()) {
-                    if (ThemeUtil.isLightThemeUsed(mContext))
-                        holder.ll_view.setBackgroundColor(Color.argb(64, 255, 32, 255));
-                    else holder.ll_view.setBackgroundColor(Color.argb(64, 255, 0, 128));
-                }
-            } else {
-                holder.ll_view.setBackgroundColor(Color.argb(64, 255, 0, 0));
-            }
+            boolean ap_list_specified=false;
             String master_dir = o.getMasterDirectoryName().startsWith("/")?o.getMasterDirectoryName().substring(1):o.getMasterDirectoryName();
             if (o.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                 if (master_dir.equals("")) holder.tv_row_master.setText(o.getMasterLocalMountPoint());
@@ -339,6 +330,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                     holder.tv_row_master.setText("smb://" + host + "/" + share + "/"+ master_dir);
                 }
                 holder.iv_row_image_master.setImageResource(R.drawable.ic_32_server);
+                if (o.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) ap_list_specified=true;
             }
             holder.tv_row_master.requestLayout();
             String target_dir = o.getTargetDirectoryName().startsWith("/")?o.getTargetDirectoryName().substring(1):o.getTargetDirectoryName();
@@ -370,8 +362,7 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                     holder.tv_row_target.setText((o.getTargetLocalMountPoint() + o.getTargetZipOutputFileName()));
                 else
                     holder.tv_row_target.setText((o.getTargetLocalMountPoint() + o.getTargetZipOutputFileName()));
-                if (o.isTargetZipUseExternalSdcard() &&
-                        mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
+                if (o.isTargetZipUseExternalSdcard() && mGp.safMgr.getSdcardRootPath().equals(SafManager.UNKNOWN_SDCARD_DIRECTORY)) {
                     holder.iv_row_image_target.setImageResource(R.drawable.ic_32_sdcard_bad);
                     sync_btn_disable=true;
                 } else {
@@ -386,7 +377,16 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                     holder.tv_row_target.setText("smb://" + host + "/" + share + "/"+ target_dir);
                 }
                 holder.iv_row_image_target.setImageResource(R.drawable.ic_32_server);
+                if (o.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) ap_list_specified=true;
             }
+            if (ap_list_specified) {
+                holder.tv_last_sync_result.setText(mContext.getString(R.string.msgs_main_permission_ap_list_no_longer_available_task_list_msg));
+                holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_warning);
+                sync_btn_disable=true;
+            } else {
+                holder.tv_last_sync_result.setTextColor(mTextColor);
+            }
+
             holder.tv_row_target.requestLayout();
 
             if (isShowCheckBox) {
@@ -400,6 +400,16 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                     holder.ib_row_sync.setVisibility(CheckBox.VISIBLE);
                 }
             }
+
+            if (!o.isSyncTaskError()) {
+                if (o.isSyncTestMode()) {
+                    if (ThemeUtil.isLightThemeUsed(mContext)) holder.ll_view.setBackgroundColor(Color.argb(64, 255, 32, 255));
+                    else holder.ll_view.setBackgroundColor(Color.argb(64, 255, 0, 128));
+                }
+            } else {
+                holder.ll_view.setBackgroundColor(Color.argb(64, 255, 0, 0));
+            }
+
             final int p = position;
 
             holder.ib_row_sync.setOnClickListener(new View.OnClickListener() {

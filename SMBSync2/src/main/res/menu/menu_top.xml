@@ -56,9 +56,9 @@
         android:title="@string/msgs_profile_edit_sync_folder_dlg_select_sdcard"
         />
 
-    <item android:id="@+id/menu_top_request_grant_coarse_location"
-        android:title="@string/msgs_main_permission_coarse_location_title"
-        />
+<!--    <item android:id="@+id/menu_top_request_grant_coarse_location"-->
+<!--        android:title="@string/msgs_main_permission_coarse_location_title"-->
+<!--        />-->
 
     <item android:id="@+id/menu_top_about"
           android:title="@string/msgs_menu_about" 

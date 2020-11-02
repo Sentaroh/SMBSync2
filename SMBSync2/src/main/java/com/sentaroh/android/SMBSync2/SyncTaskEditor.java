@@ -2883,112 +2883,112 @@ public class SyncTaskEditor extends DialogFragment {
         }
     }
 
-    static public void checkLocationServiceWarning(Activity activity, GlobalParameters gp, CommonUtilities cu) {
-        if (Build.VERSION.SDK_INT<=26) return;
-        if (Build.VERSION.SDK_INT>=29) {
-            boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED);
-            boolean background_granted=background_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED);
-            if (gp.settingSupressLocationServiceWarning ||
-                    (CommonUtilities.isLocationServiceEnabled(activity, gp) && coarse_granted && background_granted)) return;
-            boolean waring_required=false;
-            String used_st="", sep="-";
-            for(SyncTaskItem st_item:gp.syncTaskList) {
-                if (st_item.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
-                    waring_required=true;
-                    used_st+=sep+st_item.getSyncTaskName();
-                    sep="\n-";
-                }
-            }
+//    static public void checkLocationServiceWarning(Activity activity, GlobalParameters gp, CommonUtilities cu) {
+//        if (Build.VERSION.SDK_INT<=26) return;
+//        if (Build.VERSION.SDK_INT>=29) {
+//            boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED);
+//            boolean background_granted=background_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED);
+//            if (gp.settingSupressLocationServiceWarning ||
+//                    (CommonUtilities.isLocationServiceEnabled(activity, gp) && coarse_granted && background_granted)) return;
+//            boolean waring_required=false;
+//            String used_st="", sep="-";
+//            for(SyncTaskItem st_item:gp.syncTaskList) {
+//                if (st_item.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
+//                    waring_required=true;
+//                    used_st+=sep+st_item.getSyncTaskName();
+//                    sep="\n-";
+//                }
+//            }
+//
+//            if (!waring_required) return;
+//
+//            showLocationServiceWarning(activity, gp, cu, used_st);
+//        } else {
+//            boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED);
+//            if (gp.settingSupressLocationServiceWarning ||
+//                    (CommonUtilities.isLocationServiceEnabled(activity, gp) && coarse_granted)) return;
+//            boolean waring_required=false;
+//            String used_st="", sep="-";
+//            for(SyncTaskItem st_item:gp.syncTaskList) {
+//                if (st_item.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
+//                    waring_required=true;
+//                    used_st+=sep+st_item.getSyncTaskName();
+//                    sep="\n-";
+//                }
+//            }
+//
+//            if (!waring_required) return;
+//
+//            showLocationServiceWarning(activity, gp, cu, used_st);
+//        }
+//    }
 
-            if (!waring_required) return;
-
-            showLocationServiceWarning(activity, gp, cu, used_st);
-        } else {
-            boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED);
-            if (gp.settingSupressLocationServiceWarning ||
-                    (CommonUtilities.isLocationServiceEnabled(activity, gp) && coarse_granted)) return;
-            boolean waring_required=false;
-            String used_st="", sep="-";
-            for(SyncTaskItem st_item:gp.syncTaskList) {
-                if (st_item.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
-                    waring_required=true;
-                    used_st+=sep+st_item.getSyncTaskName();
-                    sep="\n-";
-                }
-            }
-
-            if (!waring_required) return;
-
-            showLocationServiceWarning(activity, gp, cu, used_st);
-        }
-    }
-
-    static public void showLocationServiceWarning(final Activity activity, final GlobalParameters gp, final CommonUtilities cu, final String used_st) {
-
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-
-        final Dialog dialog = new Dialog(activity, gp.applicationTheme);//, android.R.style.Theme_Black);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.show_warning_message_dlg);
-
-        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.show_warning_message_dlg_title_view);
-        final TextView title = (TextView) dialog.findViewById(R.id.show_warning_message_dlg_title);
-        title_view.setBackgroundColor(gp.themeColorList.title_background_color);
-        title.setText(activity.getString(R.string.msgs_main_app_specific_dir_used_title));
-        title.setTextColor(gp.themeColorList.title_text_color);
-        title.setText(activity.getString(R.string.msgs_main_location_service_warning_title));
-
-        String msg_text="";
-        boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED);
-        if (Build.VERSION.SDK_INT>=29) {
-            boolean background_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED);
-            boolean loc=CommonUtilities.isLocationServiceEnabled(activity, gp);
-            if (!CommonUtilities.isLocationServiceEnabled(activity, gp) && (!coarse_granted||!background_granted)) {
-                msg_text = activity.getString(R.string.msgs_main_location_service_warning_msg_both);
-            } else if (!CommonUtilities.isLocationServiceEnabled(activity, gp)) {
-                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_location);
-            } else if (!coarse_granted || !background_granted) {
-                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_coarse);
-            }
-        } else {
-            if (!CommonUtilities.isLocationServiceEnabled(activity, gp) && !coarse_granted) {
-                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_both);
-            } else if (!CommonUtilities.isLocationServiceEnabled(activity, gp)) {
-                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_location);
-            } else if (!coarse_granted) {
-                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_coarse);
-            }
-        }
-
-        if (!used_st.equals("")) msg_text+="\n\n"+used_st;
-        ((TextView) dialog.findViewById(R.id.show_warning_message_dlg_msg)).setText(msg_text);
-
-        final Button btnClose = (Button) dialog.findViewById(R.id.show_warning_message_dlg_close);
-        final CheckedTextView ctvSuppr = (CheckedTextView) dialog.findViewById(R.id.show_warning_message_dlg_ctv_suppress);
-        CommonUtilities.setCheckedTextView(ctvSuppr);
-        ctvSuppr.setText(R.string.msgs_main_location_service_warning_suppress);
-
-        CommonDialog.setDlgBoxSizeCompact(dialog);
-        ctvSuppr.setChecked(false);
-        // Closeボタンの指定
-        btnClose.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                dialog.dismiss();
-                if (ctvSuppr.isChecked()) {
-                    prefs.edit().putBoolean(activity.getString(R.string.settings_suppress_warning_location_service_disabled), true).commit();
-                    gp.settingSupressLocationServiceWarning =true;
-                }
-            }
-        });
-        // Cancelリスナーの指定
-        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface arg0) {
-                btnClose.performClick();
-            }
-        });
-        dialog.show();
-    }
+//    static public void showLocationServiceWarning(final Activity activity, final GlobalParameters gp, final CommonUtilities cu, final String used_st) {
+//
+//        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+//
+//        final Dialog dialog = new Dialog(activity, gp.applicationTheme);//, android.R.style.Theme_Black);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.show_warning_message_dlg);
+//
+//        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.show_warning_message_dlg_title_view);
+//        final TextView title = (TextView) dialog.findViewById(R.id.show_warning_message_dlg_title);
+//        title_view.setBackgroundColor(gp.themeColorList.title_background_color);
+//        title.setText(activity.getString(R.string.msgs_main_app_specific_dir_used_title));
+//        title.setTextColor(gp.themeColorList.title_text_color);
+//        title.setText(activity.getString(R.string.msgs_main_location_service_warning_title));
+//
+//        String msg_text="";
+//        boolean coarse_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED);
+//        if (Build.VERSION.SDK_INT>=29) {
+//            boolean background_granted=(activity.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED);
+//            boolean loc=CommonUtilities.isLocationServiceEnabled(activity, gp);
+//            if (!CommonUtilities.isLocationServiceEnabled(activity, gp) && (!coarse_granted||!background_granted)) {
+//                msg_text = activity.getString(R.string.msgs_main_location_service_warning_msg_both);
+//            } else if (!CommonUtilities.isLocationServiceEnabled(activity, gp)) {
+//                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_location);
+//            } else if (!coarse_granted || !background_granted) {
+//                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_coarse);
+//            }
+//        } else {
+//            if (!CommonUtilities.isLocationServiceEnabled(activity, gp) && !coarse_granted) {
+//                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_both);
+//            } else if (!CommonUtilities.isLocationServiceEnabled(activity, gp)) {
+//                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_location);
+//            } else if (!coarse_granted) {
+//                msg_text=activity.getString(R.string.msgs_main_location_service_warning_msg_coarse);
+//            }
+//        }
+//
+//        if (!used_st.equals("")) msg_text+="\n\n"+used_st;
+//        ((TextView) dialog.findViewById(R.id.show_warning_message_dlg_msg)).setText(msg_text);
+//
+//        final Button btnClose = (Button) dialog.findViewById(R.id.show_warning_message_dlg_close);
+//        final CheckedTextView ctvSuppr = (CheckedTextView) dialog.findViewById(R.id.show_warning_message_dlg_ctv_suppress);
+//        CommonUtilities.setCheckedTextView(ctvSuppr);
+//        ctvSuppr.setText(R.string.msgs_main_location_service_warning_suppress);
+//
+//        CommonDialog.setDlgBoxSizeCompact(dialog);
+//        ctvSuppr.setChecked(false);
+//        // Closeボタンの指定
+//        btnClose.setOnClickListener(new OnClickListener() {
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//                if (ctvSuppr.isChecked()) {
+//                    prefs.edit().putBoolean(activity.getString(R.string.settings_suppress_warning_location_service_disabled), true).commit();
+//                    gp.settingSupressLocationServiceWarning =true;
+//                }
+//            }
+//        });
+//        // Cancelリスナーの指定
+//        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+//            @Override
+//            public void onCancel(DialogInterface arg0) {
+//                btnClose.performClick();
+//            }
+//        });
+//        dialog.show();
+//    }
 
     private void invokeEditDirFilterDlg(final Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg) {
         final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
@@ -3468,7 +3468,7 @@ public class SyncTaskEditor extends DialogFragment {
     private void setSpinnerSyncTaskWifiOption(Spinner spinner, String cv) {
         CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
-                new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
+                new AdapterWifiOption(getActivity(), android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_prompt));
         spinner.setAdapter(adapter);
@@ -3481,7 +3481,7 @@ public class SyncTaskEditor extends DialogFragment {
         int sel = 0;
         if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) sel = 0;
         else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP)) sel = 1;
-        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) sel = 2;
+        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) sel = 3;
         else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR)) sel = 3;
         else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR)) sel = 4;
 
@@ -3586,6 +3586,9 @@ public class SyncTaskEditor extends DialogFragment {
         final TextView dlg_msg = (TextView) mDialog.findViewById(R.id.edit_sync_task_msg);
         dlg_msg.setTextColor(mGp.themeColorList.text_color_error);
         dlg_msg.setVisibility(TextView.GONE);
+
+        final Button btn_ok = (Button) mDialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
+        CommonDialog.setViewEnabled(getActivity(), btn_ok, false);
 
         final Button swap_master_target = (Button) mDialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
         final Button master_folder_info = (Button) mDialog.findViewById(R.id.edit_sync_task_master_folder_info_btn);
@@ -3730,6 +3733,13 @@ public class SyncTaskEditor extends DialogFragment {
 
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
         setSpinnerSyncTaskWifiOption(spinnerSyncWifiStatus, n_sti.getSyncOptionWifiStatusOption());
+
+        if ((n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)||n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) &&
+                n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
+            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_permission_ap_list_no_longer_available_dialog_title),
+                    mContext.getString(R.string.msgs_main_permission_ap_list_no_longer_available_dialog_msg), null);
+        }
+
         if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) || n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
             ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
@@ -4238,8 +4248,6 @@ public class SyncTaskEditor extends DialogFragment {
 
         CommonDialog.setDlgBoxSizeLimit(mDialog, true);
 
-        final Button btn_ok = (Button) mDialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
-
         et_sync_main_task_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -4693,7 +4701,6 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
         // OKボタンの指定
-        CommonDialog.setViewEnabled(getActivity(), btn_ok, false);
         btn_ok.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 final SyncTaskItem new_stli = buildSyncTaskListItem(mDialog, n_sti);
@@ -4730,7 +4737,7 @@ public class SyncTaskEditor extends DialogFragment {
                         mUtil.addDebugMsg(1,"I","editSyncTask edit saved, type="+type+", task="+new_stli.getSyncTaskName());
                         ((ActivityMain)getActivity()).refreshOptionMenu();
 
-                        checkLocationServiceWarning(getActivity(), mGp, mUtil);
+//                        checkLocationServiceWarning(getActivity(), mGp, mUtil);
 
                     }
                     @Override
@@ -5844,6 +5851,30 @@ public class SyncTaskEditor extends DialogFragment {
             objectOutput.writeUTF(zip_enc_method);
             objectOutput.writeUTF(zip_file_name);
             objectOutput.writeUTF(zip_file_password);
+        }
+    }
+
+    private class AdapterWifiOption extends CustomSpinnerAdapter {
+        private Activity a;
+        public AdapterWifiOption(Activity c, int textViewResourceId) {
+            super(c, textViewResourceId);
+            a=c;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            return position!=2;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            final TextView text=(TextView)super.getDropDownView(position, convertView, parent);
+            if (position==2) {
+                CommonDialog.setViewEnabled(a, text, false);
+            } else {
+                CommonDialog.setViewEnabled(a, text, true);
+            }
+            return text;
         }
     }
 }

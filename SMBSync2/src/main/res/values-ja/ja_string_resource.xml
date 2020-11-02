@@ -144,6 +144,10 @@
         <string name="msgs_main_location_service_warning_msg_location">Android 8.1から下記のタスクは位置情報サービスが無効のため、同期はエラーで終了します。 システム設定でロケーションサービスを有効にするか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
         <string name="msgs_main_location_service_warning_msg_coarse">Android 8.1から下記のタスクは「ロケーション許可」が与えられていないため、同期はエラーで終了します。 メニューから許可を与えるか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
         <string name="msgs_main_location_service_warning_msg_both">Android 8.1から下記のタスクは位置情報サービスとロケーションが無効なため同期はエラーで終了します。 以下の何れかの対応を行ってください。\n1.システム設定でロケーションサービスを有効にし、その後にアプリメニューから「ロケーション許可」与える。\n2.同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更する。</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">アクセスポイントリストは使用できません</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">アクセスポイントリストは使用できません</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">GooglePlayプライバシーポリシーに準拠するためアクセスポイントリストは使用できなくなりました、このためワイヤレスAPオプションを「プライベートアドレス」に変更しました。</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">GooglePlayプライバシーポリシーに準拠するため、アクセスポイントリストは使用できなくなりました。同期タスクを編集して「プライベートアドレスリスト」等に変更してください。</string>
         <string name="msgs_main_location_error_location_service_is_disabled">ロケーションサービスが有効になっていないためWiFi AP名を取得できません。設定からロケーションを有効にしてください。</string>
         <string name="msgs_main_location_error_location_permission_not_granted">ロケーションが許可されていないためWiFi AP名を取得できません。メニューからロケーションを許可してください。</string>
         <string name="msgs_main_location_error_background_location_permission_not_granted">ロケーション許可が「アプリの使用中のみ許可」になっているためWiFi AP名を取得できません。メニューからロケーション許可を「常に許可」に変更してください。</string>
