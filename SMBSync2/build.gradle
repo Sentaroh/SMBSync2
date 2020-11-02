@@ -12,8 +12,8 @@ android {
         targetSdkVersion 29
 
 //
-        versionCode 270
-        versionName "2.39"
+        versionCode 271
+        versionName "2.40"
 
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
