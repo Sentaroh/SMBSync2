@@ -236,18 +236,6 @@ public final class CommonUtilities {
 
         ArrayList<String> out= SystemInfo.listSystemInfo(c, gp.safMgr);
 
-        if (Build.VERSION.SDK_INT>=27) {
-            out.add("setSettingGrantLocationRequired="+gp.settingGrantLocationRequired);
-            if (Build.VERSION.SDK_INT==27 || Build.VERSION.SDK_INT==28) {
-                out.add("ACCESS_COARSE_LOCATION Permission="+(c.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED));
-            } else if (Build.VERSION.SDK_INT>=29) {
-                out.add("ACCESS_FINE_LOCATION Permission="+(c.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED));
-                boolean backgroundLocationPermissionApproved = c.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)== PackageManager.PERMISSION_GRANTED;
-                out.add("ACCESS_BACKGROUND_LOCATION="+backgroundLocationPermissionApproved);
-            }
-            out.add("LocationService enabled="+isLocationServiceEnabled(c, gp)+", warning="+gp.settingSupressLocationServiceWarning);
-        }
-
         if (Build.VERSION.SDK_INT >= 28) {
             UsageStatsManager usageStatsManager = (UsageStatsManager) c.getSystemService(USAGE_STATS_SERVICE);
             if (usageStatsManager != null) {
