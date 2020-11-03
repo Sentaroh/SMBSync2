@@ -126,9 +126,6 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public boolean sampleProfileCreateRequired = false;
 
-    public boolean wifiIsActive = false;
-    public String wifiSsid = "";
-
 //    public boolean themeIsLight = true;
     public String settingScreenTheme =SMBSYNC2_SCREEN_THEME_STANDARD;
     public int applicationTheme = -1;

@@ -96,8 +96,6 @@ public class SyncService extends Service {
 
     private Context mContext = null;
 
-    private WifiReceiver mWifiReceiver = new WifiReceiver();
-
     private SleepReceiver mSleepReceiver = new SleepReceiver();
 
     @Override
@@ -129,18 +127,7 @@ public class SyncService extends Service {
 
         mWifiMgr = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
 
-        initWifiStatus();
-
         IntentFilter int_filter = new IntentFilter();
-        int_filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        int_filter.addAction(WifiManager.RSSI_CHANGED_ACTION);
-        int_filter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
-        int_filter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
-        int_filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        int_filter.addAction(WifiManager.NETWORK_IDS_CHANGED_ACTION);
-        registerReceiver(mWifiReceiver, int_filter);
-
-        int_filter = new IntentFilter();
         int_filter.addAction(Intent.ACTION_SCREEN_OFF);
         int_filter.addAction(Intent.ACTION_SCREEN_ON);
         int_filter.addAction(Intent.ACTION_USER_PRESENT);
@@ -266,7 +253,6 @@ public class SyncService extends Service {
     public void onDestroy() {
         super.onDestroy();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-        unregisterReceiver(mWifiReceiver);
         unregisterReceiver(mSleepReceiver);
 //        unregisterReceiver(mUsbReceiver);
         stopForeground(true);
@@ -925,71 +911,6 @@ public class SyncService extends Service {
             if (mGp.callbackStub != null) mGp.callbackStub.cbThreadEnded();
         } catch (RemoteException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void initWifiStatus() {
-        mGp.wifiIsActive = mWifiMgr.isWifiEnabled();
-        if (mGp.wifiIsActive) {
-            mGp.wifiSsid = mUtil.getConnectedWifiSsid();
-        }
-        mUtil.addDebugMsg(1, "I", "Wi-Fi Status, Active=" + mGp.wifiIsActive + ", SSID=" + mGp.wifiSsid);
-    }
-
-    final private class WifiReceiver extends BroadcastReceiver {
-        @Override
-        final public void onReceive(Context c, Intent in) {
-            String tssid =null;
-            try {
-                tssid=mWifiMgr.getConnectionInfo().getSSID();
-            } catch(Exception e){
-                mUtil.addLogMsg("W", "WIFI receiver, getSSID() failed. msg="+e.getMessage());
-            }
-            String wssid = "";
-            String ss = "";
-            try {
-                ss=mWifiMgr.getConnectionInfo().getSupplicantState().toString();
-//                mUtil.addDebugMsg(1,"I","ss="+ss+", IP addr="+CommonUtilities.getIfIpAddress("wlan0"));
-//                mUtil.addDebugMsg(1,"I","ss="+ss+", IP addr="+String.format("%8x",mWifiMgr.getConnectionInfo().getIpAddress()));
-            } catch(Exception e){
-                mUtil.addLogMsg("W", "WIFI receiver, getSupplicantState() failed. msg="+e.getMessage());
-            }
-            if (tssid == null || tssid.equals("<unknown ssid>")) wssid = "";
-            else wssid = tssid.replaceAll("\"", "");
-            if (wssid.equals("0x")) wssid = "";
-
-            boolean new_wifi_enabled = mWifiMgr.isWifiEnabled();
-            if (!new_wifi_enabled && mGp.wifiIsActive) {
-                mUtil.addDebugMsg(1, "I", "WIFI receiver, WIFI Off");
-                mGp.wifiSsid = "";
-                mGp.wifiIsActive = false;
-            } else {
-                if (ss.equals("COMPLETED") || ss.equals("ASSOCIATING") || ss.equals("ASSOCIATED")) {
-                    if (mGp.wifiSsid.equals("") && !wssid.equals("")) {
-                        mUtil.addDebugMsg(1, "I", "WIFI receiver, Connected WIFI Access point SSID=" + wssid);
-                        mGp.wifiSsid = wssid;
-                        mGp.wifiIsActive = true;
-                    }
-                } else if (ss.equals("INACTIVE") ||
-                        ss.equals("DISCONNECTED") ||
-                        ss.equals("UNINITIALIZED") ||
-                        ss.equals("INTERFACE_DISABLED") ||
-                        ss.equals("SCANNING")) {
-                    if (mGp.wifiIsActive) {
-                        if (!mGp.wifiSsid.equals("")) {
-                            mUtil.addDebugMsg(1, "I", "WIFI receiver, Disconnected WIFI Access point SSID=" + mGp.wifiSsid);
-                            mGp.wifiSsid = "";
-                            mGp.wifiIsActive = true;
-                        }
-                    } else {
-                        if (new_wifi_enabled) {
-                            mUtil.addDebugMsg(1, "I", "WIFI receiver, WIFI On");
-                            mGp.wifiSsid = "";
-                            mGp.wifiIsActive = true;
-                        }
-                    }
-                }
-            }
         }
     }
 

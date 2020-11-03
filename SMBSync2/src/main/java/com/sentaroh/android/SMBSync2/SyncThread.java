@@ -2064,41 +2064,41 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    private String getWiFiAPNameErrorReason(SyncTaskItem sti) {
-        String result="";
-        if (Build.VERSION.SDK_INT>=27) {
-            if (!CommonUtilities.isLocationServiceEnabled(mStwa.context, mStwa.gp)) {
-                result=mStwa.context.getString(R.string.msgs_main_location_error_location_service_is_disabled);
-                return result;
-            }
-        }
-        WifiManager wm = (WifiManager) mStwa.context.getSystemService(Context.WIFI_SERVICE);
-        if (wm.isWifiEnabled()) {
-            String ssid_name=wm.getConnectionInfo().getSSID();
-            if (ssid_name!=null) {
-                if (Build.VERSION.SDK_INT==27 || Build.VERSION.SDK_INT==28) {//Android 8.1 && 9
-                    if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
-                        result=mStwa.context.getString(R.string.msgs_main_location_error_location_permission_not_granted);
-                    }
-                } else if (Build.VERSION.SDK_INT>=29) {//Android 10 以上
-                    if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
-                        result=mStwa.context.getString(R.string.msgs_main_location_error_location_permission_not_granted);
-                    } else if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
-                        result=mStwa.context.getString(R.string.msgs_main_location_error_background_location_permission_not_granted);
-                    }
-                } else {
-                    result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected)+" ssid="+ssid_name;
-                }
-            } else {
-                //SSID is null
-                result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected)+" ssid="+ssid_name;
-            }
-        } else {
-            //WIFI Off
-            result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_is_off);
-        }
-        return result;
-    }
+//    private String getWiFiAPNameErrorReason(SyncTaskItem sti) {
+//        String result="";
+//        if (Build.VERSION.SDK_INT>=27) {
+//            if (!CommonUtilities.isLocationServiceEnabled(mStwa.context, mStwa.gp)) {
+//                result=mStwa.context.getString(R.string.msgs_main_location_error_location_service_is_disabled);
+//                return result;
+//            }
+//        }
+//        WifiManager wm = (WifiManager) mStwa.context.getSystemService(Context.WIFI_SERVICE);
+//        if (wm.isWifiEnabled()) {
+//            String ssid_name=wm.getConnectionInfo().getSSID();
+//            if (ssid_name!=null) {
+//                if (Build.VERSION.SDK_INT==27 || Build.VERSION.SDK_INT==28) {//Android 8.1 && 9
+//                    if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+//                        result=mStwa.context.getString(R.string.msgs_main_location_error_location_permission_not_granted);
+//                    }
+//                } else if (Build.VERSION.SDK_INT>=29) {//Android 10 以上
+//                    if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+//                        result=mStwa.context.getString(R.string.msgs_main_location_error_location_permission_not_granted);
+//                    } else if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+//                        result=mStwa.context.getString(R.string.msgs_main_location_error_background_location_permission_not_granted);
+//                    }
+//                } else {
+//                    result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected)+" ssid="+ssid_name;
+//                }
+//            } else {
+//                //SSID is null
+//                result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected)+" ssid="+ssid_name;
+//            }
+//        } else {
+//            //WIFI Off
+//            result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_is_off);
+//        }
+//        return result;
+//    }
 
     private boolean isPrivateAddress(String if_addr) {
         if (if_addr.startsWith("10.")) return true;

@@ -223,12 +223,12 @@ public final class CommonUtilities {
 
     final public static String getWifiSsidName(WifiManager wm) {
         String wssid = "";
-        if (wm.isWifiEnabled()) {
-            String tssid = wm.getConnectionInfo().getSSID();
-            if (tssid == null || tssid.equals("<unknown ssid>")) wssid = "";
-            else wssid = tssid.replaceAll("\"", "");
-            if (wssid.equals("0x")) wssid = "";
-        }
+//        if (wm.isWifiEnabled()) {
+//            String tssid = wm.getConnectionInfo().getSSID();
+//            if (tssid == null || tssid.equals("<unknown ssid>")) wssid = "";
+//            else wssid = tssid.replaceAll("\"", "");
+//            if (wssid.equals("0x")) wssid = "";
+//        }
         return wssid;
     }
 
@@ -580,14 +580,14 @@ public final class CommonUtilities {
         String ret = "";
         WifiManager mWifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         String ssid = "";
-        if (mWifi.isWifiEnabled()) {
-            ssid = mWifi.getConnectionInfo().getSSID();
-            if (ssid != null &&
-                    !ssid.equals("0x") &&
-                    !ssid.equals("<unknown ssid>") &&
-                    !ssid.equals("")) ret = ssid;
-//			Log.v("","ssid="+ssid);
-        }
+//        if (mWifi.isWifiEnabled()) {
+//            ssid = mWifi.getConnectionInfo().getSSID();
+//            if (ssid != null &&
+//                    !ssid.equals("0x") &&
+//                    !ssid.equals("<unknown ssid>") &&
+//                    !ssid.equals("")) ret = ssid;
+////			Log.v("","ssid="+ssid);
+//        }
         addDebugMsg(2, "I", "getConnectedWifiSsid WifiEnabled=" + mWifi.isWifiEnabled() +", SSID=" + ssid + ", result=" + ret);
         return ret;
     }
