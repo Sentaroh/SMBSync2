@@ -597,13 +597,6 @@ est connect&eacute; &agrave; un r&eacute;seau wifi. Il acceptera n'importe quel 
 <p class=MsoNormal style='margin-left:42.0pt;text-indent:-21.0pt;page-break-after:
 avoid'><span style='font-size:10.5pt;font-family:Wingdings'>&Oslash;<span
 style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><span
-style='font-size:10.5pt'>Wifi S&eacute;lectionn&eacute;s:ne d&eacute;marre la synchronisation que si
-le Wifi est connect&eacute; &agrave; un SSID WLAN dans la liste que vous pouvez sp&eacute;cifier.
-Vous pouvez &eacute;galement ajouter automatiquement le SSID actuellement connect&eacute;.</span></p>
-
-<p class=MsoNormal style='margin-left:42.0pt;text-indent:-21.0pt;page-break-after:
-avoid'><span style='font-size:10.5pt;font-family:Wingdings'>&Oslash;<span
-style='font:7.0pt "Times New Roman"'>&nbsp; </span></span><span
 style='font-size:10.5pt'>Wifi avec IP priv&eacute;e:vous ne pouvez lancer la
 synchronisation que si l'adresse IP attribu&eacute;e au r&eacute;seau Wifi se situe dans les
 plages suivantes : 10.0.0.0 - 10.255.255.255, 172.16.0.0 - 172.31.255.255 ou
@@ -723,18 +716,39 @@ sub-directories of the selected folder will be synchronized.</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_FR_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Utiliser la version 2 des filtres</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt'>Apr&egrave;s l'avoir activ&eacute;, vous
+pouvez utiliser le nouveau filtre. <b><u><span style='color:red'>Il se peut
+qu'il se comporte diff&eacute;remment de l'ancien filtre, c'est pourquoi nous vous
+invitons &agrave; le tester minutieusement avant de l'utiliser.</span></u></b></p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt'>&nbsp;</p>
+
 <p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
 page-break-after:avoid'><span style='font-family:Symbol'><img width=11
 height=11 src="SMBSync2_Help_FR_task.files/image001.png" alt="*"><span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>R&eacute;essayer en cas d'erreur de connexion (uniquement pour les
-actions des SMB)</p>
+</span></span>Supprimer les fichiers avant la sync(mode Miroir uniquement)</p>
 
 <p class=MsoBodyText style='margin-left:21.0pt;page-break-after:avoid'>On server-side
 connection errors, SMBSync2 will try again the synchronization for a maximum of
 3 times at a 30 seconds interval.</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt'><span
+style='font-family:Symbol'><img width=11 height=11
+src="SMBSync2_Help_FR_task.files/image001.png" alt="*"><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Supprimer les r&eacute;pertoires et les fichiers exclus par les filtres</p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt'>Si elle est activ&eacute;e, <b><u><span
+style='color:red'>elle supprime les r&eacute;pertoires/fichiers exclus du filtre.</span></u></b></p>
+
+<p class=MsoListParagraph style='margin-left:21.0pt'>&nbsp;</p>
 
 <p class=MsoListParagraph style='margin-left:21.0pt;text-indent:-21.0pt;
 page-break-after:avoid'><span style='font-family:Symbol'><img width=11
@@ -838,12 +852,12 @@ derni&egrave;re modification du fichier cible.</p>
 synchronisation, SMBSync2 stockera la liste des fichiers avec leurs horodatages
 dans sa base de donn&eacute;es (cf. 1.3). Comme la base de donn&eacute;es doit &ecirc;tre cr&eacute;&eacute;e la
 premi&egrave;re fois, tous les fichiers ayant le m&ecirc;me nom et la m&ecirc;me taille seront &agrave;
-nouveau &eacute;cras&eacute;s par une copie compl&egrave;te du fichier ma&icirc;tre lors de la premi&egrave;re
-synchronisation. Lors des synchronisations suivantes, la base de donn&eacute;es sera
-utilis&eacute;e et l'&eacute;crasement de tous les fichiers de m&ecirc;me nom et de m&ecirc;me taille ne sera
-plus effectu&eacute;. La derni&egrave;re heure de modification du fichier local est
-enregistr&eacute;e par le code propri&eacute;taire SMBSync2 (il ne repose pas sur la fonction
-Java File#setLastModified()).</p>
+nouveau &eacute;cras&eacute;s par une copie compl&egrave;te du fichier ma&icirc;tre lors de la premi&egrave;re synchronisation.
+Lors des synchronisations suivantes, la base de donn&eacute;es sera utilis&eacute;e et
+l'&eacute;crasement de tous les fichiers de m&ecirc;me nom et de m&ecirc;me taille ne sera plus
+effectu&eacute;. La derni&egrave;re heure de modification du fichier local est enregistr&eacute;e
+par le code propri&eacute;taire SMBSync2 (il ne repose pas sur la fonction Java
+File#setLastModified()).</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -884,9 +898,9 @@ src="SMBSync2_Help_FR_task.files/image001.png" alt="*"><span style='font:7.0pt "
 sont consid&eacute;r&eacute;s diff&eacute;rents seulement si la taille de la source est sup&eacute;rieure &agrave;
 celle de la destination)</p>
 
-<p class=MsoListParagraph style='margin-left:21.0pt'>Les fichiers ne sont
-consid&eacute;r&eacute;s comme diff&eacute;rents que si la taille de la source est sup&eacute;rieure &agrave;
-celle de la destination. Cela d&eacute;sactivera la comparaison par temps de fichier.</p>
+<p class=MsoListParagraph style='margin-left:21.0pt'>Les fichiers ne sont consid&eacute;r&eacute;s
+comme diff&eacute;rents que si la taille de la source est sup&eacute;rieure &agrave; celle de la
+destination. Cela d&eacute;sactivera la comparaison par temps de fichier.</p>
 
 <p class=MsoNormal><span style='font-size:10.5pt'>&nbsp;</span></p>
 
@@ -948,9 +962,9 @@ src="SMBSync2_Help_FR_task.files/image001.png" alt="*"><span style='font:7.0pt "
 
 <p class=MsoListParagraph style='margin-left:24.0pt'>Permet de s&eacute;lectionner le
 d&eacute;calage horaire en minutes entre l'heure d'&eacute;t&eacute; et l'heure d'hiver. Les
-fichiers sont consid&eacute;r&eacute;s comme diff&eacute;rents si le d&eacute;calage horaire n'est pas
-exactement &eacute;gal &agrave; l'intervalle sp&eacute;cifi&eacute; (+/- le &quot;d&eacute;calage horaire minimum
-autoris&eacute; (en secondes)&quot; sp&eacute;cifi&eacute; dans l'option pr&eacute;c&eacute;dente)</p>
+fichiers sont consid&eacute;r&eacute;s comme diff&eacute;rents si le d&eacute;calage horaire n'est pas exactement
+&eacute;gal &agrave; l'intervalle sp&eacute;cifi&eacute; (+/- le &quot;d&eacute;calage horaire minimum autoris&eacute;
+(en secondes)&quot; sp&eacute;cifi&eacute; dans l'option pr&eacute;c&eacute;dente)</p>
 
 <p class=MsoNormal>&nbsp;</p>
 
