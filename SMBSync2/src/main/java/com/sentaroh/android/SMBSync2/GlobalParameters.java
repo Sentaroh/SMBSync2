@@ -160,7 +160,7 @@ public class GlobalParameters extends CommonGlobalParms {
             "aac;apk;avi;gif;ico;gz;jar;jpe;jpeg;jpg;m3u;m4a;m4u;mov;movie;mp2;mp3;mpe;mpeg;mpg;mpga;png;qt;ra;ram;svg;tgz;wmv;zip;";
 
     public boolean settingSupressAppSpecifiDirWarning = false;
-    public boolean settingSupressLocationServiceWarning =false;
+//    public boolean settingSupressLocationServiceWarning =false;
     public boolean settingSuppressShortcutWarning = true;
     public boolean settingFixDeviceOrientationToPortrait = false;
     public boolean settingForceDeviceTabletViewInLandscape = false;
@@ -560,7 +560,6 @@ public class GlobalParameters extends CommonGlobalParms {
         settingVibrateWhenSyncEnded = prefs.getString(c.getString(R.string.settings_vibrate_when_sync_ended), "0");
         settingExportedProfileEncryptRequired = prefs.getBoolean(c.getString(R.string.settings_exported_profile_encryption), true);
         settingSupressAppSpecifiDirWarning = prefs.getBoolean(c.getString(R.string.settings_suppress_warning_app_specific_dir), false);
-        settingSupressLocationServiceWarning = prefs.getBoolean(c.getString(R.string.settings_suppress_warning_location_service_disabled), false);
 
         settingScreenTheme =prefs.getString(c.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD);
         if (prefs.contains("settings_use_light_theme")) {

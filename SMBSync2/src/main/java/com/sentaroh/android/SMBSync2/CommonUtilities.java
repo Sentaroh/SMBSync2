@@ -284,7 +284,6 @@ public final class CommonUtilities {
         out.add("  Write sync result log="+gp.settingWriteSyncResultLog);
         out.add("  No compress file type="+gp.settingNoCompressFileType);
         out.add("  Prevent sync start delay="+gp.settingPreventSyncStartDelay);
-        out.add("  Suppress Location service warning="+gp.settingSupressLocationServiceWarning);
         out.add("  Management file directory="+gp.settingMgtFileDir);
 
         out.add("");

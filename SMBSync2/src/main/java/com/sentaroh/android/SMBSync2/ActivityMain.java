@@ -2237,7 +2237,6 @@ public class ActivityMain extends AppCompatActivity {
                 ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired +
 
                 ", settingSupressAppSpecifiDirWarning=" + mGp.settingSupressAppSpecifiDirWarning +
-                ", settingSupressLocationServiceWarning=" + mGp.settingSupressLocationServiceWarning +
                 ", settingFixDeviceOrientationToPortrait=" + mGp.settingFixDeviceOrientationToPortrait +
                 ", settingForceDeviceTabletViewInLandscape=" + mGp.settingForceDeviceTabletViewInLandscape +
                 ", settingScreenThemeLanguage=" + mGp.settingScreenThemeLanguage + " (value=" + mGp.settingScreenThemeLanguageValue + ")" +

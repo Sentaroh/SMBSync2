@@ -7966,7 +7966,6 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileString(c, pw, "",        encrypt_required, cp, c.getString(R.string.settings_mgt_dir));
 
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_suppress_warning_app_specific_dir));
-        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_suppress_warning_location_service_disabled));
 
         saveSettingsParmsToFileString(c, pw, "1",       encrypt_required, cp, c.getString(R.string.settings_notification_message_when_sync_ended));
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_playback_ringtone_when_sync_ended));
