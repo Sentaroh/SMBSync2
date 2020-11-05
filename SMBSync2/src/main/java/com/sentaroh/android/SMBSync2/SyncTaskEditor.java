@@ -601,12 +601,14 @@ public class SyncTaskEditor extends DialogFragment {
                 ct_specific_file_type_audio.setChecked(sv.specific_file_type_audio);
                 ct_specific_file_type_image.setChecked(sv.specific_file_type_image);
                 ct_specific_file_type_video.setChecked(sv.specific_file_type_video);
-                if (sv.specific_file_type || sv.specific_file_type_audio || sv.specific_file_type_image || sv.specific_file_type_video || !sv.sync_file_filter_info.equals("")) {
+                if (sv.specific_file_type || sv.specific_file_type_audio || sv.specific_file_type_image || sv.specific_file_type_video ||
+                        (!sv.sync_file_filter_info.equals("") && !sv.sync_file_filter_info.equals(mContext.getString(R.string.msgs_profile_sync_task_dlg_file_filter_not_specified)))) {
                     performClickNoSound(ct_specific_file_type);
                 }
 
                 ct_specific_directory.setChecked(false);
-                if (sv.specific_diretory || !sv.sync_dir_filter_info.equals("")) {
+                if (sv.specific_diretory ||
+                        (!sv.sync_dir_filter_info.equals("") && !sv.sync_dir_filter_info.equals(mContext.getString(R.string.msgs_profile_sync_task_dlg_dir_filter_not_specified)))) {
                     performClickNoSound(ct_specific_directory);
                 }
 
