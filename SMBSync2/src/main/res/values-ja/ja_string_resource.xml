@@ -407,8 +407,8 @@
         <string name="msgs_profile_sync_task_sync_file_type_video">ビデオファイルを同期する</string>
         <string name="msgs_profile_sync_task_sync_option">オプション:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">許容するマスターとターゲットファイルの最終更新時刻の差(秒)</string>
-        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">指定されたアクセスポイントまたはIPアドレスで無い場合タスクをスキップし、次のタスクを開始する。</string>
-        <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">グローバルIPアドレスでの同期を許可する</string>
+        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">指定されたIPアドレスで無い場合タスクをスキップし、次のタスクを開始する。</string>
+        <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">全てのIPアドレスで同期を許可する</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">ファイルの上書または削除の前に確認する</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">フィルターにより除外されたディレクトリー/ファイルを削除する</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">警告: ソースディレクトリに存在しないすべてのファイルとディレクトリー、およびフィルタにより除外されたファイルとディレクトリーは宛先ディレクトリーから削除されます。\nテストモードまたはテストディレクトリー作成してテストして、意図しないファイルやディレクトリーを削除しないことを確認する事を強くお勧めします。</string>

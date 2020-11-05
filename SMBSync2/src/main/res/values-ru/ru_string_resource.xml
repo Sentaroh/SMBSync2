@@ -407,7 +407,7 @@
         <string name="msgs_profile_sync_task_sync_file_type_video">Синхронизировать видеофайлы</string>
         <string name="msgs_profile_sync_task_sync_option">Опции:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Минимально допустимая разница во времени (в секундах) между исходным и целевым файлами для синхронизации</string>
-        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Пропустить задачу, если она не подключена к указанной точке доступа или IP-адрес беспроводной локальной сети не соответствует указанному IP-адресу.</string>
+        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Пропустите задачу, если IP-адрес WLAN не совпадает с указанным IP-адресом.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Разрешить синхронизацию с глобальными IP-адресами</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Подтвердите, прежде чем перезаписать/удалить</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Удаляет каталоги и файлы, исключенные фильтром</string>

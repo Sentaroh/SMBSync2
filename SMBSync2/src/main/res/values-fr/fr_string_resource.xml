@@ -407,7 +407,7 @@
         <string name="msgs_profile_sync_task_sync_file_type_video">Synchro des fichiers vidéo</string>
         <string name="msgs_profile_sync_task_sync_option">Options:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Différence de temps tolérée (sec) entre les fichiers source et destination</string>
-        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Ignorer la tâche si le WLAN n\'est pas connecté au point d\'accès spécifié, ou que l\'adresse IP ne correspond pas à celle spécifiée.</string>
+        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Sauter la tâche si l\'adresse IP du WLAN ne correspond pas à l\'adresse IP spécifiée.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Autoriser la connexion aux adresses IP publiques</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirmer avant de remplacer/supprimer</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Supprimer les répertoires et les fichiers exclus par les filtres</string>
