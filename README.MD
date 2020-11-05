@@ -7,8 +7,7 @@ This application performs file synchronization between an Android device and a P
 
 # Download
 
-- Latest version : https://drive.google.com/drive/folders/1NF9HfxxtQOAh7_8zHiHchc8fPd8z9fWt?usp=sharing
-- Previous version : https://drive.google.com/drive/folders/1ORjpLNsqv7Ccv6EmN4YP0qhXy_0JYtOd?usp=sharing
+https://github.com/Sentaroh/SMBSync2/releases
 
 # How to Build
 
