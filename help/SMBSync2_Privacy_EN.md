@@ -16,11 +16,11 @@ The app needs to record the following data to check the synchronization results 
 - Android version, terminal maker, terminal name, terminal model, application version
 - Directory name, file name, file size, file last modified time
 - SMB server host name, IP address, port number, account name
-- Network interface name, IP addressSystem settings
+- Network interface name, IP address, System settings
 - App settings
 
 ## 1.3. Exported settings and Sync task list 
-The app can export "[2.1 Synchronization task list](#_Synchronization_task_list)" to a file. You can password protect the file before exporting it.
+The app can export "1.1 Synchronization task list" to a file. You can password protect the file before exporting it.
 - Directory name, file name
 - SMB server host name, IP address, port number, account name, password
 - App settings

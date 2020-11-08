@@ -24,7 +24,7 @@ L'application doit enregistrer les données suivantes pour vérifier les résult
 
 ## 1.3. Paramètres exportés et liste des tâches de synchronisation
 
-L'application peut exporter "[3.1 Liste des tâches de synchronisation](#_3.1._Liste_des)" vers un fichier. Vous pouvez protéger le fichier par un mot de passe avant de l'exporter.
+L'application peut exporter "1.1 Liste des tâches de synchronisation" vers un fichier. Vous pouvez protéger le fichier par un mot de passe avant de l'exporter.
 
 - Nom du répertoire, nom du fichier
 - Nom d'hôte du serveur SMB, adresse IP, numéro de port, nom de compte, mot de passe

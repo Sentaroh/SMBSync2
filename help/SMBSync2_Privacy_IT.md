@@ -24,7 +24,7 @@ L'app deve registrare i seguenti dati per verificare i risultati della sincroniz
 
 ## 1.3. Impostazioni esportate e lista dei compiti di sincronizzazione
 
-L'app può esportare "[1.1 Elenco dei compiti di sincronizzazione ](#_1.1._Elenco_dei)" in un file. È possibile proteggere il file con una password prima di esportarlo.
+L'app può esportare "1.1 Elenco dei compiti di sincronizzazione" in un file. È possibile proteggere il file con una password prima di esportarlo.
 
 - Nome della directory, nome del file
 - Nome host del server SMB, indirizzo IP, numero di porta, nome del conto, password
