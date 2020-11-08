@@ -8,29 +8,24 @@
 La sincronizzazione avviene tra due coppie di cartelle chiamate Master (cartella sorgente) e Target (cartella di destinazione). Si tratta di una sincronizzazione in una sola direzione, dal Master al Target.
 Le modalità di sincronizzazione supportate sono:</p>
 <ul>
-<li>Mirror</li>
-
-</ul>
+<li><p>Mirror</p>
 <p>La cartella di destinazione viene conservata come copia esatta del master. Se un file è diverso tra il master e la destinazione, il file sul master sovrascrive il file sulla destinazione. La cartella e i file non presenti sulla destinazione vengono copiati dal master. Anche i file e le cartelle non presenti sul master vengono cancellati dal master. Solo i file modificati (per dimensione e/o data/ora) vengono aggiornati sulla destinazione.</p>
-<ul>
-<li>Permeti</li>
-
-</ul>
+</li>
+<li><p>Permeti</p>
 <p>Se un file è diverso tra il master e il target, il file sul master sovrascrive il file sul target. Una volta copiati nella destinazione, i file e le cartelle vengono cancellati dal master (come il comando move).
 Solo i file modificati (per dimensione e/o data/ora) vengono copiati nella destinazione. I file identici, in base ai criteri di confronto selezionati, vengono cancellati dal master senza essere copiati. I file e le cartelle sul target, non presenti sul master, vengono ovviamente conservati.</p>
-<ul>
-<li>Copia</li>
-
-</ul>
+</li>
+<li><p>Copia</p>
 <p>Come per permeti, ma i file non vengono cancellati dal master dopo essere stati copiati.
 Se un file è diverso tra il master e la destinazione, il file sul master sovrascrive il file sulla destinazione. Una volta copiati nella destinazione, i file e le cartelle vengono mantenuti sul master (come un comando di copia).
 Solo i file modificati (per dimensione e/o data/ora) vengono copiati sulla destinazione. I file identici, in base ai criteri di confronto selezionati, vengono ignorati e non vengono più copiati.</p>
-<ul>
-<li>Archivia</li>
-
-</ul>
+</li>
+<li><p>Archivia</p>
 <p>Archiviare foto e video spostandoli dal master alla cartella di destinazione. Per l&#39;archiviazione possono essere specificati criteri specifici: data/ora di ripresa, data e ora dell&#39;ultima esecuzione dell&#39;archivio (ad esempio 7 giorni o prima o 30 giorni o prima).
 ZIP non può essere specificato come target per le operazioni di archivio.</p>
+</li>
+
+</ul>
 <p><strong>Compare criteria:</strong> 
 I file sono considerati diversi in base a questi criteri:</p>
 <ol start='' >
