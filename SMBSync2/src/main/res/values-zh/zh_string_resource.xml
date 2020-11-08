@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_change_btn">变更记录</string>
         <string name="msgs_about_dlg_privacy_btn">隐私</string>
         <string name="msgs_dlg_title_about">关于SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_ZH_Short.htm</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_ZH.htm</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.htm</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_JA_Short.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_JA.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_JA.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">选择要导入的任务和设置</string>
         <string name="msgs_export_import_profile_listing">列出配置文件</string>
@@ -44,19 +44,19 @@
         <string name="msgs_export_import_pswd_hint_confirm">确认密码</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">密码不匹配。</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync2_Help_ZH_task.htm</string>
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_ZH_task.html</string>
         <string name="msgs_help_sync_task_title">同步任务帮助</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_ZH_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_ZH_folder_internal.html</string>
         <string name="msgs_help_sync_folder_internal_title">内部存储帮助</string>
-        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_ZH_folder_sdcard.htm</string>
+        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_ZH_folder_sdcard.html</string>
         <string name="msgs_help_sync_folder_sdcard_title">SDCARD帮助</string>
-        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_ZH_folder_usb.htm</string>
+        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_ZH_folder_usb.html</string>
         <string name="msgs_help_sync_folder_usb_title">USB媒体帮助</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_ZH_folder_smb.htm</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_ZH_folder_smb.html</string>
         <string name="msgs_help_sync_folder_smb_title">SMB服务器帮助</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_ZH_folder_zip.htm</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_ZH_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">ZIP文件帮助</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_ZH_task_picture.htm</string>
+        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_ZH_task_picture.html</string>
         <string name="msgs_help_sync_task_picture_title">同步任务图片帮助</string>
     <!-- Log management -->
         <string name="msgs_log_management_title">管理日志文件</string>

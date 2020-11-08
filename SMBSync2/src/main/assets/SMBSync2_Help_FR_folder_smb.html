@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>SMBSync2_Help_FR_folder_smb</title></head>
+<body><h3>Rechercher les serveurs SMB</h3>
+<p>Scanner le réseau pour trouver le serveur SMB disponible</p>
+<h3>Nom du serveur/Adresse IP</h3>
+<p>Précisez le nom du serveur SMB ou l&#39;adresse IP </p>
+<h3>Protocole SMB</h3>
+<p>Vous pouvez spécifier le protocole SMB.</p>
+<ul>
+<li><p>Utiliser SMB V1</p>
+</li>
+<li><p>Utiliser SMB V2 (2.01)</p>
+<p>SMB min v2.1, max v2.1</p>
+</li>
+<li><p>Utiliser SMB V2 (2.11)</p>
+<p>SMB min v2.1, max v2.1</p>
+</li>
+<li><p>Utiliser SMB V2/3 (2.12)</p>
+<p>Prise en charge du protocole SMB V2 ou V3</p>
+<p>SMB min v2.0.2, max v3.0</p>
+</li>
+<li><p>Utiliser SMB V2/3 (2.14)</p>
+<p>SMB min v2.0.2, max v3.0</p>
+</li>
+
+</ul>
+<h3>Utiliser le protocole SMB2</h3>
+<p>Lorsqu&#39;elle est cochée, elle force setProperty(&quot;jcifs.smb.client.useSMB2Negotiation&quot;, &quot;true&quot;) dans la fonction JcifsAuth(). Cela garantit l&#39;utilisation du style de négociation SMB2 non rétrocompatible, incompatible avec les versions antérieures à SMB 2.0.2</p>
+<h3>Exiger l&#39;authentification SMB IPC</h3>
+<p>Lors de la vérification, le client est tenu d&#39;utiliser la signature SMB pour les connexions IPC$ comme transport DCERPC. Sinon, c&#39;est autorisé, mais pas obligatoire. </p>
+<h3>Saisir numéro de port</h3>
+<p>Précisez le numéro de port s&#39;il est différent de celui par défaut. S&#39;il est laissé vide, SMBSync2 essaiera de se connecter aux numéros de port standard par défaut 139 et 445. </p>
+<h3>Utiliser un compte d&#39;authentification</h3>
+<p>Doit être rempli si le serveur le demande. </p>
+<h3>Nom d&#39;utilisateur</h3>
+<p>Nom de compte d&#39;utilisateur pour se connecter à l&#39;hôte. Un compte Microsoft ne peut pas être utilisé avec SMBSync2. Veuillez créer un compte local et l&#39;utiliser. </p>
+<h3>Mot de passe</h3>
+<p>Mot de passe du compte pour se connecter à l&#39;hôte. </p>
+<h3>Afficher les dossiers partagés</h3>
+<p>Se connecte à l&#39;hôte spécifié et liste toutes les actions disponibles pour le compte. </p>
+<p>(Les noms des actions seront affichés lorsque vous appuierez sur le bouton &quot; Afficher les dossiers partagés &quot;. Cliquez sur le nom de l&#39;action souhaitée, puis appuyez sur OK pour valider)</p>
+<h3>Afficher les dossiers</h3>
+<p>Afficher la liste des annuaires sur l&#39;action sélectionnée. </p>
+<p>Lorsque vous appuyez sur le bouton &quot;Répertoire de la liste&quot;, les répertoires sélectionnables sont affichés. </p>
+<p>Appuyez sur l&#39;annuaire que vous souhaitez choisir, puis sur le bouton &quot;Sélectionner&quot;. Pour récapituler </p>
+<p>en passant par les sous-répertoires, appuyez sur le nom du répertoire. </p>
+<h3>Dossier</h3>
+<p>Veuillez entrer le répertoire cible ou le répertoire principal. Si vous indiquez un répertoire qui n&#39;existe pas dans la cible, il sera créé lors de la synchronisation. </p>
+<h3>Ajouter des mots-clés</h3>
+<p>%YEAR%, %MONTH%, %DAY% et %DAY-OF-YEAR% peuvent être utilisés comme noms de répertoires cibles. Les mots-clés sont convertis en année, mois et jour de début de la synchronisation.</p>
+<p> </p>
+<p><strong>Ces options ne sont affichées que lorsque le type de synchronisation est Copier/Déplacer.</strong></p>
+<h3>Ajouter au nom du dossier la date/heure à laquelle la photo/vidéo a été prise (le mot-clé sera remplacé par la date et l&#39;heure à laquelle la photo/vidéo a été prise)</h3>
+<p>Si elles sont vérifiées, les données EXIF des supports sauvegardés sont utilisées pour obtenir la date et l&#39;heure du tournage. L&#39;horodatage des tirs est utilisé et ajouté au dossier cible. Lorsque l&#39;application ne parvient pas à obtenir l&#39;heure de tir à partir des données EXIF, elle utilise la dernière heure modifiée du fichier.</p>
+<p>&nbsp;</p>
+<p><strong>Les options suivantes ne sont affichées que lorsque le type de synchronisation est Archive.</strong></p>
+<h3>Si la date et l&#39;heure ne peuvent pas être déterminées depuis l&#39;entête EXIF, afficher un message de confirmation</h3>
+<p>Si la case est cochée, lorsque la date et l&#39;heure de tournage ne peuvent pas être obtenues à partir du fichier EXIF, un message de confirmation s&#39;affiche pour indiquer si l&#39;heure de la dernière modification du fichier a été utilisée ou non. Si vous sélectionnez Annuler dans la boîte de dialogue de confirmation, le fichier ne sera pas archivé. </p>
+<h3>Archiver les fichiers si:</h3>
+<p>Choisissez les critères de temps pour déterminer les fichiers à archiver. La sélection de l&#39;heure est basée sur la date de prise de vue de la photo/vidéo, ou sur la dernière heure modifiée s&#39;il n&#39;est pas possible d&#39;acquérir l&#39;horodatage à partir de l&#39;en-tête EXIF.</p>
+<ul>
+<li><p>Toutes les dates</p>
+<p>Archivez toutes les photos/vidéos</p>
+</li>
+<li><p>Plus ancien que 7 jours</p>
+<p>N&#39;archivez que les fichiers dont la date de tournage est antérieure de 7 jours ou plus à l&#39;heure actuelle.</p>
+</li>
+<li><p>Plus ancien que 30 jours</p>
+<p>N&#39;archivez que les fichiers dont la date de tournage est antérieure de 30 jours ou plus à l&#39;heure actuelle.</p>
+</li>
+<li><p>Plus ancien que 60 jours</p>
+<p>N&#39;archivez que les fichiers dont la date de tournage est antérieure de 60 jours ou plus à l&#39;heure actuelle.</p>
+</li>
+<li><p>Plus ancien que 90 jours</p>
+<p>N&#39;archivez que les fichiers dont la date de tournage est antérieure de 90 jours ou plus à l&#39;heure actuelle.</p>
+</li>
+<li><p>Plus ancien que 180 jours</p>
+<p>N&#39;archivez que les fichiers dont la date de tournage est antérieure de 180 jours ou plus à l&#39;heure actuelle.</p>
+</li>
+<li><p>Plus ancien que 1 année</p>
+<p>N&#39;archivez que les fichiers dont la date de tournage est antérieure d&#39;un an ou plus à l&#39;heure actuelle. </p>
+</li>
+
+</ul>
+<h3>Incrémenter les noms de fichiers</h3>
+<p>Ajoutez le numéro de séquence incrémentielle au nom du fichier lors de l&#39;archivage.</p>
+<ul>
+<li><p>Ne pas changer</p>
+<p>Ne pas ajouter un numéro de séquence.</p>
+</li>
+<li><p>3 chiffres (001-999)</p>
+<p>Appendice 001-999</p>
+</li>
+<li><p>4 chiffres (0001-9999)</p>
+<p>Appendice 0001-9999</p>
+</li>
+<li><p>5 chiffres (00001-99999)</p>
+<p>Appendice 00001-99999</p>
+</li>
+<li><p>6 chiffres (000001-999999)</p>
+<p>Appendice 000001-999999 </p>
+</li>
+
+</ul>
+<h3>Changer le nom du fichier avant de l&#39;archiver dans le dossier cible </h3>
+<p>Si cette case est cochée, le nom du fichier archivé sera modifié en fonction des critères que vous aurez choisis. Vous pouvez ajouter la date et l&#39;heure dans le nom du fichier &quot;Modèle de nom de fichier&quot;. </p>
+<h3>Modèle de nom de fichier</h3>
+<p>Saisissez les modèles à utiliser pour renommer les fichiers archivés. La valeur par défaut est DSC<em>%DATE%</em>%TIME%</p>
+<ul>
+<li><p>%Original name%</p>
+<p>Sera remplacé par le nom de fichier original lors de l&#39;archivage des archives (Ex. DSC_0001)</p>
+</li>
+<li><p>%Date%</p>
+<p>Sera remplacé par la date de tournage (ex. 2018-01-01)</p>
+</li>
+<li><p>%Time%</p>
+<p>Sera remplacé par l&#39;heure de tournage (ex. 13:01:10) </p>
+</li>
+
+</ul>
+<p>La dernière ligne de l&#39;écran indique à quoi ressembleront votre dossier cible et le nom du fichier une fois archivé. </p>
+<h3>Créer un dossier dont le nom comprend la date de capture des photos et y stocker les fichiers archivés.</h3>
+<p>Crée un répertoire horodaté où stocker les fichiers archivés.</p>
+<p>Lorsque cette option est cochée, le &quot;modèle de nom de répertoire&quot; s&#39;affiche. </p>
+<h3>Modèle de répertoire</h3>
+<p>Saisissez les modèles à utiliser pour renommer le répertoire à créer (exp. DIR-% ANNÉE% -% MOIS% et ainsi de suite). En appuyant sur les boutons des modèles, vous pouvez entrer des mots-clés derrière le curseur.</p>
+<ul>
+<li><p>%Year%</p>
+<p>Sera remplacé par l&#39;année de tournage. (Ex. 2018)</p>
+</li>
+<li><p>%Month%</p>
+<p>Sera remplacé par le mois de tournage (Ex. 01)</p>
+</li>
+<li><p>%Day%</p>
+<p>Sera remplacé par le jour du tournage (Ex. 29)</p>
+</li>
+
+</ul>
+<p>La dernière ligne de l&#39;écran indique à quoi ressembleront votre dossier cible et le nom du fichier une fois archivé. </p>
+<h3>Informations détaillées</h3>
+<p><a href='https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing' target='_blank' class='url'>https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing</a></p>
+<p> </p>
+</body>
+</html>
