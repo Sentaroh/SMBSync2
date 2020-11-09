@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_change_btn">变更记录</string>
         <string name="msgs_about_dlg_privacy_btn">隐私</string>
         <string name="msgs_dlg_title_about">关于SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_JA_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_JA.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_JA.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_ZH_Short.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_ZH.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_ZH.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">选择要导入的任务和设置</string>
         <string name="msgs_export_import_profile_listing">列出配置文件</string>

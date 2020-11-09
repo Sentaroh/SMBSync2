@@ -68,20 +68,17 @@ Si cette option n'est pas cochée, tous les fichiers sont synchronisés. Si vous
 
 - Synchro des fichiers audio
 
-  Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :
-
+  Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :  
   aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
 
 - Synchro des fichiers images
 
-  Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :
-
+  Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :  
   bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff,
 
 - Synchro des fichiers vidéo
 
-  Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :
-
+  Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :  
   avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv 
 
 - Filtre de fichiers

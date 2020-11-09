@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_change_btn">Журнал изменений</string>
         <string name="msgs_about_dlg_privacy_btn">Приватность </string>
         <string name="msgs_dlg_title_about">О программе SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_JA_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_JA.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_JA.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_RU_Short.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_RU.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_RU.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Импорт файла задания</string>
         <string name="msgs_export_import_profile_listing">Список файлов</string>

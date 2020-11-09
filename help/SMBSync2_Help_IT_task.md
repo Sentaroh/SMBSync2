@@ -68,20 +68,17 @@ Se deselezionati, tutti i file sono sincronizzati. Se si seleziona il filtro dei
 
 - Sync audio files
 
-  Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:
-
+  Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
   aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
 
 - Sync immagini
 
-  Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:
-
+  Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
   bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff,
 
 - Sync video files
 
-  Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:
-
+  Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
   avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv 
 
 - File filtro

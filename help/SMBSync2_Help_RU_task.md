@@ -72,21 +72,15 @@
 
 - Синхронизация аудио файлов
 
-  При установке флажка он будет синхронизировать файлы со следующими расширениями.
-
-  aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
+  При установке флажка он будет синхронизировать файлы со следующими расширениями.    aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
 
 - Синхронизация файлов изображений
 
-  При установке флажка он будет синхронизировать файлы со следующими расширениями.
-
-  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
+  При установке флажка он будет синхронизировать файлы со следующими расширениями.    bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
 
 - Синхронизировать видеофайлы
 
-  При установке флажка он будет синхронизировать файлы со следующими расширениями.
-
-  avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
+  При установке флажка он будет синхронизировать файлы со следующими расширениями.    avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
 
 - файловый фильтр
 

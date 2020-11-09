@@ -11,42 +11,46 @@
 <p>Please enter the target or master directory. If you specify a directory that does not exist in the target, it will be created during synchronization.</p>
 <h3>Add keywords</h3>
 <p>%YEAR%, %MONTH%, %DAY% and %DAY-OF-YEAR% can be used as target directory names. The keywords are converted into the year, month, and day on which the sync started.</p>
-<p><strong>These options are displayed only when the sync type is Copy/Move.</strong></p>
-<h3>Append the photo/video shooting time/date to the directory name</h3>
-<p>If checked, the EXIF data of the backed up media is used to get the shooting date and time. The shooting timestamp is used and appended to the target folder. When the app is unable to get the shooting time from the EXIF, it uses the last modified time of the file.</p>
-<p><strong>The following options are displayed only when the sync type is Archive.</strong></p>
+<h3>Append the photo/video shooting time/date to the directory name  </h3>
+<p><strong>These options are displayed only when the sync type is Copy/Move.</strong><br/>If checked, the EXIF data of the backed up media is used to get the shooting date and time. The shooting timestamp is used and appended to the target folder. When the app is unable to get the shooting time from the EXIF, it uses the last modified time of the file.</p>
+<p><strong>The following options are displayed only when the sync type is Archive.</strong>  </p>
 <h3>If the date and time cannot be determined by EXIF data, display a confirmation message.</h3>
 <p>If checked, when the shooting date and time cannot be acquired from EXIF , a confirmation message is displayed as to whether or not use the last modified time of the file instead. If you select Cancel in the confirmation dialog, the file will not be archived.</p>
 <h3>Archive files if…</h3>
 <p>Choose the time criteria to determine which files to archive. Time selection is based on the photo/video shooting date, or the last modified time if it is not possible to acquire the timestamp from the EXIF header.</p>
-<h3>Any date (all)</h3>
+<ul>
+<li><p>Any date (all)</p>
 <p>Archive all pictures/videos</p>
-<h3>Older than 7 days</h3>
+</li>
+<li><p>Older than 7 days</p>
 <p>Archive only files with a shooting date older than the current time by 7 days or more</p>
-<h3>Older than 30 days</h3>
+</li>
+<li><p>Older than 30 days</p>
 <p>Archive only files with a shooting date older than the current time by 30 days or more</p>
-<h3>Older than 60 days</h3>
+</li>
+<li><p>Older than 60 days</p>
 <p>Archive only files with a shooting date older than the current time by 60 days or more</p>
-<h3>Older than 90 days</h3>
+</li>
+<li><p>Older than 90 days</p>
 <p>Archive only files with a shooting date older than the current time by 90 days or more</p>
-<h3>Older than 180 days</h3>
+</li>
+<li><p>Older than 180 days</p>
 <p>Archive only files with a shooting date older than the current time by 180 days or more</p>
-<h3>Older than 1 year</h3>
+</li>
+<li><p>Older than 1 year</p>
 <p>Archive only files with a shooting date older than the current time by 1 year or more</p>
-<p> </p>
+</li>
+
+</ul>
 <h3>Increment file names by appending [sequence number]</h3>
 <p>Append the incremental sequence number to the file name when archiving.</p>
-<ol start='' >
-<li>Do not change</li>
-
-</ol>
-<p>		Do not append a sequence number</p>
-<ol start='2' >
-<li>3 digits sequence</li>
-
-</ol>
-<p>		Append 001-999</p>
-<ol start='3' >
+<ul>
+<li><p>Do not change</p>
+<p>Do not append a sequence number</p>
+</li>
+<li><p>3 digits sequence</p>
+<p>Append 001-999</p>
+</li>
 <li><p>4 digits sequence</p>
 <p>Append 0001-9999</p>
 </li>
@@ -57,11 +61,9 @@
 <p>Append 000001-999999</p>
 </li>
 
-</ol>
-<p> </p>
+</ul>
 <h3>Change the name of the file before archiving it in the target folder. </h3>
 <p>If checked, the file name of the archived file will be changed based on your selected criteria. You can append the date and time in the file name &quot;File name template&quot;.</p>
-<p> </p>
 <h3>File name template</h3>
 <p>Enter the patterns to use to rename the archived files. Default value is DSC_%DATE%</p>
 <ol start='' >
@@ -82,7 +84,7 @@
 <p>When checked, the &quot;Directory name template&quot; is displayed.</p>
 <h3>Directory template</h3>
 <p>Enter the patterns to use to rename the directory to be created (exp. DIR-% YEAR% -% MONTH% and so on). By pressing the patterns buttons, you can enter keywords behind the cursor.</p>
-<ol start='' >
+<ul>
 <li><p>%YEAR%</p>
 <p>Will be replaced by the shooting Year. (Ex. 2018)</p>
 </li>
@@ -93,7 +95,7 @@
 <p>Will be replaced by the shooting Day (Ex. 29)</p>
 </li>
 
-</ol>
+</ul>
 <p>The last line in the screen displays how your target folder and file name will look like once archived.</p>
 <h3>Detailed information</h3>
 <p><a href='https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing' target='_blank' class='url'>https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing</a></p>

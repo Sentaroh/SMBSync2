@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_change_btn">Historique des modifications</string>
         <string name="msgs_about_dlg_privacy_btn">Confidentialité</string>
         <string name="msgs_dlg_title_about">A propos de SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_JA_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_JA.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_JA.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_FR_Short.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_FR.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_FR.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Sélectionner les tâches et les paramètres à importer</string>
         <string name="msgs_export_import_profile_listing">Afficher les fichiers de configutaion</string>
