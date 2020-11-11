@@ -342,32 +342,32 @@
         <string name="msgs_profile_sync_task_dlg_active">Auto sync</string>
         <string name="msgs_profile_sync_task_dlg_change_master_and_target">Inverti sorgente e destinazione</string>
         <string name="msgs_profile_sync_task_dlg_swap_warning_title">Inverti sorgente e destinazione</string>
-        <string name="msgs_profile_sync_task_dlg_swap_warning_message">Reversing the direction of sincronizzazione may result in unexpected deletes of files e directories.\nIt is strongly recommend that you abilitare Test mode e ensure that no files or directories are removed or replaced unintentionally.</string>
+        <string name="msgs_profile_sync_task_dlg_swap_warning_message">L\'inversione della direzione di sincronizzazione potrebbe creare inaspettate cancellazioni di file o cartelle.\nÉ fortemente raccomandato abilitare la modalità Test per assicurarsi che nessun file o cartella sia stata rimossa o rimpiazzata accidentalmente.</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Filtro cartelle non è stato specificato</string>
-        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">I caratteri non validi have been removed from the specificato directory name (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">I caratteri non validi sono stati rimossi dalla cartella specificata (\", :, \\, *, &lt;, &gt;, \|)</string>
         <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">Filtro file non è stato specificato</string>
         <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">I caratteri non validi sono stati rimossi dal nome file specificato (/, \", :, \\, *, &lt;, &gt;, \|)</string>
-        <string name="msgs_profile_sync_task_dlg_file_directory_name_first_char_has_invalid_char">Devi specificare a relative path. Starting \"/\" character removed from path name.</string>
+        <string name="msgs_profile_sync_task_dlg_file_directory_name_first_char_has_invalid_char">Devi specificare un percorso relativo. Carattere iniziale \"/\" rimosso dal percorso.</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Aggiungi tempo/data del sync nel nome della cartella (la parola chiave verrà sostituita dalla data e ora nel quale il sync è stato fatto)</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">Aggiungi tempo/data del sync nel nome del file (la parola chiave verrà sostituita dalla data e ora nel quale il sync è stato fatto)</string>
         <string name="msgs_profile_sync_task_sync_option_use_taken_date_time_for_directory_keyword">Aggiungi la data/ora dello scatto della foto/video nel nome della cartella (la parola chiave verrà sostituita dalla data e ora nel quale la foto/video è stata scattata)</string>
         <string name="msg_edit_sync_folder_keyword_insert_year">ANNO</string>
-        <string name="msg_edit_sync_folder_keyword_insert_month">Mese</string>
-        <string name="msg_edit_sync_folder_keyword_insert_day">Giorno</string>
+        <string name="msg_edit_sync_folder_keyword_insert_month">MESE</string>
+        <string name="msg_edit_sync_folder_keyword_insert_day">GIORNO</string>
         <string name="msg_edit_sync_folder_keyword_insert_day_of_year">GIORNO DELL\'ANNO</string>
         <string name="msg_edit_sync_folder_keyword_insert_week_number">NUMERO SETTIMANA</string>
         <string name="msg_edit_sync_folder_keyword_insert_week_day" formatted="false">GIORNO DELLA SETTIMANA (%s, %s ...)</string>
         <string name="msg_edit_sync_folder_keyword_insert_week_day_long" formatted="false">GIORNO DELLA SETTIMANA (%s, %s ...)</string>
-        <string name="msgs_profile_sync_task_dlg_master">cartella sorgente (Sorgente)</string>
-        <string name="msgs_profile_sync_task_dlg_sync_type">tipo di sync</string>
+        <string name="msgs_profile_sync_task_dlg_master">Cartella sorgente (Sorgente)</string>
+        <string name="msgs_profile_sync_task_dlg_sync_type">Tipo di sync</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_archive">Archivia</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_copy">Copia</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_mirror">Mirror</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_move">Sposta</string>
         <string name="msgs_profile_sync_task_dlg_sync_type_prompt">Seleziona tipo di sync</string>
-        <string name="msgs_profile_sync_task_dlg_target">cartella destinazione (Destinazione)</string>
+        <string name="msgs_profile_sync_task_dlg_target">Cartella destinazione (Destinazione)</string>
         <string name="msgs_profile_sync_task_dlg_task_name">Nome Sync task</string>
-        <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">Aggiungi current Indirizzo IP</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_addr_add_current_addr">Aggiungi Indirizzo IP corrente</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_edit_title">Modifica Indirizzo IP</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_hint">Indirizzo IP</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_list">Wireless LAN indirizzo lista IP</string>
@@ -388,53 +388,53 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Elimina</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Lista cartelle</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Escludi</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- inclusi es: cache/temp;/my*/fo?der\n- escludi tutti cache/temp cartelle: \\cache/temp\n- i filtri possono essere inseriti nella stessa linea, separati da \";\"\n- escludi filter wins</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter tutti files with specific name: file1;*.txt;*.jpg;file*\n- filters can also be entered in same line, separati da \";\"\n- escludi filter wins</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Opzione \"Rimuovi cartelle e file esclusi dai filtri\" abilitata: Tutti i file e le cartelle non incluse dai filtri, as well as those that do not exist in the source directory, will be eliminati from the destination directory.</string>
-        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">File filtro</string>
-        <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">filtro</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- inclusi es: cache/temp;/my*/fo?der\n- escludi le cartelle cache/temp: \\cache/temp\n- i filtri possono essere inseriti nella stessa linea, separati da \";\"\n- escludi filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filtra tutti i file con nome specifico: file1;*.txt;*.jpg;file*\n- i filtri possono essere inseriti nella stessa linea, separati da \";\"\n- escludi filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Opzione \"Rimuovi cartelle e file esclusi dai filtri\" abilitata: Tutti i file e le cartelle non inclusi dai filtri, cosi come quelli che non esistono nella cartella sorgente, verranno eliminati dallaa cartella destinazione.</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Filtro file</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filtro</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Includi</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Non specificato</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">Il filtro contiene caratteri non validi: %s</string>
-        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts">The filter path cannot consist of only \"%s\" generic wildcards.</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts">Il filtro percorso non può consistere di soli \"%s\" jolly generici.</string>
         <string name="msgs_profile_sync_task_filter_title">Filtro file:</string>
-        <string name="msgs_profile_sync_task_sync_direction_two_way">Usa Doppia-Via sync</string>
+        <string name="msgs_profile_sync_task_sync_direction_two_way">Usa sync Doppia-Via </string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Includi i seguenti filtri:</string>
         <string name="msgs_profile_sync_task_sync_file_type_audio">Sync file audio</string>
-        <string name="msgs_profile_sync_task_sync_file_type_detail_not_specified">Devi specificare almeno una file filter option.</string>
+        <string name="msgs_profile_sync_task_sync_file_type_detail_not_specified">Devi specificare almeno un\'opzione di filtro file.</string>
         <string name="msgs_profile_sync_task_sync_file_type_image">Sync immagini</string>
         <string name="msgs_profile_sync_task_sync_file_type_specific">Seleziona file per il sync</string>
         <string name="msgs_profile_sync_task_sync_file_type_video">Sync file video</string>
         <string name="msgs_profile_sync_task_sync_option">Opzioni:</string>
-        <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Min allowed time difference (in secondi) between source e file di destinazione</string>
+        <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Min differenza di tempo ammessa (in secondi) tra file sorgente e destinazione</string>
         <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Salta il task se l\'IP WLAN non corrisponde all\'indirizzo IP specificato.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Permetti sync con tutti gli indirizzi IP (inclusi pubblici)</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Conferma prima di sovrascrivere/cancellare</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Rimuovi cartelle e file esclusi dai filtri</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Attenzione: tutti file e cartelle non esistenti nella cartella sorgente e those that are not included by the defined filters will be eliminati from the cartella destinazione !\nIt is strongly recommend that you abilitare Test mode e ensure that no unexpected files or directories are removed or replaced.</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Attenzione: tutti file e cartelle non esistenti nella cartella sorgente e quelli non inclusi dai filtri definiti verranno eliminati dalla cartella destinazione !\nÉ fortemente racomandato abilitare la modalità Test per assicurarsi che nessun file o cartella venga rimossa o sostituita involontariamente.</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Rimuovi cartelle e file esclusi dai filtri</string>
-        <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Elimina precedenti file su sync (Solo modalità Mirror)</string>
-        <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Compara solo dimensione (files are considered different only if size of the source is larger than the destination)</string>
+        <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Elimina file prima della sync (Solo modalità Mirror)</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Compara solo dimensione (i file sono considerati differenti solo se la dimensione della sorgente è più grande della destinazione)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">Usa dimensione file per determinare se i file sono differenti</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_use_last_mod_time">Usa tempo dell\'ultima modifica per determinare se i file sono differenti</string>
         <string name="msgs_profile_sync_task_sync_option_empty_directory">Includi cartelle vuote</string>
         <string name="msgs_profile_sync_task_sync_option_hidden_directory">Includi cartelle nascoste</string>
         <string name="msgs_profile_sync_task_sync_option_hidden_file">Includi file nascosti</string>
-        <string name="msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled">File sync saltata a causa \"Do not overwrite destination file if it is newer than source file\" opzione è abilitato.</string>
-        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Skip directory e file names that contengono caratteri non validi (\", :, \\, *, &lt;, &gt;, \|)</string>
-        <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Obtain last modification time of files from SMBSync2 application custom list</string>
-        <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">Synchronize i file in root of la cartella sorgente (if unchecked, only the cartelle e their files/subfolders are synchronized).</string>
-        <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning">Attenzione: Possible Unexpected Results !\nIf you live in a zone with DST or if you switch TimeZones, destinazione file can wrongly show an older time than the source if it was modified within the DST/TimeZone interval change. It is strongly recommended su abilitare \"Conferma prima di sovrascrivere/cancellare\" option. Per favore verify i contenuti del file before overwiting it.</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled">File sync saltata a causa dell\'opzione \"Non sovrascrivere il file destinazione se è più nuovo del file sorgente\" abilitata.</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Salta nomi cartelle e file che contengono caratteri non validi (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Ottieni l\'ora dell\'ultima modifica dei file dalla lista personalizzata di SMBSync2</string>
+        <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">Sincronizza i file nella root della cartella sorgente (se deselezionata, solo le cartelle e i loro files/sottocartelle verranno sincronizzate).</string>
+        <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning">Attenzione: Possibili Risultati Inaspettati !\nSe vivi in zone con DST o se hai cambiato TimeZone, i file destinazione possono erroneamente mostrare un\'ora vecchia rispetto alla sorgente se è stata modificata entro l\'intervallo di cambiamento DST/TimeZone. É fortemente raccomandato abilitare l\'opzione \"Conferma prima di sovrascrivere/cancellare\" . Per favore verifica i contenuti del file prima di sovrascriverli.</string>
         <string name="msgs_profile_sync_task_sync_option_copy_no_compare_title">destinazione sovrascrittura file warning</string>
-        <string name="msgs_profile_sync_task_sync_option_copy_no_compare_warning">Attenzione: \"Usa dimensione file per determinare se i file sono differenti\" e \"Usa tempo dell\'ultima modifica per determinare se i file sono differenti\" options are both not selected. This will force the source files su be copiati on each sync e overwrite the destinazione files.</string>
-        <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file">Do not overwrite destination file if it is newer than source file</string>
-        <string name="msgs_profile_sync_task_sync_option_diff_file_ignore_dst_difference">Ignora Day Light Saving Ora difference between files</string>
-        <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value">Ora difference between daylight saving time e standard time (minuti)</string>
-        <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">Seleziona Daylight Saving Ora offset (minuti)</string>
-        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">Do not set last modified time della destinazione file su match source file</string>
-        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified_warning">Quando abilitato, the last modified time of the destinazione file cannot be set su be the same as the source file. destinazione file will always appear as newer than the source file. This opzione è useful when the destinazione cannot set the last modified time.\nIf this opzione è abilitato, you can prevent files from being copiati each time by disabling \"Usa tempo dell\'ultima modifica per determinare se i file sono differenti\" or by enabling the \"Do not overwrite destination file if it is newer than source file\".</string>
+        <string name="msgs_profile_sync_task_sync_option_copy_no_compare_warning">Attenzione: Le opzioni \"Usa dimensione file per determinare se i file sono differenti\" e \"Usa tempo dell\'ultima modifica per determinare se i file sono differenti\" sono entrambe selezionate. Questo forzerà i file sorgente ad essere copiati ad ogni sync e sovrascrivere i file destinazione.</string>
+        <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file">Non sovrascrivere il file destinazione se è più nuovo del file sorgente</string>
+        <string name="msgs_profile_sync_task_sync_option_diff_file_ignore_dst_difference">Ignora la differenza dell\'Ora Legale tra file</string>
+        <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value">Differenza di ora tra ora legale e ora solare (minuti)</string>
+        <string name="msgs_profile_sync_task_sync_option_offset_of_dst_time_value_title">Seleziona offset Ora Legale (minuti)</string>
+        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified">Non impostare l\'ora dell\'ultima modifica della il file destinazione per trovare file sorgente</string>
+        <string name="msgs_profile_sync_task_sync_option_not_set_file_last_modified_warning">Quando abilitato, l\'ora dell\'ultima modifica del file destinazione non può essere settata uguale al file sorgente. Il file destinazione apparirà sempre più nuovo del file sorgente. L\'opzione è utile quando la destinazione non è possibile settare l\'ora dell\'ultima modifica.\nSe l\'opzione è abilitata, puoi prevenire che vengano copiati i file ogni volta disabilitando \"Usa tempo dell\'ultima modifica per determinare se i file sono differenti\" o abilitando l\'opzione \"Non sovrascrivere il file destinazione se è più nuovo del file sorgente\".</string>
         <string name="msgs_profile_sync_task_sync_option_perform_overriden_copy_move">Sovrascrivi file di destinazione</string>
-        <string name="msgs_profile_sync_task_sync_option_network_adv_options">Network advanced options:</string>
+        <string name="msgs_profile_sync_task_sync_option_network_adv_options">Opzioni Rete Avanzate:</string>
         <string name="msgs_profile_sync_task_sync_option_retry_if_error_occured">Riprova se vi sono errori di rete</string>
         <string name="msgs_profile_sync_task_sync_option_show_special_option">Mostra opzioni avanzate</string>
         <string name="msgs_profile_sync_task_sync_option_sub_dir">Includi sottocartelle</string>
@@ -442,38 +442,38 @@
         <string name="msgs_profile_sync_task_sync_option_test_mode">Modalità Test (non copia o cancella file)</string>
         <string name="msgs_profile_sync_task_sync_option_use_extended_filter1">Usa il filtro di selezione cartelle migliorato</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_title">Usa la nuova versione 2 del filtro</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Changing the directory filter version may result in unexpected file deletion or overwriting, which may change the synchronized files. It is highly recommended that you run it in test mode su check it, or create a test folder su check the sincronizzazione results.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error" formatted="false">Includi directory filter must have sorgente as root path. Either change the filters as \"Escludi\" or rimuovere qualunque leading \"%s\" characters from the below filters:\n%s.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error" formatted="false">Includi directory filter %s must have sorgente as root path. Either change the filter su \"Escludi\" or rimuovere leading \"%s\".</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_v2_warning">Cambiando la versione del filtro cartelle possono verificarsi cancellazioni o sovrascrittura di file involontarie, which may change the synchronized files. É molto raccomandato eseguirlo in modalità test per verificare, o creare una cartella test per verificare i risultati di sincronizzazione.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_error" formatted="false">I filtri cartella inclusi devono avere la sorgente come percorso root. Either change the filters as \"Escludi\" or rimuovere qualunque leading \"%s\" characters from the below filters:\n%s.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_whole_dir_prefix_edit_dlg_error" formatted="false">I filtri cartella inclusi %s devono avere la sorgente come percorso root. Either change the filter su \"Escludi\" or rimuovere leading \"%s\".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_error" formatted="false">Whole directory prefix \"%s\" is no longer valid. Replace it by \"%s\" in the below filters:\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_old_whole_dir_prefix_edit_dlg_error" formatted="false">Filtro %s has old whole directory prefix \"%s\". Replace it by \"%s\" character (exp. %s).</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_error" formatted="false">I caratteri non validi (%s) sono presenti e devono essere rimossi dal filtro:\n%s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_characters_edit_dlg_error" formatted="false">Filtro %s has an invalid character (%s) that deve essere removed</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_error" formatted="false">Invalid \"%s\" only paths deve essere removed from the below filters:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error" formatted="false">Filtro %s contiene generic only path parts. Per favore rimuovere the invalid \"%s\" characters.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_invalid_asterisk_characters_edit_dlg_error" formatted="false">Filtro %s contiene generic only path parts. Per favore rimuovere il carattere non valido \"%s\".</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_error">Per favore rimuovi i seguenti duplicate filter voci: %s</string>
         <string name="msgs_profile_sync_task_sync_option_use_directory_filter_has_duplicate_filters_edit_dlg_error">Per favore rimuovi i seguenti duplicate filter voci: %s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">Uso di asterisk characters nei filtri file is not supported outside the file name. Per favore rimuovere qualunque \"*\" char from the path of the below filters:\n%s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_edit_dlg_error">Uso del carattere * nei filtri file is allowed only in the file name. Rimuovi the * caratteri from the path of this filter: %s</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_file_option_warning">I filtri %s contengono file nascosti ma l\'opzione \"Includi file nascosti\" è disabilitata. No hidden file will be processata finchè non l\'abiliti su Opzioni Avanzate e salvi la Sync Task.</string>
-        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_directory_option_warning">I filtri %s contengono cartelle nascoste ma l\'opzione \"Includi cartelle nascoste\" è disabilitata. No hidden folder will be processata finchè non l\'abiliti su Opzioni Avanzate e salvi la Sync Task.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_error">Uso del carattere asterisco nei filtri file non è supportato al di fuori del nome del file. Per favore rimuovere qualunque carattere \"*\" dal percorso del the below filters:\n%s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_file_filter_path_has_invalid_asterisk_edit_dlg_error">Uso del carattere * nei filtri file è permesso solo nel nome del file. Rimuovi il carattere * dal percorso di questo filtro: %s</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_file_option_warning">I filtri %s contengono file nascosti ma l\'opzione \"Includi file nascosti\" è disabilitata. Nessun file nascosto verrà processato finchè non l\'abiliti su Opzioni Avanzate e salvi la Sync Task.</string>
+        <string name="msgs_profile_sync_task_sync_option_use_directory_filter_show_hidden_directory_option_warning">I filtri %s contengono cartelle nascoste ma l\'opzione \"Includi cartelle nascoste\" è disabilitata. Nessuna cartella nascosta verrà processata finchè non l\'abiliti su Opzioni Avanzate e salvi la Sync Task.</string>
         <string name="msgs_profile_sync_task_sync_option_wifi_condition_title">Opzioni Rete:</string>
         <string name="msgs_profile_sync_task_sync_option_spinner_wifi_title">Wifi AP Opzioni:</string>
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Scrivi file direttamente sulla cartella SMB senza usare file temporanei</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">Filtro cartelle non è stato specificato.</string>
         <string name="msgs_profile_sync_task_option_remove_directory_if_empty_when_move">Elimina la cartella sorgente quando è vuota (solo quando l\'opzione Sync è Sposta)</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">Seleziona sottocartelle</string>
-        <string name="msgs_profile_sync_task_sync_use_small_ioarea">Limit SMB I/O write buffer su 16 KB</string>
+        <string name="msgs_profile_sync_task_sync_use_small_ioarea">Limita buffer scrittura SMB I/O a 16 KB</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Cancella</string>
-        <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">In doppia-via sync, mantieni una copia dei file sovrascritti in caso di conflitti</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle">Two-way sync regole in caso di conflitto file</string>
+        <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">In sync doppia-via, mantieni una copia dei file sovrascritti in caso di conflitti</string>
+        <string name="msgs_profile_twoway_sync_conflict_copy_rurle">Regole sync Doppia-via in caso di conflitto file</string>
         <string name="msgs_profile_twoway_sync_conflict_copy_rurle_ask_user">Chiedi all\'utente</string>
         <string name="msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file">Ignora il file</string>
         <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer">Mantieni nuovi file</string>
         <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_older">Mantieni vecchi file</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">Logon cancellata</string>
         <string name="msgs_remote_profile_dlg_logon_error">Logon Fallito</string>
-        <string name="msgs_remote_profile_dlg_logon_success">Logon Successful</string>
+        <string name="msgs_remote_profile_dlg_logon_success">Logon Riuscito</string>
         <string name="msgs_rename_profile">Rinomina task</string>
         <string name="msgs_save_to_profile_error">Salvataggio fallito del file impostazioni sync: %s</string>
         <string name="msgs_select_export_file">Seleziona destinazione esportazione</string>
@@ -483,14 +483,14 @@
         <string name="msgs_select_usb_dir">Seleziona cartella USB</string>
         <string name="msgs_select_remote_dir">Seleziona cartella SMB</string>
         <string name="msgs_select_remote_share">Seleziona condivisione SMB</string>
-        <string name="msgs_share_list_not_obtained">Impossibile ottenere la lista delle condivisioni SMB. Per favore verifica:\n- the shares configuration on il server SMB side\n- the proper user-name/password needed by the server is provided</string>
-        <string name="msgs_smbsync_main_private_key_corrupted_title">Internal encrypt key error</string>
-        <string name="msgs_smbsync_main_private_key_corrupted_msg">The le impostazioni di sync cannot be saved a causa the internal chiave encriptazione non è valida.\nRecreate internal chiave encriptazione?</string>
-        <string name="msgs_smbsync_main_no_external_storage">Memoria esterna was not mounted. Some functions will not be available.</string>
-        <string name="msgs_smbsync_main_restart_by_destroyed">L\'applicazione è stata riavviata dopo being killed. To disabilitare restart, abilitare \"Don\'t keep activities\" in Impostazioni > Developer Opzioni.</string>
+        <string name="msgs_share_list_not_obtained">Impossibile ottenere la lista delle condivisioni SMB. Per favore verifica:\n- le confiurazioni condivisione dal lato server SMB\n- the proper user-name/password needed by the server is provided</string>
+        <string name="msgs_smbsync_main_private_key_corrupted_title">Errore chiave encriptazione interna</string>
+        <string name="msgs_smbsync_main_private_key_corrupted_msg">Le impostazioni di sync non possono essere salvate a causa della chiave di encriptazione interna non valida.\nRicreare la chiave encriptazione interna?</string>
+        <string name="msgs_smbsync_main_no_external_storage">La Memoria esterna non è stata montata. Alcune funzioni non saranno disponibili.</string>
+        <string name="msgs_smbsync_main_restart_by_destroyed">L\'applicazione è stata riavviata dopo being killed. To disabilitare restart, abilitare \"Non mantenere attività\" in Impostazioni > Opzioni Sviluppatore.</string>
         <string name="msgs_smbsync_main_restart_by_killed">L\'applicazione è stata riavviata a causa it was killed when it copiati su the background.</string>
-        <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Le impostazioni di SMBv1 sono state cambiate.  This change will not be effective until the application is restarted.  Esci this application now?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">Si raccomanda di riavviare l\'applicazione dopo changing the tema or language. Clicca \"Riavvia\" per riavviare. Se vuoi riavviarla dopo, clicca \"Dopo\"</string>
+        <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Le impostazioni di SMBv1 sono state cambiate.  Il cambiamento non avrà effetto finchè l\'applicazione sarà riavviata.  Uscire dall\'applicazione adesso?</string>
+        <string name="msgs_smbsync_ui_settings_language_changed_restart">Si raccomanda di riavviare l\'applicazione dopo aver cambiato tema o lingua. Clicca \"Riavvia\" per riavviare. Se vuoi riavviarla dopo, clicca \"Dopo\"</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Dopo</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">Riavvia</string>
         <string name="msgs_smbsync_main_start">Applicazione avviata.</string>
@@ -505,15 +505,15 @@
         <string name="msgs_progress_spin_dlg_housekeep_running">Esegui manutenzione dei dati dell\'app</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Cancella manutenzione</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel_confirm">Confermi cancellazione manutenzione dei dati dell\'app?</string>
-        <string name="msgs_maintenance_last_mod_list_confirm_start_msg">Manutenzione of application data files.\nNo sync task can be executed while manutenzione dei dati dell\'app is running. Run the manutenzione operation?</string>
-        <string name="msgs_maintenance_last_mod_list_can_not_start_msg">Non abilitato alla perform manutenzione dei dati dell\'app while sync task is running.</string>
+        <string name="msgs_maintenance_last_mod_list_confirm_start_msg">Manutenzione dei file dati dell\'applicazione.\nNessuna sync task può essere eseguita finchè la manutenzione dei dati dell\'app è in corso. Eseguire la manutenzione?</string>
+        <string name="msgs_maintenance_last_mod_list_can_not_start_msg">Non abilitato all\'esecuzione della manutenzione dei dati dell\'app durante la sync task.</string>
         <string name="msgs_maintenance_last_mod_list_cancel_msg">Manutenzione dei dati dell\'app è stata cancellata.</string>
         <string name="msgs_maintenance_last_mod_list_del_count">%s elementi eliminati dalla lista degli ultimi file modificati.</string>
-        <string name="msgs_maintenance_last_mod_list_end_msg">Manutenzione dei dati dell\'app is completato.</string>
-        <string name="msgs_maintenance_last_mod_list_start_msg">Manutenzione dei dati dell\'app has avviato.</string>
+        <string name="msgs_maintenance_last_mod_list_end_msg">Manutenzione dei dati dell\'app completato.</string>
+        <string name="msgs_maintenance_last_mod_list_start_msg">Manutenzione dei dati dell\'app è stata avviata.</string>
         <string name="msgs_maintenance_result_log_list_del_count">%s log cronologia file sono stati eliminati.</string>
         <string name="msgs_maintenance_result_log_list_del_file">Eliminati %s.</string>
-        <string name="msgs_maintenance_result_log_list_del_title">File e directories not related su history logs have been trovato in the log cronologia directory. Rimuovere questi file?</string>
+        <string name="msgs_maintenance_result_log_list_del_title">File e cartelle not related su history logs have been trovato in the log cronologia directory. Rimuovere questi file?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Sync</string>
         <string name="msgs_menu_exec_schedule">Esegui pianificazione</string>
@@ -550,13 +550,13 @@
         <string name="msgs_mirror_confirm_yesall_btn">Si per tutte le sottosequenze</string>
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">L\'ora di ultima modifica del file was used a causa the shooting data e ora non può essere ottenuto from the EXIF/metadata del file. File=</string>
         <string name="msgs_mirror_taken_date_convert_error">L\'ora di ultima modifica del file was used a causa an error occurred in the conversion of the shooting date. File=</string>
-        <string name="msgs_mirror_whole_directory_filter_error">Filtro cartelle %s non possono essere usati. Edit il task sync e fix the invalid filter.</string>
+        <string name="msgs_mirror_whole_directory_filter_error">Filtro cartelle %s non possono essere usati. Modifica il task sync e sistema i filtri non validi.</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Sync interrotto a causa il percorso destinazione contiene una cartella with the same name as the file being copiati. File=</string>
         <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Sincronizzazione è stata cancellata a causa la lunghezza del nome del file supera i 255 caratteri. Nome file caratteri=%s, Nome file=%s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Sync cancellato a causa di SD non montata.</string>
         <string name="msgs_mirror_external_sdcard_select_required">Sync cancellato a causa permessi scrittura SD non concessi.</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">Sembra che i contenuti SD non sono applicati nell\'archivio multimediale.  Esegui una scansione dei media per aggiornare i contenuti della SD.</string>
-        <string name="msgs_mirror_file_set_last_modified_failed">setLastModified() fallito.  Abilita \"Do not set last modified time della destinazione file su match source file\" in opzioni sync task.</string>
+        <string name="msgs_mirror_file_set_last_modified_failed">setLastModified() fallito.  Abilita l\'opzione \"Non impostare l\'ora dell\'ultima modifica della il file destinazione su match source file\" del sync task.</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">Copia il file ZIP sull file destinazione... %s%% fatto.</string>
         <string name="msgs_mirror_file_zip_copy_to_work">Copia il file ZIP su the cache temp file... %s%% fatto.</string>
         <string name="msgs_mirror_ignore_override_copy_file">Copia file ignorato a causa dell\'opzione \"Sovrascrittura file destinazione\" disabilitata per questa task.</string>
@@ -677,7 +677,7 @@
         <string name="msgs_scheduler_main_spinner_sched_minutes_prompt">Seleziona minuti pianificazione</string>
         <string name="msgs_scheduler_info_last_day_of_the_month">Ultimo giorno</string>
         <string name="msgs_scheduler_main_last_day_of_the_month">Sync l\'ultimo giorno di ogni mese</string>
-        <string name="msgs_scheduler_main_last_day_of_the_month_warning">Attenzione: Se il giorno selezionato never occurs in some months, sync will be saltata on those months. Exp: you seleziona 29 e February has only 28 days, or you seleziona 31 e the mese only has 30 days. Select   \"Sync l\'ultimo giorno of the mese\" option su ensure the task is executed l\'ultimo giorno di ogni mese.</string>
+        <string name="msgs_scheduler_main_last_day_of_the_month_warning">Attenzione: Se il giorno selezionato never occurs in some months, sync verrà saltata on those months. Exp: you seleziona 29 e February has only 28 days, or you seleziona 31 e the mese only has 30 days. Select   \"Sync l\'ultimo giorno of the mese\" option su ensure the task is executed l\'ultimo giorno di ogni mese.</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Lista Sync task</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Esegui tutti auto sync task</string>
         <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Per favore specifica la task sync da pianificare premendo il bottone ‘lista Sync...’.</string>
@@ -725,7 +725,7 @@
         <string name="msgs_schedule_sync_enabled_schedule_invalid_schedule_conditions_error">Una delle pianificazioni abilitate non può essere eseguita perchè its configured impostazioni. Pianificazione=%1$s, Errore=%2$s</string>
         <string name="msgs_schedule_rename_schedule">Rinomina pianificazione</string>
         <string name="msgs_schedule_list_edit_no_schedule">Premi sul bottone aggiungi per creare una nuova pianificazione.</string>
-        <string name="msgs_schedule_list_edit_scheduler_disabled">Scheduled task non verrà eseguita a causa the scheduling service è disabilitata. To abilita scheduling service, tap the calendar icon in the top right corner of this window. You must  also abilita toggle switch in front of each sync plan su execute.</string>
+        <string name="msgs_schedule_list_edit_scheduler_disabled">La task pianificata non verrà eseguita a causa il servizio di pianificazione è disabilitata. Per abilitare il servizio pianificazione, tap the calendar icon in the top right corner of this window. You must  also abilita toggle switch in front of each sync plan su execute.</string>
         <string name="msgs_schedule_list_edit_execute_selected_schedule">Esegui le pianificazioni selezionate</string>
         <string name="msgs_schedule_list_edit_execute_all_enabled_schedule">Esegui tutti pianificazioni abilitate</string>
         <string name="msgs_schedule_list_edit_execute_selected_schedule_with_schedule_name">Esegui la pianificazione (%s)</string>
@@ -742,13 +742,13 @@
         <string name="msgs_send_logcat_btn_preview_logcat">Anteprima LogCat</string>
         <string name="msgs_send_logcat_btn_preview_applog">Anteprima AppLog</string>
         <string name="msgs_send_logcat_title">Invia un Logcat e un AppLog</string>
-        <string name="msgs_send_logcat_message">Invia LogCat e AppLog allo sviluppatore tramite e-mail\n1. Per favore verifica i contenuti premendo il bottone mostra del LogCat e il bottone mostra AppLog (choose an application when the application selection screen is displayed).\n2. After confirming i contenuti su be sent, press the send button e seleziona email in the email selection dialog.\n3. Per favore enter a message in the body of the email if necessary then send the email (the log is compressed su zip format e attached su the email).</string>
+        <string name="msgs_send_logcat_message">Invia LogCat e AppLog allo sviluppatore tramite e-mail\n1. Per favore verifica i contenuti premendo il bottone mostra del LogCat e il bottone mostra AppLog (scegli un\'applicazione quando viene mostrata la schermata di selezione).\n2. Dopo aver confermato i contenuti da inviare, premi il bottone invia e seleziona email.\n3. Per favore inserisci un messaggio nel corpo dell\'email se necessario ed invia l\'email (il log è compresso nel formato zip e allegato all\'email).</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">Essendo la sync task disabilitata, non è stato possibile avviarla.</string>
         <string name="msgs_svc_received_start_request_from_scheduler">La richiesta di sync ricevuta dal pianificatore di SMBSync2.</string>
         <string name="msgs_svc_received_start_request_from_scheduler_task_not_found">La richiesta di sync ricevuta dal pianificatore di SMBSync2, ma è stata ignorata perchè le task non esistono:</string>
         <string name="msgs_svc_received_start_request_from_scheduler_no_task_list">Esecuzione interrotto a causa il task sync non esistono.</string>
-        <string name="msgs_svc_received_start_request_from_external">La richiesta di sync ricevuto da un\'applicazione esterna.</string>
+        <string name="msgs_svc_received_start_request_from_external">Richiesta di sync ricevuta da un\'applicazione esterna.</string>
         <string name="msgs_svc_received_start_request_from_external_task_not_found">Richiesta di sync ricevuto da un\'applicazione esterna, ma è stato ignorato perchè le specifiche sync task non esistono:</string>
         <string name="msgs_svc_received_start_request_from_external_no_task_list">Esecuzione interrotto perchè i task sync non esistono.</string>
         <string name="msgs_svc_received_start_request_from_external_no_task_specified">Esecuzione interrotto a causa no sync task è stata specificato.</string>
