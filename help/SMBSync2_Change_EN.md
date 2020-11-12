@@ -1,4 +1,4 @@
-####  	2020-11-05 Ver2.41
+####  	2020-11-12 Ver2.41
 - Update help file
 ####  	2020-11-03 Ver2.39
 - Location permissions are no longer used to comply with the Google Play Privacy Policy. (Access point lists are not available as an option for synchronization tasks.)
