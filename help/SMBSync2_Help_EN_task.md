@@ -45,15 +45,12 @@ Files are considered different based on these criteria:
 
 3. Files have a different time stamp (last modification date and time)
 
- 
+Check Advanced options below for more detailed information on compare criteria and more granular settings.
 
-## Check Advanced options below for more detailed information on compare criteria and more granular settings.
 ### Swap source and destination
-
 Swap the master and target folders: master becomes the target and the target is changed to master.
 
 ### Master folder (Source)
-
 Tap the storage icon/name to edit the master folder.
 
 ### Target folder (Destination)
@@ -119,7 +116,8 @@ When checked, it will display a confirmation dialog before overwriting or deleti
 
 - IP address list
 
-  You can start syncing only if the WiFi IP address matches one of the specified addresses. You can also directly add the current IP address your device is connected to through the IP selection list.
+  You can start syncing only if the WiFi IP address matches one of the specified addresses. You can also directly add the current IP address your device is connected to through the IP selection list.  
+You can use wildcards for the filter. (e.g., 192.168.100.*, 192.168.*.*.)
 
 ### Skip task if the WLAN is not connected to the specified access point, or if WLAN IP does not match the specified IP address.
 

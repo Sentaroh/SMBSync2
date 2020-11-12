@@ -72,22 +72,22 @@
 
 - 同步音频文件
 
-如果选中，以下文件扩展名将被同步。  
-aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
+  如果选中，以下文件扩展名将被同步。  
+  aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
 
 - 同步图像文件
 
-如果选中，以下文件扩展名将被同步。  
-bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
+  如果选中，以下文件扩展名将被同步。  
+  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
 
 - 同步视频文件
 
-如果选中，以下文件扩展名将被同步。  
-avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
+  如果选中，以下文件扩展名将被同步。  
+  avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
 
 - 档案过滤器
 
-你也可以选择你要同步的文件的名称和扩展名，除了上述的
+  你也可以选择你要同步的文件的名称和扩展名，除了上述的
 
  
 
@@ -136,9 +136,9 @@ avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
 
 - IP地址列表
 
-  只有当WiFi IP地址与指定地址之一相匹配时，您才能开始同步。您也可以通过IP选择列表直接添加设备当前连接的IP地址。
+  只有当WiFi IP地址与指定地址之一相匹配时，您才能开始同步。您也可以通过IP选择列表直接添加设备当前连接的IP地址。  
+你可以使用通配符作为过滤器。(例如，192.168.100.*，192.168.*.*。)
 
- 
 
 ###  如果WLAN未连接到指定的接入点，或者WLAN IP与指定的IP地址不匹配，则跳过任务。
 
