@@ -388,6 +388,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Elimina</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Lista cartelle</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Escludi</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">È possibile utilizzare i caratteri jolly nel filtro. Esempio:\n192.168.100.* == 192.168.100.0-192.168.100.255\n192.168.* == 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- inclusi es: cache/temp;/my*/fo?der\n- escludi tutti cache/temp cartelle: \\cache/temp\n- i filtri possono essere inseriti nella stessa linea, separati da \";\"\n- escludi filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter tutti files with specific name: file1;*.txt;*.jpg;file*\n- filters can also be entered in same line, separati da \";\"\n- escludi filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Opzione \"Rimuovi cartelle e file esclusi dai filtri\" abilitata: Tutti i file e le cartelle non incluse dai filtri, as well as those that do not exist in the source directory, will be eliminati from the destination directory.</string>

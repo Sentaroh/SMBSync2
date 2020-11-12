@@ -388,6 +388,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Удалить</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Список каталога</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Исключить</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">В фильтре можно использовать подстановочные знаки. Пример:\n192.168.100.* == 192.168.100.0-192.168.100.255\n192.168.* == 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- отфильтровать все файлы с именами: file1;*.txt;*.jpg;file*.\n- фильтры можно также вводить в той же строке, разделенной \"; \"; \n- фильтры можно также вводить в той же строке, разделенной \"; \".\n - исключить выигрыши фильтров</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">При включенной опции \"Удаляет каталоги и файлы, исключенные фильтром\" все файлы и каталоги, не входящие в исходную директорию, а также файлы и каталоги, исключенные фильтром, будут удалены из целевой директории.</string>

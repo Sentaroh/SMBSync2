@@ -388,6 +388,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">删除</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">目录清单</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">排除</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">你可以在过滤器中使用通配符。例子:\n192.168.100.* == 192.168.100.0-192.168.100.255\n192.168.* == 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">-包括exp：缓存/温度; / my * / foder \n-排除所有缓存/温度文件夹：\\ cache / temp \n-可以在同一行中输入过滤器，并以\"; \" \n分隔-排除过滤器获胜</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-过滤所有具有特定名称的文件：file1; *。txt; *。jpg; file * \n-过滤器也可以在同一行中输入，并以\"; \" \n分隔-排除过滤器胜出</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">启用了选项"删除过滤器排除的目录和文件"：过滤器不包括的所有文件和目录以及源目录中不存在的所有文件和目录将从目标目录中删除。</string>
