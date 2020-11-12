@@ -114,7 +114,7 @@ Se spuntata, visualizzerà una finestra di dialogo di conferma prima di sovrascr
 - Has private address: è possibile avviare la sincronizzazione solo se l'indirizzo IP assegnato alla rete WiFi si trova nei seguenti campi: 10.0.0.0.0 - 10.255.255.255.255, 172.16.0.0.0 - 172.31.255.255.255 o 192.168.0.0.0 - 192.168.255.255.255.
 
 - indirizzo lista IP: è possibile avviare la sincronizzazione solo se l'indirizzo IP WiFi corrisponde a uno degli indirizzi specificati. È inoltre possibile aggiungere direttamente l'indirizzo IP corrente al quale l'apparecchio è collegato attraverso l'elenco di selezione IP.  
-È possibile utilizzare i caratteri jolly per il filtro. (ad es. 192.168.100.*, 192.168.*.*).
+È possibile utilizzare i caratteri jolly per il filtro. (ad es. 192.168.100.\*, 192.168.\*.\*).
 
 ### Skip task if the WLAN non è connesso su lo specifico access point, or if WLAN IP non coincide con l\'indirizzo IP specificato
 
