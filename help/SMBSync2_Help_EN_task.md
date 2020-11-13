@@ -117,7 +117,7 @@ When checked, it will display a confirmation dialog before overwriting or deleti
 - IP address list
 
   You can start syncing only if the WiFi IP address matches one of the specified addresses. You can also directly add the current IP address your device is connected to through the IP selection list.  
-You can use wildcards for the filter. (e.g., 192.168.100.\*, 192.168.\*.\*.)
+You can use wildcards for the filter. (e.g., 192.168.100.\*, 192.168.\*)
 
 ### Skip task if the WLAN is not connected to the specified access point, or if WLAN IP does not match the specified IP address.
 
