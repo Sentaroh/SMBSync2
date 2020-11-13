@@ -74,7 +74,7 @@ Si cette option n'est pas cochée, tous les fichiers sont synchronisés. Si vous
 - Synchro des fichiers images
 
   Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :  
-  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff,
+  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
 
 - Synchro des fichiers vidéo
 

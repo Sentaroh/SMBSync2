@@ -74,7 +74,7 @@ Se deselezionati, tutti i file sono sincronizzati. Se si seleziona il filtro dei
 - Sync immagini
 
   Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
-  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff,
+  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
 
 - Sync video files
 
