@@ -963,10 +963,10 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Délai de réponse</string>
-        <string name="settings_smb_client_response_timeout_title">Délai de Réponse du Serveur</string>
+        <string name="settings_smb_client_response_timeout_title">Délai de Réponse du Serveur(SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Toujours Crypter les Mots de passe</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Crypter les Mots de passe</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Crypter les Mots de passe(SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
         <string name="settings_smb_lm_compatibility_dialog_title">Compatibilité SMB (LmCompatibility)</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
@@ -984,11 +984,11 @@
             <item>4</item>
         </string-array >
         <string name="settings_smb_lm_compatibility_summary">Compatibilité SMB (LmCompatibility)</string>
-        <string name="settings_smb_lm_compatibility_title">Compatibilité SMB</string>
+        <string name="settings_smb_lm_compatibility_title">Compatibilité SMB(SMBv1)</string>
         <string name="settings_smb_title">Paramètres SMB</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Utiliser la Sécurité Etendue</string>
-        <string name="settings_smb_use_extended_security_title">Utiliser la Sécurité Etendue</string>
+        <string name="settings_smb_use_extended_security_title">Utiliser la Sécurité Etendue(SMBv1)</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">Désactiver l\'avertissement indiquant que le dossier de configuration de l\'application est inclus dans la tâche de synchronisation</string>
         <string name="settings_suppress_warning_app_specific_dir_title">Sync du Dossier de Configuration</string>

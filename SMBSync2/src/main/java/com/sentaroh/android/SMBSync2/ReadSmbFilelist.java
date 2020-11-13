@@ -38,6 +38,7 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class ReadSmbFilelist implements Runnable {
     private ThreadCtrl getFLCtrl = null;
@@ -147,8 +148,10 @@ public class ReadSmbFilelist implements Runnable {
         if (mRemoteAuthInfo.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
             auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
         } else {
+            Properties prop_new = new Properties();
+            prop_new.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
             auth=new JcifsAuth(smb_level, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password,
-                    mRemoteAuthInfo.smb_ipc_signing_enforced, mRemoteAuthInfo.smb_use_smb2_negotiation);
+                    mRemoteAuthInfo.smb_ipc_signing_enforced, mRemoteAuthInfo.smb_use_smb2_negotiation, prop_new);
         }
 
         try {
@@ -235,6 +238,7 @@ public class ReadSmbFilelist implements Runnable {
 
         } catch (JcifsException e) {
             e.printStackTrace();
+
             String cause="";
             String[] e_msg=JcifsUtil.analyzeNtStatusCode(e, remoteUrl + remoteDir, mRemoteUserNameForLog);
 //            e_msg[0] = e.getMessage()+"\n"+e_msg[0];
@@ -295,8 +299,10 @@ public class ReadSmbFilelist implements Runnable {
         if (mRemoteAuthInfo.smb_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
             auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password);
         } else {
+            Properties prop_new = new Properties();
+            prop_new.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
             auth=new JcifsAuth(smb_level, mRemoteAuthInfo.smb_domain_name, mRemoteAuthInfo.smb_user_name, mRemoteAuthInfo.smb_user_password,
-                    mRemoteAuthInfo.smb_ipc_signing_enforced, mRemoteAuthInfo.smb_use_smb2_negotiation);
+                    mRemoteAuthInfo.smb_ipc_signing_enforced, mRemoteAuthInfo.smb_use_smb2_negotiation, prop_new);
         }
         JcifsFile[] fl=null;
         try {

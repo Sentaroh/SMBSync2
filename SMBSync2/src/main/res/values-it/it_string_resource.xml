@@ -963,10 +963,10 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Risposta Timeout</string>
-        <string name="settings_smb_client_response_timeout_title">Timeout Connessione Server</string>
+        <string name="settings_smb_client_response_timeout_title">Timeout Connessione Server(SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Cripta Sempre Password</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Cripta Password</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Cripta Password(SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
         <string name="settings_smb_lm_compatibility_dialog_title">LmLivello Compatibilità</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
@@ -984,11 +984,11 @@
             <item>4</item>
         </string-array >
         <string name="settings_smb_lm_compatibility_summary">LmLivello Compatibilità</string>
-        <string name="settings_smb_lm_compatibility_title">LmLivello Compatibilità</string>
+        <string name="settings_smb_lm_compatibility_title">LmLivello Compatibilità(SMBv1)</string>
         <string name="settings_smb_title">Impostazioni SMB</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Usa Sicurezza Estesa</string>
-        <string name="settings_smb_use_extended_security_title">Usa Sicurezza Estesa</string>
+        <string name="settings_smb_use_extended_security_title">Usa Sicurezza Estesa(SMBv1)</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">Disabilita messaggio di attenzione quando la cartella impostazioni app è inclusa nel task sync</string>
         <string name="settings_suppress_warning_app_specific_dir_title">Impostazioni Cartella Sincronizzazione</string>

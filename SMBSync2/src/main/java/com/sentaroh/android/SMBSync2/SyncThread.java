@@ -75,6 +75,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -543,7 +544,9 @@ public class SyncThread extends Thread {
         if (sti.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
             mStwa.masterAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
         } else {
-            mStwa.masterAuth=new JcifsAuth(mst_smb_level, mst_dom, mst_user, mst_pass, sti.isMasterSmbIpcSigningEnforced(), sti.isMasterSmbUseSmb2Negotiation());
+            Properties prop_new = new Properties();
+            prop_new.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
+            mStwa.masterAuth=new JcifsAuth(mst_smb_level, mst_dom, mst_user, mst_pass, sti.isMasterSmbIpcSigningEnforced(), sti.isMasterSmbUseSmb2Negotiation(), prop_new);
         }
 
         String tgt_dom=null, tgt_user=null, tgt_pass=null;
@@ -554,7 +557,9 @@ public class SyncThread extends Thread {
         if (sti.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
             mStwa.targetAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, tgt_dom, tgt_user, tgt_pass);
         } else {
-            mStwa.targetAuth=new JcifsAuth(tgt_smb_level, tgt_dom, tgt_user, tgt_pass, sti.isTargetSmbIpcSigningEnforced(), sti.isTargetSmbUseSmb2Negotiation());
+            Properties prop_new = new Properties();
+            prop_new.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
+            mStwa.targetAuth=new JcifsAuth(tgt_smb_level, tgt_dom, tgt_user, tgt_pass, sti.isTargetSmbIpcSigningEnforced(), sti.isTargetSmbUseSmb2Negotiation(), prop_new);
         }
 
         mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncOptionRetryCount()) + 1;

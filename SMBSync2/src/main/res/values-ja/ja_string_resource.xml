@@ -963,10 +963,10 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Response timeout</string>
-        <string name="settings_smb_client_response_timeout_title">Server Connection Timeout</string>
+        <string name="settings_smb_client_response_timeout_title">Server Connection Timeout(SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Disable Plain Text Passwords</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Disable Plain Text Passwords</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Disable Plain Text Passwords(SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
         <string name="settings_smb_lm_compatibility_dialog_title">LmCompatibility Level</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
@@ -984,11 +984,11 @@
             <item>4</item>
         </string-array >
         <string name="settings_smb_lm_compatibility_summary">LmCompatibility Level</string>
-        <string name="settings_smb_lm_compatibility_title">LmCompatibility Level</string>
+        <string name="settings_smb_lm_compatibility_title">LmCompatibility Level(SMBv1)</string>
         <string name="settings_smb_title">SMB設定</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
-        <string name="settings_smb_use_extended_security_title">Use Extended Security</string>
+        <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">アプリケーション固有ディレクトリの使用についての警告を表示しない</string>
         <string name="settings_suppress_warning_app_specific_dir_title">アプリケーション固有ディレクトリの使用</string>
