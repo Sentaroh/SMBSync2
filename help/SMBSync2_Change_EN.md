@@ -1,3 +1,5 @@
+#### 	2020-11-13 Ver2.42
+- Update task help file
 ####  	2020-11-12 Ver2.41
 - Update help file
 ####  	2020-11-03 Ver2.39
