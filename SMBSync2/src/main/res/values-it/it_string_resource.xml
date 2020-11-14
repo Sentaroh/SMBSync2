@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_change_btn">Log cambiamenti</string>
         <string name="msgs_about_dlg_privacy_btn">Privacy</string>
         <string name="msgs_dlg_title_about">A proposito di SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_IT_Short.htm</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_IT.htm</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.htm</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_IT_Short.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_IT.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Seleziona impostazioni e task da importare</string>
         <string name="msgs_export_import_profile_listing">Lista file di configurazione</string>
@@ -44,19 +44,19 @@
         <string name="msgs_export_import_pswd_hint_confirm">Conferma password</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Le password non coincidono.</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync2_Help_IT_task.htm</string>
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_IT_task.html</string>
         <string name="msgs_help_sync_task_title">Aiuto Sync Task</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_IT_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_IT_folder_internal.html</string>
         <string name="msgs_help_sync_folder_internal_title">Aiuto Memoria Interna</string>
-        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_IT_folder_sdcard.htm</string>
+        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_IT_folder_sdcard.html</string>
         <string name="msgs_help_sync_folder_sdcard_title">Aiuto SD</string>
-        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_IT_folder_usb.htm</string>
+        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_IT_folder_usb.html</string>
         <string name="msgs_help_sync_folder_usb_title">Aiuto USB</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_IT_folder_smb.htm</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_IT_folder_smb.html</string>
         <string name="msgs_help_sync_folder_smb_title">Aiuto Server SMB</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_IT_folder_zip.htm</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_IT_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">Aiuto file ZIP</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_IT_task_picture.htm</string>
+        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_IT_task_picture.html</string>
         <string name="msgs_help_sync_task_picture_title">Aiuto Sync Task Foto</string>
     <!-- Log management -->
         <string name="msgs_log_management_title">Gestione file di log</string>
