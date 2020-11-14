@@ -41,14 +41,14 @@
 
 ### 2.1.照片、媒体和文件
 
-**-read the contents of your USB storage**
+**-read the contents of your USB storage**  
 **-modify or delete the contents of your USB storage**
 
 它用于将文件同步到内部存储和读/写管理文件。
 
 ### 2.2.存储
 
-**-read the contents of your USB storage**
+**-read the contents of your USB storage**  
 **-modify or delete the contents of your USB storage**
 
 它用于将文件同步到USB存储设备上，并读取/写入管理文件。

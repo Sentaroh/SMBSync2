@@ -42,14 +42,14 @@
 
 ### 2.1. Фотографии, мультимедиа и файлы
 
-**-read the contents of your USB storage**
+**-read the contents of your USB storage**  
 **-modify or delete the contents of your USB storage**
 
 Используется для синхронизации файлов во внутреннее хранилище и для чтения/записи административных файлов.
 
 ### 2.2. хранилище
 
-**-read the contents of your USB storage**
+**-read the contents of your USB storage**  
 **-modify or delete the contents of your USB storage**
 
 Используется для синхронизации файлов на USB-накопитель и для чтения/записи управленческих файлов.

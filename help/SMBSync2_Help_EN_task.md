@@ -69,12 +69,12 @@ If unchecked, all files are synchronized. If you check the files filter, you get
 - Sync image files
 
   When checked, sync will include files with the following extensions:  
-  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff,
+  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
 
 - Sync video files
 
   When checked, sync will include files with the following extensions:  
-  avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv 
+  avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
 
 - File filter
 

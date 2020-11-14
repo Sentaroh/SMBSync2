@@ -1,4 +1,9 @@
+### tipo memoria
+
+Selezionare il punto di montaggio per lo stoccaggio interno.
+
 ### Lista cartelle
+
 Mostra l'elenco delle directory nella memoria interna. 
 Quando si preme il tasto elenco directory, vengono visualizzate le directory selezionabili. Premete sulla directory che volete scegliere e poi sul tasto "Seleziona". Per navigare attraverso le sottodirectory, toccate il nome della directory.
 
@@ -20,11 +25,9 @@ Selezionare la directory principale SDCARD per accedere a SDCARD. Se non è poss
 
 ### If the date e time cannot be determined by EXIF data, display a confirmation message
 
-Se l'opzione è selezionata, quando la data e l'ora di ripresa non possono essere acquisite da EXIF , viene visualizzato un messaggio di conferma dell'utilizzo o meno dell'ultima ora modificata del file. Se si seleziona Annulla nella finestra di dialogo di conferma, il file non verrà archiviato.
+Se l'opzione è selezionata, quando la data e l'ora di ripresa non possono essere acquisite da EXIF , viene visualizzato un messaggio di conferma dell'utilizzo o meno dell'ultima ora modificata del file. Se si seleziona Annulla nella finestra di dialogo di conferma, il file non verrà archiviato. 
 
- 
-
-### Archive files if…
+### Archivia file se
 
 Scegliere i criteri temporali per determinare quali file archiviare. La selezione dell'ora si basa sulla data di ripresa delle foto/video o sull'ultima ora modificata se non è possibile acquisire il timestamp dall'intestazione EXIF.
 

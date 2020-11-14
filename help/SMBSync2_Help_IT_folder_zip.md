@@ -1,4 +1,4 @@
-### Punto di montaggio
+### tipo memoria
 Selezionare il punto di montaggio dove memorizzare il file ZIP.
 
 ### Salva file ZIP su SDCARD.
@@ -10,7 +10,7 @@ Toccare per visualizzare la schermata di selezione per dare l'accesso e l'autori
 ### Lista Files
 Mostra le directory e l'elenco dei file nella cartella selezionata.
 
-### File name
+### file ZIP
 Specificare il nome del file ZIP di destinazione. 
 
 ### Aggiungi tempo/data del sync nel nome della cartella (the keyword will be replaced by the date e time in which the sync was performed)
@@ -22,7 +22,7 @@ Selezionare il livello di compressione ZIP. I livelli di compressione più forti
 ### Seleziona Metodo Encriptazione
 Selezionare il metodo di crittografia per il file ZIP. 
 
-### Password e conferma password
+### Password/conferma password
 Specificare la password di crittografia. 
 Nota: attualmente, quando ZIP è selezionato come target, SMBSync2 supporta solo la memorizzazione interna come master. I supporti USB, SMB e SD esterna non possono essere utilizzati come memoria master quando il target ZIP è selezionato come destinazione ZIP. 
 

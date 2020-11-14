@@ -44,14 +44,14 @@ L'application utilise les autorisations suivantes.
 
 ### 2.1 Photos/Médias/Fichiers
 
-**-read the contents of your USB storage**
+**-read the contents of your USB storage**  
 **-modify or delete the contents of your USB storage**
 
 Nécessaire pour la synchronisation des fichiers avec le stockage interne/externe/USB et pour les opérations de lecture/écriture sur les fichiers de données d'application.
 
 ### 2.2 Stockage
 
-**-read the contents of your USB storage**
+**-read the contents of your USB storage**  
 **-modify or delete the contents of your USB storage**
 
 Nécessaire pour la synchronisation des fichiers avec le stockage interne/externe/USB et pour les opérations de lecture/écriture sur les fichiers de données d'application.

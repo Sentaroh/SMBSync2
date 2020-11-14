@@ -36,14 +36,14 @@ Data recorded by the app can be sent by following these steps:
 The app uses the following permissions.
 ### 2.1.Photos/Media/Files
 
-**-read the contents of your USB storage**
+**-read the contents of your USB storage**  
 **-modify or delete the contents of your USB storage**
 
 Required for file synchronization to internal/external/USB storage and to read/write operations on application data files.
 
 ### 2.2.Storage
 
-**-read the contents of your USB storage**
+**-read the contents of your USB storage**  
 **-modify or delete the contents of your USB storage**
 
 Required for file synchronization to internal/external/USB storage and to read/write operations on application data files.

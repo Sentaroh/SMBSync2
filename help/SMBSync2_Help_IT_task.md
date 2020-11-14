@@ -116,11 +116,11 @@ Se spuntata, visualizzerà una finestra di dialogo di conferma prima di sovrascr
 - indirizzo lista IP: è possibile avviare la sincronizzazione solo se l'indirizzo IP WiFi corrisponde a uno degli indirizzi specificati. È inoltre possibile aggiungere direttamente l'indirizzo IP corrente al quale l'apparecchio è collegato attraverso l'elenco di selezione IP.  
 È possibile utilizzare i caratteri jolly per il filtro. (ad es. 192.168.100.\*, 192.168.\*).
 
-### Skip task if the WLAN non è connesso su lo specifico access point, or if WLAN IP non coincide con l\'indirizzo IP specificato
+### Salta il  task se l\'IP WLAN non corrisponde all\'indirizzo IP specificato
 
 Auto Sync salterà l'attività se non corrisponde ai criteri specificati 
 
-### Allow sync with tutti indirizzo IPes (include public)
+### Permetti sync con tutti gli indirizzi IP (inclusi pubblici)
 
 La sincronizzazione sarà consentita ogni volta che il Wifi è connesso a qualsiasi rete, anche su intervalli IP pubblici (come in un Wifi pubblico).
 
@@ -128,7 +128,7 @@ La sincronizzazione sarà consentita ogni volta che il Wifi è connesso a qualsi
 
 **Si prega di utilizzarlo quando si impostano le opzioni dettagliate.** 
 
-### Includi subcartelle
+### Includi  sottocartelle
 
 Includerà ricorsivamente le sottodirectory sotto la cartella master specificata. 
 
@@ -148,11 +148,11 @@ Quando spuntata, Sync includerà i file linux nascosti (quelli con un nome che i
 
 Se deselezionati, i file sul target non saranno mai sovrascritti anche se i criteri di confronto per dimensioni e tempo sono diversi. 
 
-### Usa enhanced directory selection filtro
+### Usa il  filtro di selezione cartelle migliorato
 
 Se la directory superiore viene esclusa da un filtro mentre una delle sue sottocartelle viene selezionata/inclusa, le sottocartelle della cartella selezionata verranno sincronizzate. 
 
-### Use new filter version 2
+### Usa la  nuova versione 2 del filtro
 
 After enabling it, you can use the new filter. **It may behave differently from the old filter, so please test it thoroughly before using it.** 
 

@@ -41,14 +41,14 @@
 
 ### 2.1.写真、メディア、ファイル
 
-**-read the contents of your USB storage**
+**-read the contents of your USB storage**  
 **-modify or delete the contents of your USB storage**
 
 内部ストレージへのファイル同期と管理ファイルの読み書きで使用します。
 
 ### 2.2.ストレージ
 
-**-read the contents of your USB storage**
+**-read the contents of your USB storage**  
 **-modify or delete the contents of your USB storage**
 
 USBストレージへのファイル同期と管理ファイルの読み書きで使用します。
