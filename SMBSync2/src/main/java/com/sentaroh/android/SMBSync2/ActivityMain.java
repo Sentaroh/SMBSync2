@@ -326,6 +326,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void run() {
                 if (mSyncTaskListCreateRequired) {
+                    mSyncTaskListCreateRequired=false;
                     mUtil.addDebugMsg(1, "I", "Sync task list creation started.");
                     synchronized (mGp.syncTaskList) {
                         ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil, false);
