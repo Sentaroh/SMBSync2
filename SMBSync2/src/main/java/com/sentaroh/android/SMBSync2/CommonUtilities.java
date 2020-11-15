@@ -289,7 +289,7 @@ public final class CommonUtilities {
         out.add("");
         out.add("  Debug level="+gp.settingDebugLevel);
         out.add("  Log option="+gp.settingLogOption);
-        out.add("  Logcat option="+gp.settingPutLogcatOption);
+//        out.add("  Logcat option="+gp.settingPutLogcatOption);
         out.add("  Log max file count="+gp.settingLogMaxFileCount);
 
         out.add("");

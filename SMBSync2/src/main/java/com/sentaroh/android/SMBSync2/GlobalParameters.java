@@ -95,7 +95,6 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public boolean activityIsFinished = true;
     public boolean activityRestartRequired=false;
-    public boolean logCatActive=false;
 
     public boolean externalStorageIsMounted = false;
     public boolean externalStorageAccessIsPermitted = false;
@@ -148,7 +147,6 @@ public class GlobalParameters extends CommonGlobalParms {
     public String settingMgtFileDir = "", settingLogMsgFilename = LOG_FILE_NAME;
     public boolean settingLogOption = false;
     public int settingLogFileMaxSize = 1024 * 1024 * 20;
-    public boolean settingPutLogcatOption = false;
 
     public boolean settingWriteSyncResultLog = true;
 
@@ -431,7 +429,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public void setLogParms(Context c, GlobalParameters gp) {
         setDebugLevel(gp.settingDebugLevel);
-        setLogcatEnabled(gp.settingPutLogcatOption);
+//        setLogcatEnabled(gp.settingPutLogcatOption);
         setLogLimitSize(10 * 1024 * 1024);
         setLogMaxFileCount(gp.settingLogMaxFileCount);
         setLogEnabled(gp.settingLogOption);
@@ -544,7 +542,7 @@ public class GlobalParameters extends CommonGlobalParms {
         settingLogMaxFileCount = Integer.valueOf(prefs.getString(c.getString(R.string.settings_log_file_max_count), "5"));
         settingMgtFileDir = prefs.getString(c.getString(R.string.settings_mgt_dir), getManagementDirectory());
         settingLogOption = prefs.getBoolean(c.getString(R.string.settings_log_option), false);
-        settingPutLogcatOption = prefs.getBoolean(c.getString(R.string.settings_put_logcat_option), false);
+//        settingPutLogcatOption = prefs.getBoolean(c.getString(R.string.settings_put_logcat_option), false);
         settingErrorOption = prefs.getBoolean(c.getString(R.string.settings_error_option), false);
         settingWifiLockRequired = prefs.getBoolean(c.getString(R.string.settings_wifi_lock), true);
 

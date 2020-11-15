@@ -735,15 +735,6 @@
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">启用计划服务</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">禁用计划服务</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">多个任务的调度和WiFi选项将被整合，以防止重复同步进程。</string>
-    <!-- Send logcat -->
-        <string name="msgs_send_logcat_menu_start_logcat">启动LogCat</string>
-        <string name="msgs_send_logcat_menu_stop_logcat">停止LogCat</string>
-        <string name="msgs_send_logcat_menu_send_logcat">发送LogCat</string>
-        <string name="msgs_send_logcat_btn_send">发送</string>
-        <string name="msgs_send_logcat_btn_preview_logcat">预览LogCat</string>
-        <string name="msgs_send_logcat_btn_preview_applog">预览AppLog</string>
-        <string name="msgs_send_logcat_title">发送Logcat和AppLog</string>
-        <string name="msgs_send_logcat_message">通过电子邮件将LogCat和AppLog发送给开发人员\n1。请通过按LogCat显示按钮和AppLog显示按钮检查内容（显示应用程序选择屏幕时选择一个应用程序）。\n2。确认要发送的内容后，按发送按钮，然后在电子邮件选择对话框中选择电子邮件。\n3。如有必要，请在电子邮件正文中输入一条消息，然后发送电子邮件（日志被压缩为zip格式并附加到电子邮件中）。</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">由于同步任务已禁用，因此无法启动它。</string>
         <string name="msgs_svc_received_start_request_from_scheduler">从SMBSync2调度程序收到的同步请求。</string>

@@ -735,15 +735,6 @@
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">スケジュールを有効にする</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">スケジュールを無効にする</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">複数スケジュールが同時刻に起動される場合は同期リストをまとめ、重複した同期タスクを無視します。またWI-FIオプションも各スケジュールで指定したオプションを組み合わせします。</string>
-    <!-- Send logcat -->
-        <string name="msgs_send_logcat_menu_start_logcat">LogCatの開始</string>
-        <string name="msgs_send_logcat_menu_stop_logcat">LogCatの停止</string>
-        <string name="msgs_send_logcat_menu_send_logcat">LogCatの送信</string>
-        <string name="msgs_send_logcat_btn_send">送信</string>
-        <string name="msgs_send_logcat_btn_preview_logcat">LogCatの表示</string>
-        <string name="msgs_send_logcat_btn_preview_applog">AppLogの表示</string>
-        <string name="msgs_send_logcat_title">LogCatとAppLogの送信</string>
-        <string name="msgs_send_logcat_message">LogCatとAppLogを開発者にE-Mailで送信します\n１．LogCat表示ボタンとAppLog表示ボタンを押し内容を確認してください（テキストファイルを表示するためのアプリケーション選択の画面が表示されたら、アプリケーションを選択してください）\n２．送信する内容を確認したら、送信ボタンを押しE-Mail選択ダイアログでE-Mailを選択\n３．必要ならばE-Mail本文にメッセージを入力し送信してください。（ログはzipに圧縮し、添付ファイルになっています）</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">同期タスクが無効になっているため、同期タスクを開始できませんでした。</string>
         <string name="msgs_svc_received_start_request_from_scheduler">SMBSync2スケジューラーから同期要求を受け付けました。</string>

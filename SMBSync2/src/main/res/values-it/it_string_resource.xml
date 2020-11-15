@@ -735,15 +735,6 @@
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Abilita servizio di pianificazione</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">Disabilita servizio di pianificazione</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Le opzioni per le pianificazioni e il WiFi per task multipli verranno consolidate per prevenire processi di sync duplicati.</string>
-    <!-- Send logcat -->
-        <string name="msgs_send_logcat_menu_start_logcat">Inizia LogCat</string>
-        <string name="msgs_send_logcat_menu_stop_logcat">Ferma LogCat</string>
-        <string name="msgs_send_logcat_menu_send_logcat">Invia LogCat</string>
-        <string name="msgs_send_logcat_btn_send">Invia</string>
-        <string name="msgs_send_logcat_btn_preview_logcat">Anteprima LogCat</string>
-        <string name="msgs_send_logcat_btn_preview_applog">Anteprima AppLog</string>
-        <string name="msgs_send_logcat_title">Invia un Logcat e un AppLog</string>
-        <string name="msgs_send_logcat_message">Invia LogCat e AppLog allo sviluppatore tramite e-mail\n1. Per favore verifica i contenuti premendo il bottone mostra del LogCat e il bottone mostra AppLog (scegli un\'applicazione quando viene mostrata la schermata di selezione).\n2. Dopo aver confermato i contenuti da inviare, premi il bottone invia e seleziona email.\n3. Per favore inserisci un messaggio nel corpo dell\'email se necessario ed invia l\'email (il log è compresso nel formato zip e allegato all\'email).</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">Essendo la sync task disabilitata, non è stato possibile avviarla.</string>
         <string name="msgs_svc_received_start_request_from_scheduler">La richiesta di sync ricevuta dal pianificatore di SMBSync2.</string>

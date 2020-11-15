@@ -487,7 +487,7 @@ public class ActivityMain extends AppCompatActivity {
 
         if (isFinishing()) {
             deleteTaskData();
-            mGp.logCatActive=false;
+//            mGp.logCatActive=false;
 //            mGp.clearParms();
         }
         mGp.appPasswordAuthValidated=false;

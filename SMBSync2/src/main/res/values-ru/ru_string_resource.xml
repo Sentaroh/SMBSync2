@@ -735,15 +735,6 @@
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Активировать услугу планирования</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">Отключить службу планирования</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Расписание и параметры Wi-Fi для нескольких задач будут объединены, чтобы избежать дублирования процессов синхронизации.</string>
-    <!-- Send logcat -->
-        <string name="msgs_send_logcat_menu_start_logcat">Запустить LogCat</string>
-        <string name="msgs_send_logcat_menu_stop_logcat">Стоп LogCat</string>
-        <string name="msgs_send_logcat_menu_send_logcat">Отправить LogCat</string>
-        <string name="msgs_send_logcat_btn_send">Отправить</string>
-        <string name="msgs_send_logcat_btn_preview_logcat">Предварительный LogCat</string>
-        <string name="msgs_send_logcat_btn_preview_applog">Предварительный просмотр AppLog</string>
-        <string name="msgs_send_logcat_title">Отправить LogCat и AppLog</string>
-        <string name="msgs_send_logcat_message">Отправьте LogCat и AppLog разработчикам электронным-mail\n1. Проверьте содержание путем нажатия кнопки отображения LogCat, и кнопка отображения AppLog (выберите приложение, когда экран выбора приложения отображен).\n 2. После подтверждения содержания, которое будет отправлено, нажмите отправить кнопку и выберите электронную почту в почтовом диалоговом окне выбора  \n3. Введите, сообщение в теле электронного письма при необходимости прикрепите электронное письмо (журнал сжат до zip и присоединен к электронной почте).</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">Поскольку задача синхронизации отключена, она не смогла запустить задачу синхронизации.</string>
         <string name="msgs_svc_received_start_request_from_scheduler">Запрос синхронизации получен от планировщика SMBSync2.</string>

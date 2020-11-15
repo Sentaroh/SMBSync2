@@ -735,15 +735,6 @@
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Activer le service de planification</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">Désactiver le service de planification</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Les planifications et les différentes options Wifi seront regroupées pour éviter les processus de sync doubles.</string>
-    <!-- Send logcat -->
-        <string name="msgs_send_logcat_menu_start_logcat">Démarrer le LogCat</string>
-        <string name="msgs_send_logcat_menu_stop_logcat">Stopper le LogCat</string>
-        <string name="msgs_send_logcat_menu_send_logcat">Envoi du LogCat</string>
-        <string name="msgs_send_logcat_btn_send">Envoi</string>
-        <string name="msgs_send_logcat_btn_preview_logcat">Aperçu du LogCat</string>
-        <string name="msgs_send_logcat_btn_preview_applog">Aperçu de l\'AppLog</string>
-        <string name="msgs_send_logcat_title">Envoi des LogCat et AppLog</string>
-        <string name="msgs_send_logcat_message">Envoyer les fichiers LogCat et AppLog au développeur par courriel\n1. Merci de vérifier le contenu de chaque fichier en appuyant sur le bouton afficher (choisir une application dans la fenêtre de sélection qui apparait).\n2. Après avoir validé les données à envoyer, appuyer sur le bouton envoyer et choisir E-Mail dans la boite de dialogue.\n3. Merci d\'écrire un message dans le texte de l\'email si besoin puis envoyer le courriel (le fichier journal est compressé au format zip et envoyé en pièce jointe avec le courriel).</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">La tâche de synchronisation n\'a pas été exécutée, car elle est désactivée.</string>
         <string name="msgs_svc_received_start_request_from_scheduler">Demande de sync reçue depuis la planification SMBSync2.</string>
