@@ -3206,6 +3206,25 @@ public class SyncTaskEditor extends DialogFragment {
         int sel_no = 0;
 //        ArrayList<String>mpl=LocalMountPoint.getLocalMountpointList2(mContext);
         ArrayList<String> mpl = LocalMountPoint.getLocalMountpointList2(mContext);
+
+        if (Build.VERSION.SDK_INT>=26) {
+            File[] fl=mContext.getExternalFilesDirs(null);
+            if (fl!=null && fl.length>1) {
+                for(File fi:fl) {
+                    String mp_name=fi.getPath().substring(0, fi.getPath().indexOf("/Android/data"));
+                    boolean found=false;
+                    for(String mi:mpl) {
+                        if (mi.equals(mp_name)) {
+                            found=true;
+                            break;
+                        }
+                    }
+                    if (!found) mpl.add(mp_name);
+                }
+                for(String mi:mpl) mUtil.addDebugMsg(1,"I","setSpinnerSyncFolderMountPoint MP entry="+mi);
+            }
+        }
+
         if (mpl == null || mpl.size() == 0) {
             adapter.add(mGp.internalRootDirectory);
             mUtil.addDebugMsg(1,"I","setSpinnerSyncFolderMountPoint add MP by InternalStorage only.");
