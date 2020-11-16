@@ -150,11 +150,14 @@ public class ActivityMain extends AppCompatActivity {
     private CommonUtilities mUtil = null;
     private CustomContextMenu ccMenu = null;
 
-    private final static int NORMAL_START = 0;
-    private final static int RESTART_WITH_OUT_INITIALYZE = 1;
+    private final static int START_STATUS_STARTING = 0;
+    private final static int START_STATUS_COMPLETED = 1;
+    private final static int START_STATUS_INITIALYZING = 2;
+    private int mStartStatus = START_STATUS_STARTING;
+
     private final static int RESTART_BY_KILLED = 2;
     private final static int RESTART_BY_DESTROYED = 3;
-    private int restartType = NORMAL_START;
+    private int mRestoreType = 0;
 
     private ServiceConnection mSvcConnection = null;
     private CommonDialog mCommonDlg = null;
@@ -180,8 +183,8 @@ public class ActivityMain extends AppCompatActivity {
         super.onRestoreInstanceState(in);
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered.");
         mCurrentTab = in.getString("currentTab");
-        if (mGp.activityIsFinished) restartType = RESTART_BY_KILLED;
-        else restartType = RESTART_BY_DESTROYED;
+        if (mGp.activityIsFinished) mRestoreType = RESTART_BY_KILLED;
+        else mRestoreType = RESTART_BY_DESTROYED;
     }
 
 
@@ -209,7 +212,7 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(R.layout.main_screen);
 
         mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType+", settingScreenThemeLanguage="+mGp.settingScreenThemeLanguage);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "mStartStatus=" + mStartStatus +", settingScreenThemeLanguage="+mGp.settingScreenThemeLanguage);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setHomeButtonEnabled(false);
@@ -252,55 +255,57 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "mStartStatus=" + mStartStatus+", mRestoreType="+ mRestoreType);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "mStartStatus=" + mStartStatus+", mRestoreType="+ mRestoreType);
 
-        if (restartType == RESTART_WITH_OUT_INITIALYZE) {
+        if (mStartStatus == START_STATUS_COMPLETED) {
             mGp.safMgr.loadSafFile();
             setActivityForeground(true);
             ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
-            final NotifyEvent ntfy_priv_key=new NotifyEvent(mContext);
-            ntfy_priv_key.setListener(new NotifyEventListener() {
-                @Override
-                public void positiveResponse(Context context, Object[] objects) {
-                    KeyStoreUtil.resetSavedKey(mContext);
-                    processOnResumeForStart();
-                }
+            if (mStartStatus==START_STATUS_STARTING) {
+                mStartStatus=START_STATUS_INITIALYZING;
+                final NotifyEvent ntfy_priv_key=new NotifyEvent(mContext);
+                ntfy_priv_key.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        KeyStoreUtil.resetSavedKey(mContext);
+                        processOnResumeForStart();
+                    }
 
-                @Override
-                public void negativeResponse(Context context, Object[] objects) {
-                    processOnResumeForStart();
-                }
-            });
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                        processOnResumeForStart();
+                    }
+                });
 
-            Thread th=new Thread() {
-                @Override
-                public void run() {
-                    final boolean corrupted=!isValidPrivateKey();
-                    mUiHandler.post(new Runnable(){
-                        @Override
-                        public void run() {
-                            if (corrupted) {
-                                mCommonDlg.showCommonDialog(true, "E",mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_title),
-                                        mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_msg), ntfy_priv_key);
-                            } else {
-                                processOnResumeForStart();
+                Thread th=new Thread() {
+                    @Override
+                    public void run() {
+                        final boolean corrupted=!isValidPrivateKey();
+                        mUiHandler.post(new Runnable(){
+                            @Override
+                            public void run() {
+                                if (corrupted) {
+                                    mCommonDlg.showCommonDialog(true, "E",mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_title),
+                                            mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_msg), ntfy_priv_key);
+                                } else {
+                                    processOnResumeForStart();
+                                }
                             }
-                        }
-                    });
-                }
-            };
-            th.start();
-
+                        });
+                    }
+                };
+                th.start();
+            }
         }
     }
 
@@ -345,38 +350,50 @@ public class ActivityMain extends AppCompatActivity {
                 mUiHandler.post(new Runnable(){
                     @Override
                     public void run() {
-                        NotifyEvent svc_ntfy = new NotifyEvent(mContext);
-                        svc_ntfy.setListener(new NotifyEventListener() {
+                        NotifyEvent stg__ntfy = new NotifyEvent(mContext);
+                        stg__ntfy.setListener(new NotifyEventListener() {
                             @Override
-                            public void positiveResponse(Context c, Object[] o) {
-                                setMainListener();
-                                NotifyEvent app_pswd_ntfy = new NotifyEvent(mContext);
-                                app_pswd_ntfy.setListener(new NotifyEventListener() {
+                            public void positiveResponse(Context context, Object[] objects) {
+                                NotifyEvent svc_ntfy = new NotifyEvent(mContext);
+                                svc_ntfy.setListener(new NotifyEventListener() {
                                     @Override
                                     public void positiveResponse(Context c, Object[] o) {
-                                        mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
-                                        if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
-                                        else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
-                                        if (mGp.syncThreadActive) {
-                                            mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-                                        } else {
-                                            mGp.messageListViewMoveToBottomRequired=true;
-                                        }
-                                        pd.dismiss();
+                                        mStartStatus= START_STATUS_COMPLETED;
+                                        setMainListener();
+                                        NotifyEvent app_pswd_ntfy = new NotifyEvent(mContext);
+                                        app_pswd_ntfy.setListener(new NotifyEventListener() {
+                                            @Override
+                                            public void positiveResponse(Context c, Object[] o) {
+                                                mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
+                                                if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
+                                                else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
+                                                if (mGp.syncThreadActive) {
+                                                    mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+                                                } else {
+                                                    mGp.messageListViewMoveToBottomRequired=true;
+                                                }
+                                                pd.dismiss();
+                                            }
+                                            @Override
+                                            public void negativeResponse(Context c, Object[] o) {
+                                                pd.dismiss();
+                                                finish();
+                                            }
+                                        });
+                                        ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
+                                                mUtil, false, app_pswd_ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION);
                                     }
                                     @Override
-                                    public void negativeResponse(Context c, Object[] o) {
-                                        pd.dismiss();
-                                        finish();
-                                    }
+                                    public void negativeResponse(Context c, Object[] o) {}
                                 });
-                                ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
-                                        mUtil, false, app_pswd_ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION);
+                                openService(svc_ntfy);
                             }
+
                             @Override
-                            public void negativeResponse(Context c, Object[] o) {}
+                            public void negativeResponse(Context context, Object[] objects) {}
                         });
-                        openService(svc_ntfy);
+                        checkRequiredPermissions(stg__ntfy);
+
                     }
                 });
             }
@@ -388,22 +405,19 @@ public class ActivityMain extends AppCompatActivity {
     private void setMainListener() {
         setCallbackListener();
         setActivityForeground(true);
-        if (restartType == NORMAL_START) {
-            setUiEnabled();
-            checkStorageStatus();
-            checkRequiredPermissions();
-            if (mGp.syncThreadActive) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-        } else if (restartType == RESTART_BY_KILLED) {
-            setUiEnabled();
+        setUiEnabled();
+        if (mRestoreType == RESTART_BY_KILLED) {
             restoreTaskData();
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_killed));
             mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-        } else if (restartType == RESTART_BY_DESTROYED) {
-            setUiEnabled();
+        } else if (mRestoreType == RESTART_BY_DESTROYED) {
             restoreTaskData();
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_destroyed));
             mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+        } else {
+            if (mGp.syncThreadActive) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
         }
+        checkStorageStatus();
         setMessageContextButtonListener();
         setMessageContextButtonNormalMode();
 
@@ -428,14 +442,13 @@ public class ActivityMain extends AppCompatActivity {
 
         deleteTaskData();
 //                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
-        restartType = RESTART_WITH_OUT_INITIALYZE;
         reshowDialogWindow();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "mStartStatus=" + mStartStatus);
     }
 
     @Override
@@ -1112,7 +1125,7 @@ public class ActivityMain extends AppCompatActivity {
 //	    mMainViewPager.setBackgroundColor(mThemeColorList.window_color_background);
         mMainViewPager.setAdapter(mMainViewPagerAdapter);
         mMainViewPager.setOnPageChangeListener(new MainPageChangeListener());
-        if (restartType == NORMAL_START) {
+        if (mStartStatus == START_STATUS_STARTING) {
             mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_TASK);
             mMainViewPager.setCurrentItem(0);
         }
@@ -2326,14 +2339,9 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private final int REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
-    private final int REQUEST_PERMISSIONS_ACCESS_LOCATION = 2;
-    private final int REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION =3;
 
-    /*
-    Target SDK 29に変更によりACCESS_COARSE_LOCATIONからACCESS_FINE_LOCATIONに変更
-    https://developer.android.com/guide/topics/connectivity/wifi-scan?hl=ja
-     */
-    private void checkRequiredPermissions() {
+    private NotifyEvent mNtfyExternalStoragePermission=null;
+    private void checkRequiredPermissions(final NotifyEvent p_ntfy) {
         if (Build.VERSION.SDK_INT >= 23) {
             mUtil.addDebugMsg(1, "I", "Prermission WriteExternalStorage=" + checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) +
                     ", WakeLock=" + checkSelfPermission(Manifest.permission.WAKE_LOCK));
@@ -2342,8 +2350,8 @@ public class ActivityMain extends AppCompatActivity {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
+                        mNtfyExternalStoragePermission=p_ntfy;
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
                     }
 
                     @Override
@@ -2368,112 +2376,12 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_main_permission_external_storage_title),
                         mContext.getString(R.string.msgs_main_permission_external_storage_request_msg), ntfy);
             } else {
-//                Hide location permission at start time
-//                checkLocationPermission(false);
+                p_ntfy.notifyToListener(true, null);
             }
         } else {
-//            Hide location permission at start time
-//            checkLocationPermission(false);
+            p_ntfy.notifyToListener(true, null);
         }
     }
-
-//    public void checkLocationPermission(boolean force_permission) {
-//        if (Build.VERSION.SDK_INT >= 27) {
-//            if (Build.VERSION.SDK_INT >= 29) {
-//                mUtil.addDebugMsg(1, "I", "Permission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)+
-//                        ", Backgrund Location=" + checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)+
-//                        ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired);
-//                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
-//                        (mGp.settingGrantLocationRequired || force_permission)) {
-//                    NotifyEvent ntfy = new NotifyEvent(mContext);
-//                    ntfy.setListener(new NotifyEventListener() {
-//                        @Override
-//                        public void positiveResponse(Context c, Object[] o) {
-//                            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSIONS_ACCESS_LOCATION);
-//                        }
-//
-//                        @Override
-//                        public void negativeResponse(Context c, Object[] o) {
-//                            mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-//                            SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-//                        }
-//                    });
-//                    if (Build.VERSION.SDK_INT>=30) {
-//                        showLocationPermissionMessage(mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-//                                mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg_api30),
-//                                mContext.getString(R.string.msgs_main_location_location_permission_screen_shot), ntfy);
-//                    } else {
-//                        mUtil.showCommonDialog(true, "W",
-//                                mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-//                                mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
-//                    }
-//                } else {
-//                    if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
-//                        checkBackgroundLocationPermission(null);
-//                    }
-//                }
-//            } else {
-//                mUtil.addDebugMsg(1, "I", "Permission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)+
-//                        ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired);
-//                if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
-//                        (mGp.settingGrantLocationRequired || force_permission)) {
-//                    NotifyEvent ntfy = new NotifyEvent(mContext);
-//                    ntfy.setListener(new NotifyEventListener() {
-//                        @Override
-//                        public void positiveResponse(Context c, Object[] o) {
-//                            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_PERMISSIONS_ACCESS_LOCATION);
-//                        }
-//
-//                        @Override
-//                        public void negativeResponse(Context c, Object[] o) {
-//                            mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-//                            SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-//                        }
-//                    });
-//                    mUtil.showCommonDialog(true, "W",
-//                            mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-//                            mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
-//                } else {
-//                    SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-//                }
-//            }
-//        }
-//    }
-//
-//    public void checkBackgroundLocationPermission(final NotifyEvent p_ntfy) {
-//        mUtil.addDebugMsg(1, "I", "Background location permission=" + checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION));
-//        if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
-//                (mGp.settingGrantLocationRequired)) {
-//            NotifyEvent ntfy_bg_location_request = new NotifyEvent(mContext);
-//            ntfy_bg_location_request.setListener(new NotifyEventListener() {
-//                @Override
-//                public void positiveResponse(Context c, Object[] o) {
-//                    requestPermissions(new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION);
-//                }
-//
-//                @Override
-//                public void negativeResponse(Context c, Object[] o) {
-//                    mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-//                    if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-//                }
-//            });
-//
-//            if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
-//                if (Build.VERSION.SDK_INT>=30) {
-//                    showLocationPermissionMessage(mContext.getString(R.string.msgs_main_permission_background_location_title),
-//                            mContext.getString(R.string.msgs_main_permission_background_location_request_msg_api30),
-//                            mContext.getString(R.string.msgs_main_location_background_location_permission_screen_shot), ntfy_bg_location_request);
-//                } else {
-//                    mUtil.showCommonDialog(true, "W",
-//                            mContext.getString(R.string.msgs_main_permission_background_location_title),
-//                            mContext.getString(R.string.msgs_main_permission_background_location_request_msg),
-//                            ntfy_bg_location_request);
-//                }
-//            } else {
-//                if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-//            }
-//        }
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -2484,9 +2392,7 @@ public class ActivityMain extends AppCompatActivity {
                 mUiHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        checkStorageStatus();
-//                      Hide location permission at start time
-//                      checkLocationPermission(false);
+                        if (mNtfyExternalStoragePermission!=null) mNtfyExternalStoragePermission.notifyToListener(true, null);
                     }
                 }, 500);
             } else {
@@ -2505,50 +2411,6 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_main_permission_external_storage_title),
                         mContext.getString(R.string.msgs_main_permission_external_storage_denied_msg), ntfy_term);
             }
-        } else if (REQUEST_PERMISSIONS_ACCESS_LOCATION == requestCode) {
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                if (Build.VERSION.SDK_INT>=29) {
-//                    checkBackgroundLocationPermission(null);
-//                } else {
-//                    SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-//                }
-//            } else {
-//                mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-//                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-////                NotifyEvent ntfy_deny=new NotifyEvent(mContext);
-////                ntfy_deny.setListener(new NotifyEventListener() {
-////                    @Override
-////                    public void positiveResponse(Context context, Object[] objects) {
-////                        mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-////                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-////                    }
-////                    @Override
-////                    public void negativeResponse(Context context, Object[] objects) {}
-////                });
-////                mUtil.showCommonDialog(false, "W",
-////                        mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-////                        mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
-//            }
-        } else if (REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION == requestCode) {
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-//            } else {
-//                mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-//                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-////                NotifyEvent ntfy_deny=new NotifyEvent(mContext);
-////                ntfy_deny.setListener(new NotifyEventListener() {
-////                    @Override
-////                    public void positiveResponse(Context context, Object[] objects) {
-////                        mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-////                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-////                    }
-////                    @Override
-////                    public void negativeResponse(Context context, Object[] objects) {}
-////                });
-////                mUtil.showCommonDialog(false, "W",
-////                        mContext.getString(R.string.msgs_main_permission_background_location_title),
-////                        mContext.getString(R.string.msgs_main_permission_background_location_denied_msg), ntfy_deny);
-//            }
         }
     }
 
