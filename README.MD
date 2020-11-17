@@ -4,6 +4,7 @@ This application performs file synchronization between an Android device and a P
 
 - This software includes the work that is distributed in the Apache License 2.0.
 - This software includes the work that is distributed in the GNU Lesser General Public License v2.1.
+- This software includes the work that is distributed in the MIT License.
 
 # Download
 
