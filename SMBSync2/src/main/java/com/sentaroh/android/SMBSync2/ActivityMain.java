@@ -48,6 +48,7 @@ import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.storage.StorageVolume;
 import android.provider.Settings;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -127,10 +128,6 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YES;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YESALL;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_KEY_STORE_ALIAS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SERIALIZABLE_FILE_NAME;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_HIST;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_MESSAGE;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_SCHEDULE;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET;
@@ -140,7 +137,6 @@ public class ActivityMain extends AppCompatActivity {
 
     private boolean isTaskTermination = false; // kill is disabled(enable is kill by onDestroy)
 
-    private TabHost mMainTabHost = null;
     private Context mContext = null;
     private AppCompatActivity mActivity = null;
 
@@ -170,6 +166,8 @@ public class ActivityMain extends AppCompatActivity {
     private boolean enableMainUi = true;
 
     private boolean mSyncTaskListCreateRequired=false;
+
+    private String mTabNameTask="Task", mTabNameSchedule="Schedule", mTabNameHistory="History", mTabNameMessage="Message";
 
     @Override
     protected void onSaveInstanceState(Bundle out) {
@@ -239,7 +237,12 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.syncHistoryList == null) mGp.syncHistoryList = mUtil.loadHistoryList();
 
         mGp.syncHistoryAdapter = new AdapterSyncHistory(mActivity, R.layout.sync_history_list_item_view, mGp.syncHistoryList);
-        mCurrentTab = SMBSYNC2_TAB_NAME_TASK;
+
+        mTabNameTask=getString(R.string.msgs_tab_name_prof);
+        mTabNameSchedule=getString(R.string.msgs_tab_name_schedule);
+        mTabNameHistory=getString(R.string.msgs_tab_name_history);
+        mTabNameMessage=getString(R.string.msgs_tab_name_msg);
+        mCurrentTab = mTabNameTask;
 
         createTabView();
         initAdapterAndView();
@@ -368,7 +371,7 @@ public class ActivityMain extends AppCompatActivity {
                                                 if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
                                                 else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
                                                 if (mGp.syncThreadActive) {
-                                                    mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+                                                    mMainTabLayout.setCurrentTabByName(mTabNameMessage);
                                                 } else {
                                                     mGp.messageListViewMoveToBottomRequired=true;
                                                 }
@@ -409,13 +412,13 @@ public class ActivityMain extends AppCompatActivity {
         if (mRestoreType == RESTART_BY_KILLED) {
             restoreTaskData();
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_killed));
-            mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+            mMainTabLayout.setCurrentTabByName(mTabNameMessage);
         } else if (mRestoreType == RESTART_BY_DESTROYED) {
             restoreTaskData();
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_destroyed));
-            mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+            mMainTabLayout.setCurrentTabByName(mTabNameMessage);
         } else {
-            if (mGp.syncThreadActive) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+            if (mGp.syncThreadActive) mMainTabLayout.setCurrentTabByName(mTabNameMessage);
         }
         checkStorageStatus();
         setMessageContextButtonListener();
@@ -811,8 +814,6 @@ public class ActivityMain extends AppCompatActivity {
 
         createTabView();
 
-        mMainTabHost.setOnTabChangedListener(null);
-
         mGp.syncTaskAdapter = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, pfl, mGp);
         mGp.syncTaskAdapter.setShowCheckBox(vsa.prof_adapter_show_cb);
         mGp.syncTaskAdapter.notifyDataSetChanged();
@@ -830,7 +831,6 @@ public class ActivityMain extends AppCompatActivity {
         initAdapterAndView();
 
         restoreViewContent(vsa);
-        mMainTabHost.setOnTabChangedListener(new MainOnTabChange());
 
         setMessageContextButtonListener();
         setMessageContextButtonNormalMode();
@@ -849,13 +849,13 @@ public class ActivityMain extends AppCompatActivity {
         setScheduleViewItemClickListener();
         setScheduleViewLongClickListener();
 
-        if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK)) {
+        if (mCurrentTab.equals(mTabNameTask)) {
             if (mGp.syncHistoryAdapter.isShowCheckBox()) setHistoryContextButtonSelectMode();
             else setHistoryContextButtonNormalMode();
 
             if (mGp.syncTaskAdapter.isShowCheckBox()) setSyncTaskContextButtonSelectMode();
             else setSyncTaskContextButtonNormalMode();
-        } else if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_HIST)) {
+        } else if (mCurrentTab.equals(mTabNameHistory)) {
             if (mGp.syncTaskAdapter.isShowCheckBox()) setSyncTaskContextButtonSelectMode();
             else setSyncTaskContextButtonNormalMode();
 
@@ -870,7 +870,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private ViewSaveArea saveViewContent() {
         ViewSaveArea vsa = new ViewSaveArea();
-        vsa.current_tab_pos = mMainTabHost.getCurrentTab();
+        vsa.current_tab_pos = mMainTabLayout.getSelectedTabPosition();
         vsa.current_pager_pos = mMainViewPager.getCurrentItem();
 
         vsa.prof_list_view_pos_x = mGp.syncTaskListView.getFirstVisiblePosition();
@@ -913,8 +913,11 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void restoreViewContent(final ViewSaveArea vsa) {
-        mMainTabHost.setCurrentTab(vsa.current_tab_pos);
+        mWhileRestoreViewProcess=true;
+        mMainTabLayout.setCurrentTabByPosition(vsa.current_tab_pos);
         mMainViewPager.setCurrentItem(vsa.current_pager_pos);
+        mWhileRestoreViewProcess=false;
+
         mGp.syncTaskListView.setSelectionFromTop(vsa.prof_list_view_pos_x, vsa.prof_list_view_pos_y);
         mGp.syncMessageListView.setSelectionFromTop(vsa.msg_list_view_pos_x, vsa.msg_list_view_pos_y);
         mGp.syncHistoryListView.setSelectionFromTop(vsa.sync_list_view_pos_x, vsa.sync_list_view_pos_y);
@@ -981,42 +984,16 @@ public class ActivityMain extends AppCompatActivity {
     private LinearLayout mMessageView;
 
     private CustomViewPager mMainViewPager;
-    private CustomViewPagerAdapter mMainViewPagerAdapter;
-
-    private TabWidget mMainTabWidget;
+    private CustomTabLayout mMainTabLayout;
+    private boolean mWhileRestoreViewProcess=false;
 
     private void createTabView() {
-        mMainTabHost = (TabHost) findViewById(android.R.id.tabhost);
-        mMainTabHost.setup();
-        mMainTabWidget = (TabWidget) findViewById(android.R.id.tabs);
-
-        mMainTabWidget.setStripEnabled(false);
-        mMainTabWidget.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
-
-        CustomTabContentView tabViewProf = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_prof));
-        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_TASK).setIndicator(tabViewProf).setContent(android.R.id.tabcontent));
-
-        CustomTabContentView tabViewSchedule = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_schedule));
-        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_SCHEDULE).setIndicator(tabViewSchedule).setContent(android.R.id.tabcontent));
-
-        CustomTabContentView tabViewHist = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_history));
-        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_HIST).setIndicator(tabViewHist).setContent(android.R.id.tabcontent));
-
-        CustomTabContentView tabViewMsg = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_msg));
-        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_MESSAGE).setIndicator(tabViewMsg).setContent(android.R.id.tabcontent));
-
         LinearLayout ll_main = (LinearLayout) findViewById(R.id.main_screen_view);
-//        ll_main.setBackgroundColor(mGp.themeColorList.window_background_color_content);
-
         LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSyncTaskView = (LinearLayout) vi.inflate(R.layout.main_sync_task, null);
-//        mSyncTaskView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
         mScheduleView = (LinearLayout) vi.inflate(R.layout.main_schedule, null);
-//        mHistoryView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
         mHistoryView = (LinearLayout) vi.inflate(R.layout.main_history, null);
-//        mHistoryView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
         mMessageView = (LinearLayout) vi.inflate(R.layout.main_message, null);
-//        mMessageView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
 
         mGp.syncMessageListView = (ListView) mMessageView.findViewById(R.id.main_message_list_view);
         mGp.syncMessageListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -1119,17 +1096,90 @@ public class ActivityMain extends AppCompatActivity {
 
         createContextView();
 
-        mMainViewPagerAdapter = new CustomViewPagerAdapter(mActivity,
-                new View[]{mSyncTaskView, mScheduleView, mHistoryView, mMessageView});
+        mMainTabLayout = (CustomTabLayout) findViewById(R.id.main_tab_layout);
+        mMainTabLayout.addTab(mTabNameTask);
+        mMainTabLayout.addTab(mTabNameSchedule);
+        mMainTabLayout.addTab(mTabNameHistory);
+        mMainTabLayout.addTab(mTabNameMessage);
+        mMainTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mMainTabLayout.adjustTabWidth();
+
+        View[] tab_view=new View[]{mSyncTaskView, mScheduleView, mHistoryView, mMessageView};
+        CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity, tab_view);
         mMainViewPager = (CustomViewPager) findViewById(R.id.main_screen_pager);
-//	    mMainViewPager.setBackgroundColor(mThemeColorList.window_color_background);
-        mMainViewPager.setAdapter(mMainViewPagerAdapter);
-        mMainViewPager.setOnPageChangeListener(new MainPageChangeListener());
-        if (mStartStatus == START_STATUS_STARTING) {
-            mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_TASK);
-            mMainViewPager.setCurrentItem(0);
-        }
-        mMainTabHost.setOnTabChangedListener(new MainOnTabChange());
+        mMainViewPager.setAdapter(adapter);
+        mMainViewPager.setOffscreenPageLimit(tab_view.length);
+        mMainViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
+                mMainTabLayout.setCurrentTabByPosition(position);
+                if (isUiEnabled()) setUiEnabled();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                mUtil.addDebugMsg(2,"I","onPageScrollStateChanged entered, state="+state);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                mUtil.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
+            }
+        });
+
+        mMainTabLayout.setCurrentTabByName(mTabNameTask);
+        mMainViewPager.setCurrentItem(0);
+
+        mMainTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                String tabId=(String)tab.getTag();
+                mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered. tab=" + tabId + ",v=" + mCurrentTab);
+
+                mActionBar.setIcon(R.drawable.smbsync);
+                mActionBar.setHomeButtonEnabled(false);
+                mActionBar.setTitle(R.string.app_name);
+
+                mMainViewPager.setCurrentItem(mMainTabLayout.getSelectedTabPosition());
+
+                if (!mWhileRestoreViewProcess) {
+                    if (mGp.syncTaskAdapter.isShowCheckBox()) {
+                        mGp.syncTaskAdapter.setShowCheckBox(false);
+                        mGp.syncTaskAdapter.setAllItemChecked(false);
+                        mGp.syncTaskAdapter.notifyDataSetChanged();
+                        setSyncTaskContextButtonNormalMode();
+                    }
+
+                    if (mGp.syncScheduleAdapter.isSelectMode()) {
+                        mGp.syncScheduleAdapter.setSelectMode(false);
+                        mGp.syncScheduleAdapter.unselectAll();
+                        mGp.syncScheduleAdapter.notifyDataSetChanged();
+                        setScheduleContextButtonNormalMode();
+                    }
+
+                    if (mGp.syncHistoryAdapter.isShowCheckBox()) {
+                        mGp.syncHistoryAdapter.setShowCheckBox(false);
+                        mGp.syncHistoryAdapter.setAllItemChecked(false);
+                        mGp.syncHistoryAdapter.notifyDataSetChanged();
+                        setHistoryContextButtonNormalMode();
+                    } else {
+                        mGp.syncHistoryAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                mCurrentTab = tabId;
+                refreshOptionMenu();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
 
     }
 
@@ -1137,81 +1187,6 @@ public class ActivityMain extends AppCompatActivity {
 //		if (Build.VERSION.SDK_INT<11) {
 //			btn.setBackgroundColor(Color.DKGRAY);
 //		}
-    }
-
-    private class MainOnTabChange implements OnTabChangeListener {
-        @Override
-        public void onTabChanged(String tabId) {
-            mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered. tab=" + tabId + ",v=" + mCurrentTab);
-
-            mActionBar.setIcon(R.drawable.smbsync);
-            mActionBar.setHomeButtonEnabled(false);
-            mActionBar.setTitle(R.string.app_name);
-
-            mMainViewPager.setCurrentItem(mMainTabHost.getCurrentTab());
-
-            if (mGp.syncTaskAdapter.isShowCheckBox()) {
-                mGp.syncTaskAdapter.setShowCheckBox(false);
-                mGp.syncTaskAdapter.setAllItemChecked(false);
-                mGp.syncTaskAdapter.notifyDataSetChanged();
-                setSyncTaskContextButtonNormalMode();
-            }
-
-            if (mGp.syncScheduleAdapter.isSelectMode()) {
-                mGp.syncScheduleAdapter.setSelectMode(false);
-                mGp.syncScheduleAdapter.unselectAll();
-                setScheduleContextButtonNormalMode();
-            }
-
-            if (mGp.syncHistoryAdapter.isShowCheckBox()) {
-                mGp.syncHistoryAdapter.setShowCheckBox(false);
-                mGp.syncHistoryAdapter.setAllItemChecked(false);
-                mGp.syncHistoryAdapter.notifyDataSetChanged();
-                setHistoryContextButtonNormalMode();
-            }
-
-            if (tabId.equals(SMBSYNC2_TAB_NAME_MESSAGE)) {
-                mGp.syncMessageListView.requestFocusFromTouch();
-                if (!mGp.freezeMessageViewScroll) {
-                    synchronized (mGp.syncMessageList) {
-                        if (mGp.messageListViewMoveToBottomRequired) {
-                            if (mGp!=null && mGp.syncMessageListView !=null && mGp.syncMessageListAdapter !=null) {
-                                mGp.uiHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mGp.syncMessageListView.setSelection(mGp.syncMessageListAdapter.getCount()-1);
-                                    }
-                                });
-                            }
-                            mGp.messageListViewMoveToBottomRequired =false;
-                        }
-                    }
-                }
-            }
-            mCurrentTab = tabId;
-            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_HIST)) mGp.syncHistoryAdapter.notifyDataSetChanged();
-            refreshOptionMenu();
-        }
-    }
-
-    private class MainPageChangeListener implements ViewPager.OnPageChangeListener {
-        @Override
-        public void onPageSelected(int position) {
-	    	mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
-            mMainTabWidget.setCurrentTab(position);
-            mMainTabHost.setCurrentTab(position);
-            if (isUiEnabled()) setUiEnabled();
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-	    	mUtil.addDebugMsg(2,"I","onPageScrollStateChanged entered, state="+state);
-        }
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-	    	mUtil.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
-        }
     }
 
     @Override
@@ -1336,7 +1311,7 @@ public class ActivityMain extends AppCompatActivity {
             //only show top sync button if there is at least one auto and valid sync task
             //in sync task select mode: always show the top sync button if there is at least one valid sync task
             //if we select non valid sync tasks, on start, a proper message is shown to help user understand the way button works
-            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK) && mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
+            if (mCurrentTab.equals(mTabNameTask) && mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
                 menu.findItem(R.id.menu_top_sync).setVisible(false);
                 for(SyncTaskItem sti:mGp.syncTaskList) {
                     if ((sti.isSyncTaskAuto() && !sti.isSyncTestMode()) ||
@@ -1354,7 +1329,7 @@ public class ActivityMain extends AppCompatActivity {
             //only show top start schedule button if there is at least one enabled and valid schedule
             //in schedule select mode: always show the start schedule button if there is at least one valid schedule
             //if we select non valid schedules, on start, a proper message is shown to help user understand the way button works
-            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_SCHEDULE) && mGp.syncScheduleList!=null && mGp.syncScheduleList.size()>0) {
+            if (mCurrentTab.equals(mTabNameSchedule) && mGp.syncScheduleList!=null && mGp.syncScheduleList.size()>0) {
                 menu.findItem(R.id.menu_top_scheduler).setVisible(true);
                 menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
                 for(ScheduleItem si:mGp.syncScheduleList) {
@@ -1917,15 +1892,15 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void processHomeButtonPress() {
-        if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK)) {
+        if (mCurrentTab.equals(mTabNameTask)) {
             if (mGp.syncTaskAdapter.isShowCheckBox()) {
                 mGp.syncTaskAdapter.setShowCheckBox(false);
                 mGp.syncTaskAdapter.notifyDataSetChanged();
 
                 setSyncTaskContextButtonNormalMode();
             }
-        } else if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_MESSAGE)) {
-        } else if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_HIST)) {
+        } else if (mCurrentTab.equals(mTabNameMessage)) {
+        } else if (mCurrentTab.equals(mTabNameHistory)) {
             if (mGp.syncHistoryAdapter.isShowCheckBox()) {
                 mGp.syncHistoryAdapter.setShowCheckBox(false);
                 mGp.syncHistoryAdapter.notifyDataSetChanged();
@@ -2028,81 +2003,84 @@ public class ActivityMain extends AppCompatActivity {
         title.setText(getString(R.string.msgs_dlg_title_about) + " (Ver " + SystemInfo.getApplVersionName(mContext) + ")");
 
         // get our tabHost from the xml
-        final TabHost tab_host = (TabHost) dialog.findViewById(R.id.about_tab_host);
-        tab_host.setup();
+        final CustomTabLayout tab_layout = (CustomTabLayout) dialog.findViewById(R.id.tab_layout);
+        tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_func_btn));
+        tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_privacy_btn));
+        tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_change_btn));
 
-        final TabWidget tab_widget = (TabWidget) dialog.findViewById(android.R.id.tabs);
-
-        tab_widget.setStripEnabled(false);
-        tab_widget.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
-
-        CustomTabContentView tabViewProf = new CustomTabContentView(mContext, getString(R.string.msgs_about_dlg_func_btn));
-        tab_host.addTab(tab_host.newTabSpec("func").setIndicator(tabViewProf).setContent(android.R.id.tabcontent));
-
-        CustomTabContentView tabViewPrivacy = new CustomTabContentView(mContext, getString(R.string.msgs_about_dlg_privacy_btn));
-        tab_host.addTab(tab_host.newTabSpec("privacy").setIndicator(tabViewPrivacy).setContent(android.R.id.tabcontent));
-
-        CustomTabContentView tabViewHist = new CustomTabContentView(mContext, getString(R.string.msgs_about_dlg_change_btn));
-        tab_host.addTab(tab_host.newTabSpec("change").setIndicator(tabViewHist).setContent(android.R.id.tabcontent));
+        tab_layout.adjustTabWidth();
 
         LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout ll_func = (LinearLayout) vi.inflate(R.layout.about_dialog_func, null);
-        LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
-        LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
 
+//        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
         int zf=120;
 
+        LinearLayout ll_func = (LinearLayout) vi.inflate(R.layout.about_dialog_func, null);
         final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function);
         func_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_func_desc));
         func_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 //        func_view.getSettings().setBuiltInZoomControls(true);
+//        func_view.getSettings().setDisplayZoomControls(true);
+//        func_view.getSettings().setSupportZoom(true);
+//        func_view.getSettings().setBuiltInZoomControls(true);
         func_view.getSettings().setTextZoom(zf);
 
-
+        LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
         final WebView privacy_view = (WebView) ll_privacy.findViewById(R.id.about_dialog_privacy);
         privacy_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
         privacy_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        func_view.getSettings().setBuiltInZoomControls(true);
-        privacy_view.getSettings().setTextZoom(zf);
+//        privacy_view.getSettings().setBuiltInZoomControls(true);
+        func_view.getSettings().setTextZoom(zf);
 
-        final WebView change_view =
-                (WebView) ll_change.findViewById(R.id.about_dialog_change_history);
+        LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
+        final WebView change_view = (WebView) ll_change.findViewById(R.id.about_dialog_change_history);
         change_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_change_desc));
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        change_view.getSettings().setTextZoom(zf);
 //        change_view.getSettings().setBuiltInZoomControls(true);
+        func_view.getSettings().setTextZoom(zf);
 
-        final CustomViewPagerAdapter mAboutViewPagerAdapter = new CustomViewPagerAdapter(mActivity,
+        final CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity,
                 new WebView[]{func_view, privacy_view, change_view});
-        final CustomViewPager mAboutViewPager = (CustomViewPager) dialog.findViewById(R.id.about_view_pager);
+        final CustomViewPager viewPager = (CustomViewPager) dialog.findViewById(R.id.about_view_pager);
 //	    mMainViewPager.setBackgroundColor(mThemeColorList.window_color_background);
-        mAboutViewPager.setOffscreenPageLimit(3);
-        mAboutViewPager.setAdapter(mAboutViewPagerAdapter);
-        mAboutViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
+//        viewPager.setSwipeEnabled(false);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
-//		    	mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
-                tab_widget.setCurrentTab(position);
-                tab_host.setCurrentTab(position);
+//                mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
+                tab_layout.getTabAt(position).select();
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-//		    	mUtil.addDebugMsg(2,"I","onPageScrollStateChanged entered, state="+state);
+//                mUtil.addDebugMsg(2,"I","onPageScrollStateChanged entered, state="+state);
             }
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//		    	mUtil.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
+//		    	util.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
             }
         });
 
-        tab_host.setOnTabChangedListener(new OnTabChangeListener() {
+        tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
-            public void onTabChanged(String tabId) {
-                mUtil.addDebugMsg(2, "I", "onTabchanged entered. tab=" + tabId);
-                mAboutViewPager.setCurrentItem(tab_host.getCurrentTab());
+            public void onTabSelected(TabLayout.Tab tab) {
+//                mUtil.addDebugMsg(2,"I","onTabSelected entered, state="+tab);
+                viewPager.setCurrentItem(tab.getPosition());
             }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+//                mUtil.addDebugMsg(2,"I","onTabUnselected entered, state="+tab);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+//                mUtil.addDebugMsg(2,"I","onTabReselected entered, state="+tab);
+            }
+
         });
 
         final Button btnOk = (Button) dialog.findViewById(R.id.about_dialog_btn_ok);
@@ -2127,22 +2105,22 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void terminateApplication() {
-        if (mMainTabHost.getCurrentTabTag().equals(SMBSYNC2_TAB_NAME_TASK)) {//
+        if (mMainTabLayout.getSelectedTabName().equals(mTabNameTask)) {//
             if (mGp.syncTaskAdapter.isShowCheckBox()) {
                 mGp.syncTaskAdapter.setShowCheckBox(false);
                 mGp.syncTaskAdapter.notifyDataSetChanged();
                 setSyncTaskContextButtonNormalMode();
                 return;
             }
-        } else if (mMainTabHost.getCurrentTabTag().equals(SMBSYNC2_TAB_NAME_SCHEDULE)) {
+        } else if (mMainTabLayout.getSelectedTabName().equals(mTabNameSchedule)) {
             if (mGp.syncScheduleAdapter.isSelectMode()) {
                 mGp.syncScheduleAdapter.setSelectMode(false);
                 mGp.syncScheduleAdapter.notifyDataSetChanged();
                 setScheduleContextButtonNormalMode();
                 return;
             }
-        } else if (mMainTabHost.getCurrentTabTag().equals(SMBSYNC2_TAB_NAME_MESSAGE)) {
-        } else if (mMainTabHost.getCurrentTabTag().equals(SMBSYNC2_TAB_NAME_HIST)) {
+        } else if (mMainTabLayout.getSelectedTabName().equals(mTabNameMessage)) {
+        } else if (mMainTabLayout.getSelectedTabName().equals(mTabNameHistory)) {
             if (mGp.syncHistoryAdapter.isShowCheckBox()) {
                 mGp.syncHistoryAdapter.setShowCheckBox(false);
                 mGp.syncHistoryAdapter.notifyDataSetChanged();

@@ -1,47 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"  
     android:layout_width="match_parent"  
     android:layout_height="match_parent"  
-    android:orientation="vertical" >  
+    android:orientation="vertical" >
 
-	<TabHost 
-	    android:id="@android:id/tabhost"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:visibility="visible"
-	    tools:ignore="HardcodedText,UselessParent" >
-	
-	    <LinearLayout
-	        android:id="@+id/main_screen_view"
-	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
-			android:orientation="vertical" >
-	
-	        <TabWidget
-	            android:id="@android:id/tabs"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            />
-	        
-			<include layout="@layout/main_dialog" />
-				        
-	        <FrameLayout
-	            android:id="@android:id/tabcontent"
-	            android:layout_width="0dp"
-	            android:layout_height="0dp" >
-	        </FrameLayout>
+    <LinearLayout
+        android:id="@+id/main_screen_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-	        <com.sentaroh.android.Utilities.Widget.CustomViewPager
-	            android:id="@+id/main_screen_pager"
-	            android:layout_width="fill_parent"
-	            android:layout_height="0dp"
-	            android:layout_weight="1"/>
-	        
-			<include layout="@layout/main_schedule_info" />
-	        	        	        	
-	    </LinearLayout>
-	    
-	    
-	</TabHost>
-</LinearLayout>    
+        <com.sentaroh.android.SMBSync2.CustomTabLayout
+            android:id="@+id/main_tab_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="#0088CC"
+            app:tabIndicatorHeight="5dp"
+            app:tabBackground="@drawable/tab_bg_selector"
+            app:tabTextColor="@color/tab_textcolor_selector"
+            app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="scrollable" />
+
+        <include layout="@layout/main_dialog" />
+
+        <com.sentaroh.android.Utilities.Widget.CustomViewPager
+            android:id="@+id/main_screen_pager"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <include layout="@layout/main_schedule_info" />
+
+    </LinearLayout>
+</LinearLayout>
