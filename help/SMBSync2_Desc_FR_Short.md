@@ -50,5 +50,5 @@ https://drive.google.com/file/d/1QPz_VN8Hur0cfvzF35SP-dt9_QTkv-ZA/view?usp=shari
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor) 
 
 ## 4.Documents
-Lien vers Google:
+Veuillez vous référer au lien PDF ci-dessous.
 https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing

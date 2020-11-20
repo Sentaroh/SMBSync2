@@ -43,6 +43,6 @@ https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=shari
 - [Xmpcore-5.1.3](https://www.adobe.com/devnet/xmp.html)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 ## 4.Documents
-Link to Google :
+Please refer to the PDF link below.
 https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing
 

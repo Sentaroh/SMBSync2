@@ -20,6 +20,7 @@ SMBSync2のスケジュール機能または外部アプリケーション（Tas
 ## 2.FAQ  
 下記リンクのPDFを参照ください。
 https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing 
+
 ## 3.使用ライブラリー
 - [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-1.3.17](https://jcifs.samba.org/)
@@ -27,5 +28,5 @@ https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=shari
 - [Xmpcore-5.1.3](https://www.adobe.com/devnet/xmp.html)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 ## 4.詳細情報
-Googleドライブへのリンク:
+下記リンクのPDFを参照ください。
 https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing

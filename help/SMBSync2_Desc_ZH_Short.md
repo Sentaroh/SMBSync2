@@ -33,4 +33,5 @@ https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=shari
 - [Xmpcore-5.1.3](https://www.adobe.com/devnet/xmp.html)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 ## 4.详细信息
+请参考下面的PDF链接。
 https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing

@@ -24,6 +24,7 @@ SMBSync2 - это инструмент для синхронизации фай�
 2. Размер файла отличается.
 3. Дата последнего обновления файла отличается более чем на 3 секунды (количество секунд может быть изменено с помощью опции задачи синхронизации)
 ## 2. Часто задаваемые вопросы
+См. ссылку в формате PDF ниже.
 https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing
 ## 3. Внешняя библиотека
 - [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
@@ -32,4 +33,5 @@ https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=shari
 - [Xmpcore-5.1.3](https://www.adobe.com/devnet/xmp.html)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 ## 4. Больше информации
+См. ссылку в формате PDF ниже.
 https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing
