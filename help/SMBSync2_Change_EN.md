@@ -1,6 +1,7 @@
-#### 2020-11-xx Ver2.43
+#### 2020-11-21 Ver2.43
 - added support for SMB timeout value in SMBv2/3
 - Corrected the Italian translation
+- Scrolling Tab enabled
 #### 2020-11-13 Ver2.42
 - Update task help file
 #### 2020-11-12 Ver2.41
