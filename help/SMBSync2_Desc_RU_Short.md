@@ -29,7 +29,7 @@ https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=shari
 ## 3. Внешняя библиотека
 - [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-1.3.17](https://jcifs.samba.org/)
-- [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.3)
+- [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
 - [Xmpcore-5.1.3](https://www.adobe.com/devnet/xmp.html)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 ## 4. Больше информации

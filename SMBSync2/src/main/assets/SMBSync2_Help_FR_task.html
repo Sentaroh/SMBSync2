@@ -10,7 +10,7 @@
 <h3>Nom de la tâche de synchronisation</h3>
 <p>Indiquez un nom pour la tâche. Le nom de la tâche de synchronisation n&#39;est pas sensible à la casse. </p>
 <h3>Mode de sync</h3>
-<p>Les modes de synchronisation actuellement pris en charge sont Mirror, Copy, Move ou Archive. </p>
+<p>Les modes de synchronisation actuellement pris en charge sont Mirror, Copy, Move ou Archive. <span style="color: red; "><u>La synchronisation se fait dans une direction de la cible à partir du maître.</u></span></p>
 <ul>
 <li><p>Miroir</p>
 <p>Le dossier cible est conservé comme une copie exacte du dossier principal. Si un fichier est différent entre le dossier principal et le dossier cible, le fichier principal écrase le fichier cible. Les dossiers et fichiers non présents sur la cible sont copiés à partir du master. Les fichiers et dossiers qui n&#39;existent pas sur le master sont également supprimés de la cible. Seuls les fichiers modifiés (par la taille et/ou la date/heure) sont mis à jour dans la cible.</p>
@@ -93,7 +93,6 @@
 <p>La synchronisation sera autorisée chaque fois que le Wifi est connecté à n&#39;importe quel réseau, même sur des plages IP publiques (comme dans un Wifi public). </p>
 <h3>Options avancées</h3>
 <p><strong>Veuillez l&#39;utiliser lorsque vous définissez des options détaillées.</strong></p>
-<p> </p>
 <h3>Inclure les sous-dossiers</h3>
 <p>It will recursively include subdirectories under the specified master folder. </p>
 <h3>Inclure les dossiers vides</h3>
@@ -107,7 +106,7 @@
 <h3>Utiliser le filtre amélioré de sélection de dossiers</h3>
 <p>If the upper directory is excluded by a filter while one of its sub-directories is selected/included, the sub-directories of the selected folder will be synchronized.</p>
 <h3>Utiliser la version 2 des filtres</h3>
-<p>Après l&#39;avoir activé, vous pouvez utiliser le nouveau filtre. <strong>Il se peut qu&#39;il se comporte différemment de l&#39;ancien filtre, c&#39;est pourquoi nous vous invitons à le tester minutieusement avant de l&#39;utiliser.</strong> </p>
+<p>Après l&#39;avoir activé, vous pouvez utiliser le nouveau filtre. <span style="color: red; "><u>Il se peut qu&#39;il se comporte différemment de l&#39;ancien filtre, c&#39;est pourquoi nous vous invitons à le tester minutieusement avant de l&#39;utiliser.</u></span></p>
 <h3>Supprimer les fichiers avant la sync(mode Miroir uniquement)</h3>
 <p>On server-side connection errors, SMBSync2 will try again the synchronization for a maximum of 3 times at a 30 seconds interval. </p>
 <h3>Supprimer les répertoires et les fichiers exclus par les filtres</h3>

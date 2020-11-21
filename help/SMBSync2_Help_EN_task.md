@@ -11,7 +11,7 @@ Specify a name for the task. Sync task name is not case-sensitive.
 
 ### Sync type
 
-Currently supported sync modes are Mirror, Copy, Move or Archive
+Currently supported sync modes are Mirror, Copy, Move or Archive. <span style="color: red; "><u>Synchronization is done in one direction of the target from the master.</u></span>
 
 - Mirror
 
@@ -157,7 +157,7 @@ If the upper directory is excluded by a filter while one of its sub-directories 
 
 ### Use new filter version 2
 
-After enabling it, you can use the new filter. **It may behave differently from the old filter, so please test it thoroughly before using it.** 
+After enabling it, you can use the new filter. <span style="color: red; "><u>It may behave differently from the old filter, so please test it thoroughly before using it.</u></span> 
 
 ### Remove directories and files excluded by the filters
 

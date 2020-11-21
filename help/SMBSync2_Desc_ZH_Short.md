@@ -29,7 +29,7 @@ https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=shari
 - [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-1.3.17](https://jcifs.samba.org/)
-- [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.3)
+- [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
 - [Xmpcore-5.1.3](https://www.adobe.com/devnet/xmp.html)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 ## 4.详细信息

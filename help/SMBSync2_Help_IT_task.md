@@ -12,7 +12,7 @@ Specificare un nome per l'attività. Il nome dell'attività di sincronizzazione 
 
 ### tipo di sync
 
-Le modalità di sincronizzazione attualmente supportate sono Specchio, Copia, Spostamento o Archivio
+Le modalità di sincronizzazione attualmente supportate sono Specchio, Copia, Spostamento o Archivio. <span style="color: red; "><u>La sincronizzazione avviene in una direzione del bersaglio dal master.</u></span>
 
 - Mirror
 
@@ -154,7 +154,7 @@ Se la directory superiore viene esclusa da un filtro mentre una delle sue sottoc
 
 ### Usa la  nuova versione 2 del filtro
 
-After enabling it, you can use the new filter. **It may behave differently from the old filter, so please test it thoroughly before using it.** 
+After enabling it, you can use the new filter. <span style="color: red; "><u>It may behave differently from the old filter, so please test it thoroughly before using it.</u></span> 
 
 ### Rimuovi cartelle e file esclusi dai filtri
 

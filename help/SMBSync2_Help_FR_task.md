@@ -12,7 +12,7 @@ Indiquez un nom pour la tâche. Le nom de la tâche de synchronisation n'est pas
 
 ### Mode de sync
 
-Les modes de synchronisation actuellement pris en charge sont Mirror, Copy, Move ou Archive. 
+Les modes de synchronisation actuellement pris en charge sont Mirror, Copy, Move ou Archive. <span style="color: red; "><u>La synchronisation se fait dans une direction de la cible à partir du maître.</u></span>
 
 - Miroir
 
@@ -134,8 +134,6 @@ La synchronisation sera autorisée chaque fois que le Wifi est connecté à n'im
 
 **Veuillez l'utiliser lorsque vous définissez des options détaillées.**
 
- 
-
 ### Inclure les sous-dossiers
 
 It will recursively include subdirectories under the specified master folder. 
@@ -162,7 +160,7 @@ If the upper directory is excluded by a filter while one of its sub-directories 
 
 ### Utiliser la version 2 des filtres
 
-Après l'avoir activé, vous pouvez utiliser le nouveau filtre. **Il se peut qu'il se comporte différemment de l'ancien filtre, c'est pourquoi nous vous invitons à le tester minutieusement avant de l'utiliser.** 
+Après l'avoir activé, vous pouvez utiliser le nouveau filtre. <span style="color: red; "><u>Il se peut qu'il se comporte différemment de l'ancien filtre, c'est pourquoi nous vous invitons à le tester minutieusement avant de l'utiliser.</u></span>
 
 ### Supprimer les fichiers avant la sync(mode Miroir uniquement)
 

@@ -10,7 +10,7 @@
 <h3>Sync task name</h3>
 <p>Specify a name for the task. Sync task name is not case-sensitive. </p>
 <h3>Sync type</h3>
-<p>Currently supported sync modes are Mirror, Copy, Move or Archive</p>
+<p>Currently supported sync modes are Mirror, Copy, Move or Archive. <span style="color: red; "><u>Synchronization is done in one direction of the target from the master.</u></span></p>
 <ul>
 <li><p>Mirror</p>
 <p>The target folder is kept as an exact copy of the master. If a file is different between the master and the target, the file on the master overwrites the file on the target. Folder and files not present on the target are copied from the master. Files and folders that do not exist on the master are also deleted from the target. Only modified files (by size and/or date/time) are updated on the target.</p>
@@ -51,10 +51,10 @@
 <p>When checked, sync will include files with the following extensions:<br/>aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav</p>
 </li>
 <li><p>Sync image files</p>
-<p>When checked, sync will include files with the following extensions:<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff,</p>
+<p>When checked, sync will include files with the following extensions:<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</p>
 </li>
 <li><p>Sync video files</p>
-<p>When checked, sync will include files with the following extensions:<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv </p>
+<p>When checked, sync will include files with the following extensions:<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv</p>
 </li>
 <li><p>File filter</p>
 <p>Is a custom include/exclude file filter. You can select the name and extension of the files you want to exclude or include from the synchronization process. </p>
@@ -110,7 +110,7 @@
 <h3>Use enhanced directory selection filter</h3>
 <p>If the upper directory is excluded by a filter while one of its sub-directories is selected/included, the sub-directories of the selected folder will be synchronized. </p>
 <h3>Use new filter version 2</h3>
-<p>After enabling it, you can use the new filter. <strong>It may behave differently from the old filter, so please test it thoroughly before using it.</strong> </p>
+<p>After enabling it, you can use the new filter. <span style="color: red; "><u>It may behave differently from the old filter, so please test it thoroughly before using it.</u></span> </p>
 <h3>Remove directories and files excluded by the filters</h3>
 <p>If enabled, <strong>it removes directories/files that are excluded from the filter.</strong> </p>
 <h3>Retry on network error (only for SMB shares)</h3>
