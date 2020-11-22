@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>SMBSync2_Privacy_FR</title></head>
+<body><h2>1. Données enregistrées par l&#39;application</h2>
+<p>Aucune donnée ne sera envoyée en dehors de l&#39;application si l&#39;utilisateur ne l&#39;utilise pas.</p>
+<h3>1.1. Liste des tâches de synchronisation</h3>
+<p>L&#39;application enregistre les données nécessaires pour effectuer la synchronisation.</p>
+<ul>
+<li>Nom de répertoire, nom de fichier, nom d&#39;hôte du serveur SMB, adresse IP, numéro de port, nom de compte, mot de passe (<strong>*1</strong>)</li>
+<li>Mot de passe de l&#39;application (<strong>*1</strong>) pour protéger le lancement de l&#39;application et la modification des paramètres</li>
+<li>Paramètres de l&#39;application</li>
+
+</ul>
+<p><strong>*1</strong> Le mot de passe est crypté avec un mot de passe généré par le système et stocké dans le Keystore d&#39;Android.</p>
+<h3>1.2. Fiche d&#39;activité de l&#39;application</h3>
+<p>L&#39;application doit enregistrer les données suivantes pour vérifier les résultats de la synchronisation et pour le dépannage.</p>
+<ul>
+<li>Version Android, fabricant du terminal, nom du terminal, modèle du terminal, version de l&#39;application</li>
+<li>Nom du répertoire, nom du fichier, taille du fichier, date de la dernière modification du fichier</li>
+<li>Nom d&#39;hôte du serveur SMB, adresse IP, numéro de port, nom de compte</li>
+<li>Nom de l&#39;interface réseau, adresse IP</li>
+<li>Paramètres du système</li>
+<li>Paramètres de l&#39;application</li>
+
+</ul>
+<h3>1.3. Paramètres exportés et liste des tâches de synchronisation</h3>
+<p>L&#39;application peut exporter &quot;1.1 Liste des tâches de synchronisation&quot; vers un fichier. Vous pouvez protéger le fichier par un mot de passe avant de l&#39;exporter.</p>
+<ul>
+<li>Nom du répertoire, nom du fichier</li>
+<li>Nom d&#39;hôte du serveur SMB, adresse IP, numéro de port, nom de compte, mot de passe</li>
+<li>Paramètres de l&#39;application</li>
+
+</ul>
+<h3>1.4. Envoyer des données enregistrées à partir de l&#39;application</h3>
+<p>Les données enregistrées par l&#39;application peuvent être envoyées en suivant ces étapes :</p>
+<ul>
+<li>Appuyez sur le bouton &quot;Partager&quot; de l&#39;onglet &quot;Historique</li>
+<li>Appuyez sur le bouton &quot;Envoyer au développeur&quot; à partir des &quot;Infos système&quot;.</li>
+<li>Appuyez sur le bouton &quot;Partager&quot; ou &quot;Envoyer au développeur&quot; à partir de &quot;Gérer les fichiers journaux&quot;.</li>
+
+</ul>
+<h2>2. Autorisations</h2>
+<p>L&#39;application utilise les autorisations suivantes.</p>
+<h3>2.1 Photos/Médias/Fichiers</h3>
+<p><strong>-read the contents of your USB storage</strong><br/><strong>-modify or delete the contents of your USB storage</strong></p>
+<p>Nécessaire pour la synchronisation des fichiers avec le stockage interne/externe/USB et pour les opérations de lecture/écriture sur les fichiers de données d&#39;application.</p>
+<h3>2.2 Stockage</h3>
+<p><strong>-read the contents of your USB storage</strong><br/><strong>-modify or delete the contents of your USB storage</strong></p>
+<p>Nécessaire pour la synchronisation des fichiers avec le stockage interne/externe/USB et pour les opérations de lecture/écriture sur les fichiers de données d&#39;application.</p>
+<h3>2.3 Informations relatives à la connexion Wi-Fi</h3>
+<p><strong>view Wi-Fi connections</strong></p>
+<p>Il est nécessaire de vérifier le statut du Wi-Fi (on/off) au début de la synchronisation.</p>
+<h3>2.4 Autres</h3>
+<h3>2.4.1 view network connections</h3>
+<p>Nécessaire pour confirmer que l&#39;appareil est connecté au réseau au début de la synchronisation.</p>
+<h3>2.4.2 connect and disconnect from Wi-Fi</h3>
+<p>Il est nécessaire d&#39;activer / désactiver le Wi-Fi avant et après une synchronisation programmée.</p>
+<h3>2.4.3 full network access</h3>
+<p>Nécessaire pour effectuer la synchronisation du réseau en utilisant le protocole SMB.</p>
+<h3>2.4.4 run at startup</h3>
+<p>Nécessaire pour effectuer une synchronisation programmée.</p>
+<h3>2.4.5 control vibration</h3>
+<p>Obligation de notifier l&#39;utilisateur par vibration à la fin de la synchronisation.</p>
+<h3>2.4.6 prevent device from sleeping</h3>
+<p>Nécessaire pour lancer la synchronisation à partir d&#39;une application programmée ou externe.</p>
+<h3>2.4.7 install shortcuts</h3>
+<p>Nécessaire pour ajouter un raccourci de tâche de synchronisation sur l&#39;écran d&#39;accueil.</p>
+<p> </p>
+</body>
+</html>

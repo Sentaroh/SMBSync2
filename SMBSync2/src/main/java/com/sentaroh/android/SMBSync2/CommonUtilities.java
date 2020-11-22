@@ -2,7 +2,7 @@ package com.sentaroh.android.SMBSync2;
 
 /*
 The MIT License (MIT)
-Copyright (c) 2011-2018 Sentaroh
+Copyright (c) 2011 Sentaroh
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal 
@@ -223,30 +223,18 @@ public final class CommonUtilities {
 
     final public static String getWifiSsidName(WifiManager wm) {
         String wssid = "";
-        if (wm.isWifiEnabled()) {
-            String tssid = wm.getConnectionInfo().getSSID();
-            if (tssid == null || tssid.equals("<unknown ssid>")) wssid = "";
-            else wssid = tssid.replaceAll("\"", "");
-            if (wssid.equals("0x")) wssid = "";
-        }
+//        if (wm.isWifiEnabled()) {
+//            String tssid = wm.getConnectionInfo().getSSID();
+//            if (tssid == null || tssid.equals("<unknown ssid>")) wssid = "";
+//            else wssid = tssid.replaceAll("\"", "");
+//            if (wssid.equals("0x")) wssid = "";
+//        }
         return wssid;
     }
 
     static public ArrayList<String> listSystemInfo(Context c, GlobalParameters gp) {
 
         ArrayList<String> out= SystemInfo.listSystemInfo(c, gp.safMgr);
-
-        if (Build.VERSION.SDK_INT>=27) {
-            out.add("setSettingGrantLocationRequired="+gp.settingGrantLocationRequired);
-            if (Build.VERSION.SDK_INT==27 || Build.VERSION.SDK_INT==28) {
-                out.add("ACCESS_COARSE_LOCATION Permission="+(c.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED));
-            } else if (Build.VERSION.SDK_INT>=29) {
-                out.add("ACCESS_FINE_LOCATION Permission="+(c.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED));
-                boolean backgroundLocationPermissionApproved = c.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)== PackageManager.PERMISSION_GRANTED;
-                out.add("ACCESS_BACKGROUND_LOCATION="+backgroundLocationPermissionApproved);
-            }
-            out.add("LocationService enabled="+isLocationServiceEnabled(c, gp)+", warning="+gp.settingSupressLocationServiceWarning);
-        }
 
         if (Build.VERSION.SDK_INT >= 28) {
             UsageStatsManager usageStatsManager = (UsageStatsManager) c.getSystemService(USAGE_STATS_SERVICE);
@@ -260,9 +248,7 @@ public final class CommonUtilities {
 
             WifiManager wm=(WifiManager)c.getSystemService(Context.WIFI_SERVICE);
             try {
-                String ssid="";
-                if (wm.isWifiEnabled() && wm.getConnectionInfo()!=null) ssid=wm.getConnectionInfo().getSSID();
-                out.add("   WiFi="+wm.isWifiEnabled()+", SSID="+ssid);
+                out.add("   WiFi Enabled="+wm.isWifiEnabled());
             } catch(Exception e) {
                 out.add("   WiFi status obtain error, error="+e.getMessage());
             }
@@ -298,13 +284,12 @@ public final class CommonUtilities {
         out.add("  Write sync result log="+gp.settingWriteSyncResultLog);
         out.add("  No compress file type="+gp.settingNoCompressFileType);
         out.add("  Prevent sync start delay="+gp.settingPreventSyncStartDelay);
-        out.add("  Suppress Location service warning="+gp.settingSupressLocationServiceWarning);
         out.add("  Management file directory="+gp.settingMgtFileDir);
 
         out.add("");
         out.add("  Debug level="+gp.settingDebugLevel);
         out.add("  Log option="+gp.settingLogOption);
-        out.add("  Logcat option="+gp.settingPutLogcatOption);
+//        out.add("  Logcat option="+gp.settingPutLogcatOption);
         out.add("  Log max file count="+gp.settingLogMaxFileCount);
 
         out.add("");
@@ -594,14 +579,14 @@ public final class CommonUtilities {
         String ret = "";
         WifiManager mWifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         String ssid = "";
-        if (mWifi.isWifiEnabled()) {
-            ssid = mWifi.getConnectionInfo().getSSID();
-            if (ssid != null &&
-                    !ssid.equals("0x") &&
-                    !ssid.equals("<unknown ssid>") &&
-                    !ssid.equals("")) ret = ssid;
-//			Log.v("","ssid="+ssid);
-        }
+//        if (mWifi.isWifiEnabled()) {
+//            ssid = mWifi.getConnectionInfo().getSSID();
+//            if (ssid != null &&
+//                    !ssid.equals("0x") &&
+//                    !ssid.equals("<unknown ssid>") &&
+//                    !ssid.equals("")) ret = ssid;
+////			Log.v("","ssid="+ssid);
+//        }
         addDebugMsg(2, "I", "getConnectedWifiSsid WifiEnabled=" + mWifi.isWifiEnabled() +", SSID=" + ssid + ", result=" + ret);
         return ret;
     }

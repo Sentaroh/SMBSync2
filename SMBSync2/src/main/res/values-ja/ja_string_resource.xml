@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_change_btn">更新履歴</string>
         <string name="msgs_about_dlg_privacy_btn">プライバシー</string>
         <string name="msgs_dlg_title_about">SMBSync2について</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_JA_Short.htm</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_JA.htm</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_JA.htm</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_JA_Short.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_JA.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_JA.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">取り込むタスク項目の選択</string>
         <string name="msgs_export_import_profile_listing">一覧</string>
@@ -44,19 +44,19 @@
         <string name="msgs_export_import_pswd_hint_confirm">パスワードの確認</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">パスワードと確認パスワードが一致していません</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync2_Help_JA_task.htm</string>
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_JA_task.html</string>
         <string name="msgs_help_sync_task_title">同期タスクのヘルプ</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_JA_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_JA_folder_internal.html</string>
         <string name="msgs_help_sync_folder_internal_title">内部ストレージのヘルプ</string>
-        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_JA_folder_sdcard.htm</string>
+        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_JA_folder_sdcard.html</string>
         <string name="msgs_help_sync_folder_sdcard_title">SDCARDのヘルプ</string>
-        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_JA_folder_usb.htm</string>
+        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_JA_folder_usb.html</string>
         <string name="msgs_help_sync_folder_usb_title">USBメディアのヘルプ</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_JA_folder_smb.htm</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_JA_folder_smb.html</string>
         <string name="msgs_help_sync_folder_smb_title">SMBのヘルプ</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_JA_folder_zip.htm</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_JA_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">ZIPのヘルプ</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_JA_task_picture.htm</string>
+        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_JA_task_picture.html</string>
         <string name="msgs_help_sync_task_picture_title">写真アーカイブのヘルプ</string>
     <!-- Log management -->
         <string name="msgs_log_management_title">ログファイル管理</string>
@@ -141,16 +141,11 @@
         <string name="msgs_main_app_specific_dir_used_msg">アプリケーション固有ディレクトリがファイルの保存先に使用されています。このディレクトリはアプリケーションがアンインストールされると削除され、保存しているデータも削除されます。ご注意ください。</string>
         <string name="msgs_main_app_specific_dir_used_suppress">この警告を次回以降表示しない （アプリ設定のユーザーインターフェース設定で再表示できます）</string>
         <string name="msgs_main_app_specific_dir_used_title">アプリケーション固有ディレクトリ使用についての警告</string>
-        <string name="msgs_main_location_service_warning_msg_location">Android 8.1から下記のタスクは位置情報サービスが無効のため、同期はエラーで終了します。 システム設定でロケーションサービスを有効にするか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
-        <string name="msgs_main_location_service_warning_msg_coarse">Android 8.1から下記のタスクは「ロケーション許可」が与えられていないため、同期はエラーで終了します。 メニューから許可を与えるか同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更してください。</string>
-        <string name="msgs_main_location_service_warning_msg_both">Android 8.1から下記のタスクは位置情報サービスとロケーションが無効なため同期はエラーで終了します。 以下の何れかの対応を行ってください。\n1.システム設定でロケーションサービスを有効にし、その後にアプリメニューから「ロケーション許可」与える。\n2.同期オプションで「APに接続されている時」、「プライベートアドレス」または「IPアドレスリスト」に変更する。</string>
-        <string name="msgs_main_location_error_location_service_is_disabled">ロケーションサービスが有効になっていないためWiFi AP名を取得できません。設定からロケーションを有効にしてください。</string>
-        <string name="msgs_main_location_error_location_permission_not_granted">ロケーションが許可されていないためWiFi AP名を取得できません。メニューからロケーションを許可してください。</string>
-        <string name="msgs_main_location_error_background_location_permission_not_granted">ロケーション許可が「アプリの使用中のみ許可」になっているためWiFi AP名を取得できません。メニューからロケーション許可を「常に許可」に変更してください。</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">アクセスポイントリストは使用できません</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">アクセスポイントリストは使用できません</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">GooglePlayプライバシーポリシーに準拠するためアクセスポイントリストは使用できなくなりました、このためワイヤレスAPオプションを「プライベートアドレス」に変更しました。</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">GooglePlayプライバシーポリシーに準拠するため、アクセスポイントリストは使用できなくなりました。同期タスクを編集して「プライベートアドレスリスト」等に変更してください。</string>
         <string name="msgs_main_location_service_warning_suppress">この警告を次回以降表示しない （アプリ設定の同期設定で再表示できます）</string>
-        <string name="msgs_main_location_service_warning_title">ロケーションサービスについての警告</string>
-        <string name="msgs_main_location_location_permission_screen_shot">LocationPermission1-JA.jpg</string>
-        <string name="msgs_main_location_background_location_permission_screen_shot">LocationPermission2-JA.jpg</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">SDCARDへの書込み許可を行うアクティビティを起動できませんでした。</string>
         <string name="msgs_main_external_sdcard_select_required_cancel_msg">SDCARDへの書込が許可されるまで同期は実行できません。 タスク=%s</string>
@@ -173,15 +168,6 @@
         <string name="msgs_main_external_usb_select_required_title">USBメディアへの書込許可</string>
         <string name="msgs_main_external_usb_select_retry_select_msg">USBメディアのルートディレクトリが選択されませんでした。選択しなおしますか？</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARDが選択されました。USBストレージを選択しなおしますか？</string>
-        <string name="msgs_main_permission_coarse_location_denied_msg">権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。許可を与える場合はメニューから「低精度ロケーション許可」を実行してください。</string>
-        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\nロケーション許可を要求しますか？</string>
-        <string name="msgs_main_permission_coarse_location_request_msg_api29">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。次の画面で「アプリ使用中のみ」を選択してください。</string>
-        <string name="msgs_main_permission_coarse_location_request_msg_api30">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。次の画面で「アプリの使用時のみ」を選択してください。</string>
-        <string name="msgs_main_permission_background_location_title">背景ロケーション許可</string>
-        <string name="msgs_main_permission_background_location_denied_msg">権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。許可を与える場合はメニューから「低精度ロケーション許可」を実行してください。</string>
-        <string name="msgs_main_permission_background_location_request_msg">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\nロケーション許可で「常に許可」を選択してください。</string>
-        <string name="msgs_main_permission_background_location_request_msg_api30">SMBSync2でWiFiのSSIDを読み取るために必要な権限です。\n権限が許可されるまでは同期タスクで「アクセスポイントリスト」を指定している場合はエラーで終了します。\n次の画面で「設定で許可してください」をタップして、「常に許可」を選択してください。</string>
-        <string name="msgs_main_permission_coarse_location_title">ロケーション許可</string>
         <string name="msgs_main_permission_external_storage_denied_msg">内部ストレージにアクセスする許可が与えられていないためアプリケーションを起動できません。</string>
         <string name="msgs_main_permission_external_storage_request_msg">内部ストレージに同期するデータや管理用データの読み書きを行うために、内部ストレージにアクセスする許可を与えてください。</string>
         <string name="msgs_main_permission_external_storage_title">内部ストレージ許可</string>
@@ -402,6 +388,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">削除</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">ディレクトリ一覧</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">除外</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">フィルターにワイルドカードが使用できます。 例:\n192.168.100.* == 192.168.100.0-192.168.100.255\n192.168.* == 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- 選択例: cache/temp;/my*/fo?der\n- 全てのcache/tempディレクトリーを除外: \\cache/temp\n- フィルターは\";\"で区切ることで複数入力できます\n- 除外が優先されます</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-ファイル名が対象です: file1;*.txt;*.jpg;file*\n-フィルターは\";\"で区切ることで複数入力できます\n-除外が優先されます</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">「フィルターにより除外されたディレクトリー/ファイルを削除する」が有効になっているため、ソースディレクトリに存在しないすべてのファイルとディレクトリー、およびフィルタにより除外されたファイルとディレクトリーは宛先ディレクトリーから削除されます。</string>
@@ -421,8 +408,8 @@
         <string name="msgs_profile_sync_task_sync_file_type_video">ビデオファイルを同期する</string>
         <string name="msgs_profile_sync_task_sync_option">オプション:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">許容するマスターとターゲットファイルの最終更新時刻の差(秒)</string>
-        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">指定されたアクセスポイントまたはIPアドレスで無い場合タスクをスキップし、次のタスクを開始する。</string>
-        <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">グローバルIPアドレスでの同期を許可する</string>
+        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">指定されたIPアドレスで無い場合タスクをスキップし、次のタスクを開始する。</string>
+        <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">全てのIPアドレスで同期を許可する</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">ファイルの上書または削除の前に確認する</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">フィルターにより除外されたディレクトリー/ファイルを削除する</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">警告: ソースディレクトリに存在しないすべてのファイルとディレクトリー、およびフィルタにより除外されたファイルとディレクトリーは宛先ディレクトリーから削除されます。\nテストモードまたはテストディレクトリー作成してテストして、意図しないファイルやディレクトリーを削除しないことを確認する事を強くお勧めします。</string>
@@ -707,7 +694,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">同期タスクが指定されていません</string>
         <string name="msgs_scheduler_info_sync_task_in_error">次の同期タスクにはエラーが含まれています: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">少なくても一つの曜日を選択してください</string>
-        <string name="msgs_schedule_list_edit_dlg_title">スケジュールリストの編集</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">スケジュール名が指定されていません。</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">スケジュール名に無効な文字が含まれています: \"%s\"</string>
@@ -749,15 +735,6 @@
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">スケジュールを有効にする</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">スケジュールを無効にする</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">複数スケジュールが同時刻に起動される場合は同期リストをまとめ、重複した同期タスクを無視します。またWI-FIオプションも各スケジュールで指定したオプションを組み合わせします。</string>
-    <!-- Send logcat -->
-        <string name="msgs_send_logcat_menu_start_logcat">LogCatの開始</string>
-        <string name="msgs_send_logcat_menu_stop_logcat">LogCatの停止</string>
-        <string name="msgs_send_logcat_menu_send_logcat">LogCatの送信</string>
-        <string name="msgs_send_logcat_btn_send">送信</string>
-        <string name="msgs_send_logcat_btn_preview_logcat">LogCatの表示</string>
-        <string name="msgs_send_logcat_btn_preview_applog">AppLogの表示</string>
-        <string name="msgs_send_logcat_title">LogCatとAppLogの送信</string>
-        <string name="msgs_send_logcat_message">LogCatとAppLogを開発者にE-Mailで送信します\n１．LogCat表示ボタンとAppLog表示ボタンを押し内容を確認してください（テキストファイルを表示するためのアプリケーション選択の画面が表示されたら、アプリケーションを選択してください）\n２．送信する内容を確認したら、送信ボタンを押しE-Mail選択ダイアログでE-Mailを選択\n３．必要ならばE-Mail本文にメッセージを入力し送信してください。（ログはzipに圧縮し、添付ファイルになっています）</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">同期タスクが無効になっているため、同期タスクを開始できませんでした。</string>
         <string name="msgs_svc_received_start_request_from_scheduler">SMBSync2スケジューラーから同期要求を受け付けました。</string>
@@ -977,10 +954,10 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Response timeout</string>
-        <string name="settings_smb_client_response_timeout_title">Server Connection Timeout</string>
+        <string name="settings_smb_client_response_timeout_title">Server Connection Timeout(SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Disable Plain Text Passwords</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Disable Plain Text Passwords</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Disable Plain Text Passwords(SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
         <string name="settings_smb_lm_compatibility_dialog_title">LmCompatibility Level</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
@@ -998,17 +975,14 @@
             <item>4</item>
         </string-array >
         <string name="settings_smb_lm_compatibility_summary">LmCompatibility Level</string>
-        <string name="settings_smb_lm_compatibility_title">LmCompatibility Level</string>
+        <string name="settings_smb_lm_compatibility_title">LmCompatibility Level(SMBv1)</string>
         <string name="settings_smb_title">SMB設定</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
-        <string name="settings_smb_use_extended_security_title">Use Extended Security</string>
+        <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">アプリケーション固有ディレクトリの使用についての警告を表示しない</string>
         <string name="settings_suppress_warning_app_specific_dir_title">アプリケーション固有ディレクトリの使用</string>
-        <string name="settings_suppress_warning_location_service_disabled">settings_suppress_warning_location_service_disabled</string>
-        <string name="settings_suppress_warning_location_service_enabled_summary_ena">ロケーションサービス有効化についての警告を表示しない</string>
-        <string name="settings_suppress_warning_location_service_enabled_title">ロケーションサービス有効化の警告</string>
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">詳細ログを保存する</string>
         <string name="settings_sync_history_log_title">同期履歴</string>
@@ -1027,6 +1001,7 @@
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
             <item>中文(zh)</item>
+            <item>Italiano(it)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1035,12 +1010,13 @@
             <item>3</item>
             <item>4</item>
             <item>5</item>
+            <item>6</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">画面テーマ</string>
         <string name="settings_screen_theme_dialog_title">画面テーマ</string>
         <string-array name="settings_screen_theme_list_entries">
-            <item>標準</item>
+            <item>ダーク</item>
             <item>ライトテーマ</item>
             <item>ブラックテーマ</item>
         </string-array >

@@ -2,7 +2,7 @@ package com.sentaroh.android.SMBSync2;
 
 /*
 The MIT License (MIT)
-Copyright (c) 2011-2018 Sentaroh
+Copyright (c) 2011 Sentaroh
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal
@@ -273,8 +273,6 @@ public class ActivitySettings extends PreferenceActivity {
             } else if (key_string.equals(c.getString(R.string.settings_wifi_lock))) {
                 isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_sync_history_log))) {
-                isChecked = true;
-            } else if (key_string.equals(c.getString(R.string.settings_suppress_warning_location_service_disabled))) {
                 isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_no_compress_file_type))) {
                 isChecked = true;

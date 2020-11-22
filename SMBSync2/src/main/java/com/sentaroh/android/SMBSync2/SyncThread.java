@@ -2,7 +2,7 @@ package com.sentaroh.android.SMBSync2;
 
 /*
 The MIT License (MIT)
-Copyright (c) 2011-2018 Sentaroh
+Copyright (c) 2011 Sentaroh
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal
@@ -75,6 +75,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -486,6 +487,13 @@ public class SyncThread extends Thread {
                         ", MountPoint=" + sti.getTargetLocalMountPoint() +
                         ", UseTakenDateTime=" + sti.isTargetUseTakenDateTimeToDirectoryNameKeyword(),
                 "");
+        mStwa.util.addDebugMsg(1, "I", "   Archive Suffix=" + sti.getArchiveSuffixOption() +
+                ", Rename file template=" + sti.getArchiveRenameFileTemplate() +
+                ", Rename directory template=" + sti.getArchiveCreateDirectoryTemplate() +
+                ", Use rename=" + sti.isArchiveUseRename() +
+                ", Retntion period=" + sti.getArchiveRetentionPeriod() +
+                ", Create directory=" + sti.isArchiveCreateDirectory() +
+                "");
         mStwa.util.addDebugMsg(1, "I", "   File filter Audio=" + sti.isSyncFileTypeAudio() +
                 ", Image=" + sti.isSyncFileTypeImage() +
                 ", Video=" + sti.isSyncFileTypeVideo() +
@@ -536,7 +544,9 @@ public class SyncThread extends Thread {
         if (sti.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
             mStwa.masterAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
         } else {
-            mStwa.masterAuth=new JcifsAuth(mst_smb_level, mst_dom, mst_user, mst_pass, sti.isMasterSmbIpcSigningEnforced(), sti.isMasterSmbUseSmb2Negotiation());
+            Properties prop_new = new Properties();
+            prop_new.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
+            mStwa.masterAuth=new JcifsAuth(mst_smb_level, mst_dom, mst_user, mst_pass, sti.isMasterSmbIpcSigningEnforced(), sti.isMasterSmbUseSmb2Negotiation(), prop_new);
         }
 
         String tgt_dom=null, tgt_user=null, tgt_pass=null;
@@ -547,7 +557,9 @@ public class SyncThread extends Thread {
         if (sti.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
             mStwa.targetAuth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, tgt_dom, tgt_user, tgt_pass);
         } else {
-            mStwa.targetAuth=new JcifsAuth(tgt_smb_level, tgt_dom, tgt_user, tgt_pass, sti.isTargetSmbIpcSigningEnforced(), sti.isTargetSmbUseSmb2Negotiation());
+            Properties prop_new = new Properties();
+            prop_new.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
+            mStwa.targetAuth=new JcifsAuth(tgt_smb_level, tgt_dom, tgt_user, tgt_pass, sti.isTargetSmbIpcSigningEnforced(), sti.isTargetSmbUseSmb2Negotiation(), prop_new);
         }
 
         mStwa.syncTaskRetryCount = mStwa.syncTaskRetryCountOriginal = Integer.parseInt(sti.getSyncOptionRetryCount()) + 1;
@@ -1993,47 +2005,48 @@ public class SyncThread extends Thread {
                     if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP)) {
                         if (!isConnectedToAnyWifiAP()) result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
                     } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
-                        if (!isConnectedToAnyWifiAP()) result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
-                        else {
-                            ArrayList<String> wl = sti.getSyncOptionWifiConnectedAccessPointWhiteList();
-                            ArrayList<Pattern> inc = new ArrayList<Pattern>();
-                            int flags = Pattern.CASE_INSENSITIVE;
-                            for (String apl : wl) {
-                                if (apl.startsWith("I")) {
-                                    String prefix = "", suffix = "";
-                                    if (apl.substring(1).endsWith("*")) suffix = "$";
-                                    inc.add(Pattern.compile(prefix + MiscUtil.convertRegExp(apl.substring(1)) + suffix, flags));
-                                    mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied AP include added=" + inc.get(inc.size() - 1).toString());
-                                }
-                            }
-                            if (!getWifiConnectedAP().equals("")) {
-                                if (inc.size() > 0) {
-                                    Matcher mt;
-                                    boolean found = false;
-                                    for (Pattern pat : inc) {
-                                        if (Build.VERSION.SDK_INT>=27) {
-                                            mt = pat.matcher(getWifiConnectedAP());
-                                        } else {
-                                            mt = pat.matcher(mGp.wifiSsid);
-                                        }
-                                        if (mt.find()) {
-                                            found = true;
-                                            mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied AP include matched=" + pat.toString());
-                                            break;
-                                        }
-                                    }
-                                    if (!found) {
-                                        if (sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid()) {
-                                            result = mStwa.context.getString(R.string.msgs_mirror_sync_skipped_wifi_ap_conn_other);
-                                        } else {
-                                            result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_conn_other);
-                                        }
-                                    }
-                                }
-                            } else {
-                                result=getWiFiAPNameErrorReason(sti);
-                            }
-                        }
+                        result = mStwa.context.getString(R.string.msgs_main_permission_ap_list_no_longer_available_sync_msg);
+//                        if (!isConnectedToAnyWifiAP()) result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected);
+//                        else {
+//                            ArrayList<String> wl = sti.getSyncOptionWifiConnectedAccessPointWhiteList();
+//                            ArrayList<Pattern> inc = new ArrayList<Pattern>();
+//                            int flags = Pattern.CASE_INSENSITIVE;
+//                            for (String apl : wl) {
+//                                if (apl.startsWith("I")) {
+//                                    String prefix = "", suffix = "";
+//                                    if (apl.substring(1).endsWith("*")) suffix = "$";
+//                                    inc.add(Pattern.compile(prefix + MiscUtil.convertRegExp(apl.substring(1)) + suffix, flags));
+//                                    mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied AP include added=" + inc.get(inc.size() - 1).toString());
+//                                }
+//                            }
+//                            if (!getWifiConnectedAP().equals("")) {
+//                                if (inc.size() > 0) {
+//                                    Matcher mt;
+//                                    boolean found = false;
+//                                    for (Pattern pat : inc) {
+//                                        if (Build.VERSION.SDK_INT>=27) {
+//                                            mt = pat.matcher(getWifiConnectedAP());
+//                                        } else {
+//                                            mt = pat.matcher(mGp.wifiSsid);
+//                                        }
+//                                        if (mt.find()) {
+//                                            found = true;
+//                                            mStwa.util.addDebugMsg(1, "I", "isWifiConditionSatisfied AP include matched=" + pat.toString());
+//                                            break;
+//                                        }
+//                                    }
+//                                    if (!found) {
+//                                        if (sti.isSyncOptionTaskSkipIfConnectAnotherWifiSsid()) {
+//                                            result = mStwa.context.getString(R.string.msgs_mirror_sync_skipped_wifi_ap_conn_other);
+//                                        } else {
+//                                            result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_conn_other);
+//                                        }
+//                                    }
+//                                }
+//                            } else {
+//                                result=getWiFiAPNameErrorReason(sti);
+//                            }
+//                        }
                     }
                 }
             }
@@ -2056,41 +2069,41 @@ public class SyncThread extends Thread {
         return result;
     }
 
-    private String getWiFiAPNameErrorReason(SyncTaskItem sti) {
-        String result="";
-        if (Build.VERSION.SDK_INT>=27) {
-            if (!CommonUtilities.isLocationServiceEnabled(mStwa.context, mStwa.gp)) {
-                result=mStwa.context.getString(R.string.msgs_main_location_error_location_service_is_disabled);
-                return result;
-            }
-        }
-        WifiManager wm = (WifiManager) mStwa.context.getSystemService(Context.WIFI_SERVICE);
-        if (wm.isWifiEnabled()) {
-            String ssid_name=wm.getConnectionInfo().getSSID();
-            if (ssid_name!=null) {
-                if (Build.VERSION.SDK_INT==27 || Build.VERSION.SDK_INT==28) {//Android 8.1 && 9
-                    if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
-                        result=mStwa.context.getString(R.string.msgs_main_location_error_location_permission_not_granted);
-                    }
-                } else if (Build.VERSION.SDK_INT>=29) {//Android 10 以上
-                    if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
-                        result=mStwa.context.getString(R.string.msgs_main_location_error_location_permission_not_granted);
-                    } else if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
-                        result=mStwa.context.getString(R.string.msgs_main_location_error_background_location_permission_not_granted);
-                    }
-                } else {
-                    result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected)+" ssid="+ssid_name;
-                }
-            } else {
-                //SSID is null
-                result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected)+" ssid="+ssid_name;
-            }
-        } else {
-            //WIFI Off
-            result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_is_off);
-        }
-        return result;
-    }
+//    private String getWiFiAPNameErrorReason(SyncTaskItem sti) {
+//        String result="";
+//        if (Build.VERSION.SDK_INT>=27) {
+//            if (!CommonUtilities.isLocationServiceEnabled(mStwa.context, mStwa.gp)) {
+//                result=mStwa.context.getString(R.string.msgs_main_location_error_location_service_is_disabled);
+//                return result;
+//            }
+//        }
+//        WifiManager wm = (WifiManager) mStwa.context.getSystemService(Context.WIFI_SERVICE);
+//        if (wm.isWifiEnabled()) {
+//            String ssid_name=wm.getConnectionInfo().getSSID();
+//            if (ssid_name!=null) {
+//                if (Build.VERSION.SDK_INT==27 || Build.VERSION.SDK_INT==28) {//Android 8.1 && 9
+//                    if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+//                        result=mStwa.context.getString(R.string.msgs_main_location_error_location_permission_not_granted);
+//                    }
+//                } else if (Build.VERSION.SDK_INT>=29) {//Android 10 以上
+//                    if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+//                        result=mStwa.context.getString(R.string.msgs_main_location_error_location_permission_not_granted);
+//                    } else if (mStwa.context.checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+//                        result=mStwa.context.getString(R.string.msgs_main_location_error_background_location_permission_not_granted);
+//                    }
+//                } else {
+//                    result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected)+" ssid="+ssid_name;
+//                }
+//            } else {
+//                //SSID is null
+//                result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_ap_not_connected)+" ssid="+ssid_name;
+//            }
+//        } else {
+//            //WIFI Off
+//            result = mStwa.context.getString(R.string.msgs_mirror_sync_can_not_start_wifi_is_off);
+//        }
+//        return result;
+//    }
 
     private boolean isPrivateAddress(String if_addr) {
         if (if_addr.startsWith("10.")) return true;

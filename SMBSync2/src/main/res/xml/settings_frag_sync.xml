@@ -21,11 +21,6 @@
             android:title="@string/settings_force_screen_on_while_sync_title"
             android:summary="@string/settings_force_screen_on_while_sync_summary_ena" />
 
-        <CheckBoxPreference
-            android:key="@string/settings_suppress_warning_location_service_disabled"
-            android:title="@string/settings_suppress_warning_location_service_enabled_title"
-            android:summary="@string/settings_suppress_warning_location_service_enabled_summary_ena" />
-
         <EditTextPreference
             android:key="@string/settings_no_compress_file_type"
             android:title="@string/settings_no_compress_file_type_title"

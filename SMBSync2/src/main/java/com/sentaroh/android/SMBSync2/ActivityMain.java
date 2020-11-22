@@ -2,7 +2,7 @@ package com.sentaroh.android.SMBSync2;
 
 /*
 The MIT License (MIT)
-Copyright (c) 2011-2018 Sentaroh
+Copyright (c) 2011 Sentaroh
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal 
@@ -48,6 +48,7 @@ import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.storage.StorageVolume;
 import android.provider.Settings;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -127,10 +128,6 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YES;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_RESP_YESALL;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_KEY_STORE_ALIAS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SERIALIZABLE_FILE_NAME;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_HIST;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_MESSAGE;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_SCHEDULE;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_TAB_NAME_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET;
@@ -140,7 +137,6 @@ public class ActivityMain extends AppCompatActivity {
 
     private boolean isTaskTermination = false; // kill is disabled(enable is kill by onDestroy)
 
-    private TabHost mMainTabHost = null;
     private Context mContext = null;
     private AppCompatActivity mActivity = null;
 
@@ -150,11 +146,14 @@ public class ActivityMain extends AppCompatActivity {
     private CommonUtilities mUtil = null;
     private CustomContextMenu ccMenu = null;
 
-    private final static int NORMAL_START = 0;
-    private final static int RESTART_WITH_OUT_INITIALYZE = 1;
+    private final static int START_STATUS_STARTING = 0;
+    private final static int START_STATUS_COMPLETED = 1;
+    private final static int START_STATUS_INITIALYZING = 2;
+    private int mStartStatus = START_STATUS_STARTING;
+
     private final static int RESTART_BY_KILLED = 2;
     private final static int RESTART_BY_DESTROYED = 3;
-    private int restartType = NORMAL_START;
+    private int mRestoreType = 0;
 
     private ServiceConnection mSvcConnection = null;
     private CommonDialog mCommonDlg = null;
@@ -168,6 +167,8 @@ public class ActivityMain extends AppCompatActivity {
 
     private boolean mSyncTaskListCreateRequired=false;
 
+    private String mTabNameTask="Task", mTabNameSchedule="Schedule", mTabNameHistory="History", mTabNameMessage="Message";
+
     @Override
     protected void onSaveInstanceState(Bundle out) {
         super.onSaveInstanceState(out);
@@ -180,8 +181,8 @@ public class ActivityMain extends AppCompatActivity {
         super.onRestoreInstanceState(in);
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered.");
         mCurrentTab = in.getString("currentTab");
-        if (mGp.activityIsFinished) restartType = RESTART_BY_KILLED;
-        else restartType = RESTART_BY_DESTROYED;
+        if (mGp.activityIsFinished) mRestoreType = RESTART_BY_KILLED;
+        else mRestoreType = RESTART_BY_DESTROYED;
     }
 
 
@@ -209,7 +210,7 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(R.layout.main_screen);
 
         mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType+", settingScreenThemeLanguage="+mGp.settingScreenThemeLanguage);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "mStartStatus=" + mStartStatus +", settingScreenThemeLanguage="+mGp.settingScreenThemeLanguage);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setHomeButtonEnabled(false);
@@ -236,7 +237,12 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.syncHistoryList == null) mGp.syncHistoryList = mUtil.loadHistoryList();
 
         mGp.syncHistoryAdapter = new AdapterSyncHistory(mActivity, R.layout.sync_history_list_item_view, mGp.syncHistoryList);
-        mCurrentTab = SMBSYNC2_TAB_NAME_TASK;
+
+        mTabNameTask=getString(R.string.msgs_tab_name_prof);
+        mTabNameSchedule=getString(R.string.msgs_tab_name_schedule);
+        mTabNameHistory=getString(R.string.msgs_tab_name_history);
+        mTabNameMessage=getString(R.string.msgs_tab_name_msg);
+        mCurrentTab = mTabNameTask;
 
         createTabView();
         initAdapterAndView();
@@ -252,55 +258,57 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "mStartStatus=" + mStartStatus+", mRestoreType="+ mRestoreType);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "mStartStatus=" + mStartStatus+", mRestoreType="+ mRestoreType);
 
-        if (restartType == RESTART_WITH_OUT_INITIALYZE) {
+        if (mStartStatus == START_STATUS_COMPLETED) {
             mGp.safMgr.loadSafFile();
             setActivityForeground(true);
             ScheduleUtil.setSchedulerInfo(mActivity, mGp, mUtil);
             mGp.progressSpinSyncprof.setText(mGp.progressSpinSyncprofText);
             mGp.progressSpinMsg.setText(mGp.progressSpinMsgText);
         } else {
-            final NotifyEvent ntfy_priv_key=new NotifyEvent(mContext);
-            ntfy_priv_key.setListener(new NotifyEventListener() {
-                @Override
-                public void positiveResponse(Context context, Object[] objects) {
-                    KeyStoreUtil.resetSavedKey(mContext);
-                    processOnResumeForStart();
-                }
+            if (mStartStatus==START_STATUS_STARTING) {
+                mStartStatus=START_STATUS_INITIALYZING;
+                final NotifyEvent ntfy_priv_key=new NotifyEvent(mContext);
+                ntfy_priv_key.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        KeyStoreUtil.resetSavedKey(mContext);
+                        processOnResumeForStart();
+                    }
 
-                @Override
-                public void negativeResponse(Context context, Object[] objects) {
-                    processOnResumeForStart();
-                }
-            });
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                        processOnResumeForStart();
+                    }
+                });
 
-            Thread th=new Thread() {
-                @Override
-                public void run() {
-                    final boolean corrupted=!isValidPrivateKey();
-                    mUiHandler.post(new Runnable(){
-                        @Override
-                        public void run() {
-                            if (corrupted) {
-                                mCommonDlg.showCommonDialog(true, "E",mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_title),
-                                        mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_msg), ntfy_priv_key);
-                            } else {
-                                processOnResumeForStart();
+                Thread th=new Thread() {
+                    @Override
+                    public void run() {
+                        final boolean corrupted=!isValidPrivateKey();
+                        mUiHandler.post(new Runnable(){
+                            @Override
+                            public void run() {
+                                if (corrupted) {
+                                    mCommonDlg.showCommonDialog(true, "E",mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_title),
+                                            mContext.getString(R.string.msgs_smbsync_main_private_key_corrupted_msg), ntfy_priv_key);
+                                } else {
+                                    processOnResumeForStart();
+                                }
                             }
-                        }
-                    });
-                }
-            };
-            th.start();
-
+                        });
+                    }
+                };
+                th.start();
+            }
         }
     }
 
@@ -326,6 +334,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void run() {
                 if (mSyncTaskListCreateRequired) {
+                    mSyncTaskListCreateRequired=false;
                     mUtil.addDebugMsg(1, "I", "Sync task list creation started.");
                     synchronized (mGp.syncTaskList) {
                         ArrayList<SyncTaskItem> task_list = SyncTaskUtil.createSyncTaskList(mContext, mGp, mUtil, false);
@@ -344,38 +353,50 @@ public class ActivityMain extends AppCompatActivity {
                 mUiHandler.post(new Runnable(){
                     @Override
                     public void run() {
-                        NotifyEvent svc_ntfy = new NotifyEvent(mContext);
-                        svc_ntfy.setListener(new NotifyEventListener() {
+                        NotifyEvent stg__ntfy = new NotifyEvent(mContext);
+                        stg__ntfy.setListener(new NotifyEventListener() {
                             @Override
-                            public void positiveResponse(Context c, Object[] o) {
-                                setMainListener();
-                                NotifyEvent app_pswd_ntfy = new NotifyEvent(mContext);
-                                app_pswd_ntfy.setListener(new NotifyEventListener() {
+                            public void positiveResponse(Context context, Object[] objects) {
+                                NotifyEvent svc_ntfy = new NotifyEvent(mContext);
+                                svc_ntfy.setListener(new NotifyEventListener() {
                                     @Override
                                     public void positiveResponse(Context c, Object[] o) {
-                                        mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
-                                        if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
-                                        else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
-                                        if (mGp.syncThreadActive) {
-                                            mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-                                        } else {
-                                            mGp.messageListViewMoveToBottomRequired=true;
-                                        }
-                                        pd.dismiss();
+                                        mStartStatus= START_STATUS_COMPLETED;
+                                        setMainListener();
+                                        NotifyEvent app_pswd_ntfy = new NotifyEvent(mContext);
+                                        app_pswd_ntfy.setListener(new NotifyEventListener() {
+                                            @Override
+                                            public void positiveResponse(Context c, Object[] o) {
+                                                mGp.syncTaskListView.setVisibility(ListView.VISIBLE);
+                                                if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
+                                                else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
+                                                if (mGp.syncThreadActive) {
+                                                    mMainTabLayout.setCurrentTabByName(mTabNameMessage);
+                                                } else {
+                                                    mGp.messageListViewMoveToBottomRequired=true;
+                                                }
+                                                pd.dismiss();
+                                            }
+                                            @Override
+                                            public void negativeResponse(Context c, Object[] o) {
+                                                pd.dismiss();
+                                                finish();
+                                            }
+                                        });
+                                        ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
+                                                mUtil, false, app_pswd_ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION);
                                     }
                                     @Override
-                                    public void negativeResponse(Context c, Object[] o) {
-                                        pd.dismiss();
-                                        finish();
-                                    }
+                                    public void negativeResponse(Context c, Object[] o) {}
                                 });
-                                ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
-                                        mUtil, false, app_pswd_ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION);
+                                openService(svc_ntfy);
                             }
+
                             @Override
-                            public void negativeResponse(Context c, Object[] o) {}
+                            public void negativeResponse(Context context, Object[] objects) {}
                         });
-                        openService(svc_ntfy);
+                        checkRequiredPermissions(stg__ntfy);
+
                     }
                 });
             }
@@ -387,22 +408,19 @@ public class ActivityMain extends AppCompatActivity {
     private void setMainListener() {
         setCallbackListener();
         setActivityForeground(true);
-        if (restartType == NORMAL_START) {
-            setUiEnabled();
-            checkStorageStatus();
-            checkRequiredPermissions();
-            if (mGp.syncThreadActive) mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-        } else if (restartType == RESTART_BY_KILLED) {
-            setUiEnabled();
+        setUiEnabled();
+        if (mRestoreType == RESTART_BY_KILLED) {
             restoreTaskData();
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_killed));
-            mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
-        } else if (restartType == RESTART_BY_DESTROYED) {
-            setUiEnabled();
+            mMainTabLayout.setCurrentTabByName(mTabNameMessage);
+        } else if (mRestoreType == RESTART_BY_DESTROYED) {
             restoreTaskData();
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_destroyed));
-            mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_MESSAGE);
+            mMainTabLayout.setCurrentTabByName(mTabNameMessage);
+        } else {
+            if (mGp.syncThreadActive) mMainTabLayout.setCurrentTabByName(mTabNameMessage);
         }
+        checkStorageStatus();
         setMessageContextButtonListener();
         setMessageContextButtonNormalMode();
 
@@ -427,14 +445,13 @@ public class ActivityMain extends AppCompatActivity {
 
         deleteTaskData();
 //                    ScheduleUtil.setSchedulerInfo(mGp, mUtil);
-        restartType = RESTART_WITH_OUT_INITIALYZE;
         reshowDialogWindow();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "resartStatus=" + restartType);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "mStartStatus=" + mStartStatus);
     }
 
     @Override
@@ -486,7 +503,7 @@ public class ActivityMain extends AppCompatActivity {
 
         if (isFinishing()) {
             deleteTaskData();
-            mGp.logCatActive=false;
+//            mGp.logCatActive=false;
 //            mGp.clearParms();
         }
         mGp.appPasswordAuthValidated=false;
@@ -797,8 +814,6 @@ public class ActivityMain extends AppCompatActivity {
 
         createTabView();
 
-        mMainTabHost.setOnTabChangedListener(null);
-
         mGp.syncTaskAdapter = new AdapterSyncTask(mActivity, R.layout.sync_task_item_view, pfl, mGp);
         mGp.syncTaskAdapter.setShowCheckBox(vsa.prof_adapter_show_cb);
         mGp.syncTaskAdapter.notifyDataSetChanged();
@@ -816,7 +831,6 @@ public class ActivityMain extends AppCompatActivity {
         initAdapterAndView();
 
         restoreViewContent(vsa);
-        mMainTabHost.setOnTabChangedListener(new MainOnTabChange());
 
         setMessageContextButtonListener();
         setMessageContextButtonNormalMode();
@@ -835,13 +849,13 @@ public class ActivityMain extends AppCompatActivity {
         setScheduleViewItemClickListener();
         setScheduleViewLongClickListener();
 
-        if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK)) {
+        if (mCurrentTab.equals(mTabNameTask)) {
             if (mGp.syncHistoryAdapter.isShowCheckBox()) setHistoryContextButtonSelectMode();
             else setHistoryContextButtonNormalMode();
 
             if (mGp.syncTaskAdapter.isShowCheckBox()) setSyncTaskContextButtonSelectMode();
             else setSyncTaskContextButtonNormalMode();
-        } else if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_HIST)) {
+        } else if (mCurrentTab.equals(mTabNameHistory)) {
             if (mGp.syncTaskAdapter.isShowCheckBox()) setSyncTaskContextButtonSelectMode();
             else setSyncTaskContextButtonNormalMode();
 
@@ -856,7 +870,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private ViewSaveArea saveViewContent() {
         ViewSaveArea vsa = new ViewSaveArea();
-        vsa.current_tab_pos = mMainTabHost.getCurrentTab();
+        vsa.current_tab_pos = mMainTabLayout.getSelectedTabPosition();
         vsa.current_pager_pos = mMainViewPager.getCurrentItem();
 
         vsa.prof_list_view_pos_x = mGp.syncTaskListView.getFirstVisiblePosition();
@@ -899,8 +913,11 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void restoreViewContent(final ViewSaveArea vsa) {
-        mMainTabHost.setCurrentTab(vsa.current_tab_pos);
+        mWhileRestoreViewProcess=true;
+        mMainTabLayout.setCurrentTabByPosition(vsa.current_tab_pos);
         mMainViewPager.setCurrentItem(vsa.current_pager_pos);
+        mWhileRestoreViewProcess=false;
+
         mGp.syncTaskListView.setSelectionFromTop(vsa.prof_list_view_pos_x, vsa.prof_list_view_pos_y);
         mGp.syncMessageListView.setSelectionFromTop(vsa.msg_list_view_pos_x, vsa.msg_list_view_pos_y);
         mGp.syncHistoryListView.setSelectionFromTop(vsa.sync_list_view_pos_x, vsa.sync_list_view_pos_y);
@@ -967,42 +984,16 @@ public class ActivityMain extends AppCompatActivity {
     private LinearLayout mMessageView;
 
     private CustomViewPager mMainViewPager;
-    private CustomViewPagerAdapter mMainViewPagerAdapter;
-
-    private TabWidget mMainTabWidget;
+    private CustomTabLayout mMainTabLayout;
+    private boolean mWhileRestoreViewProcess=false;
 
     private void createTabView() {
-        mMainTabHost = (TabHost) findViewById(android.R.id.tabhost);
-        mMainTabHost.setup();
-        mMainTabWidget = (TabWidget) findViewById(android.R.id.tabs);
-
-        mMainTabWidget.setStripEnabled(false);
-        mMainTabWidget.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
-
-        CustomTabContentView tabViewProf = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_prof));
-        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_TASK).setIndicator(tabViewProf).setContent(android.R.id.tabcontent));
-
-        CustomTabContentView tabViewSchedule = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_schedule));
-        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_SCHEDULE).setIndicator(tabViewSchedule).setContent(android.R.id.tabcontent));
-
-        CustomTabContentView tabViewHist = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_history));
-        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_HIST).setIndicator(tabViewHist).setContent(android.R.id.tabcontent));
-
-        CustomTabContentView tabViewMsg = new CustomTabContentView(mContext, getString(R.string.msgs_tab_name_msg));
-        mMainTabHost.addTab(mMainTabHost.newTabSpec(SMBSYNC2_TAB_NAME_MESSAGE).setIndicator(tabViewMsg).setContent(android.R.id.tabcontent));
-
         LinearLayout ll_main = (LinearLayout) findViewById(R.id.main_screen_view);
-//        ll_main.setBackgroundColor(mGp.themeColorList.window_background_color_content);
-
         LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSyncTaskView = (LinearLayout) vi.inflate(R.layout.main_sync_task, null);
-//        mSyncTaskView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
         mScheduleView = (LinearLayout) vi.inflate(R.layout.main_schedule, null);
-//        mHistoryView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
         mHistoryView = (LinearLayout) vi.inflate(R.layout.main_history, null);
-//        mHistoryView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
         mMessageView = (LinearLayout) vi.inflate(R.layout.main_message, null);
-//        mMessageView.setBackgroundColor(mGp.themeColorList.window_background_color_content);
 
         mGp.syncMessageListView = (ListView) mMessageView.findViewById(R.id.main_message_list_view);
         mGp.syncMessageListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -1105,17 +1096,90 @@ public class ActivityMain extends AppCompatActivity {
 
         createContextView();
 
-        mMainViewPagerAdapter = new CustomViewPagerAdapter(mActivity,
-                new View[]{mSyncTaskView, mScheduleView, mHistoryView, mMessageView});
+        mMainTabLayout = (CustomTabLayout) findViewById(R.id.main_tab_layout);
+        mMainTabLayout.addTab(mTabNameTask);
+        mMainTabLayout.addTab(mTabNameSchedule);
+        mMainTabLayout.addTab(mTabNameHistory);
+        mMainTabLayout.addTab(mTabNameMessage);
+        mMainTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mMainTabLayout.adjustTabWidth();
+
+        View[] tab_view=new View[]{mSyncTaskView, mScheduleView, mHistoryView, mMessageView};
+        CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity, tab_view);
         mMainViewPager = (CustomViewPager) findViewById(R.id.main_screen_pager);
-//	    mMainViewPager.setBackgroundColor(mThemeColorList.window_color_background);
-        mMainViewPager.setAdapter(mMainViewPagerAdapter);
-        mMainViewPager.setOnPageChangeListener(new MainPageChangeListener());
-        if (restartType == NORMAL_START) {
-            mMainTabHost.setCurrentTabByTag(SMBSYNC2_TAB_NAME_TASK);
-            mMainViewPager.setCurrentItem(0);
-        }
-        mMainTabHost.setOnTabChangedListener(new MainOnTabChange());
+        mMainViewPager.setAdapter(adapter);
+        mMainViewPager.setOffscreenPageLimit(tab_view.length);
+        mMainViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
+                mMainTabLayout.setCurrentTabByPosition(position);
+                if (isUiEnabled()) setUiEnabled();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                mUtil.addDebugMsg(2,"I","onPageScrollStateChanged entered, state="+state);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                mUtil.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
+            }
+        });
+
+        mMainTabLayout.setCurrentTabByName(mTabNameTask);
+        mMainViewPager.setCurrentItem(0);
+
+        mMainTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                String tabId=(String)tab.getTag();
+                mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered. tab=" + tabId + ",v=" + mCurrentTab);
+
+                mActionBar.setIcon(R.drawable.smbsync);
+                mActionBar.setHomeButtonEnabled(false);
+                mActionBar.setTitle(R.string.app_name);
+
+                mMainViewPager.setCurrentItem(mMainTabLayout.getSelectedTabPosition());
+
+                if (!mWhileRestoreViewProcess) {
+                    if (mGp.syncTaskAdapter.isShowCheckBox()) {
+                        mGp.syncTaskAdapter.setShowCheckBox(false);
+                        mGp.syncTaskAdapter.setAllItemChecked(false);
+                        mGp.syncTaskAdapter.notifyDataSetChanged();
+                        setSyncTaskContextButtonNormalMode();
+                    }
+
+                    if (mGp.syncScheduleAdapter.isSelectMode()) {
+                        mGp.syncScheduleAdapter.setSelectMode(false);
+                        mGp.syncScheduleAdapter.unselectAll();
+                        mGp.syncScheduleAdapter.notifyDataSetChanged();
+                        setScheduleContextButtonNormalMode();
+                    }
+
+                    if (mGp.syncHistoryAdapter.isShowCheckBox()) {
+                        mGp.syncHistoryAdapter.setShowCheckBox(false);
+                        mGp.syncHistoryAdapter.setAllItemChecked(false);
+                        mGp.syncHistoryAdapter.notifyDataSetChanged();
+                        setHistoryContextButtonNormalMode();
+                    } else {
+                        mGp.syncHistoryAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                mCurrentTab = tabId;
+                refreshOptionMenu();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
 
     }
 
@@ -1123,81 +1187,6 @@ public class ActivityMain extends AppCompatActivity {
 //		if (Build.VERSION.SDK_INT<11) {
 //			btn.setBackgroundColor(Color.DKGRAY);
 //		}
-    }
-
-    private class MainOnTabChange implements OnTabChangeListener {
-        @Override
-        public void onTabChanged(String tabId) {
-            mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered. tab=" + tabId + ",v=" + mCurrentTab);
-
-            mActionBar.setIcon(R.drawable.smbsync);
-            mActionBar.setHomeButtonEnabled(false);
-            mActionBar.setTitle(R.string.app_name);
-
-            mMainViewPager.setCurrentItem(mMainTabHost.getCurrentTab());
-
-            if (mGp.syncTaskAdapter.isShowCheckBox()) {
-                mGp.syncTaskAdapter.setShowCheckBox(false);
-                mGp.syncTaskAdapter.setAllItemChecked(false);
-                mGp.syncTaskAdapter.notifyDataSetChanged();
-                setSyncTaskContextButtonNormalMode();
-            }
-
-            if (mGp.syncScheduleAdapter.isSelectMode()) {
-                mGp.syncScheduleAdapter.setSelectMode(false);
-                mGp.syncScheduleAdapter.unselectAll();
-                setScheduleContextButtonNormalMode();
-            }
-
-            if (mGp.syncHistoryAdapter.isShowCheckBox()) {
-                mGp.syncHistoryAdapter.setShowCheckBox(false);
-                mGp.syncHistoryAdapter.setAllItemChecked(false);
-                mGp.syncHistoryAdapter.notifyDataSetChanged();
-                setHistoryContextButtonNormalMode();
-            }
-
-            if (tabId.equals(SMBSYNC2_TAB_NAME_MESSAGE)) {
-                mGp.syncMessageListView.requestFocusFromTouch();
-                if (!mGp.freezeMessageViewScroll) {
-                    synchronized (mGp.syncMessageList) {
-                        if (mGp.messageListViewMoveToBottomRequired) {
-                            if (mGp!=null && mGp.syncMessageListView !=null && mGp.syncMessageListAdapter !=null) {
-                                mGp.uiHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mGp.syncMessageListView.setSelection(mGp.syncMessageListAdapter.getCount()-1);
-                                    }
-                                });
-                            }
-                            mGp.messageListViewMoveToBottomRequired =false;
-                        }
-                    }
-                }
-            }
-            mCurrentTab = tabId;
-            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_HIST)) mGp.syncHistoryAdapter.notifyDataSetChanged();
-            refreshOptionMenu();
-        }
-    }
-
-    private class MainPageChangeListener implements ViewPager.OnPageChangeListener {
-        @Override
-        public void onPageSelected(int position) {
-	    	mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
-            mMainTabWidget.setCurrentTab(position);
-            mMainTabHost.setCurrentTab(position);
-            if (isUiEnabled()) setUiEnabled();
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-	    	mUtil.addDebugMsg(2,"I","onPageScrollStateChanged entered, state="+state);
-        }
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-	    	mUtil.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
-        }
     }
 
     @Override
@@ -1292,24 +1281,24 @@ public class ActivityMain extends AppCompatActivity {
 //        }
 //        LogCatUtil.prepareOptionMenu(mGp, mUtil, menu);
 
-        if (Build.VERSION.SDK_INT >= 27) {
-            if (Build.VERSION.SDK_INT>=29) {
-                if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED &&
-                        checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED) {
-                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
-                } else {
-                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
-                }
-            } else {
-                if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
-                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
-                } else {
-                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
-                }
-            }
-        } else {
-            menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
-        }
+//        if (Build.VERSION.SDK_INT >= 27) {
+//            if (Build.VERSION.SDK_INT>=29) {
+//                if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED &&
+//                        checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)==PackageManager.PERMISSION_GRANTED) {
+//                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
+//                } else {
+//                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
+//                }
+//            } else {
+//                if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED) {
+//                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
+//                } else {
+//                    menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(true);
+//                }
+//            }
+//        } else {
+//            menu.findItem(R.id.menu_top_request_grant_coarse_location).setVisible(false);
+//        }
 
         if (mGp.settingScheduleSyncEnabled) menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule);
         else menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule_disabled);
@@ -1322,7 +1311,7 @@ public class ActivityMain extends AppCompatActivity {
             //only show top sync button if there is at least one auto and valid sync task
             //in sync task select mode: always show the top sync button if there is at least one valid sync task
             //if we select non valid sync tasks, on start, a proper message is shown to help user understand the way button works
-            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK) && mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
+            if (mCurrentTab.equals(mTabNameTask) && mGp.syncTaskList!=null && mGp.syncTaskList.size()>0) {
                 menu.findItem(R.id.menu_top_sync).setVisible(false);
                 for(SyncTaskItem sti:mGp.syncTaskList) {
                     if ((sti.isSyncTaskAuto() && !sti.isSyncTestMode()) ||
@@ -1340,7 +1329,7 @@ public class ActivityMain extends AppCompatActivity {
             //only show top start schedule button if there is at least one enabled and valid schedule
             //in schedule select mode: always show the start schedule button if there is at least one valid schedule
             //if we select non valid schedules, on start, a proper message is shown to help user understand the way button works
-            if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_SCHEDULE) && mGp.syncScheduleList!=null && mGp.syncScheduleList.size()>0) {
+            if (mCurrentTab.equals(mTabNameSchedule) && mGp.syncScheduleList!=null && mGp.syncScheduleList.size()>0) {
                 menu.findItem(R.id.menu_top_scheduler).setVisible(true);
                 menu.findItem(R.id.menu_top_exec_schedule).setVisible(false);
                 for(ScheduleItem si:mGp.syncScheduleList) {
@@ -1533,10 +1522,10 @@ public class ActivityMain extends AppCompatActivity {
             case R.id.menu_top_select_storage:
                 reselectSdcard("", "");
                 return true;
-            case R.id.menu_top_request_grant_coarse_location:
-                mGp.setSettingGrantCoarseLocationRequired(mContext, true);
-                checkLocationPermission(false);
-                return true;
+//            case R.id.menu_top_request_grant_coarse_location:
+//                mGp.setSettingGrantCoarseLocationRequired(mContext, true);
+//                checkLocationPermission(false);
+//                return true;
 //            case R.id.menu_top_start_logcat:
 //                LogCatUtil.startLogCat(mGp, mGp.getLogDirName(),"logcat.txt");
 //                return true;
@@ -1903,15 +1892,15 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void processHomeButtonPress() {
-        if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_TASK)) {
+        if (mCurrentTab.equals(mTabNameTask)) {
             if (mGp.syncTaskAdapter.isShowCheckBox()) {
                 mGp.syncTaskAdapter.setShowCheckBox(false);
                 mGp.syncTaskAdapter.notifyDataSetChanged();
 
                 setSyncTaskContextButtonNormalMode();
             }
-        } else if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_MESSAGE)) {
-        } else if (mCurrentTab.equals(SMBSYNC2_TAB_NAME_HIST)) {
+        } else if (mCurrentTab.equals(mTabNameMessage)) {
+        } else if (mCurrentTab.equals(mTabNameHistory)) {
             if (mGp.syncHistoryAdapter.isShowCheckBox()) {
                 mGp.syncHistoryAdapter.setShowCheckBox(false);
                 mGp.syncHistoryAdapter.notifyDataSetChanged();
@@ -2014,81 +2003,84 @@ public class ActivityMain extends AppCompatActivity {
         title.setText(getString(R.string.msgs_dlg_title_about) + " (Ver " + SystemInfo.getApplVersionName(mContext) + ")");
 
         // get our tabHost from the xml
-        final TabHost tab_host = (TabHost) dialog.findViewById(R.id.about_tab_host);
-        tab_host.setup();
+        final CustomTabLayout tab_layout = (CustomTabLayout) dialog.findViewById(R.id.tab_layout);
+        tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_func_btn));
+        tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_privacy_btn));
+        tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_change_btn));
 
-        final TabWidget tab_widget = (TabWidget) dialog.findViewById(android.R.id.tabs);
-
-        tab_widget.setStripEnabled(false);
-        tab_widget.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
-
-        CustomTabContentView tabViewProf = new CustomTabContentView(mContext, getString(R.string.msgs_about_dlg_func_btn));
-        tab_host.addTab(tab_host.newTabSpec("func").setIndicator(tabViewProf).setContent(android.R.id.tabcontent));
-
-        CustomTabContentView tabViewPrivacy = new CustomTabContentView(mContext, getString(R.string.msgs_about_dlg_privacy_btn));
-        tab_host.addTab(tab_host.newTabSpec("privacy").setIndicator(tabViewPrivacy).setContent(android.R.id.tabcontent));
-
-        CustomTabContentView tabViewHist = new CustomTabContentView(mContext, getString(R.string.msgs_about_dlg_change_btn));
-        tab_host.addTab(tab_host.newTabSpec("change").setIndicator(tabViewHist).setContent(android.R.id.tabcontent));
+        tab_layout.adjustTabWidth();
 
         LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout ll_func = (LinearLayout) vi.inflate(R.layout.about_dialog_func, null);
-        LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
-        LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
 
+//        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
         int zf=120;
 
+        LinearLayout ll_func = (LinearLayout) vi.inflate(R.layout.about_dialog_func, null);
         final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function);
         func_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_func_desc));
         func_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 //        func_view.getSettings().setBuiltInZoomControls(true);
+//        func_view.getSettings().setDisplayZoomControls(true);
+//        func_view.getSettings().setSupportZoom(true);
+//        func_view.getSettings().setBuiltInZoomControls(true);
         func_view.getSettings().setTextZoom(zf);
 
-
+        LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
         final WebView privacy_view = (WebView) ll_privacy.findViewById(R.id.about_dialog_privacy);
         privacy_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
         privacy_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        func_view.getSettings().setBuiltInZoomControls(true);
-        privacy_view.getSettings().setTextZoom(zf);
+//        privacy_view.getSettings().setBuiltInZoomControls(true);
+        func_view.getSettings().setTextZoom(zf);
 
-        final WebView change_view =
-                (WebView) ll_change.findViewById(R.id.about_dialog_change_history);
+        LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
+        final WebView change_view = (WebView) ll_change.findViewById(R.id.about_dialog_change_history);
         change_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_change_desc));
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        change_view.getSettings().setTextZoom(zf);
 //        change_view.getSettings().setBuiltInZoomControls(true);
+        func_view.getSettings().setTextZoom(zf);
 
-        final CustomViewPagerAdapter mAboutViewPagerAdapter = new CustomViewPagerAdapter(mActivity,
+        final CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity,
                 new WebView[]{func_view, privacy_view, change_view});
-        final CustomViewPager mAboutViewPager = (CustomViewPager) dialog.findViewById(R.id.about_view_pager);
+        final CustomViewPager viewPager = (CustomViewPager) dialog.findViewById(R.id.about_view_pager);
 //	    mMainViewPager.setBackgroundColor(mThemeColorList.window_color_background);
-        mAboutViewPager.setOffscreenPageLimit(3);
-        mAboutViewPager.setAdapter(mAboutViewPagerAdapter);
-        mAboutViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
+//        viewPager.setSwipeEnabled(false);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
-//		    	mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
-                tab_widget.setCurrentTab(position);
-                tab_host.setCurrentTab(position);
+//                mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
+                tab_layout.getTabAt(position).select();
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-//		    	mUtil.addDebugMsg(2,"I","onPageScrollStateChanged entered, state="+state);
+//                mUtil.addDebugMsg(2,"I","onPageScrollStateChanged entered, state="+state);
             }
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//		    	mUtil.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
+//		    	util.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
             }
         });
 
-        tab_host.setOnTabChangedListener(new OnTabChangeListener() {
+        tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
-            public void onTabChanged(String tabId) {
-                mUtil.addDebugMsg(2, "I", "onTabchanged entered. tab=" + tabId);
-                mAboutViewPager.setCurrentItem(tab_host.getCurrentTab());
+            public void onTabSelected(TabLayout.Tab tab) {
+//                mUtil.addDebugMsg(2,"I","onTabSelected entered, state="+tab);
+                viewPager.setCurrentItem(tab.getPosition());
             }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+//                mUtil.addDebugMsg(2,"I","onTabUnselected entered, state="+tab);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+//                mUtil.addDebugMsg(2,"I","onTabReselected entered, state="+tab);
+            }
+
         });
 
         final Button btnOk = (Button) dialog.findViewById(R.id.about_dialog_btn_ok);
@@ -2113,22 +2105,22 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void terminateApplication() {
-        if (mMainTabHost.getCurrentTabTag().equals(SMBSYNC2_TAB_NAME_TASK)) {//
+        if (mMainTabLayout.getSelectedTabName().equals(mTabNameTask)) {//
             if (mGp.syncTaskAdapter.isShowCheckBox()) {
                 mGp.syncTaskAdapter.setShowCheckBox(false);
                 mGp.syncTaskAdapter.notifyDataSetChanged();
                 setSyncTaskContextButtonNormalMode();
                 return;
             }
-        } else if (mMainTabHost.getCurrentTabTag().equals(SMBSYNC2_TAB_NAME_SCHEDULE)) {
+        } else if (mMainTabLayout.getSelectedTabName().equals(mTabNameSchedule)) {
             if (mGp.syncScheduleAdapter.isSelectMode()) {
                 mGp.syncScheduleAdapter.setSelectMode(false);
                 mGp.syncScheduleAdapter.notifyDataSetChanged();
                 setScheduleContextButtonNormalMode();
                 return;
             }
-        } else if (mMainTabHost.getCurrentTabTag().equals(SMBSYNC2_TAB_NAME_MESSAGE)) {
-        } else if (mMainTabHost.getCurrentTabTag().equals(SMBSYNC2_TAB_NAME_HIST)) {
+        } else if (mMainTabLayout.getSelectedTabName().equals(mTabNameMessage)) {
+        } else if (mMainTabLayout.getSelectedTabName().equals(mTabNameHistory)) {
             if (mGp.syncHistoryAdapter.isShowCheckBox()) {
                 mGp.syncHistoryAdapter.setShowCheckBox(false);
                 mGp.syncHistoryAdapter.notifyDataSetChanged();
@@ -2237,7 +2229,6 @@ public class ActivityMain extends AppCompatActivity {
                 ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired +
 
                 ", settingSupressAppSpecifiDirWarning=" + mGp.settingSupressAppSpecifiDirWarning +
-                ", settingSupressLocationServiceWarning=" + mGp.settingSupressLocationServiceWarning +
                 ", settingFixDeviceOrientationToPortrait=" + mGp.settingFixDeviceOrientationToPortrait +
                 ", settingForceDeviceTabletViewInLandscape=" + mGp.settingForceDeviceTabletViewInLandscape +
                 ", settingScreenThemeLanguage=" + mGp.settingScreenThemeLanguage + " (value=" + mGp.settingScreenThemeLanguageValue + ")" +
@@ -2326,14 +2317,9 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private final int REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
-    private final int REQUEST_PERMISSIONS_ACCESS_LOCATION = 2;
-    private final int REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION =3;
 
-    /*
-    Target SDK 29に変更によりACCESS_COARSE_LOCATIONからACCESS_FINE_LOCATIONに変更
-    https://developer.android.com/guide/topics/connectivity/wifi-scan?hl=ja
-     */
-    private void checkRequiredPermissions() {
+    private NotifyEvent mNtfyExternalStoragePermission=null;
+    private void checkRequiredPermissions(final NotifyEvent p_ntfy) {
         if (Build.VERSION.SDK_INT >= 23) {
             mUtil.addDebugMsg(1, "I", "Prermission WriteExternalStorage=" + checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) +
                     ", WakeLock=" + checkSelfPermission(Manifest.permission.WAKE_LOCK));
@@ -2342,8 +2328,8 @@ public class ActivityMain extends AppCompatActivity {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                                REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
+                        mNtfyExternalStoragePermission=p_ntfy;
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
                     }
 
                     @Override
@@ -2368,110 +2354,10 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_main_permission_external_storage_title),
                         mContext.getString(R.string.msgs_main_permission_external_storage_request_msg), ntfy);
             } else {
-//                Hide location permission at start time
-//                checkLocationPermission(false);
+                p_ntfy.notifyToListener(true, null);
             }
         } else {
-//            Hide location permission at start time
-//            checkLocationPermission(false);
-        }
-    }
-
-    public void checkLocationPermission(boolean force_permission) {
-        if (Build.VERSION.SDK_INT >= 27) {
-            if (Build.VERSION.SDK_INT >= 29) {
-                mUtil.addDebugMsg(1, "I", "Permission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)+
-                        ", Backgrund Location=" + checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)+
-                        ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired);
-                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
-                        (mGp.settingGrantLocationRequired || force_permission)) {
-                    NotifyEvent ntfy = new NotifyEvent(mContext);
-                    ntfy.setListener(new NotifyEventListener() {
-                        @Override
-                        public void positiveResponse(Context c, Object[] o) {
-                            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSIONS_ACCESS_LOCATION);
-                        }
-
-                        @Override
-                        public void negativeResponse(Context c, Object[] o) {
-                            mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-                            SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-                        }
-                    });
-                    if (Build.VERSION.SDK_INT>=30) {
-                        showLocationPermissionMessage(mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-                                mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg_api30),
-                                mContext.getString(R.string.msgs_main_location_location_permission_screen_shot), ntfy);
-                    } else {
-                        mUtil.showCommonDialog(true, "W",
-                                mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-                                mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
-                    }
-                } else {
-                    if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
-                        checkBackgroundLocationPermission(null);
-                    }
-                }
-            } else {
-                mUtil.addDebugMsg(1, "I", "Permission LocationCoarse=" + checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)+
-                        ", settingGrantCoarseLocationRequired="+mGp.settingGrantLocationRequired);
-                if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
-                        (mGp.settingGrantLocationRequired || force_permission)) {
-                    NotifyEvent ntfy = new NotifyEvent(mContext);
-                    ntfy.setListener(new NotifyEventListener() {
-                        @Override
-                        public void positiveResponse(Context c, Object[] o) {
-                            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_PERMISSIONS_ACCESS_LOCATION);
-                        }
-
-                        @Override
-                        public void negativeResponse(Context c, Object[] o) {
-                            mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-                            SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-                        }
-                    });
-                    mUtil.showCommonDialog(true, "W",
-                            mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-                            mContext.getString(R.string.msgs_main_permission_coarse_location_request_msg), ntfy);
-                } else {
-                    SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-                }
-            }
-        }
-    }
-
-    public void checkBackgroundLocationPermission(final NotifyEvent p_ntfy) {
-        mUtil.addDebugMsg(1, "I", "Background location permission=" + checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION));
-        if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
-                (mGp.settingGrantLocationRequired)) {
-            NotifyEvent ntfy_bg_location_request = new NotifyEvent(mContext);
-            ntfy_bg_location_request.setListener(new NotifyEventListener() {
-                @Override
-                public void positiveResponse(Context c, Object[] o) {
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION);
-                }
-
-                @Override
-                public void negativeResponse(Context c, Object[] o) {
-                    mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-                    if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-                }
-            });
-
-            if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)!=PackageManager.PERMISSION_GRANTED) {
-                if (Build.VERSION.SDK_INT>=30) {
-                    showLocationPermissionMessage(mContext.getString(R.string.msgs_main_permission_background_location_title),
-                            mContext.getString(R.string.msgs_main_permission_background_location_request_msg_api30),
-                            mContext.getString(R.string.msgs_main_location_background_location_permission_screen_shot), ntfy_bg_location_request);
-                } else {
-                    mUtil.showCommonDialog(true, "W",
-                            mContext.getString(R.string.msgs_main_permission_background_location_title),
-                            mContext.getString(R.string.msgs_main_permission_background_location_request_msg),
-                            ntfy_bg_location_request);
-                }
-            } else {
-                if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-            }
+            p_ntfy.notifyToListener(true, null);
         }
     }
 
@@ -2484,9 +2370,7 @@ public class ActivityMain extends AppCompatActivity {
                 mUiHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        checkStorageStatus();
-//                      Hide location permission at start time
-//                      checkLocationPermission(false);
+                        if (mNtfyExternalStoragePermission!=null) mNtfyExternalStoragePermission.notifyToListener(true, null);
                     }
                 }, 500);
             } else {
@@ -2504,50 +2388,6 @@ public class ActivityMain extends AppCompatActivity {
                 mUtil.showCommonDialog(false, "W",
                         mContext.getString(R.string.msgs_main_permission_external_storage_title),
                         mContext.getString(R.string.msgs_main_permission_external_storage_denied_msg), ntfy_term);
-            }
-        } else if (REQUEST_PERMISSIONS_ACCESS_LOCATION == requestCode) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (Build.VERSION.SDK_INT>=29) {
-                    checkBackgroundLocationPermission(null);
-                } else {
-                    SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-                }
-            } else {
-                mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-//                NotifyEvent ntfy_deny=new NotifyEvent(mContext);
-//                ntfy_deny.setListener(new NotifyEventListener() {
-//                    @Override
-//                    public void positiveResponse(Context context, Object[] objects) {
-//                        mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-//                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-//                    }
-//                    @Override
-//                    public void negativeResponse(Context context, Object[] objects) {}
-//                });
-//                mUtil.showCommonDialog(false, "W",
-//                        mContext.getString(R.string.msgs_main_permission_coarse_location_title),
-//                        mContext.getString(R.string.msgs_main_permission_coarse_location_denied_msg), ntfy_deny);
-            }
-        } else if (REQUEST_PERMISSIONS_ACCESS_BACKGROUND_LOCATION == requestCode) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-            } else {
-                mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-                SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-//                NotifyEvent ntfy_deny=new NotifyEvent(mContext);
-//                ntfy_deny.setListener(new NotifyEventListener() {
-//                    @Override
-//                    public void positiveResponse(Context context, Object[] objects) {
-//                        mGp.setSettingGrantCoarseLocationRequired(mContext, false);
-//                        SyncTaskEditor.checkLocationServiceWarning(mActivity, mGp, mUtil);
-//                    }
-//                    @Override
-//                    public void negativeResponse(Context context, Object[] objects) {}
-//                });
-//                mUtil.showCommonDialog(false, "W",
-//                        mContext.getString(R.string.msgs_main_permission_background_location_title),
-//                        mContext.getString(R.string.msgs_main_permission_background_location_denied_msg), ntfy_deny);
             }
         }
     }

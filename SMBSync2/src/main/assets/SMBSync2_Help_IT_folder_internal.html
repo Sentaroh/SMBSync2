@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>SMBSync2_Help_IT_folder_internal</title></head>
+<body><h3>tipo memoria</h3>
+<p>Selezionare il punto di montaggio per lo stoccaggio interno.</p>
+<h3>Lista cartelle</h3>
+<p>Mostra l&#39;elenco delle directory nella memoria interna. 
+Quando si preme il tasto elenco directory, vengono visualizzate le directory selezionabili. Premete sulla directory che volete scegliere e poi sul tasto &quot;Seleziona&quot;. Per navigare attraverso le sottodirectory, toccate il nome della directory.</p>
+<h3>Cartelle</h3>
+<p>Si prega di inserire l&#39;elenco di destinazione o l&#39;elenco principale. Se si specifica una directory che non esiste nel target, questa verrà creata durante la sincronizzazione.</p>
+<h3>Aggiungi parole chiave</h3>
+<p>%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di directory di destinazione. Le parole chiave vengono convertite nell&#39;anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.</p>
+<p><strong>These options are displayed only when the sync type is Copy/Move.</strong></p>
+<h3>Aggiungi tempo/data del sync nel nome della cartella (the keyword will be replaced by the date e time in which the sync was performed)</h3>
+<p>Se spuntata, i dati EXIF dei supporti di backup vengono utilizzati per ottenere la data e l&#39;ora di ripresa. Il timestamp della data e dell&#39;ora di ripresa viene utilizzato e allegato alla cartella di destinazione. Quando l&#39;applicazione non è in grado di ottenere l&#39;ora di ripresa dall&#39;EXIF, utilizza l&#39;ultima ora modificata del file.</p>
+<p><strong>The following options are displayed only when the sync type is Archive.</strong></p>
+<h3>If the date e time cannot be determined by EXIF data, display a confirmation message</h3>
+<p>Se l&#39;opzione è selezionata, quando la data e l&#39;ora di ripresa non possono essere acquisite da EXIF , viene visualizzato un messaggio di conferma dell&#39;utilizzo o meno dell&#39;ultima ora modificata del file. Se si seleziona Annulla nella finestra di dialogo di conferma, il file non verrà archiviato.</p>
+<h3>Archivia file se</h3>
+<p>Scegliere i criteri temporali per determinare quali file archiviare. La selezione dell&#39;ora si basa sulla data di ripresa delle foto/video o sull&#39;ultima ora modificata se non è possibile acquisire il timestamp dall&#39;intestazione EXIF.</p>
+<ul>
+<li><p>Qualunque data (Tutti)</p>
+<p>Archivia tutte le immagini/video</p>
+</li>
+<li><p>Più vecchio di 7 giorni</p>
+<p>Archiviare solo i file con una data di ripresa più vecchia di 7 giorni o più rispetto all&#39;ora attuale</p>
+</li>
+<li><p>Più vecchio di 30 giorni</p>
+<p>Archiviare solo i file con una data di ripresa più vecchia di 30 giorni o più rispetto all&#39;ora attuale</p>
+</li>
+<li><p>Più vecchio di 60 giorni</p>
+<p>Archiviare solo i file con una data di ripresa più vecchia di 60 giorni o più rispetto all&#39;ora attuale</p>
+</li>
+<li><p>Più vecchio di 90 giorni</p>
+<p>Archiviare solo i file con una data di ripresa più vecchia di 90 giorni o più rispetto all&#39;ora attuale</p>
+</li>
+<li><p>Più vecchio di 180 giorni</p>
+<p>Archiviare solo i file con una data di ripresa più vecchia di 180 giorni o più rispetto all&#39;ora attuale</p>
+</li>
+<li><p>Più vecchio di 1 anno</p>
+<p>Archiviare solo i file con una data di ripresa più vecchia di 1 anno o più rispetto all&#39;ora attuale</p>
+</li>
+
+</ul>
+<p> </p>
+<h3>Increment file names by appending</h3>
+<p>Aggiungere il numero di sequenza incrementale al nome del file durante l&#39;archiviazione.</p>
+<ul>
+<li><p>Non cambiare</p>
+<p>Non aggiungere un numero progressivo</p>
+</li>
+<li><p>2 cifre (01-99)</p>
+<p>Append 001-999</p>
+</li>
+<li><p>3 cifre (001-999)</p>
+<p>Append 001-999</p>
+</li>
+<li><p>4 cifre (0001-9999)</p>
+<p>Append 0001-9999</p>
+</li>
+<li><p>5 cifre (00001-99999)</p>
+<p>Append 00001-99999</p>
+</li>
+<li><p>6 cifre (000001-999999)</p>
+<p>Append 000001-999999</p>
+</li>
+
+</ul>
+<h3>Cambia il nome del file before archiving it in he cartella destinazione </h3>
+<p>Se l&#39;opzione è selezionata, il nome del file archiviato verrà modificato in base ai criteri selezionati. Potete aggiungere la data e l&#39;ora nel nome del file &quot;Modello del nome del file&quot;. </p>
+<h3>File name template</h3>
+<p>Inserire gli schemi da utilizzare per rinominare i file archiviati. Il valore predefinito è DSC_%DATE%.</p>
+<ul>
+<li><p>%ORIGINAL-NAME%</p>
+<p>Sarà sostituito dal nome originale del file durante l&#39;archiviazione dell&#39;archivio (es. DSC_0001)</p>
+</li>
+<li><p>%DATE%</p>
+<p>Sarà sostituito dalla data di ripresa.(Es. 2018-01-01)</p>
+</li>
+<li><p>%TIME%</p>
+<p>Sarà sostituito dal tempo di ripresa.(Es. 13:01:10)</p>
+</li>
+
+</ul>
+<p>L&#39;ultima riga della schermata mostra come apparirà la cartella di destinazione e il nome del file una volta archiviati.</p>
+<h3>Create a directory based on the shooting date to store the files</h3>
+<p>Crea una directory con indicazione dell&#39;ora in cui memorizzare i file archiviati.</p>
+<p>Quando viene selezionato, viene visualizzato il &quot;Modello di nome della directory&quot;.</p>
+<h3>Directory template</h3>
+<p>Inserire gli schemi da utilizzare per rinominare la directory da creare (exp. DIR-% YEAR% -% MONTH% e così via). Premendo i tasti dei modelli, potete inserire le parole chiave dietro il cursore.</p>
+<ul>
+<li><p>%YEAR%</p>
+<p>Sarà sostituito dall&#39;anno di riprese. (Es. 2018)</p>
+</li>
+<li><p>%MONTH%</p>
+<p>Sarà sostituito dal Mese di ripresa (Es. 01)</p>
+</li>
+<li><p>%DAY%</p>
+<p>Sarà sostituito dal giorno delle riprese (Es. 29)</p>
+</li>
+
+</ul>
+<p>L&#39;ultima riga della schermata mostra come apparirà la cartella di destinazione e il nome del file una volta archiviati.</p>
+<h3>Informazioni dettagliate</h3>
+<p><a href='https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing' target='_blank' class='url'>https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing</a></p>
+<p> </p>
+</body>
+</html>

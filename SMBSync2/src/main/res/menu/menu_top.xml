@@ -3,17 +3,17 @@
     <item android:id="@+id/menu_top_scheduler"
         android:title="@string/msgs_menu_scheduler"
         android:icon="@drawable/ic_64_schedule"
-        appv7:showAsAction="ifRoom"
+        appv7:showAsAction="always"
         />
     <item android:id="@+id/menu_top_sync"
           android:title="@string/msgs_menu_sync"
           android:icon="@drawable/ic_32_sync"
-          appv7:showAsAction="ifRoom"
+          appv7:showAsAction="always"
           />
     <item android:id="@+id/menu_top_exec_schedule"
         android:title="@string/msgs_menu_exec_schedule"
         android:icon="@drawable/ic_128_execute_schedule"
-        appv7:showAsAction="ifRoom"
+        appv7:showAsAction="always"
         />
     <item android:id="@+id/menu_top_browse_log"
           android:title="@string/msgs_menu_browse_logfile" 
@@ -56,9 +56,9 @@
         android:title="@string/msgs_profile_edit_sync_folder_dlg_select_sdcard"
         />
 
-    <item android:id="@+id/menu_top_request_grant_coarse_location"
-        android:title="@string/msgs_main_permission_coarse_location_title"
-        />
+<!--    <item android:id="@+id/menu_top_request_grant_coarse_location"-->
+<!--        android:title="@string/msgs_main_permission_coarse_location_title"-->
+<!--        />-->
 
     <item android:id="@+id/menu_top_about"
           android:title="@string/msgs_menu_about" 

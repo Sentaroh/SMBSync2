@@ -2,7 +2,7 @@ package com.sentaroh.android.SMBSync2;
 
 /*
 The MIT License (MIT)
-Copyright (c) 2011-2018 Sentaroh
+Copyright (c) 2011 Sentaroh
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal
@@ -2782,6 +2782,9 @@ public class SyncTaskUtil {
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
         title.setText(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_title));
+
+        LinearLayout ll_filter_guide=(LinearLayout)ll_dlg_view.findViewById(R.id.filter_select_edit_ip_address_guide_ll);
+        ll_filter_guide.setVisibility(LinearLayout.VISIBLE);
 
         Button add_current_addr = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
         add_current_addr.setText(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_add_current_addr));
@@ -7966,7 +7969,6 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileString(c, pw, "",        encrypt_required, cp, c.getString(R.string.settings_mgt_dir));
 
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_suppress_warning_app_specific_dir));
-        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_suppress_warning_location_service_disabled));
 
         saveSettingsParmsToFileString(c, pw, "1",       encrypt_required, cp, c.getString(R.string.settings_notification_message_when_sync_ended));
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_playback_ringtone_when_sync_ended));

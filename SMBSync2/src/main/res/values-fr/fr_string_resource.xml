@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_change_btn">Historique des modifications</string>
         <string name="msgs_about_dlg_privacy_btn">Confidentialité</string>
         <string name="msgs_dlg_title_about">A propos de SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_FR_Short.htm</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_FR.htm</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.htm</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_FR_Short.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_FR.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_FR.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Sélectionner les tâches et les paramètres à importer</string>
         <string name="msgs_export_import_profile_listing">Afficher les fichiers de configutaion</string>
@@ -44,19 +44,19 @@
         <string name="msgs_export_import_pswd_hint_confirm">Confirmer mot de passe</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Les mots de passe saisis ne sont pas identiques.</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync2_Help_FR_task.htm</string>
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_FR_task.html</string>
         <string name="msgs_help_sync_task_title">Aide de Configuration de Tâche</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_FR_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_FR_folder_internal.html</string>
         <string name="msgs_help_sync_folder_internal_title">Aide sur le Stockage Interne</string>
-        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_FR_folder_sdcard.htm</string>
+        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_FR_folder_sdcard.html</string>
         <string name="msgs_help_sync_folder_sdcard_title">Aide sur le Stockage Externe (carte SD)</string>
-        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_FR_folder_usb.htm</string>
+        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_FR_folder_usb.html</string>
         <string name="msgs_help_sync_folder_usb_title">Aide sur Stockage USB</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_FR_folder_smb.htm</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_FR_folder_smb.html</string>
         <string name="msgs_help_sync_folder_smb_title">Aide sur Serveur SMB</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_FR_folder_zip.htm</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_FR_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">Aide sur Fichier ZIP</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_FR_task_picture.htm</string>
+        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_FR_task_picture.html</string>
         <string name="msgs_help_sync_task_picture_title">Aide sur Synchronisation de Photos</string>
     <!-- Log management -->
         <string name="msgs_log_management_title">Gestion des fichiers journaux</string>
@@ -141,16 +141,11 @@
         <string name="msgs_main_app_specific_dir_used_msg">Le dossier de stockage sélectionné est situé dans le dossier de données de l\'application. Ce dossier et vos données qui y auront été sauvegardées seront supprimés lorsque l\'application est désinstallée.</string>
         <string name="msgs_main_app_specific_dir_used_suppress">Ne plus afficher cet avertissement (vous pourrez le réactiver dans les paramètres de l\'application)</string>
         <string name="msgs_main_app_specific_dir_used_title">Avertissement concernant l\'utilisation du dossier de données de l\'application</string>
-        <string name="msgs_main_location_service_warning_msg_location">Les tâches de synchronisation suivantes ont échoué, car le service de localisation est désactivé. La localisation (GPS) est requise depuis Android 8.1 pour pouvoir identifier le nom (SSID) de l\'interface Wifi. Vous devez soit activer la localisation dans les paramètres système soit modifier vos options de synchronisation dans l\'application en sélectionnant "Tous les réseaux", "Wifi avec IP privée" ou "Liste d\'adresse IP".</string>
-        <string name="msgs_main_location_service_warning_msg_coarse">Les tâches de synchronisation suivantes ont échoué, car l\'application ne dispose pas des permissions pour accéder au service de localisation. La localisation (GPS) est requise depuis Android 8.1 pour pouvoir identifier le nom (SSID) de l\'interface Wifi. Vous devez soit autoriser l\'accès au service de localisation soit modifier vos options de synchronisation dans l\'application en sélectionnant "Tous les réseaux", "Wifi avec IP privée" ou "Liste d\'adresse IP".</string>
-        <string name="msgs_main_location_service_warning_msg_both">Les tâches de synchronisation suivantes ont échoué, car l\'accès aux services de localisation est désactivé. La localisation (GPS) est requise depuis Android 8.1 pour pouvoir identifier le nom (SSID) de l\'interface Wifi. Vous devez soit activer la localisation dans les paramètres système ainsi qu\'autoriser l\'application à y accéder, soit modifier vos options de synchronisation dans l\'application en sélectionnant "Tous les réseaux", "Wifi avec IP privée" ou "Liste d\'adresse IP".</string>
-        <string name="msgs_main_location_error_location_service_is_disabled">Impossible d\'identifier le nom du réseau Wifi, car le service de localisation est désactivé. Merci de l\'activer dans les paramètres système.</string>
-        <string name="msgs_main_location_error_location_permission_not_granted">Impossible d\'identifier le nom du réseau Wifi, car l\'application ne dispose pas des permissions d\'accès à la localisation. Merci d\'autoriser l\'accès à la localisation dans le menu.</string>
-        <string name="msgs_main_location_error_background_location_permission_not_granted">Impossible d\'identifier le nom du réseau Wifi, car la localisation n\'est autorisée que pendant l\'utilisation de l\'application. Autorisez l\'accès au service de localisation en arrière-plan (toujours autoriser).</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">Les listes de points d\'accès ne sont pas disponibles</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">Les listes de points d\'accès ne sont pas disponibles</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Les listes de points d\'accès ne sont plus disponibles en raison de la conformité avec la politique de confidentialité de Google Play, c\'est pourquoi l\'option de point d\'accès sans fil a été modifiée en \"Wifi avec IP privée\".</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">La liste des points d\'accès n\'est plus disponible en raison de la conformité avec les règles de confidentialité de Google Play. Veuillez modifier la tâche de synchronisation et la remplacer par \"Liste d\'adresses IP\", etc.</string>
         <string name="msgs_main_location_service_warning_suppress">Désactiver cet avertissement (peut être réactivé dans les paramètres de synchronisation)</string>
-        <string name="msgs_main_location_service_warning_title">Avertissement concernant le service de localisation</string>
-        <string name="msgs_main_location_location_permission_screen_shot">LocationPermission1-EN.jpg</string>
-        <string name="msgs_main_location_background_location_permission_screen_shot">LocationPermission2-EN.jpg</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">Carte SD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">Echec d\'affichage du menu autorisant l\'accès en écriture à la carte SD.</string>
         <string name="msgs_main_external_sdcard_select_required_cancel_msg">Synchronisation impossible sans autoriser l\'accès en écriture à la carte SD. Tâche=%s</string>
@@ -173,15 +168,6 @@
         <string name="msgs_main_external_usb_select_required_title">Autoriser l\'écriture au stockage USB</string>
         <string name="msgs_main_external_usb_select_retry_select_msg">Le dossier racine du stockage USB n\'a pas été sélectionné. Voulez-vous choisir à nouveau ?</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">L\'emplacement "carte SD" a été sélectionné. Voulez-vous resélectionner le stockage USB?</string>
-        <string name="msgs_main_permission_coarse_location_denied_msg">Si vous choisissez \"Wifi Sélectionnés\" dans les paramètres de la tâche, la synchronisation échouera si vous n\'accordez pas la permission d\'accès au service de localisation. Merci d\'autoriser "Permission d\'accès au service de localisation" dans le menu.</string>
-        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 nécessite la permission d\'accès au service de localisation pour pouvoir identifier le SSID du réseau Wifi.\nSi vous spécifiez \"Wifi Sélectionnés\", la synchronisation échouera tant que cette permission n\'est pas accordée.\nSouhaitez-vous demander l\'autorisation d\'accès à la localisation maintenant ?</string>
-        <string name="msgs_main_permission_coarse_location_request_msg_api29">SMBSync2 nécessite la permission d\'accès au service de localisation pour pouvoir identifier le SSID du réseau Wifi.\nSi vous spécifiez \"Wifi Sélectionnés\", la synchronisation échouera tant que cette permission n\'est pas accordée. Veuillez sélectionner \"Autoriser tout le temps\" sur l\'écran suivant.</string>
-        <string name="msgs_main_permission_coarse_location_request_msg_api30">SMBSync2 nécessite la permission d\'accès au service de localisation pour pouvoir identifier le SSID du réseau Wifi.\nSi vous spécifiez \"Wifi Sélectionnés\", la synchronisation échouera tant que cette permission n\'est pas accordée. Veuillez sélectionner \"Pendant l\'utilisation de l\'application\" sur l\'écran suivant.</string>
-        <string name="msgs_main_permission_background_location_title">Autorisation de localisation en arrière-plan</string>
-        <string name="msgs_main_permission_background_location_denied_msg">Si vous choisissez \"Wifi Sélectionnés\" dans les paramètres de la tâche, la synchronisation échouera si vous n\'accordez pas la permission d\'accès au service de localisation. Merci d\'autoriser "Permission d\'accès au service de localisation" dans le menu.</string>
-        <string name="msgs_main_permission_background_location_request_msg">Cette autorisation est nécessaire pour que l\'application puisse lire le SSID WiFi.\nSi vous n\'accordez pas cette permission et que vous choisissez l\'option \"Liste des points d\'accès\" dans la tâche de synchronisation, la synchronisation échouera.\nSous Permissions de localisation, sélectionnez \"Toujours autoriser\".</string>
-        <string name="msgs_main_permission_background_location_request_msg_api30">Cette autorisation est nécessaire pour que l\'application puisse lire le SSID WiFi.\nSi vous n\'accordez pas cette permission et que vous choisissez l\'option \"Liste des points d\'accès\" dans la tâche de synchronisation, la synchronisation échouera.\nSous Permissions de localisation, sélectionnez \"Toujours autoriser\".</string>
-        <string name="msgs_main_permission_coarse_location_title">Permission pour la Localisation</string>
         <string name="msgs_main_permission_external_storage_denied_msg">L\'application ne peut pas démarrer, car elle ne dispose pas de l\'autorisation d\'accès au stockage interne.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Autorisez l\'accès au stockage interne pour permettre la lecture et l\'écriture des données synchronisées ainsi que pour la gestion des paramètres de l\'application. </string>
         <string name="msgs_main_permission_external_storage_title">Permission d\'Accès au Stockage Interne</string>
@@ -402,6 +388,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Supprimer</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Afficher les dossiers</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Exclure</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">Vous pouvez utiliser des jokers dans le filtre. Exemple :\n192.168.100.* == 192.168.100.0-192.168.100.255\n192.168.* == 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- exp. inclure: mon/dossier;/doss*/p?ivé\n- exclure tous les dossiers cache/tmp: \\cache/tmp\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- exp. de filtre: fichier1;*.txt;*.jpg;fichier*\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">L\'option \"Supprimer les répertoires et les fichiers exclus par les filtres\" est activée: Tous les fichiers et répertoires exclus par les filtres, ainsi que ceux n\'existant pas dans le dossier source, seront supprimés du répertoire de destination.</string>
@@ -421,7 +408,7 @@
         <string name="msgs_profile_sync_task_sync_file_type_video">Synchro des fichiers vidéo</string>
         <string name="msgs_profile_sync_task_sync_option">Options:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Différence de temps tolérée (sec) entre les fichiers source et destination</string>
-        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Ignorer la tâche si le WLAN n\'est pas connecté au point d\'accès spécifié, ou que l\'adresse IP ne correspond pas à celle spécifiée.</string>
+        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Sauter la tâche si l\'adresse IP du WLAN ne correspond pas à l\'adresse IP spécifiée.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Autoriser la connexion aux adresses IP publiques</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirmer avant de remplacer/supprimer</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Supprimer les répertoires et les fichiers exclus par les filtres</string>
@@ -435,7 +422,7 @@
         <string name="msgs_profile_sync_task_sync_option_hidden_directory">Inclure les dossiers cachés</string>
         <string name="msgs_profile_sync_task_sync_option_hidden_file">Inclure les fichiers cachés</string>
         <string name="msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled">Fichier non synchronisé, car l\'option \"Ne pas remplacer le fichier de destination s\'il est plus récent que le fichier source\" est activée.</string>
-        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Ignorer les dossiers et fichiers dont le nom contient des caractères invalides (\", :, \\, *, &lt;, &gt; \|)</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Ignorer les dossiers et fichiers dont le nom contient des caractères invalides (\", :, \\, *, &lt;, &gt;, \|)</string>
         <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Obtenir la date de dernière modification des fichiers par une liste interne de l\'application</string>
         <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">Synchroniser les fichiers situés dans la racine du dossier source (si décoché, seuls les dossiers et leurs fichiers/sous-dossiers sont synchronisés)</string>
         <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning">AVERTISSEMENT: Risque de Résultats Inattendus!\nSi vous êtes dans une région avec changement d\'heure en été, ou que vous changez de fuseau horaire, le fichier destination peut faussement apparaitre comme plus ancien s\'il a été modifié pendant l\'intervalle de temps où l\'heure d\'été/fuseau horaire ont changé. Il est fortement recommandé d\'activer l\'option \"Confirmer avant de remplacer/supprimer\". Veuillez vérifier le contenu du fichier avant de l\'écraser.</string>
@@ -707,7 +694,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Liste des tâches de sync vide.</string>
         <string name="msgs_scheduler_info_sync_task_in_error">Les tâches de synchronisation suivantes contiennent des erreurs: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">Sélectionner au moins un jour de la semaine.</string>
-        <string name="msgs_schedule_list_edit_dlg_title">Modifier la liste de planification</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Une planification avec ce nom existe déjà.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Nom de la planification non spécifié.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Le nom de la tâche de planification contient un caractère non valide: \"%s\"</string>
@@ -749,15 +735,6 @@
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Activer le service de planification</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">Désactiver le service de planification</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Les planifications et les différentes options Wifi seront regroupées pour éviter les processus de sync doubles.</string>
-    <!-- Send logcat -->
-        <string name="msgs_send_logcat_menu_start_logcat">Démarrer le LogCat</string>
-        <string name="msgs_send_logcat_menu_stop_logcat">Stopper le LogCat</string>
-        <string name="msgs_send_logcat_menu_send_logcat">Envoi du LogCat</string>
-        <string name="msgs_send_logcat_btn_send">Envoi</string>
-        <string name="msgs_send_logcat_btn_preview_logcat">Aperçu du LogCat</string>
-        <string name="msgs_send_logcat_btn_preview_applog">Aperçu de l\'AppLog</string>
-        <string name="msgs_send_logcat_title">Envoi des LogCat et AppLog</string>
-        <string name="msgs_send_logcat_message">Envoyer les fichiers LogCat et AppLog au développeur par courriel\n1. Merci de vérifier le contenu de chaque fichier en appuyant sur le bouton afficher (choisir une application dans la fenêtre de sélection qui apparait).\n2. Après avoir validé les données à envoyer, appuyer sur le bouton envoyer et choisir E-Mail dans la boite de dialogue.\n3. Merci d\'écrire un message dans le texte de l\'email si besoin puis envoyer le courriel (le fichier journal est compressé au format zip et envoyé en pièce jointe avec le courriel).</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">La tâche de synchronisation n\'a pas été exécutée, car elle est désactivée.</string>
         <string name="msgs_svc_received_start_request_from_scheduler">Demande de sync reçue depuis la planification SMBSync2.</string>
@@ -977,10 +954,10 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Délai de réponse</string>
-        <string name="settings_smb_client_response_timeout_title">Délai de Réponse du Serveur</string>
+        <string name="settings_smb_client_response_timeout_title">Délai de Réponse du Serveur(SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Toujours Crypter les Mots de passe</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Crypter les Mots de passe</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Crypter les Mots de passe(SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
         <string name="settings_smb_lm_compatibility_dialog_title">Compatibilité SMB (LmCompatibility)</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
@@ -998,17 +975,14 @@
             <item>4</item>
         </string-array >
         <string name="settings_smb_lm_compatibility_summary">Compatibilité SMB (LmCompatibility)</string>
-        <string name="settings_smb_lm_compatibility_title">Compatibilité SMB</string>
+        <string name="settings_smb_lm_compatibility_title">Compatibilité SMB(SMBv1)</string>
         <string name="settings_smb_title">Paramètres SMB</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Utiliser la Sécurité Etendue</string>
-        <string name="settings_smb_use_extended_security_title">Utiliser la Sécurité Etendue</string>
+        <string name="settings_smb_use_extended_security_title">Utiliser la Sécurité Etendue(SMBv1)</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">Désactiver l\'avertissement indiquant que le dossier de configuration de l\'application est inclus dans la tâche de synchronisation</string>
         <string name="settings_suppress_warning_app_specific_dir_title">Sync du Dossier de Configuration</string>
-        <string name="settings_suppress_warning_location_service_disabled">settings_suppress_warning_location_service_disabled</string>
-        <string name="settings_suppress_warning_location_service_enabled_summary_ena">Ne pas afficher un avertissement demandant l\'activation du service de localisation.</string>
-        <string name="settings_suppress_warning_location_service_enabled_title">Service de Localisation Requis</string>
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">Journal de synchronisation détaillé</string>
         <string name="settings_sync_history_log_title">Historique des Synchronisations</string>
@@ -1026,7 +1000,8 @@
             <item>Français (fr)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
-            <item>中文(zh)</item>
+            <item>中文 (zh)</item>
+            <item>Italiano (it)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1035,6 +1010,7 @@
             <item>3</item>
             <item>4</item>
             <item>5</item>
+            <item>6</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Thème d\'Affichage</string>

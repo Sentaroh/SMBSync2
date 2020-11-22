@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="YYYY/MM/DD"
-            android:textSize="12sp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
              />
         <TextView
             android:id="@+id/msg_list_view_item_time"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="HH:MM:SS"
-            android:textSize="12sp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
              />
         <TextView
             android:id="@+id/msg_list_view_item_title"

@@ -2,7 +2,7 @@ package com.sentaroh.android.SMBSync2;
 
 /*
 The MIT License (MIT)
-Copyright (c) 2011-2018 Sentaroh
+Copyright (c) 2011 Sentaroh
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal 
@@ -95,7 +95,6 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public boolean activityIsFinished = true;
     public boolean activityRestartRequired=false;
-    public boolean logCatActive=false;
 
     public boolean externalStorageIsMounted = false;
     public boolean externalStorageAccessIsPermitted = false;
@@ -126,9 +125,6 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public boolean sampleProfileCreateRequired = false;
 
-    public boolean wifiIsActive = false;
-    public String wifiSsid = "";
-
 //    public boolean themeIsLight = true;
     public String settingScreenTheme =SMBSYNC2_SCREEN_THEME_STANDARD;
     public int applicationTheme = -1;
@@ -151,7 +147,6 @@ public class GlobalParameters extends CommonGlobalParms {
     public String settingMgtFileDir = "", settingLogMsgFilename = LOG_FILE_NAME;
     public boolean settingLogOption = false;
     public int settingLogFileMaxSize = 1024 * 1024 * 20;
-    public boolean settingPutLogcatOption = false;
 
     public boolean settingWriteSyncResultLog = true;
 
@@ -163,7 +158,7 @@ public class GlobalParameters extends CommonGlobalParms {
             "aac;apk;avi;gif;ico;gz;jar;jpe;jpeg;jpg;m3u;m4a;m4u;mov;movie;mp2;mp3;mpe;mpeg;mpg;mpga;png;qt;ra;ram;svg;tgz;wmv;zip;";
 
     public boolean settingSupressAppSpecifiDirWarning = false;
-    public boolean settingSupressLocationServiceWarning =false;
+//    public boolean settingSupressLocationServiceWarning =false;
     public boolean settingSuppressShortcutWarning = true;
     public boolean settingFixDeviceOrientationToPortrait = false;
     public boolean settingForceDeviceTabletViewInLandscape = false;
@@ -434,7 +429,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public void setLogParms(Context c, GlobalParameters gp) {
         setDebugLevel(gp.settingDebugLevel);
-        setLogcatEnabled(gp.settingPutLogcatOption);
+//        setLogcatEnabled(gp.settingPutLogcatOption);
         setLogLimitSize(10 * 1024 * 1024);
         setLogMaxFileCount(gp.settingLogMaxFileCount);
         setLogEnabled(gp.settingLogOption);
@@ -547,7 +542,7 @@ public class GlobalParameters extends CommonGlobalParms {
         settingLogMaxFileCount = Integer.valueOf(prefs.getString(c.getString(R.string.settings_log_file_max_count), "5"));
         settingMgtFileDir = prefs.getString(c.getString(R.string.settings_mgt_dir), getManagementDirectory());
         settingLogOption = prefs.getBoolean(c.getString(R.string.settings_log_option), false);
-        settingPutLogcatOption = prefs.getBoolean(c.getString(R.string.settings_put_logcat_option), false);
+//        settingPutLogcatOption = prefs.getBoolean(c.getString(R.string.settings_put_logcat_option), false);
         settingErrorOption = prefs.getBoolean(c.getString(R.string.settings_error_option), false);
         settingWifiLockRequired = prefs.getBoolean(c.getString(R.string.settings_wifi_lock), true);
 
@@ -563,7 +558,6 @@ public class GlobalParameters extends CommonGlobalParms {
         settingVibrateWhenSyncEnded = prefs.getString(c.getString(R.string.settings_vibrate_when_sync_ended), "0");
         settingExportedProfileEncryptRequired = prefs.getBoolean(c.getString(R.string.settings_exported_profile_encryption), true);
         settingSupressAppSpecifiDirWarning = prefs.getBoolean(c.getString(R.string.settings_suppress_warning_app_specific_dir), false);
-        settingSupressLocationServiceWarning = prefs.getBoolean(c.getString(R.string.settings_suppress_warning_location_service_disabled), false);
 
         settingScreenTheme =prefs.getString(c.getString(R.string.settings_screen_theme), SMBSYNC2_SCREEN_THEME_STANDARD);
         if (prefs.contains("settings_use_light_theme")) {

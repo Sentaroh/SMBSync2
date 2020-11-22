@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_change_btn">Журнал изменений</string>
         <string name="msgs_about_dlg_privacy_btn">Приватность </string>
         <string name="msgs_dlg_title_about">О программе SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_RU_Short.htm</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_RU.htm</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_EN.htm</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync2_Desc_RU_Short.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync2_Privacy_RU.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync2_Change_RU.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Импорт файла задания</string>
         <string name="msgs_export_import_profile_listing">Список файлов</string>
@@ -44,19 +44,19 @@
         <string name="msgs_export_import_pswd_hint_confirm">Подтвердите пароль</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Пароли не совпадают.</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync2_Help_RU_task.htm</string>
+        <string name="msgs_help_sync_task_file">SMBSync2_Help_RU_task.html</string>
         <string name="msgs_help_sync_task_title">Справка по задачам синхронизации</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_RU_folder_internal.htm</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync2_Help_RU_folder_internal.html</string>
         <string name="msgs_help_sync_folder_internal_title">Справка по внутреннему хранилищу</string>
-        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_RU_folder_sdcard.htm</string>
+        <string name="msgs_help_sync_folder_sdcard_file">SMBSync2_Help_RU_folder_sdcard.html</string>
         <string name="msgs_help_sync_folder_sdcard_title">Справка по карте памяти</string>
-        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_RU_folder_usb.htm</string>
+        <string name="msgs_help_sync_folder_usb_file">SMBSync2_Help_RU_folder_usb.html</string>
         <string name="msgs_help_sync_folder_usb_title">Справка по USB</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_RU_folder_smb.htm</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync2_Help_RU_folder_smb.html</string>
         <string name="msgs_help_sync_folder_smb_title">Справка по SMB-серверу</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_RU_folder_zip.htm</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_RU_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">Справка по ZIP файлу</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_RU_task_picture.htm</string>
+        <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_RU_task_picture.html</string>
         <string name="msgs_help_sync_task_picture_title">Справка по синхронизации в картинках</string>
     <!-- Log management -->
         <string name="msgs_log_management_title">Управление журналом</string>
@@ -141,16 +141,11 @@
         <string name="msgs_main_app_specific_dir_used_msg">В качестве места хранения выбран каталог приложения. Этот каталог и все данные, которые вы там сохранили, удаляются при удалении приложения.</string>
         <string name="msgs_main_app_specific_dir_used_suppress">Отключить это предупреждение (можно включить в настройках интерфейса пользователя)</string>
         <string name="msgs_main_app_specific_dir_used_title">Предупреждение об использовании каталога приложения</string>
-        <string name="msgs_main_location_service_warning_msg_location">Начиная с Android 8.1, следующая задача будет завершена с ошибкой, поскольку служба определения местоположения отключена. Пожалуйста, включите службу определения местоположения в настройках системы или измените параметр синхронизации на «при подключении к точке доступа», «частный адрес» или «список IP-адресов».</string>
-        <string name="msgs_main_location_service_warning_msg_coarse">Начиная с Android 8.1, следующие задачи не имеют «Разрешение определения низкой точности», поэтому синхронизация завершается с ошибкой. Пожалуйста, дайте разрешение из меню или измените на «Частный адрес» или «Список IP-адресов», если «Подключен к точке доступа» в опции синхронизации.</string>
-        <string name="msgs_main_location_service_warning_msg_both">«В Android 8.1 следующие задачи будут завершены с ошибкой, поскольку служба определения местоположения и местоположение с низкой точностью недоступны. Выполните одно из следующих действий: \n1. Включите службу определения местоположения в настройках системы, После этого дайте «разрешение на локацию низкой точности» из меню приложения. \n2 Измените на «Частный адрес» или «Список IP-адресов», когда «Подключен к точке доступа» в опции синхронизации.</string>
-        <string name="msgs_main_location_error_location_service_is_disabled">Не удается получить имя точки доступа WiFi, поскольку служба определения местоположения не включена. Пожалуйста, включите местоположение в настроек.</string>
-        <string name="msgs_main_location_error_location_permission_not_granted">Невозможно получить имя точки доступа WiFi, поскольку местоположение с низкой точностью не доступно. Пожалуйста, выберите местоположение низкой точности в меню.</string>
-        <string name="msgs_main_location_error_background_location_permission_not_granted">Невозможно получить имя точки доступа WiFi, поскольку определение местоположения с низкой точностью - «Разрешено только при использовании приложения». Пожалуйста, измените местоположение низкой точности в меню на «Всегда разрешать».</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">Списки точек доступа недоступны</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">Списки точек доступа недоступны</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Списки точек доступа больше не доступны из-за соответствия политике конфиденциальности Google Play, поэтому опция беспроводной точки доступа была изменена на \"Имеет частный адрес\".</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">Список точек доступа больше не доступен в соответствии с политикой конфиденциальности Google Play. Пожалуйста, отредактируйте задание синхронизации и измените его на \"Список IP-адресов\" и т. д.</string>
         <string name="msgs_main_location_service_warning_suppress">Не показывать это предупреждение снова в следующий раз</string>
-        <string name="msgs_main_location_service_warning_title">Предупреждение службы определения местоположения</string>
-        <string name="msgs_main_location_location_permission_screen_shot">LocationPermission1-EN.jpg</string>
-        <string name="msgs_main_location_background_location_permission_screen_shot">LocationPermission2-EN.jpg</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">Карта SD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">Не удалось получить разрешение на запись SD карты.</string>
         <string name="msgs_main_external_sdcard_select_required_cancel_msg">Вы не можите синхронизироваться, пока не будет предоставлено разрешение на запись в SD карту. Задача=%s</string>
@@ -173,15 +168,6 @@
         <string name="msgs_main_external_usb_select_required_title">Разрешить запись на USB-носитель</string>
         <string name="msgs_main_external_usb_select_retry_select_msg">Корневой каталог USB-носителя не был выбран. Хотите его выбрать?</string>
         <string name="msgs_main_external_usb_select_retry_select_sdcard_selected_msg">SDCARD была выбрана. Хотите повторно выбрать USB-накопитель?</string>
-        <string name="msgs_main_permission_coarse_location_denied_msg">Если в настройках задания указать \"Список точек доступа\", то синхронизация будет неудачной, если вы не разрешите Службе Местоположения. Пожалуйста, разрешите \"Разрешение на грубое расположение\" из меню.</string>
-        <string name="msgs_main_permission_coarse_location_request_msg">SMBSync2 привилегии, необходимые для чтения SSID WiFi. \nЕсли вы укажете \"Список точек доступа\" в задаче синхронизации, пока не будет предоставлено разрешение, завершится с ошибкой. \nВы хотите запросить разрешение на неточное местоопределение?</string>
-        <string name="msgs_main_permission_coarse_location_request_msg_api29">SMBSync2 привилегии, необходимые для чтения SSID WiFi. \nЕсли вы укажете \"Список точек доступа\" в задаче синхронизации, пока не будет предоставлено разрешение, завершится с ошибкой. Пожалуйста, выберите \"Разрешить все время\" на следующем экране.</string>
-        <string name="msgs_main_permission_coarse_location_request_msg_api30">SMBSync2 привилегии, необходимые для чтения SSID WiFi. \nЕсли вы укажете \"Список точек доступа\" в задаче синхронизации, пока не будет предоставлено разрешение, завершится с ошибкой. Пожалуйста, выберите "Во время использования приложения" на следующем экране.</string>
-        <string name="msgs_main_permission_background_location_title">Разрешение на фоновое расположение</string>
-        <string name="msgs_main_permission_background_location_denied_msg">Если в настройках задания указать \"Список точек доступа\", то синхронизация будет неудачной, если вы не разрешите Службе Местоположения. Пожалуйста, разрешите \"Разрешение на грубое расположение\" из меню.</string>
-        <string name="msgs_main_permission_background_location_request_msg">Это разрешение необходимо для чтения WiFi SSID в SMBSync2.\nДо тех пор пока разрешение не будет предоставлено, SMBSync2 выйдет с ошибкой, если в задаче синхронизации указан \"Список точек доступа\".\nВ разделе Разрешения на местоположение выберите \"Всегда разрешать\".</string>
-        <string name="msgs_main_permission_background_location_request_msg_api30">Это разрешение необходимо для чтения WiFi SSID в SMBSync2.\nДо тех пор пока разрешение не будет предоставлено, SMBSync2 выйдет с ошибкой, если в задаче синхронизации указан \"Список точек доступа\".\nВ разделе Разрешения на местоположение выберите \"Всегда разрешать\".</string>
-        <string name="msgs_main_permission_coarse_location_title">Разрешение на неточное местоположение</string>
         <string name="msgs_main_permission_external_storage_denied_msg">Невозможно запустить приложение, так как вам не было предоставлено разрешение на доступ к внутренней памяти.</string>
         <string name="msgs_main_permission_external_storage_request_msg">Предоставьте разрешение на доступ к внутреннему хранилищу для чтения и записи данных, которые синхронизированы с внутренним хранилищем и для административных данных.</string>
         <string name="msgs_main_permission_external_storage_title">Разрешение на внутреннее хранение</string>
@@ -402,6 +388,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Удалить</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Список каталога</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Исключить</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">В фильтре можно использовать подстановочные знаки. Пример:\n192.168.100.* == 192.168.100.0-192.168.100.255\n192.168.* == 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- отфильтровать все файлы с именами: file1;*.txt;*.jpg;file*.\n- фильтры можно также вводить в той же строке, разделенной \"; \"; \n- фильтры можно также вводить в той же строке, разделенной \"; \".\n - исключить выигрыши фильтров</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">При включенной опции \"Удаляет каталоги и файлы, исключенные фильтром\" все файлы и каталоги, не входящие в исходную директорию, а также файлы и каталоги, исключенные фильтром, будут удалены из целевой директории.</string>
@@ -421,7 +408,7 @@
         <string name="msgs_profile_sync_task_sync_file_type_video">Синхронизировать видеофайлы</string>
         <string name="msgs_profile_sync_task_sync_option">Опции:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Минимально допустимая разница во времени (в секундах) между исходным и целевым файлами для синхронизации</string>
-        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Пропустить задачу, если она не подключена к указанной точке доступа или IP-адрес беспроводной локальной сети не соответствует указанному IP-адресу.</string>
+        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Пропустите задачу, если IP-адрес WLAN не совпадает с указанным IP-адресом.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Разрешить синхронизацию с глобальными IP-адресами</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Подтвердите, прежде чем перезаписать/удалить</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Удаляет каталоги и файлы, исключенные фильтром</string>
@@ -435,7 +422,7 @@
         <string name="msgs_profile_sync_task_sync_option_hidden_directory">Включить скрытые каталоги</string>
         <string name="msgs_profile_sync_task_sync_option_hidden_file">Включить скрытые файлы</string>
         <string name="msgs_profile_sync_task_sync_option_ignore_never_overwrite_target_file_if_it_is_newer_than_the_master_file_option_enabled">Копирование файла не выполнено, потому что включена опция «Никогда не перезаписывать конечный файл, если он новее исходного файла».</string>
-        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Пропуск каталогов и имен файлов, содержащих недопустимые символы (\": \\, *, &lt; &gt; \|)</string>
+        <string name="msgs_profile_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Пропуск каталогов и имен файлов, содержащих недопустимые символы (\": \\, *, &lt; &gt;, \|)</string>
         <string name="msgs_profile_sync_task_sync_option_last_modified_smbsync">Принудительно получить дату и время последнего обновления в SMBSync2</string>
         <string name="msgs_profile_sync_task_sync_option_master_root_dir_file">Синхронизировать файлы в корне основной директории (если флажок не установлен, синхронизируются только папки и их файлы/подкаталоги).</string>
         <string name="msgs_profile_sync_task_sync_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file_warning">ПРЕДУПРЕЖДЕНИЕ: возможные Неожиданные результаты\nЕсли вы живете в зоне с DST или при переключении часовых поясов, целевой файл может ошибочно показать более старое время, чем источник, если он был изменен в пределах интервала DST/TimeZone.\nНастоятельно рекомендуется включить опцию \"Подтвердить перед перезаписью/удалением\". \nПожалуйста, проверьте содержимое файла перед его перелистыванием.</string>
@@ -514,7 +501,7 @@
         <string name="msgs_tab_name_schedule">Расписание</string>
         <string name="msgs_tab_name_msg">Сообщения</string>
         <string name="msgs_tab_name_prof">Задача</string>
-        <string name="msgs_terminate_application">Выход из SMBSync2.</string>
+        <string name="msgs_terminate_application">Выход из SMBSync2</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Выполнение управления файлами обслуживания.</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Отмена обслуживания</string>
@@ -707,7 +694,6 @@
         <string name="msgs_scheduler_info_sync_task_list_was_empty">Пустой список задач синхронизации</string>
         <string name="msgs_scheduler_info_sync_task_in_error">Следующие задачи синхронизации содержат ошибки: %s</string>
         <string name="msgs_scheduler_main_dw_not_selected">Пожалуйста, выберите хотя бы один день недели.</string>
-        <string name="msgs_schedule_list_edit_dlg_title">Изменить список расписаний</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists">Задача планирования с таким именем уже существует.</string>
         <string name="msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified">Имя синхронизации не указано.</string>
         <string name="msgs_schedule_list_edit_dlg_error_schedule_name_contains_unusabel_character">Недействительный символ в названии расписания: \"%s\"</string>
@@ -749,15 +735,6 @@
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_enable">Активировать услугу планирования</string>
         <string name="msgs_schedule_list_edit_scheduler_service_toggle_disable">Отключить службу планирования</string>
         <string name="msgs_schedule_list_edit_multi_sched_warn">Расписание и параметры Wi-Fi для нескольких задач будут объединены, чтобы избежать дублирования процессов синхронизации.</string>
-    <!-- Send logcat -->
-        <string name="msgs_send_logcat_menu_start_logcat">Запустить LogCat</string>
-        <string name="msgs_send_logcat_menu_stop_logcat">Стоп LogCat</string>
-        <string name="msgs_send_logcat_menu_send_logcat">Отправить LogCat</string>
-        <string name="msgs_send_logcat_btn_send">Отправить</string>
-        <string name="msgs_send_logcat_btn_preview_logcat">Предварительный LogCat</string>
-        <string name="msgs_send_logcat_btn_preview_applog">Предварительный просмотр AppLog</string>
-        <string name="msgs_send_logcat_title">Отправить LogCat и AppLog</string>
-        <string name="msgs_send_logcat_message">Отправьте LogCat и AppLog разработчикам электронным-mail\n1. Проверьте содержание путем нажатия кнопки отображения LogCat, и кнопка отображения AppLog (выберите приложение, когда экран выбора приложения отображен).\n 2. После подтверждения содержания, которое будет отправлено, нажмите отправить кнопку и выберите электронную почту в почтовом диалоговом окне выбора  \n3. Введите, сообщение в теле электронного письма при необходимости прикрепите электронное письмо (журнал сжат до zip и присоединен к электронной почте).</string>
     <!-- svc -->
         <string name="msgs_svc_can_not_start_sync_task_disabled">Поскольку задача синхронизации отключена, она не смогла запустить задачу синхронизации.</string>
         <string name="msgs_svc_received_start_request_from_scheduler">Запрос синхронизации получен от планировщика SMBSync2.</string>
@@ -977,10 +954,10 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Время ожидания ответа</string>
-        <string name="settings_smb_client_response_timeout_title">Время ожидания ответа клиента</string>
+        <string name="settings_smb_client_response_timeout_title">Время ожидания ответа клиента(SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Отключить обычные текстовые пароли</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Отключить обычные текстовые пароли</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Отключить обычные текстовые пароли(SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
         <string name="settings_smb_lm_compatibility_dialog_title">Уровень совместимости с Lm</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
@@ -998,17 +975,14 @@
             <item>4</item>
         </string-array >
         <string name="settings_smb_lm_compatibility_summary">Уровень LmCompatibility</string>
-        <string name="settings_smb_lm_compatibility_title">Уровень LmCompatibility</string>
+        <string name="settings_smb_lm_compatibility_title">Уровень LmCompatibility(SMBv1)</string>
         <string name="settings_smb_title">Настройки SMB</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Использовать расширенную безопасность</string>
-        <string name="settings_smb_use_extended_security_title">Использовать расширенную безопасность</string>
+        <string name="settings_smb_use_extended_security_title">Использовать расширенную безопасность(SMBv1)</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">Отключить предупреждение, когда конкретный каталог приложения включен в задачу синхронизации</string>
         <string name="settings_suppress_warning_app_specific_dir_title">Не предупреждать при синхронизации конкретного каталога приложения</string>
-        <string name="settings_suppress_warning_location_service_disabled">settings_suppress_warning_location_service_disabled</string>
-        <string name="settings_suppress_warning_location_service_enabled_summary_ena">Отключить предупреждение для включения службы определения местоположения.</string>
-        <string name="settings_suppress_warning_location_service_enabled_title">Не предупреждать, когда служба определения местоположения отключена.</string>
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">Вести подробный журнал истории синхронизации</string>
         <string name="settings_sync_history_log_title">Синхронизация истории</string>
@@ -1026,7 +1000,8 @@
             <item>Français (fr)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
-            <item>中文(zh)</item>
+            <item>中文 (zh)</item>
+            <item>Italiano (it)</item>
         </string-array >
         <string-array name="settings_screen_theme_language_list_values">
             <item>0</item>
@@ -1035,6 +1010,7 @@
             <item>3</item>
             <item>4</item>
             <item>5</item>
+            <item>6</item>
         </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Тема экрана</string>
