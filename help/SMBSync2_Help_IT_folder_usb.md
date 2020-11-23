@@ -4,36 +4,36 @@ Select mount point for internal storage.
 
 ### Lista cartelle
 
-Mostra l'elenco delle directory nella memoria interna. 
-Quando si preme il tasto elenco directory, vengono visualizzate le directory selezionabili. Premete sulla directory che volete scegliere e poi sul tasto "Seleziona". Per navigare attraverso le sottodirectory, toccate il nome della directory.
+Mostra l'elenco delle cartella nella memoria interna. 
+Quando si preme il tasto elenco cartella, vengono visualizzate le cartella selezionabili. Premete sulla cartella che volete scegliere e poi sul tasto "Seleziona". Per navigare attraverso le sottodirectory, toccate il nome della cartella.
 
 ### Aggiungi parole chiave
 
-%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di directory di destinazione. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.
+%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di cartella di destinazione. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.
 
-**Queste opzioni vengono visualizzate solo quando il tipo di sincronizzazione è Copy/Move.**
+**Queste opzioni vengono visualizzate solo quando il tipo di sincronizzazione è Copia/Sposta.**
 
-### Aggiungi tempo/data del sync nel nome della cartella (the keyword will be replaced by the date e time in which the sync was performed)
+### Aggiungi ora/data del sync nel nome della cartella (la parola chiave verrà sostituita dall'ora e la data nel quale è stata eseguita la sync)
 
-Se spuntata, i dati EXIF dei supporti di backup vengono utilizzati per ottenere la data e l'ora di ripresa. Il timestamp della data e dell'ora di ripresa viene utilizzato e allegato alla cartella di destinazione. Quando l'applicazione non è in grado di ottenere l'ora di ripresa dall'EXIF, utilizza l'ultima ora modificata del file.
+Se spuntata, i dati EXIF dei supporti di backup vengono utilizzati per ottenere la data e l'ora di scatto. Il timestamp della data e dell'ora di scatto viene utilizzato e allegato alla cartella di destinazione. Quando l'applicazione non è in grado di ottenere l'ora di scatto dall'EXIF, utilizza l'ultima ora modificata del file.
 
 ### Cartelle
 
-Si prega di inserire l'elenco di destinazione o l'elenco principale. Se si specifica una directory che non esiste nel target, questa verrà creata durante la sincronizzazione.
+Si prega di inserire l'elenco di destinazione o l'elenco principale. Se si specifica una cartella che non esiste nel target, questa verrà creata durante la sincronizzazione.
 
 ### Seleziona cartella USB
 
-Selezionare la directory principale USB per accedere a USB. Se non è possibile selezionarla, inviare le informazioni di sistema allo sviluppatore con "Menu -> Informazioni di sistema".
+Selezionare la cartella principale USB per accedere a USB. Se non è possibile selezionarla, inviare le informazioni di sistema allo sviluppatore con "Menu -> Informazioni di sistema".
 
-**Le seguenti opzioni vengono visualizzate solo quando il tipo di sincronizzazione è Archivio.**
+**Le seguenti opzioni vengono visualizzate solo quando il tipo di sincronizzazione è Archivia.**
 
 ### If the date e time cannot be determined by EXIF data, display a confirmation message
 
-Se l'opzione è selezionata, quando la data e l'ora di ripresa non possono essere acquisite da EXIF , viene visualizzato un messaggio di conferma dell'utilizzo o meno dell'ultima ora modificata del file. Se si seleziona Annulla nella finestra di dialogo di conferma, il file non verrà archiviato. 
+Se l'opzione è selezionata, quando la data e l'ora di scatto non possono essere acquisite da EXIF , viene visualizzato un messaggio di conferma dell'utilizzo o meno dell'ultima ora modificata del file. Se si seleziona Annulla nella finestra di dialogo di conferma, il file non verrà archiviato. 
 
 ### Archivia file se
 
-Scegliere i criteri temporali per determinare quali file archiviare. La selezione dell'ora si basa sulla data di ripresa delle foto/video o sull'ultima ora modificata se non è possibile acquisire il timestamp dall'intestazione EXIF.
+Scegliere i criteri temporali per determinare quali file archiviare. La selezione dell'ora si basa sulla data di scatto delle foto/video o sull'ultima ora modificata se non è possibile acquisire il timestamp dall'intestazione EXIF.
 
 - Qualunque data (Tutti)
 
@@ -41,29 +41,29 @@ Scegliere i criteri temporali per determinare quali file archiviare. La selezion
 
 - Più vecchio di 7 giorni
 
-  Archiviare solo i file con una data di ripresa più vecchia di 7 giorni o più rispetto all'ora attuale
+  Archiviare solo i file con una data di scatto più vecchia di 7 giorni o più rispetto all'ora attuale
 
 - Più vecchio di 30 giorni
 
-  Archiviare solo i file con una data di ripresa più vecchia di 30 giorni o più rispetto all'ora attuale
+  Archiviare solo i file con una data di scatto più vecchia di 30 giorni o più rispetto all'ora attuale
 
 - Più vecchio di 60 giorni
 
-  Archiviare solo i file con una data di ripresa più vecchia di 60 giorni o più rispetto all'ora attuale
+  Archiviare solo i file con una data di scatto più vecchia di 60 giorni o più rispetto all'ora attuale
 
 - Più vecchio di 90 giorni
 
-  Archiviare solo i file con una data di ripresa più vecchia di 90 giorni o più rispetto all'ora attuale
+  Archiviare solo i file con una data di scatto più vecchia di 90 giorni o più rispetto all'ora attuale
 
 - Più vecchio di 180 giorni
 
-  Archiviare solo i file con una data di ripresa più vecchia di 180 giorni o più rispetto all'ora attuale
+  Archiviare solo i file con una data di scatto più vecchia di 180 giorni o più rispetto all'ora attuale
 
 - Più vecchio di 1 anno
 
-  Archiviare solo i file con una data di ripresa più vecchia di 1 anno o più rispetto all'ora attuale
+  Archiviare solo i file con una data di scatto più vecchia di 1 anno o più rispetto all'ora attuale
 
-### Increment file names by appending
+### Nome file incrementale
 
 Aggiungere il numero di sequenza incrementale al nome del file durante l'archiviazione.
 
@@ -73,29 +73,29 @@ Aggiungere il numero di sequenza incrementale al nome del file durante l'archivi
 
 - 2 cifre (01-99)
 
-  Append 001-999
+  Aggiungi 001-999
 
 - 3 cifre (001-999)
 
-  Append 001-999
+  Aggiungi 001-999
 
 - 4 cifre (0001-9999)
 
-  Append 0001-9999
+  Aggiungi 0001-9999
 
 - 5 cifre (00001-99999)
 
-  Append 00001-99999
+  Aggiungi 00001-99999
 
 - 6 cifre (000001-999999)
 
-  Append 000001-999999 
+  Aggiungi 000001-999999
 
-### Cambia il nome del file before archiving it in the cartella destinazione 
+### Cambia il nome del file prima di archiviarlo nella cartella destinazione 
 
 Se l'opzione è selezionata, il nome del file archiviato verrà modificato in base ai criteri selezionati. Potete aggiungere la data e l'ora nel nome del file "Modello del nome del file". 
 
-### File name template
+### Template nome file
 
 Inserire gli schemi da utilizzare per rinominare i file archiviati. Il valore predefinito è DSC_%DATE%.
 
@@ -105,23 +105,23 @@ Inserire gli schemi da utilizzare per rinominare i file archiviati. Il valore pr
 
 - %DATE%
 
-  Sarà sostituito dalla data di ripresa.(Es. 2018-01-01)
+  Sarà sostituito dalla data di scatto.(Es. 2018-01-01)
 
 - %TIME%
 
-  Sarà sostituito dal tempo di ripresa.(Es. 13:01:10) 
+  Sarà sostituito dal tempo di scatto.(Es. 13:01:10) 
 
 L'ultima riga della schermata mostra come apparirà la cartella di destinazione e il nome del file una volta archiviati.
 
-### Create a directory based on the shooting date to store the files
+### Crea una cartella basata sulla data di scatto per salvare i file
 
-Crea una directory con indicazione dell'ora in cui memorizzare i file archiviati.
+Crea una cartella con indicazione dell'ora in cui memorizzare i file archiviati.
 
-Quando viene selezionato, viene visualizzato il "Modello di nome della directory". 
+Quando viene selezionato, viene visualizzato il "Modello di nome della cartella". 
 
-### Directory template
+### Template cartella
 
-Inserire gli schemi da utilizzare per rinominare la directory da creare (exp. DIR-% YEAR% -% MONTH% e così via). Premendo i tasti dei modelli, potete inserire le parole chiave dietro il cursore.
+Inserire gli schemi da utilizzare per rinominare la cartella da creare (exp. DIR-% YEAR% -% MONTH% e così via). Premendo i tasti dei modelli, potete inserire le parole chiave dietro il cursore.
 
 - %YEAR%
 
@@ -129,7 +129,7 @@ Inserire gli schemi da utilizzare per rinominare la directory da creare (exp. DI
 
 - %MONTH%
 
-  Sarà sostituito dal Mese di ripresa (Es. 01)
+  Sarà sostituito dal Mese di scatto (Es. 01)
 
 - %DAY%
 

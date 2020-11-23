@@ -7,13 +7,13 @@ Controllare per salvare il file ZIP nella SDCARD. Altrimenti verrà salvato nell
 ### Permetti scrittura su SDCARD 
 Toccare per visualizzare la schermata di selezione per dare l'accesso e l'autorizzazione di scrittura alla SDCARD.
 
-### Lista Files
+### Lista File
 Mostra le directory e l'elenco dei file nella cartella selezionata.
 
 ### file ZIP
 Specificare il nome del file ZIP di destinazione. 
 
-### Aggiungi tempo/data del sync nel nome della cartella (the keyword will be replaced by the date e time in which the sync was performed)
+### Aggiungi tempo/data del sync nel nome della cartella (la parola chiave verrà sostituita dall'ora e la data nel quale è stata eseguita la sync)
 %YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di directory di destinazione. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione. 
 
 ### Livello compressione

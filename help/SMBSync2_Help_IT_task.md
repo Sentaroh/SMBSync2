@@ -10,7 +10,7 @@ Se l'opzione è selezionata, l'attività può essere avviata automaticamente a i
 
 Specificare un nome per l'attività. Il nome dell'attività di sincronizzazione non è sensibile alle maiuscole e minuscole. 
 
-### tipo di sync
+### Tipo di sync
 
 Le modalità di sincronizzazione attualmente supportate sono Specchio, Copia, Spostamento o Archivio. <span style="color: red; "><u>La sincronizzazione avviene in una direzione del bersaglio dal master.</u></span>
 
@@ -18,9 +18,9 @@ Le modalità di sincronizzazione attualmente supportate sono Specchio, Copia, Sp
 
   La cartella di destinazione viene conservata come copia esatta del master. Se un file è diverso tra il master e la destinazione, il file sul master sovrascrive il file sulla destinazione. La cartella e i file non presenti sulla destinazione vengono copiati dal master. Anche i file e le cartelle non presenti sul master vengono cancellati dal master. Solo i file modificati (per dimensione e/o data/ora) vengono aggiornati sulla destinazione. 
 
-- Permeti
+- Sposta
 
-  Se un file è diverso tra il master e il target, il file sul master sovrascrive il file sul target. Una volta copiati nella destinazione, i file e le cartelle vengono cancellati dal master (come il comando move).
+  Se un file è diverso tra il master e il target, il file sul master sovrascrive il file sul target. Una volta copiati nella destinazione, i file e le cartelle vengono cancellati dal master (come il comando sposta).
 
   Solo i file modificati (per dimensione e/o data/ora) vengono copiati nella destinazione. I file identici, in base ai criteri di confronto selezionati, vengono cancellati dal master senza essere copiati. I file e le cartelle sul target, non presenti sul master, vengono ovviamente conservati. 
 
@@ -38,7 +38,7 @@ Le modalità di sincronizzazione attualmente supportate sono Specchio, Copia, Sp
 
   ZIP non può essere specificato come target per le operazioni di archivio. 
 
-**Compare criteria:** 
+**Criteri di comparazione:** 
 
 I file sono considerati diversi in base a questi criteri:
 
@@ -48,17 +48,17 @@ I file sono considerati diversi in base a questi criteri:
 
 3. I file hanno un orario diverso (data e ora dell'ultima modifica) 
 
-Check Advanced options below for more detailed information on compare criteria and more granular settings. 
+Controlla le opzioni Avanzate sotto per maggiori dettagli sui criteri di comparazione ed altre impostazioni granulari. 
 
 ### Inverti sorgente e destinazione
 
 Scambiare le cartelle master e target: il master diventa il target e il target viene cambiato in master. 
 
-### cartella sorgente (Sorgente)
+### Cartella sorgente (Sorgente)
 
 Toccare l'icona/nome della memoria per modificare la cartella principale. 
 
-### cartella destinazione (Destinazione)
+### Cartella destinazione (Destinazione)
 
 Toccare l'icona/nome della memoria per modificare la cartella di destinazione. 
 
@@ -66,7 +66,7 @@ Toccare l'icona/nome della memoria per modificare la cartella di destinazione.
 
 Se deselezionati, tutti i file sono sincronizzati. Se si seleziona il filtro dei file, si ottengono le seguenti opzioni:
 
-- Sync audio files
+- Sync file audio
 
   Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
   aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
@@ -76,30 +76,30 @@ Se deselezionati, tutti i file sono sincronizzati. Se si seleziona il filtro dei
   Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
   bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
 
-- Sync video files
+- Sync file video
 
   Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
   avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv 
 
-- File filtro
+- Filtro file
 
   È un filtro di inclusione/esclusione dei file personalizzato. È possibile selezionare il nome e l'estensione dei file che si desidera escludere o includere dal processo di sincronizzazione. 
 
-### Selezionare le sottodirectory
+### Selezionare le sottocartelle
 
-Se non viene selezionato, tutte le cartelle sono sincronizzate. Se si seleziona il filtro delle sottodirectory, si ottengono le seguenti opzioni:
+Se non viene selezionato, tutte le cartelle sono sincronizzate. Se si seleziona il filtro delle sottocartelle, si ottengono le seguenti opzioni:
 
-- Cartelle filtro
+- Filtro cartelle
 
-  È un filtro di directory inclusione/esclusione personalizzato. È possibile selezionare il nome delle cartelle che si desidera escludere o includere dal processo di sincronizzazione. 
+  È un filtro di inclusione/esclusione cartelle personalizzato. È possibile selezionare il nome delle cartelle che si desidera escludere o includere dal processo di sincronizzazione. 
 
 ### Esegui sync tasks solo quando in carica
 
 Le attività pianificate di Auto Sync non si avviano se il dispositivo non è in carica. L'avvio manuale è sempre possibile. 
 
-### Synchronize the files in root of la cartella sorgente (if unchecked, only the cartelle e their files/subfolders are synchronized).
+### Synchronize i file nella root della cartella sorgente (se non selezionata, solo le cartelle e i loro file/sottocartelle verranno sincronizzati).
 
-Se deselezionati, vengono sincronizzate solo le cartelle e i loro file/sottocartelle sotto la directory master. Per impostazione predefinita, è selezionata e anche i file che si trovano direttamente nella root della directory master saranno sincronizzati. 
+Se deselezionati, vengono sincronizzate solo le cartelle e i loro file/sottocartelle sotto la cartelle master. Per impostazione predefinita, è selezionata e anche i file che si trovano direttamente nella root della cartelle master saranno sincronizzati. 
 
 ### Conferma prima di sovrascrivere/cancellare
 
@@ -107,11 +107,11 @@ Se spuntata, visualizzerà una finestra di dialogo di conferma prima di sovrascr
 
 ### Wifi AP Opzioni:
 
-- Run even when off: cercherà di avviare la sincronizzazione anche se il Wifi è spento
+- Esegui anche da spento: cercherà di avviare la sincronizzazione anche se il Wifi è spento
 
 - Conn a qualunque AP: si sincronizzerà solo se connesso ad una rete wifi. Accetterà qualsiasi nome SSID WLAN.
 
-- Has private address: è possibile avviare la sincronizzazione solo se l'indirizzo IP assegnato alla rete WiFi si trova nei seguenti campi: 10.0.0.0.0 - 10.255.255.255.255, 172.16.0.0.0 - 172.31.255.255.255 o 192.168.0.0.0 - 192.168.255.255.255.
+- Come indirizzo privato: è possibile avviare la sincronizzazione solo se l'indirizzo IP assegnato alla rete WiFi si trova nei seguenti campi: 10.0.0.0.0 - 10.255.255.255.255, 172.16.0.0.0 - 172.31.255.255.255 o 192.168.0.0.0 - 192.168.255.255.255.
 
 - indirizzo lista IP: è possibile avviare la sincronizzazione solo se l'indirizzo IP WiFi corrisponde a uno degli indirizzi specificati. È inoltre possibile aggiungere direttamente l'indirizzo IP corrente al quale l'apparecchio è collegato attraverso l'elenco di selezione IP.  
 È possibile utilizzare i caratteri jolly per il filtro. (ad es. 192.168.100.\*, 192.168.\*).
@@ -130,11 +130,11 @@ La sincronizzazione sarà consentita ogni volta che il Wifi è connesso a qualsi
 
 ### Includi  sottocartelle
 
-Includerà ricorsivamente le sottodirectory sotto la cartella master specificata. 
+Includerà ricorsivamente le sottocartelle sotto la cartella master specificata. 
 
 ### Includi cartelle vuote
 
-Sincronizza le directory vuote (anche se una directory è vuota sul master, verrà creata sul target). Se deselezionata, le directory vuote sul master vengono ignorate. 
+Sincronizza le cartelle vuote (anche se una cartelle è vuota sul master, verrà creata sul target). Se deselezionata, le cartelle vuote sul master vengono ignorate. 
 
 ### Includi cartelle nascoste
 
@@ -144,29 +144,29 @@ Quando spuntata, Sync includerà le cartelle linux nascoste (quelle con un nome 
 
 Quando spuntata, Sync includerà i file linux nascosti (quelli con un nome che inizia con un punto). Si noti che in Windows e Samba, l'attributo nascosto non è impostato dal nome del file. Quindi, il file sincronizzato sulla destinazione SMB/Windows non avrà l'attributo nascosto dell'host. 
 
-### Overwrite destination files
+### Sovrascrivi file destinazione
 
 Se deselezionati, i file sul target non saranno mai sovrascritti anche se i criteri di confronto per dimensioni e tempo sono diversi. 
 
 ### Usa il  filtro di selezione cartelle migliorato
 
-Se la directory superiore viene esclusa da un filtro mentre una delle sue sottocartelle viene selezionata/inclusa, le sottocartelle della cartella selezionata verranno sincronizzate. 
+Se la cartelle superiore viene esclusa da un filtro mentre una delle sue sottocartelle viene selezionata/inclusa, le sottocartelle della cartella selezionata verranno sincronizzate. 
 
 ### Usa la  nuova versione 2 del filtro
 
-After enabling it, you can use the new filter. <span style="color: red; "><u>It may behave differently from the old filter, so please test it thoroughly before using it.</u></span> 
+Dopo averla abilitata, puoi usare il nuovo filtro. <span style="color: red; "><u>It may behave differently from the old filter, so please test it thoroughly before using it.</u></span> 
 
 ### Rimuovi cartelle e file esclusi dai filtri
 
-If enabled, **it removes directories/files that are excluded from the filter.** 
+Se abilitato, **rimuove cartelle/file che sono esclusi dai filtri.** 
 
-### Riprova on network error
+### Riprova ad errori di rete
 
 In caso di errori di connessione lato server, SMBSync2 riproverà la sincronizzazione per un massimo di 3 volte ad un intervallo di 30 secondi. 
 
-### Limit SMB I/O write buffer su 16 KB
+### Limita buffer di scrittura SMB I/O a 16 KB
 
-**Please try if you get an "Access is denied" error when writing to the PC/NAS folder.**
+**Per favore provala se in presenza dell'errore "Accesso negato" error durante la scrittura sulle cartelle del PC/NAS.**
 
 Quando spuntata, limiterà il buffer di I/O a 16KB per le operazioni di scrittura sull'host SMB. 
 
@@ -174,7 +174,7 @@ Quando spuntata, limiterà il buffer di I/O a 16KB per le operazioni di scrittur
 
 Controllato di default (consigliato). Quando viene copiato nell'host SMB, il file verrà copiato in una cartella temporanea sull'host. Una volta che l'operazione di copia è riuscita, il file temporaneo viene spostato nella sua destinazione finale sovrascrivendo il file di destinazione. Se deselezionato, il file di destinazione sull'host viene immediatamente sovrascritto all'inizio della copia. Se si verifica un errore di connessione, il file sull'host rimane danneggiato fino alla successiva sincronizzazione. 
 
-### Do not set last modified time of destination file su match source file
+### Non settare l'ultima volta di modifica del file destinazione per trovare il file sorgente
 
 Si prega di abilitare se si ottiene un errore come SmbFile#setLastModified()/File#setLastModified() fallisce. Significa che l'host remoto non permette l'impostazione del file modificato l'ultima volta. Se deselezionato, l'ultimo tempo modificato del file copiato sul target sarà impostato all'ora in cui è stato copiato / sincronizzato. Ciò significa che il file di destinazione apparirà più nuovo del master. 
 
@@ -188,7 +188,7 @@ Per le sincronizzazioni successive, è possibile:
 
 Vedere sotto per informazioni dettagliate su ogni opzione. 
 
-### Obtain last modification time of files from SMBSync2 application custom list
+### Ottieni l'ora di ultima modifica dei file dalla lista personalizzata di SMBSync2
 
 Si prega di provare se tutti i file vengono copiati sopra i file di destinazione ad ogni sincronizzazione.
 
@@ -200,15 +200,15 @@ Durante la prima sincronizzazione, SMBSync2 memorizzerà la lista dei file con i
 
 ### Elimina precedenti file su sync (Solo modalità Mirror)
 
-Una volta spuntate, le directory e i file che sono presenti nella cartella di destinazione ma che non esistono sul master, verranno prima cancellati. Dopo di che, i file e le cartelle che sono diversi saranno copiati nella cartella di destinazione.
+Una volta spuntate, le cartelle e i file che sono presenti nella cartella di destinazione ma che non esistono sul master, verranno prima cancellati. Dopo di che, i file e le cartelle che sono diversi saranno copiati nella cartella di destinazione.
 
-Se la cartella master è SMB, il tempo di elaborazione sarà più lungo perché la struttura delle directory e il loro contenuto viene scansionato attraverso la rete. Si raccomanda vivamente di attivare l'opzione "Usa la negoziazione SMB2" perché SMB1 sarà molto lenta. 
+Se la cartella master è SMB, il tempo di elaborazione sarà più lungo perché la struttura delle cartelle e il loro contenuto viene scansionato attraverso la rete. Si raccomanda vivamente di attivare l'opzione "Usa la negoziazione SMB2" perché SMB1 sarà molto lenta. 
 
 ### Usa dimensione file per determinare se i file sono differenti
 
 Quando si seleziona, i file sono considerati diversi se differiscono per dimensioni. 
 
-### Size only compare
+### Compara solo dimensione
 
 I file sono considerati diversi solo se la dimensione della fonte è maggiore della destinazione. Questo disabiliterà il confronto in base al tempo del file. 
 
@@ -216,27 +216,27 @@ I file sono considerati diversi solo se la dimensione della fonte è maggiore de
 
 Quando si seleziona, i file sono considerati diversi in base al loro ultimo tempo di modifica  
 
-### Min allowed time difference (in seconds) between source and destination files
+### Differenza min di ora permessa (in secondi) tra i file sorgente e destinazione
 
 I file sono considerati identici se la differenza tra i loro ultimi tempi modificati è inferiore o uguale al tempo selezionato in secondi. Sono considerati diversi se la differenza di tempo tra i file è superiore al tempo selezionato. FAT e ExFAT richiedono una tolleranza minima di 2 secondi. Se si seleziona 0 secondi, i file devono avere esattamente lo stesso tempo per essere considerati simili. 
 
-### Do not overwrite destination file if it is newer than source file
+### Non sovrascrivere i file destinazione se più nuovi dei file sorgente
 
 Se spuntata, il file viene sovrascritto solo quando il file master è più nuovo del file di destinazione, anche se le dimensioni del file e gli ultimi tempi di aggiornamento sono diversi. Tenere presente che se si cambiano i fusi orari o se i file vengono modificati durante il periodo di intervallo della modifica dell'ora legale, l'ultimo file modificato potrebbe apparire più vecchio del file non aggiornato. Ciò è legato alle differenze del file system e solo un controllo manuale prima di sovrascrivere il file eviterà la perdita di dati. Si raccomanda generalmente di non modificare i file durante l'intervallo del cambio dell'ora legale se sono destinati ad essere auto-sincronizzati.  
 
-###  Ignore Day Light Saving Time difference between files
+### Ignora differenza dell'Ora Legale tra file
 
 Permette di selezionare la differenza di fuso orario in minuti tra l'ora legale e quella invernale. I file sono considerati diversi se la differenza di orario non è esattamente uguale all'intervallo specificato (+/- la "differenza di orario minima consentita (in secondi)" specificata nell'opzione precedente) 
 
-###  Skip directory and file names that contain invalid characters(", :, \, *, <, >, |)
+###  Salta cartelle e file che contengono caratteri non validi(", :, \, *, <, >, |)
 
-Se spuntata, visualizzerà un messaggio di avviso e la sincronizzazione continuerà senza elaborare le directory/file contenenti caratteri non validi. 
+Se spuntata, visualizzerà un messaggio di avviso e la sincronizzazione continuerà senza elaborare le cartelle/file contenenti caratteri non validi. 
 
-###  Delete the master directory when it is empty (only when Sync option is Move)
+###  Elimina la cartella master quando è vuota (solo quando l'opzione di Sync è Sposta)
 
-Quando la modalità di sincronizzazione è Move, dopo che i file sono stati spostati nella destinazione, viene cancellata anche la cartella Master. 
+Quando la modalità di sincronizzazione è Sposta, dopo che i file sono stati spostati nella destinazione, viene cancellata anche la cartella Master. 
 
-### Detail information
+### Informazioni dettagliate
 
 https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing
 
