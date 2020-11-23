@@ -4,15 +4,15 @@
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>SMBSync2_Desc_IT_Short</title></head>
 <body><h2>1. Funzioni</h2>
-<p>SMBSync2 è uno strumento per la sincronizzazione di file via LAN wireless utilizzando il protocollo SMB1, SMB2 o SMB3 tra la memoria interna del terminale Android, SDCARD e PC/NAS. La sincronizzazione è a senso unico dal master all&#39;obiettivo. Sono supportate le modalità Mirror, Move, Copy e Archive. Sono supportate molte combinazioni di archiviazione (archiviazione interna, SDCARD, OTG-USB, SMB, ZIP)La sincronizzazione può essere avviata automaticamente da applicazioni esterne (Tasker, AutoMagic ecc.) o da SMBSync2 schedule. 
+<p>SMBSync2 è uno strumento per la sincronizzazione di file via LAN wireless utilizzando il protocollo SMB1, SMB2 o SMB3 tra la memoria interna del terminale Android, SDCARD e PC/NAS. La sincronizzazione è a senso unico dal master all&#39;obiettivo. Sono supportate le modalità Mirror, Sposta, Copia e Archivia. Sono supportate molte combinazioni di archiviazione (archiviazione interna, SDCARD, OTG-USB, SMB, ZIP)La sincronizzazione può essere avviata automaticamente da applicazioni esterne (Tasker, AutoMagic ecc.) o dal pianificatore SMBSync2. 
 La sincronizzazione avviene tra due coppie di cartelle chiamate Master (cartella sorgente) e Target (cartella di destinazione). Si tratta di una sincronizzazione in una sola direzione, dal Master al Target.
 Le modalità di sincronizzazione supportate sono:</p>
 <ul>
 <li><p>Mirror</p>
 <p>La cartella di destinazione viene conservata come copia esatta del master. Se un file è diverso tra il master e la destinazione, il file sul master sovrascrive il file sulla destinazione. La cartella e i file non presenti sulla destinazione vengono copiati dal master. Anche i file e le cartelle non presenti sul master vengono cancellati dal master. Solo i file modificati (per dimensione e/o data/ora) vengono aggiornati sulla destinazione.</p>
 </li>
-<li><p>Permeti</p>
-<p>Se un file è diverso tra il master e il target, il file sul master sovrascrive il file sul target. Una volta copiati nella destinazione, i file e le cartelle vengono cancellati dal master (come il comando move).
+<li><p>Sposta</p>
+<p>Se un file è diverso tra il master e il target, il file sul master sovrascrive il file sul target. Una volta copiati nella destinazione, i file e le cartelle vengono cancellati dal master (come il comando sposta).
 Solo i file modificati (per dimensione e/o data/ora) vengono copiati nella destinazione. I file identici, in base ai criteri di confronto selezionati, vengono cancellati dal master senza essere copiati. I file e le cartelle sul target, non presenti sul master, vengono ovviamente conservati.</p>
 </li>
 <li><p>Copia</p>
@@ -26,7 +26,7 @@ ZIP non può essere specificato come target per le operazioni di archivio.</p>
 </li>
 
 </ul>
-<p><strong>Compare criteria:</strong> 
+<p><strong>Criteri di comparazione:</strong> 
 I file sono considerati diversi in base a questi criteri:</p>
 <ol start='' >
 <li>Il nome del file/cartella esiste solo sul master o sul target, non su entrambi i lati</li>
