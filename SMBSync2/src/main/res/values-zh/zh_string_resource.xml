@@ -344,9 +344,9 @@
         <string name="msgs_profile_sync_task_dlg_swap_warning_title">交换源和目标</string>
         <string name="msgs_profile_sync_task_dlg_swap_warning_message">反转同步方向可能会导致文件和目录的意外删除。\n强烈建议您启用"测试"模式，并确保没有意外删除或替换任何文件或目录。</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">未指定目录过滤器</string>
-        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">从指定的目录名称（\"，：，\\，*，&lt;，&gt; \|）中删除了无效字符</string>
+        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">从指定的目录名称(\", :, \\, *, &lt;, &gt;, \|)中删除了无效字符</string>
         <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">未指定文件过滤器</string>
-        <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">从指定的文件名中删除了无效字符（/，\"，：，\\，*，&lt;，&gt; \|）</string>
+        <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">从指定的文件名中删除了无效字符（/，\"，：，\\，*，&lt;，&gt;, \|）</string>
         <string name="msgs_profile_sync_task_dlg_file_directory_name_first_char_has_invalid_char">您必须指定相对路径。起始\" / \"字符已从路径名中删除。</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">将同步时间/日期追加到目录名称（关键字将由执行同步的日期和时间替换）</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">将同步时间/日期追加到文件名（关键字将被执行同步的日期和时间代替）</string>
