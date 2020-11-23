@@ -1025,6 +1025,21 @@
             <item>1</item>
             <item>2</item>
         </string-array >
+        <string name="settings_display_font_scale_factor">settings_display_font_scale_factor</string>
+        <string name="settings_display_font_scale_factor_title">Taille du texte</string>
+        <string name="settings_display_font_scale_factor_dialog_title">Sélectionnez la taille du texte</string>
+        <string-array name="settings_display_font_scale_factor_list_entries">
+            <item>Petit(80&#65130;)</item>
+            <item>Normal(100&#65130;)</item>
+            <item>Grand(120&#65130;)</item>
+            <item>Le plus grand(160&#65130;)</item>
+        </string-array >
+        <string-array name="settings_display_font_scale_factor_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
         <string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
         <string name="settings_vibrate_when_sync_ended_dialog_title">Choisir quand la vibration des notification est active</string>
         <string-array name="settings_vibrate_when_sync_ended_list_entries">

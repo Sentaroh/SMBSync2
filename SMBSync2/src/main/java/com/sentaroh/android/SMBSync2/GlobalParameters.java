@@ -49,7 +49,9 @@ import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat.BigTextStyle;
 import android.support.v4.app.NotificationCompat.Builder;
+import android.util.DisplayMetrics;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -78,6 +80,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import jcifs.util.LogStream;
 
+import static android.content.Context.WINDOW_SERVICE;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.LOG_FILE_NAME;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
@@ -503,6 +506,10 @@ public class GlobalParameters extends CommonGlobalParms {
 
         if (!prefs.contains(c.getString(R.string.settings_wifi_lock)))
             prefs.edit().putBoolean(c.getString(R.string.settings_wifi_lock), true).commit();
+
+        if (!prefs.contains(c.getString(R.string.settings_display_font_scale_factor)))
+            prefs.edit().putString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL).commit();
+
     }
 
     public void setSettingOptionLogEnabled(Context c, boolean enabled) {
@@ -577,6 +584,7 @@ public class GlobalParameters extends CommonGlobalParms {
 //            applicationTheme = R.style.MainBlack;
 //        }
         loadLanguagePreference(c);
+        setDisplayFontScale(c);
 
         settingForceDeviceTabletViewInLandscape = prefs.getBoolean(c.getString(R.string.settings_device_orientation_landscape_tablet), false);
 
@@ -613,6 +621,64 @@ public class GlobalParameters extends CommonGlobalParms {
         settingScheduleSyncEnabled=enabled;
         prefs.edit().putBoolean(SCHEDULER_ENABLED_KEY, enabled).commit();
     }
+
+    public static final String FONT_SCALE_FACTOR_SMALL="0";
+    public static final float FONT_SCALE_FACTOR_SMALL_VALUE=0.8f;
+    public static final String FONT_SCALE_FACTOR_NORMAL="1";
+    public static final float FONT_SCALE_FACTOR_NORMAL_VALUE=1.0f;
+    public static final String FONT_SCALE_FACTOR_LARGE="2";
+    public static final float FONT_SCALE_FACTOR_LARGE_VALUE=1.2f;
+    public static final String FONT_SCALE_FACTOR_LARGEST="3";
+    public static final float FONT_SCALE_FACTOR_LARGEST_VALUE=1.6f;
+    static public String getFontScaleFactor(Context c) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        String fs=prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL);
+        return fs;
+    }
+
+    static public float getFontScaleFactorValue(Context c) {
+        String fs=getFontScaleFactor(c);
+        float fs_value=getFontScaleFactorValue(c, fs);
+        return fs_value;
+    }
+
+    static public float getFontScaleFactorValue(Context c, String fs) {
+        float fs_value=1.0f;
+        if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_SMALL)) {
+            fs_value=FONT_SCALE_FACTOR_SMALL_VALUE;
+        } else if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_NORMAL)) {
+            fs_value=FONT_SCALE_FACTOR_NORMAL_VALUE;
+        } else if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_LARGE)) {
+            fs_value=FONT_SCALE_FACTOR_LARGE_VALUE;
+        } else if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_LARGEST)) {
+            fs_value=FONT_SCALE_FACTOR_LARGEST_VALUE;
+        }
+        return fs_value;
+    }
+
+    static public void setDisplayFontScale(Context c) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        String fs=prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL);
+        setDisplayFontScale(c, fs);
+    }
+
+    static public void setDisplayFontScale(Context c, String fs) {
+        float fs_value=getFontScaleFactorValue(c, fs);
+        setDisplayFontScale(c, fs_value);
+    }
+
+    static public void setDisplayFontScale(Context c, float scale) {
+        Configuration configuration=c.getResources().getConfiguration();
+        configuration.fontScale = scale;
+        DisplayMetrics metrics = c.getResources().getDisplayMetrics();
+        WindowManager wm = (WindowManager) c.getSystemService(WINDOW_SERVICE);
+
+        wm.getDefaultDisplay().getMetrics(metrics);
+        metrics.scaledDensity = configuration.fontScale * metrics.density;
+        c.getResources().updateConfiguration(configuration, metrics);
+
+    }
+
 
     //+ To use createConfigurationContext() non deprecated method:
     //  - set LANGUAGE_LOCALE_USE_NEW_API to true

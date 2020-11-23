@@ -1025,6 +1025,21 @@
             <item>1</item>
             <item>2</item>
         </string-array >
+        <string name="settings_display_font_scale_factor">settings_display_font_scale_factor</string>
+        <string name="settings_display_font_scale_factor_title">Размер текста</string>
+        <string name="settings_display_font_scale_factor_dialog_title">Размер текста</string>
+        <string-array name="settings_display_font_scale_factor_list_entries">
+            <item>Маленький(80&#65130;)</item>
+            <item>Нормальный(100&#65130;)</item>
+            <item>Большой(120&#65130;)</item>
+            <item>Крупнейший(160&#65130;)</item>
+        </string-array >
+        <string-array name="settings_display_font_scale_factor_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+        </string-array >
         <string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
         <string name="settings_vibrate_when_sync_ended_dialog_title">Выберите опцию для уведомления вибрации</string>
         <string-array name="settings_vibrate_when_sync_ended_list_entries">

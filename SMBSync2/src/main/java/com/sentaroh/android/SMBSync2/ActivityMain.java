@@ -2012,8 +2012,7 @@ public class ActivityMain extends AppCompatActivity {
 
         LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-//        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
-        int zf=120;
+        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
 
         LinearLayout ll_func = (LinearLayout) vi.inflate(R.layout.about_dialog_func, null);
         final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function);
@@ -2205,6 +2204,9 @@ public class ActivityMain extends AppCompatActivity {
                     mUtil.getStringWithLocale(mActivity, mGp.settingScreenThemeLanguage, R.string.msgs_smbsync_ui_settings_language_changed_restart_later),
                     ntfy);
         }
+
+        mGp.setDisplayFontScale(mActivity);
+        reloadScreen(false);
 
         if (mGp.settingFixDeviceOrientationToPortrait)
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
