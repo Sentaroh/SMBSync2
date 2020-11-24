@@ -1,18 +1,27 @@
+#### 2020-11-24 Ver2.44
+- Allowed to change the font size in the settings. (80%,100%,120%,160%)
+
 #### 2020-11-21 Ver2.43
 - added support for SMB timeout value in SMBv2/3
 - Corrected the Italian translation
 - Scrolling Tab enabled
+
 #### 2020-11-13 Ver2.42
 - Update task help file
+
 #### 2020-11-12 Ver2.41
 - Update help file
+
 #### 2020-11-03 Ver2.39
 - Location permissions are no longer used to comply with the Google Play Privacy Policy. (Access point lists are not available as an option for synchronization tasks.)
 - Add Italian translation
+
 #### 2020-10-28 Ver2.38
 - Update privacy policy
+
 #### 2020-10-23 Ver2.37
 - Add Chinese language to help.
+
 #### 2020-10-17 Ver2.36
 - Added the option to start the schedule immediately on the Schedule tab
 - Add Chinese translation
