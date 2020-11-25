@@ -8,7 +8,7 @@ This application performs file synchronization between an Android device and a P
 
 # Download
 
-It is the same thing as the APK published on Google Play.
+It is the same thing as the APK published on Google Play.  
 https://github.com/Sentaroh/SMBSync2/releases
 
 # How to Build
