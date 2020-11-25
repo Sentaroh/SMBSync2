@@ -3039,7 +3039,7 @@ public class ActivityMain extends AppCompatActivity {
                 String del_list = "";
                 for (int i = 0; i < mGp.syncScheduleAdapter.getCount(); i++) {
                     if (mGp.syncScheduleAdapter.getItem(i).isChecked) {
-                        del_list += mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
+                        del_list += "- "+mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
                     }
                 }
                 mUtil.showCommonDialog(true, "W",
@@ -3078,7 +3078,7 @@ public class ActivityMain extends AppCompatActivity {
                 String del_list = "";
                 for (int i = 0; i<mGp.syncScheduleAdapter.getCount(); i++) {
                     if (mGp.syncScheduleAdapter.getItem(i).isChecked && !mGp.syncScheduleAdapter.getItem(i).scheduleEnabled) {
-                        del_list += mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
+                        del_list += "- "+mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
                     }
                 }
                 mUtil.showCommonDialog(true, "W",
@@ -3116,7 +3116,7 @@ public class ActivityMain extends AppCompatActivity {
                 String del_list = "";
                 for (int i = 0; i<mGp.syncScheduleAdapter.getCount(); i++) {
                     if (mGp.syncScheduleAdapter.getItem(i).isChecked && mGp.syncScheduleAdapter.getItem(i).scheduleEnabled) {
-                        del_list += mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
+                        del_list += "- "+mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
                     }
                 }
                 mUtil.showCommonDialog(true, "W",
@@ -4557,10 +4557,10 @@ public class ActivityMain extends AppCompatActivity {
         for (int i = 0; i < pa.getCount(); i++) {
             if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskError()) {
                 is_task_error_tmp = true;
-                msg = pa.getItem(i).getSyncTaskName();
+                msg = "- "+pa.getItem(i).getSyncTaskName();
                 break;
             } else if (pa.getItem(i).isChecked() && !pa.getItem(i).isSyncTaskAuto()) {
-                msg += sep + pa.getItem(i).getSyncTaskName();
+                msg += sep + "- "+pa.getItem(i).getSyncTaskName();
                 sep = "\n";
             }
         }
@@ -4599,10 +4599,10 @@ public class ActivityMain extends AppCompatActivity {
         for (int i = 0; i < pa.getCount(); i++) {
             if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskError()) {
                 is_task_error_tmp = true;
-                msg = pa.getItem(i).getSyncTaskName();
+                msg = "- "+pa.getItem(i).getSyncTaskName();
                 break;
             } else if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskAuto()) {
-                msg += sep + pa.getItem(i).getSyncTaskName();
+                msg += sep + "- "+pa.getItem(i).getSyncTaskName();
                 sep = "\n";
             }
         }

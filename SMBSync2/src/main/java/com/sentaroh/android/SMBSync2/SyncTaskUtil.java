@@ -1388,7 +1388,7 @@ public class SyncTaskUtil {
 
         for (int i = 0; i < mGp.syncTaskAdapter.getCount(); i++) {
             if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
-                dpmsg = dpmsg + mGp.syncTaskAdapter.getItem(i).getSyncTaskName() + "\n";
+                dpmsg = dpmsg + "- "+mGp.syncTaskAdapter.getItem(i).getSyncTaskName() + "\n";
                 dpnum[i] = i;
             } else dpnum[i] = -1;
         }
