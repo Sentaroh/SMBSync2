@@ -18,7 +18,7 @@ SMBSync2のスケジュール機能または外部アプリケーション（Tas
 2. ファイルサイズが違う
 3. ファイルの最終更新日時が3秒以上違う(秒数は同期タスクのオプションにより変更可能)  
 ## 2.FAQ  
-下記リンクのPDFを参照ください。
+下記リンクのPDFを参照ください。  
 https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing 
 
 ## 3.使用ライブラリー
@@ -28,5 +28,5 @@ https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=shari
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 
 ## 4.詳細情報
-下記リンクのPDFを参照ください。
+下記リンクのPDFを参照ください。  
 https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing

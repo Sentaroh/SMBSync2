@@ -35,13 +35,14 @@ Nelle Opzioni Avanzate è possibile regolare molte impostazioni di confronto: l'
 Quando il target si trova nella memoria interna o sulla scheda SD, la maggior parte dei sistemi Android non consente di impostare l'ultimo orario modificato del file di destinazione in modo che corrisponda all'orario del file di origine. Quando il target è SMB (PC/NAS), o storage OTG-USB, di solito questo non è un problema. SMSync2 rileva se l'ora/data può essere impostata sulla destinazione per corrispondere al file di origine. In caso contrario, l'ultimo tempo di aggiornamento del file viene registrato nei file del database dell'applicazione. Viene quindi utilizzato per confrontare i file e verificare se differiscono per tempo. In tal caso, se si tenta di sincronizzare la coppia master/target con un'applicazione di terze parti o se i file di dati SMBSync2 vengono cancellati, i file di origine vengono copiati nuovamente sul target. È possibile impostare l'opzione "Non sovrascrivere il file di destinazione se è più recente del master", oltre al confronto per dimensioni per superare questo problema.
 
 ## 2.FAQs
-Si prega di fare riferimento al link PDF qui sotto.
+Si prega di fare riferimento al link PDF qui sotto.  
 https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing
+
 ## 3. Libreria
 - [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-1.3.17](https://jcifs.samba.org/)
 - [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 ## 4. Documenti
-Si prega di fare riferimento al link PDF qui sotto.
+Si prega di fare riferimento al link PDF qui sotto.  
 https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing
