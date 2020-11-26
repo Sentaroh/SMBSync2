@@ -114,13 +114,15 @@ Lorsqu'elle est cochée, elle affiche un dialogue de confirmation avant d'écras
 ### Options Wifi AP
 
 - Même si Wifi éteint:essaiera de démarrer la synchronisation même si le Wifi est désactivé
-
 - Tous les réseaux:se synchronise uniquement lorsqu'il est connecté à un réseau wifi. Il acceptera n'importe quel nom de SSID WLAN.
-
 - Wifi avec IP privée:vous ne pouvez lancer la synchronisation que si l'adresse IP attribuée au réseau Wifi se situe dans les plages suivantes : 10.0.0.0 - 10.255.255.255, 172.16.0.0 - 172.31.255.255 ou 192.168.0.0 - 192.168.255.255.
-
 - Liste d'adresse IP: vous ne pouvez commencer la synchronisation que si l'adresse IP WiFi correspond à l'une des adresses spécifiées. Vous pouvez également ajouter directement l'adresse IP actuelle à laquelle votre appareil est connecté via la liste de sélection des adresses IP.   
 Vous pouvez utiliser des jokers pour le filtre. (par exemple, 192.168.100.\*, 192.168.\*)
+
+Il existe plusieurs façons de se synchroniser lors de la connexion à un WiFi spécifique. Voir la FAQ pour plus de détails.
+
+1. Changer l'adresse IP de votre routeur WiFi pour une autre adresse que 192.168.0.0/24
+2. Fixation de l'adresse IP du côté d'Android
 
 ### Ignorer la tâche si le WLAN n'est pas connecté au point d'accès spécifié, ou que l'adresse IP ne correspond pas à celle spécifiée.
 

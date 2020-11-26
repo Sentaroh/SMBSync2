@@ -119,6 +119,11 @@ When checked, it will display a confirmation dialog before overwriting or deleti
   You can start syncing only if the WiFi IP address matches one of the specified addresses. You can also directly add the current IP address your device is connected to through the IP selection list.  
 You can use wildcards for the filter. (e.g., 192.168.100.\*, 192.168.\*)
 
+There are several ways to synchronize when connecting to a specific WiFi. See the FAQ for details.
+
+1. Change the IP address to something other than 192.168.0.0/24 on your WiFi router
+2. Fixing the IP address on the Android side
+
 ### Skip task if the WLAN is not connected to the specified access point, or if WLAN IP does not match the specified IP address.
 
 Auto Sync will skip the task if it doesn’t match the specified criteria 
