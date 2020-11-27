@@ -121,8 +121,8 @@ Vous pouvez utiliser des jokers pour le filtre. (par exemple, 192.168.100.\*, 19
 
 Il existe plusieurs façons de se synchroniser lors de la connexion à un WiFi spécifique. Voir la FAQ pour plus de détails.
 
-1. Changer l'adresse IP de votre routeur WiFi pour une autre adresse que 192.168.0.0/24
-2. Fixation de l'adresse IP du côté d'Android
+1. Changez l'adresse IP de votre routeur WiFi pour une autre adresse que 192.168.0.0/24 et ajoutez-la à la liste des adresses IP
+2. Fixer une adresse IP du côté d'Android et l'enregistrer dans la liste des adresses IP
 
 ### Ignorer la tâche si le WLAN n'est pas connecté au point d'accès spécifié, ou que l'adresse IP ne correspond pas à celle spécifiée.
 

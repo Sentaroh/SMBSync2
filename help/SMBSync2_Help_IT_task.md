@@ -118,8 +118,8 @@ Se spuntata, visualizzerà una finestra di dialogo di conferma prima di sovrascr
 
 Ci sono diversi modi per sincronizzarsi quando ci si connette ad un WiFi specifico. Vedi le FAQ per i dettagli.
 
-1. 2. Cambiare l'indirizzo IP in qualcosa di diverso da 192.168.0.0.0/24 sul router WiFi
-2. 3. Fissare l'indirizzo IP sul lato Android
+1. Cambiare l'indirizzo IP in qualcosa di diverso da 192.168.0.0.0/24 sul router WiFi e aggiungerlo alla lista degli indirizzi IP
+2. Fissare un indirizzo IP sul lato Android e registrarlo nell'elenco degli indirizzi IP
 
 ### Salta il  task se l\'IP WLAN non corrisponde all\'indirizzo IP specificato
 
