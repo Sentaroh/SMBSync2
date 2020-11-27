@@ -124,9 +124,9 @@ There are several ways to synchronize when connecting to a specific WiFi. See th
 1. Change the IP address to something other than 192.168.0.0/24 on your WiFi router and add it to the IP address list
 2. Fixing an IP address on the Android side and registering it in the IP address list
 
-### Skip task if the WLAN is not connected to the specified access point, or if WLAN IP does not match the specified IP address.
+### Skip task if the WLAN IP does not match the specified IP address.
 
-Auto Sync will skip the task if it doesn’t match the specified criteria 
+Sync will skip the task if it doesn’t match the specified criteria 
 
 ### Allow sync with all IP addresses (include public)
 
