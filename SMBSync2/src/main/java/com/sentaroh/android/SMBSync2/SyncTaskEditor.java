@@ -781,7 +781,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_dir_view_keyword_insert_week_day_long = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday_long);
 
         final CheckedTextView ctv_smb_use_taken_date_time_for_directory_keyword = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_use_taken_date_time_for_directory_keyword);
-        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
+        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) || sfev.folder_master) {
             ctv_smb_use_taken_date_time_for_directory_keyword.setVisibility(CheckedTextView.GONE);
         } else {
             ctv_smb_use_taken_date_time_for_directory_keyword.setVisibility(CheckedTextView.VISIBLE);
@@ -1071,7 +1071,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_dir_view_keyword_insert_week_day_long = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday_long);
 
         final CheckedTextView ctv_internal_use_taken_date_time_for_directory_keyword = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_use_taken_date_time_for_directory_keyword);
-        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
+        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) || sfev.folder_master) {
             ctv_internal_use_taken_date_time_for_directory_keyword.setVisibility(CheckedTextView.GONE);
         } else {
             ctv_internal_use_taken_date_time_for_directory_keyword.setVisibility(CheckedTextView.VISIBLE);
@@ -1215,7 +1215,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_dir_view_keyword_insert_week_day_long = (Button) ll_dir_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday_long);
 
         final CheckedTextView ctv_sdcard_use_taken_date_time_for_directory_keyword = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_sdcard_use_taken_date_time_for_directory_keyword);
-        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
+        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) || sfev.folder_master) {
             ctv_sdcard_use_taken_date_time_for_directory_keyword.setVisibility(CheckedTextView.GONE);
         } else {
             ctv_sdcard_use_taken_date_time_for_directory_keyword.setVisibility(CheckedTextView.VISIBLE);
@@ -1393,7 +1393,7 @@ public class SyncTaskEditor extends DialogFragment {
                 mContext.getString(R.string.msg_edit_sync_folder_keyword_insert_week_day_long));
 
         final CheckedTextView ctv_usb_use_taken_date_time_for_directory_keyword = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_usb_use_taken_date_time_for_directory_keyword);
-        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
+        if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) || sfev.folder_master) {
             ctv_usb_use_taken_date_time_for_directory_keyword.setVisibility(CheckedTextView.GONE);
         } else {
             ctv_usb_use_taken_date_time_for_directory_keyword.setVisibility(CheckedTextView.VISIBLE);
@@ -2375,10 +2375,10 @@ public class SyncTaskEditor extends DialogFragment {
         btn_sdcard_select_sdcard.setVisibility(Button.GONE);
 
         if (master) {
-            ll_internal_keyword_view.setVisibility(LinearLayout.GONE);
-            ll_sdcard_keyword_view.setVisibility(LinearLayout.GONE);
-            ll_usb_keyword_view.setVisibility(LinearLayout.GONE);
-            ll_smb_keyword_view.setVisibility(LinearLayout.GONE);
+            ll_internal_keyword_view.setVisibility(LinearLayout.VISIBLE);
+            ll_sdcard_keyword_view.setVisibility(LinearLayout.VISIBLE);
+            ll_usb_keyword_view.setVisibility(LinearLayout.VISIBLE);
+            ll_smb_keyword_view.setVisibility(LinearLayout.VISIBLE);
             ll_zip_keyword_view.setVisibility(LinearLayout.GONE);
         } else {
             ll_internal_keyword_view.setVisibility(LinearLayout.VISIBLE);

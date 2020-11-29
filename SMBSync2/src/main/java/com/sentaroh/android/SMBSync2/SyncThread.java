@@ -988,10 +988,11 @@ public class SyncThread extends Thread {
     private int performSync(SyncTaskItem sti) {
         int sync_result = 0;
         long time_millis = System.currentTimeMillis();
-        String from, to, to_temp;
+        String from, from_temp, to, to_temp;
         if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
-            from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1013,7 +1014,8 @@ public class SyncThread extends Thread {
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
-            from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = sti.getTargetLocalMountPoint() + sti.getTargetZipOutputFileName();
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1036,7 +1038,8 @@ public class SyncThread extends Thread {
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
-            from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1068,7 +1071,8 @@ public class SyncThread extends Thread {
             }
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-            from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1101,7 +1105,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             //Internal to SMB
-            from = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(sti.getMasterLocalMountPoint(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildSmbHostUrl(mStwa.targetSmbAddress,
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName());
 
@@ -1123,7 +1128,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             //External to Internal
-            from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1156,7 +1162,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             //External to Internal
-            from = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1189,7 +1196,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             //External to External
-            from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1222,7 +1230,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
             //External to External
-            from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1255,7 +1264,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
             //External to External
-            from = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1288,7 +1298,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
             //External to External
-            from = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
+            from_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1321,8 +1332,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             //External to SMB
-            from = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
-
+            from_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildSmbHostUrl(mStwa.targetSmbAddress,
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName());
 
@@ -1356,8 +1367,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             //External to SMB
-            from = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
-
+            from_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getMasterDirectoryName());
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildSmbHostUrl(sti.getTargetSmbAddr(),
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName());
 
@@ -1391,9 +1402,8 @@ public class SyncThread extends Thread {
         } else if (sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
                 sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
             //External to Internal
-            from = buildSmbHostUrl(mStwa.masterSmbAddress,
-                    sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
-
+            from_temp = buildSmbHostUrl(mStwa.masterSmbAddress, sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
+            from=replaceKeywordValue(from_temp, time_millis);
             to_temp = buildStorageDir(sti.getTargetLocalMountPoint(), sti.getTargetDirectoryName());
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
@@ -1416,8 +1426,9 @@ public class SyncThread extends Thread {
             //External to External
             to_temp = buildStorageDir(mGp.safMgr.getSdcardRootPath(), sti.getTargetDirectoryName());
 
-            from = buildSmbHostUrl(mStwa.masterSmbAddress,
+            from_temp = buildSmbHostUrl(mStwa.masterSmbAddress,
                     sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
+            from=replaceKeywordValue(from_temp, time_millis);
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
@@ -1451,8 +1462,9 @@ public class SyncThread extends Thread {
             //External to External
             to_temp = buildStorageDir(mGp.safMgr.getUsbRootPath(), sti.getTargetDirectoryName());
 
-            from = buildSmbHostUrl(mStwa.masterSmbAddress,
+            from_temp = buildSmbHostUrl(mStwa.masterSmbAddress,
                     sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
+            from=replaceKeywordValue(from_temp, time_millis);
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
@@ -1487,8 +1499,9 @@ public class SyncThread extends Thread {
             to_temp = buildSmbHostUrl(mStwa.targetSmbAddress,
                     sti.getTargetSmbPort(), sti.getTargetSmbShareName(), sti.getTargetDirectoryName()) + "/";
 
-            from = buildSmbHostUrl(mStwa.masterSmbAddress,
+            from_temp = buildSmbHostUrl(mStwa.masterSmbAddress,
                     sti.getMasterSmbPort(), sti.getMasterSmbShareName(), sti.getMasterDirectoryName()) + "/";
+            from=replaceKeywordValue(from_temp, time_millis);
 
             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()) to = to_temp;//replaceKeywordValue(to_temp, time_millis);
             else to = replaceKeywordValue(to_temp, time_millis);
