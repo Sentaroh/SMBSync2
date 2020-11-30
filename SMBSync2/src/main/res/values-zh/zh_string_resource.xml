@@ -285,7 +285,6 @@
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">列表目录</string>
         <string name="msgs_profile_edit_sync_folder_dlg_folder_type">存储类型</string>
         <string name="msgs_profile_edit_sync_folder_dlg_local_mount_point">挂载点</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_logon">登录</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_cancel">取消登录过程</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_error">登录期间检测到错误</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_success">登录成功</string>

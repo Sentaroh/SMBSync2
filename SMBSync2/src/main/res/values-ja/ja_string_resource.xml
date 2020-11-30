@@ -285,7 +285,6 @@
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">ディレクトリ一覧</string>
         <string name="msgs_profile_edit_sync_folder_dlg_folder_type">フォルダータイプ</string>
         <string name="msgs_profile_edit_sync_folder_dlg_local_mount_point">マウントポイント</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_logon">ログオン</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_cancel">ログオンが中止されました</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_error">ログオンエラーが発生しました</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_success">ログオンが正常に完了しました</string>

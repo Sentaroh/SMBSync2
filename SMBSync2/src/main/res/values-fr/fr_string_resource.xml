@@ -285,7 +285,6 @@
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">Afficher les dossiers</string>
         <string name="msgs_profile_edit_sync_folder_dlg_folder_type">Type de stockage</string>
         <string name="msgs_profile_edit_sync_folder_dlg_local_mount_point">Point de montage</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_logon">Connexion</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_cancel">Annuler la connexion</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_error">Erreur durant la connexion</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_success">Connexion réussie</string>
