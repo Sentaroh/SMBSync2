@@ -39,16 +39,17 @@ Dans les options avancées, de nombreux paramètres de comparaison peuvent être
 Lorsque la cible se trouve sur le stockage interne ou sur la carte SD, la plupart des systèmes Android ne permettent pas de régler l'heure de la dernière modification du fichier cible pour qu'elle corresponde à l'heure du fichier source. Lorsque la cible est une SMB (PC/NAS), ou un stockage OTG-USB, cela ne pose généralement pas de problème. SMSync2 détecte si l'heure/la date peut être réglée sur la cible pour correspondre au fichier source. Si ce n'est pas le cas, la dernière heure de mise à jour du fichier est enregistrée dans les fichiers de la base de données de l'application. Elle est ensuite utilisée pour comparer les fichiers et vérifier s'ils diffèrent dans le temps. Dans ce cas, si vous essayez de synchroniser la paire maître/cible avec une application tierce ou si les fichiers de données SMBSync2 sont effacés, les fichiers sources seront à nouveau copiés sur la cible. Vous pouvez régler l'option "Ne pas écraser le fichier de destination s'il est plus récent que le maître" en plus de la comparaison par taille pour surmonter ce problème.
 
 ## 2.FAQs
-Veuillez vous référer au lien PDF ci-dessous.
+Veuillez vous référer au lien PDF ci-dessous.  
 https://drive.google.com/file/d/1QPz_VN8Hur0cfvzF35SP-dt9_QTkv-ZA/view?usp=sharing
 
 ## 3. Bibliothèque externe
 - [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
+- [bcprov-jdk15to18-1.66](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
 - [jcifs-1.3.17](https://jcifs.samba.org/)
 - [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
-- [Xmpcore-5.1.3](https://www.adobe.com/devnet/xmp.html)
-- [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor) 
+- [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
+- [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 
 ## 4.Documents
-Veuillez vous référer au lien PDF ci-dessous.
+Veuillez vous référer au lien PDF ci-dessous.  
 https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing

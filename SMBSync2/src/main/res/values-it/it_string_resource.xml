@@ -285,7 +285,6 @@
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">Lista cartelle</string>
         <string name="msgs_profile_edit_sync_folder_dlg_folder_type">Tipo di memoria</string>
         <string name="msgs_profile_edit_sync_folder_dlg_local_mount_point">Punto di montaggio</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_logon">Logon</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_cancel">Cancella processo logon</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_error">Errore durante logon</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_success">Logon riuscito</string>
@@ -388,6 +387,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Elimina</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Lista cartelle</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Escludi</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">È possibile utilizzare i caratteri jolly nel filtro. Esempio:\n192.168.100.* == 192.168.100.0-192.168.100.255\n192.168.* == 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- inclusi es: cache/temp;/my*/fo?der\n- escludi le cartelle cache/temp: \\cache/temp\n- i filtri possono essere inseriti nella stessa linea, separati da \";\"\n- escludi filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filtra tutti i file con nome specifico: file1;*.txt;*.jpg;file*\n- i filtri possono essere inseriti nella stessa linea, separati da \";\"\n- escludi filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Opzione \"Rimuovi cartelle e file esclusi dai filtri\" abilitata: Tutti i file e le cartelle non inclusi dai filtri, cosi come quelli che non esistono nella cartella sorgente, verranno eliminati dallaa cartella destinazione.</string>
@@ -487,7 +487,7 @@
         <string name="msgs_smbsync_main_private_key_corrupted_title">Errore chiave encriptazione interna</string>
         <string name="msgs_smbsync_main_private_key_corrupted_msg">Le impostazioni di sync non possono essere salvate a causa della chiave di encriptazione interna non valida.\nRicreare la chiave encriptazione interna?</string>
         <string name="msgs_smbsync_main_no_external_storage">La Memoria esterna non è stata montata. Alcune funzioni non saranno disponibili.</string>
-        <string name="msgs_smbsync_main_restart_by_destroyed">L\'applicazione è stata riavviata dopo esser stata chiusa. per disattivare il riavvio, abilitare \"Non mantenere attività\" in Impostazioni > Opzioni Sviluppatore.</string>
+        <string name="msgs_smbsync_main_restart_by_destroyed">L\'applicazione è stata riavviata dopo esser stata chiusa. per disattivare il riavvio, abilitare \"Non mantenere attività\" in Impostazioni &lt; Opzioni Sviluppatore.</string>
         <string name="msgs_smbsync_main_restart_by_killed">L\'applicazione è stata riavviata a causa è stata chiusa mente copiava in background.</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Le impostazioni di SMBv1 sono state cambiate.  Il cambiamento non avrà effetto finchè l\'applicazione sarà riavviata.  Uscire dall\'applicazione adesso?</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart">Si raccomanda di riavviare l\'applicazione dopo aver cambiato tema o lingua. Premi \"Riavvia\" per riavviare. Se vuoi riavviarla dopo, premi \"Dopo\"</string>
@@ -530,7 +530,7 @@
         <string name="msgs_menu_show_battery_optimization_screen">Ottimizzazione Batteria</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archiviazione annullata]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">La data e l\'ora delle immagini scattate non possono essere ottenute dai dati EXIF.  Utilizzare invece l'ora e la data di aggiornamento del file?  (Disabilita l\'opzione \"Conferma\" archiviazione per questa sync task per non mostrare questo messaggio in futuro)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm" formatted="false">La data e l\'ora delle immagini scattate non possono essere ottenute dai dati EXIF.  Utilizzare invece l\'ora e la data di aggiornamento del file?  (Disabilita l\'opzione \"Conferma\" archiviazione per questa sync task per non mostrare questo messaggio in futuro)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[Copia annullata]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Conferma sovrascrittura del file \n%s\n(Disabilita l\'opzione \"Conferma prima di sovrascrivere/cancellare\" per questa sync task per non mostrare questo messaggio in futuro)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[Cancellazione annullata]</string>
@@ -1023,6 +1023,21 @@
             <item>0</item>
             <item>1</item>
             <item>2</item>
+        </string-array >
+        <string name="settings_display_font_scale_factor">settings_display_font_scale_factor</string>
+        <string name="settings_display_font_scale_factor_title">Dimensione del testo</string>
+        <string name="settings_display_font_scale_factor_dialog_title">Seleziona la dimensione del testo</string>
+        <string-array name="settings_display_font_scale_factor_list_entries">
+            <item>Piccolo(80&#65130;)</item>
+            <item>Normale(100&#65130;)</item>
+            <item>Grande(120&#65130;)</item>
+            <item>Più grande(160&#65130;)</item>
+        </string-array >
+        <string-array name="settings_display_font_scale_factor_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
         </string-array >
         <string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
         <string name="settings_vibrate_when_sync_ended_dialog_title">Seleziona quando vibrare alle notifiche</string>

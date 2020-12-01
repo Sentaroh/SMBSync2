@@ -2012,8 +2012,7 @@ public class ActivityMain extends AppCompatActivity {
 
         LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-//        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
-        int zf=120;
+        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
 
         LinearLayout ll_func = (LinearLayout) vi.inflate(R.layout.about_dialog_func, null);
         final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function);
@@ -2205,6 +2204,9 @@ public class ActivityMain extends AppCompatActivity {
                     mUtil.getStringWithLocale(mActivity, mGp.settingScreenThemeLanguage, R.string.msgs_smbsync_ui_settings_language_changed_restart_later),
                     ntfy);
         }
+
+        mGp.setDisplayFontScale(mActivity);
+        reloadScreen(false);
 
         if (mGp.settingFixDeviceOrientationToPortrait)
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -3037,7 +3039,7 @@ public class ActivityMain extends AppCompatActivity {
                 String del_list = "";
                 for (int i = 0; i < mGp.syncScheduleAdapter.getCount(); i++) {
                     if (mGp.syncScheduleAdapter.getItem(i).isChecked) {
-                        del_list += mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
+                        del_list += "- "+mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
                     }
                 }
                 mUtil.showCommonDialog(true, "W",
@@ -3076,7 +3078,7 @@ public class ActivityMain extends AppCompatActivity {
                 String del_list = "";
                 for (int i = 0; i<mGp.syncScheduleAdapter.getCount(); i++) {
                     if (mGp.syncScheduleAdapter.getItem(i).isChecked && !mGp.syncScheduleAdapter.getItem(i).scheduleEnabled) {
-                        del_list += mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
+                        del_list += "- "+mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
                     }
                 }
                 mUtil.showCommonDialog(true, "W",
@@ -3114,7 +3116,7 @@ public class ActivityMain extends AppCompatActivity {
                 String del_list = "";
                 for (int i = 0; i<mGp.syncScheduleAdapter.getCount(); i++) {
                     if (mGp.syncScheduleAdapter.getItem(i).isChecked && mGp.syncScheduleAdapter.getItem(i).scheduleEnabled) {
-                        del_list += mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
+                        del_list += "- "+mGp.syncScheduleAdapter.getItem(i).scheduleName + "\n";
                     }
                 }
                 mUtil.showCommonDialog(true, "W",
@@ -4555,10 +4557,10 @@ public class ActivityMain extends AppCompatActivity {
         for (int i = 0; i < pa.getCount(); i++) {
             if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskError()) {
                 is_task_error_tmp = true;
-                msg = pa.getItem(i).getSyncTaskName();
+                msg = "- "+pa.getItem(i).getSyncTaskName();
                 break;
             } else if (pa.getItem(i).isChecked() && !pa.getItem(i).isSyncTaskAuto()) {
-                msg += sep + pa.getItem(i).getSyncTaskName();
+                msg += sep + "- "+pa.getItem(i).getSyncTaskName();
                 sep = "\n";
             }
         }
@@ -4597,10 +4599,10 @@ public class ActivityMain extends AppCompatActivity {
         for (int i = 0; i < pa.getCount(); i++) {
             if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskError()) {
                 is_task_error_tmp = true;
-                msg = pa.getItem(i).getSyncTaskName();
+                msg = "- "+pa.getItem(i).getSyncTaskName();
                 break;
             } else if (pa.getItem(i).isChecked() && pa.getItem(i).isSyncTaskAuto()) {
-                msg += sep + pa.getItem(i).getSyncTaskName();
+                msg += sep + "- "+pa.getItem(i).getSyncTaskName();
                 sep = "\n";
             }
         }

@@ -1,6 +1,6 @@
 ## 1. Données enregistrées par l'application
 
-Aucune donnée ne sera envoyée en dehors de l'application si l'utilisateur ne l'utilise pas.
+L'application enregistrera une "liste de tâches de synchronisation" et, selon les paramètres, un "enregistrement d'activité de l'application". <span style="color: red; "><u>En outre, les données enregistrées ne seront pas envoyées par l'application, sauf si l'utilisateur les a manipulées.</u></span>
 
 ### 1.1. Liste des tâches de synchronisation
 

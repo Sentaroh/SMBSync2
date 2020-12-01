@@ -1,6 +1,6 @@
 ## 1.Data recorded by the app
 
-No data will be sent outside of the app unless the user operates it.
+The app will record a ”Synchronization task list” and, depending on the settings, a ”App activity record”. <span style="color: red; "><u>In addition, the recorded data will not be sent out by the app unless the user has manipulated it.</u></span>
 
 ### 1.1.Synchronization task list
 

@@ -1,6 +1,6 @@
 ## 1. Dati registrati dall'applicazione
 
-Nessun dato verrà inviato all'esterno dell'applicazione se non è gestito dall'utente.
+L'app registrerà un "Elenco attività di sincronizzazione" e, a seconda delle impostazioni, un "Registro attività dell'app". <span style="color: red; "><u>Inoltre, i dati registrati non verranno inviati dall'app a meno che l'utente non li abbia manipolati.</u></span>
 
 ### 1.1. Elenco dei compiti di sincronizzazione
 

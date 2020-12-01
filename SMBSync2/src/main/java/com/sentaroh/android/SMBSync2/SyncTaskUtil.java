@@ -142,6 +142,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_VER5;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_VER6;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_VER7;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_PROF_VER8;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_BOOLEAN;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_INT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_UNLOAD_SETTINGS_TYPE_LONG;
@@ -1387,7 +1388,7 @@ public class SyncTaskUtil {
 
         for (int i = 0; i < mGp.syncTaskAdapter.getCount(); i++) {
             if (mGp.syncTaskAdapter.getItem(i).isChecked()) {
-                dpmsg = dpmsg + mGp.syncTaskAdapter.getItem(i).getSyncTaskName() + "\n";
+                dpmsg = dpmsg + "- "+mGp.syncTaskAdapter.getItem(i).getSyncTaskName() + "\n";
                 dpnum[i] = i;
             } else dpnum[i] = -1;
         }
@@ -7976,9 +7977,12 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_vibrate_when_sync_ended));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_device_orientation_portrait));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_device_orientation_landscape_tablet));
-        saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_screen_theme_language));
+        saveSettingsParmsToFileString(c, pw, SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM,
+                                                        encrypt_required, cp, c.getString(R.string.settings_screen_theme_language));
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_screen_theme));
         saveSettingsParmsToFileBoolean(c, pw, true,     encrypt_required, cp, c.getString(R.string.settings_dim_screen_on_while_sync));
+        saveSettingsParmsToFileString(c, pw, GlobalParameters.FONT_SCALE_FACTOR_NORMAL,
+                                                        encrypt_required, cp, c.getString(R.string.settings_display_font_scale_factor));
 
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_log_option));
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_put_logcat_option));

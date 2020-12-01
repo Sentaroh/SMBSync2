@@ -23,15 +23,17 @@ SMBSync2是一款通过无线局域网使用SMB1、SMB2或SMB3协议在Android�
 2. 不同的文件大小。
 3. 最后修改的日期和时间相差3秒以上（秒数可以通过同步任务中的选项更改）。
 ## 2.常问问题
-请参考下面的PDF链接。
+请参考下面的PDF链接。  
 https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing
+
 ## 3.正在使用的图书馆
 - [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
+- [bcprov-jdk15to18-1.66](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
 - [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-1.3.17](https://jcifs.samba.org/)
 - [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
-- [Xmpcore-5.1.3](https://www.adobe.com/devnet/xmp.html)
+- [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 ## 4.详细信息
-请参考下面的PDF链接。
+请参考下面的PDF链接。  
 https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing

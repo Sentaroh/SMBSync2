@@ -2479,6 +2479,7 @@ public class SyncThreadArchiveFile {
 //        if (date_time==null || date_time[0]==null) {
 //            date_time= StringUtil.convDateTimeTo_YearMonthDayHourMinSec(last_mod).split(" ");
 //        }
+        try {fis_retry.close();} catch(Exception e) {};
         return date_time;
     }
 

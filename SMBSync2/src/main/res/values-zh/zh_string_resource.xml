@@ -285,7 +285,6 @@
         <string name="msgs_profile_edit_sync_folder_dlg_dirlist">列表目录</string>
         <string name="msgs_profile_edit_sync_folder_dlg_folder_type">存储类型</string>
         <string name="msgs_profile_edit_sync_folder_dlg_local_mount_point">挂载点</string>
-        <string name="msgs_profile_edit_sync_folder_dlg_logon">登录</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_cancel">取消登录过程</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_error">登录期间检测到错误</string>
         <string name="msgs_profile_edit_sync_folder_dlg_logon_success">登录成功</string>
@@ -344,9 +343,9 @@
         <string name="msgs_profile_sync_task_dlg_swap_warning_title">交换源和目标</string>
         <string name="msgs_profile_sync_task_dlg_swap_warning_message">反转同步方向可能会导致文件和目录的意外删除。\n强烈建议您启用"测试"模式，并确保没有意外删除或替换任何文件或目录。</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">未指定目录过滤器</string>
-        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">从指定的目录名称（\"，：，\\，*，&lt;，&gt; \|）中删除了无效字符</string>
+        <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">从指定的目录名称(\", :, \\, *, &lt;, &gt;, \|)中删除了无效字符</string>
         <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">未指定文件过滤器</string>
-        <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">从指定的文件名中删除了无效字符（/，\"，：，\\，*，&lt;，&gt; \|）</string>
+        <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">从指定的文件名中删除了无效字符（/，\"，：，\\，*，&lt;，&gt;, \|）</string>
         <string name="msgs_profile_sync_task_dlg_file_directory_name_first_char_has_invalid_char">您必须指定相对路径。起始\" / \"字符已从路径名中删除。</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">将同步时间/日期追加到目录名称（关键字将由执行同步的日期和时间替换）</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_file">将同步时间/日期追加到文件名（关键字将被执行同步的日期和时间代替）</string>
@@ -1024,6 +1023,21 @@
             <item>0</item>
             <item>1</item>
             <item>2</item>
+        </string-array >
+        <string name="settings_display_font_scale_factor">settings_display_font_scale_factor</string>
+        <string name="settings_display_font_scale_factor_title">文字大小</string>
+        <string name="settings_display_font_scale_factor_dialog_title">选择文字大小</string>
+        <string-array name="settings_display_font_scale_factor_list_entries">
+            <item>规模小(80&#65130;)</item>
+            <item>正常(100&#65130;)</item>
+            <item>大号(120&#65130;)</item>
+            <item>最大的(160&#65130;)</item>
+        </string-array >
+        <string-array name="settings_display_font_scale_factor_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
         </string-array >
         <string name="settings_vibrate_when_sync_ended">settings_vibrate_when_sync_ended</string>
         <string name="settings_vibrate_when_sync_ended_dialog_title">选择何时在通知上振动</string>
