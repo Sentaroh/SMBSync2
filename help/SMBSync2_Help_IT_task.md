@@ -105,11 +105,11 @@ Se deselezionati, vengono sincronizzate solo le cartelle e i loro file/sottocart
 
 Se spuntata, visualizzerà una finestra di dialogo di conferma prima di sovrascrivere o cancellare i file. 
 
-### Wifi AP Opzioni:
+### WiFi AP Opzioni:
 
-- Esegui anche da spento: cercherà di avviare la sincronizzazione anche se il Wifi è spento
+- Esegui anche da spento: cercherà di avviare la sincronizzazione anche se il WiFi è spento
 
-- Conn a qualunque AP: si sincronizzerà solo se connesso ad una rete wifi. Accetterà qualsiasi nome SSID WLAN.
+- Conn a qualunque AP: si sincronizzerà solo se connesso ad una rete WiFi. Accetterà qualsiasi nome SSID WLAN.
 
 - Come indirizzo privato: è possibile avviare la sincronizzazione solo se l'indirizzo IP assegnato alla rete WiFi si trova nei seguenti campi: 10.0.0.0.0 - 10.255.255.255.255, 172.16.0.0.0 - 172.31.255.255.255 o 192.168.0.0.0 - 192.168.255.255.255.
 
@@ -127,7 +127,7 @@ Auto Sync salterà l'attività se non corrisponde ai criteri specificati
 
 ### Permetti sync con tutti gli indirizzi IP (inclusi pubblici)
 
-La sincronizzazione sarà consentita ogni volta che il Wifi è connesso a qualsiasi rete, anche su intervalli IP pubblici (come in un Wifi pubblico).
+La sincronizzazione sarà consentita ogni volta che il WiFi è connesso a qualsiasi rete, anche su intervalli IP pubblici (come in un WiFi pubblico).
 
 ### Mostra opzioni avanzate
 

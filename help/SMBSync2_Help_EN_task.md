@@ -108,7 +108,7 @@ When checked, it will display a confirmation dialog before overwriting or deleti
 
 - Conn to any AP
 
-  Will synchronize only when connected to a wifi network. It will accept any WLAN SSID name.
+  Will synchronize only when connected to a WiFi network. It will accept any WLAN SSID name.
 
 - Has private address
 
@@ -130,7 +130,7 @@ Sync will skip the task if it doesn’t match the specified criteria
 
 ### Allow sync with all IP addresses (include public)
 
-Sync will be allowed whenever the Wifi is connected to any network, even on public IP ranges (like in a public Wifi). 
+Sync will be allowed whenever the WiFi is connected to any network, even on public IP ranges (like in a public WiFi).
 
 ### Shows advanced options
 

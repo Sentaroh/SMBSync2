@@ -111,11 +111,11 @@ Si la case n'est pas cochée, seuls les dossiers et leurs fichiers/sous-dossiers
 
 Lorsqu'elle est cochée, elle affiche un dialogue de confirmation avant d'écraser ou de supprimer des fichiers. 
 
-### Options Wifi AP
+### Options WiFi AP
 
-- Même si Wifi éteint:essaiera de démarrer la synchronisation même si le Wifi est désactivé
-- Tous les réseaux:se synchronise uniquement lorsqu'il est connecté à un réseau wifi. Il acceptera n'importe quel nom de SSID WLAN.
-- Wifi avec IP privée:vous ne pouvez lancer la synchronisation que si l'adresse IP attribuée au réseau Wifi se situe dans les plages suivantes : 10.0.0.0 - 10.255.255.255, 172.16.0.0 - 172.31.255.255 ou 192.168.0.0 - 192.168.255.255.
+- Même si WiFi éteint:essaiera de démarrer la synchronisation même si le WiFi est désactivé
+- Tous les réseaux:se synchronise uniquement lorsqu'il est connecté à un réseau WiFi. Il acceptera n'importe quel nom de SSID WLAN.
+- WiFi avec IP privée:vous ne pouvez lancer la synchronisation que si l'adresse IP attribuée au réseau WiFi se situe dans les plages suivantes : 10.0.0.0 - 10.255.255.255, 172.16.0.0 - 172.31.255.255 ou 192.168.0.0 - 192.168.255.255.
 - Liste d'adresse IP: vous ne pouvez commencer la synchronisation que si l'adresse IP WiFi correspond à l'une des adresses spécifiées. Vous pouvez également ajouter directement l'adresse IP actuelle à laquelle votre appareil est connecté via la liste de sélection des adresses IP.   
 Vous pouvez utiliser des jokers pour le filtre. (par exemple, 192.168.100.\*, 192.168.\*)
 
@@ -130,7 +130,7 @@ Auto Sync sautera la tâche si elle ne correspond pas aux critères spécifiés.
 
 ### Autoriser la connexion aux adresses IP publiques
 
-La synchronisation sera autorisée chaque fois que le Wifi est connecté à n'importe quel réseau, même sur des plages IP publiques (comme dans un Wifi public). 
+La synchronisation sera autorisée chaque fois que le WiFi est connecté à n'importe quel réseau, même sur des plages IP publiques (comme dans un WiFi public).
 
 ### Options avancées
 
