@@ -2,6 +2,6 @@ Do not edit the html files.
 If you want to modify the html files, please follow the steps below.
 1.Edit the MarkDown file in the help directory
 2.Export MarkDown file to html
-3.Export html to the assets directory
+3.Exported html is move to the assets directory
 
 I use Typora (https://typora.io/) for editing and exporting.
