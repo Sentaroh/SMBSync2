@@ -6,7 +6,7 @@ L'app registrerà un "Elenco attività di sincronizzazione" e, a seconda delle i
 
 L'app registra i dati necessari per eseguire la sincronizzazione.
 
-- Nome della directory, nome del file, nome host del server SMB, indirizzo IP, numero di porta, nome del conto, password (***1**)
+- Nome della cartella, nome del file, nome host del server SMB, indirizzo IP, numero di porta, nome dell&#39;account, password (***1**)
 - Password dell'applicazione (***1**) per proteggere il lancio dell'applicazione e la modifica delle impostazioni
 - Impostazioni dell'applicazione
 
@@ -16,8 +16,8 @@ L'app registra i dati necessari per eseguire la sincronizzazione.
 
 L'app deve registrare i seguenti dati per verificare i risultati della sincronizzazione e per la risoluzione dei problemi.
 - Versione Android, produttore del terminale, nome del terminale, modello del terminale, versione dell'applicazione
-- Nome della directory, nome del file, dimensione del file, ultima modifica del file
-- Nome host del server SMB, indirizzo IP, numero di porta, nome del conto
+- Nome della cartella, nome del file, dimensione del file, ultima modifica del file
+- Nome host del server SMB, indirizzo IP, numero di porta, nome dell'account
 - Nome dell'interfaccia di rete, indirizzo IP
 - Impostazioni di sistema
 - Impostazioni dell'applicazione
@@ -26,8 +26,8 @@ L'app deve registrare i seguenti dati per verificare i risultati della sincroniz
 
 L'app può esportare "1.1.Elenco dei compiti di sincronizzazione" in un file. È possibile proteggere il file con una password prima di esportarlo.
 
-- Nome della directory, nome del file
-- Nome host del server SMB, indirizzo IP, numero di porta, nome del conto, password
+- Nome della cartella, nome del file
+- Nome host del server SMB, indirizzo IP, numero di porta, nome dell'account, password
 - Impostazioni dell'applicazione
 
 ### 1.4. Inviare i dati registrati dall'app
