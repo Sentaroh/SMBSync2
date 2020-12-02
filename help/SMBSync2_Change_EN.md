@@ -1,4 +1,10 @@
+#### 2020-12-03 Ver2.45
+
+- Enabled to add keywords (e.g. %YEAR) for synchronization date in the master directory
+- Correcting the Italian translation
+
 #### 2020-11-24 Ver2.44
+
 - Allowed to change the font size in the settings. (80%,100%,120%,160%)
 
 #### 2020-11-21 Ver2.43
