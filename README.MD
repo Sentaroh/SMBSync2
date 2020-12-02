@@ -39,8 +39,8 @@ https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing
 
 # Download  
 
-​	It is the same thing as the APK published on Google Play.  
-​	https://github.com/Sentaroh/SMBSync2/releases
+It is the same thing as the APK published on Google Play.  
+​https://github.com/Sentaroh/SMBSync2/releases
 
 # How to Build  
 
@@ -59,3 +59,5 @@ https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing
 - This software includes the work that is distributed in the MOZILLA PUBLIC LICENSE 1.1.  
   - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)  
 
+- This software includes the work that is distributed in the MIT License.
+  - [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on/1.58)  
