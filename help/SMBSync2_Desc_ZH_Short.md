@@ -1,5 +1,5 @@
 ## 1.功能
-SMBSync2是一款通过无线局域网使用SMB1、SMB2或SMB3协议在Android设备内部存储、SDCARD和PC/NAS之间进行文件同步的工具。 同步从主站到目标站是单向的，可以进行镜像、移动、复制和存档。 (内部存储、SDCARD、SMB和ZIP的组合也是可以的。)
+SMBSync2是一款通过无线局域网使用SMB1、SMB2或SMB3协议在Android设备内部存储、SDCARD和PC/NAS之间进行文件同步的工具。 同步从主站到目标站是单向的，可以进行镜像、移动、复制和存档。 (内部存储、SDCARD、SMB和ZIP的组合也是可以的。)  
 定期同步可以由SMBSync2的调度功能或外部应用程序（如Tasker或AutoMagic）启动。
 - 镜像
 
@@ -27,9 +27,8 @@ SMBSync2是一款通过无线局域网使用SMB1、SMB2或SMB3协议在Android�
 https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing
 
 ## 3.正在使用的图书馆
-- [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
 - [bcprov-jdk15to18-1.66](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
-- [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
+- [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-1.3.17](https://jcifs.samba.org/)
 - [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
 - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)

@@ -1,6 +1,7 @@
 ## 1.機能
-SMBSync2はAndroid端末の内部ストレージ、SDCARDとPC/NASの間でSMB1, SMB2またはSMB3プロトコルを使用し無線LAN経由でファイルの同期を行うためのツールです。同期はマスターからターゲットへの一方向で、ミラー、移動、コピー、アーカイブが使用できます。（内部ストレージ、SDCARD、SMB、ZIPの組み合わせが可能です）
+SMBSync2はAndroid端末の内部ストレージ、SDCARDとPC/NASの間でSMB1, SMB2またはSMB3プロトコルを使用し無線LAN経由でファイルの同期を行うためのツールです。同期はマスターからターゲットへの一方向で、ミラー、移動、コピー、アーカイブが使用できます。（内部ストレージ、SDCARD、SMB、ZIPの組み合わせが可能です）  
 SMBSync2のスケジュール機能または外部アプリケーション（TaskerやAutoMagicなど）により定期的に同期を開始する事が可能です。
+
 - ミラー  
   マスター側のディレクトリーとファイルをターゲット側に差分コピー(*1)し、コピー終了後にマスター側に存在しないターゲット側のファイルとディレクトリーを削除する。
 
@@ -22,9 +23,9 @@ SMBSync2のスケジュール機能または外部アプリケーション（Tas
 https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing 
 
 ## 3.使用ライブラリー
-- [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
-- [bcprov-jdk15to18-1.66](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
+- [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-1.3.17](https://jcifs.samba.org/)
+- [bcprov-jdk15to18-1.66](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
 - [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
 - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
