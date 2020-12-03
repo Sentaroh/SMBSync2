@@ -24,7 +24,7 @@ Files are considered different based on these criteria:
 2. Files have different sizes  
 3. Files have a different time stamp (last modification date and time)  
 
-In Advanced Options, many compare settings can be adjusted: time tolerance interval can be set to ignore difference if less than 1, 3, 5 or 10 sec for compatibility with FAT/exFAT medias. Ignore Daylight Saving time is supported. Option to not overwrite target file if it is newer than the master or if it is larger in size…
+In Advanced Options, many compare settings can be adjusted: time tolerance interval can be set to ignore difference if less than 1, 3, 5 or 10 sec for compatibility with FAT/exFAT medias. Ignore Daylight Saving time is supported. Option to not overwrite target file if it is newer than the master or if it is larger in size…  
 When target is on Internal Storage or on the SD Card, most Android systems do not permit setting the last modified time of the target file to match the time of the source file. When target is SMB (PC/NAS), or OTG-USB storage, this is usually not an issue. SMSync2 detects if the time/date can be set on the target to match the source file. If not, the last update time of the file is recorded in the application database files. It is then used to compare the files and check if they differ by time. In that case, if you try to synchronize the master/target pair with a third-party application or if SMBSync2 data files are erased, the source files will be copied again to the target. You can set the option to “Not overwrite destination file if it is newer than the master” in addition to comparing by size to overcome this issue.
 
 # FAQs
