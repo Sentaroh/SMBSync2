@@ -59,5 +59,5 @@ It is the same thing as the APK published on Google Play.
 - This software includes the work that is distributed in the MOZILLA PUBLIC LICENSE 1.1.  
   - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)  
 
-- This software includes the work that is distributed in the MIT License.
+- This software includes the work that is distributed in the Bouncy Castle LICENSE.
   - [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on/1.58)  
