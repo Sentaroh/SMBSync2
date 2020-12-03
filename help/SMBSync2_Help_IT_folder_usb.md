@@ -9,7 +9,8 @@ Quando si preme il tasto elenco cartella, vengono visualizzate le cartella selez
 
 ### Aggiungi parole chiave
 
-%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di cartella di destinazione. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.
+%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di cartella. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.  
+Nella directory master viene convertita nella data e nell'ora di inizio della sincronizzazione.
 
 **Queste opzioni vengono visualizzate solo quando il tipo di sincronizzazione è Copia/Sposta.**
 

@@ -14,7 +14,7 @@ Afficher la liste des répertoires et des fichiers dans le dossier sélectionné
 Précisez le nom du fichier ZIP cible.
 
 ### Ajouter des mots-clés
-%YEAR%, %MONTH%, %DAY% et %DAY-OF-YEAR% peuvent être utilisés comme noms de répertoires cibles. Les mots-clés sont convertis en année, mois et jour de début de la synchronisation.
+%YEAR%, %MONTH%, %DAY% et %DAY-OF-YEAR% peuvent être utilisés comme noms de répertoires cibles. Les mots-clés sont convertis en année, mois et jour de début de la synchronisation.   
 
 ### Niveau de compression
 Sélectionnez le niveau de compression ZIP. Les niveaux de compression les plus élevés sont les plus lents.

@@ -8,7 +8,8 @@ Mostra l'elenco delle cartelle nella memoria interna.
 Quando si preme il tasto elenco cartelle, vengono visualizzate le cartelle selezionabili. Premete sulla cartelle che volete scegliere e poi sul tasto "Seleziona". Per navigare attraverso le sottodirectory, toccate il nome della cartelle.
 
 ### Aggiungi parole chiave
-%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di cartelle di destinazione. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.
+%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di cartelle. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.  
+Nella directory master viene convertita nella data e nell'ora di inizio della sincronizzazione.
 
 **Queste opzioni vengono visualizzate solo quando il tipo di sincronizzazione è Copia/Sposta.**
 

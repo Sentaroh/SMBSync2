@@ -76,7 +76,8 @@ Si prega di inserire l'elenco di destinazione o l'elenco principale. Se si speci
 
 ### Aggiungi parole chiave
 
-%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di cartelle di destinazione. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.
+%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di cartelle. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.  
+Nella directory master viene convertita nella data e nell'ora di inizio della sincronizzazione.
 
 **Queste opzioni vengono visualizzate solo quando il tipo di sincronizzazione è Copia/Sposta.**
 

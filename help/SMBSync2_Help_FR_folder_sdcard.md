@@ -3,7 +3,8 @@ Afficher la liste des répertoires sur le stockage interne.
 Lorsque vous appuyez sur le bouton "list directory", les répertoires sélectionnables sont affichés. Appuyez sur le répertoire que vous souhaitez choisir, puis sur le bouton "Sélectionner". Pour revenir aux sous-répertoires, appuyez sur le nom du répertoire. 
 
 ### Ajouter des mots-clés
-%YEAR%, %MONTH%, %DAY% et %DAY-OF-YEAR% peuvent être utilisés comme noms de répertoires cibles. Les mots-clés sont convertis en année, mois et jour de début de la synchronisation. 
+%YEAR%, %MONTH%, %DAY% et %DAY-OF-YEAR% peuvent être utilisés comme noms de répertoires. Les mots-clés sont convertis en année, mois et jour de début de la synchronisation.   
+Dans le répertoire principal, il est converti en date et heure de début de synchronisation.
 
 **Ces options ne sont affichées que lorsque le type de synchronisation est Copier/Déplacer.**
 

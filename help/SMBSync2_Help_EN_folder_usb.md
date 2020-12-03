@@ -5,7 +5,8 @@ When you press the list directory button, the selectable directories are display
 
 ### Add keywords
 
-%YEAR%, %MONTH%, %DAY% and %DAY-OF-YEAR% can be used as target directory names. The keywords are converted into the year, month, and day on which the sync started.
+%YEAR%, %MONTH%, %DAY% and %DAY-OF-YEAR% can be used as directory names. The keywords are converted into the year, month, and day on which the sync started.  
+In the master directory it is converted to the synchronization start date and time.
 
 **These options are displayed only when the sync type is Copy/Move.**
 
