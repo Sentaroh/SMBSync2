@@ -34,8 +34,7 @@ In Advanced Options, many compare settings can be adjusted: time tolerance inter
 When target is on Internal Storage or on the SD Card, most Android systems do not permit setting the last modified time of the target file to match the time of the source file. When target is SMB (PC/NAS), or OTG-USB storage, this is usually not an issue. SMSync2 detects if the time/date can be set on the target to match the source file. If not, the last update time of the file is recorded in the application database files. It is then used to compare the files and check if they differ by time. In that case, if you try to synchronize the master/target pair with a third-party application or if SMBSync2 data files are erased, the source files will be copied again to the target. You can set the option to “Not overwrite destination file if it is newer than the master” in addition to comparing by size to overcome this issue.
 
 ## 2.FAQs
-Please refer to the PDF link below.  
-https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing
+[Please refer to the PDF](https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing)
 
 ## 3.Library
 - [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
@@ -45,6 +44,5 @@ https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=shari
 - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 ## 4.Documents
-Please refer to the PDF link below.  
-https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing
+[Please refer to the PDF](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)
 

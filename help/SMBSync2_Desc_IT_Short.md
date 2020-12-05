@@ -35,8 +35,7 @@ Nelle Opzioni Avanzate è possibile regolare molte impostazioni di confronto: l'
 Quando il target si trova nella memoria interna o sulla scheda SD, la maggior parte dei sistemi Android non consente di impostare l&#39;ultimo orario modificato del file di destinazione in modo che corrisponda all&#39;orario del file di origine. Quando il target è SMB (PC/NAS), o memoria OTG-USB, di solito questo non è un problema. SMSync2 rileva se l&#39;ora/data può essere impostata sulla destinazione per corrispondere al file di origine. In caso contrario, l&#39;ultimo tempo di aggiornamento del file viene registrato nei file del database dell&#39;applicazione. Viene quindi utilizzato per confrontare i file e verificare se differiscono per tempo. In tal caso, se si tenta di sincronizzare la coppia master/target con un&#39;applicazione di terze parti o se i file di dati SMBSync2 vengono cancellati, i file di origine vengono copiati nuovamente sul target. È possibile impostare l&#39;opzione &quot;Non sovrascrivere il file di destinazione se è più recente del master&quot;, oltre al confronto per dimensioni per superare questo problema.
 
 ## 2.FAQs
-Si prega di fare riferimento al link PDF qui sotto.  
-https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing
+[Vedi PDF](https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing)
 
 ## 3. Libreria
 - [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
@@ -46,5 +45,4 @@ https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=shari
 - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
 ## 4. Documenti
-Si prega di fare riferimento al link PDF qui sotto.  
-https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing
+[Vedi PDF](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)
