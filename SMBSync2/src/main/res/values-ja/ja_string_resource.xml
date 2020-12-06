@@ -301,6 +301,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_show_password">パスワードの表示</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_use_smb2_negotiation">Use SMB2 negotiation</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_prompt_title">SMBプロトコルの選択</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">SMBプロトコル</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">SMB1</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">SMB V2 (2.01)</string>

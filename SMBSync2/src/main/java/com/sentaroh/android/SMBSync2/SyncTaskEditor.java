@@ -3233,7 +3233,7 @@ public class SyncTaskEditor extends DialogFragment {
                 new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
         mGp.safMgr.loadSafFile();
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
+        spinner.setPrompt(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_prompt_title));
         spinner.setAdapter(adapter);
 
 //        adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_system));

@@ -301,6 +301,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_show_password">Montrer le mot de passe</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">Exiger l\'authentification SMB IPC</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_use_smb2_negotiation">Utiliser le protocole SMB2</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_prompt_title">Sélectionnez le protocole SMB</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">Protocole SMB</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">Utiliser SMB V1</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">Utiliser SMB V2 (2.01)</string>

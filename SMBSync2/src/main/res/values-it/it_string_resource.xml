@@ -301,6 +301,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_show_password">Mostra password</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_ipc_signing_enforced">Forza SMB IPC Signing</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_use_smb2_negotiation">Usa negoziazione SMB2</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_prompt_title">Selezionare il protocollo SMB</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_hdr">Protocollo SMB</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb1">Usa SMB V1</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb201">Usa SMB V2 (2.01)</string>
