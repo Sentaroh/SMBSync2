@@ -652,11 +652,11 @@ public class SyncTaskEditor extends DialogFragment {
             hndl.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    final Button new_btn_sync_folder_ok = (Button) mEditFolderDialog.findViewById(R.id.edit_profile_remote_btn_ok);
-                    final TextView new_dlg_msg = (TextView) mEditFolderDialog.findViewById(R.id.edit_sync_folder_dlg_msg);
-                    setSyncFolderOkButtonEnabled(new_btn_sync_folder_ok, ok_button_enabled);
-//                    new_dlg_msg.setVisibility(msg_visibility);
-//                    new_dlg_msg.setText(msg_text);
+                    if (mEditFolderDialog!=null) {
+                        final Button new_btn_sync_folder_ok = (Button) mEditFolderDialog.findViewById(R.id.edit_profile_remote_btn_ok);
+                        final TextView new_dlg_msg = (TextView) mEditFolderDialog.findViewById(R.id.edit_sync_folder_dlg_msg);
+                        setSyncFolderOkButtonEnabled(new_btn_sync_folder_ok, ok_button_enabled);
+                    }
                 }
             }, 500);
         }
