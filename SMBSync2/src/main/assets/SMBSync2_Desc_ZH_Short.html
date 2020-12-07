@@ -4,7 +4,7 @@
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>SMBSync2_Desc_ZH_Short</title></head>
 <body><h2>1.功能</h2>
-<p>SMBSync2是一款通过无线局域网使用SMB1、SMB2或SMB3协议在Android设备内部存储、SDCARD和PC/NAS之间进行文件同步的工具。 同步从主站到目标站是单向的，可以进行镜像、移动、复制和存档。 (内部存储、SDCARD、SMB和ZIP的组合也是可以的。)<br/>定期同步可以由SMBSync2的调度功能或外部应用程序（如Tasker或AutoMagic）启动。</p>
+<p>SMBSync2是一款通过无线局域网使用SMB1、SMB2或SMB3协议在Android设备内部存储、SDCARD/USB-OTG和PC/NAS之间进行文件同步的工具。 同步从主站到目标站是单向的，可以进行镜像、移动、复制和存档。 (内部存储、SDCARD、USB-OTG SMB和ZIP的组合也是可以的。)<br/>定期同步可以由SMBSync2的调度功能或外部应用程序（如Tasker或AutoMagic）启动。</p>
 <ul>
 <li><p>镜像</p>
 <p>将主站侧的目录和文件差额拷贝（*1）到目标站侧，复制完成后，从目标站侧删除主站侧不存在的文件和目录。</p>
@@ -16,7 +16,9 @@
 <p>差分将主目录中的文件复制到目标目录中。</p>
 </li>
 <li><p>封存</p>
-<p>如果主目录中的照片和视频是在执行存档前7天或30天之前拍摄的，则将其移动到目标目录中。 但是，你不能使用ZIP来瞄准。</p>
+<p>如果主目录中的照片和视频是在归档执行日期前7天或30天之前拍摄的，则将其移动到目标中。但是，您不能使用zip来锁定目标。 
+以下文件类型有资格进行归档。 
+&quot;gif&quot;、&quot;jpg&quot;、&quot;jpeg&quot;、&quot;jpe&quot;、&quot;png&quot;、&quot;mp4&quot;、&quot;mov&quot;。  </p>
 </li>
 
 </ul>
@@ -27,11 +29,20 @@
 <li>最后修改的日期和时间相差3秒以上（秒数可以通过同步任务中的选项更改）。</li>
 
 </ol>
+<p>在高级选项中，有很多比较设置可以调整，（下面是一个例子</p>
+<ul>
+<li>时间容许间隔可以设置为忽略小于1、3、5或10秒的差异，以便与FAT/exFAT介质兼容。</li>
+<li>支持忽略夏令时。</li>
+<li>如果目标文件比主文件新或尺寸较大，可选择不覆盖。</li>
+
+</ul>
 <h2>2.常问问题</h2>
 <p><a href='https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing'>查看PDF</a></p>
-<h2>3.正在使用的图书馆</h2>
+<h2>3.详细信息</h2>
+<p><a href='https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing'>查看PDF</a></p>
+<h2>4.正在使用的图书馆</h2>
 <ul>
-<li><a href='https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66'>bcprov-jdk15to18-1.66</a>  </li>
+<li>[<a href='https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on/1.58'>Bouncy Castle Provider</a>    </li>
 <li><a href='https://github.com/AgNO3/jcifs-ng'>jcifs-ng</a></li>
 <li><a href='https://jcifs.samba.org/'>jcifs-1.3.17</a></li>
 <li><a href='https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2'>Zip4J 1.3.2</a></li>
@@ -39,7 +50,5 @@
 <li><a href='https://github.com/drewnoakes/metadata-extractor'>Metadata-extractor</a></li>
 
 </ul>
-<h2>4.详细信息</h2>
-<p><a href='https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing'>查看PDF</a></p>
 </body>
 </html>

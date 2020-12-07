@@ -1,5 +1,5 @@
 ## 1.功能
-SMBSync2是一款通过无线局域网使用SMB1、SMB2或SMB3协议在Android设备内部存储、SDCARD和PC/NAS之间进行文件同步的工具。 同步从主站到目标站是单向的，可以进行镜像、移动、复制和存档。 (内部存储、SDCARD、SMB和ZIP的组合也是可以的。)  
+SMBSync2是一款通过无线局域网使用SMB1、SMB2或SMB3协议在Android设备内部存储、SDCARD/USB-OTG和PC/NAS之间进行文件同步的工具。 同步从主站到目标站是单向的，可以进行镜像、移动、复制和存档。 (内部存储、SDCARD、USB-OTG SMB和ZIP的组合也是可以的。)  
 定期同步可以由SMBSync2的调度功能或外部应用程序（如Tasker或AutoMagic）启动。
 - 镜像
 
@@ -15,22 +15,32 @@ SMBSync2是一款通过无线局域网使用SMB1、SMB2或SMB3协议在Android�
 
 - 封存
 
-  如果主目录中的照片和视频是在执行存档前7天或30天之前拍摄的，则将其移动到目标目录中。 但是，你不能使用ZIP来瞄准。
+  如果主目录中的照片和视频是在归档执行日期前7天或30天之前拍摄的，则将其移动到目标中。但是，您不能使用zip来锁定目标。 
+以下文件类型有资格进行归档。 
+"gif"、"jpg"、"jpeg"、"jpe"、"png"、"mp4"、"mov"。  
 
 *1 当满足以下三个条件中的任何一个时，该文件将被判定为差异文件，并将被复制或移动。 但是，文件大小和最后修改时间可以被同步任务的选项忽略。
 
 1. 该文件不存在。
 2. 不同的文件大小。
 3. 最后修改的日期和时间相差3秒以上（秒数可以通过同步任务中的选项更改）。
+
+在高级选项中，有很多比较设置可以调整，（下面是一个例子
+- 时间容许间隔可以设置为忽略小于1、3、5或10秒的差异，以便与FAT/exFAT介质兼容。
+- 支持忽略夏令时。
+- 如果目标文件比主文件新或尺寸较大，可选择不覆盖。
+
 ## 2.常问问题
 [查看PDF](https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing)
 
-## 3.正在使用的图书馆
-- [bcprov-jdk15to18-1.66](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
+## 3.详细信息
+
+[查看PDF](https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing)
+
+## 4.正在使用的图书馆
+- [[Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on/1.58)    
 - [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-1.3.17](https://jcifs.samba.org/)
 - [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
 - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
-## 4.详细信息
-[查看PDF](https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing)

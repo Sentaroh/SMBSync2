@@ -1,6 +1,6 @@
 ## 1. Funzioni
 
-SMBSync2 è uno strumento per la sincronizzazione di file via LAN wireless utilizzando il protocollo SMB1, SMB2 o SMB3 tra la memoria interna del terminale Android, SDCARD e PC/NAS. La sincronizzazione è a senso unico dal master all'obiettivo. Sono supportate le modalità Mirror, Sposta, Copia e Archivia. Sono supportate molte combinazioni di archiviazione (archiviazione interna, SDCARD, OTG-USB, SMB, ZIP)La sincronizzazione può essere avviata automaticamente da applicazioni esterne (Tasker, AutoMagic ecc.) o dal pianificatore SMBSync2.   
+SMBSync2 è uno strumento per la sincronizzazione di file via LAN wireless utilizzando il protocollo SMB1, SMB2 o SMB3 tra la memoria interna del terminale Android, SDCARD/USB-OTG e PC/NAS. La sincronizzazione è a senso unico dal master all'obiettivo. Sono supportate le modalità Mirror, Sposta, Copia e Archivia. Sono supportate molte combinazioni di archiviazione (archiviazione interna, SDCARD, USB-OTG, SMB, ZIP)La sincronizzazione può essere avviata automaticamente da applicazioni esterne (Tasker, AutoMagic ecc.) o dal pianificatore SMBSync2.   
 La sincronizzazione avviene tra due coppie di cartelle chiamate Master (cartella sorgente) e Target (cartella di destinazione). Si tratta di una sincronizzazione in una sola direzione, dal Master al Target.  
 Le modalità di sincronizzazione supportate sono:
 
@@ -21,28 +21,33 @@ Le modalità di sincronizzazione supportate sono:
 
 - Archivia
 
-  Archiviare foto e video spostandoli dal master alla cartella di destinazione. Per l&#39;archiviazione possono essere specificati criteri specifici: data/ora di scatto, data e ora dell&#39;ultima esecuzione dell&#39;archivio (ad esempio 7 giorni o prima o 30 giorni o prima).  
-  ZIP non può essere specificato come target per le operazioni di archivio.
+  Spostare le foto e i video nella directory del master se sono state scattate prima di 7 giorni o 30 giorni prima della data di esecuzione dell'archivio. (Tuttavia, non è possibile utilizzare lo zip per raggiungere l'obiettivo).  
+I seguenti tipi di file possono essere archiviati.  
+"gif", "jpg", "jpeg", "jpe", "png", "mp4", "mov".  
 
 **Criteri di comparazione:**   
 I file sono considerati diversi in base a questi criteri:
 
-1. Il nome del file/cartella esiste solo sul master o sul target, non su entrambi i lati
+1. Il nome del file esiste solo sul master o sul target, non su entrambi i lati
 2. I file hanno dimensioni diverse
 3. I file hanno un orario diverso (data e ora dell'ultima modifica)   
 
-Nelle Opzioni Avanzate è possibile regolare molte impostazioni di confronto: l'intervallo di tolleranza temporale può essere impostato per ignorare la differenza se inferiore a 1, 3, 5 o 10 sec per la compatibilità con i media FAT/exFAT. Ignora l'ora legale è supportata. Opzione per non sovrascrivere il file di destinazione se è più nuovo del master o se è di dimensioni maggiori...  
-Quando il target si trova nella memoria interna o sulla scheda SD, la maggior parte dei sistemi Android non consente di impostare l&#39;ultimo orario modificato del file di destinazione in modo che corrisponda all&#39;orario del file di origine. Quando il target è SMB (PC/NAS), o memoria OTG-USB, di solito questo non è un problema. SMSync2 rileva se l&#39;ora/data può essere impostata sulla destinazione per corrispondere al file di origine. In caso contrario, l&#39;ultimo tempo di aggiornamento del file viene registrato nei file del database dell&#39;applicazione. Viene quindi utilizzato per confrontare i file e verificare se differiscono per tempo. In tal caso, se si tenta di sincronizzare la coppia master/target con un&#39;applicazione di terze parti o se i file di dati SMBSync2 vengono cancellati, i file di origine vengono copiati nuovamente sul target. È possibile impostare l&#39;opzione &quot;Non sovrascrivere il file di destinazione se è più recente del master&quot;, oltre al confronto per dimensioni per superare questo problema.
+Nelle Opzioni Avanzate è possibile regolare molte impostazioni di confronto. (Ecco un esempio)
+- L'intervallo di tolleranza temporale può essere impostato in modo da ignorare la differenza se inferiore a 1, 3, 5 o 10 sec per la compatibilità con i media FAT/exFAT. 
+- Ignora l'ora legale è supportata. 
+- Opzione per non sovrascrivere il file di destinazione se è più nuovo del master o se è di dimensioni maggiori.
 
 ## 2.FAQs
 [Vedi PDF](https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing)
 
-## 3. Libreria
+## 3. Documenti
+
+[Vedi PDF](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)
+
+## 4. Libreria
 - [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-1.3.17](https://jcifs.samba.org/)
-- [bcprov-jdk15to18-1.66](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
+- [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on/1.58)  
 - [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
 - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
-## 4. Documenti
-[Vedi PDF](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)

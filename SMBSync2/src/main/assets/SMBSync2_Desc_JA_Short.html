@@ -4,12 +4,12 @@
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>SMBSync2_Desc_JA_Short</title></head>
 <body><h2>1.機能</h2>
-<p>SMBSync2はAndroid端末の内部ストレージ、SDCARDとPC/NASの間でSMB1, SMB2またはSMB3プロトコルを使用し無線LAN経由でファイルの同期を行うためのツールです。同期はマスターからターゲットへの一方向で、ミラー、移動、コピー、アーカイブが使用できます。（内部ストレージ、SDCARD、SMB、ZIPの組み合わせが可能です）<br/>SMBSync2のスケジュール機能または外部アプリケーション（TaskerやAutoMagicなど）により定期的に同期を開始する事が可能です。</p>
+<p>SMBSync2はAndroid端末の内部ストレージ、SDCARD/USB-OTGとPC/NASの間でSMB1, SMB2またはSMB3プロトコルを使用し無線LAN経由でファイルの同期を行うためのツールです。同期はマスターからターゲットへの一方向で、ミラー、移動、コピー、アーカイブが使用できます。（内部ストレージ、SDCARD、USB-OTG、SMB、ZIPの組み合わせが可能です）<br/>SMBSync2のスケジュール機能または外部アプリケーション（TaskerやAutoMagicなど）により定期的に同期を開始する事が可能です。</p>
 <ul>
 <li>ミラー<br/>マスター側のディレクトリーとファイルをターゲット側に差分コピー(<strong><u>*1</u></strong>)し、コピー終了後にマスター側に存在しないターゲット側のファイルとディレクトリーを削除する。</li>
 <li>移動<br/>マスター側のディレクトリーとファイルをターゲット側に差分コピーし、コピー終了後にマスター側のファイルを削除する。（ただし、マスターとターゲットに同名でファイルサイズと更新日時が同じファイルはコピーせずマスター側のファイルを削除）</li>
 <li>コピー<br/>マスター側のディレクトリーに含まれるファイルをターゲット側に差分コピーする。</li>
-<li>アーカイブ<br/>マスター側のディレクトリーに含まれる写真とビデオをアーカイブ実行日時より撮影日時が７日以前や30日以前などの条件でターゲットに移動する。（ただし、ターゲットにZIPは使用できません）</li>
+<li>アーカイブ<br/>マスター側のディレクトリーに含まれる写真とビデオをアーカイブ実行日時より撮影日時が７日以前や30日以前などの条件でターゲットに移動する。（ただし、ターゲットにZIPは使用できません）<br/>以下のファイルタイプがアーカイブの対象となります。<br/>&quot;gif&quot;, &quot;jpg&quot;, &quot;jpeg&quot;, &quot;jpe&quot;, &quot;png&quot;, &quot;mp4&quot;, &quot;mov&quot;</li>
 
 </ul>
 <p><strong><u>*1</u></strong> 下記の３条件のうちいずれかが成立した場合に差分ファイルと判定し、コピーや移動を行います。また、同期タスクのオプションでファイルサイズと最終更新時間を無視することができます。</p>
@@ -19,19 +19,27 @@
 <li>ファイルの最終更新日時が3秒以上違う(秒数は同期タスクのオプションにより変更可能)  </li>
 
 </ol>
+<p>詳細オプションでは、多くの比較設定を調整することができます。(以下は例です)</p>
+<ul>
+<li>FAT/exFATメディアとの互換性のために、1、3、5、10秒未満の差を無視するように時間許容範囲を設定することができます。</li>
+<li>サマータイムを無視することができます。</li>
+<li>ターゲットファイルがマスターより新しい場合やサイズが大きい場合に上書きしないオプション。</li>
+
+</ul>
 <h2>2.FAQ  </h2>
 <p><a href='https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing'>PDFを参照ください。</a></p>
-<h2>3.使用ライブラリー</h2>
+<h2>3.詳細情報</h2>
+<p><a href='https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing'>PDFを参照ください。</a></p>
+<h2>4.使用ライブラリー</h2>
 <ul>
 <li><a href='https://github.com/AgNO3/jcifs-ng'>jcifs-ng</a></li>
 <li><a href='https://jcifs.samba.org/'>jcifs-1.3.17</a></li>
-<li><a href='https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66'>bcprov-jdk15to18-1.66</a>  </li>
+<li><a href='https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on/1.58'>Bouncy Castle Provider</a>  </li>
 <li><a href='https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2'>Zip4J 1.3.2</a></li>
 <li><a href='https://code.google.com/archive/p/juniversalchardet/'>juniversalchardet-1.0.3</a></li>
 <li><a href='https://github.com/drewnoakes/metadata-extractor'>Metadata-extractor</a></li>
 
 </ul>
-<h2>4.詳細情報</h2>
-<p><a href='https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing'>PDFを参照ください。</a></p>
+<p>&nbsp;</p>
 </body>
 </html>

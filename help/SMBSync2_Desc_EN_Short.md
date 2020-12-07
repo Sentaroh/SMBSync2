@@ -1,5 +1,5 @@
 ## 1.Functions
-SMBSync2 is a tool for synchronizing files via wireless LAN using SMB1,SMB2 or SMB3 protocol between the internal storage of Android terminal, SDCARD and PC/NAS. Synchronization is a one-way from the master to the target. Mirror, Move, Copy and Archive modes are supported. Many storage combinations are supported (Internal storage, SDCARD, OTG-USB, SMB, ZIP)
+SMBSync2 is a tool for synchronizing files via wireless LAN using SMB1,SMB2 or SMB3 protocol between the internal storage of Android terminal, SDCARD/USB-OTG and PC/NAS. Synchronization is a one-way from the master to the target. Mirror, Move, Copy and Archive modes are supported. Many storage combinations are supported (Internal storage, SDCARD, USB-OTG, SMB, ZIP)
 Sync can be automatically started by external applications (Tasker, AutoMagic etc) or SMBSync2 schedule.   
 Sync occurs between two folder pairs called the Master (source folder) and the Target (destination folder). It is a one direction Sync, from the Master to the Target.
 
@@ -21,28 +21,33 @@ The supported Sync modes are:
 
 - Archive
 
-  Archive photos and videos by Moving them from the master to the target folder. Specific medias criteria can be specified for archiving: shooting date/time, date and time of last archive execution (such as 7 days or earlier or 30 days or earlier).
-  ZIP cannot be specified as a target for Archive operations.
+  Move photos and videos in the master's directory to the target if they were taken before 7 days or 30 days before the archive execution date. (However, you cannot use zip to target.)  
+The following file types are eligible for archiving.  
+"gif", "jpg", "jpeg", "jpe", "png", "mp4", "mov".  
 
 **Compare criteria:** 
 Files are considered different based on these criteria:
-1. File/folder name exists only on master or target, not on both sides
+1. File name exists only on master or target, not on both sides
 2. Files have different sizes
 3. Files have a different time stamp (last modification date and time)
 
-In Advanced Options, many compare settings can be adjusted: time tolerance interval can be set to ignore difference if less than 1, 3, 5 or 10 sec for compatibility with FAT/exFAT medias. Ignore Daylight Saving time is supported. Option to not overwrite target file if it is newer than the master or if it is larger in size…  
-When target is on Internal Storage or on the SD Card, most Android systems do not permit setting the last modified time of the target file to match the time of the source file. When target is SMB (PC/NAS), or OTG-USB storage, this is usually not an issue. SMSync2 detects if the time/date can be set on the target to match the source file. If not, the last update time of the file is recorded in the application database files. It is then used to compare the files and check if they differ by time. In that case, if you try to synchronize the master/target pair with a third-party application or if SMBSync2 data files are erased, the source files will be copied again to the target. You can set the option to “Not overwrite destination file if it is newer than the master” in addition to comparing by size to overcome this issue.
+In Advanced Options, many compare settings can be adjusted.(Here is an example)  
+- Time tolerance interval can be set to ignore difference if less than 1, 3, 5 or 10 sec for compatibility with FAT/exFAT medias. 
+- Ignore Daylight Saving time is supported. 
+- Option to not overwrite target file if it is newer than the master or if it is larger in size.   
 
 ## 2.FAQs
 [Please refer to the PDF](https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing)
 
-## 3.Library
+## 3.Documents
+
+[Please refer to the PDF](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)
+
+## 4.Library
 - [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
 - [jcifs-1.3.17](https://jcifs.samba.org/)
-- [bcprov-jdk15to18-1.66](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
+- [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on/1.58)  
 - [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
 - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
 - [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
-## 4.Documents
-[Please refer to the PDF](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)
 
