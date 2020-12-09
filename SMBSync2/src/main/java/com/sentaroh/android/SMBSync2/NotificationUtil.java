@@ -270,23 +270,23 @@ public class NotificationUtil {
             PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
-        } else {
-            if (!LogUtil.getLogFilePath(gwa).equals("") && gwa.settingLogOption) {
-                File lf = new File(LogUtil.getLogFilePath(gwa));
-                if (lf.exists()) {
-                    Intent br_log_intent = new Intent(Intent.ACTION_VIEW);
-                    br_log_intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(gwa)), "text/plain");
-                    PendingIntent br_log_pi = PendingIntent.getActivity(c, 0, br_log_intent,
-                            PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.setContentIntent(br_log_pi);
-                } else {
-                    Intent dummy_intent = new Intent(c, ActivityMain.class);
-                    PendingIntent dummy_pi = PendingIntent.getActivity(c, 0, dummy_intent,
-                            PendingIntent.FLAG_UPDATE_CURRENT);
-                    dummy_pi.cancel();
-                    builder.setContentIntent(dummy_pi);
-                }
-            }
+//        } else {
+//            if (!LogUtil.getLogFilePath(gwa).equals("") && gwa.settingLogOption) {
+//                File lf = new File(LogUtil.getLogFilePath(gwa));
+//                if (lf.exists()) {
+//                    Intent br_log_intent = new Intent(Intent.ACTION_VIEW);
+//                    br_log_intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(gwa)), "text/plain");
+//                    PendingIntent br_log_pi = PendingIntent.getActivity(c, 0, br_log_intent,
+//                            PendingIntent.FLAG_UPDATE_CURRENT);
+//                    builder.setContentIntent(br_log_pi);
+//                } else {
+//                    Intent dummy_intent = new Intent(c, ActivityMain.class);
+//                    PendingIntent dummy_pi = PendingIntent.getActivity(c, 0, dummy_intent,
+//                            PendingIntent.FLAG_UPDATE_CURRENT);
+//                    dummy_pi.cancel();
+//                    builder.setContentIntent(dummy_pi);
+//                }
+//            }
         }
         if (isNotificationEnabled(gwa))
             gwa.notificationManager.notify(R.string.app_name, builder.build());
@@ -317,22 +317,22 @@ public class NotificationUtil {
             Intent activity_intent = new Intent(c, ActivityMain.class);
             PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
-        } else {
-            if (!LogUtil.getLogFilePath(gwa).equals("") && gwa.settingLogOption) {
-                File lf = new File(LogUtil.getLogFilePath(gwa));
-                if (lf.exists()) {
-                    Intent br_log_intent = new Intent(Intent.ACTION_VIEW);
-                    br_log_intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(gwa)), "text/plain");
-                    PendingIntent br_log_pi = PendingIntent.getActivity(c, 0, br_log_intent,
-                            PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.setContentIntent(br_log_pi);
-                } else {
-                    Intent dummy_intent = new Intent(c, ActivityMain.class);
-                    PendingIntent dummy_pi = PendingIntent.getActivity(c, 0, dummy_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    dummy_pi.cancel();
-                    builder.setContentIntent(dummy_pi);
-                }
-            }
+//        } else {
+//            if (!LogUtil.getLogFilePath(gwa).equals("") && gwa.settingLogOption) {
+//                File lf = new File(LogUtil.getLogFilePath(gwa));
+//                if (lf.exists()) {
+//                    Intent br_log_intent = new Intent(Intent.ACTION_VIEW);
+//                    br_log_intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(gwa)), "text/plain");
+//                    PendingIntent br_log_pi = PendingIntent.getActivity(c, 0, br_log_intent,
+//                            PendingIntent.FLAG_UPDATE_CURRENT);
+//                    builder.setContentIntent(br_log_pi);
+//                } else {
+//                    Intent dummy_intent = new Intent(c, ActivityMain.class);
+//                    PendingIntent dummy_pi = PendingIntent.getActivity(c, 0, dummy_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//                    dummy_pi.cancel();
+//                    builder.setContentIntent(dummy_pi);
+//                }
+//            }
         }
         if (isNotificationEnabled(gwa))
             gwa.notificationManager.notify(R.string.app_name, builder.build());
