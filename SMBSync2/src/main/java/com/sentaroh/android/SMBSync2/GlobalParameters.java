@@ -539,7 +539,7 @@ public class GlobalParameters extends CommonGlobalParms {
             slf4jLog.setLogOption(false, true, true, false, false);
         } else if (settingDebugLevel==2) {
             LogStream.setLevel(5);
-            slf4jLog.setLogOption(true, true, true, true, true);
+            slf4jLog.setLogOption(true, true, true, false, true);
         } else if (settingDebugLevel==3) {
             LogStream.setLevel(5);
             slf4jLog.setLogOption(true, true, true, true, true);
