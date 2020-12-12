@@ -52,9 +52,9 @@ Please refer to the PDF link below.
 
 # How to Build  
 
-1. Clone from Github(https://github.com/Sentaroh/SMBSync2.git) using Android Studio 3.0 or higher(VCS-> Checkout from Version Control-> GitHub).  
-
-1. Build by Android Studio.
+1. Clone or download from Github.  
+1. Open with AndroidStudio(Open an Existing Project).
+1. Build(Build->Rebuild project).
 
 # License information
 
