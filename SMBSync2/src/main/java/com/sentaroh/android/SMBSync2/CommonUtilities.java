@@ -820,7 +820,7 @@ public final class CommonUtilities {
             File lf = new File(dir + "/history.txt");
             if (lf.exists()) {
                 FileReader fw = new FileReader(lf);
-                BufferedReader br = new BufferedReader(fw, GENERAL_IO_AREA_SIZE);
+                BufferedReader br = new BufferedReader(fw, 1024*100);//Change to 100KiB
                 String line = "";
                 String[] l_array = null;
                 while ((line = br.readLine()) != null) {
@@ -922,7 +922,7 @@ public final class CommonUtilities {
             lf.mkdirs();
             lf = new File(dir + "/history.txt");
             FileWriter fw = new FileWriter(lf);
-            BufferedWriter bw = new BufferedWriter(fw, GENERAL_IO_AREA_SIZE);
+            BufferedWriter bw = new BufferedWriter(fw, 1024*100);//Change to 100KiB
             int max = 500;
             StringBuilder sb_buf = new StringBuilder(1024 * 2);
             SyncHistoryItem shli = null;
