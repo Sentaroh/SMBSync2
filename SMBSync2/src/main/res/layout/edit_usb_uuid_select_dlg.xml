@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/edit_usb_uuid_select_dlg_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/edit_usb_uuid_select_dlg_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/msgs_edit_usb_uuid_select_dialog_title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_line1_turquoise" />
+
+    <TextView
+        android:id="@+id/edit_usb_uuid_select_dlg_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffff0000" />
+
+    <ListView
+        android:id="@+id/edit_usb_uuid_select_dlg_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fadeScrollbars="false" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/edit_usb_uuid_select_dlg_cancel_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.50"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/msgs_common_dialog_cancel" />
+        <Button
+            android:id="@+id/edit_usb_uuid_select_dlg_ok_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.50"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/msgs_common_dialog_add" />
+
+    </LinearLayout>
+</LinearLayout>

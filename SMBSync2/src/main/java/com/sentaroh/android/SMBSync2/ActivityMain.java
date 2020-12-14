@@ -77,9 +77,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,7 +96,6 @@ import com.sentaroh.android.Utilities.StringUtil;
 import com.sentaroh.android.Utilities.SystemInfo;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.android.Utilities.ThreadCtrl;
-import com.sentaroh.android.Utilities.Widget.CustomTabContentView;
 import com.sentaroh.android.Utilities.Widget.CustomViewPager;
 import com.sentaroh.android.Utilities.Widget.CustomViewPagerAdapter;
 import com.sentaroh.android.Utilities.Widget.NonWordwrapTextView;
@@ -1303,6 +1299,9 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.settingScheduleSyncEnabled) menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule);
         else menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule_disabled);
 
+        if (Build.VERSION.SDK_INT>=26) menu.findItem(R.id.menu_top_edit_force_usb_uuid_list).setVisible(true);
+        else menu.findItem(R.id.menu_top_edit_force_usb_uuid_list).setVisible(false);
+
         if (isUiEnabled()) {
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_housekeep), true);
             if (mGp.syncThreadActive) menu.findItem(R.id.menu_top_housekeep).setVisible(false);
@@ -1502,6 +1501,9 @@ public class ActivityMain extends AppCompatActivity {
             case R.id.menu_top_settings:
                 invokeSettingsActivity();
                 setContextButtonNormalMode();
+                return true;
+            case R.id.menu_top_edit_force_usb_uuid_list:
+                EditUsbUuidList eu=new EditUsbUuidList(mActivity, mUtil);
                 return true;
             case R.id.menu_top_kill:
                 killTerminateApplication();

@@ -191,6 +191,8 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public boolean settingScheduleSyncEnabled=true;
 
+    public ArrayList<String> forceUsbUuidList =new ArrayList<String>();
+
     public Handler uiHandler = null;
 
     public NotificationManager notificationManager = null;
@@ -424,8 +426,11 @@ public class GlobalParameters extends CommonGlobalParms {
     public void refreshMediaDir(Context c) {
         if (safMgr == null) {
             safMgr = new SafManager(c, settingDebugLevel > 1);
+            safMgr.setUsbUuidList(forceUsbUuidList);
+            safMgr.loadSafFile();
         } else {
             safMgr.setDebugEnabled(settingDebugLevel > 1);
+            safMgr.setUsbUuidList(forceUsbUuidList);
             safMgr.loadSafFile();
         }
     }
@@ -610,7 +615,26 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingScheduleSyncEnabled=prefs.getBoolean(SCHEDULER_ENABLED_KEY, true);
 
+        String uuid_list=prefs.getString(FORCE_USB_UUID_LIST_KEY, "");
+        forceUsbUuidList.clear();
+        if (!uuid_list.equals("")) {
+            String[]uuid_array=uuid_list.split(";");
+            for(String item:uuid_array) {
+                if (!item.equals("")) forceUsbUuidList.add(item);
+            }
+        }
     }
+    final static public String FORCE_USB_UUID_LIST_KEY="force_usb_uuid_list";
+
+    public void saveForceUsbUuidList(Context c) {
+        String out="";
+        for(String item:forceUsbUuidList) {
+            out+=item+";";
+        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        prefs.edit().putString(FORCE_USB_UUID_LIST_KEY, out).commit();
+    }
+
 
     public String getManagementDirectory() {
         return internalRootDirectory + "/" + APPLICATION_TAG;

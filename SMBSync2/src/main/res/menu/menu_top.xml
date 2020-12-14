@@ -60,6 +60,10 @@
 <!--        android:title="@string/msgs_main_permission_coarse_location_title"-->
 <!--        />-->
 
+    <item android:id="@+id/menu_top_edit_force_usb_uuid_list"
+        android:title="@string/msgs_edit_usb_uuid_menu_tittle"
+        />
+
     <item android:id="@+id/menu_top_about"
           android:title="@string/msgs_menu_about" 
           android:icon="@android:drawable/ic_menu_info_details"

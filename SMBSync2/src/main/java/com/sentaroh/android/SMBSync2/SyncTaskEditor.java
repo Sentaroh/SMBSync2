@@ -23,13 +23,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -2585,12 +2583,50 @@ public class SyncTaskEditor extends DialogFragment {
         List<StorageVolume> vol_list=sm.getStorageVolumes();
         StorageVolume sv=null;
         String uuid="";
-        for(StorageVolume item:vol_list) {
-            cu.addDebugMsg(1,"I","getStorageVolume uuid="+item.getUuid()+", desc="+item.getDescription(c));
-            if (item.getDescription(c).toLowerCase().contains(type.toLowerCase())) {
-                sv=item;
-                uuid=item.getUuid();
-                break;
+        GlobalParameters gp=GlobalWorkArea.getGlobalParameters(c);
+        if (type.toLowerCase().equals("usb")) {
+            for(StorageVolume sv_item:vol_list) {
+                cu.addDebugMsg(1,"I","getStorageVolume uuid="+sv_item.getUuid()+", desc="+sv_item.getDescription(c));
+                if (sv_item.getDescription(c).toLowerCase().contains(type.toLowerCase())) {
+                    sv=sv_item;
+                    uuid=sv_item.getUuid();
+                    break;
+                } else {
+                    if (gp.forceUsbUuidList.size()>0) {
+                        for(String item:gp.forceUsbUuidList) {
+                            if (item.equals(sv_item.getUuid())) {
+                                sv=sv_item;
+                                uuid=item;
+                                break;
+                            }
+                        }
+                        if (sv!=null) break;
+                    }
+                }
+            }
+        } else if (type.toLowerCase().equals("sd")) {
+            for(StorageVolume sv_item:vol_list) {
+                cu.addDebugMsg(1,"I","getStorageVolume uuid="+sv_item.getUuid()+", desc="+sv_item.getDescription(c));
+                if (sv_item.getDescription(c).toLowerCase().contains(type.toLowerCase())) {
+                    if (gp.forceUsbUuidList.size()>0) {
+                        boolean found=false;
+                        for(String usb_item:gp.forceUsbUuidList) {
+                            if (usb_item.equals(sv_item.getUuid())) {
+                                found=true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            sv=sv_item;
+                            uuid=sv_item.getUuid();
+                            break;
+                        }
+                    } else {
+                        sv=sv_item;
+                        uuid=sv_item.getUuid();
+                        break;
+                    }
+                }
             }
         }
         cu.addDebugMsg(1,"I","getStorageVolume exit, uuid="+uuid);
