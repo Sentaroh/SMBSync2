@@ -104,22 +104,22 @@
         <string name="msgs_export_prof_success">Successfully exported synchronisation settings.</string>
         <string name="msgs_export_prof_title">Export Synchronisation Settings.</string>
         <string name="msgs_extra_data_sync_profile_type_error">Sync canceled: received request from external app is not a string</string>
-        <string name="msgs_edit_usb_uuid_menu_tittle">Edit USB UUIDs List</string>
+        <string name="msgs_edit_usb_uuid_menu_tittle">USB UUIDs List</string>
         <string name="msgs_edit_usb_uuid_dialog_warning_message">Use this only if the USB media is not recognized.</string>
-        <string name="msgs_edit_usb_uuid_dialog_tittle">Edit the UUID list to be recognized as USB</string>
+        <string name="msgs_edit_usb_uuid_dialog_tittle">Edit the UUID list to be recognized as USB storage media</string>
         <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">Add UUID</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">Add</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_exit_title">Confirm of Quit</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_exit_message">The UUID list has been changed. Do you want to exit without saving?</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_title">Confirmation of UUID deletion</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_message">Do you want to delete %s?</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_all_uuids_message">Do you want to delete all UUIDs?</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_save_title">Confirmation of USB UUID storage</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_save_message">The following UUIDs will be recognized as USB and cannot be used as SDCARD. Do you want to save them? \n%s</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_exit_title">Exit without saving</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_exit_message">The UUID list has been changed. Do you want to exit without saving ?</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_title">Confirm UUID delete</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_message">Do you want to delete this UUID: %s ?</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_all_uuids_message">Do you want to delete all UUIDs ?</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_save_title">Confirm USB UUID storage list</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_save_message">The following UUIDs will be recognized as USB media and cannot be used as SDCARD. Do you want to save them? \n%s</string>
         <string name="msgs_edit_usb_uuid_select_dialog_title">UUIDs that can be added.</string>
         <string name="msgs_edit_usb_uuid_select_dialog_no_uuid">No available UUID found</string>
-        <string name="msgs_edit_usb_uuid_dialog_audit_error_length">UUID should be 9 characters in the format of XXXX-XXXX.</string>
-        <string name="msgs_edit_usb_uuid_dialog_audit_error_format">UUID must be 9 characters in the format XXXX-XXXX.</string>
+        <string name="msgs_edit_usb_uuid_dialog_audit_error_length">The UUID must consist of 9 characters in the format XXXX-XXXX</string>
+        <string name="msgs_edit_usb_uuid_dialog_audit_error_format">The UUID must consist of 9 characters in the format XXXX-XXXX</string>
         <string name="msgs_edit_usb_uuid_dialog_audit_error_character_combination">The UUID must be a combination of 0-9 and A-F.</string>
         <string name="msgs_edit_usb_uuid_dialog_audit_error_already_registered">%s is already registered.</string>
         <string name="msgs_filelist_cancel">Generation of remote file list cancelled.</string>
@@ -406,7 +406,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Delete</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Directory list</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Exclude</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">You can use wildcards in the filter. Example:\n192.168.100.* == 192.168.100.0-192.168.100.255\n192.168.* == 192.168.0.0 - 192.168.255.255</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">You can use wildcards in the filter. Example:\n192.168.100.* -> 192.168.100.0-192.168.100.255\n192.168.* -> 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all files with specific name: file1;*.txt;*.jpg;file*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Option \"Remove directories and files excluded by the filters\" is enabled: All files and directories not included by the filters, as well as those that do not exist in the source directory, will be deleted from the destination directory.</string>
@@ -972,10 +972,10 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Response timeout</string>
-        <string name="settings_smb_client_response_timeout_title">Server Connection Timeout(SMBv1/2/3)</string>
+        <string name="settings_smb_client_response_timeout_title">Server Connection Timeout (SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Always Encrypt Passwords</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Encrypt Passwords(SMBv1)</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Encrypt Passwords (SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
         <string name="settings_smb_lm_compatibility_dialog_title">LmCompatibility Level</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
@@ -993,11 +993,11 @@
             <item>4</item>
         </string-array >
         <string name="settings_smb_lm_compatibility_summary">LmCompatibility Level</string>
-        <string name="settings_smb_lm_compatibility_title">LmCompatibility Level(SMBv1)</string>
+        <string name="settings_smb_lm_compatibility_title">LmCompatibility Level (SMBv1)</string>
         <string name="settings_smb_title">SMB Settings</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
-        <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
+        <string name="settings_smb_use_extended_security_title">Use Extended Security (SMBv1)</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">Disable warning when the app settings folder is included in the sync task</string>
         <string name="settings_suppress_warning_app_specific_dir_title">Settings Folder Synchronization</string>
@@ -1047,10 +1047,10 @@
         <string name="settings_display_font_scale_factor_title">Text size</string>
         <string name="settings_display_font_scale_factor_dialog_title">Select text size</string>
         <string-array name="settings_display_font_scale_factor_list_entries">
-            <item>Small(80&#65130;)</item>
-            <item>Normal(100&#65130;)</item>
-            <item>Large(120&#65130;)</item>
-            <item>Largest(160&#65130;)</item>
+            <item>Small (80&#65130;)</item>
+            <item>Normal (100&#65130;)</item>
+            <item>Large (120&#65130;)</item>
+            <item>Largest (160&#65130;)</item>
         </string-array >
         <string-array name="settings_display_font_scale_factor_list_values">
             <item>0</item>

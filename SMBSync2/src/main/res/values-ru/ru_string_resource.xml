@@ -112,7 +112,7 @@
         <string name="msgs_edit_usb_uuid_dialog_confirm_exit_title">Подтверждение выхода</string>
         <string name="msgs_edit_usb_uuid_dialog_confirm_exit_message">Список UUID изменился. Вы хотите выйти без сохранения?</string>
         <string name="msgs_edit_usb_uuid_dialog_confirm_delete_title">Подтверждение удаления UUID</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_message">Вы хотите удалить %s?</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_message">Вы хотите удалить %s ?</string>
         <string name="msgs_edit_usb_uuid_dialog_confirm_delete_all_uuids_message">Вы хотите удалить все UUID?</string>
         <string name="msgs_edit_usb_uuid_dialog_confirm_save_title">Подтверждение USB UUID-накопителя</string>
         <string name="msgs_edit_usb_uuid_dialog_confirm_save_message">Следующие UUID-ы будут распознаны как USB и не могут быть использованы в качестве SDCARD. Вы хотите сохранить их? \n%s</string>
@@ -406,7 +406,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Удалить</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Список каталога</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Исключить</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">В фильтре можно использовать подстановочные знаки. Пример:\n192.168.100.* == 192.168.100.0-192.168.100.255\n192.168.* == 192.168.0.0 - 192.168.255.255</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">В фильтре можно использовать подстановочные знаки. Пример:\n192.168.100.* -> 192.168.100.0-192.168.100.255\n192.168.* -> 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- отфильтровать все файлы с именами: file1;*.txt;*.jpg;file*.\n- фильтры можно также вводить в той же строке, разделенной \"; \"; \n- фильтры можно также вводить в той же строке, разделенной \"; \".\n - исключить выигрыши фильтров</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">При включенной опции \"Удаляет каталоги и файлы, исключенные фильтром\" все файлы и каталоги, не входящие в исходную директорию, а также файлы и каталоги, исключенные фильтром, будут удалены из целевой директории.</string>
@@ -972,10 +972,10 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Время ожидания ответа</string>
-        <string name="settings_smb_client_response_timeout_title">Время ожидания ответа клиента(SMBv1/2/3)</string>
+        <string name="settings_smb_client_response_timeout_title">Время ожидания ответа клиента (SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Отключить обычные текстовые пароли</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Отключить обычные текстовые пароли(SMBv1)</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Отключить обычные текстовые пароли (SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
         <string name="settings_smb_lm_compatibility_dialog_title">Уровень совместимости с Lm</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
@@ -993,11 +993,11 @@
             <item>4</item>
         </string-array >
         <string name="settings_smb_lm_compatibility_summary">Уровень LmCompatibility</string>
-        <string name="settings_smb_lm_compatibility_title">Уровень LmCompatibility(SMBv1)</string>
+        <string name="settings_smb_lm_compatibility_title">Уровень LmCompatibility (SMBv1)</string>
         <string name="settings_smb_title">Настройки SMB</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Использовать расширенную безопасность</string>
-        <string name="settings_smb_use_extended_security_title">Использовать расширенную безопасность(SMBv1)</string>
+        <string name="settings_smb_use_extended_security_title">Использовать расширенную безопасность (SMBv1)</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">Отключить предупреждение, когда конкретный каталог приложения включен в задачу синхронизации</string>
         <string name="settings_suppress_warning_app_specific_dir_title">Не предупреждать при синхронизации конкретного каталога приложения</string>
@@ -1047,10 +1047,10 @@
         <string name="settings_display_font_scale_factor_title">Размер текста</string>
         <string name="settings_display_font_scale_factor_dialog_title">Размер текста</string>
         <string-array name="settings_display_font_scale_factor_list_entries">
-            <item>Маленький(80&#65130;)</item>
-            <item>Нормальный(100&#65130;)</item>
-            <item>Большой(120&#65130;)</item>
-            <item>Крупнейший(160&#65130;)</item>
+            <item>Маленький  (80&#65130;)</item>
+            <item>Нормальный (100&#65130;)</item>
+            <item>Большой (120&#65130;)</item>
+            <item>Крупнейший (160&#65130;)</item>
         </string-array >
         <string-array name="settings_display_font_scale_factor_list_values">
             <item>0</item>
