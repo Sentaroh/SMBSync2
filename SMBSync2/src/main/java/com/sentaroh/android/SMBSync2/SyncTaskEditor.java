@@ -4062,12 +4062,12 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
         //Disable option for release APK
-        if (!mGp.debuggable) {
-            CommonDialog.setViewEnabled(getActivity(), ctUseDirectoryFilterV2, false);
-            ctUseDirectoryFilterV2.setChecked(false);
-            CommonDialog.setViewEnabled(getActivity(), ctvEnsureTargetExactMirror, false);
-            ctvEnsureTargetExactMirror.setChecked(false);
-        }
+//        if (!mGp.debuggable) {
+//            CommonDialog.setViewEnabled(getActivity(), ctUseDirectoryFilterV2, false);
+//            ctUseDirectoryFilterV2.setChecked(false);
+//            CommonDialog.setViewEnabled(getActivity(), ctvEnsureTargetExactMirror, false);
+//            ctvEnsureTargetExactMirror.setChecked(false);
+//        }
 
         final LinearLayout ll_special_option_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_special_option_view);
         final CheckedTextView ctvShowSpecialOption = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
