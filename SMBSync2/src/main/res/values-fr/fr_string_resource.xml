@@ -104,22 +104,22 @@
         <string name="msgs_export_prof_success">Paramètres de synchronisation exportés avec succès.</string>
         <string name="msgs_export_prof_title">Exporter les Paramètres de Synchronisation</string>
         <string name="msgs_extra_data_sync_profile_type_error">Synchronisation annulée: la requête reçue par l\'application externe n\'est pas une chaîne de caractères.</string>
-        <string name="msgs_edit_usb_uuid_menu_tittle">Editer la liste des UUIDs USB</string>
-        <string name="msgs_edit_usb_uuid_dialog_warning_message">Ne l\'utilisez que si le support USB n\'est pas reconnu.</string>
-        <string name="msgs_edit_usb_uuid_dialog_tittle">Modifier la liste des UUID pour être reconnu comme USB</string>
-        <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">Ajouter UUID</string>
+        <string name="msgs_edit_usb_uuid_menu_tittle">Liste UUID USB</string>
+        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilisez cette fonction seulement si le périphérique USB n\'est pas reconnu.</string>
+        <string name="msgs_edit_usb_uuid_dialog_tittle">Modifier la liste des UUID devant être reconnus comme périphérique USB</string>
+        <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">Ajouter un UUID</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">Ajouter</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_exit_title">Confirmer l\'arrêt</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_exit_message">La liste UUID a changé. Voulez-vous quitter sans enregistrer?</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_title">Confirmation de la suppression de l\'UUID</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_message">Voulez-vous supprimer les % ?</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_exit_title">Quitter sans sauvegarder</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_exit_message">La liste des UUID a changé. Voulez-vous quitter sans sauvegarder ?</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_title">Confirmer la suppression de l\'UUID</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_delete_message">Voulez-vous supprimer l\' UUID %s ?</string>
         <string name="msgs_edit_usb_uuid_dialog_confirm_delete_all_uuids_message">Voulez-vous supprimer tous les UUID ?</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_save_title">Confirmation du stockage USB UUID</string>
-        <string name="msgs_edit_usb_uuid_dialog_confirm_save_message">Les UUID suivantes seront reconnues comme USB et ne peuvent pas être utilisées comme SDCARD. Voulez-vous les sauvegarder ? \n%s</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_save_title">Confirmer la liste UUID du stockage USB</string>
+        <string name="msgs_edit_usb_uuid_dialog_confirm_save_message">Les UUID suivantes seront reconnues comme périphérique USB et ne pourront pas être utilisées comme SDCARD. Voulez-vous les sauvegarder ? \n%s</string>
         <string name="msgs_edit_usb_uuid_select_dialog_title">UUIDs qui peuvent être ajoutés.</string>
         <string name="msgs_edit_usb_uuid_select_dialog_no_uuid">Aucun UUID disponible trouvé</string>
-        <string name="msgs_edit_usb_uuid_dialog_audit_error_length">L\'UUID doit comporter 9 caractères dans le format XXXX-XXXX.</string>
-        <string name="msgs_edit_usb_uuid_dialog_audit_error_format">UUID doit être de 9 caractères dans le format XXXX-XXXX.</string>
+        <string name="msgs_edit_usb_uuid_dialog_audit_error_length">L\'UUID doit comporter 9 caractères au format XXXX-XXXX</string>
+        <string name="msgs_edit_usb_uuid_dialog_audit_error_format">L\'UUID doit comporter 9 caractères au format XXXX-XXXX</string>
         <string name="msgs_edit_usb_uuid_dialog_audit_error_character_combination">L\'UUID doit être une combinaison de 0 à 9 et de A à F.</string>
         <string name="msgs_edit_usb_uuid_dialog_audit_error_already_registered">%s est déjà enregistré.</string>
         <string name="msgs_filelist_cancel">Génération de la liste de fichiers du serveur distant annulée</string>
@@ -161,8 +161,8 @@
         <string name="msgs_main_app_specific_dir_used_title">Avertissement concernant l\'utilisation du dossier de données de l\'application</string>
         <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">Les listes de points d\'accès ne sont pas disponibles</string>
         <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">Les listes de points d\'accès ne sont pas disponibles</string>
-        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Les listes de points d\'accès ne sont plus disponibles en raison de la conformité avec la politique de confidentialité de Google Play, c\'est pourquoi l\'option de point d\'accès sans fil a été modifiée en \"Wifi avec IP privée\".</string>
-        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">La liste des points d\'accès n\'est plus disponible en raison de la conformité avec les règles de confidentialité de Google Play. Veuillez modifier la tâche de synchronisation et la remplacer par \"Liste d\'adresses IP\", etc.</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Les listes de points d\'accès ne sont plus disponibles afin de se conformer à la politique de confidentialité de Google Play. L\'option AP sans fil a été remplacée par \"Wifi avec IP privée\".</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">Les listes de points d\'accès ne sont plus disponibles afin de se conformer à la politique de confidentialité de Google Play. Veuillez modifier la tâche de synchronisation et la remplacer par \"Liste d\'adresses IP\", etc.</string>
         <string name="msgs_main_location_service_warning_suppress">Désactiver cet avertissement (peut être réactivé dans les paramètres de synchronisation)</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">Carte SD</string>
         <string name="msgs_main_external_sdcard_select_activity_not_found_msg">Echec d\'affichage du menu autorisant l\'accès en écriture à la carte SD.</string>
@@ -406,7 +406,7 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_delete">Supprimer</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Afficher les dossiers</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Exclure</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">Vous pouvez utiliser des jokers dans le filtre. Exemple :\n192.168.100.* == 192.168.100.0-192.168.100.255\n192.168.* == 192.168.0.0 - 192.168.255.255</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">Vous pouvez utiliser des caractères génériques dans le filtre. Exemple :\n192.168.100.* -> 192.168.100.0-192.168.100.255\n192.168.* -> 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- exp. inclure: mon/dossier;/doss*/p?ivé\n- exclure tous les dossiers cache/tmp: \\cache/tmp\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- exp. de filtre: fichier1;*.txt;*.jpg;fichier*\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">L\'option \"Supprimer les répertoires et les fichiers exclus par les filtres\" est activée: Tous les fichiers et répertoires exclus par les filtres, ainsi que ceux n\'existant pas dans le dossier source, seront supprimés du répertoire de destination.</string>
@@ -426,7 +426,7 @@
         <string name="msgs_profile_sync_task_sync_file_type_video">Synchro des fichiers vidéo</string>
         <string name="msgs_profile_sync_task_sync_option">Options:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Différence de temps tolérée (sec) entre les fichiers source et destination</string>
-        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Sauter la tâche si l\'adresse IP du WLAN ne correspond pas à l\'adresse IP spécifiée.</string>
+        <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Ignorer la tâche si l\'adresse IP ne correspond pas à celle spécifiée.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Autoriser la connexion aux adresses IP publiques</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirmer avant de remplacer/supprimer</string>
         <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Supprimer les répertoires et les fichiers exclus par les filtres</string>
@@ -972,10 +972,10 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Délai de réponse</string>
-        <string name="settings_smb_client_response_timeout_title">Délai de Réponse du Serveur(SMBv1/2/3)</string>
+        <string name="settings_smb_client_response_timeout_title">Délai de Réponse du Serveur (SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_summary_ena">Toujours Crypter les Mots de passe</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Crypter les Mots de passe(SMBv1)</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Crypter les Mots de passe (SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
         <string name="settings_smb_lm_compatibility_dialog_title">Compatibilité SMB (LmCompatibility)</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
@@ -993,11 +993,11 @@
             <item>4</item>
         </string-array >
         <string name="settings_smb_lm_compatibility_summary">Compatibilité SMB (LmCompatibility)</string>
-        <string name="settings_smb_lm_compatibility_title">Compatibilité SMB(SMBv1)</string>
+        <string name="settings_smb_lm_compatibility_title">Compatibilité SMB (SMBv1)</string>
         <string name="settings_smb_title">Paramètres SMB</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Utiliser la Sécurité Etendue</string>
-        <string name="settings_smb_use_extended_security_title">Utiliser la Sécurité Etendue(SMBv1)</string>
+        <string name="settings_smb_use_extended_security_title">Utiliser la Sécurité Etendue (SMBv1)</string>
         <string name="settings_suppress_warning_app_specific_dir">settings_suppress_warning_app_specific_dir</string>
         <string name="settings_suppress_warning_app_specific_dir_summary_ena">Désactiver l\'avertissement indiquant que le dossier de configuration de l\'application est inclus dans la tâche de synchronisation</string>
         <string name="settings_suppress_warning_app_specific_dir_title">Sync du Dossier de Configuration</string>
@@ -1047,10 +1047,10 @@
         <string name="settings_display_font_scale_factor_title">Taille du texte</string>
         <string name="settings_display_font_scale_factor_dialog_title">Sélectionnez la taille du texte</string>
         <string-array name="settings_display_font_scale_factor_list_entries">
-            <item>Petit(80&#65130;)</item>
-            <item>Normal(100&#65130;)</item>
-            <item>Grand(120&#65130;)</item>
-            <item>Le plus grand(160&#65130;)</item>
+            <item>Petite (80&#65130;)</item>
+            <item>Normale (100&#65130;)</item>
+            <item>Grande (120&#65130;)</item>
+            <item>Très grande (160&#65130;)</item>
         </string-array >
         <string-array name="settings_display_font_scale_factor_list_values">
             <item>0</item>
