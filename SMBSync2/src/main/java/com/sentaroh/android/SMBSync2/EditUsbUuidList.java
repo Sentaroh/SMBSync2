@@ -3,11 +3,13 @@ package com.sentaroh.android.SMBSync2;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static android.view.KeyEvent.KEYCODE_BACK;
 
 public class EditUsbUuidList{
     private Context mContext=null;
@@ -271,6 +275,22 @@ public class EditUsbUuidList{
                     mMainMessage.setText("");
                     CommonDialog.setViewEnabled(mActivity, mAddSpecifiedUuidButton, false);
                 }
+            }
+        });
+
+        mDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int kc, KeyEvent keyEvent) {
+                switch (kc) {
+                    case KEYCODE_BACK:
+                        if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                            mCancelButton.performClick();
+                        }
+                        return true;
+                    default:
+                }
+
+                return false;
             }
         });
 
