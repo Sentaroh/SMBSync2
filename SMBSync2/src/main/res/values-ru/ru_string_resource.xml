@@ -131,6 +131,8 @@
         <string name="msgs_filter_list_dlg_dir_filter">Фильтр каталогов</string>
         <string name="msgs_filter_list_dlg_file_filter">Фильтр файлов</string>
         <string name="msgs_filter_list_dlg_filter_added">Фильтр %s был добавлен.</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_title">Подтверждение выхода</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_message">Фильтр был заменен. Вы хотите выйти без сохранения?</string>
         <string name="msgs_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_filter_list_dlg_not_specified">Не определен</string>
         <string name="msgs_filter_list_duplicate_filter_specified">Следующие фильтры уже существуют: %s</string>
@@ -391,6 +393,8 @@
         <string name="msgs_profile_sync_task_dlg_wifi_addr_list">Беспроводной список IP-адреса LAN</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_title">Отредактируйте IP-адрес WiFi</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_list">Беспроводной список IP-адреса LAN</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_title">Подтверждение выхода</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_message">Список IP-адресов был изменен. Вы хотите выйти без сохранения?</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">Беспроводной IP-адрес LAN, не определен.</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">Добавьте активную точку доступа</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">Отредактируйте название точки доступа (SSID)</string>

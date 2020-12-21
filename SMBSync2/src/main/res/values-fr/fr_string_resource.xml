@@ -131,6 +131,8 @@
         <string name="msgs_filter_list_dlg_dir_filter">Filtre de dossiers</string>
         <string name="msgs_filter_list_dlg_file_filter">Filtre de fichiers</string>
         <string name="msgs_filter_list_dlg_filter_added">Le filtre %s a été ajouté.</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_title">Quitter sans sauvegarder</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_message">Le filtre a été changé. Vous voulez sortir sans sauvegarder ?</string>
         <string name="msgs_filter_list_dlg_filter_hint">Filtre</string>
         <string name="msgs_filter_list_dlg_not_specified">Non spécifié</string>
         <string name="msgs_filter_list_duplicate_filter_specified">Les filtres suivants existent déjà: %s</string>
@@ -391,6 +393,8 @@
         <string name="msgs_profile_sync_task_dlg_wifi_addr_list">Liste des Adresses IP</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_title">Modifier l\'adresse IP du réseau sans fil</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_list">Liste des adresses IP du réseau sans fil</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_title">Quitter sans sauvegarder</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_message">La liste des adresses IP a été modifiée. Vous voulez sortir sans sauvegarder ?</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">Adresse IP du réseau sans fil non spécifiée</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">Ajouter la connexion sans fil en cours</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">Modifier le nom du point d\'accès (SSID)</string>

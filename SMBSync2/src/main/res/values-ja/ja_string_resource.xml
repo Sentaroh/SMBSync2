@@ -131,6 +131,8 @@
         <string name="msgs_filter_list_dlg_dir_filter">ディレクトリー フィルター</string>
         <string name="msgs_filter_list_dlg_file_filter">ファイル フィルター</string>
         <string name="msgs_filter_list_dlg_filter_added">フィルター %s 追加しました。</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_title">終了確認</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_message">フィルターが変更されています。保存せずに終了しますか？</string>
         <string name="msgs_filter_list_dlg_filter_hint">フィルター</string>
         <string name="msgs_filter_list_dlg_not_specified">無指定</string>
         <string name="msgs_filter_list_duplicate_filter_specified">次のフィルターは既に存在します: %s</string>
@@ -391,6 +393,8 @@
         <string name="msgs_profile_sync_task_dlg_wifi_addr_list">同期可能なIPアドレスリスト</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_title">無線LAN IPアドレスリストの編集</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_list">同期可能なIPアドレスリスト</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_title">終了確認</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_message">IPアドレスリストが変更されています。保存せずに終了しますか？</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">無線LANのアドレスが何も指定されていません。</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">現在接続されているアクセスポイントを追加する</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">アクセスポイント名の編集</string>

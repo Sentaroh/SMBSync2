@@ -41,6 +41,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -108,6 +109,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_ACCESS_DENIED;
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_INVALID_LOGON_TYPE;
 import static com.sentaroh.android.SMBSync2.AdapterNetworkScanResult.NetworkScanListItem.SMB_STATUS_UNKNOWN_ACCOUNT;
@@ -2932,20 +2934,57 @@ public class SyncTaskUtil {
             }
         });
 
-        // CANCELボタンの指定
         btn_cancel.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                dialog.dismiss();
-//				glblParms.profileListView.setSelectionFromTop(currentViewPosX,currentViewPosY);
+                String prev_list="";
+                for (int i = 0; i < addr_list.size(); i++) {
+                    String inc = addr_list.get(i).substring(0, 1);
+                    String filter = addr_list.get(i).substring(1, addr_list.get(i).length());
+                    prev_list+=filter+inc+";";
+                }
+                String new_list="";
+                for(int i=0;i<filterAdapter.getCount();i++) {
+                    if (!filterAdapter.getItem(i).isDeleted()) {
+                        String inc = filterAdapter.getItem(i).isInclude()?"I":"E";
+                        String filter = filterAdapter.getItem(i).getFilter();
+                        new_list+=filter+inc+";";
+                    }
+                }
+
+                NotifyEvent ntfy=new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {}
+                });
+                if (prev_list.equals(new_list)) ntfy.notifyToListener(true, null);
+                else {
+                    mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_title),
+                            mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_message), ntfy);
+                }
             }
         });
-        // Cancelリスナーの指定
-        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
-            public void onCancel(DialogInterface arg0) {
-                btn_cancel.performClick();
+            public boolean onKey(DialogInterface dialogInterface, int kc, KeyEvent keyEvent) {
+                switch (kc) {
+                    case KEYCODE_BACK:
+                        if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                            btn_cancel.performClick();
+                        }
+                        return true;
+                    default:
+                }
+
+                return false;
             }
         });
+
         // OKボタンの指定
         btn_ok.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -3182,16 +3221,55 @@ public class SyncTaskUtil {
         // CANCELボタンの指定
         btn_cancel.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                dialog.dismiss();
+                String prev_list="";
+                for (int i = 0; i < sti.getFileFilter().size(); i++) {
+                    String inc = sti.getFileFilter().get(i).substring(0, 1);
+                    String filter = sti.getFileFilter().get(i).substring(1, sti.getFileFilter().get(i).length());
+                    prev_list+=filter+inc+";";
+                }
+                String new_list="";
+                for(int i=0;i<filterAdapter.getCount();i++) {
+                    if (!filterAdapter.getItem(i).isDeleted()) {
+                        String inc = filterAdapter.getItem(i).isInclude()?"I":"E";
+                        String filter = filterAdapter.getItem(i).getFilter();
+                        new_list+=filter+inc+";";
+                    }
+                }
+
+                NotifyEvent ntfy=new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {}
+                });
+                if (prev_list.equals(new_list)) ntfy.notifyToListener(true, null);
+                else {
+                    mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_filter_list_dlg_filter_quit_warning_title),
+                            mContext.getString(R.string.msgs_filter_list_dlg_filter_quit_warning_message), ntfy);
+                }
             }
         });
-        // Cancelリスナーの指定
-        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
-            public void onCancel(DialogInterface arg0) {
-                btn_cancel.performClick();
+            public boolean onKey(DialogInterface dialogInterface, int kc, KeyEvent keyEvent) {
+                switch (kc) {
+                    case KEYCODE_BACK:
+                        if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                            btn_cancel.performClick();
+                        }
+                        return true;
+                    default:
+                }
+
+                return false;
             }
         });
+
         // OKボタンの指定
         btn_ok.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -3489,16 +3567,53 @@ public class SyncTaskUtil {
         // CANCELボタンの指定
         btn_cancel.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                dialog.dismiss();
-                p_ntfy.notifyToListener(false, null);
+                String prev_list="";
+                for (int i = 0; i < sti.getFileFilter().size(); i++) {
+                    String inc = sti.getFileFilter().get(i).substring(0, 1);
+                    String filter = sti.getFileFilter().get(i).substring(1, sti.getFileFilter().get(i).length());
+                    prev_list+=filter+inc+";";
+                }
+                String new_list="";
+                for(int i=0;i<filterAdapter.getCount();i++) {
+                    if (!filterAdapter.getItem(i).isDeleted()) {
+                        String inc = filterAdapter.getItem(i).isInclude()?"I":"E";
+                        String filter = filterAdapter.getItem(i).getFilter();
+                        new_list+=filter+inc+";";
+                    }
+                }
+
+                NotifyEvent ntfy=new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        dialog.dismiss();
+                        p_ntfy.notifyToListener(false, null);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {}
+                });
+                if (prev_list.equals(new_list)) ntfy.notifyToListener(true, null);
+                else {
+                    mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_filter_list_dlg_filter_quit_warning_title),
+                            mContext.getString(R.string.msgs_filter_list_dlg_filter_quit_warning_message), ntfy);
+                }
             }
         });
 
-        // Cancelリスナーの指定
-        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
-            public void onCancel(DialogInterface arg0) {
-                btn_cancel.performClick();
+            public boolean onKey(DialogInterface dialogInterface, int kc, KeyEvent keyEvent) {
+                switch (kc) {
+                    case KEYCODE_BACK:
+                        if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                            btn_cancel.performClick();
+                        }
+                        return true;
+                    default:
+                }
+
+                return false;
             }
         });
 

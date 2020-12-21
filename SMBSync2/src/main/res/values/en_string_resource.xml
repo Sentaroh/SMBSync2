@@ -131,6 +131,8 @@
         <string name="msgs_filter_list_dlg_dir_filter">Directory filter</string>
         <string name="msgs_filter_list_dlg_file_filter">File filter</string>
         <string name="msgs_filter_list_dlg_filter_added">Filter %s was added.</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_title">Exit without saving</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_message">The filter has been changed. Do you want to exit without saving?</string>
         <string name="msgs_filter_list_dlg_filter_hint">Filter</string>
         <string name="msgs_filter_list_dlg_not_specified">Not specified</string>
         <string name="msgs_filter_list_duplicate_filter_specified">The following filters already exist: %s</string>
@@ -391,6 +393,8 @@
         <string name="msgs_profile_sync_task_dlg_wifi_addr_list">Wireless LAN IP address list</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_title">Edit WiFi IP Address</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_list">Wireless LAN IP address list</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_title">Exit without saving</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_message">The IP address list has been changed. Do you want to exit without saving?</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">Wireless LAN IP address not specified.</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">Add the currently connected access point</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">Edit AP name (SSID)</string>

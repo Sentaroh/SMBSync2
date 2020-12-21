@@ -131,6 +131,8 @@
         <string name="msgs_filter_list_dlg_dir_filter">目录过滤器</string>
         <string name="msgs_filter_list_dlg_file_filter">文件过滤器</string>
         <string name="msgs_filter_list_dlg_filter_added">添加了过滤器%s。</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_title">退出确认</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_message">过滤器已被更改。你想不保存就退出吗？</string>
         <string name="msgs_filter_list_dlg_filter_hint">过滤</string>
         <string name="msgs_filter_list_dlg_not_specified">未标明</string>
         <string name="msgs_filter_list_duplicate_filter_specified">已经存在以下过滤器：%s</string>
@@ -391,6 +393,8 @@
         <string name="msgs_profile_sync_task_dlg_wifi_addr_list">无线局域网IP地址列表</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_title">编辑WiFi IP地址</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_list">无线局域网IP地址列表</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_title">退出确认</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_message">IP地址列表已被更改。你想不保存就退出吗？</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">未指定无线局域网IP地址。</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">添加当前连接的接入点</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">编辑AP名称（SSID）</string>
