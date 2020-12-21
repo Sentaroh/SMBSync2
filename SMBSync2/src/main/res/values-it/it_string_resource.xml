@@ -131,8 +131,8 @@
         <string name="msgs_filter_list_dlg_dir_filter">Cartelle filtro</string>
         <string name="msgs_filter_list_dlg_file_filter">File filtro</string>
         <string name="msgs_filter_list_dlg_filter_added">Filtro %s aggiunto.</string>
-        <string name="msgs_filter_list_dlg_filter_quit_warning_title">Conferma di uscire</string>
-        <string name="msgs_filter_list_dlg_filter_quit_warning_message">Il filtro è stato sostituito. Volete uscire senza risparmiare?</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_title">Conferma prima di uscire</string>
+        <string name="msgs_filter_list_dlg_filter_quit_warning_message">Il filtro è stato modificato. Volete uscire senza salvare ?</string>
         <string name="msgs_filter_list_dlg_filter_hint">filtro</string>
         <string name="msgs_filter_list_dlg_not_specified">Non specificato</string>
         <string name="msgs_filter_list_duplicate_filter_specified">I seguenti filtri esistono già: %s</string>
@@ -393,7 +393,7 @@
         <string name="msgs_profile_sync_task_dlg_wifi_addr_list">Wireless LAN indirizzo lista IP</string>
         <string name="msgs_profile_sync_task_dlg_wifi_addr_title">Modifica WiFi Indirizzo IP</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_list">Wireless LAN indirizzo lista IP</string>
-        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_title">Conferma di uscire</string>
+        <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_title">Conferma prima di uscire</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_list_quit_warning_message">L\'elenco degli indirizzi IP è stato modificato. Volete uscire senza salvare?</string>
         <string name="msgs_profile_sync_task_dlg_wifi_address_not_specified">Wireless LAN indirizzo IP non specificato.</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">Aggiungi l\'access point connesso</string>
