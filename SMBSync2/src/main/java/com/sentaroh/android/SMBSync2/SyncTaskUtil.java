@@ -3568,9 +3568,9 @@ public class SyncTaskUtil {
         btn_cancel.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 String prev_list="";
-                for (int i = 0; i < sti.getFileFilter().size(); i++) {
-                    String inc = sti.getFileFilter().get(i).substring(0, 1);
-                    String filter = sti.getFileFilter().get(i).substring(1, sti.getFileFilter().get(i).length());
+                for (int i = 0; i < sti.getDirFilter().size(); i++) {
+                    String inc = sti.getDirFilter().get(i).substring(0, 1);
+                    String filter = sti.getDirFilter().get(i).substring(1, sti.getDirFilter().get(i).length());
                     prev_list+=filter+inc+";";
                 }
                 String new_list="";
