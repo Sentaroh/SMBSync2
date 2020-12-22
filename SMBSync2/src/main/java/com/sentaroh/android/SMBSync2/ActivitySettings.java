@@ -262,6 +262,7 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_no_compress_file_type), getActivity());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_mgt_dir), getActivity());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_force_screen_on_while_sync), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_enable_usb_uuid_list), getActivity());
         }
 
         private boolean checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
@@ -270,6 +271,8 @@ public class ActivitySettings extends PreferenceActivity {
             if (key_string.equals(c.getString(R.string.settings_error_option))) {
                 isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_force_screen_on_while_sync))) {
+                isChecked = true;
+            } else if (key_string.equals(c.getString(R.string.settings_enable_usb_uuid_list))) {
                 isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_wifi_lock))) {
                 isChecked = true;

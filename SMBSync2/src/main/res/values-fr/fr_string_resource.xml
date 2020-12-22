@@ -105,7 +105,7 @@
         <string name="msgs_export_prof_title">Exporter les Paramètres de Synchronisation</string>
         <string name="msgs_extra_data_sync_profile_type_error">Synchronisation annulée: la requête reçue par l\'application externe n\'est pas une chaîne de caractères.</string>
         <string name="msgs_edit_usb_uuid_menu_tittle">Liste UUID USB</string>
-        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilisez cette fonction seulement si le périphérique USB n\'est pas reconnu.</string>
+        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilisez cette fonction seulement si le périphérique USB n\'est pas reconnu.\nLes UUIDs qui peuvent être utilisés peuvent être vérifiés dans \"ExternalFilesDirs\" dans les informations du système. Les UUIDs qui ne sont pas répertoriés dans \"ExternalFilesDirs\" ne peuvent pas être utilisés.</string>
         <string name="msgs_edit_usb_uuid_dialog_tittle">Modifier la liste des UUID devant être reconnus comme périphérique USB</string>
         <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">Ajouter un UUID</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">Ajouter</string>
@@ -1081,6 +1081,9 @@
         <string name="settings_vibrate_when_sync_ended_summary_no">Ne jamais vibrer lors des notifications</string>
         <string name="settings_vibrate_when_sync_ended_summary_success">Vibrer lors des notifications pour les tâches réussies</string>
         <string name="settings_vibrate_when_sync_ended_title">Vibration lors des Notifications</string>
+        <string name="settings_enable_usb_uuid_list">settings_enable_edit_usb_uuid_list</string>
+        <string name="settings_enable_usb_uuid_list_title">Liste des UUID USB</string>
+        <string name="settings_enable_usb_uuid_list_summary_ena">Activer la liste des UUID USB</string>
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">Maintenir le Wi-Fi activé jusqu\'à la fin de la synchronisation</string>
         <string name="settings_wifi_lock_title">Verrouillage du Wi-Fi</string>

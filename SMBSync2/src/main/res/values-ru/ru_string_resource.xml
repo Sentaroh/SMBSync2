@@ -105,7 +105,7 @@
         <string name="msgs_export_prof_title">Экспорт списка задач</string>
         <string name="msgs_extra_data_sync_profile_type_error">Синхронизация отменена, поскольку синхронизация не String.</string>
         <string name="msgs_edit_usb_uuid_menu_tittle">Редактирование списка USB UUIDs</string>
-        <string name="msgs_edit_usb_uuid_dialog_warning_message">Используйте его только в том случае, если USB-носитель не распознан.</string>
+        <string name="msgs_edit_usb_uuid_dialog_warning_message">Используйте его только в том случае, если USB-носитель не распознан.\nUUID, которые могут быть использованы, можно проверить в \"ExternalFilesDirs\" в информации системы. UUID, не перечисленные в \"ExternalFilesDirs\", не могут быть использованы.</string>
         <string name="msgs_edit_usb_uuid_dialog_tittle">Отредактируйте список UUID, который должен быть распознан как USB</string>
         <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">Добавить UUID</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">Добавить</string>
@@ -1081,6 +1081,9 @@
         <string name="settings_vibrate_when_sync_ended_summary_no">Отключить вибрацию уведомлений</string>
         <string name="settings_vibrate_when_sync_ended_summary_success">Включить уведомление вибрации для задач, которые успешно завершены</string>
         <string name="settings_vibrate_when_sync_ended_title">Вибрация уведомлений</string>
+        <string name="settings_enable_usb_uuid_list">settings_enable_edit_usb_uuid_list</string>
+        <string name="settings_enable_usb_uuid_list_title">список USB-UUID</string>
+        <string name="settings_enable_usb_uuid_list_summary_ena">Включить список USB UUID</string>
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">Не давать уходить в сон Wi-Fi до завершенной синхронизации</string>
         <string name="settings_wifi_lock_title">Блокировка Wi-Fi</string>

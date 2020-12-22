@@ -31,5 +31,11 @@
             android:title="@string/settings_mgt_dir_title"
             android:summary="@string/settings_mgt_dir_summary"
             android:inputType="text"/>
+
+        <CheckBoxPreference
+            android:key="@string/settings_enable_usb_uuid_list"
+            android:title="@string/settings_enable_usb_uuid_list_title"
+            android:summary="@string/settings_enable_usb_uuid_list_summary_ena" />
+
     </PreferenceCategory>
 </PreferenceScreen>

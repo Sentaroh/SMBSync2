@@ -105,7 +105,7 @@
         <string name="msgs_export_prof_title">导出同步设置。</string>
         <string name="msgs_extra_data_sync_profile_type_error">同步已取消：从外部应用收到的请求不是字符串</string>
         <string name="msgs_edit_usb_uuid_menu_tittle">编辑USB UUIDs列表</string>
-        <string name="msgs_edit_usb_uuid_dialog_warning_message">只有在USB媒体未被识别时才使用此选项。</string>
+        <string name="msgs_edit_usb_uuid_dialog_warning_message">只有在USB媒体未被识别时才使用此选项。\n可以使用的UUID可以在系统信息中的 \"ExternalFilesDirs \"中确认。在 \"ExternalFilesDirs \"中没有列出的UUID不能使用。</string>
         <string name="msgs_edit_usb_uuid_dialog_tittle">编辑UUID列表，识别为USB。</string>
         <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">添加UUID</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">添加</string>
@@ -1081,6 +1081,9 @@
         <string name="settings_vibrate_when_sync_ended_summary_no">永不震动通知</string>
         <string name="settings_vibrate_when_sync_ended_summary_success">振动通知成功完成的任务</string>
         <string name="settings_vibrate_when_sync_ended_title">震动通知</string>
+        <string name="settings_enable_usb_uuid_list">settings_enable_edit_usb_uuid_list</string>
+        <string name="settings_enable_usb_uuid_list_title">USB UUID列表</string>
+        <string name="settings_enable_usb_uuid_list_summary_ena">启用USB UUID列表</string>
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">保持Wi-Fi无线电保持唤醒状态，直到同步完成</string>
         <string name="settings_wifi_lock_title">Wi-Fi锁定</string>

@@ -105,7 +105,7 @@
         <string name="msgs_export_prof_title">Impostazioni Esportazione Sincronizzazione.</string>
         <string name="msgs_extra_data_sync_profile_type_error">Sync annullata: la richiesta ricevuta dall\'app esterna non è una stringa</string>
         <string name="msgs_edit_usb_uuid_menu_tittle">Modifica elenco UUID USB</string>
-        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilizzare questa funzione solo se il supporto USB non viene riconosciuto.</string>
+        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilizzare questa funzione solo se il supporto USB non viene riconosciuto.\nGli UUID che possono essere utilizzati possono essere controllati in \"ExternalFilesDirs\" nelle informazioni di sistema. Gli UUID che non sono elencati in \"ExternalFilesDirs\" non possono essere utilizzati.</string>
         <string name="msgs_edit_usb_uuid_dialog_tittle">Modificare l\'elenco UUID per essere riconosciuto come USB</string>
         <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">Aggiungi UUID</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">Aggiungi</string>
@@ -1081,6 +1081,9 @@
         <string name="settings_vibrate_when_sync_ended_summary_no">Non vibrare mai alle notifiche</string>
         <string name="settings_vibrate_when_sync_ended_summary_success">Vibra alla notifica per i task completati con successo</string>
         <string name="settings_vibrate_when_sync_ended_title">Vibra alle Notifiche</string>
+        <string name="settings_enable_usb_uuid_list">settings_enable_edit_usb_uuid_list</string>
+        <string name="settings_enable_usb_uuid_list_title">Elenco UUID USB</string>
+        <string name="settings_enable_usb_uuid_list_summary_ena">Attivare l\'elenco UUID USB</string>
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">Mantieni il Wi-Fi attivo finchè il sync non è completato</string>
         <string name="settings_wifi_lock_title">Blocco Wi-Fi</string>

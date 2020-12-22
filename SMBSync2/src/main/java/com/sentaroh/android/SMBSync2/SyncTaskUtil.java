@@ -8083,6 +8083,7 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileString(c, pw, DEFAULT_NOCOMPRESS_FILE_TYPE,
                                                         encrypt_required, cp, c.getString(R.string.settings_no_compress_file_type));
         saveSettingsParmsToFileString(c, pw, "",        encrypt_required, cp, c.getString(R.string.settings_mgt_dir));
+        saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_enable_usb_uuid_list));
 
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_suppress_warning_app_specific_dir));
 

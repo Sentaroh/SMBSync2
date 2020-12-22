@@ -281,6 +281,7 @@ public final class CommonUtilities {
         out.add("Settings options:");
         out.add("  Error option="+gp.settingErrorOption);
         out.add("  WiFi lock option="+gp.settingWifiLockRequired);
+        out.add("  Enable USB UUID List="+gp.settingEnableUsbUuidList);
         out.add("  Write sync result log="+gp.settingWriteSyncResultLog);
         out.add("  No compress file type="+gp.settingNoCompressFileType);
         out.add("  Prevent sync start delay="+gp.settingPreventSyncStartDelay);

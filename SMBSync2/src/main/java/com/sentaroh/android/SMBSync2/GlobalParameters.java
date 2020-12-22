@@ -156,6 +156,8 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean settingErrorOption = false;
     public boolean settingWifiLockRequired = true;
 
+    public boolean settingEnableUsbUuidList = false;
+
     public String settingNoCompressFileType = DEFAULT_NOCOMPRESS_FILE_TYPE;
     static final public String DEFAULT_NOCOMPRESS_FILE_TYPE =
             "aac;apk;avi;gif;ico;gz;jar;jpe;jpeg;jpg;m3u;m4a;m4u;mov;movie;mp2;mp3;mpe;mpeg;mpg;mpga;png;qt;ra;ram;svg;tgz;wmv;zip;";
@@ -426,11 +428,11 @@ public class GlobalParameters extends CommonGlobalParms {
     public void refreshMediaDir(Context c) {
         if (safMgr == null) {
             safMgr = new SafManager(c, settingDebugLevel > 1);
-            safMgr.setUsbUuidList(forceUsbUuidList);
+            if (settingEnableUsbUuidList) safMgr.setUsbUuidList(forceUsbUuidList);
             safMgr.loadSafFile();
         } else {
             safMgr.setDebugEnabled(settingDebugLevel > 1);
-            safMgr.setUsbUuidList(forceUsbUuidList);
+            if (settingEnableUsbUuidList) safMgr.setUsbUuidList(forceUsbUuidList);
             safMgr.loadSafFile();
         }
     }
@@ -515,6 +517,8 @@ public class GlobalParameters extends CommonGlobalParms {
         if (!prefs.contains(c.getString(R.string.settings_display_font_scale_factor)))
             prefs.edit().putString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL).commit();
 
+        if (!prefs.contains(c.getString(R.string.settings_enable_usb_uuid_list)))
+            prefs.edit().putBoolean(c.getString(R.string.settings_enable_usb_uuid_list), false).commit();
     }
 
     public void setSettingOptionLogEnabled(Context c, boolean enabled) {
@@ -615,9 +619,11 @@ public class GlobalParameters extends CommonGlobalParms {
 
         settingScheduleSyncEnabled=prefs.getBoolean(SCHEDULER_ENABLED_KEY, true);
 
+        settingEnableUsbUuidList=prefs.getBoolean(c.getString(R.string.settings_enable_usb_uuid_list), false);
+
         String uuid_list=prefs.getString(FORCE_USB_UUID_LIST_KEY, "");
         forceUsbUuidList.clear();
-        if (!uuid_list.equals("")) {
+        if (!uuid_list.equals("") && settingEnableUsbUuidList) {
             String[]uuid_array=uuid_list.split(";");
             for(String item:uuid_array) {
                 if (!item.equals("")) forceUsbUuidList.add(item);
@@ -627,6 +633,7 @@ public class GlobalParameters extends CommonGlobalParms {
     final static public String FORCE_USB_UUID_LIST_KEY="force_usb_uuid_list";
 
     public void saveForceUsbUuidList(Context c) {
+        if (!settingEnableUsbUuidList) return;
         String out="";
         for(String item:forceUsbUuidList) {
             out+=item+";";

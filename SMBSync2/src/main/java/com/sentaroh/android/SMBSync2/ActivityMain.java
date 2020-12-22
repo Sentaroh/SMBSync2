@@ -1299,8 +1299,12 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.settingScheduleSyncEnabled) menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule);
         else menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule_disabled);
 
-        if (Build.VERSION.SDK_INT>=26) menu.findItem(R.id.menu_top_edit_force_usb_uuid_list).setVisible(true);
-        else menu.findItem(R.id.menu_top_edit_force_usb_uuid_list).setVisible(false);
+        if (mGp.settingEnableUsbUuidList) {
+            if (Build.VERSION.SDK_INT>=26) menu.findItem(R.id.menu_top_edit_force_usb_uuid_list).setVisible(true);
+            else menu.findItem(R.id.menu_top_edit_force_usb_uuid_list).setVisible(false);
+        } else {
+            menu.findItem(R.id.menu_top_edit_force_usb_uuid_list).setVisible(false);
+        }
 
         if (isUiEnabled()) {
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_housekeep), true);
@@ -2178,6 +2182,8 @@ public class ActivityMain extends AppCompatActivity {
         if (!mGp.settingMgtFileDir.equals(p_dir) && mGp.settingLogOption) {// option was changed
             LogUtil.closeLog(mContext, mGp);
         }
+
+        mGp.refreshMediaDir(mContext);
 
         if (!p_theme.equals(mGp.settingScreenTheme) || checkThemeLanguageChanged()) {
             NotifyEvent ntfy=new NotifyEvent(mContext);

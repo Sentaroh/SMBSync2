@@ -105,7 +105,7 @@
         <string name="msgs_export_prof_title">タスクリストの保存</string>
         <string name="msgs_extra_data_sync_profile_type_error">SyncProfileはStringで指定されていません、同期を中止します。</string>
         <string name="msgs_edit_usb_uuid_menu_tittle">USB UUIDリストの編集</string>
-        <string name="msgs_edit_usb_uuid_dialog_warning_message">USBメディアが認識されない場合だけに使用してください。</string>
+        <string name="msgs_edit_usb_uuid_dialog_warning_message">USBメディアが認識されない場合だけに使用してください。\n使用できるUUIDはシステム情報の\"ExternalFilesDirs\"で確認できます。 \"ExternalFilesDirs\"に表示されていないUUIDは使用できません。</string>
         <string name="msgs_edit_usb_uuid_dialog_tittle">USBとして認識するUUIDリストの編集</string>
         <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">UUIDの追加</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">追加</string>
@@ -1081,6 +1081,9 @@
         <string name="settings_vibrate_when_sync_ended_summary_no">常に端末を振動させない</string>
         <string name="settings_vibrate_when_sync_ended_summary_success">同期が正常終了した時に端末を振動させる</string>
         <string name="settings_vibrate_when_sync_ended_title">端末の振動</string>
+        <string name="settings_enable_usb_uuid_list">settings_enable_edit_usb_uuid_list</string>
+        <string name="settings_enable_usb_uuid_list_title">USB UUIDリスト</string>
+        <string name="settings_enable_usb_uuid_list_summary_ena">USB UUIDリストを有効にする</string>
         <string name="settings_wifi_lock">settings_wifi_lock</string>
         <string name="settings_wifi_lock_summary_ena">同期中はWi-Fiをスリープさせない</string>
         <string name="settings_wifi_lock_title">Wi-Fiロック</string>
