@@ -86,7 +86,7 @@ public class ScheduleUtil {
             if (!prefs.getString(SCHEDULER_SCHEDULE_HOURS_KEY, "-1").equals("-1")) {
                 sp.scheduleName = "NO NAME";
                 sp.scheduleEnabled = prefs.getBoolean(SCHEDULER_SCHEDULE_ENABLED_KEY, false);
-                sp.scheduleIntervalFirstRunImmed = prefs.getBoolean(SCHEDULER_SCHEDULE_INTERVAL_FIRST_RUN_KEY, false);
+//                sp.scheduleIntervalFirstRunImmed = prefs.getBoolean(SCHEDULER_SCHEDULE_INTERVAL_FIRST_RUN_KEY, false);
                 sp.scheduleType = prefs.getString(SCHEDULER_SCHEDULE_TYPE_KEY, ScheduleItem.SCHEDULER_SCHEDULE_TYPE_EVERY_DAY);
                 sp.scheduleHours = prefs.getString(SCHEDULER_SCHEDULE_HOURS_KEY, "00");
                 sp.scheduleMinutes = prefs.getString(SCHEDULER_SCHEDULE_MINUTES_KEY, "00");
@@ -133,7 +133,7 @@ public class ScheduleUtil {
                 si.scheduleHours = sub_array[4].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.scheduleMinutes = sub_array[5].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.scheduleDayOfTheWeek = sub_array[6].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
-                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+//                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[8].length() > 0)
                     si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
                 si.syncTaskList = sub_array[9].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
@@ -176,7 +176,7 @@ public class ScheduleUtil {
                 si.scheduleHours = sub_array[4].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.scheduleMinutes = sub_array[5].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.scheduleDayOfTheWeek = sub_array[6].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
-                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+//                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[8].length() > 0)
                     si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
                 si.syncTaskList = sub_array[9].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
@@ -221,7 +221,7 @@ public class ScheduleUtil {
                 si.scheduleHours = sub_array[4].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.scheduleMinutes = sub_array[5].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.scheduleDayOfTheWeek = sub_array[6].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
-                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+//                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[8].length() > 0)
                     si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
                 si.syncTaskList = sub_array[9].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
@@ -268,7 +268,7 @@ public class ScheduleUtil {
                 si.scheduleHours = sub_array[4].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.scheduleMinutes = sub_array[5].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.scheduleDayOfTheWeek = sub_array[6].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
-                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+//                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[8].length() > 0)
                     si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
                 si.syncTaskList = sub_array[9].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
@@ -305,7 +305,7 @@ public class ScheduleUtil {
         n_sp.scheduleDayOfTheWeek = sp.scheduleDayOfTheWeek;
         n_sp.scheduleDay = sp.scheduleDay;
         n_sp.scheduleHours = sp.scheduleHours;
-        n_sp.scheduleIntervalFirstRunImmed = sp.scheduleIntervalFirstRunImmed;
+//        n_sp.scheduleIntervalFirstRunImmed = sp.scheduleIntervalFirstRunImmed;
         n_sp.scheduleLastExecTime = sp.scheduleLastExecTime;
         n_sp.scheduleMinutes = sp.scheduleMinutes;
         n_sp.scheduleType = sp.scheduleType;
@@ -404,7 +404,7 @@ public class ScheduleUtil {
             data += si.scheduleHours + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                     //4
             data += si.scheduleMinutes + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                   //5
             data += si.scheduleDayOfTheWeek + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;              //6
-            data += (si.scheduleIntervalFirstRunImmed ? "1" : "0") + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;//7
+            data += "0" + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;//7
             data += String.valueOf(si.scheduleLastExecTime) + SCHEDULER_SEPARATOR_ITEM;         //8
             data += si.syncTaskList + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                      //9
             data += si.syncGroupList + SCHEDULER_SEPARATOR_DUMMY_DATA + SCHEDULER_SEPARATOR_ITEM;                     //10
@@ -483,20 +483,25 @@ public class ScheduleUtil {
                     ", s_day="+s_day_temp+", s_hrs="+s_hrs+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
         } else if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
             if (sp.scheduleLastExecTime == 0) {
-                if (!sp.scheduleIntervalFirstRunImmed) {
-                    sp.scheduleLastExecTime = System.currentTimeMillis();
-                    long nt = sp.scheduleLastExecTime;
-                    if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
-                        nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000);
-                    result = nt + s_min * (60 * 1000);
-                } else {
-                    sp.scheduleLastExecTime = System.currentTimeMillis();
-                    long nt = sp.scheduleLastExecTime;
-                    if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
-                        nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000) + (60 * 1000);
-                    else nt += 60 * 1000;
-                    result = nt;
-                }
+                sp.scheduleLastExecTime = System.currentTimeMillis();
+                long nt = sp.scheduleLastExecTime;
+                if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
+                    nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000);
+                result = nt + s_min * (60 * 1000);
+//                if (!sp.scheduleIntervalFirstRunImmed) {
+//                    sp.scheduleLastExecTime = System.currentTimeMillis();
+//                    long nt = sp.scheduleLastExecTime;
+//                    if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
+//                        nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000);
+//                    result = nt + s_min * (60 * 1000);
+//                } else {
+//                    sp.scheduleLastExecTime = System.currentTimeMillis();
+//                    long nt = sp.scheduleLastExecTime;
+//                    if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
+//                        nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000) + (60 * 1000);
+//                    else nt += 60 * 1000;
+//                    result = nt;
+//                }
             } else {
                 long nt = sp.scheduleLastExecTime;
                 long m_nt=0l;

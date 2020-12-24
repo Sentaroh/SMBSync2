@@ -54,7 +54,7 @@ class ScheduleItem implements Serializable, Cloneable {
     public String scheduleMinutes = "00";
     public String scheduleDayOfTheWeek = "0000000";
 
-    public boolean scheduleIntervalFirstRunImmed = true;
+//    public boolean scheduleIntervalFirstRunImmed = true;
 
     public long scheduleLastExecTime = 0;
 
@@ -92,7 +92,8 @@ class ScheduleItem implements Serializable, Cloneable {
                 this.scheduleMinutes.equals(new_item.scheduleMinutes) &&
                 this.scheduleDayOfTheWeek.equals(new_item.scheduleDayOfTheWeek) &&
 
-                this.scheduleIntervalFirstRunImmed==new_item.scheduleIntervalFirstRunImmed &&
+//                this.scheduleIntervalFirstRunImmed==new_item.scheduleIntervalFirstRunImmed &&
+                this.scheduleLastExecTime==new_item.scheduleLastExecTime &&
 
                 this.syncTaskList.equals(new_item.syncTaskList) &&
 

@@ -116,15 +116,6 @@
 		        android:textAppearance="?android:attr/textAppearanceMedium"/>
             
 		    <CheckedTextView
-		        android:id="@+id/scheduler_main_dlg_ctv_interval_schedule_first_run"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="5dp"
-		        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-		        android:gravity="center_vertical"
-		        android:text="@string/msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed"
-		        android:textAppearance="?android:attr/textAppearanceMedium"/>
-		    <CheckedTextView
 		        android:id="@+id/scheduler_main_dlg_ctv_sync_all_sync_task"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"

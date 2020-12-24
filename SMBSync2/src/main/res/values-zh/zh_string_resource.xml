@@ -686,7 +686,6 @@
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">不变</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">启用</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">禁用</string>
-        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">第一次同步将在下一分钟开始。</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">将间隔启动时间重置为上一次同步事件。</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_time">计划时间：%s</string>
         <string name="msgs_scheduler_main_spinner_sched_type_prompt">选择计划类型</string>

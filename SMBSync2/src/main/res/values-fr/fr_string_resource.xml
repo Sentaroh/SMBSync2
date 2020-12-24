@@ -686,7 +686,6 @@
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">Ne pas modifier</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">Activé</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">Désactivé</string>
-        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">La première sync démarrera dans une minute.</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">Réinitialiser le début de l\'intervalle au début de la dernière sync</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_time">Planification: %s</string>
         <string name="msgs_scheduler_main_spinner_sched_type_prompt">Sélectionner le type de planification:</string>

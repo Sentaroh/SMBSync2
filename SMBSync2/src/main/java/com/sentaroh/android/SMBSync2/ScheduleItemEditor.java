@@ -190,9 +190,6 @@ public class ScheduleItemEditor {
         final CheckedTextView ctv_last_day = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_last_day_of_the_month);
 //        ctv_last_day.setTextColor(mGp.themeColorList.text_color_primary);
 
-        final CheckedTextView ctv_first_time = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_first_run);
-//        ctv_first_time.setTextColor(mGp.themeColorList.text_color_primary);
-
         final CheckedTextView ctv_reset_interval = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_reset);
 //        ctv_reset_interval.setTextColor(mGp.themeColorList.text_color_primary);
 
@@ -294,7 +291,6 @@ public class ScheduleItemEditor {
             }
         });
 
-        ctv_first_time.setChecked(mSched.scheduleIntervalFirstRunImmed);
         ctv_reset_interval.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -355,24 +351,6 @@ public class ScheduleItemEditor {
             @Override
             public void afterTextChanged(Editable editable) {
                 setScheduleWasChanged(dialog, mSched);//will call setOkButtonEnabledDisabled() to check for item validity
-            }
-        });
-
-        ctv_first_time.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = !ctv_first_time.isChecked();
-                ctv_first_time.setChecked(isChecked);
-                if ((mSched.scheduleIntervalFirstRunImmed && !isChecked) ||
-                        (!mSched.scheduleIntervalFirstRunImmed && isChecked)) {
-                    ctv_reset_interval.setChecked(true);
-                } else {
-                    if (mSched.scheduleMinutes.equals(sp_sched_minutes.getSelectedItem().toString())) {
-                        ctv_reset_interval.setChecked(false);
-                    }
-                }
-                setScheduleInfo(dialog, mSched);
-                setScheduleWasChanged(dialog, mSched);
             }
         });
 
@@ -860,8 +838,6 @@ public class ScheduleItemEditor {
 //		final LinearLayout ll_sched_minutes=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_minute);
         final CheckedTextView ctv_last_day = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_last_day_of_the_month);
 
-        final CheckedTextView ctv_first_time = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_first_run);
-
         final CheckedTextView ctv_reset_interval = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_reset);
 
         final CheckedTextView ctv_sync_all_prof = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_sync_all_sync_task);
@@ -880,11 +856,10 @@ public class ScheduleItemEditor {
         final RadioButton rb_override_sync_option_charge_1=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_1);
         final RadioButton rb_override_sync_option_charge_2=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_2);
 
-        boolean p_intv_first_run = sp.scheduleIntervalFirstRunImmed;
+//        boolean p_intv_first_run = sp.scheduleIntervalFirstRunImmed;
         sp.scheduleDayOfTheWeek = buildDayOfWeekString(dialog);
         sp.scheduleName = et_name.getText().toString();
         sp.scheduleEnabled = ctv_sched_enabled.isChecked();
-        sp.scheduleIntervalFirstRunImmed = ctv_first_time.isChecked();
 
         String p_sched_type = sp.scheduleType;
         String p_sched_mm = sp.scheduleMinutes;
@@ -903,8 +878,6 @@ public class ScheduleItemEditor {
 
         if (sp.scheduleType.equals(ScheduleItem.SCHEDULER_SCHEDULE_TYPE_INTERVAL)) {
             if (!p_sched_type.equals(sp.scheduleType) || !p_sched_mm.equals(sp.scheduleMinutes) ||
-                    (!p_intv_first_run && sp.scheduleIntervalFirstRunImmed) ||
-                    (p_intv_first_run && !sp.scheduleIntervalFirstRunImmed) ||
                     ctv_reset_interval.isChecked()) {
                 sp.scheduleLastExecTime = 0;
             }
@@ -1124,8 +1097,6 @@ public class ScheduleItemEditor {
         final LinearLayout ll_sched_hours = (LinearLayout) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
         final LinearLayout ll_sched_minutes = (LinearLayout) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_minute);
         final CheckedTextView ctv_last_day = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_last_day_of_the_month);
-        final CheckedTextView ctv_first_time = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_first_run);
-        ctv_first_time.setVisibility(CheckedTextView.GONE);
         final CheckedTextView ctv_reset_interval = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_reset);
         ctv_reset_interval.setVisibility(CheckedTextView.GONE);
 
@@ -1164,7 +1135,6 @@ public class ScheduleItemEditor {
             ll_sched_hours.setVisibility(LinearLayout.GONE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
             ctv_last_day.setVisibility(CheckedTextView.GONE);
-            ctv_first_time.setVisibility(CheckedTextView.VISIBLE);
             ctv_reset_interval.setVisibility(CheckedTextView.VISIBLE);
         }
     }

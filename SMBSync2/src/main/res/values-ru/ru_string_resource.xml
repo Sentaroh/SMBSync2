@@ -686,7 +686,6 @@
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">Не изменять</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">Включено</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">Отключено</string>
-        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">Сделать первую синхронизацию со следующей минутой.</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">Сбросить время расписания.</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_time">Время в расписании: %s</string>
         <string name="msgs_scheduler_main_spinner_sched_type_prompt">Выберите тип расписания</string>
