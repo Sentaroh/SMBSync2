@@ -47,6 +47,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -156,6 +157,16 @@ public class ScheduleItemEditor {
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         TextView dlg_title = (TextView) dialog.findViewById(R.id.schedule_edit_dlg_title);
         dlg_title.setTextColor(mGp.themeColorList.title_text_color);
+
+        final ImageButton ib_help=(ImageButton) dialog.findViewById(R.id.schedule_edit_dlg_help);
+        ib_help.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SyncTaskEditor.showFieldHelp(mActivity, mGp,
+                        mContext.getString(R.string.msgs_help_schedule_title),
+                        mContext.getString(R.string.msgs_help_schedule_file)) ;
+            }
+        });
 
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
 

@@ -56,6 +56,8 @@
         <string name="msgs_help_sync_folder_smb_title">Справка по SMB-серверу</string>
         <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_RU_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">Справка по ZIP файлу</string>
+        <string name="msgs_help_schedule_file">SMBSync2_Help_RU_schedule.html</string>
+        <string name="msgs_help_schedule_title">Помощь в составлении расписания</string>
         <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_RU_task_picture.html</string>
         <string name="msgs_help_sync_task_picture_title">Справка по синхронизации в картинках</string>
     <!-- Log management -->

@@ -56,6 +56,8 @@
         <string name="msgs_help_sync_folder_smb_title">SMB服务器帮助</string>
         <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_ZH_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">ZIP文件帮助</string>
+        <string name="msgs_help_schedule_file">SMBSync2_Help_ZH_schedule.html</string>
+        <string name="msgs_help_schedule_title">安排帮助</string>
         <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_ZH_task_picture.html</string>
         <string name="msgs_help_sync_task_picture_title">同步任务图片帮助</string>
     <!-- Log management -->

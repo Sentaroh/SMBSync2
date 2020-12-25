@@ -56,6 +56,8 @@
         <string name="msgs_help_sync_folder_smb_title">Aide sur Serveur SMB</string>
         <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_FR_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">Aide sur Fichier ZIP</string>
+        <string name="msgs_help_schedule_file">SMBSync2_Help_FR_schedule.html</string>
+        <string name="msgs_help_schedule_title">Planifier l\'aide</string>
         <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_FR_task_picture.html</string>
         <string name="msgs_help_sync_task_picture_title">Aide sur Synchronisation de Photos</string>
     <!-- Log management -->

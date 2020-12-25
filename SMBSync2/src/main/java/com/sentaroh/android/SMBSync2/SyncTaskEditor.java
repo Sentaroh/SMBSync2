@@ -5059,16 +5059,16 @@ public class SyncTaskEditor extends DialogFragment {
         return nstli;
     }
 
-    private void showFieldHelp(String title, String help_msg) {
-        Dialog dialog = new Dialog(getActivity(), mGp.applicationTheme);
+    static public void showFieldHelp(Activity a, GlobalParameters gp, String title, String help_msg) {
+        Dialog dialog = new Dialog(a, gp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.help_view);
         LinearLayout ll_view = (LinearLayout) dialog.findViewById(R.id.help_view_title_view);
-        ll_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        ll_view.setBackgroundColor(gp.themeColorList.title_background_color);
 
         TextView dlg_tv = (TextView) dialog.findViewById(R.id.help_view_title_text);
 //        dlg_tv.setBackgroundColor(mGp.themeColorList.title_background_color);
-        dlg_tv.setTextColor(mGp.themeColorList.title_text_color);
+        dlg_tv.setTextColor(gp.themeColorList.title_text_color);
 //        dlg_tv.setTextSize(32);
 
         WebView dlg_wb = (WebView) dialog.findViewById(R.id.help_view_help);
@@ -5128,7 +5128,7 @@ public class SyncTaskEditor extends DialogFragment {
         help_sync_option.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFieldHelp(mContext.getString(R.string.msgs_help_sync_task_title),
+                showFieldHelp(getActivity(), mGp, mContext.getString(R.string.msgs_help_sync_task_title),
                         mContext.getString(R.string.msgs_help_sync_task_file));
             }
         });
@@ -5142,19 +5142,19 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
-                    showFieldHelp(mContext.getString(R.string.msgs_help_sync_folder_internal_title),
+                    showFieldHelp(getActivity(), mGp, mContext.getString(R.string.msgs_help_sync_folder_internal_title),
                             mContext.getString(R.string.msgs_help_sync_folder_internal_file));
                 } else if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SDCARD)) {
-                    showFieldHelp(mContext.getString(R.string.msgs_help_sync_folder_sdcard_title),
+                    showFieldHelp(getActivity(), mGp, mContext.getString(R.string.msgs_help_sync_folder_sdcard_title),
                             mContext.getString(R.string.msgs_help_sync_folder_sdcard_file));
                 } else if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_USB)) {
-                    showFieldHelp(mContext.getString(R.string.msgs_help_sync_folder_usb_title),
+                    showFieldHelp(getActivity(), mGp, mContext.getString(R.string.msgs_help_sync_folder_usb_title),
                             mContext.getString(R.string.msgs_help_sync_folder_usb_file));
                 } else if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                    showFieldHelp(mContext.getString(R.string.msgs_help_sync_folder_smb_title),
+                    showFieldHelp(getActivity(), mGp, mContext.getString(R.string.msgs_help_sync_folder_smb_title),
                             mContext.getString(R.string.msgs_help_sync_folder_smb_file));
                 } else if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
-                    showFieldHelp(mContext.getString(R.string.msgs_help_sync_folder_zip_title),
+                    showFieldHelp(getActivity(), mGp, mContext.getString(R.string.msgs_help_sync_folder_zip_title),
                             mContext.getString(R.string.msgs_help_sync_folder_zip_file));
                 }
             }
