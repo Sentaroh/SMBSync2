@@ -1,3 +1,8 @@
+#### 2020-12-26 Ver2.46
+
+- Improved display of spinner selection in black theme
+- Made new filters available
+
 #### 2020-12-03 Ver2.45
 
 - Enabled to add keywords (e.g. %YEAR) for synchronization date in the master directory
