@@ -77,8 +77,10 @@ public class ScheduleUtil {
             sl = buildScheduleListV5(gp, v5_data);
         } else if (!v4_data.equals("-1")) {
             sl = buildScheduleListV4(gp, v4_data);
+            saveScheduleData(c, gp, sl);
         } else if (!v3_data.equals("-1")) {
             sl = buildScheduleListV3(gp, v3_data);
+            saveScheduleData(c, gp, sl);
         } else if (!v2_data.equals("-1")) {
             sl = buildScheduleListV2(gp, v2_data);
             saveScheduleData(c, gp, sl);
