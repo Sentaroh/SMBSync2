@@ -57,7 +57,7 @@
         <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_IT_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">Aiuto file ZIP</string>
         <string name="msgs_help_schedule_file">SMBSync2_Help_IT_schedule.html</string>
-        <string name="msgs_help_schedule_title">Aiuto per la programmazione</string>
+        <string name="msgs_help_schedule_title">Aiuto pianificazione</string>
         <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_IT_task_picture.html</string>
         <string name="msgs_help_sync_task_picture_title">Aiuto Sync Task Foto</string>
     <!-- Log management -->
@@ -107,7 +107,7 @@
         <string name="msgs_export_prof_title">Impostazioni Esportazione Sincronizzazione.</string>
         <string name="msgs_extra_data_sync_profile_type_error">Sync annullata: la richiesta ricevuta dall\'app esterna non è una stringa</string>
         <string name="msgs_edit_usb_uuid_menu_tittle">Modifica elenco UUID USB</string>
-        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilizzare questa funzione solo se il supporto USB non viene riconosciuto.\nGli UUID che possono essere utilizzati possono essere controllati in \"ExternalFilesDirs\" nelle informazioni di sistema. Gli UUID che non sono elencati in \"ExternalFilesDirs\" non possono essere utilizzati.</string>
+        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilizzare questa funzione solo se il supporto USB non viene riconosciuto.\nGli UUID che possono essere utilizzati sono disponibili in \"ExternalFilesDirs\" nelle informazioni sistema. Gli UUID che non ci sono non possono essere utilizzati.</string>
         <string name="msgs_edit_usb_uuid_dialog_tittle">Modificare l\'elenco UUID per essere riconosciuto come USB</string>
         <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">Aggiungi UUID</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">Aggiungi</string>
