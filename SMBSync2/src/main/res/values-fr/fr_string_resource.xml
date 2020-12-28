@@ -107,7 +107,7 @@
         <string name="msgs_export_prof_title">Exporter les Paramètres de Synchronisation</string>
         <string name="msgs_extra_data_sync_profile_type_error">Synchronisation annulée: la requête reçue par l\'application externe n\'est pas une chaîne de caractères.</string>
         <string name="msgs_edit_usb_uuid_menu_tittle">Liste UUID USB</string>
-        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilisez cette fonction seulement si le périphérique USB n\'est pas reconnu.\nLes UUIDs disponibles peuvent être retrouvés dans \"ExternalFilesDirs\" au niveau des informations système. Les UUIDs qui n'y sont pas répertoriés ne peuvent pas être utilisés.</string>
+        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilisez cette fonction seulement si le périphérique USB n\'est pas reconnu.\nLes UUIDs disponibles peuvent être retrouvés dans \"ExternalFilesDirs\" au niveau des informations système. Les UUIDs qui n\'y sont pas répertoriés ne peuvent pas être utilisés.</string>
         <string name="msgs_edit_usb_uuid_dialog_tittle">Modifier la liste des UUID devant être reconnus comme périphérique USB</string>
         <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">Ajouter un UUID</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">Ajouter</string>
