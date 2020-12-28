@@ -57,7 +57,7 @@
         <string name="msgs_help_sync_folder_zip_file">SMBSync2_Help_FR_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">Aide sur Fichier ZIP</string>
         <string name="msgs_help_schedule_file">SMBSync2_Help_FR_schedule.html</string>
-        <string name="msgs_help_schedule_title">Planifier l\'aide</string>
+        <string name="msgs_help_schedule_title">Aide à la planification</string>
         <string name="msgs_help_sync_task_picture_file">SMBSync2_Help_FR_task_picture.html</string>
         <string name="msgs_help_sync_task_picture_title">Aide sur Synchronisation de Photos</string>
     <!-- Log management -->
@@ -107,7 +107,7 @@
         <string name="msgs_export_prof_title">Exporter les Paramètres de Synchronisation</string>
         <string name="msgs_extra_data_sync_profile_type_error">Synchronisation annulée: la requête reçue par l\'application externe n\'est pas une chaîne de caractères.</string>
         <string name="msgs_edit_usb_uuid_menu_tittle">Liste UUID USB</string>
-        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilisez cette fonction seulement si le périphérique USB n\'est pas reconnu.\nLes UUIDs qui peuvent être utilisés peuvent être vérifiés dans \"ExternalFilesDirs\" dans les informations du système. Les UUIDs qui ne sont pas répertoriés dans \"ExternalFilesDirs\" ne peuvent pas être utilisés.</string>
+        <string name="msgs_edit_usb_uuid_dialog_warning_message">Utilisez cette fonction seulement si le périphérique USB n\'est pas reconnu.\nLes UUIDs disponibles peuvent être retrouvés dans \"ExternalFilesDirs\" au niveau des informations système. Les UUIDs qui n'y sont pas répertoriés ne peuvent pas être utilisés.</string>
         <string name="msgs_edit_usb_uuid_dialog_tittle">Modifier la liste des UUID devant être reconnus comme périphérique USB</string>
         <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">Ajouter un UUID</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">Ajouter</string>

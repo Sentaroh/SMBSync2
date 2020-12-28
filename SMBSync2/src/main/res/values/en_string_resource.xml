@@ -107,7 +107,7 @@
         <string name="msgs_export_prof_title">Export Synchronisation Settings.</string>
         <string name="msgs_extra_data_sync_profile_type_error">Sync canceled: received request from external app is not a string</string>
         <string name="msgs_edit_usb_uuid_menu_tittle">USB UUIDs List</string>
-        <string name="msgs_edit_usb_uuid_dialog_warning_message">Use this only if the USB media is not recognized.\nThe UUIDs that can be used can be checked in \"ExternalFilesDirs\" in the system information. UUIDs that are not listed in \"ExternalFilesDirs\" cannot be used.</string>
+        <string name="msgs_edit_usb_uuid_dialog_warning_message">Use this only if the USB media is not recognized.\nThe usable UUIDs can be checked in \"ExternalFilesDirs\" in the system information. UUIDs that are not listed in \"ExternalFilesDirs\" cannot be used.</string>
         <string name="msgs_edit_usb_uuid_dialog_tittle">Edit the UUID list to be recognized as USB storage media</string>
         <string name="msgs_edit_usb_uuid_dialog_list_available_uuid">Add UUID</string>
         <string name="msgs_edit_usb_uuid_dialog_add_specific_uuid">Add</string>
