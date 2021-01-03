@@ -3494,16 +3494,16 @@ public class SyncTaskEditor extends DialogFragment {
         spinner.setAdapter(adapter);
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_off));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap));
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap));
+//        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_ap));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address));
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address));
 
         int sel = 0;
         if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) sel = 0;
         else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP)) sel = 1;
-        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) sel = 3;
-        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR)) sel = 3;
-        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR)) sel = 4;
+        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) sel = 2;
+        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR)) sel = 2;
+        else if (cv.equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR)) sel = 3;
 
         spinner.setSelection(sel);
 
@@ -5006,6 +5006,10 @@ public class SyncTaskEditor extends DialogFragment {
         nstli.setsyncOptionUseDirectoryFilterV2(ctUseDirectoryFilterV2.isChecked());
 
         String wifi_sel = Integer.toString(spinnerSyncWifiStatus.getSelectedItemPosition());
+        // Ignore "Specific AP"
+        if (wifi_sel.equals("2")) wifi_sel="3";
+        else if (wifi_sel.equals("3")) wifi_sel="4";
+
         nstli.setSyncOptionWifiStatusOption(wifi_sel);
         nstli.setSyncOptionTaskSkipIfConnectAnotherWifiSsid(ctv_task_skip_if_ssid_invalid.isChecked());
         nstli.setSyncOptionSyncAllowGlobalIpAddress(ctv_sync_allow_global_ip_addr.isChecked());
@@ -5889,11 +5893,11 @@ public class SyncTaskEditor extends DialogFragment {
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
             final TextView text=(TextView)super.getDropDownView(position, convertView, parent);
-            if (position==2) {
-                CommonDialog.setViewEnabled(a, text, false);
-            } else {
-                CommonDialog.setViewEnabled(a, text, true);
-            }
+//            if (position==2) {
+//                CommonDialog.setViewEnabled(a, text, false);
+//            } else {
+//                CommonDialog.setViewEnabled(a, text, true);
+//            }
             return text;
         }
     }
