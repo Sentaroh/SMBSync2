@@ -2548,6 +2548,7 @@ public class SyncTaskEditor extends DialogFragment {
 	            Method isRemovable = volume.getClass().getDeclaredMethod("isRemovable");
 	            boolean removable=(boolean)isRemovable.invoke(volume);
                 Method isPrimary = volume.getClass().getDeclaredMethod("isPrimary");
+                boolean primary=(boolean)isPrimary.invoke(volume);
                 Method getUuid = volume.getClass().getDeclaredMethod("getUuid");
                 String uuid=(String)getUuid.invoke(volume);
 //                Method getId = volume.getClass().getDeclaredMethod("getId");
@@ -2560,7 +2561,7 @@ public class SyncTaskEditor extends DialogFragment {
 //                        ", Path="+(String)getPath.invoke(volume));
                 cu.addDebugMsg(1,"I","getStorageVolumeUuidApi23 uuid="+uuid+", desc="+desc+", type="+type+", isRemovable="+removable+", path="+path);
                 if (type.contains("SD")) {
-                    if (!desc.toLowerCase().contains("USB".toLowerCase()) && removable) {
+                    if (!desc.toLowerCase().contains("USB".toLowerCase()) && removable && !primary) {
                         result=uuid;
                         break;
                     }
@@ -2586,8 +2587,9 @@ public class SyncTaskEditor extends DialogFragment {
         GlobalParameters gp=GlobalWorkArea.getGlobalParameters(c);
         if (type.toLowerCase().equals("usb")) {
             for(StorageVolume sv_item:vol_list) {
-                cu.addDebugMsg(1,"I","getStorageVolume uuid="+sv_item.getUuid()+", desc="+sv_item.getDescription(c));
-                if (sv_item.getDescription(c).toLowerCase().contains(type.toLowerCase())) {
+                cu.addDebugMsg(1,"I","getStorageVolume uuid="+sv_item.getUuid()+", desc="+sv_item.getDescription(c)+
+                        ", primary="+sv_item.isPrimary()+", removable="+sv_item.isRemovable());
+                if (sv_item.getDescription(c).toLowerCase().contains(type.toLowerCase()) && sv_item.isRemovable() && !sv_item.isPrimary()) {
                     sv=sv_item;
                     uuid=sv_item.getUuid();
                     break;
@@ -2606,8 +2608,9 @@ public class SyncTaskEditor extends DialogFragment {
             }
         } else if (type.toLowerCase().equals("sd")) {
             for(StorageVolume sv_item:vol_list) {
-                cu.addDebugMsg(1,"I","getStorageVolume uuid="+sv_item.getUuid()+", desc="+sv_item.getDescription(c));
-                if (sv_item.getDescription(c).toLowerCase().contains(type.toLowerCase())) {
+                cu.addDebugMsg(1,"I","getStorageVolume uuid="+sv_item.getUuid()+", desc="+sv_item.getDescription(c)+
+                        ", primary="+sv_item.isPrimary()+", removable="+sv_item.isRemovable());
+                if (sv_item.getDescription(c).toLowerCase().contains(type.toLowerCase()) && sv_item.isRemovable() && !sv_item.isPrimary()) {
                     if (gp.forceUsbUuidList.size()>0) {
                         boolean found=false;
                         for(String usb_item:gp.forceUsbUuidList) {
@@ -2639,8 +2642,9 @@ public class SyncTaskEditor extends DialogFragment {
         StorageVolume sv=null;
         String uuid="";
         for(StorageVolume item:vol_list) {
-            cu.addDebugMsg(1,"I","getSdcardStorageVolume(1) uuid="+item.getUuid()+", desc="+item.getDescription(c));
-            if (item.getDescription(c).contains("SD")) {
+            cu.addDebugMsg(1,"I","getSdcardStorageVolume(1) uuid="+item.getUuid()+", desc="+item.getDescription(c)+
+                    ", primary="+item.isPrimary()+", removable="+item.isRemovable());
+            if (item.getDescription(c).contains("SD")  && item.isRemovable() && !item.isPrimary()) {
                 sv=item;
                 uuid=item.getUuid();
                 break;
@@ -2648,7 +2652,8 @@ public class SyncTaskEditor extends DialogFragment {
         }
         if (sv==null) {
             for(StorageVolume item:vol_list) {
-                cu.addDebugMsg(1,"I","getSdcardStorageVolume(2) uuid="+item.getUuid()+", desc="+item.getDescription(c));
+                cu.addDebugMsg(1,"I","getSdcardStorageVolume(2) uuid="+item.getUuid()+", desc="+item.getDescription(c)+
+                        ", primary="+item.isPrimary()+", removable="+item.isRemovable());
                 if (!item.isPrimary() && item.isRemovable() && !item.getDescription(c).contains("USB")) {
                     sv=item;
                     uuid=item.getUuid();
