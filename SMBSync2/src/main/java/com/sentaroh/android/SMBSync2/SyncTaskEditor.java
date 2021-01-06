@@ -5886,10 +5886,10 @@ public class SyncTaskEditor extends DialogFragment {
             a=c;
         }
 
-        @Override
-        public boolean isEnabled(int position) {
-            return position!=2;
-        }
+//        @Override
+//        public boolean isEnabled(int position) {
+//            return position!=2;
+//        }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
