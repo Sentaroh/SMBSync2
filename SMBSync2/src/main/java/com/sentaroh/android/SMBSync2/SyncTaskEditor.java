@@ -3693,9 +3693,9 @@ public class SyncTaskEditor extends DialogFragment {
         final LinearLayout ll_wifi_wl_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_wl_view);
         final LinearLayout ll_wifi_wl_ap_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ap_list_view);
         final LinearLayout ll_wifi_wl_address_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_address_list_view);
-        final Button edit_wifi_ap_list = (Button) mDialog.findViewById(R.id.edit_sync_task_option_btn_edit_ap_white_list);
+//        final Button edit_wifi_ap_list = (Button) mDialog.findViewById(R.id.edit_sync_task_option_btn_edit_ap_white_list);
         final Button edit_wifi_addr_list = (Button) mDialog.findViewById(R.id.edit_sync_task_option_btn_edit_address_white_list);
-        setWifiApWhileListInfo(n_sti.getSyncOptionWifiConnectedAccessPointWhiteList(), edit_wifi_ap_list);
+//        setWifiApWhileListInfo(n_sti.getSyncOptionWifiConnectedAccessPointWhiteList(), edit_wifi_ap_list);
         setWifiApWhileListInfo(n_sti.getSyncOptionWifiConnectedAddressWhiteList(), edit_wifi_addr_list);
         final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_global_ip_address);
         ctv_sync_allow_global_ip_addr.setChecked(n_sti.isSyncOptionSyncAllowGlobalIpAddress());
@@ -4618,26 +4618,26 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
         // wifi ap listボタンの指定
-        edit_wifi_ap_list.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
-                //Listen setRemoteShare response
-                ntfy.setListener(new NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context arg0, Object[] arg1) {
-                        setWifiApWhileListInfo(n_sti.getSyncOptionWifiConnectedAccessPointWhiteList(), edit_wifi_ap_list);
-                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-                    }
-
-                    @Override
-                    public void negativeResponse(Context arg0, Object[] arg1) {
-                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-                    }
-
-                });
-                mTaskUtil.editWifiAccessPointListDlg(n_sti.getSyncOptionWifiConnectedAccessPointWhiteList(), ntfy);
-            }
-        });
+//        edit_wifi_ap_list.setOnClickListener(new OnClickListener() {
+//            public void onClick(View v) {
+//                NotifyEvent ntfy = new NotifyEvent(mContext);
+//                //Listen setRemoteShare response
+//                ntfy.setListener(new NotifyEventListener() {
+//                    @Override
+//                    public void positiveResponse(Context arg0, Object[] arg1) {
+//                        setWifiApWhileListInfo(n_sti.getSyncOptionWifiConnectedAccessPointWhiteList(), edit_wifi_ap_list);
+//                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+//                    }
+//
+//                    @Override
+//                    public void negativeResponse(Context arg0, Object[] arg1) {
+//                        checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+//                    }
+//
+//                });
+//                mTaskUtil.editWifiAccessPointListDlg(n_sti.getSyncOptionWifiConnectedAccessPointWhiteList(), ntfy);
+//            }
+//        });
 
         // wifi address listボタンの指定
         edit_wifi_addr_list.setOnClickListener(new OnClickListener() {
@@ -4928,7 +4928,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         final Spinner spinnerSyncType = (Spinner) dialog.findViewById(R.id.edit_sync_task_sync_type);
         final Spinner spinnerSyncWifiStatus = (Spinner) dialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
-        final Button edit_wifi_ap_list = (Button) dialog.findViewById(R.id.edit_sync_task_option_btn_edit_ap_white_list);
+//        final Button edit_wifi_ap_list = (Button) dialog.findViewById(R.id.edit_sync_task_option_btn_edit_ap_white_list);
         final CheckedTextView ctv_task_skip_if_ssid_invalid = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ap_list_task_skip_if_ssid_invalid);
 
         final CheckedTextView ctv_edit_sync_tak_option_keep_conflict_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file);
