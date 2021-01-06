@@ -163,9 +163,9 @@
         <string name="msgs_main_app_specific_dir_used_msg">The selected storage path is located under the application data folder.  This directory, and any data you have saved there, will be deleted when the application is uninstalled.</string>
         <string name="msgs_main_app_specific_dir_used_suppress">Disable this warning (can be enabled again in user interface settings)</string>
         <string name="msgs_main_app_specific_dir_used_title">Warning about using the application data folder</string>
-        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">Access point lists are not available</string>
-        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">Access point lists are not available</string>
-        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Access point lists are no longer available due to compliance with the Google Play privacy policy, hence the wireless AP option has been changed to \"Has private addr\".</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">Unsupported Wifi option</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">Access point lists no longer available</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Access point lists are no longer supported due to compliance with the Google Play privacy policy. The wireless AP option was changed to \"Has private addr\".</string>
         <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">Access point list is no longer available to comply with the Google Play Privacy Policy. Please edit the sync task and change it to \"IP Address List\" etc.</string>
         <string name="msgs_main_location_service_warning_suppress">Disable this warning (can be enabled in sync settings)</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">SDCARD</string>
@@ -401,7 +401,6 @@
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">Add the currently connected access point</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">Edit AP name (SSID)</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_hint">Access point name (SSID)</string>
-        <string name="msgs_profile_sync_task_dlg_wifi_ap_list">Wireless LAN access point list</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_not_connected">Wireless LAN is not connected to the specified access point.</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_not_specified">Specify wireless LAN access point (SSID).</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_title">Edit Access Points (SSID\'s)</string>

@@ -163,9 +163,9 @@
         <string name="msgs_main_app_specific_dir_used_msg">Le dossier de stockage sélectionné est situé dans le dossier de données de l\'application. Ce dossier et vos données qui y auront été sauvegardées seront supprimés lorsque l\'application est désinstallée.</string>
         <string name="msgs_main_app_specific_dir_used_suppress">Ne plus afficher cet avertissement (vous pourrez le réactiver dans les paramètres de l\'application)</string>
         <string name="msgs_main_app_specific_dir_used_title">Avertissement concernant l\'utilisation du dossier de données de l\'application</string>
-        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">Les listes de points d\'accès ne sont pas disponibles</string>
-        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">Les listes de points d\'accès ne sont pas disponibles</string>
-        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Les listes de points d\'accès ne sont plus disponibles afin de se conformer à la politique de confidentialité de Google Play. L\'option AP sans fil a été remplacée par \"Wifi avec IP privée\".</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_task_list_msg">Option Wifi non supportée</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_title">Listes de points d\'accès non disponibles</string>
+        <string name="msgs_main_permission_ap_list_no_longer_available_dialog_msg">Les listes de points d\'accès ne sont plus supportées afin de se conformer à la politique de confidentialité de Google Play. L\'option AP sans fil a été remplacée par \"Wifi avec IP privée\".</string>
         <string name="msgs_main_permission_ap_list_no_longer_available_sync_msg">Les listes de points d\'accès ne sont plus disponibles afin de se conformer à la politique de confidentialité de Google Play. Veuillez modifier la tâche de synchronisation et la remplacer par \"Liste d\'adresses IP\", etc.</string>
         <string name="msgs_main_location_service_warning_suppress">Désactiver cet avertissement (peut être réactivé dans les paramètres de synchronisation)</string>
         <string name="msgs_main_external_sdcard_mp_changed_title">Carte SD</string>
@@ -401,7 +401,6 @@
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">Ajouter la connexion sans fil en cours</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">Modifier le nom du point d\'accès (SSID)</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_hint">Nom du point d\'accès (SSID)</string>
-        <string name="msgs_profile_sync_task_dlg_wifi_ap_list">Liste des points d\'accès Wifi</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_not_connected">La connexion wifi en cours ne correspond pas au point d\'accès spécifié.</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_not_specified">Spécifier le point d\'accès sans fil (SSID).</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_title">Modifier les points d\'accès (SSID)</string>

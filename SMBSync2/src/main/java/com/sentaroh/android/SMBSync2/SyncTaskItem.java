@@ -208,7 +208,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public final static String SYNC_WIFI_STATUS_WIFI_OFF = "0"; // list index 0
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP = "1"; // list index 1
-    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP = "2"; // list index 2
+    public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP = "2"; // list index 2 (deprecated)
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR = "3"; // list index 3
     public final static String SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR = "4"; // list index 4
     public final static String SYNC_WIFI_STATUS_WIFI_DEFAULT = SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
@@ -627,13 +627,17 @@ class SyncTaskItem implements Serializable, Cloneable {
     private int syncMasterFolderError =SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
     private int syncTargetFolderError =SyncTaskItem.SYNC_FOLDER_ERROR_NO_ERROR;
     private boolean isSyncTaskNameError =false;
-    public boolean isSyncTaskError() {return (isSyncTaskNameError || (syncMasterFolderError+syncTargetFolderError)!=SYNC_FOLDER_ERROR_NO_ERROR);}
+    private boolean isSyncTaskWifiOptionError =false;
+    public boolean isSyncTaskError() {return (isSyncTaskNameError || isSyncTaskWifiOptionError || (syncMasterFolderError+syncTargetFolderError)!=SYNC_FOLDER_ERROR_NO_ERROR);}
     public int getMasterFolderError() {return syncMasterFolderError;}
     public void setMasterFolderError(int error_code) {syncMasterFolderError = error_code;}
     public int getTargetFolderError() {return syncTargetFolderError;}
     public void setTargetFolderError(int error_code) {syncTargetFolderError = error_code;}
     public boolean getSyncTaskNameError() {return isSyncTaskNameError;}
     public void setSyncTaskNameError(boolean is_error) {isSyncTaskNameError = is_error;}
+
+    public boolean getSyncTaskWifiOptionError() {return isSyncTaskWifiOptionError;}
+    public void setSyncTaskWifiOptionError(boolean is_error) {isSyncTaskWifiOptionError = is_error;}
 
     public void setLastSyncTime(String p) {syncLastSyncTime = p;}
     public void setLastSyncResult(int p) {syncLastSyncResult = p;}
@@ -687,6 +691,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncMasterFolderError==sti.getMasterFolderError()) &&
                 (syncTargetFolderError==sti.getTargetFolderError()) &&
                 //(isSyncTaskNameError==sti.getSyncTaskNameError()) &&
+                (isSyncTaskWifiOptionError==sti.getSyncTaskWifiOptionError()) &&
                 (syncTwoWayConflictOption.equals(sti.getSyncTwoWayConflictFileRule())) &&
                 (syncTwoWayConflictKeepConflictFile==sti.isSyncTwoWayKeepConflictFile() ))&&
                 (syncTaskMasterFolderType.equals(sti.getMasterFolderType())) &&

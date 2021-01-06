@@ -401,7 +401,6 @@
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">Добавьте активную точку доступа</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">Отредактируйте название точки доступа (SSID)</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_hint">Имя точки доступа (SSID)</string>
-        <string name="msgs_profile_sync_task_dlg_wifi_ap_list">Список беспроводных точек доступа к LAN</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_not_connected">Беспроводная LAN не подключена к указанной точке доступа.</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_not_specified">Определите беспроводную точку доступа к LAN (SSID).</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_title">Изменить точки доступа (\SSID)</string>

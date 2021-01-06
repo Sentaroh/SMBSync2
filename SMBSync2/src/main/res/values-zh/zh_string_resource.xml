@@ -401,7 +401,6 @@
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">添加当前连接的接入点</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">编辑AP名称（SSID）</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_hint">接入点名称（SSID）</string>
-        <string name="msgs_profile_sync_task_dlg_wifi_ap_list">无线局域网接入点列表</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_not_connected">无线局域网未连接到指定的接入点。</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_not_specified">指定无线局域网访问点（SSID）。</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_title">编辑访问点（SSID）</string>

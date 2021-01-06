@@ -401,7 +401,6 @@
         <string name="msgs_profile_sync_task_dlg_wifi_ap_add_current_ap">現在接続されているアクセスポイントを追加する</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_edit_title">アクセスポイント名の編集</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_hint">アクセスポイント名</string>
-        <string name="msgs_profile_sync_task_dlg_wifi_ap_list">同期可能なアクセスポイントリスト</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_not_connected">無線LANがアクセスポイントに接続されていません</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_not_specified">無線LANアクセスポイント名が何も指定されていません。</string>
         <string name="msgs_profile_sync_task_dlg_wifi_ap_title">無線LANアクセスポイントの編集</string>
