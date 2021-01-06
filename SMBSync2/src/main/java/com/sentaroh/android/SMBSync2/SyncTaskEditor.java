@@ -4340,13 +4340,15 @@ public class SyncTaskEditor extends DialogFragment {
                                     n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
                                     String msg="", opt_temp="";
-                                    if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) || Build.VERSION.SDK_INT<=26) {
-                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
-                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
-                                    } else {
-                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR;
-                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private);
-                                    }
+                                    opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
+                                    msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
+//                                    if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) || Build.VERSION.SDK_INT<=26) {
+//                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
+//                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
+//                                    } else {
+//                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR;
+//                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private);
+//                                    }
                                     final String option=opt_temp;
                                     NotifyEvent ntfy = new NotifyEvent(mContext);
                                     ntfy.setListener(new NotifyEventListener() {
@@ -4533,13 +4535,15 @@ public class SyncTaskEditor extends DialogFragment {
                                     n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                                 if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
                                     String msg="", opt_temp="";
-                                    if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) || Build.VERSION.SDK_INT<=26) {
-                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
-                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
-                                    } else {
-                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR;
-                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private);
-                                    }
+                                    opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
+                                    msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
+//                                    if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) || Build.VERSION.SDK_INT<=26) {
+//                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
+//                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
+//                                    } else {
+//                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR;
+//                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private);
+//                                    }
                                     final String option=opt_temp;
                                     NotifyEvent ntfy = new NotifyEvent(mContext);
                                     ntfy.setListener(new NotifyEventListener() {
