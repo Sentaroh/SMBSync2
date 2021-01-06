@@ -4329,46 +4329,44 @@ public class SyncTaskEditor extends DialogFragment {
 
                         setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-                        if (dlg_msg.getText().length()==0) {
-                            if (!prev_master_folder_type.equals(n_sti.getMasterFolderType())) {
-                                ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
-                                ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
-                                if ((!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
-                                        !n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB))) {
-                                    ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
-                                    ll_advanced_network_option_view.setVisibility(LinearLayout.GONE);
-                                } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
-                                        n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                                    if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
-                                        String msg="", opt_temp="";
-                                        if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) || Build.VERSION.SDK_INT<=26) {
-                                            opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
-                                            msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
-                                        } else {
-                                            opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR;
-                                            msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private);
-                                        }
-                                        final String option=opt_temp;
-                                        NotifyEvent ntfy = new NotifyEvent(mContext);
-                                        ntfy.setListener(new NotifyEventListener() {
-                                            @Override
-                                            public void positiveResponse(Context context, Object[] objects) {
-                                                n_sti.setSyncOptionWifiStatusOption(option);
-                                                spinnerSyncWifiStatus.setSelection(Integer.valueOf(option));
-                                                confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
-                                            }
-
-                                            @Override
-                                            public void negativeResponse(Context context, Object[] objects) {
-                                                confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
-                                            }
-                                        });
-                                        mUtil.showCommonDialog(true, "W", msg, "", ntfy);
+                        if (!prev_master_folder_type.equals(n_sti.getMasterFolderType())) {
+                            ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
+                            ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
+                            if ((!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
+                                    !n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB))) {
+                                ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
+                                ll_advanced_network_option_view.setVisibility(LinearLayout.GONE);
+                            } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
+                                    n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                                if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
+                                    String msg="", opt_temp="";
+                                    if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) || Build.VERSION.SDK_INT<=26) {
+                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
+                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
+                                    } else {
+                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR;
+                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private);
                                     }
+                                    final String option=opt_temp;
+                                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                                    ntfy.setListener(new NotifyEventListener() {
+                                        @Override
+                                        public void positiveResponse(Context context, Object[] objects) {
+                                            n_sti.setSyncOptionWifiStatusOption(option);
+                                            spinnerSyncWifiStatus.setSelection(Integer.valueOf(option));
+                                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
+                                        }
+
+                                        @Override
+                                        public void negativeResponse(Context context, Object[] objects) {
+                                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
+                                        }
+                                    });
+                                    mUtil.showCommonDialog(true, "W", msg, "", ntfy);
                                 }
-                            } else {
-                                confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                             }
+                        } else {
+                            confirmUseAppSpecificDir(n_sti, n_sti.getMasterDirectoryName(), null);
                         }
                     }
 
@@ -4524,46 +4522,44 @@ public class SyncTaskEditor extends DialogFragment {
                         setSpinnerSyncTaskType(spinnerSyncType, n_sti);
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
 
-                        if (dlg_msg.getText().length()==0) {
-                            if (!prev_target_folder_type.equals(n_sti.getTargetFolderType())) {
-                                ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
-                                ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
-                                if (!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
-                                        !n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                                    ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
-                                    ll_advanced_network_option_view.setVisibility(LinearLayout.GONE);
-                                } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
-                                        n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                                    if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
-                                        String msg="", opt_temp="";
-                                        if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) || Build.VERSION.SDK_INT<=26) {
-                                            opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
-                                            msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
-                                        } else {
-                                            opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR;
-                                            msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private);
-                                        }
-                                        final String option=opt_temp;
-                                        NotifyEvent ntfy = new NotifyEvent(mContext);
-                                        ntfy.setListener(new NotifyEventListener() {
-                                            @Override
-                                            public void positiveResponse(Context context, Object[] objects) {
-                                                n_sti.setSyncOptionWifiStatusOption(option);
-                                                spinnerSyncWifiStatus.setSelection(Integer.valueOf(option));
-                                                confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
-                                            }
-
-                                            @Override
-                                            public void negativeResponse(Context context, Object[] objects) {
-                                                confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
-                                            }
-                                        });
-                                        mUtil.showCommonDialog(true, "W", msg, "", ntfy);
+                        if (!prev_target_folder_type.equals(n_sti.getTargetFolderType())) {
+                            ll_wifi_condition_view.setVisibility(LinearLayout.VISIBLE);
+                            ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
+                            if (!n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) &&
+                                    !n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                                ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
+                                ll_advanced_network_option_view.setVisibility(LinearLayout.GONE);
+                            } else if (n_sti.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
+                                    n_sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                                if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_OFF)) {
+                                    String msg="", opt_temp="";
+                                    if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) || Build.VERSION.SDK_INT<=26) {
+                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_ANY_AP;
+                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_to_any);
+                                    } else {
+                                        opt_temp=SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR;
+                                        msg=mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_change_wifi_confition_has_private);
                                     }
+                                    final String option=opt_temp;
+                                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                                    ntfy.setListener(new NotifyEventListener() {
+                                        @Override
+                                        public void positiveResponse(Context context, Object[] objects) {
+                                            n_sti.setSyncOptionWifiStatusOption(option);
+                                            spinnerSyncWifiStatus.setSelection(Integer.valueOf(option));
+                                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
+                                        }
+
+                                        @Override
+                                        public void negativeResponse(Context context, Object[] objects) {
+                                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
+                                        }
+                                    });
+                                    mUtil.showCommonDialog(true, "W", msg, "", ntfy);
                                 }
-                            } else {
-                                confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                             }
+                        } else {
+                            confirmUseAppSpecificDir(n_sti, n_sti.getTargetDirectoryName(), null);
                         }
                     }
 
