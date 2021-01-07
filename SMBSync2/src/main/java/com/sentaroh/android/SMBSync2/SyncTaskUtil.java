@@ -7252,6 +7252,13 @@ public class SyncTaskUtil {
                 putTaskListValueErrorMessage(util, "WiFi status option", SyncTaskItem.SYNC_WIFI_STATUS_WIFI_DEFAULT_DESCRIPTION);
             }
 
+            //Set SyncTask to error state if Wifi AP option is set from previous versions
+            if (stli.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) {
+                if (stli.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) || stli.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                    stli.setSyncTaskWifiOptionError(true);
+                }
+            }
+
             stli.setLastSyncTime(parm[38]);
             try {
                 if (isValidTaskItemValue(SyncTaskItem.SYNC_STATUS_LIST, Integer.parseInt(parm[39]))) {

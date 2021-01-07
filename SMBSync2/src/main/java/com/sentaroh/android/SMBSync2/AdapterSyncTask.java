@@ -295,9 +295,13 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                 holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
                 holder.tv_last_sync_result.setText(e_msg);
                 holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_warning);
+            } else if (o.getSyncTaskWifiOptionError()) {
+                sync_btn_disable=true;
+                holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
+                holder.tv_last_sync_result.setText(mContext.getString(R.string.msgs_main_permission_ap_list_no_longer_available_task_list_msg));
+                holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_warning);
             }
 
-            boolean ap_list_specified=false;
             String master_dir = o.getMasterDirectoryName().startsWith("/")?o.getMasterDirectoryName().substring(1):o.getMasterDirectoryName();
             if (o.getMasterFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_INTERNAL)) {
                 if (master_dir.equals("")) holder.tv_row_master.setText(o.getMasterLocalMountPoint());
@@ -330,7 +334,6 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                     holder.tv_row_master.setText("smb://" + host + "/" + share + "/"+ master_dir);
                 }
                 holder.iv_row_image_master.setImageResource(R.drawable.ic_32_server);
-                if (o.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) ap_list_specified=true;
             }
             holder.tv_row_master.requestLayout();
             String target_dir = o.getTargetDirectoryName().startsWith("/")?o.getTargetDirectoryName().substring(1):o.getTargetDirectoryName();
@@ -377,14 +380,6 @@ public class AdapterSyncTask extends ArrayAdapter<SyncTaskItem> {
                     holder.tv_row_target.setText("smb://" + host + "/" + share + "/"+ target_dir);
                 }
                 holder.iv_row_image_target.setImageResource(R.drawable.ic_32_server);
-                if (o.getSyncOptionWifiStatusOption().equals(SyncTaskItem.SYNC_WIFI_STATUS_WIFI_CONNECT_SPECIFIC_AP)) ap_list_specified=true;
-            }
-            if (ap_list_specified) {
-                holder.tv_last_sync_result.setText(mContext.getString(R.string.msgs_main_permission_ap_list_no_longer_available_task_list_msg));
-                holder.tv_last_sync_result.setTextColor(mThemeColorList.text_color_warning);
-                sync_btn_disable=true;
-            } else {
-                holder.tv_last_sync_result.setTextColor(mTextColor);
             }
 
             holder.tv_row_target.requestLayout();

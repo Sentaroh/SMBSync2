@@ -137,29 +137,6 @@
                 android:layout_marginLeft="10dp"
                 android:orientation="vertical" >
                 <LinearLayout
-                    android:id="@+id/edit_sync_task_option_ap_list_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="vertical" >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/msgs_profile_sync_task_dlg_wifi_ap_list"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <Button
-                        android:id="@+id/edit_sync_task_option_btn_edit_ap_white_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|left"
-                        android:text="ap"
-                        android:lines="1"
-                        android:ellipsize="end"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        tools:ignore="HardcodedText" />
-                </LinearLayout>
-                <LinearLayout
                     android:id="@+id/edit_sync_task_option_address_list_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
