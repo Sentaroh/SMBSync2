@@ -7691,11 +7691,19 @@ public class SyncTaskUtil {
             if (sdcard) {
                 OutputStream pos=null;
                 if (fd.startsWith(mGp.safMgr.getSdcardRootPath())) {
-                    SafFile of=mGp.safMgr.createSdcardFile(fp);
-                    pos=c.getContentResolver().openOutputStream(of.getUri());
+                    if (Build.VERSION.SDK_INT>=30) {
+                        pos=new FileOutputStream(fp);
+                    } else {
+                        SafFile of=mGp.safMgr.createSdcardFile(fp);
+                        pos=c.getContentResolver().openOutputStream(of.getUri());
+                    }
                 } else if (fd.startsWith(mGp.safMgr.getUsbRootPath())) {
-                    SafFile of=mGp.safMgr.createUsbFile(fp);
-                    pos=c.getContentResolver().openOutputStream(of.getUri());
+                    if (Build.VERSION.SDK_INT>=30) {
+                        pos=new FileOutputStream(fp);
+                    } else {
+                        SafFile of=mGp.safMgr.createUsbFile(fp);
+                        pos=c.getContentResolver().openOutputStream(of.getUri());
+                    }
                 } else {
                     pos=new FileOutputStream(fp);
                 }
