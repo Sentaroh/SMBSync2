@@ -589,7 +589,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View view) {
                 android.content.ClipboardManager cm=(android.content.ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData cd=cm.getPrimaryClip();
-                cm.setPrimaryClip(ClipData.newPlainText("SMBSync2 storage info", tv_msg.getText().toString()));
+                cm.setPrimaryClip(ClipData.newPlainText("SMBSync2 storage info", tv_msg.getOriginalText().toString()));
                 CommonUtilities.showToastMessageLong(mActivity, mContext.getString(R.string.msgs_info_storage_copy_completed));
             }
         });
@@ -620,7 +620,7 @@ public class ActivityMain extends AppCompatActivity {
 //                intent.putExtra(Intent.EXTRA_CC, new String[]{"cc@example.com"});
 //                intent.putExtra(Intent.EXTRA_BCC, new String[]{"bcc@example.com"});
                         intent.putExtra(Intent.EXTRA_SUBJECT, "SMBSync2 System Info");
-                        intent.putExtra(Intent.EXTRA_TEXT, desc+ "\n\n\n"+tv_msg.getText().toString());
+                        intent.putExtra(Intent.EXTRA_TEXT, desc+ "\n\n\n"+tv_msg.getOriginalText().toString());
 //                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(lf));
                         mContext.startActivity(intent);
                     }

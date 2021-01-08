@@ -161,7 +161,7 @@
                    android:layout_height="wrap_content"
                    android:orientation="horizontal" >
 
-                   <Button
+                   <com.sentaroh.android.Utilities.Widget.NonWordwrapButton
                        android:id="@+id/edit_sync_task_master_folder_info_btn"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
                    android:layout_width="fill_parent"
                    android:layout_height="wrap_content"
                    android:orientation="horizontal" >
-                   <Button
+                   <com.sentaroh.android.Utilities.Widget.NonWordwrapButton
                        android:id="@+id/edit_sync_task_target_folder_info_btn"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
