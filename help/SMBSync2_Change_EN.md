@@ -1,3 +1,8 @@
+#### 2021-01-08 Ver2.47
+
+- Correct translations
+- Avoided app force close
+
 #### 2020-12-26 Ver2.46
 
 - Improved display of spinner selection in black theme
