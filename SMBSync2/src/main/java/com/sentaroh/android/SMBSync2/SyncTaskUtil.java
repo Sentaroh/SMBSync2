@@ -2567,6 +2567,7 @@ public class SyncTaskUtil {
         th.start();
     }
 
+/*
     public void editWifiAccessPointListDlg(final ArrayList<String> ap_list, final NotifyEvent p_ntfy) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
         final AdapterFilterList filterAdapter;
@@ -2767,6 +2768,7 @@ public class SyncTaskUtil {
         dialog.show();
 
     }
+*/
 
     public void editWifiIPAddressListDlg(final ArrayList<String> addr_list, final NotifyEvent p_ntfy) {
         ArrayList<AdapterFilterList.FilterListItem> filterList = new ArrayList<AdapterFilterList.FilterListItem>();
@@ -2896,6 +2898,7 @@ public class SyncTaskUtil {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
+
         add_current_addr.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
