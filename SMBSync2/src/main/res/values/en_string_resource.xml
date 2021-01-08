@@ -489,12 +489,6 @@
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">Select subdirectories</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">Limit SMB I/O write buffer to 16 KB</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Cancel</string>
-        <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">In two-way sync, keep a copy of the overwritten file in case of conflict</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle">Two-way sync rules in case of conflicting files</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_ask_user">Ask user</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file">Ignore the file</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer">Keep newer file</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_older">Keep older file</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">Logon cancelled</string>
         <string name="msgs_remote_profile_dlg_logon_error">Logon Failed</string>
         <string name="msgs_remote_profile_dlg_logon_success">Logon Successful</string>

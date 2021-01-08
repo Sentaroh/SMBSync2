@@ -489,12 +489,6 @@
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">选择子目录</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">将SMB I / O写缓冲区限制为16 KB</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">取消</string>
-        <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">在双向同步中，如果发生冲突，请保留覆盖文件的副本</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle">文件冲突时的双向同步规则</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_ask_user">询问用户</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file">忽略文件</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer">保留较新的文件</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_older">保留较旧的文件</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">登录已取消</string>
         <string name="msgs_remote_profile_dlg_logon_error">登录失败</string>
         <string name="msgs_remote_profile_dlg_logon_success">登录成功</string>

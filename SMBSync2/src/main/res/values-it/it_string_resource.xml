@@ -489,12 +489,6 @@
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">Seleziona sottocartelle</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">Limita buffer scrittura SMB I/O a 16 KB</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Annulla</string>
-        <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">In sync doppia-via, mantieni una copia dei file sovrascritti in caso di conflitti</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle">Regole sync Doppia-via in caso di conflitto file</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_ask_user">Chiedi all\'utente</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file">Ignora il file</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer">Mantieni nuovi file</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_older">Mantieni vecchi file</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">Logon annullato</string>
         <string name="msgs_remote_profile_dlg_logon_error">Logon fallito</string>
         <string name="msgs_remote_profile_dlg_logon_success">Logon riuscito</string>

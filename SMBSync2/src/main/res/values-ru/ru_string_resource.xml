@@ -489,12 +489,6 @@
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">Выберите подкаталоги</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">Ограничить буфер записи ввода / вывода SMB 16 КБ</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Отмена</string>
-        <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">Хранить файл конфликта двусторонней синхронизации</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle">Правила двусторонней синхронизации</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_ask_user">Спросите пользователя</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file">Пропустить синхронизацию файлов</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer">Copy new date files</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_older">Copy old date files</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">Вход отменен</string>
         <string name="msgs_remote_profile_dlg_logon_error">Ошибка входа</string>
         <string name="msgs_remote_profile_dlg_logon_success">Вход успешный</string>

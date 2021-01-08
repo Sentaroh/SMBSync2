@@ -3463,29 +3463,6 @@ public class SyncTaskEditor extends DialogFragment {
         adapterSyncOption.notifyDataSetChanged();
     }
 
-    private void setSpinnerTwoWaySyncConflictRule(Spinner spinner, String cv) {
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
-        final CustomSpinnerAdapter adapter =
-                new CustomSpinnerAdapter(mContext, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_prompt));
-        spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_ask_user));
-        adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer));
-        adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_older));
-        adapter.add(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file));
-
-        int sel = 0;
-        if (cv.equals(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_ASK_USER)) sel = 0;
-        else if (cv.equals(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER)) sel = 1;
-        else if (cv.equals(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER)) sel = 2;
-        else if (cv.equals(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE)) sel = 3;
-
-        spinner.setSelection(sel);
-
-        adapter.notifyDataSetChanged();
-    }
-
     private void setSpinnerSyncTaskWifiOption(Spinner spinner, String cv) {
         CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter =
@@ -5066,19 +5043,6 @@ public class SyncTaskEditor extends DialogFragment {
 //        CommonDialog.setDlgBoxSizeLimit(dialog, false);
 
         dialog.show();
-    }
-
-    private void setTwoWaySyncConflictRuleFromSpinnere(Spinner spinner, SyncTaskItem n_stli) {
-        String so = mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer);
-        if (spinner.getSelectedItemPosition()<spinner.getAdapter().getCount()) so=spinner.getSelectedItem().toString();
-        if (so.equals(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_ask_user)))
-            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_ASK_USER);
-        else if (so.equals(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer)))
-            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER);
-        else if (so.equals(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_copy_older)))
-            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER);
-        else if (so.equals(mContext.getString(R.string.msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file)))
-            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE);
     }
 
     private void setSyncTaskTypeFromSpinnere(Spinner spinner, SyncTaskItem n_stli) {

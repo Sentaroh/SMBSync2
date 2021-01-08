@@ -489,12 +489,6 @@
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">Sélectionner les sous-dossiers</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">Limiter le cache SMB E/S en écriture à 16Ko</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Annuler</string>
-        <string name="msgs_profile_twoway_sync_conflict_keep_conflict_file">En cas de conflit, garder une copie du fichier remplacé</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle">Règles de conflit de la sync bidirectionnelle</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_ask_user">Demander</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_skip_sync_file">Ignorer le fichier</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_newer">Garder le fichier le plus récent</string>
-        <string name="msgs_profile_twoway_sync_conflict_copy_rurle_copy_older">Garder le fichier le plus ancien</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">Connexion annulée</string>
         <string name="msgs_remote_profile_dlg_logon_error">Connexion échouée</string>
         <string name="msgs_remote_profile_dlg_logon_success">Connexion réussie</string>
