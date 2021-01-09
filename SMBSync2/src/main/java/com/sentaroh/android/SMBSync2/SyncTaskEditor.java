@@ -3643,7 +3643,6 @@ public class SyncTaskEditor extends DialogFragment {
             }
         });
         final LinearLayout ll_wifi_condition_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_wifi_condition_view);
-        final LinearLayout ll_spinner_wifi_status = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_spinner_wifi_status);
         final LinearLayout ll_wifi_wl_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_wl_view);
 //        final LinearLayout ll_wifi_wl_ap_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ap_list_view);
         final LinearLayout ll_wifi_wl_address_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_address_list_view);

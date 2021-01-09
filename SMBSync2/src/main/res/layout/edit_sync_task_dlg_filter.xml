@@ -6,19 +6,12 @@
     android:orientation="vertical"
     tools:ignore="RtlHardcoded,ContentDescription" >
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:text="@string/msgs_profile_sync_task_filter_title"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/msgs_profile_sync_task_filter_title"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
         android:id="@+id/sync_filter_file_detail_view"
