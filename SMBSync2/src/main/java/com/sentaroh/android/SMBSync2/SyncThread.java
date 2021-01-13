@@ -4068,6 +4068,7 @@ public class SyncThread extends Thread {
     static final public void scanMediaFile(SyncThreadWorkArea stwa, String fp) {
         try {
             MediaScannerConnection.scanFile(stwa.context, new String[]{fp}, null, null);
+            stwa.util.addDebugMsg(1, "I", "Media scanner invoked, fp="+fp);
         } catch(Exception e) {
             stwa.util.addLogMsg("W","Media scanner scan failed, fp="+fp);
             stwa.util.addLogMsg("W",e.getMessage());
