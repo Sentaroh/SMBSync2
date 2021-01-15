@@ -148,6 +148,11 @@ public class SyncThreadArchiveFile {
                     continue;
                 }
             }
+            if (!SyncThread.isValidFileDirectoryName(stwa, sti, item.full_path)) {
+                if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+                else return SyncTaskItem.SYNC_STATUS_ERROR;
+            }
+
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -216,31 +221,33 @@ public class SyncThreadArchiveFile {
 //                          }
                             File[] children = mf.listFiles();
                             if (children != null) {
-                                archiveFileInternalToInternal(stwa, sti, children, from_path, to_path);
-                                for (File element : children) {
-                                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                        if (!element.getName().equals(".android_secure")) {
-                                            if (!from_path.equals(to_path)) {
-                                                if (element.isDirectory()) {
-                                                    if (sti.isSyncOptionSyncSubDirectory()) {
-                                                        sync_result = buildArchiveListInternalToInternal(stwa, sti, from_base, from_path + "/" + element.getName(),
-                                                                element, to_base, to_path + "/" + element.getName());
-                                                    } else {
-                                                        stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=", from_path);
+                                sync_result=archiveFileInternalToInternal(stwa, sti, children, from_path, to_path);
+                                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                    for (File element : children) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            if (!element.getName().equals(".android_secure")) {
+                                                if (!from_path.equals(to_path)) {
+                                                    if (element.isDirectory()) {
+                                                        if (sti.isSyncOptionSyncSubDirectory()) {
+                                                            sync_result = buildArchiveListInternalToInternal(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                                    element, to_base, to_path + "/" + element.getName());
+                                                        } else {
+                                                            stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=", from_path);
+                                                        }
                                                     }
+                                                } else {
+                                                    stwa.util.addDebugMsg(1, "W",
+                                                            String.format(stwa.context.getString(R.string.msgs_mirror_same_directory_ignored),
+                                                                    from_path, "/", element.getName()));
                                                 }
-                                            } else {
-                                                stwa.util.addDebugMsg(1, "W",
-                                                        String.format(stwa.context.getString(R.string.msgs_mirror_same_directory_ignored),
-                                                                from_path, "/", element.getName()));
                                             }
+                                        } else {
+                                            return sync_result;
                                         }
-                                    } else {
-                                        return sync_result;
-                                    }
-                                    if (!stwa.gp.syncThreadCtrl.isEnabled()) {
-                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                        break;
+                                        if (!stwa.gp.syncThreadCtrl.isEnabled()) {
+                                            sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                                            break;
+                                        }
                                     }
                                 }
                             } else {
@@ -388,6 +395,11 @@ public class SyncThreadArchiveFile {
                     continue;
                 }
             }
+            if (!SyncThread.isValidFileDirectoryName(stwa, sti, item.full_path)) {
+                if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+                else return SyncTaskItem.SYNC_STATUS_ERROR;
+            }
+
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -461,31 +473,33 @@ public class SyncThreadArchiveFile {
 //                              SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
 //                          }
                             File[] children = mf.listFiles();
-                            archiveFileInternalToExternal(stwa, sti, children, from_path, to_path);
-                            if (children != null) {
-                                for (File element : children) {
-                                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                        if (!element.getName().equals(".android_secure")) {
-                                            if (element.isDirectory()) {
-                                                if (sti.isSyncOptionSyncSubDirectory()) {
-                                                    sync_result = buildArchiveListInternalToExternal(stwa, sti, from_base, from_path + "/" + element.getName(),
-                                                            element, to_base, to_path + "/" + element.getName());
-                                                } else {
-                                                    if (stwa.gp.settingDebugLevel >= 1)
-                                                        stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                            sync_result=archiveFileInternalToExternal(stwa, sti, children, from_path, to_path);
+                            if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                if (children != null) {
+                                    for (File element : children) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            if (!element.getName().equals(".android_secure")) {
+                                                if (element.isDirectory()) {
+                                                    if (sti.isSyncOptionSyncSubDirectory()) {
+                                                        sync_result = buildArchiveListInternalToExternal(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                                element, to_base, to_path + "/" + element.getName());
+                                                    } else {
+                                                        if (stwa.gp.settingDebugLevel >= 1)
+                                                            stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                    }
                                                 }
                                             }
+                                        } else {
+                                            return sync_result;
                                         }
-                                    } else {
-                                        return sync_result;
+                                        if (!stwa.gp.syncThreadCtrl.isEnabled()) {
+                                            sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                                            break;
+                                        }
                                     }
-                                    if (!stwa.gp.syncThreadCtrl.isEnabled()) {
-                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                        break;
-                                    }
+                                } else {
+                                    stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                                 }
-                            } else {
-                                stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                             }
                         }
                     } else {
@@ -530,6 +544,11 @@ public class SyncThreadArchiveFile {
                     continue;//Archive cancelled
                 }
             }
+            if (!SyncThread.isValidFileDirectoryName(stwa, sti, item.full_path)) {
+                if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+                else return SyncTaskItem.SYNC_STATUS_ERROR;
+            }
+
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -602,32 +621,34 @@ public class SyncThreadArchiveFile {
 //                          }
                             File[] children = mf.listFiles();
                             if (children != null) {
-                                archiveFileInternalToSmb(stwa, sti, children, from_path, to_path);
-                                for (File element : children) {
-                                    if (element.isDirectory()) {
-                                        if (!element.getName().equals(".android_secure")) {
-                                            while (stwa.syncTaskRetryCount > 0) {
-                                                if (sti.isSyncOptionSyncSubDirectory()) {
-                                                    sync_result = buildArchiveListInternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
-                                                            element, to_base, to_path + "/" + element.getName());
-                                                }
-                                                if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
-                                                    stwa.syncTaskRetryCount--;
-                                                    if (stwa.syncTaskRetryCount > 0)
-                                                        sync_result = waitRetryInterval(stwa);
-                                                    if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
+                                sync_result=archiveFileInternalToSmb(stwa, sti, children, from_path, to_path);
+                                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                    for (File element : children) {
+                                        if (element.isDirectory()) {
+                                            if (!element.getName().equals(".android_secure")) {
+                                                while (stwa.syncTaskRetryCount > 0) {
+                                                    if (sti.isSyncOptionSyncSubDirectory()) {
+                                                        sync_result = buildArchiveListInternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                                element, to_base, to_path + "/" + element.getName());
+                                                    }
+                                                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
+                                                        stwa.syncTaskRetryCount--;
+                                                        if (stwa.syncTaskRetryCount > 0)
+                                                            sync_result = waitRetryInterval(stwa);
+                                                        if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
+                                                            break;
+                                                    } else {
+                                                        stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
                                                         break;
-                                                } else {
-                                                    stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
-                                                    break;
+                                                    }
                                                 }
+                                                if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS)
+                                                    break;
                                             }
-                                            if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS)
+                                            if (!stwa.gp.syncThreadCtrl.isEnabled()) {
+                                                sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
                                                 break;
-                                        }
-                                        if (!stwa.gp.syncThreadCtrl.isEnabled()) {
-                                            sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                            break;
+                                            }
                                         }
                                     }
                                 }
@@ -809,6 +830,11 @@ public class SyncThreadArchiveFile {
                     continue;
                 }
             }
+            if (!SyncThread.isValidFileDirectoryName(stwa, sti, item.full_path)) {
+                if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+                else return SyncTaskItem.SYNC_STATUS_ERROR;
+            }
+
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -821,9 +847,9 @@ public class SyncThreadArchiveFile {
             String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);
 
             if (!sti.isArchiveUseRename()) {
-                File tf=new File(to_path+"/"+item.file_name);
+                File tf=new File(converted_to_path+"/"+item.file_name);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+to_file_name, to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -839,9 +865,9 @@ public class SyncThreadArchiveFile {
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
                 String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
-                File tf=new File(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                File tf=new File(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -852,7 +878,7 @@ public class SyncThreadArchiveFile {
                     }
                 } else {
                     sync_result= moveFileExternalToInternal(stwa, sti, item.full_path, (File)item.file, tf, tf.getPath(),
-                            to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                            converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 }
             }
         }
@@ -877,25 +903,27 @@ public class SyncThreadArchiveFile {
                             }
                             File[] children = mf.listFiles();
                             if (children != null) {
-                                archiveFileExternalToInternal(stwa, sti, children, from_path, to_path);
-                                for (File element : children) {
-                                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                        if (!element.getName().equals(".android_secure")) {
-                                            if (element.isDirectory()) {
-                                                if (sti.isSyncOptionSyncSubDirectory()) {
-                                                    sync_result = buildArchiveListExternalToInternal(stwa, sti, from_base, from_path + "/" + element.getName(),
-                                                            element, to_base, to_path + "/" + element.getName());
-                                                } else {
-                                                    stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=", from_path);
+                                sync_result=archiveFileExternalToInternal(stwa, sti, children, from_path, to_path);
+                                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                    for (File element : children) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            if (!element.getName().equals(".android_secure")) {
+                                                if (element.isDirectory()) {
+                                                    if (sti.isSyncOptionSyncSubDirectory()) {
+                                                        sync_result = buildArchiveListExternalToInternal(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                                element, to_base, to_path + "/" + element.getName());
+                                                    } else {
+                                                        stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=", from_path);
+                                                    }
                                                 }
                                             }
+                                        } else {
+                                            return sync_result;
                                         }
-                                    } else {
-                                        return sync_result;
-                                    }
-                                    if (!stwa.gp.syncThreadCtrl.isEnabled()) {
-                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                        break;
+                                        if (!stwa.gp.syncThreadCtrl.isEnabled()) {
+                                            sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                                            break;
+                                        }
                                     }
                                 }
                             } else {
@@ -1040,6 +1068,11 @@ public class SyncThreadArchiveFile {
                     continue;
                 }
             }
+            if (!SyncThread.isValidFileDirectoryName(stwa, sti, item.full_path)) {
+                if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+                else return SyncTaskItem.SYNC_STATUS_ERROR;
+            }
+
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -1107,36 +1140,38 @@ public class SyncThreadArchiveFile {
     //                          SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
     //                      }
                             File[] children = mf.listFiles();
-                            archiveFileExternalToExternal(stwa, sti, children, from_path, to_path);
-                            if (children != null) {
-                                for (File element : children) {
-                                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                        if (!element.getName().equals(".android_secure")) {
-                                            if (!from_path.equals(to_path)) {
-                                                if (element.isDirectory()) {
-                                                    if (sti.isSyncOptionSyncSubDirectory()) {
-                                                        sync_result = buildArchiveListExternalToExternal(stwa, sti, from_base, from_path + "/" + element.getName(),
-                                                                element, to_base, to_path + "/" + element.getName());
-                                                    } else {
-                                                        stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                            sync_result=archiveFileExternalToExternal(stwa, sti, children, from_path, to_path);
+                            if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                if (children != null) {
+                                    for (File element : children) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            if (!element.getName().equals(".android_secure")) {
+                                                if (!from_path.equals(to_path)) {
+                                                    if (element.isDirectory()) {
+                                                        if (sti.isSyncOptionSyncSubDirectory()) {
+                                                            sync_result = buildArchiveListExternalToExternal(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                                    element, to_base, to_path + "/" + element.getName());
+                                                        } else {
+                                                            stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                        }
                                                     }
+                                                } else {
+                                                    stwa.util.addDebugMsg(1, "W",
+                                                            String.format(stwa.context.getString(R.string.msgs_mirror_same_directory_ignored),
+                                                                    from_path + "/" + element.getName()));
                                                 }
-                                            } else {
-                                                stwa.util.addDebugMsg(1, "W",
-                                                        String.format(stwa.context.getString(R.string.msgs_mirror_same_directory_ignored),
-                                                                from_path + "/" + element.getName()));
                                             }
+                                        } else {
+                                            return sync_result;
                                         }
-                                    } else {
-                                        return sync_result;
+                                        if (!stwa.gp.syncThreadCtrl.isEnabled()) {
+                                            sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                                            break;
+                                        }
                                     }
-                                    if (!stwa.gp.syncThreadCtrl.isEnabled()) {
-                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                        break;
-                                    }
+                                } else {
+                                    stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                                 }
-                            } else {
-                                stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                             }
                         }
                     } else {
@@ -1236,6 +1271,11 @@ public class SyncThreadArchiveFile {
                     continue;
                 }
             }
+            if (!SyncThread.isValidFileDirectoryName(stwa, sti, item.full_path)) {
+                if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+                else return SyncTaskItem.SYNC_STATUS_ERROR;
+            }
+
             file_seq_no++;
             String to_file_name="", to_file_ext="", to_file_seqno="";
             if (item.file_name.lastIndexOf(".")>=0) {
@@ -1245,12 +1285,12 @@ public class SyncThreadArchiveFile {
                 to_file_name=item.file_name;
             }
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
-            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);            
+            String converted_to_path=buildArchiveTargetDirectoryName(stwa, sti, to_path, item);
 
             if (!sti.isArchiveUseRename()) {
-                JcifsFile tf=new JcifsFile(to_path+"/"+item.file_name, stwa.targetAuth);
+                JcifsFile tf=new JcifsFile(converted_to_path+"/"+item.file_name, stwa.targetAuth);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+to_file_name, to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+to_file_name, to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1266,9 +1306,9 @@ public class SyncThreadArchiveFile {
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
                 String temp_dir= buildArchiveSubDirectoryName(stwa, sti, item);
 
-                JcifsFile tf=new JcifsFile(to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext, stwa.targetAuth);
+                JcifsFile tf=new JcifsFile(converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext, stwa.targetAuth);
                 if (tf.exists()) {
-                    String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
+                    String new_name=createArchiveLocalNewFilePath(stwa, sti, converted_to_path, converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno,to_file_ext) ;
                     if (new_name.equals("")) {
                         stwa.util.addLogMsg("E","Archive sequence number overflow error.");
                         sync_result=SyncTaskItem.SYNC_STATUS_ERROR;
@@ -1279,7 +1319,7 @@ public class SyncThreadArchiveFile {
                     }
                 } else {
                     sync_result= moveFileExternalToSmb(stwa, sti, item.full_path, (File)item.file, tf, tf.getPath(),
-                            to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
+                            converted_to_path+"/"+temp_dir+to_file_name+to_file_seqno+to_file_ext);
                 }
             }
         }
@@ -1304,40 +1344,42 @@ public class SyncThreadArchiveFile {
     //                      }
                             File[] children = mf.listFiles();
                             if (children != null) {
-                                archiveFileExternalToSmb(stwa, sti, children, from_path, to_path);
-                                for (File element : children) {
-                                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                        if (!element.getName().equals(".android_secure")) {
-                                            while (stwa.syncTaskRetryCount > 0) {
-                                                if (element.isDirectory()) {
-                                                    if (sti.isSyncOptionSyncSubDirectory()) {
-                                                        sync_result = buildArchiveListExternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
-                                                                element, to_base, to_path + "/" + element.getName());
+                                sync_result=archiveFileExternalToSmb(stwa, sti, children, from_path, to_path);
+                                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                    for (File element : children) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            if (!element.getName().equals(".android_secure")) {
+                                                while (stwa.syncTaskRetryCount > 0) {
+                                                    if (element.isDirectory()) {
+                                                        if (sti.isSyncOptionSyncSubDirectory()) {
+                                                            sync_result = buildArchiveListExternalToSmb(stwa, sti, from_base, from_path + "/" + element.getName(),
+                                                                    element, to_base, to_path + "/" + element.getName());
+                                                        } else {
+                                                            if (stwa.gp.settingDebugLevel >= 1)
+                                                                stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                        }
+                                                    }
+                                                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
+                                                        stwa.syncTaskRetryCount--;
+                                                        if (stwa.syncTaskRetryCount > 0)
+                                                            sync_result = waitRetryInterval(stwa);
+                                                        if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
+                                                            break;
                                                     } else {
-                                                        if (stwa.gp.settingDebugLevel >= 1)
-                                                            stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                        stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
+                                                        break;
                                                     }
                                                 }
-                                                if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
-                                                    stwa.syncTaskRetryCount--;
-                                                    if (stwa.syncTaskRetryCount > 0)
-                                                        sync_result = waitRetryInterval(stwa);
-                                                    if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
-                                                        break;
-                                                } else {
-                                                    stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
+                                                if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS)
                                                     break;
-                                                }
                                             }
-                                            if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS)
-                                                break;
+                                        } else {
+                                            return sync_result;
                                         }
-                                    } else {
-                                        return sync_result;
-                                    }
-                                    if (!stwa.gp.syncThreadCtrl.isEnabled()) {
-                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                        break;
+                                        if (!stwa.gp.syncThreadCtrl.isEnabled()) {
+                                            sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                                            break;
+                                        }
                                     }
                                 }
                             } else {
@@ -1524,37 +1566,39 @@ public class SyncThreadArchiveFile {
     //                      }
                             JcifsFile[] children = mf.listFiles();
                             if (children != null) {
-                                archiveFileSmbToInternal(stwa, sti, children, from_path, to_path);
-                                for (JcifsFile element : children) {
-                                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                        while (stwa.syncTaskRetryCount > 0) {
-                                            if (element.isDirectory()) {
-                                                if (sti.isSyncOptionSyncSubDirectory()) {
-                                                    sync_result = buildArchiveListSmbToInternal(stwa, sti, from_base, from_path + element.getName(),
-                                                            element, to_base, to_path + "/" + element.getName().replace("/", ""));
+                                sync_result=archiveFileSmbToInternal(stwa, sti, children, from_path, to_path);
+                                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                    for (JcifsFile element : children) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            while (stwa.syncTaskRetryCount > 0) {
+                                                if (element.isDirectory()) {
+                                                    if (sti.isSyncOptionSyncSubDirectory()) {
+                                                        sync_result = buildArchiveListSmbToInternal(stwa, sti, from_base, from_path + element.getName(),
+                                                                element, to_base, to_path + "/" + element.getName().replace("/", ""));
+                                                    } else {
+                                                        if (stwa.gp.settingDebugLevel >= 1)
+                                                            stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                    }
+                                                }
+                                                if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
+                                                    stwa.syncTaskRetryCount--;
+                                                    if (stwa.syncTaskRetryCount > 0)
+                                                        sync_result = waitRetryInterval(stwa);
+                                                    if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
+                                                        break;
                                                 } else {
-                                                    if (stwa.gp.settingDebugLevel >= 1)
-                                                        stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                    stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
+                                                    break;
                                                 }
                                             }
-                                            if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
-                                                stwa.syncTaskRetryCount--;
-                                                if (stwa.syncTaskRetryCount > 0)
-                                                    sync_result = waitRetryInterval(stwa);
-                                                if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
-                                                    break;
-                                            } else {
-                                                stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
-                                                break;
-                                            }
+                                            if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) break;
+                                        } else {
+                                            return sync_result;
                                         }
-                                        if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) break;
-                                    } else {
-                                        return sync_result;
-                                    }
-                                    if (!stwa.gp.syncThreadCtrl.isEnabled()) {
-                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                        break;
+                                        if (!stwa.gp.syncThreadCtrl.isEnabled()) {
+                                            sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                                            break;
+                                        }
                                     }
                                 }
                             } else {
@@ -1818,37 +1862,39 @@ public class SyncThreadArchiveFile {
     //                      }
                             JcifsFile[] children = mf.listFiles();
                             if (children != null) {
-                                archiveFileSmbToExternal(stwa, sti, children, from_path, to_path);
-                                for (JcifsFile element : children) {
-                                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                        while (stwa.syncTaskRetryCount > 0) {
-                                            if (element.isDirectory()) {
-                                                if (sti.isSyncOptionSyncSubDirectory()) {
-                                                    sync_result = buildArchiveListSmbToExternal(stwa, sti, from_base, from_path + element.getName(),
-                                                            element, to_base, to_path + "/" + element.getName().replace("/", ""));
+                                sync_result=archiveFileSmbToExternal(stwa, sti, children, from_path, to_path);
+                                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                    for (JcifsFile element : children) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            while (stwa.syncTaskRetryCount > 0) {
+                                                if (element.isDirectory()) {
+                                                    if (sti.isSyncOptionSyncSubDirectory()) {
+                                                        sync_result = buildArchiveListSmbToExternal(stwa, sti, from_base, from_path + element.getName(),
+                                                                element, to_base, to_path + "/" + element.getName().replace("/", ""));
+                                                    } else {
+                                                        if (stwa.gp.settingDebugLevel >= 1)
+                                                            stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                    }
+                                                }
+                                                if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
+                                                    stwa.syncTaskRetryCount--;
+                                                    if (stwa.syncTaskRetryCount > 0)
+                                                        sync_result = waitRetryInterval(stwa);
+                                                    if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
+                                                        break;
                                                 } else {
-                                                    if (stwa.gp.settingDebugLevel >= 1)
-                                                        stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                    stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
+                                                    break;
                                                 }
                                             }
-                                            if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
-                                                stwa.syncTaskRetryCount--;
-                                                if (stwa.syncTaskRetryCount > 0)
-                                                    sync_result = waitRetryInterval(stwa);
-                                                if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
-                                                    break;
-                                            } else {
-                                                stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
-                                                break;
-                                            }
+                                            if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) break;
+                                        } else {
+                                            return sync_result;
                                         }
-                                        if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) break;
-                                    } else {
-                                        return sync_result;
-                                    }
-                                    if (!stwa.gp.syncThreadCtrl.isEnabled()) {
-                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                        break;
+                                        if (!stwa.gp.syncThreadCtrl.isEnabled()) {
+                                            sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                                            break;
+                                        }
                                     }
                                 }
                             } else {
@@ -2030,37 +2076,39 @@ public class SyncThreadArchiveFile {
     //                      }
                             JcifsFile[] children = mf.listFiles();
                             if (children != null) {
-                                archiveFileSmbToSmb(stwa, sti, children, from_path, to_path);
-                                for (JcifsFile element : children) {
-                                    if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                                        while (stwa.syncTaskRetryCount > 0) {
-                                            if (element.isDirectory()) {
-                                                if (sti.isSyncOptionSyncSubDirectory()) {
-                                                    sync_result = buildArchiveListSmbToSmb(stwa, sti, from_base, from_path + element.getName(),
-                                                            element, to_base, to_path + element.getName());
+                                sync_result=archiveFileSmbToSmb(stwa, sti, children, from_path, to_path);
+                                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                    for (JcifsFile element : children) {
+                                        if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                                            while (stwa.syncTaskRetryCount > 0) {
+                                                if (element.isDirectory()) {
+                                                    if (sti.isSyncOptionSyncSubDirectory()) {
+                                                        sync_result = buildArchiveListSmbToSmb(stwa, sti, from_base, from_path + element.getName(),
+                                                                element, to_base, to_path + element.getName());
+                                                    } else {
+                                                        if (stwa.gp.settingDebugLevel >= 1)
+                                                            stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                    }
+                                                }
+                                                if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
+                                                    stwa.syncTaskRetryCount--;
+                                                    if (stwa.syncTaskRetryCount > 0)
+                                                        sync_result = waitRetryInterval(stwa);
+                                                    if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
+                                                        break;
                                                 } else {
-                                                    if (stwa.gp.settingDebugLevel >= 1)
-                                                        stwa.util.addDebugMsg(1, "I", "Sub directory was not sync, dir=" + from_path);
+                                                    stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
+                                                    break;
                                                 }
                                             }
-                                            if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
-                                                stwa.syncTaskRetryCount--;
-                                                if (stwa.syncTaskRetryCount > 0)
-                                                    sync_result = waitRetryInterval(stwa);
-                                                if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
-                                                    break;
-                                            } else {
-                                                stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
-                                                break;
-                                            }
+                                            if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) break;
+                                        } else {
+                                            return sync_result;
                                         }
-                                        if (sync_result != SyncTaskItem.SYNC_STATUS_SUCCESS) break;
-                                    } else {
-                                        return sync_result;
-                                    }
-                                    if (!stwa.gp.syncThreadCtrl.isEnabled()) {
-                                        sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
-                                        break;
+                                        if (!stwa.gp.syncThreadCtrl.isEnabled()) {
+                                            sync_result = SyncTaskItem.SYNC_STATUS_CANCEL;
+                                            break;
+                                        }
                                     }
                                 }
                             } else {

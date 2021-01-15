@@ -1580,6 +1580,23 @@ public class SyncThread extends Thread {
         return result;
     }
 
+    static public String getUnprintableCharacter(String in) {
+        String removed=in.replaceAll("\\p{C}", "");
+        for(int i=0;i<removed.length();i++) {
+            String in_sub=in.substring(i,i+1);
+            String out_sub=removed.substring(i,i+1);
+            if (!in_sub.equals(out_sub)) {
+                return "Pos="+(i+1)+", 0x"+StringUtil.getHexString(in_sub.getBytes(),0,in_sub.getBytes().length).toUpperCase();
+            }
+        }
+        return "";
+    }
+
+    static public String removeUnprintableCharacter(String in) {
+        String removed=in.replaceAll("\\p{C}", "");
+        return removed;
+    }
+
     public static String hasInvalidCharForFileDirName(String in_str) {
         if (in_str.contains(":")) return ":";
         if (in_str.contains("\\")) return "\\";
@@ -1591,15 +1608,15 @@ public class SyncThread extends Thread {
         if (in_str.contains("|")) return "|";
         if (in_str.contains("\n")) return "CR";
         if (in_str.contains("\t")) return "TAB";
-        String printable=in_str.replaceAll("\\p{C}", "");
-        if (in_str.length()!=printable.length()) return "UNPRINTABLE";
+//        String unprintable=in_str.replaceAll("\\p{C}", "");
+//        if (in_str.length()!=unprintable.length()) return "UNPRINTABLE("+getUnprintableCharacter(in_str)+")";
         return "";
     }
 
     public static boolean isValidFileDirectoryName(SyncThreadWorkArea stwa, SyncTaskItem sti, String in_str) {
         String invalid_char = hasInvalidCharForFileDirName(in_str);
+        String basename = in_str.substring(in_str.lastIndexOf("/") + 1, in_str.length());
         if (!invalid_char.equals("")) {
-            String basename = in_str.substring(in_str.lastIndexOf("/") + 1, in_str.length());
             if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) {
                 stwa.totalIgnoreCount++;
                 showMsg(stwa, false, stwa.currentSTI.getSyncTaskName(), "I", in_str, basename,
@@ -1614,17 +1631,6 @@ public class SyncThread extends Thread {
         }
         return true;
     }
-
-//    private CIFSContext setSmbAuth(BaseContext bc, String domain, String user, String pass) {
-//        String tuser = null, tpass = null;
-//        if (user.length() != 0) tuser = user;
-//        if (pass.length() != 0) tpass = pass;
-//
-//        NtlmPasswordAuthentication creds = new NtlmPasswordAuthentication(bc, "", tuser, tpass);
-//        CIFSContext smb_auth = bc.withCredentials(creds);
-//
-//        return smb_auth;
-//    }
 
     final public static boolean createDirectoryToInternalStorage(SyncThreadWorkArea stwa, SyncTaskItem sti, String dir) {
         boolean result = false;
@@ -2778,11 +2784,11 @@ public class SyncThread extends Thread {
             stwa.util.addDebugMsg(1, "I", "isFileChanged fp="+fp+ ", orphan_file=" + orphan_file +
                     ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+tf_time+", master_time="+mf_time);
 
-            String lt_target=stwa.sdfLocalTime.format(tf_time);
-            String lt_master=stwa.sdfLocalTime.format(mf_time);
+//            String lt_target=stwa.sdfLocalTime.format(tf_time);
+//            String lt_master=stwa.sdfLocalTime.format(mf_time);
             String ut_target=stwa.sdfUTCTime.format(tf_time);
             String ut_master=stwa.sdfUTCTime.format(mf_time);
-            stwa.util.addDebugMsg(1, "I", "isFileChanged Local time target="+lt_target+", master="+lt_master);
+//            stwa.util.addDebugMsg(1, "I", "isFileChanged Local time target="+lt_target+", master="+lt_master);
             stwa.util.addDebugMsg(1, "I", "isFileChanged UTC        target="+ut_target+", master="+ut_master);
         }
         return diff;
@@ -2858,11 +2864,11 @@ public class SyncThread extends Thread {
             stwa.util.addDebugMsg(1, "I", "isFileChangedForLocalToRemote fp="+fp+ ", orphan_file=" + orphan_file +
                     ", time_diff=" + time_diff + ", length_diff=" + length_diff + ", diff=" + diff+", target_time="+hf_time+", master_time="+lf_time);
 
-            String lt_target=stwa.sdfLocalTime.format(lf_time);
-            String lt_master=stwa.sdfLocalTime.format(hf_time);
+//            String lt_target=stwa.sdfLocalTime.format(lf_time);
+//            String lt_master=stwa.sdfLocalTime.format(hf_time);
             String ut_target=stwa.sdfUTCTime.format(lf_time);
             String ut_master=stwa.sdfUTCTime.format(lf_time);
-            stwa.util.addDebugMsg(1, "I", "isFileChangedForLocalToRemote Local time target="+lt_target+", master="+lt_master);
+//            stwa.util.addDebugMsg(1, "I", "isFileChangedForLocalToRemote Local time target="+lt_target+", master="+lt_master);
             stwa.util.addDebugMsg(1, "I", "isFileChangedForLocalToRemote UTC        target="+ut_target+", master="+ut_master);
         }
 
