@@ -548,8 +548,8 @@ public class SyncThreadSyncZip {
             String t_from_path = from_path.substring(from_base.length());
             if (mf.exists()) {
                 if (mf.isDirectory()) { // Directory copy
-                    if (mf.canRead()) {
-                        if (!SyncThread.isHiddenDirectory(stwa, sti, mf) && SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
+                    if (!SyncThread.isHiddenDirectory(stwa, sti, mf) && SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
+                        if (mf.canRead()) {
                             if (sti.isSyncOptionSyncEmptyDirectory()) {
                                 createDirectoryToZip(stwa, sti, from_path, zf, zp);
                             }
@@ -582,11 +582,11 @@ public class SyncThreadSyncZip {
                             } else {
                                 stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
                             }
+                        } else {
+                            stwa.totalIgnoreCount++;
+                            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
+                                    stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                         }
-                    } else {
-                        stwa.totalIgnoreCount++;
-                        SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
-                                stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
