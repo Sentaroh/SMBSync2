@@ -415,7 +415,8 @@ public class SyncTaskUtil {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 final String fpath = (String) o[0]+o[1]+"/"+(String)o[2];
-                importSyncTaskList(p_ntfy, fpath, false);
+                if (fpath.endsWith(".stf")) importSyncTaskList(p_ntfy, fpath, true);
+                else importSyncTaskList(p_ntfy, fpath, false);
             }
 
             @Override
