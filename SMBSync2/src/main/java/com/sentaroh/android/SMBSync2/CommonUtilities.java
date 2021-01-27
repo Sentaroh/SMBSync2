@@ -249,6 +249,8 @@ public final class CommonUtilities {
             WifiManager wm=(WifiManager)c.getSystemService(Context.WIFI_SERVICE);
             try {
                 out.add("   WiFi Enabled="+wm.isWifiEnabled());
+                if (wm.getConnectionInfo()!=null) out.add("   LinkSpeed="+wm.getConnectionInfo().getLinkSpeed());
+                else out.add("   LinkSpeed=-1");
             } catch(Exception e) {
                 out.add("   WiFi status obtain error, error="+e.getMessage());
             }
