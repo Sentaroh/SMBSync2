@@ -509,6 +509,55 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setFileFilter(ArrayList<String> p) {syncFileFilter = p;}
     public void setDirFilter(ArrayList<String> p) {syncDirFilter = p;}
 
+    private boolean syncSyncOptionIgnoreFileSize0ByteFile = false;
+    public boolean isSyncOptionIgnoreFileSize0ByteFile() {return syncSyncOptionIgnoreFileSize0ByteFile;}
+    public void setSyncOptionIgnoreFileSize0ByteFile(boolean p) {syncSyncOptionIgnoreFileSize0ByteFile = p;}
+
+    private String syncFilterFileSizeValue = "0";
+    public String getSyncFilterFileSizeValue() {return syncFilterFileSizeValue;}
+    public void setSyncFilterFileSizeValue(String p) {syncFilterFileSizeValue = p;}
+
+    public static final String FILTER_FILE_SIZE_TYPE_NONE="NONE";
+    public static final String FILTER_FILE_SIZE_TYPE_GT="GT";
+    public static final String FILTER_FILE_SIZE_TYPE_LT="LT";
+    private String syncFilterFileSizeType = FILTER_FILE_SIZE_TYPE_NONE;
+    public String getSyncFilterFileSizeType() {return syncFilterFileSizeType;}
+    public void setSyncFilterFileSizeType(String p) {syncFilterFileSizeType = p;}
+    static final private String[] syncFilterFileSizeTypeValueArray=new String[]{FILTER_FILE_SIZE_TYPE_NONE, FILTER_FILE_SIZE_TYPE_LT, FILTER_FILE_SIZE_TYPE_GT};
+    static public String getSyncFilterFileSizeTypeByIndex(int index) {
+        if (index>=0 && index<=2) return syncFilterFileSizeTypeValueArray[index];
+        else return FILTER_FILE_SIZE_TYPE_NONE;
+    }
+
+    public static final String FILTER_FILE_SIZE_UNIT_BYTE="BYTE";
+    public static final String FILTER_FILE_SIZE_UNIT_KIB="KiB";
+    public static final String FILTER_FILE_SIZE_UNIT_MIB="MiB";
+    public static final String FILTER_FILE_SIZE_UNIT_GIB="GiB";
+    private String syncFilterFileSizeUnit = FILTER_FILE_SIZE_UNIT_BYTE;
+    public String getSyncFilterFileSizeUnit() {return syncFilterFileSizeUnit;}
+    public void setSyncFilterFileSizeUnit(String p) {syncFilterFileSizeUnit = p;}
+    static final private String[] syncFilterFileSizeUnitValueArray=new String[]{FILTER_FILE_SIZE_UNIT_BYTE, FILTER_FILE_SIZE_UNIT_KIB, FILTER_FILE_SIZE_UNIT_MIB, FILTER_FILE_SIZE_UNIT_GIB};
+    static public String getSyncFilterFileSizeUnitByIndex(int index) {
+        if (index>=0 && index<=3) return syncFilterFileSizeUnitValueArray[index];
+        else return FILTER_FILE_SIZE_TYPE_NONE;
+    }
+
+    private String syncFilterFileDateValue = "1";
+    public String getSyncFilterFileDateValue() {return syncFilterFileDateValue;}
+    public void setSyncFilterFileDateValue(String p) {syncFilterFileDateValue = p;}
+
+    public static final String FILTER_FILE_DATE_TYPE_NONE="NONE";
+    public static final String FILTER_FILE_DATE_TYPE_OLDER ="OLDER";
+    public static final String FILTER_FILE_DATE_TYPE_NEWER ="NEWER";
+    private String syncFilterFileDateType = FILTER_FILE_DATE_TYPE_NONE;
+    public String getSyncFilterFileDateType() {return syncFilterFileDateType;}
+    public void setSyncFilterFileDateType(String p) {syncFilterFileDateType = p;}
+    static final private String[] syncFilterFileDateTypeValueArray=new String[]{FILTER_FILE_DATE_TYPE_NONE, FILTER_FILE_DATE_TYPE_OLDER, FILTER_FILE_DATE_TYPE_NEWER};
+    static public String getSyncFilterFileDateTypeByIndex(int index) {
+        if (index>=0 && index<=2) return syncFilterFileDateTypeValueArray[index];
+        else return FILTER_FILE_SIZE_TYPE_NONE;
+    }
+
     public String getSyncOptionRetryCount() {return syncOptionRetryCount;}
     public void setSyncOptionRetryCount(String p) {syncOptionRetryCount = p;}
 
@@ -742,6 +791,13 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncFileTypeAudio==sti.isSyncFileTypeAudio()) &&
                         (syncFileTypeImage==sti.isSyncFileTypeImage()) &&
                         (syncFileTypeVideo==sti.isSyncFileTypeVideo()) &&
+
+                        (syncSyncOptionIgnoreFileSize0ByteFile ==sti.isSyncOptionIgnoreFileSize0ByteFile()) &&
+                        (syncFilterFileSizeValue.equals(sti.getSyncFilterFileSizeValue())) &&
+                        (syncFilterFileSizeType.equals(sti.getSyncFilterFileSizeType())) &&
+                        (syncFilterFileSizeUnit.equals(sti.getSyncFilterFileSizeUnit())) &&
+                        (syncFilterFileDateValue.equals(sti.getSyncFilterFileDateValue())) &&
+                        (syncFilterFileDateType.equals(sti.getSyncFilterFileDateType())) &&
 
                         (syncOptionRootDirFileToBeProcessed==sti.isSyncProcessRootDirFile()) &&
                         (syncOptionProcessOverrideCopyMove==sti.isSyncOverrideCopyMoveFile()) &&

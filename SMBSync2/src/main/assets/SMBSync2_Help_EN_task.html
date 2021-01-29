@@ -44,8 +44,9 @@
 <p>Tap the storage icon/name to edit the master folder.</p>
 <h3>Target folder (Destination)</h3>
 <p>Tap the storage icon/name to edit the target folder.</p>
-<h3>File filters / Select files for sync</h3>
+<h3>Select files for sync</h3>
 <p>If unchecked, all files are synchronized. If you check the files filter, you get the following options:</p>
+<h5><u>File name filter</u></h5>
 <ul>
 <li><p>Sync audio files</p>
 <p>When checked, sync will include files with the following extensions:<br/>aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav</p>
@@ -59,6 +60,17 @@
 <li><p>File filter</p>
 <p>Is a custom include/exclude file filter. You can select the name and extension of the files you want to exclude or include from the synchronization process. </p>
 </li>
+
+</ul>
+<h5><u>File size filter</u></h5>
+<p>You can choose which files to sync depending on their size.  </p>
+<ul>
+<li>Less than/Greater than<br/>You can specify any file size.  </li>
+
+</ul>
+<h5><u>File last modified filter</u></h5>
+<ul>
+<li>You can select files whose last modification date is before or within xx days of the sync start date.</li>
 
 </ul>
 <h3>Directory filters / Select subdirectories</h3>
@@ -152,13 +164,15 @@
 <h3>Min allowed time difference (in seconds) between source and destination files</h3>
 <p>Files are considered identical if the difference between their last modified times is less or equal to the selected time in seconds. They are considered different if the time difference between the files is superior to the selected time. FAT and ExFAT need a minimum of 2 seconds tolerance. If 0 seconds is selected, the files must have exactly the same time to be considered similar.</p>
 <h3>Do not overwrite destination file if it is newer than source file</h3>
-<p>If checked, the file will be overwritten only when the master file is newer than the target file even if the file sizes and the last update times are different. Keep in mind that if you change time zones or if the files are modified during the interval period of the Day Light Saving Time change, the last modified file could appear older than the non-updated file. This is related to the file system differences and only a manual check before overwriting the file will avoid data loss. It is generally recommended to not modify files during the interval of day light saving time change if they are meant to be auto-synchronized </p>
+<p>fIf checked, the file will be overwritten only when the master file is newer than the target file even if the file sizes and the last update times are different. Keep in mind that if you change time zones or if the files are modified during the interval period of the Day Light Saving Time change, the last modified file could appear older than the non-updated file. This is related to the file system differences and only a manual check before overwriting the file will avoid data loss. It is generally recommended to not modify files during the interval of day light saving time change if they are meant to be auto-synchronized </p>
 <h3>Ignore Day Light Saving Time difference between files</h3>
 <p>Let you select the time difference in minutes between summer and winter time. Files are considered different if the time difference is not exactly equal to the specified interval (+/- the “Min allowed time difference (in seconds)” specified in previous option)</p>
 <h3>Skip directory and file names that contain invalid characters(&quot;, :, \, *, &lt;, &gt;, |)</h3>
 <p>If checked, it will display a warning message and the sync will continue without processing the directories/files containing invalid characters. </p>
 <h3>Delete the master directory when it is empty (only when Sync option is Move)</h3>
 <p>When sync mode is Move, after the files are moved to the target, the Master folder is also deleted. </p>
+<h3>Ignore files with a file size of 0 Bytes  </h3>
+<p>If checked, files with a file size of 0 bytes will be ignored.  </p>
 <h3>Detail information</h3>
 <p><a href='https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing' target='_blank' class='url'>https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing</a></p>
 <p> </p>

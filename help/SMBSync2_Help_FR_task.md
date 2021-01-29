@@ -62,9 +62,11 @@ Appuyez sur l'icône/nom du stockage pour modifier le dossier principal.
 
 Appuyez sur l'icône/nom du stockage pour modifier le dossier cible. 
 
-### Filtre de fichiers / Sélectionner les fichiers à synchroniser
+### Sélectionner les fichiers à synchroniser
 
 Si cette option n'est pas cochée, tous les fichiers sont synchronisés. Si vous cochez le filtre de fichiers, vous obtenez les options suivantes :
+
+##### 		<u>Filtre sur les noms de fichiers</u>
 
 - Synchro des fichiers audio
 
@@ -85,11 +87,18 @@ Si cette option n'est pas cochée, tous les fichiers sont synchronisés. Si vous
 
   Il s'agit d'un filtre personnalisé d'inclusion/exclusion de fichiers. Vous pouvez sélectionner le nom et l'extension des fichiers que vous voulez exclure ou inclure du processus de synchronisation. 
 
-Les caractères génériques comme *.docx sont pris en charge.
+##### 		<u>Filtre sur la taille des fichiers</u>
 
- 
+Vous pouvez choisir les fichiers à synchroniser en fonction de leur taille.  
 
-### Filtre de fichiers / Sélectionner les sous-dossiers
+- Moins de / Plus de  
+  Vous pouvez spécifier n'importe quelle taille de fichier.  
+  
+##### <u>Filtre de la date de dernière modification du fichier</u>
+
+- Vous pouvez sélectionner des fichiers dont la date de dernière modification est antérieure ou inférieure à xx jours à la date de début de la synchronisation.
+
+### Sélectionner les sous-dossiers
 
 Si la case n'est pas cochée, tous les dossiers sont synchronisés. Si vous cochez le filtre des sous-répertoires, vous obtenez les options suivantes :
 
@@ -243,6 +252,9 @@ Si elle est cochée, elle affichera un message d'avertissement et la synchronisa
 ###  Supprimer le dossier source s'il est vide (uniquement en mode Déplacer)
 
 Lorsque le mode de synchronisation est "Move", après que les fichiers aient été déplacés vers la cible, le dossier "Master" est également supprimé.  
+
+### Ignorer les fichiers d'une taille de 0 octet  
+Si cette option est cochée, les fichiers d'une taille de 0 octet seront ignorés.  
 
 ### Informations détaillées
 

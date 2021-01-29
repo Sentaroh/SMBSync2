@@ -558,6 +558,16 @@
                 <include layout="@layout/divider_line1" />
             </LinearLayout>
 
+            <include layout="@layout/divider_line1" />
+            <CheckedTextView
+                android:id="@+id/edit_sync_task_option_ignore_file_size_0_bytes_file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:gravity="center_vertical"
+                android:text="@string/msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
             <LinearLayout
                 android:id="@+id/edit_sync_task_option_ll_remove_directory_if_empty_when_move_view"
                 android:layout_width="match_parent"

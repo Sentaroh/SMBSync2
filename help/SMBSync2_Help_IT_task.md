@@ -66,6 +66,8 @@ Toccare l'icona/nome della memoria per modificare la cartella di destinazione.
 
 Se deselezionati, tutti i file sono sincronizzati. Se si seleziona il filtro dei file, si ottengono le seguenti opzioni:
 
+##### 		<u>Filtro del nome del file</u>
+
 - Sync file audio
 
   Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
@@ -84,6 +86,17 @@ Se deselezionati, tutti i file sono sincronizzati. Se si seleziona il filtro dei
 - Filtro file
 
   È un filtro di inclusione/esclusione dei file personalizzato. È possibile selezionare il nome e l'estensione dei file che si desidera escludere o includere dal processo di sincronizzazione. 
+
+##### 		<u>Filtro dimensione file</u>
+
+Puoi scegliere quali file sincronizzare a seconda della loro dimensione.  
+
+- Meno di/più grande di  
+  Puoi specificare qualsiasi dimensione di file. 
+
+##### <u>Filtro data ultima modifica file</u>
+
+- Puoi selezionare i file la cui ultima data di modifica è precedente o entro xx giorni dalla data di inizio della sincronizzazione.
 
 ### Selezionare le sottocartelle
 
@@ -240,6 +253,9 @@ Se spuntata, visualizzerà un messaggio di avviso e la sincronizzazione continue
 ###  Elimina la cartella master quando è vuota (solo quando l'opzione di Sync è Sposta)
 
 Quando la modalità di sincronizzazione è Sposta, dopo che i file sono stati spostati nella destinazione, viene cancellata anche la cartella Master. 
+
+### Ignora i file con una dimensione di 0 byte  
+Se selezionata, i file con una dimensione di 0 byte saranno ignorati.    
 
 ### Informazioni dettagliate
 

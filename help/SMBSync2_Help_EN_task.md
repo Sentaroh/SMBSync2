@@ -57,9 +57,11 @@ Tap the storage icon/name to edit the master folder.
 
 Tap the storage icon/name to edit the target folder.
 
-### File filters / Select files for sync
+### Select files for sync
 
 If unchecked, all files are synchronized. If you check the files filter, you get the following options:
+
+##### 		<u>File name filter</u>
 
 - Sync audio files
 
@@ -79,6 +81,18 @@ If unchecked, all files are synchronized. If you check the files filter, you get
 - File filter
 
   Is a custom include/exclude file filter. You can select the name and extension of the files you want to exclude or include from the synchronization process. 
+
+##### 		<u>File size filter</u>
+
+You can choose which files to sync depending on their size.  
+
+- Less than/Greater than  
+  You can specify any file size.  
+  
+
+##### <u>File last modified filter</u>
+
+- You can select files whose last modification date is before or within xx days of the sync start date.
 
 ### Directory filters / Select subdirectories
 
@@ -228,7 +242,7 @@ Files are considered identical if the difference between their last modified tim
 
 ### Do not overwrite destination file if it is newer than source file
 
-If checked, the file will be overwritten only when the master file is newer than the target file even if the file sizes and the last update times are different. Keep in mind that if you change time zones or if the files are modified during the interval period of the Day Light Saving Time change, the last modified file could appear older than the non-updated file. This is related to the file system differences and only a manual check before overwriting the file will avoid data loss. It is generally recommended to not modify files during the interval of day light saving time change if they are meant to be auto-synchronized 
+fIf checked, the file will be overwritten only when the master file is newer than the target file even if the file sizes and the last update times are different. Keep in mind that if you change time zones or if the files are modified during the interval period of the Day Light Saving Time change, the last modified file could appear older than the non-updated file. This is related to the file system differences and only a manual check before overwriting the file will avoid data loss. It is generally recommended to not modify files during the interval of day light saving time change if they are meant to be auto-synchronized 
 
 ###  Ignore Day Light Saving Time difference between files
 
@@ -241,6 +255,10 @@ If checked, it will display a warning message and the sync will continue without
 ###  Delete the master directory when it is empty (only when Sync option is Move)
 
 When sync mode is Move, after the files are moved to the target, the Master folder is also deleted. 
+
+### Ignore files with a file size of 0 Bytes  
+If checked, files with a file size of 0 bytes will be ignored.  
+
 
 ### Detail information
 
