@@ -444,7 +444,7 @@
         <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">Greater than</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">File size is not specified.</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit">File size cannot be more than 5 digits</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">The file size must be zero or greater.</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">The file size must be greater than or equal to 1</string>
         <string name="msgs_task_sync_task_sync_file_date_filter">File last modified date filter</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">Select file last modified date type</string>
         <string name="msgs_task_sync_task_sync_file_date_hint">Day</string>
@@ -452,7 +452,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_older">Older than</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer">Days before</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">The update date is not specified.</string>
-        <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">Please specify an update date of 0 or more.</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">Please specify at least one day as the update date.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">The update date cannot be more than 3 digits.</string>
         <string name="msgs_profile_sync_task_sync_option">Options:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Min allowed time difference (in seconds) between source and destination files</string>

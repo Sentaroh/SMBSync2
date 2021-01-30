@@ -444,7 +444,7 @@
         <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">Maggiore di</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">La dimensione del file non è specificata</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit">La dimensione del file non può essere superiore a 5 cifre</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">La dimensione del file deve essere zero o superiore.</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">La dimensione del file deve essere maggiore o uguale a 1</string>
         <string name="msgs_task_sync_task_sync_file_date_filter">Filtro data ultima modifica file</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">Seleziona il tipo di data dell\'ultima modifica del file</string>
         <string name="msgs_task_sync_task_sync_file_date_hint">Giorno</string>
@@ -452,7 +452,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_older">Più vecchio di</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer">Giorni prima</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">La data di aggiornamento non è specificata.</string>
-        <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">Si prega di specificare una data di aggiornamento di 0 o più.</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">Si prega di specificare la data di aggiornamento più di 1 giorno.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">La data di aggiornamento non può essere più di 3 cifre.</string>
         <string name="msgs_profile_sync_task_sync_option">Opzioni:</string>
         <string name="msgs_profile_sync_task_sync_option_allowance_last_mod_time">Min differenza di tempo ammessa (in secondi) tra file sorgente e destinazione</string>

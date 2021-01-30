@@ -5553,12 +5553,13 @@ public class SyncTaskEditor extends DialogFragment {
                     }
                 }
                 if (!error_detected && sp_file_date_type.getSelectedItemPosition()!=0) {
+                    String sel=SyncTaskItem.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
                     if (et_file_date_value.getText().length()==0) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified);
                         error_detected = true;
-//                    } else if (Integer.parseInt(et_file_date_value.getText().toString())==0) {
-//                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0);
-//                        error_detected = true;
+                    } else if (sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER) && Integer.parseInt(et_file_date_value.getText().toString())==0) {
+                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0);
+                        error_detected = true;
                     } else if (et_file_date_value.getText().length()>3) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit);
                         error_detected = true;
