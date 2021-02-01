@@ -91,7 +91,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp">
+                android:layout_marginStart="15dp">
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/sync_filter_file_size_value_view"
                     android:layout_width="wrap_content"
@@ -134,7 +134,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp">
+                android:layout_marginStart="15dp">
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/sync_filter_file_date_value_view"
                     android:layout_width="wrap_content"
