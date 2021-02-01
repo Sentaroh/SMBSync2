@@ -131,7 +131,7 @@
         <string name="msgs_filter_list_dlg_add_dir_filter">Aggiungi filtro cartella</string>
         <string name="msgs_filter_list_dlg_close">Chiudi</string>
         <string name="msgs_filter_list_dlg_dir_filter">Cartelle filtro</string>
-        <string name="msgs_filter_list_dlg_file_filter">File filtro</string>
+        <string name="msgs_filter_list_dlg_file_filter">Filtro nome file</string>
         <string name="msgs_filter_list_dlg_filter_added">Filtro %s aggiunto.</string>
         <string name="msgs_filter_list_dlg_filter_quit_warning_title">Conferma prima di uscire</string>
         <string name="msgs_filter_list_dlg_filter_quit_warning_message">Il filtro è stato modificato. Volete uscire senza salvare ?</string>
@@ -367,7 +367,7 @@
         <string name="msgs_profile_sync_task_dlg_swap_warning_message">L\'inversione della direzione di sincronizzazione potrebbe creare inaspettate cancellazioni di file o cartelle.\nÉ fortemente raccomandato abilitare la modalità Test per assicurarsi che nessun file o cartella sia stata rimossa o rimpiazzata accidentalmente.</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Il filtro cartelle non è stato specificato</string>
         <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">I caratteri non validi sono stati rimossi dalla cartella specificata (\", :, \\, *, &gt;, &lt;, \|)</string>
-        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">Filtro file non è stato specificato</string>
+        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">Filtro file nome non è stato specificato</string>
         <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">I caratteri non validi sono stati rimossi dal nome file specificato (/, \", :, \\, *, &gt;, &lt;, \|)</string>
         <string name="msgs_profile_sync_task_dlg_file_directory_name_first_char_has_invalid_char">Devi specificare un percorso relativo. Carattere iniziale \"/\" rimosso dal percorso.</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Aggiungi tempo/data del sync nel nome della cartella (la parola chiave verrà sostituita dalla data e ora nel quale il sync è stato fatto)</string>
@@ -415,13 +415,13 @@
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- inclusi es: cache/temp;/my*/fo?der\n- escludi le cartelle cache/temp: \\cache/temp\n- i filtri possono essere inseriti nella stessa linea, separati da \";\"\n- escludi filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filtra tutti i file con nome specifico: file1;*.txt;*.jpg;file*\n- i filtri possono essere inseriti nella stessa linea, separati da \";\"\n- escludi filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Opzione \"Rimuovi cartelle e file esclusi dai filtri\" abilitata: Tutti i file e le cartelle non inclusi dai filtri, cosi come quelli che non esistono nella cartella sorgente, verranno eliminati dallaa cartella destinazione.</string>
-        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Filtro file</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Filtro nome file</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filtro</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Includi</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Non specificato</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">Il filtro contiene caratteri non validi: %s</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts">Il filtro percorso non può consistere di soli \"%s\" jolly generici.</string>
-        <string name="msgs_profile_sync_task_filter_title">Filtro file:</string>
+        <string name="msgs_profile_sync_task_filter_title">Filtri:</string>
         <string name="msgs_profile_sync_task_sync_direction_two_way">Usa sync Doppia-Via </string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Includi i seguenti filtri:</string>
         <string name="msgs_profile_sync_task_sync_file_type_audio">Sync file audio</string>

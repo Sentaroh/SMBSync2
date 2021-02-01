@@ -131,7 +131,7 @@
         <string name="msgs_filter_list_dlg_add_dir_filter">添加目录过滤器</string>
         <string name="msgs_filter_list_dlg_close">关闭</string>
         <string name="msgs_filter_list_dlg_dir_filter">目录过滤器</string>
-        <string name="msgs_filter_list_dlg_file_filter">文件过滤器</string>
+        <string name="msgs_filter_list_dlg_file_filter">文件名过滤器</string>
         <string name="msgs_filter_list_dlg_filter_added">过滤器%s已添加。</string>
         <string name="msgs_filter_list_dlg_filter_quit_warning_title">退出确认</string>
         <string name="msgs_filter_list_dlg_filter_quit_warning_message">过滤器已被更改。你想不保存就退出吗？</string>
@@ -367,7 +367,7 @@
         <string name="msgs_profile_sync_task_dlg_swap_warning_message">反转同步方向可能会导致文件和目录的意外删除。\n强烈建议您启用"测试"模式，并确保没有意外删除或替换任何文件或目录。</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">未指定目录过滤器</string>
         <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">从指定的目录名称(\", :, \\, *, &lt;, &gt;, \|)中删除了无效字符</string>
-        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">未指定文件过滤器</string>
+        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">未指定文件名过滤器</string>
         <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">从指定的文件名中删除了无效字符（/，\"，：，\\，*，&lt;，&gt;, \|）</string>
         <string name="msgs_profile_sync_task_dlg_file_directory_name_first_char_has_invalid_char">您必须指定相对路径。起始\" / \"字符已从路径名中删除。</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">将同步时间/日期追加到目录名称（关键字将由执行同步的日期和时间替换）</string>
@@ -415,13 +415,13 @@
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">-包括exp：缓存/温度; / my * / foder \n-排除所有缓存/温度文件夹：\\ cache / temp \n-可以在同一行中输入过滤器，并以\"; \" \n分隔-排除过滤器获胜</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-过滤所有具有特定名称的文件：file1; *。txt; *。jpg; file * \n-过滤器也可以在同一行中输入，并以\"; \" \n分隔-排除过滤器胜出</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">启用了选项"删除过滤器排除的目录和文件"：过滤器不包括的所有文件和目录以及源目录中不存在的所有文件和目录将从目标目录中删除。</string>
-        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">文件过滤器</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">文件名过滤器</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">过滤</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">包括</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">未标明</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">筛选器包含无效字符：%s</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts">筛选器路径不能仅由\"%s \"通用通配符组成。</string>
-        <string name="msgs_profile_sync_task_filter_title">文件过滤器：</string>
+        <string name="msgs_profile_sync_task_filter_title">滤波器</string>
         <string name="msgs_profile_sync_task_sync_direction_two_way">使用双向同步</string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">包括以下过滤器：</string>
         <string name="msgs_profile_sync_task_sync_file_type_audio">同步音频文件</string>

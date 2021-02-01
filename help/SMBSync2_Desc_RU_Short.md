@@ -37,12 +37,3 @@ SMBSync2 - это инструмент для синхронизации фай�
 ## 3. Больше информации
 
 [См. PDF-файл](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)
-
-## 4. Внешняя библиотека
-- [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
-- [jcifs-1.3.17](https://jcifs.samba.org/)
-- [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on/1.58)    
-- [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
-- [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
-- [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
-

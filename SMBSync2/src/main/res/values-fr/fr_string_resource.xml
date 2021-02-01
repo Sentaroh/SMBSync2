@@ -131,7 +131,7 @@
         <string name="msgs_filter_list_dlg_add_dir_filter">Ajouter un filtre de dossier</string>
         <string name="msgs_filter_list_dlg_close">Quitter</string>
         <string name="msgs_filter_list_dlg_dir_filter">Filtre de dossiers</string>
-        <string name="msgs_filter_list_dlg_file_filter">Filtre de fichiers</string>
+        <string name="msgs_filter_list_dlg_file_filter">Filtre de nom de fichier</string>
         <string name="msgs_filter_list_dlg_filter_added">Le filtre %s a été ajouté.</string>
         <string name="msgs_filter_list_dlg_filter_quit_warning_title">Quitter sans sauvegarder</string>
         <string name="msgs_filter_list_dlg_filter_quit_warning_message">Le filtre a été modifié. Voulez-vous quitter sans sauvegarder ?</string>
@@ -367,7 +367,7 @@
         <string name="msgs_profile_sync_task_dlg_swap_warning_message">Inverser le sens de synchronisation entre les dossiers source et destination peut entraîner la suppression inattendue de fichiers ou de répertoires.\nIl est vivement  recommandé d\'activer le mode Test et de vous assurer qu\'aucun fichier ou répertoire ne sera supprimé ou remplacé de manière involontaire.</string>
         <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Filtre de dossier non spécifié</string>
         <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">Des caractères invalides ont été supprimés du nom de dossier spécifié (\", :, \\, *, &lt;, &gt;, \|)</string>
-        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">Filtre de fichier non spécifié</string>
+        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">Filtre de nom fichier non spécifié</string>
         <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">Des caractères invalides ont été supprimés du nom de fichier spécifié (/, \", :, \\, *, &lt;, &gt;, \|)</string>
         <string name="msgs_profile_sync_task_dlg_file_directory_name_first_char_has_invalid_char">Vous devez spécifier un chemin relatif. Le symbole \"/\" de début a donc été ignoré.</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Ajouter la date/heure de synchronisation au nom du dossier (le mot-clé sera remplacé par la date et l\'heure de la synchronisation)</string>
@@ -415,13 +415,13 @@
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- exp. inclure: mon/dossier;/doss*/p?ivé\n- exclure tous les dossiers cache/tmp: \\cache/tmp\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- exp. de filtre: fichier1;*.txt;*.jpg;fichier*\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">L\'option \"Supprimer les répertoires et les fichiers exclus par les filtres\" est activée: Tous les fichiers et répertoires exclus par les filtres, ainsi que ceux n\'existant pas dans le dossier source, seront supprimés du répertoire de destination.</string>
-        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Filtre de fichiers</string>
+        <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Filtre de nom de fichier</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filtre</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Inclure</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_not_specified">Non spécifié</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_character">Le filtre contient des caractères invalides: %s</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_name_contains_invalid_asterisk_only_parts">The filter path cannot consist of only \"%s\" generic wildcards.</string>
-        <string name="msgs_profile_sync_task_filter_title">Filtres de fichiers:</string>
+        <string name="msgs_profile_sync_task_filter_title">Filtres:</string>
         <string name="msgs_profile_sync_task_sync_direction_two_way">Utiliser la synchronisation bidirectionnelle</string>
         <string name="msgs_profile_sync_task_sync_file_type_add_filter_title">Inclure les filtres suivants:</string>
         <string name="msgs_profile_sync_task_sync_file_type_audio">Synchro des fichiers audio</string>

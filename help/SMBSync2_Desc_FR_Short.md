@@ -41,12 +41,3 @@ Dans les options avancées, de nombreux paramètres de comparaison peuvent être
 ## 3.Documents
 
 [Veuillez vous référer au lien PDF](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)
-
-## 4. Bibliothèque externe
-- [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
-- [jcifs-1.3.17](https://jcifs.samba.org/)
-- [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on/1.58)  
-- [Zip4J 1.3.2](https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j/1.3.2)
-- [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
-- [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
-
