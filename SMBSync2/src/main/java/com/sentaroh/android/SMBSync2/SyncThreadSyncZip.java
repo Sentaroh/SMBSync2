@@ -591,7 +591,7 @@ public class SyncThreadSyncZip {
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
                             !SyncThread.isHiddenFile(stwa, sti, mf) &&
-                            SyncThread.isFileSelected(stwa, sti, t_from_path, mf.length(), mf.lastModified())) {
+                            SyncThread.isFileSelected(stwa, sti, t_from_path, from_path, mf.length(), mf.lastModified())) {
                         boolean tf_exists = false;
                         try {
                             FileHeader fh = zf.getFileHeader(t_from_path.substring(1));

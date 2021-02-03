@@ -797,7 +797,7 @@ public class SyncThreadSyncFile {
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
                             !SyncThread.isHiddenFile(stwa, sti, mf) &&
-                            SyncThread.isFileSelected(stwa, sti, t_from_path, mf.length(), mf.lastModified())) {
+                            SyncThread.isFileSelected(stwa, sti, t_from_path, from_path, mf.length(), mf.lastModified())) {
                         String parsed_to_path=to_path;
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
@@ -1081,7 +1081,7 @@ public class SyncThreadSyncFile {
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
                             !SyncThread.isHiddenFile(stwa, sti, mf) &&
-                            SyncThread.isFileSelected(stwa, sti, t_from_path, mf.length(), mf.lastModified())) {
+                            SyncThread.isFileSelected(stwa, sti, t_from_path, from_path, mf.length(), mf.lastModified())) {
                         String parsed_to_path=to_path;
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
@@ -1336,7 +1336,7 @@ public class SyncThreadSyncFile {
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
                             !SyncThread.isHiddenFile(stwa, sti, mf) &&
-                            SyncThread.isFileSelected(stwa, sti, t_from_path, mf.length(), mf.lastModified())) {
+                            SyncThread.isFileSelected(stwa, sti, t_from_path, from_path, mf.length(), mf.lastModified())) {
                         String parsed_to_path=to_path;
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
@@ -1557,7 +1557,7 @@ public class SyncThreadSyncFile {
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
                             !SyncThread.isHiddenFile(stwa, sti, mf) &&
-                            SyncThread.isFileSelected(stwa, sti, t_from_path, mf.length(), mf.lastModified())) {
+                            SyncThread.isFileSelected(stwa, sti, t_from_path, from_path, mf.length(), mf.lastModified())) {
 //						mf = new File(from_path);
                         String parsed_to_path=to_path;
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
@@ -1789,7 +1789,7 @@ public class SyncThreadSyncFile {
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
                             !SyncThread.isHiddenFile(stwa, sti, mf) &&
-                            SyncThread.isFileSelected(stwa, sti, t_from_path, mf.length(), mf.lastModified())) {
+                            SyncThread.isFileSelected(stwa, sti, t_from_path, from_path, mf.length(), mf.lastModified())) {
 //						mf = new File(from_path);
                         String parsed_to_path=to_path;
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
@@ -2043,7 +2043,7 @@ public class SyncThreadSyncFile {
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
                             !SyncThread.isHiddenFile(stwa, sti, mf) &&
-                            SyncThread.isFileSelected(stwa, sti, t_from_path, mf.length(), mf.lastModified())) {
+                            SyncThread.isFileSelected(stwa, sti, t_from_path, from_path, mf.length(), mf.lastModified())) {
                         String parsed_to_path=to_path;
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
@@ -2332,7 +2332,7 @@ public class SyncThreadSyncFile {
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
-                            !SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, t_from_path, mf.length(), mf.getLastModified())) {
+                            !SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, t_from_path, from_path, mf.length(), mf.getLastModified())) {
                         String parsed_to_path=to_path;
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.getLastModified(), from_path, to_path);
@@ -2672,7 +2672,7 @@ public class SyncThreadSyncFile {
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
-                            !SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, t_from_path, mf.length(), mf.getLastModified())) {
+                            !SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, t_from_path, from_path, mf.length(), mf.getLastModified())) {
                         String parsed_to_path=to_path;
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.getLastModified(), from_path, to_path);
@@ -2998,7 +2998,7 @@ public class SyncThreadSyncFile {
                     }
                 } else { // file copy
                     if (SyncThread.isDirectorySelectedByFileName(stwa, t_from_path) &&
-                            !SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, t_from_path, mf.length(), mf.getLastModified())) {
+                            !SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, t_from_path, from_path, mf.length(), mf.getLastModified())) {
                         String parsed_to_path=to_path;
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.getLastModified(), from_path, to_path);
