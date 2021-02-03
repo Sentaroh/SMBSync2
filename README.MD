@@ -55,6 +55,7 @@ Please refer to the PDF link below.
 1. Clone or download from Github.  
 1. Open with AndroidStudio(Open an Existing Project).
 1. Build(Build->Rebuild project).
+1. Plase refer to "release/SMBSync2_debug.apk"
 
 # License information
 
