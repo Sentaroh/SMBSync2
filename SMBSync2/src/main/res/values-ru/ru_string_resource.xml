@@ -414,7 +414,7 @@
         <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">В фильтре можно использовать подстановочные знаки. Пример:\n192.168.100.* -> 192.168.100.0-192.168.100.255\n192.168.* -> 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- отфильтровать все файлы с именами: file1;*.txt;*.jpg;file*.\n- фильтры можно также вводить в той же строке, разделенной \"; \"; \n- фильтры можно также вводить в той же строке, разделенной \"; \".\n - исключить выигрыши фильтров</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">При включенной опции \"Удаляет каталоги и файлы, исключенные фильтром\" все файлы и каталоги, не входящие в исходную директорию, а также файлы и каталоги, исключенные фильтром, будут удалены из целевой директории.</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Параметр \"Удалить папки и файлы, исключенные фильтрами имен\" включен: все файлы и папки, исключенные фильтрами имен, а также те, которые не существуют в исходной папке, будут удалены из папки назначения.</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Фильтр по имени файла</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Фильтр</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Включать</string>
@@ -459,9 +459,9 @@
         <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Пропустите задачу, если IP-адрес WLAN не совпадает с указанным IP-адресом.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Разрешить синхронизацию с глобальными IP-адресами</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Подтвердите, прежде чем перезаписать/удалить</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Удаляет каталоги и файлы, исключенные фильтром</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Предупреждение: все папки и файлы, которые не существуют в исходной папке, а также те, которые не включены в фильтры, будут удалены из папки назначения!\nНастоятельно рекомендуем протестировать и убедиться в том, что непреднамеренные файлы или каталоги не удалены.</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Удаляет каталоги и файлы, исключенные фильтром</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Удалить папки и файлы, исключенные фильтрами имен</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Предупреждение: все папки и файлы, которые не существуют в исходном каталоге, а также те, имена которых не включены в фильтры, будут удалены из целевого каталога!\nНастоятельно рекомендуется активировать тестовый режим и убедиться, что нет файлов или каталоги будут случайно удалены или заменены. Примечание: файлы, отфильтрованные по дате и размеру, не будут удалены из Назначения.</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Удалить папки и файлы, исключенные фильтрами имен</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Удаление файлов перед синхронизацией (только в режиме зеркального отображения).</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Файлы считаются разными только в том случае, если размер источника больше, чем место назначения (только сравнение размеров, отключение разницы во времени).</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">Использовать размер файла для определения различия в файле</string>

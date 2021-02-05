@@ -414,7 +414,7 @@
         <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">You can use wildcards in the filter. Example:\n192.168.100.* -> 192.168.100.0-192.168.100.255\n192.168.* -> 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all files with specific name: file1;*.txt;*.jpg;file*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Option \"Remove directories and files excluded by the filters\" is enabled: All files and directories not included by the filters, as well as those that do not exist in the source directory, will be deleted from the destination directory.</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Option \"Remove folders and files excluded by name filters\" is enabled: All files and directories with a name not included by the name filters, as well as those that do not exist in the source directory, will be deleted from the destination directory.</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">File name filter</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filter</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Include</string>
@@ -459,9 +459,9 @@
         <string name="msgs_profile_sync_task_sync_option_ap_list_task_skip_if_ssid_invalid">Skip task if WLAN IP does not match the specified IP address.</string>
         <string name="msgs_profile_sync_task_sync_option_sync_allow_global_ip_address">Allow sync with all IP addresses (include public)</string>
         <string name="msgs_profile_sync_task_sync_option_confirm_required">Confirm before overwrite/delete</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Remove directories and files excluded by the filters</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Warning: all files and folders that do not exist in the Source directory and those that are not included by the defined filters will be deleted from the Target directory !\nIt is strongly recommend that you enable Test mode and ensure that no unexpected files or directories are removed or replaced.</string>
-        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Remove directories and files excluded by the filters</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog_title">Remove folders and files excluded by name filters</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror_warn_dialog">Warning: all files and folders that do not exist in the Source directory and those with a NAME not included by the name filters will be deleted from the Target directory !\nIt is strongly recommend that you enable Test mode and ensure that no unexpected files or directories are removed or replaced. Note: files filtered by size and date will not be deleted from the Target.</string>
+        <string name="msgs_profile_sync_task_sync_option_ensure_target_is_exact_mirror">Remove folders and files excluded by name filters</string>
         <string name="msgs_profile_sync_task_sync_option_delete_first_when_mirror">Delete files prior to sync (Mirror mode only)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_size_greater_than_target">Size only compare (files are considered different only if size of the source is larger than the destination)</string>
         <string name="msgs_profile_sync_task_sync_option_diff_file_use_file_size">Use file size to determine if files are different</string>
