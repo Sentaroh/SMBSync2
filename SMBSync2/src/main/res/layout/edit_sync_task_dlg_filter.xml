@@ -91,7 +91,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp">
+                android:layout_marginStart="15dp"
+                android:layout_marginRight="5dp">
                 <Spinner
                     android:id="@+id/sync_filter_file_size_type_spinner"
                     style="?android:attr/spinnerStyle"
@@ -120,7 +121,6 @@
                     style="?android:attr/spinnerStyle"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
                     android:layout_gravity="center_vertical"
                     android:minHeight="36dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
@@ -134,7 +134,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp">
+                android:layout_marginStart="15dp"
+                android:layout_marginRight="5dp">
                 <Spinner
                     android:id="@+id/sync_filter_file_date_type_spinner"
                     style="?android:attr/spinnerStyle"
@@ -154,7 +155,6 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginRight="5dp"
                         android:hint="@string/msgs_task_sync_task_sync_file_date_hint"
                         android:inputType="number"
                         android:maxLength="4" />
