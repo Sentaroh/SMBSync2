@@ -2990,7 +2990,8 @@ public class SyncThread extends Thread {
         if (sti.isSyncOptionIgnoreFileSize0ByteFile()) {
             if (file_size==0) {
                 selected=false;
-                stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size equals 0), FP="+full_path);
+                if (stwa.gp.settingDebugLevel >= 1)
+                    stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size equals 0), FP="+full_path);
             }
         }
         if (selected && !sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
@@ -2998,17 +2999,19 @@ public class SyncThread extends Thread {
                 if (file_size<stwa.fileSizeFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size greater than "+
-                            (sti.getSyncFilterFileSizeValue()+" "+sti.getSyncFilterFileSizeUnit())+
-                            "). FP="+full_path+", Size="+file_size);
+                    if (stwa.gp.settingDebugLevel >= 1)
+                        stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size greater than "+
+                                (sti.getSyncFilterFileSizeValue()+" "+sti.getSyncFilterFileSizeUnit())+
+                                "). FP="+full_path+", Size="+file_size);
                 }
             } else {
                 if (file_size>stwa.fileSizeFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size less than "+
-                            (sti.getSyncFilterFileSizeValue()+" "+sti.getSyncFilterFileSizeUnit())+
-                            "). FP="+full_path+", Size="+file_size);
+                    if (stwa.gp.settingDebugLevel >= 1)
+                        stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size less than "+
+                                (sti.getSyncFilterFileSizeValue()+" "+sti.getSyncFilterFileSizeUnit())+
+                                "). FP="+full_path+", Size="+file_size);
                 }
             }
         }
@@ -3017,17 +3020,19 @@ public class SyncThread extends Thread {
                 if (last_modified_time<stwa.fileDateFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File last modified date not older. File last modified date="+
-                            StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
-                            "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
+                    if (stwa.gp.settingDebugLevel >= 1)
+                        stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File last modified date not older. File last modified date="+
+                                StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
+                                "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
                 }
             } else {
                 if (last_modified_time>stwa.fileDateFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=(File last modified date not newer. File last modified date="+
-                            StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
-                            "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
+                    if (stwa.gp.settingDebugLevel >= 1)
+                        stwa.util.addDebugMsg(1, "I", "File was ignored, reason=(File last modified date not newer. File last modified date="+
+                                StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
+                                "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
                 }
             }
         }
@@ -3752,15 +3757,15 @@ public class SyncThread extends Thread {
 
     final private int compileFilter(SyncTaskItem sti, ArrayList<String> s_ff, ArrayList<String> s_df) {
         mStwa.util.addDebugMsg(1, "I", "compileFilter Ignore 0 byte file="+sti.isSyncOptionIgnoreFileSize0ByteFile());
+        mStwa.fileSizeFilterValue=-1;
         if (!sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
             long filter_value=Long.parseLong(sti.getSyncFilterFileSizeValue());
             if (sti.getSyncFilterFileSizeUnit().equals(SyncTaskItem.FILTER_FILE_SIZE_UNIT_BYTE)) mStwa.fileSizeFilterValue=filter_value;
             else if (sti.getSyncFilterFileSizeUnit().equals(SyncTaskItem.FILTER_FILE_SIZE_UNIT_KIB)) mStwa.fileSizeFilterValue=filter_value*1024;
             else if (sti.getSyncFilterFileSizeUnit().equals(SyncTaskItem.FILTER_FILE_SIZE_UNIT_MIB)) mStwa.fileSizeFilterValue=filter_value*1024*1024;
             else if (sti.getSyncFilterFileSizeUnit().equals(SyncTaskItem.FILTER_FILE_SIZE_UNIT_GIB)) mStwa.fileSizeFilterValue=filter_value*1024*1024*1024;
-        } else {
-            mStwa.fileSizeFilterValue=-1;
         }
+
         mStwa.util.addDebugMsg(1, "I", "compileFilter file size filter="+mStwa.fileSizeFilterValue+", op="+sti.getSyncFilterFileSizeType()+", unit="+sti.getSyncFilterFileSizeUnit());
         if (!sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
             int filter_value=-1*Integer.parseInt(sti.getSyncFilterFileDateValue());
