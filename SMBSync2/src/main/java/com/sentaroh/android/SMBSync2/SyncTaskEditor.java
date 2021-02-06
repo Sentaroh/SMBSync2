@@ -3887,11 +3887,12 @@ public class SyncTaskEditor extends DialogFragment {
 
         final CheckedTextView ctvIgnore_0_byte_file=(CheckedTextView)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_size_0_bytes_file);
 
-        boolean is_all_file_type = false;
+        boolean is_all_file_type = true;
         if (n_sti.isSyncFileTypeAudio() || n_sti.isSyncFileTypeImage() || n_sti.isSyncFileTypeVideo() || n_sti.getFileFilter().size() != 0 ||
                 !n_sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE) ||
-                !n_sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) is_all_file_type = false;
-        else is_all_file_type=true;
+                !n_sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
+            is_all_file_type = false;
+        }
 
         boolean is_all_sub_dir = false;
         if (n_sti.getDirFilter().size() == 0) is_all_sub_dir = true;
@@ -5542,7 +5543,8 @@ public class SyncTaskEditor extends DialogFragment {
                     if (et_file_size_value.getText().length()==0) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified);
                         error_detected = true;
-                    } else if (et_file_size_value.getText().length()>5) {
+                    } else if (et_file_size_value.getText().length()>=5) {
+                        et_file_size_value.getText().delete(4,5);
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit);
                         error_detected = true;
                     } else if (SyncTaskItem.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition()).equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) {
