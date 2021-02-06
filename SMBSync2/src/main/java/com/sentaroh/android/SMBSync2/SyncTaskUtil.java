@@ -7914,11 +7914,54 @@ public class SyncTaskUtil {
             if (!parm[94].equals("") && !parm[94].equals("end")) stli.setSyncOptionEnsureTargetIsExactMirror((parm[94].equals("1") ? true : false));
 
             if (!parm[95].equals("") && !parm[95].equals("end")) stli.setSyncOptionIgnoreFileSize0ByteFile((parm[95].equals("1") ? true : false));
-            if (!parm[96].equals("") && !parm[96].equals("end")) stli.setSyncFilterFileSizeValue(parm[96]);
-            if (!parm[97].equals("") && !parm[97].equals("end")) stli.setSyncFilterFileSizeType(parm[97]);
-            if (!parm[98].equals("") && !parm[98].equals("end")) stli.setSyncFilterFileSizeUnit(parm[98]);
-            if (!parm[99].equals("") && !parm[99].equals("end")) stli.setSyncFilterFileDateType(parm[99]);
-            if (!parm[100].equals("") && !parm[100].equals("end")) stli.setSyncFilterFileDateValue(parm[100]);
+
+            if (!parm[96].equals("") && !parm[96].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.syncFilterFileSizeTypeValueArray, parm[96])) {
+                    stli.setSyncFilterFileSizeType(parm[96]);
+                } else {
+                    stli.setSyncFilterFileSizeType(SyncTaskItem.FILTER_FILE_SIZE_TYPE_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Filter File Size Type", SyncTaskItem.FILTER_FILE_SIZE_TYPE_DEFAULT);
+                }
+            }
+
+            if (!parm[97].equals("") && !parm[97].equals("end")) {
+                if (parm[97].length() <= 5 && TextUtils.isDigitsOnly(parm[97]) && Integer.parseInt(parm[97]) > 0) { //max 5 digits allowed and value > 1
+                    stli.setSyncFilterFileSizeValue(parm[97]);
+                } else {
+                    stli.setSyncFilterFileSizeValue(SyncTaskItem.FILTER_FILE_SIZE_VALUE_DEFAULT);
+                    stli.setSyncFilterFileSizeType(SyncTaskItem.FILTER_FILE_SIZE_TYPE_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Filter File Size Value", SyncTaskItem.FILTER_FILE_SIZE_VALUE_DEFAULT);
+                }
+            }
+
+            if (!parm[98].equals("") && !parm[98].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.syncFilterFileSizeUnitValueArray, parm[98])) {
+                    stli.setSyncFilterFileSizeUnit(parm[98]);
+                } else {
+                    stli.setSyncFilterFileSizeUnit(SyncTaskItem.FILTER_FILE_SIZE_UNIT_DEFAULT);
+                    stli.setSyncFilterFileSizeType(SyncTaskItem.FILTER_FILE_SIZE_TYPE_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Filter File Size Unit", SyncTaskItem.FILTER_FILE_SIZE_UNIT_DEFAULT);
+                }
+            }
+
+            if (!parm[99].equals("") && !parm[99].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.syncFilterFileDateTypeValueArray, parm[99])) {
+                    stli.setSyncFilterFileDateType(parm[99]);
+                } else {
+                    stli.setSyncFilterFileDateType(SyncTaskItem.FILTER_FILE_DATE_TYPE_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Filter File Date Type", SyncTaskItem.FILTER_FILE_DATE_TYPE_DEFAULT);
+                }
+            }
+
+            if (!parm[100].equals("") && !parm[100].equals("end")) {
+                if (parm[100].length() <= 3 && TextUtils.isDigitsOnly(parm[100]) && Integer.parseInt(parm[100]) > 0) { //max 3 digits allowed and value > 1
+                    stli.setSyncFilterFileDateValue(parm[100]);
+                } else {
+                    stli.setSyncFilterFileDateValue(SyncTaskItem.FILTER_FILE_DATE_VALUE_DEFAULT);
+                    stli.setSyncFilterFileDateType(SyncTaskItem.FILTER_FILE_DATE_TYPE_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Filter File Date Value", SyncTaskItem.FILTER_FILE_DATE_VALUE_DEFAULT);
+                }
+            }
 
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
@@ -8463,8 +8506,8 @@ public class SyncTaskUtil {
                             (item.isSyncOptionEnsureTargetIsExactMirror() ? "1" : "0") + "\t" +         //94
 
                             (item.isSyncOptionIgnoreFileSize0ByteFile() ? "1" : "0") + "\t" +           //95
-                            (item.getSyncFilterFileSizeValue()) + "\t" +                                //96
-                            (item.getSyncFilterFileSizeType()) + "\t" +                                 //97
+                            (item.getSyncFilterFileSizeType()) + "\t" +                                 //96
+                            (item.getSyncFilterFileSizeValue()) + "\t" +                                //97
                             (item.getSyncFilterFileSizeUnit()) + "\t" +                                 //98
                             (item.getSyncFilterFileDateType()) + "\t" +                                 //99
                             (item.getSyncFilterFileDateValue()) + "\t" +                                //100
