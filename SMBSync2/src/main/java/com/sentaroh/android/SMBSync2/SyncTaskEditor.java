@@ -5543,8 +5543,7 @@ public class SyncTaskEditor extends DialogFragment {
                     if (et_file_size_value.getText().length()==0) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified);
                         error_detected = true;
-                    } else if (et_file_size_value.getText().length()>=5) {
-                        et_file_size_value.getText().delete(4,5);
+                    } else if (et_file_size_value.getText().length()>5) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit);
                         error_detected = true;
                     } else if (SyncTaskItem.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition()).equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) {
