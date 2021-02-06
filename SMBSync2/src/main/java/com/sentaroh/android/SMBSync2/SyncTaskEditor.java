@@ -5543,8 +5543,7 @@ public class SyncTaskEditor extends DialogFragment {
                     if (et_file_size_value.getText().length()==0) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified);
                         error_detected = true;
-                    } else if (et_file_size_value.getText().length()>=5) {
-                        et_file_size_value.getText().delete(4,5);
+                    } else if (et_file_size_value.getText().length()>5) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit);
                         error_detected = true;
                     } else if (SyncTaskItem.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition()).equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) {
@@ -5559,11 +5558,11 @@ public class SyncTaskEditor extends DialogFragment {
                     if (et_file_date_value.getText().length()==0) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified);
                         error_detected = true;
-                    } else if (sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER) && Integer.parseInt(et_file_date_value.getText().toString())==0) {
-                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0);
-                        error_detected = true;
                     } else if (et_file_date_value.getText().length()>3) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit);
+                        error_detected = true;
+                    } else if (!sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) && Integer.parseInt(et_file_date_value.getText().toString())==0) {
+                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0);
                         error_detected = true;
                     }
                 }

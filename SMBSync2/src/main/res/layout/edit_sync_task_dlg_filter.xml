@@ -112,7 +112,7 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:maxLength="6"
+                        android:maxLength="5"
                         android:hint="@string/msgs_task_sync_task_sync_file_size_size_hint"
                         android:layout_gravity="center_vertical"/>
                 </android.support.design.widget.TextInputLayout>
@@ -157,7 +157,7 @@
                         android:layout_gravity="center_vertical"
                         android:hint="@string/msgs_task_sync_task_sync_file_date_hint"
                         android:inputType="number"
-                        android:maxLength="4" />
+                        android:maxLength="3" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <include layout="@layout/divider_line1" />
