@@ -3769,6 +3769,7 @@ public class SyncThread extends Thread {
         mStwa.util.addDebugMsg(1, "I", "compileFilter file size filter="+mStwa.fileSizeFilterValue+", op="+sti.getSyncFilterFileSizeType()+", unit="+sti.getSyncFilterFileSizeUnit());
         if (!sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
             int filter_value=-1*Integer.parseInt(sti.getSyncFilterFileDateValue());
+            if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) filter_value=0;
             Calendar curr_date=Calendar.getInstance();
             curr_date.add(Calendar.DAY_OF_YEAR, filter_value);
             int year=curr_date.get(Calendar.YEAR);

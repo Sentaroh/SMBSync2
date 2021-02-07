@@ -443,7 +443,7 @@
         <string name="msgs_task_sync_task_sync_file_size_filter_type_less_than">Inférieure à</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">Supérieure à</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">La taille de fichier doit être spécifiée.</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit">La taille du fichier ne doit pas dépasser 5 chiffres</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits">La taille du fichier ne doit pas dépasser 5 chiffres</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">La taille du fichier doit être supérieure ou égale à 1</string>
         <string name="msgs_task_sync_task_sync_file_date_filter">Synchroniser les fichiers si la date de modification est:</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">Inclure les fichiers dont la date de modification est:</string>
@@ -451,6 +451,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_none">Toutes</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older">Plus ancienne qu\'il y a</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer">Plus récente qu\'il y a</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_sync_begin_day">Sync date de début seulement</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">La date de modification doit être spécifiée.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">La date de modification doit être supérieure ou égale à 1.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">La date de modification ne peut pas comporter plus de 3 chiffres.</string>

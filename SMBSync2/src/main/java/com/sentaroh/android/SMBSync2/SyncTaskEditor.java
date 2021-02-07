@@ -3556,11 +3556,13 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_none));
         adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_older));
         adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_newer));
+        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_sync_begin_day));
 
         int sel = 0;
         if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) sel = 0;
         else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER)) sel = 1;
         else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER)) sel = 2;
+        else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) sel = 3;
 
         spinner.setSelection(sel);
 
@@ -4038,7 +4040,8 @@ public class SyncTaskEditor extends DialogFragment {
         sp_file_date_type.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (sp_file_date_type.getSelectedItemPosition()==0) {
+                String sel=SyncTaskItem.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
+                if (sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) || sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) {
                     et_file_date_value_view.setVisibility(EditText.GONE);
                 } else {
                     et_file_date_value_view.setVisibility(EditText.VISIBLE);
@@ -5211,10 +5214,24 @@ public class SyncTaskEditor extends DialogFragment {
             nstli.setSyncFileTypeAudio(false);
             nstli.setSyncFileTypeImage(false);
             nstli.setSyncFileTypeVideo(false);
+            nstli.setSyncFilterFileSizeType(SyncTaskItem.FILTER_FILE_SIZE_TYPE_DEFAULT);
+            nstli.setSyncFilterFileDateType(SyncTaskItem.FILTER_FILE_DATE_TYPE_DEFAULT);
         } else {
             nstli.setSyncFileTypeAudio(ctvSyncFileTypeAudio.isChecked());
             nstli.setSyncFileTypeImage(ctvSyncFileTypeImage.isChecked());
             nstli.setSyncFileTypeVideo(ctvSyncFileTypeVideo.isChecked());
+
+            String size_type=nstli.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition());
+            nstli.setSyncFilterFileSizeType(size_type);
+            String size_unit=nstli.getSyncFilterFileSizeUnitByIndex(sp_file_size_unit.getSelectedItemPosition());
+            nstli.setSyncFilterFileSizeUnit(size_unit);
+
+            nstli.setSyncFilterFileSizeValue(et_file_size_value.getText().toString());
+
+            String date_type=nstli.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
+            nstli.setSyncFilterFileDateType(date_type);
+
+            nstli.setSyncFilterFileDateValue(et_file_date_value.getText().toString());
         }
 
         if (!ctvSyncSpecificSubDir.isChecked()) {
@@ -5223,19 +5240,7 @@ public class SyncTaskEditor extends DialogFragment {
 
         nstli.setSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty(ctv_sync_remove_master_if_empty.isChecked());
 
-        String size_type=nstli.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition());
-        nstli.setSyncFilterFileSizeType(size_type);
-        String size_unit=nstli.getSyncFilterFileSizeUnitByIndex(sp_file_size_unit.getSelectedItemPosition());
-        nstli.setSyncFilterFileSizeUnit(size_unit);
-
-        nstli.setSyncFilterFileSizeValue(et_file_size_value.getText().toString());
-
         nstli.setSyncOptionIgnoreFileSize0ByteFile(ctvIgnore_0_byte_file.isChecked());
-
-        String date_type=nstli.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
-        nstli.setSyncFilterFileDateType(date_type);
-
-        nstli.setSyncFilterFileDateValue(et_file_date_value.getText().toString());
 
         return nstli;
     }
@@ -5537,31 +5542,33 @@ public class SyncTaskEditor extends DialogFragment {
         boolean error_detected = false;
 
         if (ctvSyncFileTypeSpecific.isChecked()) {
+            String sel_size_type=SyncTaskItem.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition());
+            String sel_date_type=SyncTaskItem.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
             if (ctvSyncFileTypeAudio.isChecked() || ctvSyncFileTypeImage.isChecked() || ctvSyncFileTypeVideo.isChecked() ||
-                    sp_file_size_type.getSelectedItemPosition()!=0 || sp_file_date_type.getSelectedItemPosition()!=0) {
-                if (sp_file_size_type.getSelectedItemPosition()!=0) {
+                    !sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE) || !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
+                if (!sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
                     if (et_file_size_value.getText().length()==0) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified);
                         error_detected = true;
                     } else if (et_file_size_value.getText().length()>5) {
-                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit);
+                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits);
                         error_detected = true;
-                    } else if (SyncTaskItem.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition()).equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) {
+                    } else if (sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) {
                         if (Integer.parseInt(et_file_size_value.getText().toString())==0) {
                             result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0);
                             error_detected = true;
                         }
                     }
                 }
-                if (!error_detected && sp_file_date_type.getSelectedItemPosition()!=0) {
-                    String sel=SyncTaskItem.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
+                if (!error_detected && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) {
                     if (et_file_date_value.getText().length()==0) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified);
                         error_detected = true;
                     } else if (et_file_date_value.getText().length()>3) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit);
                         error_detected = true;
-                    } else if (!sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) && Integer.parseInt(et_file_date_value.getText().toString())==0) {
+                    } else if ((sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER) || sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER))
+                            && Integer.parseInt(et_file_date_value.getText().toString())==0) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0);
                         error_detected = true;
                     }

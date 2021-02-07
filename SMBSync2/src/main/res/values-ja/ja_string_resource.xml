@@ -443,7 +443,7 @@
         <string name="msgs_task_sync_task_sync_file_size_filter_type_less_than">より小さい</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">より大きい</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">ファイルサイズが指定されていません</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit">ファイルサイズは5桁以上は使用できません</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits">ファイルサイズは5桁以上は使用できません</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">ファイルサイズは1以上を指定してください</string>
         <string name="msgs_task_sync_task_sync_file_date_filter">ファイル更新日フィルター</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">ファイル更新日フィルタータイプの選択</string>
@@ -451,6 +451,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_none">使用しない</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older">日より古い</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer">日以内</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_sync_begin_day">同期開始日のみ</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">更新日が指定されていません</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">更新日は1以上を指定してください</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">更新日は3桁以上は使用できません</string>

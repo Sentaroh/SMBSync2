@@ -443,7 +443,7 @@
         <string name="msgs_task_sync_task_sync_file_size_filter_type_less_than">低于</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">大于</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">未指定文件大小</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit">文件大小不能超过5位数</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits">文件大小不能超过5位数</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">文件大小必须大于或等于1。</string>
         <string name="msgs_task_sync_task_sync_file_date_filter">文件最后修改日期过滤器</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">选择文件最后修改日期类型</string>
@@ -451,6 +451,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_none">无</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older">老于</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer">几天前</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_sync_begin_day">仅同步开始日期</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">更新日期未指定。</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">请指定1天以上的更新日期。</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">更新日期不能超过3位数。</string>

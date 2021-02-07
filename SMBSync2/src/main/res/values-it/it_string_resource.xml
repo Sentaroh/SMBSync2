@@ -443,7 +443,7 @@
         <string name="msgs_task_sync_task_sync_file_size_filter_type_less_than">Meno di</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">Piu di</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">La dimensione del file non è specificata</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit">La dimensione del file non può essere superiore a 5 cifre</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits">La dimensione del file non può essere superiore a 5 cifre</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">La dimensione del file deve essere maggiore o uguale a 1</string>
         <string name="msgs_task_sync_task_sync_file_date_filter">Sincronizza i file se la data di modifica è:</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">Includi il file se la data di modifica e:</string>
@@ -451,6 +451,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_none">Tutte</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older">Più anziana di</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer">Più recente di</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_sync_begin_day">Sincronizza solo la data di inizio</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">La data di aggiornamento non è specificata.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">La data di aggiornamento non puo essere di meno di un giorno.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">La data di aggiornamento non può essere più di 3 cifre.</string>
