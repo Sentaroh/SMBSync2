@@ -3034,7 +3034,7 @@ public class SyncThread extends Thread {
                                 StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
                                 "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
                 }
-            } else if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) {
+            } else if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_TODAY)) {
                 if (last_modified_time>=stwa.fileDateFilterValue) selected=true;
                 else {
                     selected=false;
@@ -3778,7 +3778,7 @@ public class SyncThread extends Thread {
         mStwa.util.addDebugMsg(1, "I", "compileFilter file size filter="+mStwa.fileSizeFilterValue+", op="+sti.getSyncFilterFileSizeType()+", unit="+sti.getSyncFilterFileSizeUnit());
         if (!sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
             int filter_value=0;
-            if (!sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) filter_value=-1*Integer.parseInt(sti.getSyncFilterFileDateValue());
+            if (!sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_TODAY)) filter_value=-1*Integer.parseInt(sti.getSyncFilterFileDateValue());
             Calendar curr_date=Calendar.getInstance();
             curr_date.add(Calendar.DAY_OF_YEAR, filter_value);
             int year=curr_date.get(Calendar.YEAR);
