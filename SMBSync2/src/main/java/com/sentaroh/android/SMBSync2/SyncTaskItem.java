@@ -553,12 +553,12 @@ class SyncTaskItem implements Serializable, Cloneable {
     public static final String FILTER_FILE_DATE_TYPE_NONE="NONE";
     public static final String FILTER_FILE_DATE_TYPE_OLDER ="OLDER";
     public static final String FILTER_FILE_DATE_TYPE_NEWER ="NEWER";
-    public static final String FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY ="SYNC_BEGIN_DAY";
+    public static final String FILTER_FILE_DATE_TYPE_TODAY ="SYNC_BEGIN_DAY";
     public static final String FILTER_FILE_DATE_TYPE_DEFAULT=FILTER_FILE_DATE_TYPE_NONE;
     private String syncFilterFileDateType = FILTER_FILE_DATE_TYPE_DEFAULT;
     public String getSyncFilterFileDateType() {return syncFilterFileDateType;}
     public void setSyncFilterFileDateType(String p) {syncFilterFileDateType = p;}
-    static final public String[] syncFilterFileDateTypeValueArray=new String[]{FILTER_FILE_DATE_TYPE_NONE, FILTER_FILE_DATE_TYPE_OLDER, FILTER_FILE_DATE_TYPE_NEWER, FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY};
+    static final public String[] syncFilterFileDateTypeValueArray=new String[]{FILTER_FILE_DATE_TYPE_NONE, FILTER_FILE_DATE_TYPE_OLDER, FILTER_FILE_DATE_TYPE_NEWER, FILTER_FILE_DATE_TYPE_TODAY};
     static public String getSyncFilterFileDateTypeByIndex(int index) {
         if (index>=0 && index<=3) return syncFilterFileDateTypeValueArray[index];
         else return FILTER_FILE_SIZE_TYPE_NONE;

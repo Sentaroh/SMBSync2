@@ -451,7 +451,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_none">使用しない</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older">日より古い</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer">日以内</string>
-        <string name="msgs_task_sync_task_sync_file_date_type_sync_begin_day">同期開始日のみ</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_today">同期開始日のみ</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">更新日が指定されていません</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">更新日は1以上を指定してください</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">更新日は3桁以上は使用できません</string>
