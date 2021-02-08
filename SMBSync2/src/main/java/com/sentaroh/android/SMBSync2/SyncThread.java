@@ -130,6 +130,8 @@ public class SyncThread extends Thread {
 
         public long fileSizeFilterValue=0L;
         public long fileDateFilterValue=0L;
+        public long fileDateFilterFromValue=0L;
+        public long fileDateFilterToValue=0L;
 
         public final boolean ALL_COPY = false;
 
@@ -3026,13 +3028,25 @@ public class SyncThread extends Thread {
                                 "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
                 }
             } else {
-                if (last_modified_time>stwa.fileDateFilterValue) selected=true;
-                else {
-                    selected=false;
-                    if (stwa.gp.settingDebugLevel >= 1)
-                        stwa.util.addDebugMsg(1, "I", "File was ignored, reason=(File last modified date not newer. File last modified date="+
-                                StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
-                                "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
+                if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) {
+                    if (last_modified_time>=stwa.fileDateFilterFromValue && last_modified_time<=stwa.fileDateFilterToValue) selected=true;
+                    else {
+                        selected=false;
+                        if (stwa.gp.settingDebugLevel >= 1)
+                            stwa.util.addDebugMsg(1, "I", "File was ignored, reason=(File last modified date not sync begin day. File last modified date="+
+                                    StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
+                                    "), Filter from date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterFromValue)+
+                                    ", Filter to date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterToValue)+", FP="+full_path);
+                    }
+                } else {
+                    if (last_modified_time>stwa.fileDateFilterValue) selected=true;
+                    else {
+                        selected=false;
+                        if (stwa.gp.settingDebugLevel >= 1)
+                            stwa.util.addDebugMsg(1, "I", "File was ignored, reason=(File last modified date not newer. File last modified date="+
+                                    StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
+                                    "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
+                    }
                 }
             }
         }
@@ -3768,19 +3782,32 @@ public class SyncThread extends Thread {
 
         mStwa.util.addDebugMsg(1, "I", "compileFilter file size filter="+mStwa.fileSizeFilterValue+", op="+sti.getSyncFilterFileSizeType()+", unit="+sti.getSyncFilterFileSizeUnit());
         if (!sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
-            int filter_value=-1*Integer.parseInt(sti.getSyncFilterFileDateValue());
-            if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) filter_value=0;
-            Calendar curr_date=Calendar.getInstance();
-            curr_date.add(Calendar.DAY_OF_YEAR, filter_value);
-            int year=curr_date.get(Calendar.YEAR);
-            int month=curr_date.get(Calendar.MONTH);
-            int day=curr_date.get(Calendar.DAY_OF_MONTH);
-            curr_date.clear();
-            curr_date.set(year, month, day);
-            mStwa.fileDateFilterValue=curr_date.getTimeInMillis();
-            mStwa.util.addDebugMsg(1, "I", "compileFilter file date filter="+sti.getSyncFilterFileDateValue()+
-                    ", op="+sti.getSyncFilterFileDateType()+
-                    ", date="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(mStwa.fileDateFilterValue));
+            if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) {
+                Calendar curr_date=Calendar.getInstance();
+                int year=curr_date.get(Calendar.YEAR);
+                int month=curr_date.get(Calendar.MONTH);
+                int day=curr_date.get(Calendar.DAY_OF_MONTH);
+                curr_date.clear();
+                curr_date.set(year, month, day);
+                mStwa.fileDateFilterFromValue=curr_date.getTimeInMillis();
+                mStwa.fileDateFilterToValue=mStwa.fileDateFilterFromValue+(1000*60*60*24)-1;
+                mStwa.util.addDebugMsg(1, "I", "compileFilter file date type="+sti.getSyncFilterFileDateType() +
+                        ", from date="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(mStwa.fileDateFilterFromValue)+
+                        ", to date="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(mStwa.fileDateFilterToValue));
+            } else {
+                int filter_value=-1*Integer.parseInt(sti.getSyncFilterFileDateValue());
+                Calendar curr_date=Calendar.getInstance();
+                curr_date.add(Calendar.DAY_OF_YEAR, filter_value);
+                int year=curr_date.get(Calendar.YEAR);
+                int month=curr_date.get(Calendar.MONTH);
+                int day=curr_date.get(Calendar.DAY_OF_MONTH);
+                curr_date.clear();
+                curr_date.set(year, month, day);
+                mStwa.fileDateFilterValue=curr_date.getTimeInMillis();
+                mStwa.util.addDebugMsg(1, "I", "compileFilter file date filter="+sti.getSyncFilterFileDateValue()+
+                        ", op="+sti.getSyncFilterFileDateType()+
+                        ", date="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(mStwa.fileDateFilterValue));
+            }
         } else {
             mStwa.fileDateFilterValue=-1;
             mStwa.util.addDebugMsg(1, "I", "compileFilter file date filter=-1");
