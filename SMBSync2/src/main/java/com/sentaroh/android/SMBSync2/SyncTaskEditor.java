@@ -3517,8 +3517,8 @@ public class SyncTaskEditor extends DialogFragment {
 
         int sel = 0;
         if (cv.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) sel = 0;
-        else if (cv.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) sel = 1;
-        else if (cv.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_GT)) sel = 2;
+        else if (cv.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LESS_THAN)) sel = 1;
+        else if (cv.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_GREATER_THAN)) sel = 2;
 
         spinner.setSelection(sel);
 
@@ -3554,14 +3554,14 @@ public class SyncTaskEditor extends DialogFragment {
         spinner.setPrompt(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_dialog_title));
         spinner.setAdapter(adapter);
         adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_none));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_older));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_newer));
+        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_older_than));
+        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_newer_than));
         adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_sync_begin_day));
 
         int sel = 0;
         if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) sel = 0;
-        else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER)) sel = 1;
-        else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER)) sel = 2;
+        else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER_THAN)) sel = 1;
+        else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER_THAN)) sel = 2;
         else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) sel = 3;
 
         spinner.setSelection(sel);
@@ -5553,7 +5553,7 @@ public class SyncTaskEditor extends DialogFragment {
                     } else if (et_file_size_value.getText().length()>5) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits);
                         error_detected = true;
-                    } else if (sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) {
+                    } else if (sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LESS_THAN)) {
                         if (Integer.parseInt(et_file_size_value.getText().toString())==0) {
                             result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0);
                             error_detected = true;
@@ -5567,7 +5567,7 @@ public class SyncTaskEditor extends DialogFragment {
                     } else if (et_file_date_value.getText().length()>3) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit);
                         error_detected = true;
-                    } else if ((sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER) || sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER))
+                    } else if ((sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER_THAN) || sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER_THAN))
                             && Integer.parseInt(et_file_date_value.getText().toString())==0) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0);
                         error_detected = true;

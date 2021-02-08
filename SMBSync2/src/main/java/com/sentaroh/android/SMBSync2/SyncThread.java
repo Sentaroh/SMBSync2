@@ -2997,7 +2997,7 @@ public class SyncThread extends Thread {
             }
         }
         if (selected && !sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
-            if (sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) {
+            if (sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LESS_THAN)) {
                 if (file_size<stwa.fileSizeFilterValue) selected=true;
                 else {
                     selected=false;
@@ -3018,12 +3018,12 @@ public class SyncThread extends Thread {
             }
         }
         if (selected && !sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
-            if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER)) {
+            if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER_THAN)) {
                 if (last_modified_time<stwa.fileDateFilterValue) selected=true;
                 else {
                     selected=false;
                     if (stwa.gp.settingDebugLevel >= 1)
-                        stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File last modified date not older. File last modified date="+
+                        stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File last modified date not older than . File last modified date="+
                                 StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
                                 "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
                 }
@@ -3043,7 +3043,7 @@ public class SyncThread extends Thread {
                     else {
                         selected=false;
                         if (stwa.gp.settingDebugLevel >= 1)
-                            stwa.util.addDebugMsg(1, "I", "File was ignored, reason=(File last modified date not newer. File last modified date="+
+                            stwa.util.addDebugMsg(1, "I", "File was ignored, reason=(File last modified date not newer than. File last modified date="+
                                     StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
                                     "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
                     }
