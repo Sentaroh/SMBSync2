@@ -92,9 +92,10 @@ You can choose which files to sync depending on their size.
 
 ### File last modified filter
 
-You can select files whose last modification date is before or within xx days of the sync start date.
+You can select a file based on its last modified date.  
 - If you specify 1 day older than selects files whose last modification date is between the start date and the day before the start date.
 - If you specify Older than 1 day selects files whose last modification date is before the day before the start of synchronization.  
+- After the begin date of sync, the files whose last modification date is the start date of synchronization will be selected. (If the synchronization finishes on the next day, the files will be selected after the start date.)  
 
 ## Directory filters / Select subdirectories
 

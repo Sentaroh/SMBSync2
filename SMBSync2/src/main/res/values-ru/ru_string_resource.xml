@@ -451,7 +451,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_none">Нет</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older_than">Старше, чем</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer_than">Новее, чем</string>
-        <string name="msgs_task_sync_task_sync_file_date_type_sync_begin_day">Только дата начала синхронизации</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_after_sync_begin_day">После даты начала синхронизации</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">Дата обновления не указана.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">Пожалуйста, укажите дату обновления более 1 дня.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">Дата обновления не может быть больше 3-х цифр.</string>

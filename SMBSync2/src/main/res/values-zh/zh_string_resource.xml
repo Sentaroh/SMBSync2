@@ -451,7 +451,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_none">无</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older_than">老于</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer_than">几天前</string>
-        <string name="msgs_task_sync_task_sync_file_date_type_sync_begin_day">仅同步开始日期</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_after_sync_begin_day">同步开始日期后</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">更新日期未指定。</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">请指定1天以上的更新日期。</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">更新日期不能超过3位数。</string>

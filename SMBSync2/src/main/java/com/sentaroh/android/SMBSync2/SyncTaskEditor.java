@@ -3556,13 +3556,13 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_none));
         adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_older_than));
         adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_newer_than));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_sync_begin_day));
+        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_after_sync_begin_day));
 
         int sel = 0;
         if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) sel = 0;
         else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER_THAN)) sel = 1;
         else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER_THAN)) sel = 2;
-        else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) sel = 3;
+        else if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_AFTER_SYNC_BEGIN_DAY)) sel = 3;
 
         spinner.setSelection(sel);
 
@@ -4041,7 +4041,7 @@ public class SyncTaskEditor extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String sel=SyncTaskItem.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
-                if (sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) || sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) {
+                if (sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) || sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_AFTER_SYNC_BEGIN_DAY)) {
                     et_file_date_value_view.setVisibility(EditText.GONE);
                 } else {
                     et_file_date_value_view.setVisibility(EditText.VISIBLE);
@@ -5560,7 +5560,7 @@ public class SyncTaskEditor extends DialogFragment {
                         }
                     }
                 }
-                if (!error_detected && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_SYNC_BEGIN_DAY)) {
+                if (!error_detected && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_AFTER_SYNC_BEGIN_DAY)) {
                     if (et_file_date_value.getText().length()==0) {
                         result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified);
                         error_detected = true;

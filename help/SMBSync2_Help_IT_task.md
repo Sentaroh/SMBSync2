@@ -96,10 +96,10 @@ Puoi scegliere quali file sincronizzare a seconda della loro dimensione.
 
 ### Filtro data ultima modifica file
 
-Puoi selezionare i file la cui ultima data di modifica è precedente o entro xx giorni dalla data di inizio della sincronizzazione.
-
-- Se si specifica 1 giorno prima seleziona i file la cui ultima data di modifica è compresa tra la data di inizio e il giorno precedente la data di inizio.
-- Se si specifica più di 1 giorno prima, seleziona i file la cui ultima data di modifica è precedente al giorno prima dell'inizio della sincronizzazione.  
+Potete selezionare un file in base alla sua ultima data di modifica.  
+- Se si specifica 1 giorno più vecchio di seleziona i file la cui ultima data di modifica è compresa tra la data di inizio e il giorno precedente la data di inizio.
+- Se specifichi Più vecchio di 1 giorno seleziona i file la cui ultima data di modifica è precedente al giorno prima dell'inizio della sincronizzazione.  
+- Dopo la data di inizio della sincronizzazione, verranno selezionati i file la cui ultima data di modifica è la data di inizio della sincronizzazione. (Se la sincronizzazione termina il giorno successivo, i file saranno selezionati dopo la data di inizio).  
 
 ## Selezionare le sottocartelle
 

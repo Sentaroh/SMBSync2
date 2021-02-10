@@ -451,7 +451,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_none">Toutes</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older_than">Plus ancienne qu\'il y a</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer_than">Plus récente qu\'il y a</string>
-        <string name="msgs_task_sync_task_sync_file_date_type_sync_begin_day">Sync date de début seulement</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_after_sync_begin_day">Après la date de début de la synchronisation</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">La date de modification doit être spécifiée.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">La date de modification doit être supérieure ou égale à 1.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">La date de modification ne peut pas comporter plus de 3 chiffres.</string>

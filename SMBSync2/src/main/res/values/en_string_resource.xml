@@ -451,7 +451,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_none">Any</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older_than">Older than</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer_than">Newer than</string>
-        <string name="msgs_task_sync_task_sync_file_date_type_sync_begin_day">Sync start date only</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_after_sync_begin_day">After sync start date</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">The update date is not specified.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">Please specify at least one day as the update date.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">The update date cannot be more than 3 digits.</string>

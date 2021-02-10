@@ -96,9 +96,10 @@ Vous pouvez choisir les fichiers à synchroniser en fonction de leur taille.
   
 ### Filtre de la date de dernière modification du fichier
 
-Vous pouvez sélectionner des fichiers dont la date de dernière modification est antérieure ou inférieure à xx jours à la date de début de la synchronisation.
-- Si vous spécifiez 1 jour avant, vous sélectionnez les fichiers dont la date de dernière modification se situe entre la date de début et le jour précédant la date de début.
-- Si vous spécifiez Plus de 1 jour, les fichiers dont la date de dernière modification est antérieure au jour précédant le début de la synchronisation seront sélectionnés.  
+Vous pouvez sélectionner un fichier en fonction de sa dernière date de modification.  
+- Si vous spécifiez 1 jour plus vieux que, vous sélectionnez les fichiers dont la dernière date de modification se situe entre la date de début et le jour précédant la date de début.
+- Si vous spécifiez Plus de 1 jour, vous sélectionnez les fichiers dont la date de dernière modification est antérieure au jour précédant le début de la synchronisation.  
+- Après la date de début de la synchronisation, les fichiers dont la date de dernière modification est la date de début de la synchronisation seront sélectionnés. (Si la synchronisation se termine le jour suivant, les fichiers seront sélectionnés après la date de début).  
 
 ## Sélectionner les sous-dossiers
 
