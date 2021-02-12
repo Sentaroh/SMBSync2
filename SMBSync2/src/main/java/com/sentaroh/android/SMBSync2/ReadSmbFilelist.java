@@ -177,21 +177,20 @@ public class ReadSmbFilelist implements Runnable {
                     } else fp = "/";
 //					Log.v("","name="+fl[i].getPath());
                     try {
-                        if (fl[i].isDirectory() &&
-                                !fn.equals("System Volume Information") &&
-                                fl[i].canRead()) {
+                        if (!fn.equals("System Volume Information") && fl[i].canRead()) {
                             if (readSubDirCnt) {
                                 JcifsFile tdf = new JcifsFile(fl[i].getPath(), auth);
                                 JcifsFile[] tfl = null;
                                 try {
-                                    tfl = tdf.listFiles();
-                                    if (readDirOnly) {
-                                        for (int j = 0; j < tfl.length; j++) {
-//                                            Log.v("","name="+tfl[j].getPath());
-                                            if (tfl[j].isDirectory()) dirct++;
+                                    if (fl[i].isDirectory()) {
+                                        tfl = tdf.listFiles();
+                                        if (readDirOnly) {
+                                            for (int j = 0; j < tfl.length; j++) {
+                                                if (tfl[j].isDirectory()) dirct++;
+                                            }
+                                        } else {
+                                            dirct = tfl.length;
                                         }
-                                    } else {
-                                        dirct = tfl.length;
                                     }
                                     TreeFilelistItem fi = new TreeFilelistItem(
                                             fn,
@@ -211,6 +210,9 @@ public class ReadSmbFilelist implements Runnable {
                                             mUtil.addDebugMsg(2, "I", "filelist added :" + fn + ",isDir=" +
                                                     fl[i].isDirectory() + ", canRead=" + fl[i].canRead() +
                                                     ", canWrite=" + fl[i].canWrite() + ",fp=" + fp + ", dircnt=" + dirct);
+                                        } else {
+                                            fi.setEnableItem(false);
+                                            remoteFileList.add(fi);
                                         }
                                     } else {
                                         remoteFileList.add(fi);

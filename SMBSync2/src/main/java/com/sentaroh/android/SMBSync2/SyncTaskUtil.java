@@ -2014,7 +2014,8 @@ public class SyncTaskUtil {
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
 
                 for (int i = 0; i < rfl.size(); i++) {
-                    if (rfl.get(i).isDir() && rfl.get(i).canRead()) rows.add(rfl.get(i));
+//                    if (rfl.get(i).isDir() && rfl.get(i).canRead())
+                        rows.add(rfl.get(i));
                 }
                 Collections.sort(rows);
                 NotifyEvent ntfy_sel=new NotifyEvent(mContext);
@@ -2132,7 +2133,8 @@ public class SyncTaskUtil {
                                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
                                 ArrayList<TreeFilelistItem> new_tfl = new ArrayList<TreeFilelistItem>();
                                 for (int i = 0; i < rfl.size(); i++) {
-                                    if (rfl.get(i).isDir() && rfl.get(i).canRead()) new_tfl.add(rfl.get(i));
+//                                    if (rfl.get(i).isDir() && rfl.get(i).canRead())
+                                        new_tfl.add(rfl.get(i));
                                 }
                                 Collections.sort(new_tfl);
                                 if (new_tfl.size()==0) {
