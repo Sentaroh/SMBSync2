@@ -82,6 +82,7 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_STARTED;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_SUCCESS;
+import static com.sentaroh.android.SMBSync2.Constants.START_SYNC_EXTRA_PARM_SYNC_RESULT_NOT_FOUND;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_TIMER_EXPIRED;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_NAME_KEY;
@@ -406,7 +407,6 @@ public class SyncService extends Service {
             }
         }
         if (!mGp.syncThreadActive) {
-            sendStartNotificationIntent();
             startSyncThread();
         }
 
@@ -429,6 +429,7 @@ public class SyncService extends Service {
                                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_task_not_found) + sp[i]);
                             NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
                                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_task_not_found) + sp[i]);
+                            SyncThread.sendEndNotificationIntent(mContext, mUtil, SMBSYNC2_SYNC_REQUEST_EXTERNAL, sp[i], 9);
                         }
                     }
                     if (pl.size() > 0) {
@@ -460,7 +461,6 @@ public class SyncService extends Service {
             mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_external_auto_task));
             queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_EXTERNAL);
             if (!mGp.syncThreadActive) {
-                sendStartNotificationIntent();
                 startSyncThread();
             }
         }
@@ -471,7 +471,6 @@ public class SyncService extends Service {
         mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_shortcut));
         queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SHORTCUT);
         if (!mGp.syncThreadActive) {
-            sendStartNotificationIntent();
             startSyncThread();
         }
         if (isServiceToBeStopped()) stopSelf();
@@ -521,7 +520,6 @@ public class SyncService extends Service {
         public void aidlStartAutoSyncTask() throws RemoteException {
             queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_ACTIVITY);
             if (!mGp.syncThreadActive) {
-                sendStartNotificationIntent();
                 startSyncThread();
             }
         }
@@ -656,7 +654,6 @@ public class SyncService extends Service {
         si.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
         queueSpecificSyncTask(job_name, req_id, si);
         if (!mGp.syncThreadActive) {
-            sendStartNotificationIntent();
             startSyncThread();
         }
     }
@@ -720,24 +717,6 @@ public class SyncService extends Service {
         queueAutoSyncTask(req_id, si);
     }
 
-    private void sendEndNotificationIntent(int sync_result) {
-        Intent in = new Intent(SMBSYNC2_SYNC_ENDED);
-        String rc="";
-        if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) rc="SUCCESS";
-        else if (sync_result==SyncTaskItem.SYNC_STATUS_ERROR) rc="ERROR";
-        else if (sync_result==SyncTaskItem.SYNC_STATUS_CANCEL) rc="CANCEL";
-        else if (sync_result==SyncTaskItem.SYNC_STATUS_WARNING) rc="WARNING";
-        in.putExtra("SYNC_RESULT",rc);
-        sendBroadcast(in, null);
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Send end boradcast intent");
-    }
-
-    private void sendStartNotificationIntent() {
-        Intent in = new Intent(SMBSYNC2_SYNC_STARTED);
-        sendBroadcast(in, null);
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Send start boradcast intent");
-    }
-
     private void startSyncThread() {
 //		final Handler hndl=new Handler();
 //        Thread.dumpStack();
@@ -762,7 +741,6 @@ public class SyncService extends Service {
                             showSyncEndNotificationMessage();
                             startSyncThread();
                         } else {
-                            sendEndNotificationIntent(mSyncThreadResult);
                             if (mGp.callbackStub == null) {
                                 stopSelf();
                             } else {
@@ -781,7 +759,6 @@ public class SyncService extends Service {
                     mGp.releaseWakeLock(mUtil);
                     hideDialogWindow();
                     synchronized (mGp.syncRequestQueue) {
-                        sendEndNotificationIntent(mSyncThreadResult);
                         mGp.syncRequestQueue.clear();
                         if (mGp.callbackStub == null) {
                             stopSelf();

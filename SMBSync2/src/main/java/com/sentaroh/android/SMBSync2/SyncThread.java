@@ -26,6 +26,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
 import android.net.ConnectivityManager;
@@ -94,6 +95,17 @@ import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWO
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_REPLACEABLE_KEYWORD_YEAR;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_ENDED;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_REQUEST_EXTERNAL;
+import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_STARTED;
+import static com.sentaroh.android.SMBSync2.Constants.START_SYNC_EXTRA_PARM_SYNC_RESULT;
+import static com.sentaroh.android.SMBSync2.Constants.START_SYNC_EXTRA_PARM_SYNC_RESULT_CANCEL;
+import static com.sentaroh.android.SMBSync2.Constants.START_SYNC_EXTRA_PARM_SYNC_RESULT_ERROR;
+import static com.sentaroh.android.SMBSync2.Constants.START_SYNC_EXTRA_PARM_SYNC_RESULT_NOT_FOUND;
+import static com.sentaroh.android.SMBSync2.Constants.START_SYNC_EXTRA_PARM_SYNC_RESULT_SUCCESS;
+import static com.sentaroh.android.SMBSync2.Constants.START_SYNC_EXTRA_PARM_SYNC_RESULT_TASK_NAME;
+import static com.sentaroh.android.SMBSync2.Constants.START_SYNC_EXTRA_PARM_SYNC_RESULT_WARNING;
+import static com.sentaroh.android.SMBSync2.Constants.START_SYNC_EXTRA_PARM_TASK_NAME;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_AUDIO;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_IMAGE;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_FILE_TYPE_VIDEO;
@@ -276,6 +288,7 @@ public class SyncThread extends Thread {
                 long start_time = 0;
                 while ((sync_result == 0 || sync_result == SyncTaskItem.SYNC_STATUS_WARNING) && mStwa.currentSTI != null) {
                     start_time = System.currentTimeMillis();
+                    sendStartNotificationIntent(mStwa.context, mStwa.util, mGp.syncThreadRequestID, mStwa.currentSTI.getSyncTaskName());
                     listSyncOption(mStwa.currentSTI);
                     setSyncTaskRunning(true);
                     showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "I", "", "", mStwa.context.getString(R.string.msgs_mirror_task_started));
@@ -336,6 +349,7 @@ public class SyncThread extends Thread {
 
                     postProcessSyncResult(mStwa.currentSTI, sync_result, (System.currentTimeMillis() - start_time));
 
+                    sendEndNotificationIntent(mStwa.context, mStwa.util, mGp.syncThreadRequestID, mStwa.currentSTI.getSyncTaskName(), sync_result);
                     mStwa.currentSTI = sri.sync_task_list.poll();
                     if ((mStwa.currentSTI != null || mGp.syncRequestQueue.size() > 0) &&
                             mGp.settingErrorOption && sync_result == SyncHistoryItem.SYNC_STATUS_ERROR) {
@@ -415,6 +429,29 @@ public class SyncThread extends Thread {
             mNotifyToService.notifyToListener(true, new Object[]{sync_result});
         }
         System.gc();
+    }
+
+    static public void sendEndNotificationIntent(Context c, CommonUtilities cu, String reqstor, String task_name, int sync_result) {
+        if (!reqstor.equals(SMBSYNC2_SYNC_REQUEST_EXTERNAL)) return;
+        Intent in = new Intent(SMBSYNC2_SYNC_ENDED);
+        String rc="";
+        if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) rc=START_SYNC_EXTRA_PARM_SYNC_RESULT_SUCCESS;
+        else if (sync_result==SyncTaskItem.SYNC_STATUS_ERROR) rc=START_SYNC_EXTRA_PARM_SYNC_RESULT_ERROR;
+        else if (sync_result==SyncTaskItem.SYNC_STATUS_CANCEL) rc=START_SYNC_EXTRA_PARM_SYNC_RESULT_CANCEL;
+        else if (sync_result==SyncTaskItem.SYNC_STATUS_WARNING) rc=START_SYNC_EXTRA_PARM_SYNC_RESULT_WARNING;
+        else rc=START_SYNC_EXTRA_PARM_SYNC_RESULT_NOT_FOUND;
+        in.putExtra(START_SYNC_EXTRA_PARM_SYNC_RESULT,rc);
+        in.putExtra(START_SYNC_EXTRA_PARM_SYNC_RESULT_TASK_NAME, task_name);
+        c.sendBroadcast(in, null);
+        cu.addDebugMsg(1, "I", "Send end boradcast intent, Task="+task_name+", Result="+rc);
+    }
+
+    static public void sendStartNotificationIntent(Context c, CommonUtilities cu, String reqstor, String task_name) {
+        if (!reqstor.equals(SMBSYNC2_SYNC_REQUEST_EXTERNAL)) return;
+        Intent in = new Intent(SMBSYNC2_SYNC_STARTED);
+        in.putExtra(START_SYNC_EXTRA_PARM_SYNC_RESULT_TASK_NAME, task_name);
+        c.sendBroadcast(in, null);
+        cu.addDebugMsg(1, "I", "Send start boradcast intent, Task="+task_name);
     }
 
     private boolean performWiFiOnIfRequired(SyncRequestItem sri) {

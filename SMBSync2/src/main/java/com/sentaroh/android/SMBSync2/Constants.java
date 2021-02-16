@@ -94,6 +94,14 @@ public class Constants {
 
 	public final static String SMBSYNC2_START_SYNC_INTENT="com.sentaroh.android."+APPLICATION_TAG+".ACTION_START_SYNC";
 	public final static String SMBSYNC2_EXTRA_PARM_SYNC_PROFILE="SyncProfile";
+    public final static String START_SYNC_EXTRA_PARM_TASK_NAME ="TaskName";
+    public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT ="SYNC_RESULT";
+    public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_SUCCESS ="SUCCESS";
+    public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_ERROR ="ERROR";
+    public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_WARNING ="WARNING";
+    public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CANCEL ="CANCEL";
+    public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_NOT_FOUND ="NOT_FOUND";
+    public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_TASK_NAME ="TASK_NAME";
 	public final static String SMBSYNC2_AUTO_SYNC_INTENT="com.sentaroh.android."+APPLICATION_TAG+".ACTION_AUTO_SYNC";
 
     public final static String QUERY_SYNC_TASK_INTENT ="com.sentaroh.android."+APPLICATION_TAG+".ACTION_QUERY_SYNC_TASK";
