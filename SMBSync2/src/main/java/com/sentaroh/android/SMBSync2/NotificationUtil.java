@@ -256,12 +256,12 @@ public class NotificationUtil {
         builder.setOngoing(false)
                 .setAutoCancel(true)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-                .setContentTitle(c.getString(R.string.app_name))
+                .setContentTitle(c.getString(R.string.app_name_for_notice_message))
                 .setContentText(msg)
                 .setWhen(System.currentTimeMillis())
         ;
         if (Build.VERSION.SDK_INT>=26) {
-            builder.setChannelId("SMBSync2");//SMBSync2");
+            builder.setChannelId("SMBSync2");
         } else {
             builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
         }
@@ -270,37 +270,18 @@ public class NotificationUtil {
             PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
-//        } else {
-//            if (!LogUtil.getLogFilePath(gwa).equals("") && gwa.settingLogOption) {
-//                File lf = new File(LogUtil.getLogFilePath(gwa));
-//                if (lf.exists()) {
-//                    Intent br_log_intent = new Intent(Intent.ACTION_VIEW);
-//                    br_log_intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(gwa)), "text/plain");
-//                    PendingIntent br_log_pi = PendingIntent.getActivity(c, 0, br_log_intent,
-//                            PendingIntent.FLAG_UPDATE_CURRENT);
-//                    builder.setContentIntent(br_log_pi);
-//                } else {
-//                    Intent dummy_intent = new Intent(c, ActivityMain.class);
-//                    PendingIntent dummy_pi = PendingIntent.getActivity(c, 0, dummy_intent,
-//                            PendingIntent.FLAG_UPDATE_CURRENT);
-//                    dummy_pi.cancel();
-//                    builder.setContentIntent(dummy_pi);
-//                }
-//            }
         }
         if (isNotificationEnabled(gwa))
-            gwa.notificationManager.notify(R.string.app_name, builder.build());
+            gwa.notificationManager.notify(R.string.app_name_for_notice_message, builder.build());
     }
 
     final static public void showNoticeMsg(Context c, GlobalParameters gwa, CommonUtilities util, String msg, boolean playback_sound, boolean vibration) {
         clearNotification(gwa, util);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(c);
-//        Bitmap bm=BitmapFactory.decodeResource(c.getResources(), R.drawable.ic_48_smbsync_err);
         builder.setOngoing(false)
                 .setAutoCancel(true)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-//                .setLargeIcon(bm)//smbsync_animation)
-                .setContentTitle(c.getString(R.string.app_name))
+                .setContentTitle(c.getString(R.string.app_name_for_notice_message))
                 .setContentText(msg)
                 .setWhen(System.currentTimeMillis())
         ;
@@ -317,30 +298,15 @@ public class NotificationUtil {
             Intent activity_intent = new Intent(c, ActivityMain.class);
             PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
-//        } else {
-//            if (!LogUtil.getLogFilePath(gwa).equals("") && gwa.settingLogOption) {
-//                File lf = new File(LogUtil.getLogFilePath(gwa));
-//                if (lf.exists()) {
-//                    Intent br_log_intent = new Intent(Intent.ACTION_VIEW);
-//                    br_log_intent.setDataAndType(Uri.parse("file://" + LogUtil.getLogFilePath(gwa)), "text/plain");
-//                    PendingIntent br_log_pi = PendingIntent.getActivity(c, 0, br_log_intent,
-//                            PendingIntent.FLAG_UPDATE_CURRENT);
-//                    builder.setContentIntent(br_log_pi);
-//                } else {
-//                    Intent dummy_intent = new Intent(c, ActivityMain.class);
-//                    PendingIntent dummy_pi = PendingIntent.getActivity(c, 0, dummy_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//                    dummy_pi.cancel();
-//                    builder.setContentIntent(dummy_pi);
-//                }
-//            }
         }
         if (isNotificationEnabled(gwa))
-            gwa.notificationManager.notify(R.string.app_name, builder.build());
+            gwa.notificationManager.notify(R.string.app_name_for_notice_message, builder.build());
     }
 
     final static public void clearNotification(GlobalParameters gwa, CommonUtilities util) {
         try {
             gwa.notificationManager.cancelAll();
+            util.addDebugMsg(1, "I", "clearNotification() issued");
         } catch(SecurityException e) {
             if (util!=null) {
                 final StringWriter sw = new StringWriter();

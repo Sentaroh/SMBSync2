@@ -34,8 +34,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,14 +42,12 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
-import android.util.Log;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
 import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE;
@@ -65,24 +61,18 @@ import static com.sentaroh.android.SMBSync2.Constants.REPLY_SYNC_TASK_EXTRA_PARM
 import static com.sentaroh.android.SMBSync2.Constants.REPLY_SYNC_TASK_INTENT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_AUTO_SYNC_INTENT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_EXTRA_PARM_SYNC_PROFILE;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_ALWAYS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_ERROR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_RINGTONE_NOTIFICATION_SUCCESS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SERVICE_HEART_BEAT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_START_SYNC_INTENT;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_ENDED;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_REQUEST_ACTIVITY;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_REQUEST_EXTERNAL;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_REQUEST_SCHEDULE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_REQUEST_SHORTCUT;
-import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_SYNC_STARTED;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_SUCCESS;
-import static com.sentaroh.android.SMBSync2.Constants.START_SYNC_EXTRA_PARM_SYNC_RESULT_NOT_FOUND;
 import static com.sentaroh.android.SMBSync2.Constants.SYNC_TASK_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_INTENT_TIMER_EXPIRED;
 import static com.sentaroh.android.SMBSync2.ScheduleConstants.SCHEDULER_SCHEDULE_NAME_KEY;
@@ -250,13 +240,24 @@ public class SyncService extends Service {
         return super.onUnbind(intent);
     }
 
+    private void issueStopForeground() {
+        mGp.notificationManager.cancel(R.string.app_name);
+        stopForeground(false);
+        mUtil.addDebugMsg(1, "I", "stopForeground(false) issued");
+    }
+
+    private void issueStartForeground() {
+        startForeground(R.string.app_name, mGp.notification);
+        mUtil.addDebugMsg(1, "I", "startForeground(R.string.app_name, mGp.notification) issued");
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         unregisterReceiver(mSleepReceiver);
 //        unregisterReceiver(mUsbReceiver);
-        stopForeground(true);
+//        hideOngoingMessage();
         if (mGp.notificationLastShowedMessage != null && !mGp.notificationLastShowedMessage.equals("")) {
             showSyncEndNotificationMessage();
             mGp.notificationLastShowedMessage = null;
@@ -549,14 +550,16 @@ public class SyncService extends Service {
     private void setActivityForeground() {
         mGp.activityIsBackground = false;
         NotificationUtil.setNotificationEnabled(mGp, false);
-        stopForeground(true);
+        issueStopForeground();
         NotificationUtil.clearNotification(mGp, mUtil);
     }
 
     private void setActivityBackground() {
         mGp.activityIsBackground = true;
         NotificationUtil.setNotificationEnabled(mGp, true);
-        if (mGp.syncThreadActive) startForeground(R.string.app_name, mGp.notification);
+        if (mGp.syncThreadActive) {
+            issueStartForeground();
+        }
     }
 
     private void cancelSyncTask() {
@@ -724,8 +727,9 @@ public class SyncService extends Service {
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_svc_can_not_start_sync_task_disabled));
             return;
         }
-        if (NotificationUtil.isNotificationEnabled(mGp))
-            startForeground(R.string.app_name, mGp.notification);
+        if (NotificationUtil.isNotificationEnabled(mGp)) {
+            issueStartForeground();
+        }
         if (mGp.syncRequestQueue.size() > 0) {
             mGp.acquireWakeLock(mContext, mUtil);
             NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -738,15 +742,15 @@ public class SyncService extends Service {
                     hideDialogWindow();
                     synchronized (mGp.syncRequestQueue) {
                         if (mGp.syncRequestQueue.size() > 0) {
+                            issueStopForeground();
                             showSyncEndNotificationMessage();
                             startSyncThread();
                         } else {
+                            issueStopForeground();
+                            showSyncEndNotificationMessage();
+                            mGp.notificationLastShowedMessage = "";
                             if (mGp.callbackStub == null) {
                                 stopSelf();
-                            } else {
-                                stopForeground(true);
-                                showSyncEndNotificationMessage();
-                                mGp.notificationLastShowedMessage = "";
                             }
                         }
                     }
@@ -760,12 +764,11 @@ public class SyncService extends Service {
                     hideDialogWindow();
                     synchronized (mGp.syncRequestQueue) {
                         mGp.syncRequestQueue.clear();
+                        issueStopForeground();
+                        showSyncEndNotificationMessage();
+                        mGp.notificationLastShowedMessage = "";
                         if (mGp.callbackStub == null) {
                             stopSelf();
-                        } else {
-                            stopForeground(true);
-                            showSyncEndNotificationMessage();
-                            mGp.notificationLastShowedMessage = "";
                         }
                     }
                 }
@@ -782,7 +785,7 @@ public class SyncService extends Service {
             setHeartBeat();
         } else {
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " task has not started, queued task does not exist");
-            stopForeground(true);
+            issueStopForeground();
         }
     }
 
@@ -804,74 +807,8 @@ public class SyncService extends Service {
             if (mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
                     mGp.settingVibrateWhenSyncEnded.equals(SMBSYNC2_VIBRATE_WHEN_SYNC_ENDED_ERROR)) vibration=true;
         }
-        boolean is_notice_message_showed=false;
-        if (mGp.activityIsBackground) {
-            if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_SUCCESS || mSyncThreadResult == SyncTaskItem.SYNC_STATUS_CANCEL) {
-                if (mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
-                        mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
-                    NotificationUtil.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
-                    is_notice_message_showed=true;
-                }
-            } else if (mSyncThreadResult == SyncTaskItem.SYNC_STATUS_ERROR) {
-                if (mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
-                        mGp.settingNotificationMessageWhenSyncEnded.equals(SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
-                    NotificationUtil.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
-                    is_notice_message_showed=true;
-                }
-            }
-        }
-//        if (mGp.callbackStub != null && sound) playBackDefaultNotification();
-//        if (mGp.callbackStub != null && vibration) vibrateDefaultPattern();
-        if (!is_notice_message_showed) {
-            Intent na=new Intent(mContext, ActivityNotification.class);
-            na.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            na.putExtra("SOUND", sound);
-            na.putExtra("SOUND_VOLUME", mGp.settingNotificationVolume);
-            na.putExtra("VIBRATE", vibration);
-            startActivity(na);
-        }
+        NotificationUtil.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
     }
-
-//    private void playBackDefaultNotification() {
-//        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//        if (uri != null) {
-//            final MediaPlayer player = MediaPlayer.create(mGp.appContext, uri);
-//            if (player != null) {
-//                float vol = (float) mGp.settingNotificationVolume / 100.0f;
-//                player.setVolume(vol, vol);
-//                if (player != null) {
-//                    final Thread th = new Thread() {
-//                        @Override
-//                        public void run() {
-//                            int dur = player.getDuration();
-//                            player.start();
-//                            SystemClock.sleep(dur + 10);
-//                            player.stop();
-//                            player.reset();
-//                            player.release();
-//                        }
-//                    };
-//                    th.setPriority(Thread.MAX_PRIORITY);
-//                    th.start();
-//                }
-//            } else {
-//                mUtil.addLogMsg("I", "Default notification can not playback, because default playback is not initialized.");
-//            }
-//        }
-//    }
-//
-//    private void vibrateDefaultPattern() {
-//        Thread th = new Thread() {
-//            @SuppressWarnings("deprecation")
-//            @Override
-//            public void run() {
-//                Vibrator vibrator = (Vibrator) mGp.appContext.getSystemService(Context.VIBRATOR_SERVICE);
-//                vibrator.vibrate(new long[]{0, 300, 200, 300}, -1);
-//            }
-//        };
-//        th.setPriority(Thread.MAX_PRIORITY);
-//        th.start();
-//    }
 
     private void showDialogWindow() {
         mGp.dialogWindowShowed = true;

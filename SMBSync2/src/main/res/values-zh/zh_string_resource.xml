@@ -838,6 +838,7 @@
     <!-- string -->
         <string name="app_name">SMBSync2</string>
         <string name="smbsync_main_title">SMBSync2</string>
+        <string name="app_name_for_notice_message">SMBSync2</string>
         <string name="app_name_auto_sync">StartSync</string>
     <!-- Setting log -->
         <string name="settings_log_file_max_count">settings_log_file_max_count</string>
