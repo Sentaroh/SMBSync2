@@ -440,8 +440,8 @@
         <string name="msgs_task_sync_task_sync_file_size_unit_mib">MiB</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_gib">GiB</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_type_none">使用しない</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_type_less_than">より小さい</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">より大きい</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_type_less_than">小さい</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">大きい</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">ファイルサイズが指定されていません</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits">ファイルサイズは5桁以上は使用できません</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">ファイルサイズは1以上を指定してください</string>
