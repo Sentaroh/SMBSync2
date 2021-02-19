@@ -1,3 +1,8 @@
+#### 2021-02-20 Ver2.48
+
+- Added file size and file last modified date to file filters
+- Added an option to ignore files with a file size of 0 bytes  
+
 #### 2021-01-08 Ver2.47
 
 - Correct translations
