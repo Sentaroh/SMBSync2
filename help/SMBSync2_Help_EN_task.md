@@ -259,7 +259,7 @@ If checked, it will display a warning message and the sync will continue without
 
 When sync mode is Move, after the files are moved to the target, the Master folder is also deleted. 
 
-## Ignore files with a file size of 0 Bytes  
+## Ignore empty files(0 Bytes size)
 If checked, files with a file size of 0 bytes will be ignored.  
 
 

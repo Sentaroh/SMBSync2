@@ -256,7 +256,7 @@ Si elle est cochée, elle affichera un message d'avertissement et la synchronisa
 
 Lorsque le mode de synchronisation est "Move", après que les fichiers aient été déplacés vers la cible, le dossier "Master" est également supprimé.  
 
-## Ignorer les fichiers d'une taille de 0 octet  
+## Ignorer les fichiers vides (0 octets de taille)
 Si cette option est cochée, les fichiers d'une taille de 0 octet seront ignorés.  
 
 ## Informations détaillées
