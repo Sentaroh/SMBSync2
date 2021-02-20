@@ -250,38 +250,13 @@ public class NotificationUtil {
         return gwa.notification;
     }
 
-    final static public void showNoticeMsg(Context c, GlobalParameters gwa, CommonUtilities util, String msg) {
-        clearNotification(gwa, util);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(c);
-        builder.setOngoing(false)
-                .setAutoCancel(true)
-                .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-                .setContentTitle(c.getString(R.string.app_name_for_notice_message))
-                .setContentText(msg)
-                .setWhen(System.currentTimeMillis())
-        ;
-        if (Build.VERSION.SDK_INT>=26) {
-            builder.setChannelId("SMBSync2");
-        } else {
-            builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        }
-        if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
-            Intent activity_intent = new Intent(c, ActivityMain.class);
-            PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.setContentIntent(activity_pi);
-        }
-        if (isNotificationEnabled(gwa))
-            gwa.notificationManager.notify(R.string.app_name_for_notice_message, builder.build());
-    }
-
     final static public void showNoticeMsg(Context c, GlobalParameters gwa, CommonUtilities util, String msg, boolean playback_sound, boolean vibration) {
         clearNotification(gwa, util);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(c);
         builder.setOngoing(false)
                 .setAutoCancel(true)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-                .setContentTitle(c.getString(R.string.app_name_for_notice_message))
+                .setContentTitle(c.getString(R.string.app_name))
                 .setContentText(msg)
                 .setWhen(System.currentTimeMillis())
         ;
@@ -299,8 +274,10 @@ public class NotificationUtil {
             PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
         }
-        if (isNotificationEnabled(gwa))
-            gwa.notificationManager.notify(R.string.app_name_for_notice_message, builder.build());
+        if (isNotificationEnabled(gwa)) {
+            gwa.notificationManager.notify(R.string.app_name, builder.build());
+            util.addDebugMsg(1, "I", "showNoticeMsg issued, msg="+msg);
+        }
     }
 
     final static public void clearNotification(GlobalParameters gwa, CommonUtilities util) {

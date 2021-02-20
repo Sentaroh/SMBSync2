@@ -114,8 +114,6 @@ public class Constants {
     public final static String REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT ="SYNC_COUNT";
     public final static String REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY ="SYNC_LIST";
 
-	public final static String SMBSYNC2_SERVICE_HEART_BEAT="com.sentaroh.android."+APPLICATION_TAG+".ACTION_SERVICE_HEART_BEAT";
-
 	public final static String SMBSYNC2_SYNC_STARTED="com.sentaroh.android."+APPLICATION_TAG+".ACTION_SYNC_STARTED";
 	public final static String SMBSYNC2_SYNC_ENDED="com.sentaroh.android."+APPLICATION_TAG+".ACTION_SYNC_ENDED";
 

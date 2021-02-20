@@ -47,11 +47,7 @@
 				<action android:name="com.sentaroh.android.SMBSync2.ACTION_TIMER_EXPIRED" />
 				<action android:name="com.sentaroh.android.SMBSync2.ACTION_SET_TIMER" />
 				<action android:name="com.sentaroh.android.SMBSync2.ACTION_SET_TIMER_IF_NOT_SET" />
-				<action android:name="com.sentaroh.android.SMBSync2.ACTION_START_SYNC"/>
-				<action android:name="com.sentaroh.android.SMBSync2.ACTION_AUTO_SYNC"/>
-                <action android:name="com.sentaroh.android.SMBSync2.ACTION_QUERY_SYNC_TASK"/>
-				<action android:name="com.sentaroh.android.SMBSync2.ACTION_SERVICE_HEART_BEAT"/>
- 												
+
 			</intent-filter>
 			
 			<intent-filter>
@@ -124,6 +120,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:label="@string/app_name"
+            android:name=".ActivityNotification"
+            android:theme="@android:style/Theme.Translucent"
+            android:launchMode="singleTop"
+            android:process=":Notify"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
+            android:screenOrientation="unspecified"
+            >
         </activity>
 
         <service android:name="com.sentaroh.android.SMBSync2.SyncService"/>

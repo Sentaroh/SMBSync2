@@ -55,8 +55,7 @@ public class ActivityIntentHandler extends Activity {
             final FragmentManager fm=getFragmentManager();
             try {
                 if (Build.VERSION.SDK_INT>=26) {
-//                    startForegroundService(in);
-                    startService(in);
+                    startForegroundService(in);
                 } else {
                     startService(in);
                 }
