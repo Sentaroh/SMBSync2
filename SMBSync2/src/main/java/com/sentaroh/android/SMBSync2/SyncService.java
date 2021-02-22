@@ -140,7 +140,6 @@ public class SyncService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        if (Build.VERSION.SDK_INT>=26) issueStartForeground();
         WakeLock wl = ((PowerManager) getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync-Service-1");
         wl.acquire(1000);
@@ -148,41 +147,63 @@ public class SyncService extends Service {
         if (intent != null) if (intent.getAction() != null) action = intent.getAction();
         if (action.equals(SCHEDULER_INTENT_TIMER_EXPIRED)) {
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
+            if (Build.VERSION.SDK_INT>=26) issueStartForeground();
             if (mGp.settingScheduleSyncEnabled) startSyncByScheduler(intent);
             else {
                 mUtil.addDebugMsg(1,"I","Schedule sync request is ignored because scheuler is disabled");
             }
         } else if (action.equals(SMBSYNC2_START_SYNC_INTENT)) {
+            if (Build.VERSION.SDK_INT>=26) issueStartForeground();
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             startSyncByAnotherAppl(intent);
         } else if (action.equals(SMBSYNC2_AUTO_SYNC_INTENT)) {
+            if (Build.VERSION.SDK_INT>=26) issueStartForeground();
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             startSyncByShortcut(intent);
         } else if (action.equals(QUERY_SYNC_TASK_INTENT)) {
+            if (Build.VERSION.SDK_INT>=26) issueStartForeground();
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             processQuerySyncTask(intent);
         } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) || action.equals(Intent.ACTION_MEDIA_UNMOUNTED) ||
                 action.equals(Intent.ACTION_MEDIA_EJECT)) {
+//            String path = intent.getDataString();
+//            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action+", Path="+path);
+//            final String sdcard = mGp.safMgr.getSdcardRootPath();
+//            final String usb_flash = mGp.safMgr.getUsbRootPath();
+//            Thread th = new Thread() {
+//                @Override
+//                public void run() {
+//                    mGp.refreshMediaDir(mContext);
+//                    mUtil.addDebugMsg(1, "I", "Media directory, SDCARD=" + mGp.safMgr.getSdcardRootPath() );
+//                    mUtil.addDebugMsg(1, "I", "Media directory, USB=" + mGp.safMgr.getUsbRootPath());
+//                    if (mGp.callbackStub != null && (!sdcard.equals(mGp.safMgr.getSdcardRootPath()) || !usb_flash.equals(mGp.safMgr.getUsbRootPath()))) {
+//                        try {
+//                            mGp.callbackStub.cbMediaStatusChanged();
+//                        } catch (RemoteException e) {
+//                            mUtil.addDebugMsg(1, "I", "Media directory refresh callback failed, error="+e.getMessage());
+//                        }
+//                    }
+//                }
+//            };
+//            th.start();
             String path = intent.getDataString();
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action+", Path="+path);
             final String sdcard = mGp.safMgr.getSdcardRootPath();
             final String usb_flash = mGp.safMgr.getUsbRootPath();
-            Thread th = new Thread() {
-                @Override
-                public void run() {
-                    mGp.refreshMediaDir(mContext);
-                    mUtil.addDebugMsg(1, "I", "Media directory, SDCARD=" + mGp.safMgr.getSdcardRootPath() );
-                    mUtil.addDebugMsg(1, "I", "Media directory, USB=" + mGp.safMgr.getUsbRootPath());
-                    if (mGp.callbackStub != null && (!sdcard.equals(mGp.safMgr.getSdcardRootPath()) || !usb_flash.equals(mGp.safMgr.getUsbRootPath()))) {
-                        try {
-                            mGp.callbackStub.cbMediaStatusChanged();
-                        } catch (RemoteException e) {
-                            mUtil.addDebugMsg(1, "I", "Media directory refresh callback failed, error="+e.getMessage());
-                        }
-                    }
+            mGp.refreshMediaDir(mContext);
+            mUtil.addDebugMsg(1, "I", "Media directory, SDCARD=" + mGp.safMgr.getSdcardRootPath() );
+            mUtil.addDebugMsg(1, "I", "Media directory, USB=" + mGp.safMgr.getUsbRootPath());
+            if (mGp.callbackStub != null && (!sdcard.equals(mGp.safMgr.getSdcardRootPath()) || !usb_flash.equals(mGp.safMgr.getUsbRootPath()))) {
+                try {
+                    mGp.callbackStub.cbMediaStatusChanged();
+                } catch (RemoteException e) {
+                    mUtil.addDebugMsg(1, "I", "Media directory refresh callback failed, error="+e.getMessage());
                 }
-            };
-            th.start();
+            }
+            if (Build.VERSION.SDK_INT>=26) {
+                issueStartForeground();
+                issueStopForegroundWithDetach();
+            }
         } else {
             mUtil.addDebugMsg(2, "I", "onStartCommand entered, action=" + action);
         }
@@ -244,8 +265,6 @@ public class SyncService extends Service {
         super.onDestroy();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         unregisterReceiver(mSleepReceiver);
-//        unregisterReceiver(mUsbReceiver);
-//        hideOngoingMessage();
         if (mGp.notificationLastShowedMessage != null && !mGp.notificationLastShowedMessage.equals("")) {
             showSyncEndNotificationMessage();
             mGp.notificationLastShowedMessage = null;
@@ -255,6 +274,7 @@ public class SyncService extends Service {
         LogUtil.closeLog(mContext, mGp);
         NotificationUtil.setNotificationEnabled(mGp, true);
         CommonUtilities.saveMsgList(mGp);
+        mGp.serviceIsActive=false;
         if (mGp.activityRestartRequired) {
             mGp.activityRestartRequired = false;
             mGp.clearParms();
