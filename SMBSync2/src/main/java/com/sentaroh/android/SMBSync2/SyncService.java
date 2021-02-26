@@ -40,6 +40,7 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
+import android.os.SystemClock;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 import com.sentaroh.android.Utilities.NotifyEvent;
@@ -88,6 +89,7 @@ public class SyncService extends Service {
     private Context mContext = null;
 
     private SleepReceiver mSleepReceiver = new SleepReceiver();
+    private MediaStatusChangeReceiver mMediaStatusChangeReceiver = new MediaStatusChangeReceiver();
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -123,6 +125,15 @@ public class SyncService extends Service {
         int_filter.addAction(Intent.ACTION_SCREEN_ON);
         int_filter.addAction(Intent.ACTION_USER_PRESENT);
         registerReceiver(mSleepReceiver, int_filter);
+
+        IntentFilter media_filter = new IntentFilter();
+        media_filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+        media_filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+        media_filter.addAction(Intent.ACTION_MEDIA_EJECT);
+        media_filter.addAction(Intent.ACTION_MEDIA_REMOVED);
+        media_filter.addDataScheme("file");
+        registerReceiver(mMediaStatusChangeReceiver, media_filter);
+
     }
 
     private String getApplVersionName() {
@@ -164,46 +175,6 @@ public class SyncService extends Service {
             if (Build.VERSION.SDK_INT>=26) issueStartForeground();
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             processQuerySyncTask(intent);
-        } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) || action.equals(Intent.ACTION_MEDIA_UNMOUNTED) ||
-                action.equals(Intent.ACTION_MEDIA_EJECT)) {
-//            String path = intent.getDataString();
-//            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action+", Path="+path);
-//            final String sdcard = mGp.safMgr.getSdcardRootPath();
-//            final String usb_flash = mGp.safMgr.getUsbRootPath();
-//            Thread th = new Thread() {
-//                @Override
-//                public void run() {
-//                    mGp.refreshMediaDir(mContext);
-//                    mUtil.addDebugMsg(1, "I", "Media directory, SDCARD=" + mGp.safMgr.getSdcardRootPath() );
-//                    mUtil.addDebugMsg(1, "I", "Media directory, USB=" + mGp.safMgr.getUsbRootPath());
-//                    if (mGp.callbackStub != null && (!sdcard.equals(mGp.safMgr.getSdcardRootPath()) || !usb_flash.equals(mGp.safMgr.getUsbRootPath()))) {
-//                        try {
-//                            mGp.callbackStub.cbMediaStatusChanged();
-//                        } catch (RemoteException e) {
-//                            mUtil.addDebugMsg(1, "I", "Media directory refresh callback failed, error="+e.getMessage());
-//                        }
-//                    }
-//                }
-//            };
-//            th.start();
-            String path = intent.getDataString();
-            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action+", Path="+path);
-            final String sdcard = mGp.safMgr.getSdcardRootPath();
-            final String usb_flash = mGp.safMgr.getUsbRootPath();
-            mGp.refreshMediaDir(mContext);
-            mUtil.addDebugMsg(1, "I", "Media directory, SDCARD=" + mGp.safMgr.getSdcardRootPath() );
-            mUtil.addDebugMsg(1, "I", "Media directory, USB=" + mGp.safMgr.getUsbRootPath());
-            if (mGp.callbackStub != null && (!sdcard.equals(mGp.safMgr.getSdcardRootPath()) || !usb_flash.equals(mGp.safMgr.getUsbRootPath()))) {
-                try {
-                    mGp.callbackStub.cbMediaStatusChanged();
-                } catch (RemoteException e) {
-                    mUtil.addDebugMsg(1, "I", "Media directory refresh callback failed, error="+e.getMessage());
-                }
-            }
-            if (Build.VERSION.SDK_INT>=26) {
-                issueStartForeground();
-                issueStopForegroundWithDetach();
-            }
         } else {
             mUtil.addDebugMsg(2, "I", "onStartCommand entered, action=" + action);
         }
@@ -265,6 +236,7 @@ public class SyncService extends Service {
         super.onDestroy();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         unregisterReceiver(mSleepReceiver);
+        unregisterReceiver(mMediaStatusChangeReceiver);
         if (mGp.notificationLastShowedMessage != null && !mGp.notificationLastShowedMessage.equals("")) {
             showSyncEndNotificationMessage();
             mGp.notificationLastShowedMessage = null;
@@ -274,7 +246,6 @@ public class SyncService extends Service {
         LogUtil.closeLog(mContext, mGp);
         NotificationUtil.setNotificationEnabled(mGp, true);
         CommonUtilities.saveMsgList(mGp);
-        mGp.serviceIsActive=false;
         if (mGp.activityRestartRequired) {
             mGp.activityRestartRequired = false;
             mGp.clearParms();
@@ -883,6 +854,29 @@ public class SyncService extends Service {
                 }
             }
         }
+    }
+
+    final private class MediaStatusChangeReceiver extends BroadcastReceiver {
+        @Override
+        final public void onReceive(Context c, Intent in) {
+            String action = in.getAction();
+            mUtil.addDebugMsg(1, "I", "Media status change receiver, action=" + action);
+            if (action.equals(Intent.ACTION_MEDIA_MOUNTED) || action.equals(Intent.ACTION_MEDIA_UNMOUNTED)
+                    || action.equals(Intent.ACTION_MEDIA_EJECT) || action.equals(Intent.ACTION_MEDIA_REMOVED)) {
+                if (action.equals(Intent.ACTION_MEDIA_EJECT)) SystemClock.sleep(1000);
+                mGp.refreshMediaDir(c);
+                try {
+                    if (mGp.callbackStub != null) {
+                        mGp.callbackStub.cbMediaStatusChanged();
+                        mUtil.addDebugMsg(1, "I", "Media status change was notified to activity");
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                mUtil.addDebugMsg(1, "I", "Media status change process ended, path=" + in.getDataString());
+            }
+        }
+
     }
 
 }

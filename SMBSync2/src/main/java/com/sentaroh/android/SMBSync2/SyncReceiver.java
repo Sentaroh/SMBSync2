@@ -93,29 +93,6 @@ public class SyncReceiver extends BroadcastReceiver {
                 for (ScheduleItem si : mSchedList) si.scheduleLastExecTime = System.currentTimeMillis();
                 ScheduleUtil.saveScheduleData(c, mGp, mSchedList, true);//Use apply by shared preference edit
                 setTimer();
-            } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) ||
-                    action.equals(Intent.ACTION_MEDIA_EJECT) ||
-                    action.equals(Intent.ACTION_MEDIA_REMOVED) ||
-                    action.equals(Intent.ACTION_MEDIA_UNMOUNTED)) {
-                mLog.addDebugMsg(1, "I", "Receiver action=" + action+", serviceIsActive="+mGp.serviceIsActive);
-                if (mGp.serviceIsActive) {
-                    Intent in = new Intent(mContext, SyncService.class);
-                    in.setAction(action);
-                    in.setData(received_intent.getData());
-                    if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
-                    try {
-                        if (Build.VERSION.SDK_INT>=26) {
-                            mContext.startForegroundService(in);
-                        } else {
-                            mContext.startService(in);
-                        }
-                    } catch(Exception e) {
-                        mLog.addDebugMsg(1,"E", "startService filed, action="+action+", error=" + e.getMessage());
-                        mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
-                    }
-                } else {
-                    mLog.addDebugMsg(1, "I", "Media mount/unmount ignored");
-                }
             } else if (action.equals(SCHEDULER_INTENT_SET_TIMER)) {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);
                 setTimer();

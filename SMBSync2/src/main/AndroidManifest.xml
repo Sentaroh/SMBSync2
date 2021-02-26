@@ -50,23 +50,23 @@
 
 			</intent-filter>
 			
-			<intent-filter>
- 				<action android:name="android.intent.action.MEDIA_MOUNTED"></action>
-    			<data android:scheme="file" />
+<!--			<intent-filter>-->
+<!-- 				<action android:name="android.intent.action.MEDIA_MOUNTED"></action>-->
+<!--    			<data android:scheme="file" />-->
 
- 				<action android:name="android.intent.action.MEDIA_EJECT"></action>
-    			<data android:scheme="file" />
- 				<action android:name="android.intent.action.MEDIA_REMOVED"></action>
-    			<data android:scheme="file" />
-    									
- 				<action android:name="android.intent.action.MEDIA_UNMOUNTED"></action>
-    			<data android:scheme="file" />
-			</intent-filter>
-			
-			<intent-filter>
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-                <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
-            </intent-filter>
+<!-- 				<action android:name="android.intent.action.MEDIA_EJECT"></action>-->
+<!--    			<data android:scheme="file" />-->
+<!-- 				<action android:name="android.intent.action.MEDIA_REMOVED"></action>-->
+<!--    			<data android:scheme="file" />-->
+<!--    									-->
+<!-- 				<action android:name="android.intent.action.MEDIA_UNMOUNTED"></action>-->
+<!--    			<data android:scheme="file" />-->
+<!--			</intent-filter>-->
+<!--			-->
+<!--			<intent-filter>-->
+<!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
+<!--                <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />-->
+<!--            </intent-filter>-->
 
 		</receiver>
 
