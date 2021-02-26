@@ -158,21 +158,21 @@ public class SyncService extends Service {
         if (intent != null) if (intent.getAction() != null) action = intent.getAction();
         if (action.equals(SCHEDULER_INTENT_TIMER_EXPIRED)) {
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
-            if (Build.VERSION.SDK_INT>=26) issueStartForeground();
+            issueStartForeground();
             if (mGp.settingScheduleSyncEnabled) startSyncByScheduler(intent);
             else {
                 mUtil.addDebugMsg(1,"I","Schedule sync request is ignored because scheuler is disabled");
             }
         } else if (action.equals(SMBSYNC2_START_SYNC_INTENT)) {
-            if (Build.VERSION.SDK_INT>=26) issueStartForeground();
+            issueStartForeground();
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             startSyncByAnotherAppl(intent);
         } else if (action.equals(SMBSYNC2_AUTO_SYNC_INTENT)) {
-            if (Build.VERSION.SDK_INT>=26) issueStartForeground();
+            issueStartForeground();
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             startSyncByShortcut(intent);
         } else if (action.equals(QUERY_SYNC_TASK_INTENT)) {
-            if (Build.VERSION.SDK_INT>=26) issueStartForeground();
+            issueStartForeground();
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             processQuerySyncTask(intent);
         } else {
