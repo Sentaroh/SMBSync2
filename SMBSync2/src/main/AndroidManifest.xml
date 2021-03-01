@@ -108,6 +108,7 @@
             android:name=".ActivityIntentHandler"
             android:theme="@android:style/Theme.Translucent"
             android:launchMode="singleTop"
+            android:taskAffinity=".ActivityIntentHandler"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
             android:screenOrientation="unspecified"
             >

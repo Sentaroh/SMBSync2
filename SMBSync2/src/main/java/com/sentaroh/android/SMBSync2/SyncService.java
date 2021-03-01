@@ -171,10 +171,6 @@ public class SyncService extends Service {
             issueStartForeground();
             mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             startSyncByShortcut(intent);
-        } else if (action.equals(QUERY_SYNC_TASK_INTENT)) {
-            issueStartForeground();
-            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
-            processQuerySyncTask(intent);
         } else {
             mUtil.addDebugMsg(2, "I", "onStartCommand entered, action=" + action);
         }
@@ -292,46 +288,6 @@ public class SyncService extends Service {
                 return si;
         }
         return null;
-    }
-
-    private void processQuerySyncTask(Intent in) {
-        String reply_list="", sep="";
-        String task_type=QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO;
-        if (in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE)!=null) task_type=in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE);
-        mUtil.addDebugMsg(1,"I","extra="+in.getExtras()+", str="+in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE));
-        int reply_count=0;
-        if (mGp.syncTaskList.size()>0) {
-            for(int i=0;i<mGp.syncTaskList.size();i++) {
-                SyncTaskItem sti=mGp.syncTaskList.get(i);
-                if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST.toLowerCase())) {
-                    if (sti.isSyncTestMode()) {
-                        reply_list+=sep+sti.getSyncTaskName();
-                        sep=SYNC_TASK_LIST_SEPARATOR;
-                        reply_count++;
-                    }
-                } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO.toLowerCase())) {
-                    if (sti.isSyncTaskAuto()) {
-                        reply_list+=sep+sti.getSyncTaskName();
-                        sep=SYNC_TASK_LIST_SEPARATOR;
-                        reply_count++;
-                    }
-                } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL.toLowerCase())) {
-                    if (!sti.isSyncTaskAuto()) {
-                        reply_list+=sep+sti.getSyncTaskName();
-                        sep=SYNC_TASK_LIST_SEPARATOR;
-                        reply_count++;
-                    }
-                } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL.toLowerCase())) {
-                    reply_list+=sep+sti.getSyncTaskName();
-                    sep=SYNC_TASK_LIST_SEPARATOR;
-                    reply_count++;
-                }
-            }
-        }
-        Intent reply=new Intent(REPLY_SYNC_TASK_INTENT);
-        reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT, reply_count);
-        reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY, reply_list);
-        mContext.sendBroadcast(reply);
     }
 
     private void startSyncByScheduler(Intent in) {
