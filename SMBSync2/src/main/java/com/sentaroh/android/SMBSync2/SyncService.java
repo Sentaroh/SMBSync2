@@ -49,15 +49,6 @@ import com.sentaroh.android.Utilities.NotifyEvent.NotifyEventListener;
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE;
-import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL;
-import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO;
-import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL;
-import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST;
-import static com.sentaroh.android.SMBSync2.Constants.QUERY_SYNC_TASK_INTENT;
-import static com.sentaroh.android.SMBSync2.Constants.REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY;
-import static com.sentaroh.android.SMBSync2.Constants.REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT;
-import static com.sentaroh.android.SMBSync2.Constants.REPLY_SYNC_TASK_INTENT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_AUTO_SYNC_INTENT;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_EXTRA_PARM_SYNC_PROFILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
@@ -152,27 +143,28 @@ public class SyncService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         WakeLock wl = ((PowerManager) getSystemService(Context.POWER_SERVICE))
-                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync-Service-1");
+                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync2-Service-onStartCommand");
         wl.acquire(1000);
+        startForegroundCompat();
+        if (!mGp.activityIsBackground || mGp.syncThreadActive) stopForegroundCompat();
         String action = "";
         if (intent != null) if (intent.getAction() != null) action = intent.getAction();
+        mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action+", mGp.activityIsBackground="+mGp.activityIsBackground);
         if (action.equals(SCHEDULER_INTENT_TIMER_EXPIRED)) {
-            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
-            issueStartForeground();
-            if (mGp.settingScheduleSyncEnabled) startSyncByScheduler(intent);
-            else {
+            if (mGp.settingScheduleSyncEnabled) {
+                startSyncByScheduler(intent);
+            } else {
                 mUtil.addDebugMsg(1,"I","Schedule sync request is ignored because scheuler is disabled");
             }
         } else if (action.equals(SMBSYNC2_START_SYNC_INTENT)) {
-            issueStartForeground();
-            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             startSyncByAnotherAppl(intent);
         } else if (action.equals(SMBSYNC2_AUTO_SYNC_INTENT)) {
-            issueStartForeground();
-            mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
             startSyncByShortcut(intent);
         } else {
-            mUtil.addDebugMsg(2, "I", "onStartCommand entered, action=" + action);
+            if (isServiceToBeStopped()) {
+                stopForegroundCompat();
+                stopSelf();
+            }
         }
         return START_STICKY;
     }
@@ -191,35 +183,37 @@ public class SyncService extends Service {
         return super.onUnbind(intent);
     }
 
-    private void issueStopForegroundWithRemove() {
-        if (Build.VERSION.SDK_INT>=26) {
-            stopForeground(Service.STOP_FOREGROUND_REMOVE);
-            mGp.notificationManager.cancel(R.string.app_name);
-            mUtil.addDebugMsg(1, "I", "stopForeground(Service.STOP_FOREGROUND_REMOVE) issued");
-        } else {
-            stopForeground(true);
-            mUtil.addDebugMsg(1, "I", "stopForeground(true) issued");
-        }
-        mStartForegroundRequired=true;
-    }
-
-    private void issueStopForegroundWithDetach() {
+    private void stopForegroundCompat() {
         if (Build.VERSION.SDK_INT>=26) {
             stopForeground(Service.STOP_FOREGROUND_DETACH);
+            SystemClock.sleep(50);
+            stopForeground(Service.STOP_FOREGROUND_REMOVE);
             mGp.notificationManager.cancel(R.string.app_name);
-            mUtil.addDebugMsg(1, "I", "stopForeground(Service.STOP_FOREGROUND_DETACH) issued");
+            mUtil.addDebugMsg(1, "I", "stopForeground(Service.STOP_FOREGROUND_DETACH&REMOVE) issued");
         } else {
             stopForeground(true);
             mUtil.addDebugMsg(1, "I", "stopForeground(true) issued");
         }
-        mStartForegroundRequired=true;
+        mStartForegroundActive =false;
     }
 
-    private boolean mStartForegroundRequired=true;
+//    private void stopForegroundCompatRemoveX() {
+//        if (Build.VERSION.SDK_INT>=26) {
+//            stopForeground(Service.STOP_FOREGROUND_REMOVE);
+//            mGp.notificationManager.cancel(R.string.app_name);
+//            mUtil.addDebugMsg(1, "I", "stopForeground(Service.STOP_FOREGROUND_REMOVE) issued");
+//        } else {
+//            stopForeground(true);
+//            mUtil.addDebugMsg(1, "I", "stopForeground(true) issued");
+//        }
+//        mStartForegroundActive =false;
+//    }
 
-    private void issueStartForeground() {
-        if (mStartForegroundRequired) {
-            mStartForegroundRequired=false;
+    private boolean mStartForegroundActive =false;
+
+    private void startForegroundCompat() {
+        if (!mStartForegroundActive) {
+            mStartForegroundActive =true;
             startForeground(R.string.app_name, mGp.notification);
             mUtil.addDebugMsg(1, "I", "startForeground(R.string.app_name, mGp.notification) issued.");
         } else {
@@ -295,29 +289,31 @@ public class SyncService extends Service {
 
         mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler));
 
+        boolean task_queued=false;
         if (in.getExtras().containsKey(SCHEDULER_SCHEDULE_NAME_KEY)) {
             String schedule_name_list = in.getStringExtra(SCHEDULER_SCHEDULE_NAME_KEY);
             mUtil.addDebugMsg(1,"I", "Schedule information, name=" + schedule_name_list);
             String[] schedule_list=schedule_name_list.split(SYNC_TASK_LIST_SEPARATOR);
 
-            startSyncByScheduler(schedule_list);
+            task_queued=startSyncByScheduler(schedule_list);
 
         }
         if (isServiceToBeStopped()) {
-            issueStopForegroundWithDetach();
+            stopForegroundCompat();
             showSyncEndNotificationMessage();
             stopSelf();
         }
     }
 
-    private void startSyncByScheduler(String[] schedule_list) {
+    private boolean startSyncByScheduler(String[] schedule_list) {
+        boolean task_queued=false;
         ArrayList<ScheduleItem> scheduleInfoList = ScheduleUtil.loadScheduleData(mContext, mGp);
         for(String schedule_name:schedule_list) {
             mUtil.addDebugMsg(1, "I", "Schedule start, name=" + schedule_name);
             ScheduleItem si = getScheduleInformation(scheduleInfoList, schedule_name);
             if (si!=null) {
                 if (si.syncAutoSyncTask) {
-                    queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
+                    task_queued=queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
                 } else {
                     if (si.syncTaskList != null && si.syncTaskList.length() > 0) {
                         String[] pl = si.syncTaskList.split(SYNC_TASK_LIST_SEPARATOR);
@@ -332,7 +328,7 @@ public class SyncService extends Service {
                         }
                         if (!n_tl.equals("")) {
                             String[] n_pl = n_tl.split(SYNC_TASK_LIST_SEPARATOR);
-                            queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
+                            task_queued=queueSpecificSyncTask(n_pl, SMBSYNC2_SYNC_REQUEST_SCHEDULE, si);
                         } else {
                             mUtil.addLogMsg("E", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler_no_task_list));
                         }
@@ -344,13 +340,14 @@ public class SyncService extends Service {
                 mUtil.addLogMsg("W","Specified schedule name was not found, name=",schedule_name);
             }
         }
-        if (!mGp.syncThreadActive) {
+        if (task_queued && !mGp.syncThreadActive) {
             startSyncThread();
         }
-
+        return task_queued;
     }
 
-    private void startSyncByAnotherAppl(Intent in) {
+    private boolean startSyncByAnotherAppl(Intent in) {
+        boolean task_queued=false;
         mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_external));
         Bundle bundle = in.getExtras();
         if (bundle != null) {
@@ -373,7 +370,10 @@ public class SyncService extends Service {
                     if (pl.size() > 0) {
                         String[] nspl = new String[pl.size()];
                         for (int i = 0; i < pl.size(); i++) nspl[i] = pl.get(i);
-                        queueSpecificSyncTask(nspl, SMBSYNC2_SYNC_REQUEST_EXTERNAL);
+                        task_queued=queueSpecificSyncTask(nspl, SMBSYNC2_SYNC_REQUEST_EXTERNAL);
+                        if (task_queued && !mGp.syncThreadActive) {
+                            startSyncThread();
+                        }
                     } else {
                         mUtil.addLogMsg("W",
                                 mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_list));
@@ -393,16 +393,17 @@ public class SyncService extends Service {
             }
         } else {
             mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_external_auto_task));
-            queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_EXTERNAL);
-            if (!mGp.syncThreadActive) {
+            task_queued=queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_EXTERNAL);
+            if (task_queued && !mGp.syncThreadActive) {
                 startSyncThread();
             }
         }
         if (isServiceToBeStopped()) {
-            issueStopForegroundWithDetach();
+            stopForegroundCompat();
             showSyncEndNotificationMessage();
             stopSelf();
         }
+        return task_queued;
     }
 
     private void startSyncByShortcut(Intent in) {
@@ -412,7 +413,7 @@ public class SyncService extends Service {
             startSyncThread();
         }
         if (isServiceToBeStopped()) {
-            issueStopForegroundWithDetach();
+            stopForegroundCompat();
             showSyncEndNotificationMessage();
             stopSelf();
         }
@@ -450,7 +451,11 @@ public class SyncService extends Service {
 
         @Override
         public void aidlStartSpecificSyncTask(String[] job_name) throws RemoteException {
-            queueSpecificSyncTask(job_name, SMBSYNC2_SYNC_REQUEST_ACTIVITY);
+            boolean task_queued=false;
+            task_queued=queueSpecificSyncTask(job_name, SMBSYNC2_SYNC_REQUEST_ACTIVITY);
+            if (task_queued && !mGp.syncThreadActive) {
+                startSyncThread();
+            }
         }
 
         @Override
@@ -460,8 +465,9 @@ public class SyncService extends Service {
 
         @Override
         public void aidlStartAutoSyncTask() throws RemoteException {
-            queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_ACTIVITY);
-            if (!mGp.syncThreadActive) {
+            boolean task_queued=false;
+            task_queued=queueAutoSyncTask(SMBSYNC2_SYNC_REQUEST_ACTIVITY);
+            if (task_queued && !mGp.syncThreadActive) {
                 startSyncThread();
             }
         }
@@ -491,7 +497,7 @@ public class SyncService extends Service {
     private void setActivityForeground() {
         mGp.activityIsBackground = false;
         NotificationUtil.setNotificationEnabled(mGp, false);
-        issueStopForegroundWithRemove();
+        stopForegroundCompat();
         NotificationUtil.clearNotification(mGp, mUtil);
     }
 
@@ -499,7 +505,7 @@ public class SyncService extends Service {
         mGp.activityIsBackground = true;
         NotificationUtil.setNotificationEnabled(mGp, true);
         if (mGp.syncThreadActive) {
-            issueStartForeground();
+            startForegroundCompat();
         }
     }
 
@@ -533,7 +539,8 @@ public class SyncService extends Service {
         return result;
     }
 
-    private void queueSpecificSyncTask(String job_name[], String req_id, ScheduleItem si) {
+    private boolean queueSpecificSyncTask(String job_name[], String req_id, ScheduleItem si) {
+        boolean task_queued=false;
         SyncRequestItem sri = new SyncRequestItem();
         sri.schedule_name=si.scheduleName;
         sri.wifi_off_after_sync_ended = si.syncWifiOffAfterEnd;
@@ -569,6 +576,7 @@ public class SyncService extends Service {
                                 mUtil.addLogMsg("I", String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted_schedule),
                                         sri.schedule_name, job_name[i], sri.request_id_display));
                             }
+                            task_queued=true;
                         }
                     } else {
                         mUtil.addLogMsg("W",
@@ -587,22 +595,23 @@ public class SyncService extends Service {
         } else {
 //            mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_specified_sync_task_not_scheduled));
         }
+        return task_queued;
     }
 
-    private void queueSpecificSyncTask(String job_name[], String req_id) {
+    private boolean queueSpecificSyncTask(String job_name[], String req_id) {
+        boolean task_queued=false;
         ScheduleItem si=new ScheduleItem();
         si.scheduleName="";
         si.syncWifiOnBeforeStart=false;
         si.syncDelayAfterWifiOn=0;
         si.syncWifiOffAfterEnd=false;
         si.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
-        queueSpecificSyncTask(job_name, req_id, si);
-        if (!mGp.syncThreadActive) {
-            startSyncThread();
-        }
+        task_queued=queueSpecificSyncTask(job_name, req_id, si);
+        return task_queued;
     }
 
-    private void queueAutoSyncTask(String req_id, ScheduleItem si) {
+    private boolean queueAutoSyncTask(String req_id, ScheduleItem si) {
+        boolean task_queued=false;
         int cnt = 0;
         SyncRequestItem sri = new SyncRequestItem();
         sri.schedule_name=si.scheduleName;
@@ -646,19 +655,23 @@ public class SyncService extends Service {
                 NotificationUtil.showOngoingMsg(mGp, mUtil, System.currentTimeMillis(),
                         mContext.getString(R.string.msgs_active_sync_prof_not_found));
             } else {
+                task_queued=true;
                 mGp.syncRequestQueue.add(sri);
             }
         }
+        return task_queued;
     }
 
-    private void queueAutoSyncTask(String req_id) {
+    private boolean queueAutoSyncTask(String req_id) {
+        boolean task_queued=false;
         ScheduleItem si=new ScheduleItem();
         si.scheduleName="";
         si.syncWifiOnBeforeStart=false;
         si.syncDelayAfterWifiOn=0;
         si.syncWifiOffAfterEnd=false;
         si.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
-        queueAutoSyncTask(req_id, si);
+        task_queued=queueAutoSyncTask(req_id, si);
+        return task_queued;
     }
 
     private void startSyncThread() {
@@ -669,7 +682,7 @@ public class SyncService extends Service {
             return;
         }
         if (NotificationUtil.isNotificationEnabled(mGp)) {
-            issueStartForeground();
+            startForegroundCompat();
         }
         if (mGp.syncRequestQueue.size() > 0) {
             mGp.acquireWakeLock(mContext, mUtil);
@@ -682,11 +695,11 @@ public class SyncService extends Service {
                     hideDialogWindow();
                     synchronized (mGp.syncRequestQueue) {
                         if (mGp.syncRequestQueue.size() > 0) {
-                            issueStopForegroundWithRemove();
+                            stopForegroundCompat();
                             showSyncEndNotificationMessage();
                             startSyncThread();
                         } else {
-                            issueStopForegroundWithRemove();
+                            stopForegroundCompat();
                             showSyncEndNotificationMessage();
                             mGp.notificationLastShowedMessage = "";
                             if (mGp.callbackStub == null) {
@@ -703,7 +716,7 @@ public class SyncService extends Service {
                     hideDialogWindow();
                     synchronized (mGp.syncRequestQueue) {
                         mGp.syncRequestQueue.clear();
-                        issueStopForegroundWithRemove();
+                        stopForegroundCompat();
                         showSyncEndNotificationMessage();
                         mGp.notificationLastShowedMessage = "";
                         if (mGp.callbackStub == null) {
@@ -721,7 +734,7 @@ public class SyncService extends Service {
             tm.start();
         } else {
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " task has not started, queued task does not exist");
-            issueStopForegroundWithRemove();
+            stopForegroundCompat();
         }
     }
 

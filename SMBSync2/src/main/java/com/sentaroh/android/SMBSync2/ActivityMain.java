@@ -455,7 +455,6 @@ public class ActivityMain extends AppCompatActivity {
         super.onPause();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered " + ",currentView=" + mCurrentTab +
                 ", getChangingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
-        setActivityForeground(false);
         if (!isTaskTermination) saveTaskData();
         CommonUtilities.saveMsgList(mGp);//Save last updated message tab list
     }
@@ -464,6 +463,7 @@ public class ActivityMain extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+        setActivityForeground(false);
     }
 
     @Override
@@ -5272,6 +5272,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void openService(final NotifyEvent p_ntfy) {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+        mGp.activityIsBackground=false;
         mSvcConnection = new ServiceConnection() {
             public void onServiceConnected(ComponentName arg0, IBinder service) {
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
