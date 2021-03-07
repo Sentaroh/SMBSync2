@@ -1,3 +1,17 @@
+#### 2021-03-07 Ver2.49
+
+- Fixed the bug that notification messages remain.
+
+#### 2021-03-01 Ver2.50
+
+- Improved Chinese (zh)
+- Resolved a bug that left a notification message when rebooting
+
+#### 2021-02-22 Ver2.49
+
+- Fixed bug that file size filter warning message is always displayed when app is launched.
+- Fixed the bug that notification messages remain.
+
 #### 2021-02-20 Ver2.48
 
 - Added file size and file last modified date to file filters
