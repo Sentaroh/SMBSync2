@@ -225,21 +225,35 @@ public class SyncTaskUtil {
                 return o2.getName().compareToIgnoreCase(o1.getName());
             }
         });
-        SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
         boolean latest_used=false;
         for(File item:auto_saved_file_list) {
+            String filename=item.getName();
+            if (filename.indexOf(".stf") > 0)
+                filename = filename.substring(0, filename.lastIndexOf(".stf"));
             String entry="";
             if (!latest_used) {
                 latest_used=true;
-                entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item_latest), sdf.format(item.lastModified()));
+                entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item_latest), filename);
             } else {
-                entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item), sdf.format(item.lastModified()));
+                entry=String.format(mContext.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item), filename);
             }
             auto_saved_selector_list.add(entry);
         }
 
         final ArrayList<String>manual_save_file_list=getExportedFileList();
         final ArrayList<String>manual_save_selector_list=new ArrayList<String>();
+        Collections.sort(manual_save_file_list, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                File o1_file=new File(o1);
+                File o2_file=new File(o2);
+//                return (int)(o2_file.lastModified()-o1_file.lastModified());
+                return o2_file.getName().compareToIgnoreCase(o1_file.getName());
+            }
+        });
+
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         for(int i=0;i<manual_save_file_list.size();i++) {
             String fp_item=manual_save_file_list.get(i);
             File lf=new File(fp_item);
@@ -8079,6 +8093,7 @@ public class SyncTaskUtil {
         }
         return as_fl;
     }
+
     public static boolean autosaveSyncTaskList(GlobalParameters mGp, Activity c, CommonUtilities util, CommonDialog cd,
                                                ArrayList<SyncTaskItem> pfl) {
         boolean result=false;
