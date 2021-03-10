@@ -7941,7 +7941,7 @@ public class SyncTaskUtil {
             }
 
             if (!parm[97].equals("") && !parm[97].equals("end")) {
-                if (parm[97].length() <= 5 && TextUtils.isDigitsOnly(parm[97]) && Integer.parseInt(parm[97]) >= 0) { //max 5 digits allowed and value >= 0
+                if (parm[97].length() <= 5 && TextUtils.isDigitsOnly(parm[97]) && Integer.parseInt(parm[97]) > 0) { //max 5 digits allowed and value > 0
                     stli.setSyncFilterFileSizeValue(parm[97]);
                 } else {
                     stli.setSyncFilterFileSizeValue(SyncTaskItem.FILTER_FILE_SIZE_VALUE_DEFAULT);
