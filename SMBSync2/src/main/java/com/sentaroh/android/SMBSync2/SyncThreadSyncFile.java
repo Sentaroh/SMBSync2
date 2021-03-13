@@ -134,8 +134,8 @@ public class SyncThreadSyncFile {
                 }
             } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
-                    remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
-                } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
+                    remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir);
+                } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir);
                 } //file is excluded by filters: never remove target file, isSmbFileExists: do not wate time checking it
 
@@ -246,8 +246,8 @@ public class SyncThreadSyncFile {
                 }
             } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
-                    remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
-                } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
+                    remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir);
+                } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir);
                 } //file is excluded by filters: never remove target file, isSmbFileExists: do not wate time checking it
 
@@ -350,8 +350,8 @@ public class SyncThreadSyncFile {
                 }
             } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
-                    remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
-                } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
+                    remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir) || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir);
+                } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
                     remove_tf = !isSmbFileExists(stwa, smb_fl, master_dir);
                 } //file is excluded by filters: never remove target file, isSmbFileExists: do not wate time checking it
 
@@ -453,8 +453,8 @@ public class SyncThreadSyncFile {
         } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
             if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                 mf = new File(master_dir);
-                remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
-            } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
+                remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir);
+            } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
                 mf = new File(master_dir);
                 remove_tf = !mf.exists();
             } //file is excluded by filters: never remove target file, mf.exists(): do not wate time checking it
@@ -565,8 +565,8 @@ public class SyncThreadSyncFile {
             } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
                 if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                     mf = new File(master_dir);
-                    remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
-                } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
+                    remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir);
+                } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
                     mf = new File(master_dir);
                     remove_tf = !mf.exists();
                 } //file is excluded by filters: never remove target file, mf.exists(): do not wate time checking it
@@ -661,8 +661,8 @@ public class SyncThreadSyncFile {
         } else if (!is_Directory && !SyncThread.isHiddenFile(stwa, sti, tf)) { // file Delete
             if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
                 mf = new File(master_dir);
-                remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelected(stwa, sti, tmp_target_dir);
-            } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelected(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
+                remove_tf = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) || !SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir);
+            } else if (SyncThread.isDirectorySelectedByFileName(stwa, tmp_target_dir) && SyncThread.isFileSelectedByName(stwa, sti, tmp_target_dir)) {//delete target file if it is included by filters and it doesn't exist on source
                 mf = new File(master_dir);
                 remove_tf = !mf.exists();
             } //file is excluded by filters: never remove target file, mf.exists(): do not wate time checking it

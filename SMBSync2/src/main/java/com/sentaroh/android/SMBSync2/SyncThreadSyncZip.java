@@ -692,8 +692,8 @@ public class SyncThreadSyncZip {
                         } //target dir is excluded by filters: never remove target dir (remove_zfli=false), do not waste time checking mf.exists()
                     } else if (!is_directory && !SyncThread.isHiddenFile(stwa, sti, zf_name)) { // file Delete
                         if (sti.isSyncOptionEnsureTargetIsExactMirror()) {//delete target file if source doesn't exist or if the file is excluded/not included by filters
-                            remove_zfli = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, zf_name) || !SyncThread.isFileSelected(stwa, sti, zf_name);
-                        } else if (SyncThread.isDirectorySelectedByFileName(stwa, zf_name) && SyncThread.isFileSelected(stwa, sti, zf_name)) {//delete target file if it is included by filters and it doesn't exist on source
+                            remove_zfli = !mf.exists() || !SyncThread.isDirectorySelectedByFileName(stwa, zf_name) || !SyncThread.isFileSelectedByName(stwa, sti, zf_name);
+                        } else if (SyncThread.isDirectorySelectedByFileName(stwa, zf_name) && SyncThread.isFileSelectedByName(stwa, sti, zf_name)) {//delete target file if it is included by filters and it doesn't exist on source
                             remove_zfli = !mf.exists();
                         } //file is excluded by filters: never remove target file, do not waste time checking mf.exists()
                     }
