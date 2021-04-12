@@ -31,6 +31,7 @@ import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -159,7 +160,7 @@ public class SyncThread extends Thread {
 
         public CommonUtilities util = null;
 
-//        public MediaScannerConnection mediaScanner = null;
+        public MediaScannerConnection mediaScanner = null;
 
         public PrintWriter syncHistoryWriter = null;
 
@@ -215,7 +216,6 @@ public class SyncThread extends Thread {
         mGp.safMgr.setDebugEnabled(mGp.settingDebugLevel > 1);
         mGp.safMgr.loadSafFile();
         mGp.initJcifsOption(c);
-//        prepareMediaScanner();
 
         mStwa.msgs_mirror_task_file_copying = c.getString(R.string.msgs_mirror_task_file_copying);
         mStwa.msgs_mirror_task_file_replaced = c.getString(R.string.msgs_mirror_task_file_replaced);
@@ -262,7 +262,8 @@ public class SyncThread extends Thread {
 
             loadLocalFileLastModList();
 
-//            waitMediaScannerConnected();
+            prepareMediaScanner();
+            waitMediaScannerConnected();
 
             mGp.syncThreadCtrl.initThreadCtrl();
 
@@ -422,7 +423,7 @@ public class SyncThread extends Thread {
             mGp.syncThreadRequestIDdisplay = "";
             mGp.syncThreadActive = false;
 
-//            mStwa.mediaScanner.disconnect();
+            mStwa.mediaScanner.disconnect();
 
             CommonUtilities.saveMsgList(mGp);//Save meesage tab list
 
@@ -986,6 +987,8 @@ public class SyncThread extends Thread {
                     mGp.syncRequestQueue.clear();
 
                     SyncTaskUtil.saveSyncTaskListToFile(mGp, mStwa.context, mStwa.util, false, "", "", mGp.syncTaskList, false);
+
+                    if (mStwa.mediaScanner!=null) mStwa.mediaScanner.disconnect();
 
                     mNotifyToService.notifyToListener(false, null);
                     // re-throw critical exception further to the os (important)
@@ -4195,45 +4198,64 @@ public class SyncThread extends Thread {
         }
     }
 
-//    private void waitMediaScannerConnected() {
-//        int cnt = 100;
-//        while (!mStwa.mediaScanner.isConnected() && cnt > 0) {
-//            SystemClock.sleep(100);
-//            cnt--;
-//        }
-//    }
+    private void waitMediaScannerConnected() {
+        int cnt = 100;
+        while (!mStwa.mediaScanner.isConnected() && cnt > 0) {
+            SystemClock.sleep(100);
+            cnt--;
+        }
+    }
 
-//    private void prepareMediaScanner() {
-//        mStwa.mediaScanner = new MediaScannerConnection(mStwa.context, new MediaScannerConnectionClient() {
-//            @Override
-//            public void onMediaScannerConnected() {
-//                if (mGp.settingDebugLevel >= 1)
-//                    mStwa.util.addDebugMsg(1, "I", "MediaScanner connected.");
-//            }
-//            @Override
-//            public void onScanCompleted(final String fp, final Uri uri) {
-//                if (mGp.settingDebugLevel >= 2)
-//                    mStwa.util.addDebugMsg(2, "I", "MediaScanner scan completed. fn=", fp, ", Uri=" + uri);
-//            }
-//        });
-//        mStwa.mediaScanner.connect();
-//    }
+    private void prepareMediaScanner() {
+        mStwa.mediaScanner = new MediaScannerConnection(mStwa.context, new MediaScannerConnection.MediaScannerConnectionClient() {
+            @Override
+            public void onMediaScannerConnected() {
+                if (mGp.settingDebugLevel >= 1)
+                    mStwa.util.addDebugMsg(1, "I", "MediaScanner connected.");
+            }
+            @Override
+            public void onScanCompleted(final String fp, final Uri uri) {
+                if (mGp.settingDebugLevel >= 1)
+                    mStwa.util.addDebugMsg(1, "I", "MediaScanner scan completed. fn=", fp, ", Uri=" + uri);
+            }
+        });
+        mStwa.mediaScanner.connect();
+    }
 
     @SuppressLint("DefaultLocale")
     static final public void scanMediaFile(SyncThreadWorkArea stwa, String fp) {
-        try {
-            MediaScannerConnection.scanFile(stwa.context, new String[]{fp}, null, null);
-            stwa.util.addDebugMsg(1, "I", "Media scanner invoked, fp="+fp);
-        } catch(Exception e) {
-            stwa.util.addLogMsg("W","Media scanner scan failed, fp="+fp);
-            stwa.util.addLogMsg("W",e.getMessage());
-        }
-//        stwa.util.addDebugMsg(2, "I", "MediaScanner scan request issued. fn=", fp);
-//        if (!stwa.mediaScanner.isConnected()) {
-//            stwa.util.addLogMsg("W", fp, "Media scanner not not invoked, because mdeia scanner was not connected.");
-//            return;
+//        try {
+//            MediaScannerConnection.scanFile(stwa.context, new String[]{fp}, null, null);
+//            stwa.util.addDebugMsg(1, "I", "Media scanner invoked, fp="+fp);
+//        } catch(Exception e) {
+//            stwa.util.addLogMsg("W","Media scanner scan failed, fp="+fp);
+//            stwa.util.addLogMsg("W",e.getMessage());
 //        }
-//        stwa.mediaScanner.scanFile(fp, null);
+        if (getFileExtention(fp).equals("")) {
+            stwa.util.addDebugMsg(1, "I", "MediaScanner scan ignored because file extention does not exists. fp=", fp);
+            return;
+        }
+        if (!stwa.mediaScanner.isConnected()) {
+            stwa.util.addLogMsg("W", fp, "Media scanner not invoked, mdeia scanner was not connected.");
+            return;
+        }
+        stwa.util.addDebugMsg(1, "I", "MediaScanner scan request issued. fp=", fp);
+        stwa.mediaScanner.scanFile(fp, null);
+    }
+
+    static public String getFileExtention(String fp) {
+        String ft="", fn="";
+        int sep_pos=fp.lastIndexOf("/");
+        if (sep_pos>=0) {
+            fn=fp.substring(sep_pos+1);
+        } else {
+            fn=fp;
+        }
+        int ext_pos=fn.lastIndexOf(".");
+        if (ext_pos >= 0) {
+            ft = fn.substring(ext_pos+1).toLowerCase();
+        }
+        return ft;
     }
 
     private String mSyncHistroryResultFilepath = "";
