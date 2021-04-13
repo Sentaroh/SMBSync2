@@ -5558,6 +5558,11 @@ public class SyncTaskEditor extends DialogFragment {
                             result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0);
                             error_detected = true;
                         }
+                    } else if (sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_GREATER_THAN)) {
+                        if (Integer.parseInt(et_file_size_value.getText().toString())==0) {
+                            result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0);
+                            error_detected = true;
+                        }
                     }
                 }
                 if (!error_detected && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_AFTER_SYNC_BEGIN_DAY)) {
