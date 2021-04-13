@@ -365,9 +365,9 @@
         <string name="msgs_profile_sync_task_dlg_change_master_and_target">Источник подкачки и место назначения</string>
         <string name="msgs_profile_sync_task_dlg_swap_warning_title">Источник подкачки и место назначения</string>
         <string name="msgs_profile_sync_task_dlg_swap_warning_message">Замена содержимого исходной и конечной папок может привести к удалению непреднамеренных файлов или каталогов.\nНастройте тестовый режим или создайте тестовую директорию и проведите проверку, чтобы убедиться, что непреднамеренные файлы или каталоги не будут удалены.</string>
-        <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Фильтр каталога не был определен</string>
+        <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">Фильтровать каталоги по имени…</string>
         <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">Имя каталога содержало недопустимые символы, и они былио удалены (\", :, \\, *, &lt;, &gt;, \|).</string>
-        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">Фильтр по имени файла не указан</string>
+        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">Фильтровать файлы по имени…</string>
         <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">Недопустимые символы (/, \": \\, *, &lt; &gt;, \|), были удалены из имени файла.</string>
         <string name="msgs_profile_sync_task_dlg_file_directory_name_first_char_has_invalid_char">Игнорировал, потому что первая буква - \"/\".</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">Add the following keyword to directory names (The keyword is converted to the date and time that the sync was performed)</string>
@@ -429,7 +429,7 @@
         <string name="msgs_profile_sync_task_sync_file_type_image">Синхронизировать файлы изображений</string>
         <string name="msgs_profile_sync_task_sync_file_type_specific">Выберите файлы для синхронизации</string>
         <string name="msgs_profile_sync_task_sync_file_type_video">Синхронизировать видеофайлы</string>
-        <string name="msgs_task_sync_task_sync_file_name_filter">Фильтр по имени файла</string>
+        <string name="msgs_task_sync_task_sync_file_name_filter">Фильтры имени файла:</string>
         <string name="msgs_task_sync_task_sync_file_size_filter">Фильтр размера файла</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">Синхронизируйте файлы размером:</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">Игнорировать файлы с размером файла 0 байт</string>
@@ -512,7 +512,8 @@
         <string name="msgs_profile_sync_task_sync_option_do_mot_use_rename_when_smb_file_write">Запись файлов непосредственно в папку SMB без использования временных файлов</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">Фильтр каталога не был указан.</string>
         <string name="msgs_profile_sync_task_option_remove_directory_if_empty_when_move">(Тип синхронизации только перемещается) Удалите главный каталог, когда главный каталог пуст.</string>
-        <string name="msgs_profile_sync_task_sync_sub_directory_specific">Выберите подкаталоги</string>
+        <string name="msgs_profile_sync_task_sync_sub_directory_specific">Выберите папки для синхронизации</string>
+        <string name="msgs_task_sync_task_sync_directory_name_filter">Фильтры имен каталогов:</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">Ограничить буфер записи ввода / вывода SMB 16 КБ</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Отмена</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">Вход отменен</string>

@@ -513,7 +513,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionIgnoreFileSize0ByteFile() {return syncSyncOptionIgnoreFileSize0ByteFile;}
     public void setSyncOptionIgnoreFileSize0ByteFile(boolean p) {syncSyncOptionIgnoreFileSize0ByteFile = p;}
 
-    static final public String FILTER_FILE_SIZE_VALUE_DEFAULT= "0";
+    static final public String FILTER_FILE_SIZE_VALUE_DEFAULT= "1";
     private String syncFilterFileSizeValue = FILTER_FILE_SIZE_VALUE_DEFAULT;
     public String getSyncFilterFileSizeValue() {return syncFilterFileSizeValue;}
     public void setSyncFilterFileSizeValue(String p) {syncFilterFileSizeValue = p;}

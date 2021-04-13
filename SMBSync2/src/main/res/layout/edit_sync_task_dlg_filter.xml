@@ -181,16 +181,25 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:orientation="vertical" >
-	    	    
-	    <Button
-	        android:id="@+id/sync_filter_edit_dir_filter_btn"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:gravity="center_vertical|left"
-	        android:ellipsize="end"
-	        android:text="@string/msgs_profile_sync_task_dlg_dir_filter_not_specified"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
-        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/msgs_task_sync_task_sync_directory_name_filter"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical" >
+            <Button
+                android:id="@+id/sync_filter_edit_dir_filter_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:ellipsize="end"
+                android:text="@string/msgs_profile_sync_task_dlg_dir_filter_not_specified"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

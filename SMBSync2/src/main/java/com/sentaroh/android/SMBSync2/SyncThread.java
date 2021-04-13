@@ -3027,6 +3027,31 @@ public class SyncThread extends Thread {
     static final public boolean isFileSelected(SyncThreadWorkArea stwa, SyncTaskItem sti, String relative_file_path, String full_path,
                                                long file_size, long last_modified_time) {
         boolean selected=true;
+
+        //check the option "Synchronize the files in root of the master directory"
+        if (!sti.isSyncProcessRootDirFile()) {
+            String tmp_d = "";
+            String abs_url = relative_file_path;
+            if (relative_file_path.startsWith("/")) abs_url = relative_file_path.substring(1);
+            if (sti.getMasterDirectoryName().equals("")) {
+                if (abs_url.substring(abs_url.length()).equals("/"))
+                    tmp_d = abs_url.substring(0, abs_url.length() - 1);
+                else tmp_d = abs_url;
+            } else {
+                if (abs_url.substring(abs_url.length()).equals("/"))
+                    tmp_d = abs_url.replace(sti.getMasterDirectoryName() + "/", "");
+                else tmp_d = abs_url.replace(sti.getMasterDirectoryName(), "");
+            }
+
+            if (tmp_d.indexOf("/") < 0) {
+                //file is in root of master, ignore it
+                if (stwa.gp.settingDebugLevel >= 2)
+                    stwa.util.addDebugMsg(2, "I", "isFileSelectedVer2: file excluded because Sync Files in Root of Master option is disabled");
+
+                return false;
+            }
+        }
+
         if (sti.isSyncOptionIgnoreFileSize0ByteFile()) {
             if (file_size==0) {
                 selected=false;
@@ -3088,12 +3113,13 @@ public class SyncThread extends Thread {
             }
         }
 
-        if (selected) selected=isFileSelected(stwa, sti, relative_file_path);
+        if (selected) selected=isFileSelectedByName(stwa, sti, relative_file_path);
         return selected;
 
     }
 
-    static final public boolean isFileSelected(SyncThreadWorkArea stwa, SyncTaskItem sti, String url) {
+    //Checks if file is selected by a "File name filter"
+    static final public boolean isFileSelectedByName(SyncThreadWorkArea stwa, SyncTaskItem sti, String url) {
         if (sti.isSyncOptionUseDirectoryFilterV2()) return isFileSelectedVer2(stwa, sti, url);
         else return isFileSelectedVer1(stwa, sti, url);
     }
@@ -3107,27 +3133,6 @@ public class SyncThread extends Thread {
         Matcher mt;
         String abs_url = url;
         if (url.startsWith("/")) abs_url = url.substring(1);
-
-        if (!sti.isSyncProcessRootDirFile()) {//「root直下のファイルは処理するオプションが無効
-            String tmp_d = "";
-            if (sti.getMasterDirectoryName().equals("")) {
-                if (abs_url.substring(abs_url.length()).equals("/"))
-                    tmp_d = abs_url.substring(0, abs_url.length() - 1);
-                else tmp_d = abs_url;
-            } else {
-                if (abs_url.substring(abs_url.length()).equals("/"))
-                    tmp_d = abs_url.replace(sti.getMasterDirectoryName() + "/", "");
-                else tmp_d = abs_url.replace(sti.getMasterDirectoryName(), "");
-            }
-
-            if (tmp_d.indexOf("/") < 0) {
-                //file is in root of master, ignore it
-                if (stwa.gp.settingDebugLevel >= 2)
-                    stwa.util.addDebugMsg(2, "I", "isFileSelectedVer2: file excluded because Sync Files in Root of Master option is disabled");
-
-                return false;
-            }
-        }
 
         String file_basename=abs_url.substring(abs_url.lastIndexOf("/") + 1, abs_url.length());
         if (stwa.fileFilterExclude != null) {//exclude filter
