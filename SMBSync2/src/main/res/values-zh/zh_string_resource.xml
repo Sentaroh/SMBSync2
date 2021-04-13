@@ -429,7 +429,7 @@
         <string name="msgs_profile_sync_task_sync_file_type_image">同步图像文件</string>
         <string name="msgs_profile_sync_task_sync_file_type_specific">选择要同步的文件</string>
         <string name="msgs_profile_sync_task_sync_file_type_video">同步视频文件</string>
-        <string name="msgs_task_sync_task_sync_file_name_filter">文件名过滤器</string>
+        <string name="msgs_task_sync_task_sync_file_name_filter">文件名过滤器 :</string>
         <string name="msgs_task_sync_task_sync_file_size_filter">文件大小过滤器</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">选择文件大小过滤类型</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">忽略文件大小为0字节的文件。</string>
@@ -513,6 +513,7 @@
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">未指定目录过滤器。</string>
         <string name="msgs_profile_sync_task_option_remove_directory_if_empty_when_move">空的主目录（仅当"同步"选项为"移动"时）删除</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">选择子目录</string>
+        <string name="msgs_task_sync_task_sync_directory_name_filter">目录名称过滤器：</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">将SMB I / O写缓冲区限制为16 KB</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">取消</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">登录已取消</string>

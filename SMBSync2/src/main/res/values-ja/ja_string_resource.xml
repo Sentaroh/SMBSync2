@@ -365,9 +365,9 @@
         <string name="msgs_profile_sync_task_dlg_change_master_and_target">マスターとターゲットを入れ替える</string>
         <string name="msgs_profile_sync_task_dlg_swap_warning_title">ソースと宛先フォルダーを入替える</string>
         <string name="msgs_profile_sync_task_dlg_swap_warning_message">ソースフォルダーと宛先フォルダーの内容を入れ替えるとファイルやディレクトリーが削除される可能性があります。\nテストモードまたはテストディレクトリー作成してテストを行い意図しないファイルやディレクトリーが削除されない事を確認してください。</string>
-        <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">ディレクトリフィルタ―は指定されてません</string>
+        <string name="msgs_profile_sync_task_dlg_dir_filter_not_specified">名前でディレクトリをフィルタリング…</string>
         <string name="msgs_profile_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, *, &lt;, &gt;, \|)</string>
-        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">ファイル名フィルタ―は指定されてません</string>
+        <string name="msgs_profile_sync_task_dlg_file_filter_not_specified">名前でファイルをフィルタリング…</string>
         <string name="msgs_profile_sync_task_dlg_file_name_has_invalid_char">ファイル名に使用できない文字が含まれていましたので削除しました。 (/, \", :, \\, *, &lt;, &gt;, \|)</string>
         <string name="msgs_profile_sync_task_dlg_file_directory_name_first_char_has_invalid_char">最初の文字が"/"のため無視しました。</string>
         <string name="msgs_profile_sync_task_dlg_keyword_insert_dir">ディレクトリに下記のキーワードを追加する（キーワードは同期実行時に変換されます）</string>
@@ -429,7 +429,7 @@
         <string name="msgs_profile_sync_task_sync_file_type_image">イメージファイルを同期する</string>
         <string name="msgs_profile_sync_task_sync_file_type_specific">ファイルを選択する</string>
         <string name="msgs_profile_sync_task_sync_file_type_video">ビデオファイルを同期する</string>
-        <string name="msgs_task_sync_task_sync_file_name_filter">ファイル名フィルター</string>
+        <string name="msgs_task_sync_task_sync_file_name_filter">ファイル名フィルター。</string>
         <string name="msgs_task_sync_task_sync_file_size_filter">ファイルサイズフィルター</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">ファイルサイズフィルタータイプの選択</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">ファイルサイズが0バイトのファイルを無視する</string>
@@ -513,6 +513,7 @@
         <string name="msgs_profile_sync_task_sync_sub_directory_dir_filter_not_specified">ディレクトリーフィルタが指定されていません</string>
         <string name="msgs_profile_sync_task_option_remove_directory_if_empty_when_move">(同期方式が移動のみ)マスターディレクトリーが空の時にマスターディレクトリーを削除する。</string>
         <string name="msgs_profile_sync_task_sync_sub_directory_specific">サブディレクトリーを選択する</string>
+        <string name="msgs_task_sync_task_sync_directory_name_filter">ディレクトリ名フィルター。</string>
         <string name="msgs_profile_sync_task_sync_use_small_ioarea">SMBフォルダー書き込み時のIOバッファーを16KBに制限する</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">キャンセル</string>
         <string name="msgs_remote_profile_dlg_logon_cancel">ログオンが中止されました</string>
