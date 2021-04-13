@@ -3046,7 +3046,7 @@ public class SyncThread extends Thread {
             if (tmp_d.indexOf("/") < 0) {
                 //file is in root of master, ignore it
                 if (stwa.gp.settingDebugLevel >= 2)
-                    stwa.util.addDebugMsg(2, "I", "isFileSelectedVer2: file excluded because Sync Files in Root of Master option is disabled");
+                    stwa.util.addDebugMsg(2, "I", "isFileSelected: file excluded because Sync Files in Root of Master option is disabled");
 
                 return false;
             }
@@ -3173,29 +3173,6 @@ public class SyncThread extends Thread {
     static final public boolean isFileSelectedVer1(SyncThreadWorkArea stwa, SyncTaskItem sti, String url) {
         boolean filtered = false;
         Matcher mt;
-
-        if (!sti.isSyncProcessRootDirFile()) {//「root直下のファイルは処理するオプションが無効
-            String tmp_d = "", tmp_url = url;
-            if (url.startsWith("/")) tmp_url = url.substring(1);
-
-            if (sti.getMasterDirectoryName().equals("")) {
-                if (tmp_url.substring(tmp_url.length()).equals("/"))
-                    tmp_d = tmp_url.substring(0, tmp_url.length() - 1);
-                else tmp_d = tmp_url;
-            } else {
-                if (tmp_url.substring(tmp_url.length()).equals("/"))
-                    tmp_d = tmp_url.replace(sti.getMasterDirectoryName() + "/", "");
-                else tmp_d = tmp_url.replace(sti.getMasterDirectoryName(), "");
-            }
-
-            if (tmp_d.indexOf("/") < 0) {
-                //file is in root of master, ignore it
-                if (stwa.gp.settingDebugLevel >= 2)
-                    stwa.util.addDebugMsg(2, "I", "isFileSelectedVer1: file excluded because Sync Files in Root of Master option is disabled");
-
-                return false;
-            }
-        }
 
         String temp_fid = url.substring(url.lastIndexOf("/") + 1, url.length());
         if (stwa.fileFilterInclude == null) {
