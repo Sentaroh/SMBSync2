@@ -779,6 +779,7 @@ public class SyncThreadSyncZip {
             zf.setRunInThread(true);
             zf.addFile(mf, n_zp);
 
+            int rx=zf.getProgressMonitor().getState();
             while (zf.getProgressMonitor().getState() == ProgressMonitor.STATE_BUSY) {
                 if (!stwa.gp.syncThreadCtrl.isEnabled()) {
                     zf.getProgressMonitor().cancelAllTasks();
@@ -793,10 +794,27 @@ public class SyncThreadSyncZip {
                 }
             }
             zf.setRunInThread(false);
-//			fh=zf.getFileHeader(to_name);
-//			fh.setLastModFileTime((int)ZipUtil.javaToDosTime(mf.lastModified()));
 
-//            ifs.close();
+            if (zf.getProgressMonitor().getResult()==ProgressMonitor.RESULT_ERROR) {//Check ZIP result
+                Throwable e=zf.getProgressMonitor().getException();
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
+                        CommonUtilities.getExecutedMethodName() + " master=" + from_dir + ", target=" + to_dir);
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "", e.getMessage());
+                SyncThread.printStackTraceElement(stwa, e.getStackTrace());
+                stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
+                return SyncTaskItem.SYNC_STATUS_ERROR;
+            }
+            if (stwa.gp.syncThreadCtrl.isEnabled()) {
+                long file_read_time = System.currentTimeMillis() - read_begin_time;
+                if (stwa.gp.settingDebugLevel >= 1)
+                    stwa.util.addDebugMsg(1, "I", to_dir + "/" + dest_path + " " + file_read_bytes + " bytes transfered in ",
+                            file_read_time + " mili seconds at " +
+                                    SyncThread.calTransferRate(file_read_bytes, file_read_time));
+                stwa.totalTransferByte += file_read_bytes;
+                stwa.totalTransferTime += file_read_time;
+            } else {
+                return SyncTaskItem.SYNC_STATUS_CANCEL;
+            }
         } catch (ZipException e) {
             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", "", "",
                     CommonUtilities.getExecutedMethodName() + " master=" + from_dir + ", target=" + to_dir);
@@ -812,14 +830,6 @@ public class SyncThreadSyncZip {
             stwa.gp.syncThreadCtrl.setThreadMessage(e.getMessage());
             return SyncTaskItem.SYNC_STATUS_ERROR;
         }
-
-        long file_read_time = System.currentTimeMillis() - read_begin_time;
-        if (stwa.gp.settingDebugLevel >= 1)
-            stwa.util.addDebugMsg(1, "I", to_dir + "/" + dest_path + " " + file_read_bytes + " bytes transfered in ",
-                    file_read_time + " mili seconds at " +
-                            SyncThread.calTransferRate(file_read_bytes, file_read_time));
-        stwa.totalTransferByte += file_read_bytes;
-        stwa.totalTransferTime += file_read_time;
 
         return sync_result;
     }
