@@ -169,7 +169,11 @@ public class SyncThreadCopyFile {
 //        SyncThread.deleteTempMediaStoreItem(stwa,temp_file);
 
         SafFile to_sf=SyncThread.createSafFile(stwa, sti, to_file_dest);
-//        if (to_sf.exists()) to_sf.delete();
+        if (to_sf==null) {
+            temp_file.delete();
+            stwa.util.addLogMsg("E", "createSafFile error. to_file_dest="+to_file_dest);
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
         deleteSafIfExists(stwa, sti, from_dir, to_dir, to_file_dest, file_name, to_sf);
         if (!temp_sf.moveTo(to_sf)) {
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+temp_sf.getLastErrorMessage());
@@ -526,7 +530,11 @@ public class SyncThreadCopyFile {
 //        SyncThread.deleteTempMediaStoreItem(stwa,temp_file);
 
         SafFile to_sf=SyncThread.createSafFile(stwa, sti, to_file_dest);
-//        if (to_sf.exists()) to_sf.delete();
+        if (to_sf==null) {
+            temp_file.delete();
+            stwa.util.addLogMsg("E", "createSafFile error. to_file_dest="+to_file_dest);
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
         deleteSafIfExists(stwa, sti, from_dir, to_dir, to_file_dest, file_name, to_sf);
         if (!from_sf.moveTo(to_sf)) {
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+from_sf.getLastErrorMessage());
@@ -872,6 +880,11 @@ public class SyncThreadCopyFile {
 //        SyncThread.deleteTempMediaStoreItem(stwa,temp_file);
 
         SafFile to_sf=SyncThread.createSafFile(stwa, sti, to_file_dest);
+        if (to_sf==null) {
+            temp_file.delete();
+            stwa.util.addLogMsg("E", "createSafFile error. to_file_dest="+to_file_dest);
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
         deleteSafIfExists(stwa, sti, from_dir, to_dir, to_file_dest, file_name, to_sf);
         if (!from_sf.moveTo(to_sf)) {
             stwa.util.addLogMsg("W", sti.getSyncTaskName(), " ", "SafFile moveTo Error="+from_sf.getLastErrorMessage());
