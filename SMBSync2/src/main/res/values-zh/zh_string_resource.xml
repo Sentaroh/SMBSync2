@@ -604,6 +604,7 @@
         <string name="msgs_mirror_file_set_last_modified_failed">setLastModified（）失败。在同步任务选项中启用\"不将目标文件的最后修改时间设置为与源文件匹配\"。</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">将ZIP文件复制到目标文件...%s %%完成。</string>
         <string name="msgs_mirror_file_zip_copy_to_work">将ZIP文件复制到缓存临时文件...%s %%完成。</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">分割存档是不能使用的。</string>
         <string name="msgs_mirror_ignore_override_copy_file">文件复制被忽略，因为为此任务禁用了"覆盖目标文件"选项。</string>
         <string name="msgs_mirror_ignore_override_move_file">文件移动被忽略，因为为此任务禁用了"覆盖目标文件"选项。</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">源文件或目录名称包含目标字符无效。编辑名称以允许同步。角色=%s</string>

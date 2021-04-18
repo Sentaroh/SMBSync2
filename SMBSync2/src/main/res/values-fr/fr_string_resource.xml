@@ -604,6 +604,7 @@
         <string name="msgs_mirror_file_set_last_modified_failed">Echec de mise à jour de la date du fichier (setLastModified()). Activer l\'option \"Ne pas changer la date de dernière modification du fichier destination pour qu\'elle soit identique à la source\".</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">Copie du fichier ZIP vers la destination... %s%% terminé.</string>
         <string name="msgs_mirror_file_zip_copy_to_work">Copie du fichier ZIP vers le fichier temporaire... %s%% terminé.</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">L\'archive fractionnée ne peut pas être utilisée.</string>
         <string name="msgs_mirror_ignore_override_copy_file">Copie du fichier ignorée, car l\'option \"Remplacer les fichiers destination\" est désactivée.</string>
         <string name="msgs_mirror_ignore_override_move_file">Déplacement du fichier ignoré, car l\'option \"Remplacer les fichiers destination\" est désactivée.</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">Le dossier ou fichier source contient des caractères invalides. Modifier son nom pour poursuivre la synchronisation. Caractère=%s</string>

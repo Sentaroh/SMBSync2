@@ -604,6 +604,7 @@
         <string name="msgs_mirror_file_set_last_modified_failed">setLastModified () не удалось. Включите \"Не устанавливайте время обновления целевого файла в соответствии с исходным файлом\" для задачи синхронизации.</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">Копирование файла ZIP в целевой файл ...%s%% завершено.</string>
         <string name="msgs_mirror_file_zip_copy_to_work">Копирование файла ZIP в рабочий файл ...%s%% завершено.</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">Раздельный архив не может быть использован.</string>
         <string name="msgs_mirror_ignore_override_copy_file">Копирование файла игнорируется, поскольку для этой задачи отключена опция \"Перезаписать файл (ы) назначения\".</string>
         <string name="msgs_mirror_ignore_override_move_file">Перемещение файла игнорируется, поскольку для этой задачи отключена опция \"Перезаписать файл (ы) назначения\".</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">Исходный файл или имя каталога содержит символы, которые недопустимы для места назначения. Измените имя, чтобы разрешить синхронизацию. Персонаж=%s</string>

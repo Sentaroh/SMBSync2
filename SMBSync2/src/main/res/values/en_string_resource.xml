@@ -604,6 +604,7 @@
         <string name="msgs_mirror_file_set_last_modified_failed">setLastModified() failed.  Enable \"Do not set last modified time of destination file to match source file\" in sync task options.</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">Copying the ZIP file to the target file... %s%% done.</string>
         <string name="msgs_mirror_file_zip_copy_to_work">Copying the ZIP file to the cache temp file... %s%% done.</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">Split archive is can not be used.</string>
         <string name="msgs_mirror_ignore_override_copy_file">File copy ignored because the \"Overwrite destination file(s)\" option is disabled for this task.</string>
         <string name="msgs_mirror_ignore_override_move_file">File move ignored because the \"Overwrite destination file(s)\" option is disabled for this task.</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">The source file or directory name contains invalid characters for the destination. Edit name to allow sync. Character=%s</string>

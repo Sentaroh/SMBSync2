@@ -75,7 +75,8 @@ public class SyncThreadSyncZip {
             zf = new ZipFile(dest_path);
             zf.setFileNameCharset(ZipUtil.DEFAULT_ZIP_FILENAME_ENCODING);
 //			stwa.zipFileNameEncoding=ZipUtil.getFileNameEncoding(dest_path);
-            zp.setDefaultFolderPath(stwa.gp.internalRootDirectory);
+            if (from_path.startsWith(stwa.gp.internalRootDirectory)) zp.setDefaultFolderPath(stwa.gp.internalRootDirectory);
+            else zp.setDefaultFolderPath(stwa.gp.safMgr.getSdcardRootPath());
             zp.setRootFolderInZip("");
 
             if (sti.getTargetZipCompressionLevel().equals(SyncTaskItem.ZIP_OPTION_COMP_LEVEL_FASTEST))
@@ -307,8 +308,18 @@ public class SyncThreadSyncZip {
         return sync_result;
     }
 
-    static public int syncCopyInternalToInternalZip(SyncThreadWorkArea stwa, SyncTaskItem sti,
-                                                    String from_path, String dest_file) {
+    static private boolean isSplitArchiveFile(SyncThreadWorkArea stwa, SyncTaskItem sti, ZipFile zf) {
+        try {
+            if (zf.isSplitArchive()) {
+                return true;
+            }
+        } catch (ZipException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    static public int syncCopyInternalToInternalZip(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path, String dest_file) {
         int sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
         ZipParameters zp = new ZipParameters();
         ZipFile zf = null;
@@ -343,6 +354,13 @@ public class SyncThreadSyncZip {
         } else {
             zf = setZipEnvironment(stwa, sti, from_path, stwa.gp.internalRootDirectory + dest_file, zp);
         }
+
+        if (isSplitArchiveFile(stwa, sti, zf)) {
+            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, zf.getFile().getName(),
+                    "", stwa.context.getString(R.string.msgs_mirror_file_zip_split_archive_can_not_be_used));
+            return SyncTaskItem.SYNC_STATUS_ERROR;
+        }
+
         if (stwa.gp.syncThreadCtrl.isEnabled() && zf != null) {
             File mf = new File(from_path);
             sync_result = moveCopyInternalToInternalZip(stwa, sti, false, from_path, from_path, mf, zf, zp);

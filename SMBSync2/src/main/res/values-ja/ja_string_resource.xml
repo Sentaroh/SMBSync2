@@ -604,6 +604,7 @@
         <string name="msgs_mirror_file_set_last_modified_failed">setLastModified()が失敗しました。同期タスクの「ターゲットファイルの最終更新時刻をマスターと同じにしない」を有効にしてください。</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">ZIPファイルをワークファイルからコピーしています。%s%% 終了。</string>
         <string name="msgs_mirror_file_zip_copy_to_work">ZIPファイルをワークファイルにコピーしています。%s%% 終了。</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">分割ZIPファイルは使用できません。</string>
         <string name="msgs_mirror_ignore_override_copy_file">同期オプションで上書きが無効になっているためファイルのコピーは無視されました。</string>
         <string name="msgs_mirror_ignore_override_move_file">同期オプションで上書きが無効になっているためファイルの移動は無視されました。</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">マスターのファイル名またはディレクトリ名にターゲットでは使用できない文字が含まれています。マスターのファイル名またはディレクトリ名を変更してください。文字=%s</string>

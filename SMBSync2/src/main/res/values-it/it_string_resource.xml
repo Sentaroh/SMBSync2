@@ -604,6 +604,7 @@
         <string name="msgs_mirror_file_set_last_modified_failed">setLastModified() fallito.  Abilita l\'opzione \"Non impostare l\'ora dell\'ultima modifica del file destinazione per trovare file sorgente\" del sync task.</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">Copia il file ZIP sul file destinazione... %s%% fatto.</string>
         <string name="msgs_mirror_file_zip_copy_to_work">Copia il file ZIP su the cache temp file... %s%% fatto.</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">L\'archivio diviso non può essere usato.</string>
         <string name="msgs_mirror_ignore_override_copy_file">Copia file ignorato a causa dell\'opzione \"Sovrascrittura file destinazione\" disabilitata per questa task.</string>
         <string name="msgs_mirror_ignore_override_move_file">Sposta file ignorato a causa dell\'opzione \"Sovrascrittura file destinazione\" disabilitata per questa task.</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">Il file sorgente o il nome della cartella contiene caratteri non validi per la destinazione. Modifica il nome per il sync. Carattere=%s</string>
