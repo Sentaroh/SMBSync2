@@ -28,8 +28,7 @@ SMBSync2のスケジュール機能または外部アプリケーション（Tas
 - ターゲットファイルがマスターより新しい場合やサイズが大きい場合に上書きしないオプション。
 
 ## 2.FAQ  
-[PDFを参照ください。](https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing)
+https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_JA.htm
 
-## 3.詳細情報
-
-[PDFを参照ください。](https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing)
+## 3.詳細情報  
+https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_JA.htm

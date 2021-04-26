@@ -30,9 +30,8 @@ SMBSync2是一款通过无线局域网使用SMB1、SMB2或SMB3协议在Android�
 - 支持忽略夏令时。
 - 如果目标文件比主文件新或尺寸较大，可选择不覆盖。
 
-## 2.常问问题
-[查看PDF](https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing)
+## 2.常问问题  
+https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_EN.htm
 
-## 3.详细信息
-
-[查看PDF](https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing)
+## 3.详细信息  
+https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_EN.htm

@@ -37,9 +37,8 @@ Nelle Opzioni Avanzate è possibile regolare molte impostazioni di confronto. (E
 - Ignora l'ora legale è supportata. 
 - Opzione per non sovrascrivere il file di destinazione se è più nuovo del master o se è di dimensioni maggiori.
 
-## 2.FAQs
-[Vedi PDF](https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing)
+## 2.FAQs  
+https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_EN.htm
 
-## 3. Documenti
-
-[Vedi PDF](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)
+## 3. Documenti  
+https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_EN.htm

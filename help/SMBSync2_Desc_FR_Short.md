@@ -35,9 +35,8 @@ Dans les options avancées, de nombreux paramètres de comparaison peuvent être
 - Ignorer l'heure d'été est pris en charge. 
 - Possibilité de ne pas écraser le fichier cible s'il est plus récent que le fichier maître ou s'il est plus volumineux.
 
-## 2.FAQs
-[Veuillez vous référer au lien PDF](https://drive.google.com/file/d/1QPz_VN8Hur0cfvzF35SP-dt9_QTkv-ZA/view?usp=sharing)
+## 2.FAQs  
+https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_FR.htm
 
-## 3.Documents
-
-[Veuillez vous référer au lien PDF](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)
+## 3.Documents  
+https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_EN.htm
