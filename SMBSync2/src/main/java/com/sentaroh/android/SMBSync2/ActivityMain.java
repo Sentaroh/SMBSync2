@@ -2050,7 +2050,7 @@ public class ActivityMain extends AppCompatActivity {
 //	    mMainViewPager.setBackgroundColor(mThemeColorList.window_color_background);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
-//        viewPager.setSwipeEnabled(false);
+        viewPager.setSwipeEnabled(false);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
