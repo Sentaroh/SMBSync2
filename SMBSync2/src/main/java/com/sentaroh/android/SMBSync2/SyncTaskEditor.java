@@ -55,6 +55,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -5257,12 +5258,38 @@ public class SyncTaskEditor extends DialogFragment {
         dlg_tv.setTextColor(gp.themeColorList.title_text_color);
 //        dlg_tv.setTextSize(32);
 
-        WebView dlg_wb = (WebView) dialog.findViewById(R.id.help_view_help);
+        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(a));
 
-        dlg_wb.loadUrl("file:///android_asset/" + help_msg);
+        WebView dlg_wb = (WebView) dialog.findViewById(R.id.help_view_help);
+        String html=CommonUtilities.convertMakdownToHtml(a, help_msg);
+        dlg_wb.loadData(html, "text/html; charset=UTF-8", null);
         dlg_wb.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         dlg_wb.getSettings().setBuiltInZoomControls(true);
-        dlg_wb.setInitialScale(0);
+        dlg_wb.getSettings().setTextZoom(zf);
+
+        dlg_wb.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading (WebView view, String url) {
+                return false;
+            }
+        });
+        dlg_wb.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if(event.getAction() == KeyEvent.ACTION_DOWN){
+                    WebView webView = (WebView) v;
+                    switch(keyCode){
+                        case KeyEvent.KEYCODE_BACK:
+                            if(webView.canGoBack()){
+                                webView.goBack();
+                                return true;
+                            }
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
 
         dlg_tv.setText(title);
 

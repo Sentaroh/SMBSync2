@@ -64,6 +64,7 @@ import com.sentaroh.android.Utilities.ThemeColorList;
 import com.sentaroh.android.Utilities.ThemeUtil;
 import com.sentaroh.jcifs.JcifsUtil;
 
+import org.markdownj.MarkdownProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,12 +72,17 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.DatagramPacket;
@@ -94,6 +100,7 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
@@ -205,6 +212,21 @@ public final class CommonUtilities {
 
     final public void rotateLogFile() {
         mLog.rotateLogFile();
+    }
+
+    public static String convertMakdownToHtml(Context c, String mark_down_fp) {
+//        long b_time=System.currentTimeMillis();
+        String html ="";
+        try {
+            InputStream is = c.getAssets().open(mark_down_fp);
+            MarkdownProcessor processor = new MarkdownProcessor();
+            html = processor.markdown(true, is);
+        } catch(Exception e) {
+            log.error("MarkDown conversion error.", e);
+            e.printStackTrace();
+        }
+//        Log.v(APPLICATION_TAG, "convertMakdownToHtml elapsed time="+(System.currentTimeMillis()-b_time));
+        return html;
     }
 
     static public String convertDateTimeWithTimzone(String time_zon_name, long time_value) {

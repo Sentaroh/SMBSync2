@@ -68,6 +68,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -2022,27 +2023,28 @@ public class ActivityMain extends AppCompatActivity {
 
         LinearLayout ll_func = (LinearLayout) vi.inflate(R.layout.about_dialog_func, null);
         final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function);
-        func_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_func_desc));
+//        String html_func=CommonUtilities.convertMakdownToHtml(mContext, getString(R.string.msgs_dlg_title_about_func_desc));
+//        func_view.loadData(html_func, "text/html; charset=UTF-8", null);
         func_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        func_view.getSettings().setBuiltInZoomControls(true);
-//        func_view.getSettings().setDisplayZoomControls(true);
-//        func_view.getSettings().setSupportZoom(true);
-//        func_view.getSettings().setBuiltInZoomControls(true);
-        func_view.getSettings().setTextZoom(zf);
+        setWebViewListener(func_view, zf);
 
         LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
         final WebView privacy_view = (WebView) ll_privacy.findViewById(R.id.about_dialog_privacy);
-        privacy_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
+//        String html_privacy=CommonUtilities.convertMakdownToHtml(mContext, getString(R.string.msgs_dlg_title_about_privacy_desc));
+//        privacy_view.loadData(html_privacy, "text/html; charset=UTF-8", null);
         privacy_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        privacy_view.getSettings().setBuiltInZoomControls(true);
-        func_view.getSettings().setTextZoom(zf);
+        setWebViewListener(privacy_view, zf);
 
         LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
         final WebView change_view = (WebView) ll_change.findViewById(R.id.about_dialog_change_history);
-        change_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_change_desc));
+//        String html_change=CommonUtilities.convertMakdownToHtml(mContext, getString(R.string.msgs_dlg_title_about_change_desc));
+//        change_view.loadData(html_change, "text/html; charset=UTF-8", null);
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        change_view.getSettings().setBuiltInZoomControls(true);
-        func_view.getSettings().setTextZoom(zf);
+        setWebViewListener(change_view, zf);
+
+        loadHelpFile(func_view, getString(R.string.msgs_dlg_title_about_func_desc));
+        loadHelpFile(privacy_view, getString(R.string.msgs_dlg_title_about_privacy_desc));
+        loadHelpFile(change_view, getString(R.string.msgs_dlg_title_about_change_desc));
 
         final CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity,
                 new WebView[]{func_view, privacy_view, change_view});
@@ -2107,6 +2109,52 @@ public class ActivityMain extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+    private void loadHelpFile(final WebView web_view, String fn) {
+        final Handler hndl=new Handler();
+        Thread th1=new Thread(){
+            @Override
+            public void run() {
+                final String html_func=CommonUtilities.convertMakdownToHtml(mContext, fn);
+                hndl.post(new Runnable(){
+                    @Override
+                    public void run() {
+                        web_view.loadData(html_func, "text/html; charset=UTF-8", null);
+                    }
+                });
+            }
+        };
+        th1.start();
+    }
+
+    private void setWebViewListener(WebView wv, int zf) {
+        wv.getSettings().setTextZoom(zf);
+        wv.getSettings().setBuiltInZoomControls(true);
+        wv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading (WebView view, String url) {
+                return false;
+            }
+        });
+        wv.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if(event.getAction() == KeyEvent.ACTION_DOWN){
+                    WebView webView = (WebView) v;
+                    switch(keyCode){
+                        case KeyEvent.KEYCODE_BACK:
+                            if(webView.canGoBack()){
+                                webView.goBack();
+                                return true;
+                            }
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
+
     }
 
     private void terminateApplication() {
