@@ -57,6 +57,7 @@ import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -2116,11 +2117,13 @@ public class ActivityMain extends AppCompatActivity {
         Thread th1=new Thread(){
             @Override
             public void run() {
-                final String html_func=CommonUtilities.convertMakdownToHtml(mContext, fn);
+                String html=CommonUtilities.convertMakdownToHtml(mContext, fn);
+                final String b64=Base64.encodeToString(html.getBytes(), Base64.DEFAULT);
                 hndl.post(new Runnable(){
                     @Override
                     public void run() {
-                        web_view.loadData(html_func, "text/html; charset=UTF-8", null);
+//                        web_view.loadData(html_func, "text/html; charset=UTF-8", null);
+                        web_view.loadData(b64, null, "base64");
                     }
                 });
             }

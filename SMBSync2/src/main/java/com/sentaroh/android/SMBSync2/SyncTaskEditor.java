@@ -46,6 +46,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -5262,7 +5263,8 @@ public class SyncTaskEditor extends DialogFragment {
 
         WebView dlg_wb = (WebView) dialog.findViewById(R.id.help_view_help);
         String html=CommonUtilities.convertMakdownToHtml(a, help_msg);
-        dlg_wb.loadData(html, "text/html; charset=UTF-8", null);
+//        dlg_wb.loadData(html, "text/html; charset=UTF-8", null);
+        dlg_wb.loadData(Base64.encodeToString(html.getBytes(), Base64.DEFAULT), null, "base64");
         dlg_wb.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         dlg_wb.getSettings().setBuiltInZoomControls(true);
         dlg_wb.getSettings().setTextZoom(zf);
