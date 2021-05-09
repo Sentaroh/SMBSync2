@@ -1,5 +1,5 @@
 Do not edit the md files.
 If you want to modify the md files, please follow the steps below.
 1.Edit the xlsm file in the help directory
-2.Generate md file by xlsm macro(in "Generate MD file" sheet)
-3.Generated md file is move to the assets directory
+2.Generate md file by xlsm macro(tap "Generate all help file" or "Generate all about file" button @ top of screen)
+3.Enter your asset directory and tap "OK" button
