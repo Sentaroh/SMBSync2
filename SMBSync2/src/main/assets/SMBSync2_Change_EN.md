@@ -1,3 +1,16 @@
+#### 2021-05-14 Ver2.52
+
+- Fixed an error in Media Scan.
+
+#### 2021-03-07 Ver2.51
+
+- Fixed a bug that left a notification message.
+
+#### 2021-03-01 Ver2.50
+
+- Improved Chinese (zh) translation
+- Resolved a bug that left a notification message when rebooting
+
 #### 2021-03-07 Ver2.49
 
 - Fixed the bug that notification messages remain.
