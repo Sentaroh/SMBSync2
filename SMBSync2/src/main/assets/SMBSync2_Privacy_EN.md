@@ -1,94 +1,86 @@
-## 1.Data recorded by the app
+## 1. Collected data
+### 1.1.Data provided to SMBSync2 from users.
 
-The app will record a ”Synchronization task list” and, depending on the settings, a ”App activity record”. <span style="color: red; "><u>In addition, the recorded data will not be sent out by the app unless the user has manipulated it.</u></span>
+The data provided by the user to use SMBSync2 will be stored in the storage area in the application.
+However, the SMB account name, SMB account password, ZIP password, and app password will be encrypted and stored.
+<span style="color: red;"><u>Data will not be sent externally unless the operation "1.4.Sending or writing data outside SMBSync2" is performed.</u></span>
 
-### 1.1.Synchronization task list
+- File information (directory name, file name)
+- SMB server information (host name/IP address, port number, account name, account password)
+- ZIP file information (compression method, encryption method, encryption password)
+- App setting options (warning messages, language and font size, etc.)
+- Application passwords (passwords used for authentication when launching applications, changing security settings, etc.)
 
-The app records the necessary data to perform the synchronization.
+### 1.2.Execution result of SMBSync2
 
-- Directory name, file name, SMB server host name, IP address, port number, account name, password (***1**)
-- App password (***1**) to protect app launch and setting change
-- App settings
+Save the data to the storage area in the application so that the user can check the execution result of SMBSync2.
+<span style="color: red;"><u>Data will not be sent externally unless the operation "1.4.Sending or writing data outside SMBSync2" is performed.</u></span>
 
-***1** password is encrypted with a system generated password and stored in the AndroidKeystore.
+- Directory name, file name, execution status
+- File size of synchronized files, file update date and time
+- Error information
 
-### 1.2.App activity record
+### 1.3.Activity record of SMBSync2
 
-The app needs to record the following data to check the synchronization results and for troubleshooting.
+Save the data to the storage area in the application to verify the execution results of SMBSync2 and to query the developer.
+<span style="color: red;"><u>Data will not be sent externally unless the operation "1.4.Sending or writing data outside SMBSync2" is performed.</u></span>
 
-- Android version, device maker, device name, device model, application version
-- Directory name, file name, file size, file last modified time
-- SMB server host name, IP address, port number, account name
-- Network interface name, IP address
-- System settings
-- App settings
+- Device information (manufacturer name, model name, OS version, mount point, app-specific directory, StorageAccessFramework, Storage manager, IP address, WiFi enable/disable, WiFi link speed)
+- SMBSync2 version, SMBSync2 execution options
+- Directory name, file name, execution status
+- File size of synchronized files, file modification date and time
+- Debugging information
+- Error information
 
-### 1.3. Exported settings and Sync task list 
+### 1.4.Sending or writing data outside SMBSync2
 
-The app can export "1.1 Synchronization task list" to a file. You can password protect the file before exporting it.
+Data held by SMBSync2 cannot be sent or written out to outside unless operated by the user.
 
-- Directory name, file name
-- SMB server host name, IP address, port number, account name, password
-- App settings
+- Press "Share button" from History tab.
+- Click "Send to Developer" button from System Information.
+- Click the "Send to Developer" button from the log management.
+- By executing "Export settings" from the menu, "1.1. Data provided to SMBSync2 from users" will be exported.
+By specifying a password when exporting, the information is encrypted and saved in the file.
 
-### 1.4.Send recorded data from the app
+### 1.5.Delete the data stored in SMBSync2
 
-Data recorded by the app can be sent by following these steps:
+By uninstalling SMBSync2, "1.1. Data provided by users to SMBSync2" and "1.3. Activity record of SMBSync2" will be deleted from the device.
+<span style="color: red;"><u>However, the following information will not be deleted, so please delete the "/storage/emulated/0/SMBSync2" directory and saved files in the file manager. </u></span>.
 
-- Press "Share button" from History tab
-- Press the "Send to Developer" button from the “System info”
-- Press "Share button" or "Send to developer" button from “Manage log files”
+- "1.2.Execution result of SMBSync2"
+- Messages displayed (around 5000 lines)
+- Task list save information
+- Date and time the file was updated (if the model does not allow setting)
+- Information saved in the external storage by saving the task list
 
-## 2. Permissions
+### 2.Permissions required to run the application
 
-The app uses the following permissions.
-
-### 2.1.Photos/Media/Files
-
-**read the contents of your USB storage**  
-**modify or delete the contents of your USB storage**
-
-Required for file synchronization to internal/external/USB storage and to read/write operations on application data files.
+### 2.1.Photos, Media and Files
+**read the contents of your USB storage**.
+**modify or delete the contents of your USB storage**.
+Used for file synchronization and reading/writing management files.
 
 ### 2.2.Storage
+**read the contents of your USB storage**.
+**modify or delete the contents of your USB storage**.
+Used for file synchronization and reading/writing management files.
 
-**read the contents of your USB storage**  
-**modify or delete the contents of your USB storage**
+### 2.3.Wi-Fi connection information
+**view Wi-Fi connections**.
+Used to check the Wi-Fi status when synchronization starts.
 
-Required for file synchronization to internal/external/USB storage and to read/write operations on application data files.
-
-### 2.3.Wi-Fi Connection information
-
-**view Wi-Fi connections**
-
-Required to check the status of Wi-Fi (on/off) at the start of synchronization.
-
-### 2.4.Other
-
-### 2.4.1.view network connections
-
-Required to confirm that device is connected to the network at the start of synchronization.
-
+### 2.4.Others
+### 2.4.1.View network connections
+Use this to check network connections when starting synchronization.
 ### 2.4.2.connect and disconnect from Wi-Fi
-
-Required to turn on / off Wi-Fi before and after a scheduled synchronization.
-
-### 2.4.3.full network access
-
-Required to perform network synchronization using the SMB protocol.
-
-### 2.4.4.run at startup
-
-Required to perform scheduled synchronization.
-
-### 2.4.5.control vibration
-
-Required to notify the user by vibration at the end of synchronization.
-
-### 2.4.6.prevent device from sleeping
-
-Required to start synchronization from a scheduled or external application.
-
-### 2.4.7.install shortcuts
-
-Required to add a synchronization task shortcut on the home screen.
+This function is used to turn Wi-Fi on and off for scheduled synchronization in Andoid 8/9.
+### 2.4.3.Full network access
+Use this to synchronize via SMB protocol through the network.
+### 2.4.4.Run at startup
+Used to perform scheduled synchronization.
+### 2.4.5.Control vibration
+Used to notify the user when synchronization is finished.
+### 2.4.6.Prevent device from sleeping
+Used to start synchronization from a schedule or external app.
+### 2.4.7.Install shortcuts
+Used to add sync start shortcuts to the desktop.
