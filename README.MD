@@ -36,15 +36,19 @@ In Advanced Options, many compare settings can be adjusted.(Here is an example)
 - Option to not overwrite target file if it is newer than the master or if it is larger in size.   
 # FAQs
 
-Please refer to the PDF link below.   
-[English](https://drive.google.com/file/d/1a8CTRu9xoCD74Qn0YZxzry-LHxQ8j7dE/view?usp=sharing)  
-[日本語](https://drive.google.com/file/d/1bld5J43139dflVwgNBJLlL3BTLAu199N/view?usp=sharing)  
+Please refer to the link below.
+
+[English](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_EN.htm)
+<br>
+[日本語](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_JA.htm)
 
 # Documents
 
-Please refer to the PDF link below.  
-[English](https://drive.google.com/file/d/0B77t0XpnNT7OYzZ0U01rR0VRMlk/view?usp=sharing)  
-[日本語](https://drive.google.com/file/d/0B77t0XpnNT7OSzBzcV9SemEwbkE/view?usp=sharing)  
+Please refer to the link below.
+
+[English](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_EN.htm)
+<br>
+[日本語](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_JA.htm)
 
 # Download  
 
