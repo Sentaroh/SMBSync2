@@ -243,15 +243,15 @@ public class SyncTaskUtil {
 
         final ArrayList<String>manual_save_file_list=getExportedFileList();
         final ArrayList<String>manual_save_selector_list=new ArrayList<String>();
-        Collections.sort(manual_save_file_list, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                File o1_file=new File(o1);
-                File o2_file=new File(o2);
-//                return (int)(o2_file.lastModified()-o1_file.lastModified());
-                return o2_file.getName().compareToIgnoreCase(o1_file.getName());
-            }
-        });
+//        Collections.sort(manual_save_file_list, new Comparator<String>() {
+//            @Override
+//            public int compare(String o1, String o2) {
+//                File o1_file=new File(o1);
+//                File o2_file=new File(o2);
+////                return (int)(o2_file.lastModified()-o1_file.lastModified());
+//                return o2_file.getName().compareToIgnoreCase(o1_file.getName());
+//            }
+//        });
 
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         for(int i=0;i<manual_save_file_list.size();i++) {
@@ -1354,7 +1354,12 @@ public class SyncTaskUtil {
                 public int compare(String o1, String o2) {
                     File o1_file=new File(o1);
                     File o2_file=new File(o2);
-                    return (int)(o2_file.lastModified()-o1_file.lastModified());
+                    int result=0;
+                    if (o2_file.lastModified()>o1_file.lastModified()) result=1;
+                    else if (o2_file.lastModified()<o1_file.lastModified()) result=-1;
+
+                    mUtil.addDebugMsg(1, "I", "o1="+o1_file.getName()+", o2="+o2_file+", result="+result);
+                    return result;
                 }
             });
         }
