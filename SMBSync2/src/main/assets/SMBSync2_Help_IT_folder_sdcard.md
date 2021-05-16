@@ -1,93 +1,93 @@
-### Elenca le directory
-Quando si preme il pulsante dell'elenco, verranno visualizzate le directory selezionabili, quindi selezionarlo. Tocca il nome della directory per aprire una sottodirectory.
+### Elenca le directory<br>
+Quando si preme il pulsante dell'elenco, verranno visualizzate le directory selezionabili, quindi selezionarlo. Tocca il nome della directory per aprire una sottodirectory.<br>
 
-### Cartelle
-Potete inserire direttamente il nome di una directory. Se si specifica una directory inesistente, questa verrà creata quando la sincronizzazione viene eseguita.
-%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di cartelle. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.
+### Cartelle<br>
+Potete inserire direttamente il nome di una directory. Se si specifica una directory inesistente, questa verrà creata quando la sincronizzazione viene eseguita.<br>
+%YEAR%, %MONTH%, %DAY% e %DAY-OF-YEAR% possono essere utilizzati come nomi di cartelle. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione.<br>
 
-### Aggiungi tempo/data del sync nel nome della cartella (la parola chiave verrà sostituita dall'ora e la data nel quale è stat eseguita la sync)
-Se spuntata, i dati EXIF dei supporti di backup vengono utilizzati per ottenere la data e l'ora di ripresa. Il timestamp della data e dell'ora di ripresa viene utilizzato e allegato alla cartella di destinazione. Quando l'applicazione non è in grado di ottenere l'ora di ripresa dall'EXIF, utilizza l'ultima ora modificata del file.
+### Aggiungi tempo/data del sync nel nome della cartella (la parola chiave verrà sostituita dall'ora e la data nel quale è stat eseguita la sync)<br>
+Se spuntata, i dati EXIF dei supporti di backup vengono utilizzati per ottenere la data e l'ora di ripresa. Il timestamp della data e dell'ora di ripresa viene utilizzato e allegato alla cartella di destinazione. Quando l'applicazione non è in grado di ottenere l'ora di ripresa dall'EXIF, utilizza l'ultima ora modificata del file.<br>
 
-### Cartelle
-Si prega di inserire l'elenco di destinazione o l'elenco principale. Se si specifica una cartelle che non esiste nel target, questa verrà creata durante la sincronizzazione.
+### Cartelle<br>
+Si prega di inserire l'elenco di destinazione o l'elenco principale. Se si specifica una cartelle che non esiste nel target, questa verrà creata durante la sincronizzazione.<br>
 
-### Seleziona cartella SDCARD
-Selezionare la cartelle principale SDCARD per accedere a SDCARD.
+### Seleziona cartella SDCARD<br>
+Selezionare la cartelle principale SDCARD per accedere a SDCARD.<br>
 
-**Le seguenti opzioni vengono visualizzate solo quando il tipo di sincronizzazione è Archivio.**
+**Le seguenti opzioni vengono visualizzate solo quando il tipo di sincronizzazione è Archivio.**<br>
 
-### Se l'ora e la data non possono essere determinate dai dati EXIF, mostra un messaggio di conferma
-Se l'opzione è selezionata, quando la data e l'ora di scatto non possono essere acquisite da EXIF , viene visualizzato un messaggio di conferma dell'utilizzo o meno dell'ultima ora di modifica del file. Se si seleziona Annulla nella finestra di dialogo di conferma, il file non verrà archiviato.
+### Se l'ora e la data non possono essere determinate dai dati EXIF, mostra un messaggio di conferma<br>
+Se l'opzione è selezionata, quando la data e l'ora di scatto non possono essere acquisite da EXIF , viene visualizzato un messaggio di conferma dell'utilizzo o meno dell'ultima ora di modifica del file. Se si seleziona Annulla nella finestra di dialogo di conferma, il file non verrà archiviato.<br>
 
-### Archivia file se
+### Archivia file se<br>
 
-Scegliere i criteri temporali per determinare quali file archiviare. La selezione dell'ora si basa sulla data di scatto delle foto/video o sull'ultima ora di modifica se non è possibile acquisire il timestamp dall'intestazione EXIF.
+Scegliere i criteri temporali per determinare quali file archiviare. La selezione dell'ora si basa sulla data di scatto delle foto/video o sull'ultima ora di modifica se non è possibile acquisire il timestamp dall'intestazione EXIF.<br>
 
-- Qualunque data (Tutti)
-Archivia tutte le immagini/video
-- Più vecchio di 7 giorni
-Archiviare solo i file con una data di scatto più vecchia di 7 giorni o più rispetto all'ora attuale
-- Più vecchio di 30 giorni
-Archiviare solo i file con una data di scatto più vecchia di 30 giorni o più rispetto all'ora attuale
-- Più vecchio di 60 giorni
-Archiviare solo i file con una data di scatto più vecchia di 60 giorni o più rispetto all'ora attuale
-- Più vecchio di 90 giorni
-Archiviare solo i file con una data di scatto più vecchia di 90 giorni o più rispetto all'ora attuale
-- Più vecchio di 180 giorni
-Archiviare solo i file con una data di scatto più vecchia di 180 giorni o più rispetto all'ora attuale
-- Più vecchio di 1 anno
-Archiviare solo i file con una data di scatto più vecchia di 1 anno o più rispetto all'ora attuale
+- Qualunque data (Tutti)<br>
+Archivia tutte le immagini/video<br>
+- Più vecchio di 7 giorni<br>
+Archiviare solo i file con una data di scatto più vecchia di 7 giorni o più rispetto all'ora attuale<br>
+- Più vecchio di 30 giorni<br>
+Archiviare solo i file con una data di scatto più vecchia di 30 giorni o più rispetto all'ora attuale<br>
+- Più vecchio di 60 giorni<br>
+Archiviare solo i file con una data di scatto più vecchia di 60 giorni o più rispetto all'ora attuale<br>
+- Più vecchio di 90 giorni<br>
+Archiviare solo i file con una data di scatto più vecchia di 90 giorni o più rispetto all'ora attuale<br>
+- Più vecchio di 180 giorni<br>
+Archiviare solo i file con una data di scatto più vecchia di 180 giorni o più rispetto all'ora attuale<br>
+- Più vecchio di 1 anno<br>
+Archiviare solo i file con una data di scatto più vecchia di 1 anno o più rispetto all'ora attuale<br>
 
-### Rinomina i file durante l'archiviazione e li memorizza nella directory specificata.
+### Rinomina i file durante l'archiviazione e li memorizza nella directory specificata.<br>
 
-Se spuntato, il nome del file sarà cambiato durante l'archiviazione. Puoi usare "File name template" per aggiungere data e ora al nome del file. Potete anche creare una directory per memorizzare i file. Per memorizzare i file nella directory, abilita "Save in directory when archiving". 
+Se spuntato, il nome del file sarà cambiato durante l'archiviazione. Puoi usare "File name template" per aggiungere data e ora al nome del file. Potete anche creare una directory per memorizzare i file. Per memorizzare i file nella directory, abilita "Save in directory when archiving". <br>
 
-### Incrementa nome dei file aggiungendo
+### Incrementa nome dei file aggiungendo<br>
 
-Add an order number to the file name when archiving.
+Add an order number to the file name when archiving.<br>
 
-- Non cambiare
-Non aggiungere un numero progressivo
-- 2 cifre (01-99)
-Aggiungi 01-99
-- 3 cifre (001-999)
-Aggiungi 001-999
-- 4 cifre (0001-9999)
-Aggiungi 0001-9999
-- 5 cifre (00001-99999)
-Aggiungi 00001-99999
-- 6 cifre (000001-999999)
-Aggiungi 000001-999999
+- Non cambiare<br>
+Non aggiungere un numero progressivo<br>
+- 2 cifre (01-99)<br>
+Aggiungi 01-99<br>
+- 3 cifre (001-999)<br>
+Aggiungi 001-999<br>
+- 4 cifre (0001-9999)<br>
+Aggiungi 0001-9999<br>
+- 5 cifre (00001-99999)<br>
+Aggiungi 00001-99999<br>
+- 6 cifre (000001-999999)<br>
+Aggiungi 000001-999999<br>
 
-### Cambia il nome del file prima di archiviarlo nella cartella destinazione 
+### Cambia il nome del file prima di archiviarlo nella cartella destinazione <br>
 
-Se l'opzione è selezionata, il nome del file archiviato verrà modificato in base ai criteri selezionati. Potete aggiungere la data e l'ora nel nome del file "Modello del nome del file". 
+Se l'opzione è selezionata, il nome del file archiviato verrà modificato in base ai criteri selezionati. Potete aggiungere la data e l'ora nel nome del file "Modello del nome del file". <br>
 
-- %ORIGINAL-NAME%
-Sarà sostituito dal nome originale del file durante l'archiviazione dell'archivio (es. DSC_0001)
-- %DATE%
-Sarà sostituito dalla data di scatto.(Es. 2018-01-01)
-- %TIME%
-Sarà sostituito dal tempo di scatto.(Es. 13:01:10)
-L'ultima riga della schermata mostra come apparirà la cartella di destinazione e il nome del file una volta archiviati.
+- %ORIGINAL-NAME%<br>
+Sarà sostituito dal nome originale del file durante l'archiviazione dell'archivio (es. DSC_0001)<br>
+- %DATE%<br>
+Sarà sostituito dalla data di scatto.(Es. 2018-01-01)<br>
+- %TIME%<br>
+Sarà sostituito dal tempo di scatto.(Es. 13:01:10)<br>
+L'ultima riga della schermata mostra come apparirà la cartella di destinazione e il nome del file una volta archiviati.<br>
 
-### Crea una cartelle basata sull'ora di scatto per salvare i file
+### Crea una cartelle basata sull'ora di scatto per salvare i file<br>
 
-Crea una cartelle con indicazione dell'ora in cui memorizzare i file archiviati.
+Crea una cartelle con indicazione dell'ora in cui memorizzare i file archiviati.<br>
 
-### Template Cartelle
+### Template Cartelle<br>
 
-Inserire gli schemi da utilizzare per rinominare la cartelle da creare (exp. DIR-% YEAR% -% MONTH% e così via). Premendo i tasti dei modelli, potete inserire le parole chiave dietro il cursore.
+Inserire gli schemi da utilizzare per rinominare la cartelle da creare (exp. DIR-% YEAR% -% MONTH% e così via). Premendo i tasti dei modelli, potete inserire le parole chiave dietro il cursore.<br>
 
-- %YEAR%
-Sarà sostituito dall'anno di riprese. (Es. 2018)
-- %MONTH%
-Sarà sostituito dal Mese di scatto (Es. 01)
-- %DAY%
-Sarà sostituito dal giorno delle riprese (Es. 29)
+- %YEAR%<br>
+Sarà sostituito dall'anno di riprese. (Es. 2018)<br>
+- %MONTH%<br>
+Sarà sostituito dal Mese di scatto (Es. 01)<br>
+- %DAY%<br>
+Sarà sostituito dal giorno delle riprese (Es. 29)<br>
 
-L'ultima riga della schermata mostra come apparirà la cartella di destinazione e il nome del file una volta archiviati.
+L'ultima riga della schermata mostra come apparirà la cartella di destinazione e il nome del file una volta archiviati.<br>
 
-### Manuali
-[FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_EN.htm)
-[Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_EN.htm) 
+### Manuali<br>
+[FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_EN.htm)<br>
+[Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_EN.htm) <br>
