@@ -1,40 +1,40 @@
-### tipo memoria<br>
-Selezionare il punto di montaggio dove memorizzare il file ZIP.<br>
+### tipo memoria
+Selezionare il punto di montaggio dove memorizzare il file ZIP.
 
-### Salva file ZIP su SDCARD.<br>
-Se spuntato, il file ZIP sarà salvato su SDCARD.<br>
+### Salva file ZIP su SDCARD.
+Se spuntato, il file ZIP sarà salvato su SDCARD.
 
-### Permetti scrittura su SDCARD <br>
-Selezionare la cartelle principale SDCARD per accedere a SDCARD.<br>
+### Permetti scrittura su SDCARD 
+Selezionare la cartelle principale SDCARD per accedere a SDCARD.
 
-### Lista File<br>
-Mostra le directory e l'elenco dei file nella cartella selezionata.<br>
+### Lista File
+Mostra le directory e l'elenco dei file nella cartella selezionata.
 
-### Aggiungi tempo/data del sync nel nome della cartella (la parola chiave verrà sostituita dalla data e ora nel quale il sync è stato fatto)<br>
-%YEAR%, %MONTH%, %DADAY% e %DADAY-OF-YEAR% possono essere utilizzati come nomi di directory di destinazione. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione. <br>
+### Aggiungi tempo/data del sync nel nome della cartella (la parola chiave verrà sostituita dalla data e ora nel quale il sync è stato fatto)
+%YEAR%, %MONTH%, %DADAY% e %DADAY-OF-YEAR% possono essere utilizzati come nomi di directory di destinazione. Le parole chiave vengono convertite nell'anno, nel mese e nel giorno in cui è iniziata la sincronizzazione. 
 
-### Livello compressione<br>
-Selezionare il livello di compressione ZIP. I livelli di compressione più forti sono i più lenti.<br>
+### Livello compressione
+Selezionare il livello di compressione ZIP. I livelli di compressione più forti sono i più lenti.
 
-- Più veloce<br>
-- Veloce<br>
-- Normale<br>
-- Massimo<br>
-- Ultra (più lento)<br>
+- Più veloce
+- Veloce
+- Normale
+- Massimo
+- Ultra (più lento)
 
-### Seleziona Metodo Encriptazione<br>
-Selezionare il metodo di crittografia per il file ZIP<br>
+### Seleziona Metodo Encriptazione
+Selezionare il metodo di crittografia per il file ZIP
 
-- Zip Compatible<br>
-- AES 128 Bit<br>
-- AES 256 Bit<br>
+- Zip Compatible
+- AES 128 Bit
+- AES 256 Bit
 
-### Password<br>
-Specifica la password per la crittografia.<br>
+### Password
+Specifica la password per la crittografia.
 
-### Conferma password<br>
-Inserisci nuovamente la tua password per confermarla.<br>
+### Conferma password
+Inserisci nuovamente la tua password per confermarla.
 
-### Manuali<br>
-[FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_EN.htm)<br>
-[Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_EN.htm) <br>
+### Manuali
+[FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_EN.htm)
+[Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_EN.htm) 

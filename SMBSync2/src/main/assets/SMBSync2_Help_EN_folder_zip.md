@@ -1,40 +1,40 @@
-### Mount point<br>
-Select mount point for internal storage.<br>
+### Mount point
+Select mount point for internal storage.
 
-### Save ZIP file to SDCARD.<br>
-If checked, the ZIP file will be saved to SDCARD.<br>
+### Save ZIP file to SDCARD.
+If checked, the ZIP file will be saved to SDCARD.
 
-### Select SDCARD<br>
-Select the SDCARD root directory to get access to SDCARD. <br>
+### Select SDCARD
+Select the SDCARD root directory to get access to SDCARD. 
 
-List Files<br>
-Shows a list of files.<br>
+List Files
+Shows a list of files.
 
-### Append the sync time/date to the directory name (the keyword will be replaced by the date and time in which the sync was performed)<br>
-%YEAR%, %MONTH%, %DAY% and %DAY-OF-YEAR% can be used as directory names. The keywords are converted into the year, month, and day on which the sync started.<br>
+### Append the sync time/date to the directory name (the keyword will be replaced by the date and time in which the sync was performed)
+%YEAR%, %MONTH%, %DAY% and %DAY-OF-YEAR% can be used as directory names. The keywords are converted into the year, month, and day on which the sync started.
 
-### Compression level<br>
-Select the level of compression.<br>
+### Compression level
+Select the level of compression.
 
-- Fastest<br>
-- Fast<br>
-- Normal<br>
-- Maximum<br>
-- Ultra (slowest)<br>
+- Fastest
+- Fast
+- Normal
+- Maximum
+- Ultra (slowest)
 
-### Encryption method<br>
-Select the Encryption method<br>
+### Encryption method
+Select the Encryption method
 
-- Zip Compatible<br>
-- AES 128 Bit<br>
-- AES 256 Bit<br>
+- Zip Compatible
+- AES 128 Bit
+- AES 256 Bit
 
-### Password<br>
-Specifies the password for encryption.<br>
+### Password
+Specifies the password for encryption.
 
-### Confirm password<br>
-Please re-enter your password to confirm it.<br>
+### Confirm password
+Please re-enter your password to confirm it.
 
-### Manuals<br>
-[FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_EN.htm)<br>
-[Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_EN.htm) <br>
+### Manuals
+[FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_EN.htm)
+[Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_EN.htm) 
