@@ -71,6 +71,7 @@ Please refer to the link below.
   - [jcifs-1.3.17](https://jcifs.samba.org/)  
 - This software includes the work that is distributed in the MOZILLA PUBLIC LICENSE 1.1.  
   - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)  
-
 - This software includes the work that is distributed in the Bouncy Castle LICENSE.
-  - [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on/1.58)  
+  - [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on/1.58)
+- This software includes the work that is distributed in the BSD 3-Clause "New" or "Revised" License
+  - [markdownj](https://github.com/myabc/markdownj)
