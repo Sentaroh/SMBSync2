@@ -2,14 +2,15 @@
 ### 1.1.Données fournies par l'utilisateur à SMBSync2  
 
 Les données fournies par l'utilisateur pour utiliser SMBSync2 seront enregistrées dans la zone de stockage de l'application.  
-Lors du stockage des données, le nom du compte SMB, le mot de passe du compte SMB, le mot de passe ZIP et le mot de passe de l'application sont cryptés avec un mot de passe généré par le système.  
 <span style="color : red ;"><u>Les données ne seront pas envoyées en externe à moins que l'opération "1.4 Envoi ou écriture de données en dehors de SMBSync2" ne soit effectuée.</u></span>  
 
 - Informations sur les fichiers (nom du répertoire, nom du fichier)  
-- Informations sur le serveur SMB (nom d'hôte/adresse IP, numéro de port, nom de compte, mot de passe de compte)  
-- Informations sur le fichier ZIP (méthode de compression, méthode de cryptage, mot de passe de cryptage)  
+- Informations sur le serveur SMB si vous utilisez un serveur SMB (nom d'hôte/adresse IP, numéro de port, nom de compte(**<u>\*1</u>**), mot de passe de compte(**<u>\*1</u>**))  
+- Informations sur le fichier ZIP en cas d'utilisation d'un fichier ZIP (méthode de compression, méthode de cryptage, mot de passe de cryptage(**<u>\*1</u>**)).  
 - Options de paramétrage de l'application (messages d'avertissement, langue et taille de la police, etc.)  
-- Mot de passe de l'application (mot de passe utilisé pour l'authentification au démarrage de l'application, l'authentification lors de la modification des paramètres de sécurité, etc.)  
+- Mot de passe de l'application(**<u>\*1</u>**)  
+
+**<u>\*1</u>**Les données sont cryptées et stockées.  
 
 ### 1.2.Résultat de l'exécution de SMBSync2  
 
@@ -73,7 +74,7 @@ Utilisé pour vérifier l'état du Wi-Fi lorsque la synchronisation commence.
 ### 2.4.1.View network connections  
 Utilisez cette option pour vérifier les connexions réseau lorsque la synchronisation est lancée.  
 ### 2.4.2.connect and disconnect from Wi-Fi  
-Cette fonction est utilisée pour activer/désactiver le Wi-Fi pour la synchronisation programmée sur Andoid 8/9.  
+Cette fonction est utilisée pour activer/désactiver le Wi-Fi pour la synchronisation programmée sur Andoid 5/6/7/8/9.  
 ### 2.4.3.Full network access  
 Il est utilisé pour synchroniser via le protocole SMB à travers le réseau.  
 ### 2.4.4.Run at startup  

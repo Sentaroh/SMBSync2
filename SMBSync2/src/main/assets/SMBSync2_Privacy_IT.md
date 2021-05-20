@@ -2,14 +2,15 @@
 ### 1.1.Dati forniti dall'utente a SMBSync2  
 
 I dati forniti dall'utente per usare SMBSync2 saranno salvati nell'area di archiviazione dell'applicazione.  
-Quando si memorizzano i dati, il nome dell'account SMB, la password dell'account SMB, la password ZIP e la password dell'applicazione sono criptati con una password generata dal sistema.  
 <span style="color: red;"><u>I dati non saranno inviati all'esterno a meno che non venga eseguita l'operazione "1.4.Invio o scrittura di dati al di fuori di SMBSync2".</u></span>.  
 
 - Informazioni sul file (nome della directory, nome del file)  
-- Informazioni sul server SMB (nome host/indirizzo IP, numero di porta, nome dell'account, password dell'account)  
-- Informazioni sul file ZIP (metodo di compressione, metodo di crittografia, password di crittografia)  
+- Informazioni sul server SMB se si usa un server SMB (nome host/indirizzo IP, numero di porta, nome dell'account(**<u>\*1</u>**), password dell'account(**<u>\*1</u>**))  
+- Informazioni sul file ZIP se si usa un file ZIP (metodo di compressione, metodo di crittografia, password di crittografia(**<u>\*1</u>**))  
 - Opzioni di impostazione delle applicazioni (messaggi di avviso, lingua e dimensione dei caratteri, ecc.)  
-- Password dell'applicazione (password usata per l'autenticazione all'avvio dell'applicazione, autenticazione quando si cambiano le impostazioni di sicurezza, ecc.)  
+- Password dell'applicazione(**<u>\*1</u>**)  
+
+**<u>\*1</u>**I dati sono criptati e conservati.  
 
 ### 1.2.Risultato dell'esecuzione di SMBSync2  
 
@@ -73,7 +74,7 @@ Utilizzato per controllare lo stato del Wi-Fi quando inizia la sincronizzazione.
 ### 2.4.1.View network connections  
 Usalo per controllare le connessioni di rete quando viene avviata la sincronizzazione.  
 ### 2.4.2.connect and disconnect from Wi-Fi  
-Questa funzione è usata per attivare/disattivare il Wi-Fi per la sincronizzazione programmata su Andoid 8/9.  
+Questa funzione è usata per attivare/disattivare il Wi-Fi per la sincronizzazione programmata su Andoid 5/6/7/8/9.  
 ### 2.4.3.Full network access  
 Questo è usato per sincronizzare tramite il protocollo SMB attraverso la rete.  
 ### 2.4.4.Run at startup  
