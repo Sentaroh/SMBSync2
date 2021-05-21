@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <files-path name="files" path="."/>
+    <cache-path name="cache" path="."/>
     <external-path name="storage" path="."/>
     <root-path name="storage" path="/storage/" />
 </paths>

@@ -447,10 +447,11 @@ public class GlobalParameters extends CommonGlobalParms {
         setLogMaxFileCount(gp.settingLogMaxFileCount);
         setLogEnabled(gp.settingLogOption);
 
-        setLogDirName(c.getExternalFilesDir(null)+"/log/");//gp.settingMgtFileDir);
-//        setLogDirName(gp.settingMgtFileDir);
+        if (Build.VERSION.SDK_INT>=23) setLogDirName(c.getFilesDir()+"/log/");
+        else setLogDirName(c.getExternalFilesDir(null)+"/log/");
         setLogFileName(gp.settingLogMsgFilename);
         setApplicationTag(APPLICATION_TAG);
+        setLogFileProviderAuth(c.getPackageName()+".provider");
     }
 
     public void initSettingsParms(Context c) {
