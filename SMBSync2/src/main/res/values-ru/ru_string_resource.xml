@@ -559,6 +559,17 @@
         <string name="msgs_maintenance_result_log_list_del_count">Файлы журнала истории %s были удалены.</string>
         <string name="msgs_maintenance_result_log_list_del_file">Удалено %s.</string>
         <string name="msgs_maintenance_result_log_list_del_title">Файлы и каталоги, не относящиеся к журналам истории, были найдены в каталоге журналов истории. Удалить эти файлы?</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">Вы хотите удалить следующие задачи?</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Не существует задач, которые можно было бы добавить.</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">Редактировать список синхронизированных задач</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Добавить задачу синхронизации</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">Вы можете изменить порядок элементов, \"долго нажимая\" на них или \"нажимая\" на значок в правой части экрана, чтобы переместить их вверх или вниз.</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Задача синхронизации не задана. Нажмите кнопку \"Добавить задачу синхронизации\", чтобы добавить задачу.</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Задачи не существует. Task=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">Выберите все</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Удалить все</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">Список задач изменился. Выйти без сохранения?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Синхронизация</string>
         <string name="msgs_menu_exec_schedule">Выполнить график</string>
@@ -685,7 +696,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_title">Изменить расписание</string>
         <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">Новое название расписания</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Включить расписание</string>
-        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Изменить список синхронизации</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Редактирование списка задач синхронизации</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">Вс</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">Пн</string>
         <string name="msgs_scheduler_main_dlg_hdr_tue">Вт</string>
@@ -725,7 +736,7 @@
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">Предупреждение: месяцы, которые имеют менее 29 дней, могут не запускать выполнение задач, если указано 29 - 31-е. Включите параметр «Синхронизировать в последний день месяца», чтобы задача выполнялась в последний день каждого месяца.</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Синхронизировать список задач</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Выполнить все задачи автосинхронизации</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Укажите профиль для синхронизации, нажав кнопку «Редактировать список синхронизации».</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Пожалуйста, укажите задачи синхронизации, которые должны быть запланированы, нажав кнопку \"Редактировать список задач синхронизации\" ниже.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Время следующей синхронизации %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">Следующая синхронизация: %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">Некоторые запланированные задачи содержат ошибки. Вы найдете более подробную информацию во вкладке \"Планирование\".</string>

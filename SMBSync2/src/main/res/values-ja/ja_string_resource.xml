@@ -559,6 +559,17 @@
         <string name="msgs_maintenance_result_log_list_del_count">履歴ログディレクトリから%sファイル削除しました。</string>
         <string name="msgs_maintenance_result_log_list_del_file">%sを削除しました</string>
         <string name="msgs_maintenance_result_log_list_del_title">履歴に登録されていないディレクトリ/ファイルが見つかりました、削除しますか？</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">下記タスクを削除しますか？</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">追加できるタスクが存在しません。</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">タスクリストの編集</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">同期タスクの追加</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">項目を「長押し」または画面右端のアイコンを「押して」上下に移動することで順序を変更できます。</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">同期タスクが指定されていません。「同期タスクの追加」ボタンを押してタスクを追加してください。</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">タスクが見つかりません。タスク=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">全て選択</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">全ての選択解除</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">タスクリストが変更されています、保存せず終了しますか。</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">同期実行</string>
         <string name="msgs_menu_exec_schedule">スケジュール実行</string>
@@ -725,7 +736,7 @@
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">29日から31日を指定すると実行する月によりスケジュールされない場合があります。必ず月末日に実行するには「毎月最後の日にスケジュールする」にチェックしてください。</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">同期タスクリスト</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">自動同期タスクだけを同期する</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">同期リストの編集ボタンを押して、同期するプロファイルを指定してください。</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">「同期タスクリストの編集」ボタンを押して、同期するタスクを指定してください。</string>
         <string name="msgs_scheduler_info_next_schedule_time">同期予定時刻 %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">同期予定 : %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">一部のスケジュールされたタスクにエラーが含まれています。詳細については、\"スケジュール\"タブを参照してください。</string>

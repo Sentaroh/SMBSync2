@@ -91,6 +91,8 @@ public class ScheduleItemEditor {
 
     private ThemeColorList mThemeColorList = null;
 
+    private String mLatestSyncTaskList=null;
+
     ScheduleItemEditor(CommonUtilities mu, AppCompatActivity a, Context c,
                        CommonDialog cd, CustomContextMenu ccm, GlobalParameters gp,
                        boolean edit_mode, ArrayList<ScheduleItem> sl,
@@ -101,7 +103,7 @@ public class ScheduleItemEditor {
         mUtil = mu;
 //        commonDlg = cd;
         mSched = si;
-
+        mLatestSyncTaskList=si.syncTaskList;
 //        Log.v("", "name=" + si.scheduleName);s
 
         mEditMode = edit_mode;
@@ -193,7 +195,7 @@ public class ScheduleItemEditor {
         final CheckBox cb_sched_thu = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_thursday);
         final CheckBox cb_sched_fri = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_friday);
         final CheckBox cb_sched_sat = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_satday);
-        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
+//        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
 //		final LinearLayout ll_sched_dw=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week);
 //		final LinearLayout ll_sched_hm=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hm);
 //		final LinearLayout ll_sched_hours=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
@@ -411,13 +413,13 @@ public class ScheduleItemEditor {
         if (mSched.syncAutoSyncTask) {
             ctv_sync_all_prof.setChecked(true);
             btn_edit.setVisibility(Button.GONE);//.setEnabled(false);
-            tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
+//            tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
         } else {
             ctv_sync_all_prof.setChecked(false);
             btn_edit.setVisibility(Button.VISIBLE);//.setEnabled(true);
-            tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
+//            tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
         }
-        tv_sync_prof.setText(mSched.syncTaskList);
+        setEditTaskListButtonLabel(dialog);
 
         sp_sched_type.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -545,14 +547,14 @@ public class ScheduleItemEditor {
                             cb_sched_sat.isChecked()) {
                         if (isChecked) {
                             btn_edit.setVisibility(Button.GONE);//.setEnabled(false);
-                            tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
+//                            tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
                             if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                             else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                             tv_msg.setText("");
                         } else {
                             btn_edit.setVisibility(Button.VISIBLE);//.setEnabled(true);
-                            tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
-                            if (tv_sync_prof.getText().equals("")) {
+//                            tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
+                            if (mLatestSyncTaskList.equals("")) {
                                 CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                                 tv_msg.setText(mContext.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
                             } else {
@@ -561,21 +563,21 @@ public class ScheduleItemEditor {
                                 tv_msg.setText("");
                             }
                         }
-                        setScheduleWasChanged(dialog, mSched);
+                        if (tv_msg.getText().length()==0) setScheduleWasChanged(dialog, mSched);
                     } else {
                         //NOP
                     }
                 } else {
                     if (isChecked) {
                         btn_edit.setVisibility(Button.GONE);//.setEnabled(false);
-                        tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
+//                        tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
                         if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                         else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                         tv_msg.setText("");
                     } else {
                         btn_edit.setVisibility(Button.VISIBLE);//.setEnabled(true);
-                        tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
-                        if (tv_sync_prof.getText().equals("")) {
+//                        tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
+                        if (mLatestSyncTaskList.equals("")) {
                             tv_msg.setText(mContext.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
                             CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                         } else {
@@ -584,7 +586,7 @@ public class ScheduleItemEditor {
                             tv_msg.setText("");
                         }
                     }
-                    setScheduleWasChanged(dialog, mSched);
+                    if (tv_msg.getText().length()==0) setScheduleWasChanged(dialog, mSched);
                 }
             }
         });
@@ -597,9 +599,9 @@ public class ScheduleItemEditor {
                 ntfy.setListener(new NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
-                        String prof_list = (String) o[0];
-                        tv_sync_prof.setText(prof_list);
-                        if (prof_list.equals("")) {
+                        mLatestSyncTaskList = (String) o[0];
+                        setEditTaskListButtonLabel(dialog);
+                        if (mLatestSyncTaskList.equals("")) {
                             tv_msg.setText(mContext.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
                             CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                         } else {
@@ -614,7 +616,8 @@ public class ScheduleItemEditor {
                     public void negativeResponse(Context c, Object[] o) {
                     }
                 });
-                editSyncTaskList(tv_sync_prof.getText().toString(), ntfy);
+                EditSyncTaskList estl=new EditSyncTaskList(mActivity, mGp, mUtil);
+                estl.editSyncTaskList(mLatestSyncTaskList, ntfy);
             }
         });
 
@@ -675,6 +678,23 @@ public class ScheduleItemEditor {
         dialog.show();
     }
 
+    private void setEditTaskListButtonLabel(Dialog dialog) {
+        final Button btn_edit = (Button) dialog.findViewById(R.id.scheduler_main_dlg_edit_sync_prof);
+        String stl=buildSyncTaskListInfo(mLatestSyncTaskList);
+        if (stl.equals("")) btn_edit.setText(mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_edit_prof));
+        else btn_edit.setText(stl);
+    }
+
+    private String buildSyncTaskListInfo(String task_list) {
+        String[] array=task_list.split(SYNC_TASK_LIST_SEPARATOR);
+        String out="", sep="";
+        for(String item:array) {
+            out+=sep+item;
+            sep=", ";
+        }
+        return out;
+    }
+
     private String getNotExistsSyncTaskName(String task_list) {
         String error_item_name="";
         if (task_list.indexOf(SYNC_TASK_LIST_SEPARATOR)>0) {
@@ -711,7 +731,7 @@ public class ScheduleItemEditor {
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_msg);
-        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
+//        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
         final CheckedTextView ctv_sync_all_prof = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_sync_all_sync_task);
         CommonDialog.setButtonEnabled(mActivity, btn_ok, !mEditMode);
 
@@ -722,7 +742,7 @@ public class ScheduleItemEditor {
             si.syncTaskList = "";
             si.syncAutoSyncTask=true;
         } else {
-            si.syncTaskList = tv_sync_prof.getText().toString();
+            si.syncTaskList = mLatestSyncTaskList;//tv_sync_prof.getText().toString();
             si.syncAutoSyncTask=false;
         }
 
@@ -754,7 +774,7 @@ public class ScheduleItemEditor {
         final CheckBox cb_sched_thu = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_thursday);
         final CheckBox cb_sched_fri = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_friday);
         final CheckBox cb_sched_sat = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_satday);
-        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
+//        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
 //		final LinearLayout ll_sched_dw=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week);
 //		final LinearLayout ll_sched_hm=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hm);
 //		final LinearLayout ll_sched_hours=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
@@ -842,7 +862,7 @@ public class ScheduleItemEditor {
 //		final CheckBox cb_sched_thu=(CheckBox)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_thursday);
 //		final CheckBox cb_sched_fri=(CheckBox)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_friday);
 //		final CheckBox cb_sched_sat=(CheckBox)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_satday);
-        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
+//        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
 //		final LinearLayout ll_sched_dw=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week);
 //		final LinearLayout ll_sched_hm=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hm);
 //		final LinearLayout ll_sched_hours=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
@@ -898,7 +918,7 @@ public class ScheduleItemEditor {
             sp.syncTaskList = "";
             sp.syncAutoSyncTask=true;
         } else {
-            sp.syncTaskList = tv_sync_prof.getText().toString();
+            sp.syncTaskList = mLatestSyncTaskList;//tv_sync_prof.getText().toString();
             sp.syncAutoSyncTask=false;
         }
 
@@ -920,182 +940,6 @@ public class ScheduleItemEditor {
         if (rb_override_sync_option_charge_0.isChecked()) sp.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
         else if (rb_override_sync_option_charge_1.isChecked()) sp.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_ENABLED;
         else if (rb_override_sync_option_charge_2.isChecked()) sp.syncOverrideOptionCharge=ScheduleItem.OVERRIDE_SYNC_OPTION_DISABLED;
-    }
-
-    //edit the sync tasks list in the schedule editor
-    private void editSyncTaskList(final String prof_list, final NotifyEvent p_ntfy) {
-        // カスタムダイアログの生成
-        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.schedule_sync_edit_synclist_dlg);
-
-        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_view);
-//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
-
-        LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_title_view);
-        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
-        TextView dlg_title = (TextView) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_title);
-        dlg_title.setTextColor(mGp.themeColorList.title_text_color);
-
-        final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_ok);
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_cancel);
-
-        final ListView lv_sync_list = (ListView) dialog.findViewById(R.id.scheduler_edit_synclist_dlg_sync_prof_list);
-
-        final SchedulerAdapterSyncList adapter =
-                new SchedulerAdapterSyncList(mActivity, android.R.layout.simple_list_item_checked, lv_sync_list);
-
-        boolean selected=setSyncTaskListView(true, prof_list, lv_sync_list, adapter);
-        CommonDialog.setViewEnabled(mActivity, btn_ok, selected);
-
-        //check if there is at least one selected sync task to enable the save button in schedule sync task list
-        lv_sync_list.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                boolean sel = false;
-                if (position == 0) {
-                    //workaround needed to properly set alpha on first/last items during scroll (android bug ? with isEnabled() not always called on first/last items in scroll view)
-                    adapter.isEnabled(lv_sync_list.getLastVisiblePosition());
-                    //adapter.isEnabled(lv_sync_list.getFirstVisiblePosition());
-                }
-
-                for (int i = 0; i < lv_sync_list.getCount(); i++) {
-                    if (lv_sync_list.isItemChecked(i)) {
-                        sel = true;
-                        break;
-                    }
-                }
-                if (sel) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-            }
-        });
-
-        //workaround needed to properly set alpha on first/last items during scroll (android bug ? with isEnabled() not always called on first/last items in scroll view)
-        lv_sync_list.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                adapter.isEnabled(lv_sync_list.getLastVisiblePosition());
-                //adapter.isEnabled(lv_sync_list.getFirstVisiblePosition());
-                //for(int i=0; i < lv_sync_list.getCount(); i++) adapter.isEnabled(i);
-            }
-        });
-
-        btn_ok.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                String n_prof_list = "", sep = "";
-                for (int i = 0; i < lv_sync_list.getCount(); i++) {
-                    if (lv_sync_list.isItemChecked(i)) {
-                        n_prof_list = n_prof_list + sep + adapter.getItem(i).substring(1);
-                        sep = SYNC_TASK_LIST_SEPARATOR;
-                    }
-                }
-                p_ntfy.notifyToListener(true, new Object[]{n_prof_list});
-            }
-        });
-
-        btn_cancel.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                p_ntfy.notifyToListener(false, null);
-            }
-        });
-        dialog.show();
-    }
-
-    private final static String SYNC_TASK_ENABLED="V";//valid sync task
-    private final static String SYNC_TASK_NOT_FOUND="N";//not found sync task
-    private final static String SYNC_TASK_ERROR="E";//sync task in error state
-
-    private boolean setSyncTaskListView(boolean active, String prof_list, ListView lv, SchedulerAdapterSyncList adapter) {
-        adapter.clear();
-
-        //add all existing sync tasks to the SchedulerAdapterSyncList (list of available sync tasks displayed in edit schedule dialog)
-        //if sync task is error, we set it
-        for (int i = 0; i < mGp.syncTaskAdapter.getCount(); i++) {
-            SyncTaskItem pfli = mGp.syncTaskAdapter.getItem(i);
-            if (!pfli.isSyncTaskError()) {
-                adapter.add(SYNC_TASK_ENABLED + pfli.getSyncTaskName());
-            } else {
-                //sync tasks with error (invalid name, duplicate, invalid source/target folder...)
-                adapter.add(SYNC_TASK_ERROR + pfli.getSyncTaskName());
-                mUtil.addDebugMsg(1, "I", "Invalid sync task, Task="+pfli.getSyncTaskName());
-            }
-        }
-
-        //calls setSelectedSyncList to set the SYNC_TASK_NOT_FOUND flag for tasks in the schedule that cannot be found in the adapter (deleted, renamed tasks)
-        String[] pfa = null;
-        pfa = prof_list.split(SYNC_TASK_LIST_SEPARATOR);
-        if (!prof_list.equals("")) {
-            for (int i = 0; i < pfa.length; i++) {
-                if (!pfa[i].equals("")) setSelectedSyncList(pfa[i], lv, adapter);
-            }
-        }
-
-        lv.setAdapter(adapter);
-        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        lv.setSelected(true);
-
-        //the sync tasks specified in the schedule will display as checked in the schedule sync tasks list
-        if (!prof_list.equals("")) {
-            for (int k = 0; k < pfa.length; k++) {
-                for (int i = 0; i < adapter.getCount(); i++) {
-                    String prof_name = adapter.getItem(i).substring(1);
-                    if (prof_name.compareToIgnoreCase(pfa[k]) == 0) {
-                        lv.setItemChecked(i, true);
-                        break;
-                    }
-                }
-            }
-        }
-        boolean selected = false;
-        for (int i = 0; i < adapter.getCount(); i++) {
-            if (lv.isItemChecked(i)) {
-                selected = true;
-                break;
-            }
-        }
-        adapter.notifyDataSetChanged();
-        return selected;
-    }
-
-    //check if sync task name "stn" that is defined in the schedule exists in the global sync task list
-    //if not, add it to the schedule sync tasks list with a notification that it was deleted/renamed
-    private void setSelectedSyncList(String stn, ListView lv, SchedulerAdapterSyncList adapter) {
-        boolean found = false;
-        for (int i = 0; i < adapter.getCount(); i++) {
-            String prof_name = adapter.getItem(i).substring(1);
-            if (prof_name.compareToIgnoreCase(stn) == 0) {
-                found = true;
-//				lv.setItemChecked(i, true);
-                break;
-            }
-        }
-        if (!found) {
-            //add the non found sync task to schedule sync task list
-            boolean added = false;
-            for (int i = 0; i < adapter.getCount(); i++) {
-                String prof_name = adapter.getItem(i).substring(1);
-                if (prof_name.compareToIgnoreCase(stn) < 0) {
-                    adapter.insert(SYNC_TASK_NOT_FOUND + stn, i + 1);
-//					lv.setItemChecked(i+1, true);
-                    added = true;
-                    break;
-                }
-            }
-            if (!added) {
-                //it is the shortest task name in the list, add it to the top of the list
-                adapter.insert(SYNC_TASK_NOT_FOUND + stn, 0);
-            }
-            adapter.notifyDataSetChanged();
-        }
     }
 
     private void setViewVisibility(Dialog dialog) {
@@ -1304,84 +1148,4 @@ public class ScheduleItemEditor {
         sp_sched_minutes.setSelection(sel);
         adapter.notifyDataSetChanged();
     }
-
-    private class SchedulerAdapterSyncList extends ArrayAdapter<String> {
-        private int layout_id = 0;
-        private Context context = null;
-        private int text_color = 0;
-        private ListView mListView=null;
-
-        public SchedulerAdapterSyncList(Context c, int textViewResourceId, ListView list_view) {
-            super(c, textViewResourceId);
-            layout_id = textViewResourceId;
-            context = c;
-            mListView=list_view;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, final ViewGroup parent) {
-            final ViewHolder holder;
-            final String o = getItem(position);
-            View v = convertView;
-            if (v == null) {
-                LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = vi.inflate(layout_id, null);
-                holder = new ViewHolder();
-                holder.tv_name = (CheckedTextView) v.findViewById(android.R.id.text1);
-                text_color = holder.tv_name.getCurrentTextColor();
-                v.setTag(holder);
-            } else {
-                holder = (ViewHolder) v.getTag();
-            }
-            if (o != null) {
-                if (o.substring(0, 1).equals(SYNC_TASK_NOT_FOUND)) {
-                    holder.tv_name.setText(o.substring(1)+"\n"+mContext.getString(R.string.msgs_scheduler_info_sync_task_was_deleted_or_renamed));
-                    holder.tv_name.setTextColor(mThemeColorList.text_color_warning);
-                    //holder.tv_name.setChecked(false);
-                } else if (o.substring(0, 1).equals(SYNC_TASK_ERROR)) {
-                    holder.tv_name.setText(o.substring(1)+"\n"+mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_sync_task_error));
-                    holder.tv_name.setTextColor(mThemeColorList.text_color_error);
-                    //holder.tv_name.setChecked(false);
-                } else {
-                    holder.tv_name.setText(o.substring(1));
-                    holder.tv_name.setTextColor(text_color);
-                }
-            }
-            return v;
-        }
-
-        @Override
-        public boolean isEnabled(int position) {
-            if (mListView == null) {
-                //shouldn't happen if entered through schedule editor
-                return false;
-            }
-            View child  = mListView.getChildAt(position - mListView.getFirstVisiblePosition());
-            if (child == null) {
-                mUtil.addDebugMsg(1, "I", "child=null, " + "position="+position + ", getFirstVisiblePosition="+mListView.getFirstVisiblePosition());
-                return false;
-            }
-
-            //mUtil.addDebugMsg(1, "I", "first visible item=" + lv_sync_list.getFirstVisiblePosition() + ", position=" + position);
-            String syncTaskState = mListView.getItemAtPosition(position).toString().substring(0, 1);
-            //mUtil.addDebugMsg(1, "I", "syncTaskState=" + syncTaskState + ", item=" + lv_sync_list.getItemAtPosition(position).toString().substring(1));
-
-            CheckedTextView ctv = (CheckedTextView) child;
-            child.setEnabled(true);
-            child.setAlpha(1f);
-            if (syncTaskState.equals(SYNC_TASK_NOT_FOUND) || syncTaskState.equals(SYNC_TASK_ERROR)) {
-                if (!ctv.isChecked()) {
-                    child.setEnabled(false);
-                    child.setAlpha(0.5f);
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        class ViewHolder {
-            CheckedTextView tv_name;
-        }
-    }
-
 }

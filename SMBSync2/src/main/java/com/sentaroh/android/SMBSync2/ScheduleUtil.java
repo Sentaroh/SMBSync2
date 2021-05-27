@@ -676,6 +676,7 @@ public class ScheduleUtil {
     }
 
     public static String isValidScheduleItem(Context c, GlobalParameters gp, ArrayList<ScheduleItem> sl, ScheduleItem si, boolean checkDup, boolean showAllErrors) {
+        Thread.dumpStack();
         String error_msg="";
         String sep_msg="";
 

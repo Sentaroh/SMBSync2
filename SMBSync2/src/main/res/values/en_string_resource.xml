@@ -559,6 +559,17 @@
         <string name="msgs_maintenance_result_log_list_del_count">%s history log  files have been deleted.</string>
         <string name="msgs_maintenance_result_log_list_del_file">Deleted %s.</string>
         <string name="msgs_maintenance_result_log_list_del_title">Files and directories not related to history logs have been found in the history log directory. Remove these files?</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">Would you like to delete the following tasks?</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">No tasks exist that can be added.</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">Edit sync task List</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Add sync task</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">You can change the order of the items by \"long pressing\" them or \"pressing\" the icon on the right side of the screen to move them up or down.</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">No synchronization task has been specified. Click the "Add Sync Task" button to add a task.</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Task does not exists. Task=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">Select all</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Deselect all</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">The task list has changed. Exit without saving?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Sync</string>
         <string name="msgs_menu_exec_schedule">Execute schedule</string>
@@ -685,7 +696,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_title">Edit Schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">New schedule name</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Enable schedule</string>
-        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Sync List...</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Edit Sync task list</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">Sun</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">Mon</string>
         <string name="msgs_scheduler_main_dlg_hdr_tue">Tue</string>
@@ -725,7 +736,7 @@
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">Warning: If the selected day never occurs in some months, sync will be skipped on those months. Exp: you select 29 and February has only 28 days, or you select 31 and the month only has 30 days. Select   \"Sync on the last day of the month\" option to ensure the task is executed on the last day of every month.</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Sync task list</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Execute all auto sync tasks</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Please specify the sync tasks to be scheduled by pressing the ‘Sync list...’ button below.</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Please specify the sync tasks to be scheduled by pressing the \"Edit sync task list\" button below.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Next sync time is %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">Next sync: %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">Some enabled schedules contain errors. Check the \"Schedule\" tab for more details.</string>

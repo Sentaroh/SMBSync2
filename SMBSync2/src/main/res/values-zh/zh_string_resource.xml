@@ -559,6 +559,17 @@
         <string name="msgs_maintenance_result_log_list_del_count">%s历史记录日志文件已被删除。</string>
         <string name="msgs_maintenance_result_log_list_del_file">已删除%s。</string>
         <string name="msgs_maintenance_result_log_list_del_title">与历史日志无关的文件和目录已在历史日志目录中找到。删除这些文件？</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">您是否要删除以下组？</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">不存在可添加的任务。</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">编辑同步任务列表</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">添加同步任务</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">你可以通过 \"长按\"来改变项目的顺序，或者 \"按\"屏幕右侧的图标来向上或向下移动它们。</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">没有指定同步任务。点击 \"添加同步任务 \"按钮，添加一个任务。</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">任务不存在。 Task=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">选择所有</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">取消选择所有</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">任务列表已经改变。不保存就退出？</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">同步</string>
         <string name="msgs_menu_exec_schedule">执行计划</string>
@@ -685,7 +696,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_title">编辑计划</string>
         <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">新计划名称</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">启用计划</string>
-        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">同步清单...</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">编辑同步任务列表</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">周日</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">周一</string>
         <string name="msgs_scheduler_main_dlg_hdr_tue">周二</string>
@@ -725,7 +736,7 @@
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">警告：如果所选日期在某些月份内没有，则同步将不会在这些月份中执行。 例如：您选择29号，而2月只有28天，或者您选择31，而某个月只有30天。 选择"每月的最后一天同步"选项，以确保任务在每月的最后一天执行。</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">同步任务列表</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">执行所有自动同步任务</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">请按下面的"同步列表..."按钮，指定要安排的同步任务。</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">请按下面的 \"编辑同步任务列表 \"按钮来指定要安排的同步任务。</string>
         <string name="msgs_scheduler_info_next_schedule_time">下一次同步时间是%s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">下次同步：%1$s，（%2$s）</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">某些已启用的计划包含错误。查看"计划"标签以了解更多详细信息。</string>

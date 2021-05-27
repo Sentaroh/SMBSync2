@@ -559,6 +559,17 @@
         <string name="msgs_maintenance_result_log_list_del_count">%s log cronologia file sono stati eliminati.</string>
         <string name="msgs_maintenance_result_log_list_del_file">Eliminati %s.</string>
         <string name="msgs_maintenance_result_log_list_del_title">File e cartelle non relative al log cronologia sono state trovate nel log cartella cronologia. Rimuovere questi file?</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">Volete cancellare i seguenti compiti?</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Non esistono compiti che possono essere aggiunti.</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">Modifica elenco attività di sincronizzazione</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Aggiungi attività di sincronizzazione</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">Puoi cambiare l\'ordine degli elementi \"premendo a lungo\" o \"premendo\" l\'icona sul lato destro dello schermo per spostarli in alto o in basso.</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Non è stata specificata alcuna attività di sincronizzazione. Fai clic sul pulsante \"Add Sync Task\" per aggiungere un compito.</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">L\'attività non esiste. Attività=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">Seleziona tutti</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Deseleziona tutti</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">L\'elenco dei compiti è cambiato. Uscire senza salvare?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Sync</string>
         <string name="msgs_menu_exec_schedule">Esegui pianificazione</string>
@@ -685,7 +696,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_title">Modifica Pianificazione</string>
         <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">Nuovo nome pianificazione</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Abilita pianificazione</string>
-        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Lista Sync...</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Modifica dell\'elenco delle attività di sincronizzazione</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">Dom</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">Lun</string>
         <string name="msgs_scheduler_main_dlg_hdr_tue">Mar</string>
@@ -725,7 +736,7 @@
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">Attenzione: Se il giorno selezionato non è presente in alcuni mesi, la sync verrà saltata in quei mesi. Es: Se selezioni il 29 e Febbraio ha solo 28 giorni, o selezioni 31 e il mese ha solo 30 giorni. Seleziona l\'opzione \"Sync l\'ultimo giorno del mese\" per assicurarti l\'esecuzione del task l\'ultimo giorno di ogni mese.</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Lista Sync task</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Esegui tutti auto sync task</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Per favore specifica la task sync da pianificare premendo il bottone ‘lista Sync...’.</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Si prega di specificare le attività di sincronizzazione da programmare premendo il pulsante \"Edit sync task list\" qui sotto.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Prossima sync il %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">Prossimo sync: %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">Alcune pianificazioni abilitate contengono errori. Verifica la scheda \"Piani\" per maggiori dettagli.</string>

@@ -559,6 +559,17 @@
         <string name="msgs_maintenance_result_log_list_del_count">%s fichiers journaux supprimés.</string>
         <string name="msgs_maintenance_result_log_list_del_file">Supprimé %s.</string>
         <string name="msgs_maintenance_result_log_list_del_title">Des fichiers et dossiers sans rapport avec les fichiers journaux ont été trouvés dans le dossier des historiques. Supprimer ces fichiers ?</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">Souhaitez-vous supprimer les tâches suivantes ?</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Il n\'existe aucune tâche qui puisse être ajoutée.</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">Liste des tâches de synchronisation d\'édition</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Ajouter une tâche de synchronisation</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">Vous pouvez modifier l\'ordre des éléments en les \"appuyant longuement\" ou en \"appuyant\" sur l\'icône située à droite de l\'écran pour les déplacer vers le haut ou vers le bas.</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Aucune tâche de synchronisation n\'a été spécifiée. Cliquez sur le bouton \"Add Sync Task\" pour ajouter une tâche.</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">La tâche n\'existe pas. Task=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">Sélectionner tout</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Désélectionner tout</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">La liste des tâches a changé. Quitter sans sauvegarder ?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Sync</string>
         <string name="msgs_menu_exec_schedule">Exécuter la planification</string>
@@ -685,7 +696,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_title">Modifier la planification</string>
         <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">Nouveau nom de planification</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Activer la planification </string>
-        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Tâches de sync...</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Modifier la liste de tâches Sync</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">Di</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">Lu</string>
         <string name="msgs_scheduler_main_dlg_hdr_tue">Ma</string>
@@ -725,7 +736,7 @@
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">Avertissement: Si le jour sélectionné n\'existe pas dans le mois, la synchronisation n\'aura pas lieu. Exp: 29 est sélectionné et février n\'a que 28 jours, ou 31 est sélectionné et le mois n\'a que 30 jours. Choisissez l\'option \"Le dernier jour de chaque mois\" pour être certain que la synchronisation a lieu tous les mois.</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Liste des tâches de sync</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Exécuter toutes les tâches configurées en mode Auto</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Merci de spécifier les tâches de synchronisation à planifier en pressant le bouton \"Tâches de sync...\" ci-dessous.</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Veuillez spécifier les tâches de synchronisation à planifier en cliquant sur le bouton \"Modifier la liste des tâches de synchronisation\" ci-dessous.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Prochaine sync à %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">Prochaine sync: %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">Certaines tâches planifiées contiennent des erreurs. Vous trouverez plus de détails dans l\'onglet \"Planfication\".</string>

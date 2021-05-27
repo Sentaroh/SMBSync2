@@ -146,19 +146,20 @@
 
                 <Button
                     android:id="@+id/scheduler_main_dlg_edit_sync_prof"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="start"
                     android:text="@string/msgs_scheduler_main_dlg_hdr_edit_prof" 
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-                <TextView
-                    android:id="@+id/scheduler_main_dlg_sync_task_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:text=""
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+<!--                <TextView-->
+<!--                    android:id="@+id/scheduler_main_dlg_sync_task_list"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:lines="1"-->
+<!--                    android:ellipsize="end"-->
+<!--                    android:text=""-->
+<!--                    android:textAppearance="?android:attr/textAppearanceMedium" />-->
             </LinearLayout>
 
             <LinearLayout

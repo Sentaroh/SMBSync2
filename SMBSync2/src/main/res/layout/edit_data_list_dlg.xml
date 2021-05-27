@@ -1,0 +1,114 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_data_list_dlg_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/edit_data_list_dlg_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/edit_data_list_dlg_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/msgs_edit_sync_task_list_dlg_title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <include layout="@layout/divider_line1_turquoise" />
+    </LinearLayout>
+
+    <com.sentaroh.android.Utilities.Widget.NonWordwrapTextView
+        android:id="@+id/edit_data_list_dlg_msg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="Message"
+        android:textColor="#ff0000"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/edit_data_list_dlg_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fadeScrollbars="false" >
+    </android.support.v7.widget.RecyclerView>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/edit_sync_task_list_dlg_select_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+<!--        <include-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            layout="@layout/context_button_delete" />-->
+<!--        <include-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            layout="@layout/context_button_select_all" />-->
+<!--        <include-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            layout="@layout/context_button_unselect_all" />-->
+<!--    </LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/edit_data_list_dlg_normal_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/edit_data_list_dlg_move_comment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/msgs_edit_sync_task_list_guide_drag_drop"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/edit_data_list_dlg_add_task_list_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/msgs_edit_sync_task_list_add_sync_task_btn_title" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/edit_data_list_dlg_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/msgs_common_dialog_cancel" />
+
+        <Button
+            android:id="@+id/edit_data_list_dlg_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/msgs_common_dialog_save" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

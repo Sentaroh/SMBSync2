@@ -47,7 +47,7 @@
     <include layout="@layout/divider_line1" />
 
     <ListView
-        android:id="@+id/android:list"
+        android:id="@+id/item_select_list_dlg_list_view"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

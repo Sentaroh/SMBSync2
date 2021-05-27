@@ -4213,14 +4213,14 @@ public class SyncTaskUtil {
         }
     }
 
-    static private String hasSyncTaskNameUnusableCharacter(Context c, String task_name) {
+    static public String hasSyncTaskNameUnusableCharacter(Context c, String task_name) {
         for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
             if (task_name.contains(item)) return c.getString(R.string.msgs_task_name_contains_invalid_character,item);
         }
         return "";
     }
 
-    static private boolean hasSyncTaskNameUnusableCharacter(String task_name) {
+    static public boolean hasSyncTaskNameUnusableCharacter(String task_name) {
         boolean result=false;
         for(String item:SYNC_TASK_NAME_UNUSABLE_CHARACTER) {
             if (task_name.contains(item)) result=true;
@@ -4387,7 +4387,7 @@ public class SyncTaskUtil {
 
                 CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
-                final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
+                final ListView lv = (ListView) dialog.findViewById(R.id.item_select_list_dlg_list_view);
                 final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mActivity, false, false);
                 lv.setAdapter(tfa);
                 tfa.setDataList(tfl);
@@ -4581,7 +4581,7 @@ public class SyncTaskUtil {
 
                 CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
-                final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
+                final ListView lv = (ListView) dialog.findViewById(R.id.item_select_list_dlg_list_view);
                 final TreeFilelistAdapter tfa = new TreeFilelistAdapter(mActivity, false, false);
                 final ArrayList<TreeFilelistItem> rows = new ArrayList<TreeFilelistItem>();
                 for (int i = 0; i < rfl.size(); i++) {
@@ -5608,7 +5608,7 @@ public class SyncTaskUtil {
 
                 CommonDialog.setDlgBoxSizeLimit(dialog, false);
 
-                final ListView lv = (ListView) dialog.findViewById(android.R.id.list);
+                final ListView lv = (ListView) dialog.findViewById(R.id.item_select_list_dlg_list_view);
                 lv.setAdapter(new ArrayAdapter<String>(mActivity,
 //						R.layout.custom_simple_list_item_checked,rows));
                         android.R.layout.simple_list_item_single_choice, rows));
