@@ -175,7 +175,7 @@ public class EditSyncTaskList {
 
         data_list_adapter.setNotifyTextViewClicked(new CallBackListener() {
             @Override
-            public boolean onCallBack(Context context, Object o, Object[] objects) {
+            public boolean onCallBack(Context context, boolean positive, Object[] objects) {
                 setContextViewVisibility(dialog, data_list_adapter);
                 return true;
             }
@@ -183,7 +183,7 @@ public class EditSyncTaskList {
 
         data_list_adapter.setNotifyCheckBox(new CallBackListener() {
             @Override
-            public boolean onCallBack(Context context, Object o, Object[] objects) {
+            public boolean onCallBack(Context context, boolean positive, Object[] objects) {
                 setContextViewVisibility(dialog, data_list_adapter);
                 return true;
             }
@@ -191,7 +191,7 @@ public class EditSyncTaskList {
 
         data_list_adapter.setNotifyHandleTouch(new CallBackListener() {
             @Override
-            public boolean onCallBack(Context context, Object o, Object[] objects) {
+            public boolean onCallBack(Context context, boolean positive, Object[] objects) {
                 if (data_list_adapter.isDragDropEnabled()) {
                     EditDataListAdapter.ViewHolder vh=(EditDataListAdapter.ViewHolder)objects[0];
                     ith.startDrag(vh);
