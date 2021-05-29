@@ -564,11 +564,15 @@
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">不存在可添加的任务。</string>
         <string name="msgs_edit_sync_task_list_dlg_title">编辑同步任务列表</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">添加同步任务</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">你可以通过 \"长按\"来改变项目的顺序，或者 \"按\"屏幕右侧的图标来向上或向下移动它们。</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">没有指定同步任务。点击 \"添加同步任务 \"按钮，添加一个任务。</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">任务不存在。 Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">选择所有</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">取消选择所有</string>
+        <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">移除同步化任务</string>
+        <string name="msgs_edit_sync_task_list_cont_label_add_sync_task">添加同步任务</string>
+        <string name="msgs_edit_sync_task_list_help_title">编辑同步任务列表的帮助</string>
+        <string name="msgs_edit_sync_task_list_add_task_list_guide">选择你要添加的任务，并点击 \"添加 \"按钮。</string>
+        <string name="msgs_edit_sync_task_list_help_file">SMBSync2_Help_ZH_edit_sync_task_list.md</string>
         <string name="msgs_edit_sync_task_list_confirm_msg_nosave">任务列表已经改变。不保存就退出？</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">同步</string>

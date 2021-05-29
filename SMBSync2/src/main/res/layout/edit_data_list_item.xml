@@ -7,14 +7,13 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/edit_data_list_item_del_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:scaleType="fitXY"
-        android:src="@drawable/context_button_trash"/>
+    <CheckBox
+        android:id="@+id/edit_data_list_item_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"/>
     <LinearLayout
+        android:id="@+id/edit_data_list_item_text_area_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

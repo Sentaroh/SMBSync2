@@ -564,11 +564,15 @@
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Не существует задач, которые можно было бы добавить.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Редактировать список синхронизированных задач</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Добавить задачу синхронизации</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">Вы можете изменить порядок элементов, \"долго нажимая\" на них или \"нажимая\" на значок в правой части экрана, чтобы переместить их вверх или вниз.</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Задача синхронизации не задана. Нажмите кнопку \"Добавить задачу синхронизации\", чтобы добавить задачу.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Задачи не существует. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Выберите все</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Удалить все</string>
+        <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">Удалить задачу синхронизации</string>
+        <string name="msgs_edit_sync_task_list_cont_label_add_sync_task">Добавить синхронизированную задачу</string>
+        <string name="msgs_edit_sync_task_list_help_title">Справка по редактированию списка синхронизированных задач</string>
+        <string name="msgs_edit_sync_task_list_add_task_list_guide">Выберите задачу, которую вы хотите добавить, и нажмите кнопку \"Добавить\".</string>
+        <string name="msgs_edit_sync_task_list_help_file">SMBSync2_Help_RU_edit_sync_task_list.md</string>
         <string name="msgs_edit_sync_task_list_confirm_msg_nosave">Список задач изменился. Выйти без сохранения?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Синхронизация</string>

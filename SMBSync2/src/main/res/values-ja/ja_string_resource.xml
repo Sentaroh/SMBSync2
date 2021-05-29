@@ -564,11 +564,15 @@
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">追加できるタスクが存在しません。</string>
         <string name="msgs_edit_sync_task_list_dlg_title">タスクリストの編集</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">同期タスクの追加</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">項目を「長押し」または画面右端のアイコンを「押して」上下に移動することで順序を変更できます。</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">同期タスクが指定されていません。「同期タスクの追加」ボタンを押してタスクを追加してください。</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">タスクが見つかりません。タスク=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">全て選択</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">全ての選択解除</string>
+        <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">同期タスクを取り除く</string>
+        <string name="msgs_edit_sync_task_list_cont_label_add_sync_task">同期タスクの追加</string>
+        <string name="msgs_edit_sync_task_list_help_title">同期タスクリスト編集のヘルプ</string>
+        <string name="msgs_edit_sync_task_list_add_task_list_guide">追加するタスクを選択して「追加」ボタンを押してください。</string>
+        <string name="msgs_edit_sync_task_list_help_file">SMBSync2_Help_JA_edit_sync_task_list.md</string>
         <string name="msgs_edit_sync_task_list_confirm_msg_nosave">タスクリストが変更されています、保存せず終了しますか。</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">同期実行</string>

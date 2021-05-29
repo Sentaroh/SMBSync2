@@ -10,15 +10,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/edit_data_list_dlg_title"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="@string/msgs_edit_sync_task_list_dlg_title"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/edit_data_list_dlg_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="@string/msgs_edit_sync_task_list_dlg_title"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+            <ImageButton
+                android:id="@+id/edit_data_list_dlg_help"
+                android:layout_width="43dp"
+                android:layout_height="42dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="right|center_vertical"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_128_help" />
+        </LinearLayout>
 
         <include layout="@layout/divider_line1_turquoise" />
     </LinearLayout>
@@ -42,49 +57,31 @@
         android:fadeScrollbars="false" >
     </android.support.v7.widget.RecyclerView>
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/edit_sync_task_list_dlg_select_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal">-->
-<!--        <include-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            layout="@layout/context_button_delete" />-->
-<!--        <include-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            layout="@layout/context_button_select_all" />-->
-<!--        <include-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            layout="@layout/context_button_unselect_all" />-->
-<!--    </LinearLayout>-->
-
     <LinearLayout
-        android:id="@+id/edit_data_list_dlg_normal_view"
+        android:id="@+id/edit_sync_task_list_dlg_select_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/edit_data_list_dlg_move_comment"
-            android:layout_width="fill_parent"
+        android:orientation="horizontal">
+        <include
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="start"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="@string/msgs_edit_sync_task_list_guide_drag_drop"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <Button
-            android:id="@+id/edit_data_list_dlg_add_task_list_btn"
-            android:layout_width="match_parent"
+            android:layout_weight="1"
+            layout="@layout/context_button_add" />
+        <include
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/msgs_edit_sync_task_list_add_sync_task_btn_title" />
+            android:layout_weight="1"
+            layout="@layout/context_button_delete" />
+        <include
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            layout="@layout/context_button_select_all" />
+        <include
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            layout="@layout/context_button_unselect_all" />
     </LinearLayout>
 
     <LinearLayout

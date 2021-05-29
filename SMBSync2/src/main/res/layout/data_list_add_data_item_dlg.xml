@@ -17,7 +17,7 @@
             android:gravity="center"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="@string/msgs_edit_sync_task_list_add_sync_task_btn_title"
+            android:text="@string/msgs_edit_sync_task_list_cont_label_add_sync_task"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <include layout="@layout/divider_line1_turquoise" />
@@ -25,13 +25,24 @@
 
     <com.sentaroh.android.Utilities.Widget.NonWordwrapTextView
         android:id="@+id/data_list_add_data_item_dlg_msg"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColor="#ff0000"
         android:visibility="gone"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/data_list_add_data_item_dlg_guide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/msgs_edit_sync_task_list_add_task_list_guide"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <include layout="@layout/divider_line1" />
 
     <ListView
         android:id="@+id/data_list_add_data_item_dlg_task_list"

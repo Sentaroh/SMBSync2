@@ -608,8 +608,8 @@ public class ScheduleItemEditor {
                             if (isScheduleWasChanged()) CommonDialog.setButtonEnabled(mActivity, btn_ok, true);
                             else CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                             tv_msg.setText("");
+                            setScheduleWasChanged(dialog, mSched);
                         }
-                        setScheduleWasChanged(dialog, mSched);
                     }
 
                     @Override

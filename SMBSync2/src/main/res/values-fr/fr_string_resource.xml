@@ -564,11 +564,15 @@
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Il n\'existe aucune tâche qui puisse être ajoutée.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Liste des tâches de synchronisation d\'édition</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Ajouter une tâche de synchronisation</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">Vous pouvez modifier l\'ordre des éléments en les \"appuyant longuement\" ou en \"appuyant\" sur l\'icône située à droite de l\'écran pour les déplacer vers le haut ou vers le bas.</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Aucune tâche de synchronisation n\'a été spécifiée. Cliquez sur le bouton \"Add Sync Task\" pour ajouter une tâche.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">La tâche n\'existe pas. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Sélectionner tout</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Désélectionner tout</string>
+        <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">Supprimer une tâche de synchronisation</string>
+        <string name="msgs_edit_sync_task_list_cont_label_add_sync_task">Ajouter une tâche de synchronisation</string>
+        <string name="msgs_edit_sync_task_list_help_title">Aide à l\'édition de la liste des tâches synchronisées</string>
+        <string name="msgs_edit_sync_task_list_add_task_list_guide">Sélectionnez la tâche que vous voulez ajouter et cliquez sur le bouton \"Ajouter\".</string>
+        <string name="msgs_edit_sync_task_list_help_file">SMBSync2_Help_FR_edit_sync_task_list.md</string>
         <string name="msgs_edit_sync_task_list_confirm_msg_nosave">La liste des tâches a changé. Quitter sans sauvegarder ?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Sync</string>
