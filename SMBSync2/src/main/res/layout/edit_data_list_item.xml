@@ -7,11 +7,13 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/edit_data_list_item_check_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
+    <ImageButton
+        android:id="@+id/edit_data_list_item_handle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:scaleType="fitXY"
+        android:src="@drawable/data_list_item_handle"/>
     <LinearLayout
         android:id="@+id/edit_data_list_item_text_area_view"
         android:layout_width="0dp"
@@ -37,12 +39,10 @@
             android:text="Error message"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
     </LinearLayout>
-    <ImageButton
-        android:id="@+id/edit_data_list_item_handle"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_vertical"
-        android:scaleType="fitXY"
-        android:src="@drawable/data_list_item_handle"/>
+    <CheckBox
+        android:id="@+id/edit_data_list_item_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"/>
 
 </LinearLayout>

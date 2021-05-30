@@ -1,5 +1,5 @@
 ### Change execution order  
-You can change the order by pressing and holding the task name or by holding down the "icon" on the right side of the screen and moving it up or down.  
+You can change the order by pressing and holding an item or holding down the "icon" on the left side of the screen and moving it up or down.  
 You cannot change the order if it is selected. Please deselect them before reordering.  
 
 ### Remove from list  

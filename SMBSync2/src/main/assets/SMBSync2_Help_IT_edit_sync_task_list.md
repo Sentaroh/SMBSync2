@@ -1,5 +1,5 @@
 ### Modifica l'ordine di esecuzione  
-È possibile modificare l'ordine tenendo premuto il nome dell'attività o tenendo premuta "l'icona" sul lato destro dello schermo e spostandola verso l'alto o verso il basso.  
+Puoi modificare l'ordine tenendo premuti gli elementi o tenendo premuta l'"icona" sul lato sinistro dello schermo e spostandoli in alto o in basso.  
 Non puoi cambiare l'ordine se è selezionato. Si prega di deselezionarli prima di riordinarli.  
 
 ### Rimuovere dalla lista  

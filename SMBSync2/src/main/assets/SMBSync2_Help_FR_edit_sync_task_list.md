@@ -1,5 +1,5 @@
 ### Modifier l'ordre d'exécution  
-Vous pouvez modifier l'ordre en appuyant longuement sur le nom de la tâche ou en maintenant enfoncée "l'icône" sur le côté droit de l'écran et en la déplaçant vers le haut ou vers le bas.  
+Vous pouvez modifier l'ordre en appuyant sur les éléments et en les maintenant enfoncés ou en maintenant enfoncée "l'icône" sur le côté gauche de l'écran et en les déplaçant vers le haut ou vers le bas.  
 Vous ne pouvez pas modifier la commande si elle est sélectionnée. Veuillez les désélectionner avant de les commander à nouveau.  
 
 ### Retirer de la liste  
