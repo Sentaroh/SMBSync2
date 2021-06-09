@@ -1840,6 +1840,10 @@ public class SyncTaskEditor extends DialogFragment {
         final Button btn_zip_view_keyword_insert_day = (Button) ll_zip_view.findViewById(R.id.edit_sync_folder_keyword_insert_day);
         final Button btn_zip_view_keyword_insert_day_of_year = (Button) ll_zip_view.findViewById(R.id.edit_sync_folder_keyword_insert_day_of_year);
 
+        final Button btn_zip_view_keyword_insert_week_number = (Button) ll_zip_view.findViewById(R.id.edit_sync_folder_keyword_insert_week_number);
+        final Button btn_zip_view_keyword_insert_week_day = (Button) ll_zip_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday);
+        final Button btn_zip_view_keyword_insert_week_day_long = (Button) ll_zip_view.findViewById(R.id.edit_sync_folder_keyword_insert_weekday_long);
+
         final CheckedTextView ctv_zip_file_save_sdcard = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_use_sdcard);
 
         final Button btn_zip_filelist = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_filelist_btn);
@@ -1850,6 +1854,10 @@ public class SyncTaskEditor extends DialogFragment {
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_zip_view_keyword_insert_month, et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_MONTH);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_zip_view_keyword_insert_day, et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_DAY);
         setSyncFolderkeywordButtonListener(dialog, sfev, btn_zip_view_keyword_insert_day_of_year, et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_DAY_OF_YEAR);
+
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_zip_view_keyword_insert_week_number, et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_NUMBER);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_zip_view_keyword_insert_week_day, et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY);
+        setSyncFolderkeywordButtonListener(dialog, sfev, btn_zip_view_keyword_insert_week_day_long, et_zip_file, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG);
 
         String zip_dir="", zip_file="";
         if (sfev.zip_file_name.lastIndexOf("/")>1) {
