@@ -7984,6 +7984,15 @@ public class SyncTaskUtil {
                 }
             }
 
+            if (!parm[101].equals("") && !parm[101].equals("end")) {
+                if (parm[101].length() <= 3 && TextUtils.isDigitsOnly(parm[101]) && Integer.parseInt(parm[101]) > 0) { //max 3 digits allowed and value > 1
+                    stli.setSyncOptionIgnoreFileNameLengthValue(Integer.parseInt(parm[101]));
+                } else {
+                    stli.setSyncOptionIgnoreFileNameLengthValue(255);
+                    putTaskListValueErrorMessage(util, "File name length ignore Value", 255);
+                }
+            }
+
             if (stli.getMasterSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
                 stli.setMasterSmbProtocol(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
             if (stli.getTargetSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SYSTEM))
@@ -8533,6 +8542,8 @@ public class SyncTaskUtil {
                             (item.getSyncFilterFileSizeUnit()) + "\t" +                                 //98
                             (item.getSyncFilterFileDateType()) + "\t" +                                 //99
                             (item.getSyncFilterFileDateValue()) + "\t" +                                //100
+
+                            (item.getSyncOptionIgnoreFileNameLengthValue()) + "\t" +                    //101
 
                             "end"
                     ;

@@ -394,6 +394,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner sp_file_size_unit=(Spinner)mDialog.findViewById(R.id.sync_filter_file_size_unit_spinner);
 
         final CheckedTextView ctvIgnore_0_byte_file=(CheckedTextView)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_size_0_bytes_file);
+        final EditText et_ignore_file_name_length_value=(EditText)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_name_length_value);
 
         final Spinner sp_file_date_type=(Spinner)mDialog.findViewById(R.id.sync_filter_file_date_type_spinner);
         final EditText et_file_date_value=(EditText)mDialog.findViewById(R.id.sync_filter_file_date_value);
@@ -549,6 +550,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner sp_file_size_unit=(Spinner)mDialog.findViewById(R.id.sync_filter_file_size_unit_spinner);
 
         final CheckedTextView ctvIgnore_0_byte_file=(CheckedTextView)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_size_0_bytes_file);
+        final EditText et_ignore_file_name_length_value=(EditText)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_name_length_value);
 
         final Spinner sp_file_date_type=(Spinner)mDialog.findViewById(R.id.sync_filter_file_date_type_spinner);
         final EditText et_file_date_value=(EditText)mDialog.findViewById(R.id.sync_filter_file_date_value);
@@ -3899,6 +3901,21 @@ public class SyncTaskEditor extends DialogFragment {
 
         final CheckedTextView ctvIgnore_0_byte_file=(CheckedTextView)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_size_0_bytes_file);
 
+        final EditText et_ignore_file_name_length_value=(EditText)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_name_length_value);
+        et_ignore_file_name_length_value.setText(String.valueOf(n_sti.getSyncOptionIgnoreFileNameLengthValue()));
+        et_ignore_file_name_length_value.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+        });
+
         boolean is_all_file_type = true;
         if (n_sti.isSyncFileTypeAudio() || n_sti.isSyncFileTypeImage() || n_sti.isSyncFileTypeVideo() || n_sti.getFileFilter().size() != 0 ||
                 !n_sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE) ||
@@ -5156,6 +5173,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner sp_file_size_unit=(Spinner)dialog.findViewById(R.id.sync_filter_file_size_unit_spinner);
 
         final CheckedTextView ctvIgnore_0_byte_file=(CheckedTextView)dialog.findViewById(R.id.edit_sync_task_option_ignore_file_size_0_bytes_file);
+        final EditText et_ignore_file_name_length_value=(EditText)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_name_length_value);
 
         final Spinner sp_file_date_type=(Spinner)dialog.findViewById(R.id.sync_filter_file_date_type_spinner);
         final EditText et_file_date_value=(EditText)dialog.findViewById(R.id.sync_filter_file_date_value);
@@ -5247,6 +5265,8 @@ public class SyncTaskEditor extends DialogFragment {
         if (!ctvSyncSpecificSubDir.isChecked()) {
             nstli.getDirFilter().clear();
         }
+
+        nstli.setSyncOptionIgnoreFileNameLengthValue(Integer.parseInt(et_ignore_file_name_length_value.getText().toString()));
 
         nstli.setSyncOptionMoveOnlyRemoveMasterDirectoryIfEmpty(ctv_sync_remove_master_if_empty.isChecked());
 
@@ -5413,6 +5433,8 @@ public class SyncTaskEditor extends DialogFragment {
         final CheckedTextView ctvEnsureTargetExactMirror = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror);
         final LinearLayout ll_sync_ensure_target_is_exact_mirror=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_ensure_target_is_exact_mirror);
 
+        final EditText et_ignore_file_name_length_value=(EditText)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_name_length_value);
+
         final EditText et_sync_main_task_name = (EditText) mDialog.findViewById(R.id.edit_sync_task_task_name);
 
         final Button swap_master_target = (Button) mDialog.findViewById(R.id.edit_sync_task_change_master_and_target_btn);
@@ -5523,9 +5545,25 @@ public class SyncTaskEditor extends DialogFragment {
                                     setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_import_failed_target_folder));
                                 }
                             } else {
-                                setDialogMsg(dlg_msg, s_msg);
-                                if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) CommonDialog.setViewEnabled(getActivity(), btn_ok, true);
-                                else CommonDialog.setViewEnabled(getActivity(), btn_ok, false);
+                                String ev=et_ignore_file_name_length_value.getText().toString();
+                                if (ev.length()>0) {
+                                    int val=Integer.parseInt(ev.toString());
+                                    if (val==0) {
+                                        s_msg=mContext.getString(R.string.msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0);
+                                    } else if (val>255) {
+                                        s_msg=mContext.getString(R.string.msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255);
+                                    }
+                                } else {
+                                    s_msg=mContext.getString(R.string.msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified);
+                                }
+                                if (s_msg.equals("")) {
+                                    setDialogMsg(dlg_msg, s_msg);
+                                    if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) CommonDialog.setViewEnabled(getActivity(), btn_ok, true);
+                                    else CommonDialog.setViewEnabled(getActivity(), btn_ok, false);
+                                } else {
+                                    setDialogMsg(dlg_msg, s_msg);
+                                    CommonDialog.setViewEnabled(getActivity(), btn_ok, false);
+                                }
                             }
                         } else {
                             setDialogMsg(dlg_msg, s_msg);
@@ -5572,6 +5610,7 @@ public class SyncTaskEditor extends DialogFragment {
         final Spinner sp_file_size_unit=(Spinner)mDialog.findViewById(R.id.sync_filter_file_size_unit_spinner);
 
         final CheckedTextView ctvIgnore_0_byte_file=(CheckedTextView)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_size_0_bytes_file);
+        final EditText et_ignore_file_name_length_value=(EditText)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_name_length_value);
 
         final Spinner sp_file_date_type=(Spinner)mDialog.findViewById(R.id.sync_filter_file_date_type_spinner);
         final EditText et_file_date_value=(EditText)mDialog.findViewById(R.id.sync_filter_file_date_value);
