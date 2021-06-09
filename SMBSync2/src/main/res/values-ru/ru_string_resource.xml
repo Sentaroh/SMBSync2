@@ -433,6 +433,10 @@
         <string name="msgs_task_sync_task_sync_file_size_filter">Фильтр размера файла</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">Синхронизируйте файлы размером:</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">Игнорировать файлы с размером файла 0 байт</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value">Игнорировать файл, если длина имени файла больше указанного значения</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">Укажите длину игнорируемого имени файла</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">Укажите длину игнорируемого имени файла, которая больше или равна 0</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">Укажите длину игнорируемого имени файла, равную 255 или меньше</string>
         <string name="msgs_task_sync_task_sync_file_size_size_hint">Размер</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_dialog_title">Выберите блок фильтрации размера файла</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_byte">Байты</string>
@@ -612,7 +616,7 @@
         <string name="msgs_mirror_taken_date_convert_error">Время последнего изменения файла было использовано, поскольку произошла ошибка при преобразовании даты съемки. Файл =</string>
         <string name="msgs_mirror_whole_directory_filter_error">Каталожный фильтр %s не может быть использован. Отредактируйте задание синхронизации и измените его на (and fix the invalid filter).</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Синхронизация прервана, поскольку в целевой папке существует каталог с тем же именем, что и у файла. Файл =</string>
-        <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Синхронизация была отменена, поскольку длина имени файла превышает 255 байтов. Число байтов в имени файла = %s, Имя файла = %s</string>
+        <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Игнорирование файла, поскольку длина имени файла превышает %1$s байт. Байт в файле name=%2$s, file name=%3$s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Синхронизация отменена, поскольку SDCARD не смонтирован.</string>
         <string name="msgs_mirror_external_sdcard_select_required">Синхронизация отменена, поскольку разрешение на запись SDCARD не предоставлено.</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">Кажется, что содержимое SDCARD не отражается в хранилище мультимедиа. Выполните сканирование носителя для обновления содержимого SDCARD.</string>

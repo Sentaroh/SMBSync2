@@ -433,6 +433,10 @@
         <string name="msgs_task_sync_task_sync_file_size_filter">Synchroniser les fichiers dont la taille est:</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">Synchroniser les fichiers dont la taille est:</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">Ignorer les fichiers vides (0 octets de taille)</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value">Ignorer le fichier si la longueur du nom du fichier est supérieure à la valeur spécifiée.</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">Spécifiez la longueur du nom de fichier à ignorer</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">Spécifiez une longueur du nom de fichier à ignorer supérieure ou égale à 0</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">Spécifiez une longueur de nom de fichier à ignorer inférieure ou égale à 255</string>
         <string name="msgs_task_sync_task_sync_file_size_size_hint">Taille</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_dialog_title">Sélectionnez l\'unité pour le filtre par taille de fichier</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_byte">Octets</string>
@@ -612,7 +616,7 @@
         <string name="msgs_mirror_taken_date_convert_error">La date de mise à jour du fichier a été utilisée, car la date de capture de l\'image n\'a pas pu être convertie. Fichier=</string>
         <string name="msgs_mirror_whole_directory_filter_error">Le filtre de dossier %s ne peut pas être utilisé. Modifiez la tâche de synchronisation et corrigez le filtre.</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Synchronisation interrompue. Le dossier de destination contient un dossier ayant le même nom que le fichier à copier. Fichier=</string>
-        <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Synchronisation interrompue. Le nom de fichier dépasse 255 caractères. Nombre de caract=%s, Nom de fichier=%s</string>
+        <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">Le fichier a été ignoré car la longueur du nom du fichier dépasse %1$s octets. Octets dans le fichier name=%2$s, fichier name=%3$s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Synchronisation interrompue. La carte SD n\'est pas montée.</string>
         <string name="msgs_mirror_external_sdcard_select_required">Synchronisation interrompue. La permission en écriture sur la carte SD n\'a pas été accordée.</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">Le contenu de la carte SD n\'apparait pas en entier dans la galerie. Effectuer une analyse de la carte pour mettre à jour son contenu.</string>

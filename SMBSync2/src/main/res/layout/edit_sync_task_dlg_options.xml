@@ -568,6 +568,29 @@
                 android:text="@string/msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
+            <include layout="@layout/divider_line1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <EditText
+                    android:id="@+id/edit_sync_task_option_ignore_file_name_length_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:minWidth="50dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:gravity="end"
+                    android:inputType="number"
+                    android:text="255"/>
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/edit_sync_task_option_ll_remove_directory_if_empty_when_move_view"
                 android:layout_width="match_parent"
