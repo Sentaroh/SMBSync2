@@ -90,44 +90,45 @@ public class SyncThreadArchiveFile {
     static private int moveFileInternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                              File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
-        if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
-            if (!sti.isSyncTestMode()) {
-                String dir=tf.getParent();
-                File lf_dir=new File(dir);
-                if (!lf_dir.exists()) lf_dir.mkdirs();
-
-                String tmp_path="";
-                if (Build.VERSION.SDK_INT<=29) {
-                    tmp_path=stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
-                } else {
-                    tmp_path=getTempFilePath(stwa, sti, to_path);
-                }
-                File temp_file=new File(tmp_path);
-                sync_result= copyFile(stwa, sti, new FileInputStream(mf),
-                        new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
-                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                    temp_file.setLastModified(mf.lastModified());
-                    temp_file.renameTo(tf);
-                }
-            }
-            if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                stwa.totalCopyCount++;
-                SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
-                        "", stwa.msgs_mirror_task_file_archived);
+        if (SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
                 if (!sti.isSyncTestMode()) {
-                    tf.setLastModified(mf.lastModified());
-                    mf.delete();
-                    stwa.totalDeleteCount++;
-                    SyncThread.scanMediaFile(stwa, mf.getPath());
-                    SyncThread.scanMediaFile(stwa, tf.getPath());
-                }
-            }
-        } else {
-            stwa.totalIgnoreCount++;
-            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", to_path, mf.getName(),
-                    "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
-        }
+                    String dir=tf.getParent();
+                    File lf_dir=new File(dir);
+                    if (!lf_dir.exists()) lf_dir.mkdirs();
 
+                    String tmp_path="";
+                    if (Build.VERSION.SDK_INT<=29) {
+                        tmp_path=stwa.gp.internalRootDirectory+"/"+APP_SPECIFIC_DIRECTORY+"/files/temp_file.tmp";
+                    } else {
+                        tmp_path=getTempFilePath(stwa, sti, to_path);
+                    }
+                    File temp_file=new File(tmp_path);
+                    sync_result= copyFile(stwa, sti, new FileInputStream(mf),
+                            new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
+                    if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                        temp_file.setLastModified(mf.lastModified());
+                        temp_file.renameTo(tf);
+                    }
+                }
+                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                    stwa.totalCopyCount++;
+                    SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
+                            "", stwa.msgs_mirror_task_file_archived);
+                    if (!sti.isSyncTestMode()) {
+                        tf.setLastModified(mf.lastModified());
+                        mf.delete();
+                        stwa.totalDeleteCount++;
+                        SyncThread.scanMediaFile(stwa, mf.getPath());
+                        SyncThread.scanMediaFile(stwa, tf.getPath());
+                    }
+                }
+            } else {
+                stwa.totalIgnoreCount++;
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", to_path, mf.getName(),
+                        "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
+            }
+        }
         return sync_result;
     }
 
@@ -287,8 +288,10 @@ public class SyncThreadArchiveFile {
     static private int moveFileInternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                   File mf, File tf, String to_path, String file_name) throws IOException {
         int result=0;
-        if (Build.VERSION.SDK_INT>=24) result= moveFileInternalToExternalSetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
-        else result= moveFileInternalToExternalUnsetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+        if (SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+            if (Build.VERSION.SDK_INT>=24) result= moveFileInternalToExternalSetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+            else result= moveFileInternalToExternalUnsetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+        }
         return result;
     }
 
@@ -582,10 +585,10 @@ public class SyncThreadArchiveFile {
                         break;
                     } else {
                         jf=new JcifsFile(new_name, stwa.targetAuth);
-                        sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath());
+                        sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath(), to_file_name);
                     }
                 } else {
-                    sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath());
+                    sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath(), to_file_name);
                 }
             } else {//Renameする
                 to_file_name=buildArchiveFileName(stwa, sti, item, to_file_name);
@@ -600,10 +603,10 @@ public class SyncThreadArchiveFile {
                         break;
                     } else {
                         jf=new JcifsFile(new_name, stwa.targetAuth);
-                        sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath());
+                        sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath(), to_file_name);
                     }
                 } else {
-                    sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath());
+                    sync_result= moveFileInternalToSmb(stwa, sti, item.full_path, (File)item.file, jf, jf.getPath(), to_file_name);
                 }
             }
         }
@@ -734,50 +737,49 @@ public class SyncThreadArchiveFile {
     }
 
     static private int moveFileInternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
-                                             File mf, JcifsFile tf, String to_path) throws IOException, JcifsException {
+                                             File mf, JcifsFile tf, String to_path, String file_name) throws IOException, JcifsException {
         int sync_result=0;
-        if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
-            if (!sti.isSyncTestMode()) {
-                String dir=tf.getParent();
-                JcifsFile jf_dir=new JcifsFile(dir,stwa.targetAuth);
-                if (!jf_dir.exists()) jf_dir.mkdirs();
-//                if (sti.isArchiveCreateDirectory()) {
-//                    if (!jf_dir.exists()) jf_dir.mkdirs();
-//                }
-                while (stwa.syncTaskRetryCount > 0) {
-                    sync_result= copyFile(stwa, sti, new FileInputStream(mf), tf.getOutputStream(), from_path, to_path,
-                            tf.getName(), sti.isSyncOptionUseSmallIoBuffer());
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
-                        stwa.syncTaskRetryCount--;
-                        if (stwa.syncTaskRetryCount > 0)
-                            sync_result = waitRetryInterval(stwa);
-                        if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
-                            break;
-                    } else {
-                        stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
-                        break;
-                    }
-                }
-            }
-            if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                stwa.totalCopyCount++;
-                SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
-                        "", stwa.msgs_mirror_task_file_archived);
+        if (SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
                 if (!sti.isSyncTestMode()) {
-                    try {
-                        tf.setLastModified(mf.lastModified());
-                    } catch(JcifsException e) {
-                        // nop
+                    String dir=tf.getParent();
+                    JcifsFile jf_dir=new JcifsFile(dir,stwa.targetAuth);
+                    if (!jf_dir.exists()) jf_dir.mkdirs();
+                    while (stwa.syncTaskRetryCount > 0) {
+                        sync_result= copyFile(stwa, sti, new FileInputStream(mf), tf.getOutputStream(), from_path, to_path,
+                                tf.getName(), sti.isSyncOptionUseSmallIoBuffer());
+                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
+                            stwa.syncTaskRetryCount--;
+                            if (stwa.syncTaskRetryCount > 0)
+                                sync_result = waitRetryInterval(stwa);
+                            if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
+                                break;
+                        } else {
+                            stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
+                            break;
+                        }
                     }
-                    mf.delete();
-                    stwa.totalDeleteCount++;
-                    SyncThread.scanMediaFile(stwa, mf.getPath());
                 }
+                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                    stwa.totalCopyCount++;
+                    SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
+                            "", stwa.msgs_mirror_task_file_archived);
+                    if (!sti.isSyncTestMode()) {
+                        try {
+                            tf.setLastModified(mf.lastModified());
+                        } catch(JcifsException e) {
+                            // nop
+                        }
+                        mf.delete();
+                        stwa.totalDeleteCount++;
+                        SyncThread.scanMediaFile(stwa, mf.getPath());
+                    }
+                }
+            } else {
+                stwa.totalIgnoreCount++;
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", to_path, mf.getName(),
+                        "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
             }
-        } else {
-            stwa.totalIgnoreCount++;
-            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", to_path, mf.getName(),
-                    "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -791,36 +793,38 @@ public class SyncThreadArchiveFile {
     static private int moveFileExternalToInternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                   File mf, File tf, String to_path, String file_name) throws IOException {
         int sync_result=0;
-        if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
-            SafFile m_df =SyncThread.createSafFile(stwa, sti, from_path, false);
-            if (!sti.isSyncTestMode()) {
-                SyncThread.createDirectoryToInternalStorage(stwa, sti, tf.getParent());
-                String temp_path=isSdcardPath(stwa,to_path)?
-                        stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/temp_file.tmp":
-                        stwa.gp.safMgr.getUsbRootPath()+   "/"+APP_SPECIFIC_DIRECTORY+"/cache/temp_file.tmp";
-                File temp_file=new File(temp_path);
-                sync_result= copyFile(stwa, sti,  stwa.context.getContentResolver().openInputStream(m_df.getUri()),
-                        new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
-                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                    temp_file.setLastModified(mf.lastModified());
-                    temp_file.renameTo(tf);
-                }
-            }
-            if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                stwa.totalCopyCount++;
-                SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
-                        "", stwa.msgs_mirror_task_file_archived);
+        if (SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
+                SafFile m_df =SyncThread.createSafFile(stwa, sti, from_path, false);
                 if (!sti.isSyncTestMode()) {
-                    m_df.delete();
-                    stwa.totalDeleteCount++;
-                    SyncThread.scanMediaFile(stwa, from_path);
-                    SyncThread.scanMediaFile(stwa, tf.getPath());
+                    SyncThread.createDirectoryToInternalStorage(stwa, sti, tf.getParent());
+                    String temp_path=isSdcardPath(stwa,to_path)?
+                            stwa.gp.safMgr.getSdcardRootPath()+"/"+APP_SPECIFIC_DIRECTORY+"/cache/temp_file.tmp":
+                            stwa.gp.safMgr.getUsbRootPath()+   "/"+APP_SPECIFIC_DIRECTORY+"/cache/temp_file.tmp";
+                    File temp_file=new File(temp_path);
+                    sync_result= copyFile(stwa, sti,  stwa.context.getContentResolver().openInputStream(m_df.getUri()),
+                            new FileOutputStream(temp_file), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
+                    if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                        temp_file.setLastModified(mf.lastModified());
+                        temp_file.renameTo(tf);
+                    }
                 }
+                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                    stwa.totalCopyCount++;
+                    SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
+                            "", stwa.msgs_mirror_task_file_archived);
+                    if (!sti.isSyncTestMode()) {
+                        m_df.delete();
+                        stwa.totalDeleteCount++;
+                        SyncThread.scanMediaFile(stwa, from_path);
+                        SyncThread.scanMediaFile(stwa, tf.getPath());
+                    }
+                }
+            } else {
+                stwa.totalIgnoreCount++;
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", to_path, mf.getName(),
+                        "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
             }
-        } else {
-            stwa.totalIgnoreCount++;
-            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", to_path, mf.getName(),
-                    "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
         return sync_result;
     }
@@ -975,8 +979,10 @@ public class SyncThreadArchiveFile {
     static private int moveFileExternalToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                                   File mf, File tf, String to_path, String file_name) throws IOException {
         int result=0;
-        if (Build.VERSION.SDK_INT>=24) result= moveFileExternalToExternalSetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
-        else result= moveFileExternalToExternalUnsetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+        if (SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+            if (Build.VERSION.SDK_INT>=24) result= moveFileExternalToExternalSetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+            else result= moveFileExternalToExternalUnsetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+        }
         return result;
     }
 
@@ -1222,55 +1228,52 @@ public class SyncThreadArchiveFile {
     static private int moveFileExternalToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                              File mf, JcifsFile tf, String to_path, String file_name) throws IOException, JcifsException {
         int sync_result=0;
-
-        if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
-            SafFile m_df =SyncThread.createSafFile(stwa, sti, from_path, false);
-            if (!sti.isSyncTestMode()) {
-                String dir=tf.getParent();
-                JcifsFile jf_dir=new JcifsFile(dir,stwa.targetAuth);
-//                if (sti.isArchiveCreateDirectory()) {
-//                    if (!jf_dir.exists()) jf_dir.mkdirs();
-//                }
-                if (!jf_dir.exists()) jf_dir.mkdirs();
-                while (stwa.syncTaskRetryCount > 0) {
-                    sync_result= copyFile(stwa, sti, stwa.context.getContentResolver().openInputStream(m_df.getUri()),
-                            tf.getOutputStream(), from_path, to_path,
-                            tf.getName(), sti.isSyncOptionUseSmallIoBuffer());
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
-                        stwa.syncTaskRetryCount--;
-                        if (stwa.syncTaskRetryCount > 0)
-                            sync_result = waitRetryInterval(stwa);
-                        if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
-                            break;
-                    } else {
-                        stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
-                        break;
-                    }
-                }
-            }
-            if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                stwa.totalCopyCount++;
-                SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
-                        "", stwa.msgs_mirror_task_file_archived);
+        if (SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
+                SafFile m_df =SyncThread.createSafFile(stwa, sti, from_path, false);
                 if (!sti.isSyncTestMode()) {
-                    try {
-                        tf.setLastModified(mf.lastModified());
-                    } catch(JcifsException e) {
-                        // nop
-                    }
-                    if (!sti.isSyncTestMode()) {
-                        stwa.totalDeleteCount++;
-                        m_df.delete();
-                        SyncThread.scanMediaFile(stwa, from_path);
+                    String dir=tf.getParent();
+                    JcifsFile jf_dir=new JcifsFile(dir,stwa.targetAuth);
+                    if (!jf_dir.exists()) jf_dir.mkdirs();
+                    while (stwa.syncTaskRetryCount > 0) {
+                        sync_result= copyFile(stwa, sti, stwa.context.getContentResolver().openInputStream(m_df.getUri()),
+                                tf.getOutputStream(), from_path, to_path,
+                                tf.getName(), sti.isSyncOptionUseSmallIoBuffer());
+                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
+                            stwa.syncTaskRetryCount--;
+                            if (stwa.syncTaskRetryCount > 0)
+                                sync_result = waitRetryInterval(stwa);
+                            if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
+                                break;
+                        } else {
+                            stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
+                            break;
+                        }
                     }
                 }
+                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                    stwa.totalCopyCount++;
+                    SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
+                            "", stwa.msgs_mirror_task_file_archived);
+                    if (!sti.isSyncTestMode()) {
+                        try {
+                            tf.setLastModified(mf.lastModified());
+                        } catch(JcifsException e) {
+                            // nop
+                        }
+                        if (!sti.isSyncTestMode()) {
+                            stwa.totalDeleteCount++;
+                            m_df.delete();
+                            SyncThread.scanMediaFile(stwa, from_path);
+                        }
+                    }
+                }
+            } else {
+                stwa.totalIgnoreCount++;
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", to_path, mf.getName(),
+                        "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
             }
-        } else {
-            stwa.totalIgnoreCount++;
-            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", to_path, mf.getName(),
-                    "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
-
         return sync_result;
     }
 
@@ -1680,8 +1683,10 @@ public class SyncThreadArchiveFile {
     static private int moveFileSmbToExternal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                              JcifsFile mf, File tf, String to_path, String file_name) throws IOException, JcifsException {
         int result=0;
-        if (Build.VERSION.SDK_INT>=24) result= moveFileSmbToExternalSetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
-        else result= moveFileSmbToExternalUnsetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+        if (SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+            if (Build.VERSION.SDK_INT>=24) result= moveFileSmbToExternalSetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+            else result= moveFileSmbToExternalUnsetLastMod(stwa, sti, from_path, mf, tf, to_path, file_name);
+        }
         return result;
     }
 
@@ -1980,46 +1985,46 @@ public class SyncThreadArchiveFile {
     static private int moveFileSmbToSmb(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path,
                                         JcifsFile mf, JcifsFile tf, String to_path, String file_name) throws IOException, JcifsException {
         int sync_result=0;
-
-        if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
-            if (!sti.isSyncTestMode()) {
-                String dir=tf.getParent();
-                JcifsFile jf_dir=new JcifsFile(dir,stwa.targetAuth);
-                if (!jf_dir.exists()) jf_dir.mkdirs();
-                while (stwa.syncTaskRetryCount > 0) {
-                    sync_result= copyFile(stwa, sti, mf.getInputStream(), tf.getOutputStream(), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
-                    if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
-                        stwa.syncTaskRetryCount--;
-                        if (stwa.syncTaskRetryCount > 0)
-                            sync_result = waitRetryInterval(stwa);
-                        if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
-                            break;
-                    } else {
-                        stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
-                        break;
-                    }
-                }
-            }
-            if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
-                stwa.totalCopyCount++;
-                SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
-                        "", stwa.msgs_mirror_task_file_archived);
+        if (SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+            if (SyncThread.sendConfirmRequest(stwa, sti, SMBSYNC2_CONFIRM_REQUEST_MOVE, from_path)) {
                 if (!sti.isSyncTestMode()) {
-                    try {
-                        tf.setLastModified(mf.getLastModified());
-                    } catch(JcifsException e) {
-                        // nop
+                    String dir=tf.getParent();
+                    JcifsFile jf_dir=new JcifsFile(dir,stwa.targetAuth);
+                    if (!jf_dir.exists()) jf_dir.mkdirs();
+                    while (stwa.syncTaskRetryCount > 0) {
+                        sync_result= copyFile(stwa, sti, mf.getInputStream(), tf.getOutputStream(), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
+                        if (sync_result == SyncTaskItem.SYNC_STATUS_ERROR && SyncThread.isRetryRequiredError(stwa.jcifsNtStatusCode)) {
+                            stwa.syncTaskRetryCount--;
+                            if (stwa.syncTaskRetryCount > 0)
+                                sync_result = waitRetryInterval(stwa);
+                            if (sync_result == SyncTaskItem.SYNC_STATUS_CANCEL)
+                                break;
+                        } else {
+                            stwa.syncTaskRetryCount = stwa.syncTaskRetryCountOriginal;
+                            break;
+                        }
                     }
-                    mf.delete();
-                    stwa.totalDeleteCount++;
                 }
+                if (sync_result==SyncTaskItem.SYNC_STATUS_SUCCESS) {
+                    stwa.totalCopyCount++;
+                    SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
+                            "", stwa.msgs_mirror_task_file_archived);
+                    if (!sti.isSyncTestMode()) {
+                        try {
+                            tf.setLastModified(mf.getLastModified());
+                        } catch(JcifsException e) {
+                            // nop
+                        }
+                        mf.delete();
+                        stwa.totalDeleteCount++;
+                    }
+                }
+            } else {
+                stwa.totalIgnoreCount++;
+                SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", to_path, mf.getName(),
+                        "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
             }
-        } else {
-            stwa.totalIgnoreCount++;
-            SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "I", to_path, mf.getName(),
-                    "", stwa.context.getString(R.string.msgs_mirror_confirm_move_cancel));
         }
-
         return sync_result;
     }
 

@@ -513,9 +513,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionIgnoreFileSize0ByteFile() {return syncSyncOptionIgnoreFileSize0ByteFile;}
     public void setSyncOptionIgnoreFileSize0ByteFile(boolean p) {syncSyncOptionIgnoreFileSize0ByteFile = p;}
 
-    private int syncSyncOptionIgnoreFileNameLengthValue = 255;
-    public int getSyncOptionIgnoreFileNameLengthValue() {return syncSyncOptionIgnoreFileNameLengthValue;}
-    public void setSyncOptionIgnoreFileNameLengthValue(int p) {syncSyncOptionIgnoreFileNameLengthValue = p;}
+    private int syncSyncOptionMaxFileNameLength = 255;
+    public int getSyncOptionMaxFileNameLength() {return syncSyncOptionMaxFileNameLength;}
+    public void setSyncOptionMaxFileNameLength(int p) {
+        syncSyncOptionMaxFileNameLength = p;}
 
     static final public String FILTER_FILE_SIZE_VALUE_DEFAULT= "1";
     private String syncFilterFileSizeValue = FILTER_FILE_SIZE_VALUE_DEFAULT;
@@ -804,7 +805,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
                         (syncSyncOptionIgnoreFileSize0ByteFile ==sti.isSyncOptionIgnoreFileSize0ByteFile()) &&
 
-                        (syncSyncOptionIgnoreFileNameLengthValue == sti.getSyncOptionIgnoreFileNameLengthValue()) &&
+                        (syncSyncOptionMaxFileNameLength == sti.getSyncOptionMaxFileNameLength()) &&
 
                         (syncFilterFileSizeValue.equals(sti.getSyncFilterFileSizeValue())) &&
                         (syncFilterFileSizeType.equals(sti.getSyncFilterFileSizeType())) &&

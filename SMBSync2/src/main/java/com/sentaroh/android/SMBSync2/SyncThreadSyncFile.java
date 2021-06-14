@@ -805,10 +805,8 @@ public class SyncThreadSyncFile {
                             stwa.util.addLogMsg("W",stwa.context.getString(R.string.msgs_mirror_same_file_ignored,from_path));
                         } else {
                             tf = new File(parsed_to_path);
-                            if (tf.getName().getBytes().length>sti.getSyncOptionIgnoreFileNameLengthValue()) {
-                                String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_255_byte, sti.getSyncOptionIgnoreFileNameLengthValue(), tf.getName().getBytes().length, tf.getName());
-                                stwa.util.addLogMsg("W", e_msg);
-                                sync_result = SyncTaskItem.SYNC_STATUS_WARNING;
+                            if (!SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+                                sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
                                 return sync_result;
                             }
                             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword())
@@ -1085,10 +1083,8 @@ public class SyncThreadSyncFile {
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
                         tf = new File(parsed_to_path);
-                        if (tf.getName().getBytes().length>sti.getSyncOptionIgnoreFileNameLengthValue()) {
-                            String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_255_byte, sti.getSyncOptionIgnoreFileNameLengthValue(), tf.getName().getBytes().length, tf.getName());
-                            stwa.util.addLogMsg("W", e_msg);
-                            sync_result = SyncTaskItem.SYNC_STATUS_WARNING;
+                        if (!SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+                            sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
                             return sync_result;
                         }
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()){
@@ -1561,10 +1557,8 @@ public class SyncThreadSyncFile {
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
                         tf = new File(parsed_to_path);
-                        if (tf.getName().getBytes().length>sti.getSyncOptionIgnoreFileNameLengthValue()) {
-                            String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_255_byte, sti.getSyncOptionIgnoreFileNameLengthValue(), tf.getName().getBytes().length, tf.getName());
-                            stwa.util.addLogMsg("W", e_msg);
-                            sync_result = SyncTaskItem.SYNC_STATUS_WARNING;
+                        if (!SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+                            sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
                             return sync_result;
                         }
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword())
@@ -1795,10 +1789,8 @@ public class SyncThreadSyncFile {
                             stwa.util.addLogMsg("W",stwa.context.getString(R.string.msgs_mirror_same_file_ignored,from_path));
                         } else {
                             tf = new File(parsed_to_path);
-                            if (tf.getName().getBytes().length>sti.getSyncOptionIgnoreFileNameLengthValue()) {
-                                String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_255_byte, sti.getSyncOptionIgnoreFileNameLengthValue(), tf.getName().getBytes().length, tf.getName());
-                                stwa.util.addLogMsg("W", e_msg);
-                                sync_result = SyncTaskItem.SYNC_STATUS_WARNING;
+                            if (!SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+                                sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
                                 return sync_result;
                             }
                             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()){
@@ -2044,10 +2036,8 @@ public class SyncThreadSyncFile {
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
                         tf = new JcifsFile(parsed_to_path, stwa.targetAuth);
-                        if (tf.getName().getBytes().length>sti.getSyncOptionIgnoreFileNameLengthValue()) {
-                            String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_255_byte, sti.getSyncOptionIgnoreFileNameLengthValue(), tf.getName().getBytes().length, tf.getName());
-                            stwa.util.addLogMsg("W", e_msg);
-                            sync_result = SyncTaskItem.SYNC_STATUS_WARNING;
+                        if (!SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+                            sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
                             return sync_result;
                         }
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword())
@@ -2332,10 +2322,8 @@ public class SyncThreadSyncFile {
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.getLastModified(), from_path, to_path);
                         tf = new File(parsed_to_path);
-                        if (tf.getName().getBytes().length>sti.getSyncOptionIgnoreFileNameLengthValue()) {
-                            String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_255_byte, sti.getSyncOptionIgnoreFileNameLengthValue(), tf.getName().getBytes().length, tf.getName());
-                            stwa.util.addLogMsg("W", e_msg);
-                            sync_result = SyncTaskItem.SYNC_STATUS_WARNING;
+                        if (!SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+                            sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
                             return sync_result;
                         }
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword())
@@ -2671,10 +2659,8 @@ public class SyncThreadSyncFile {
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.getLastModified(), from_path, to_path);
                         tf = new File(parsed_to_path);
-                        if (tf.getName().getBytes().length>sti.getSyncOptionIgnoreFileNameLengthValue()) {
-                            String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_255_byte, sti.getSyncOptionIgnoreFileNameLengthValue(), tf.getName().getBytes().length, tf.getName());
-                            stwa.util.addLogMsg("W", e_msg);
-                            sync_result = SyncTaskItem.SYNC_STATUS_WARNING;
+                        if (!SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+                            sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
                             return sync_result;
                         }
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword()){

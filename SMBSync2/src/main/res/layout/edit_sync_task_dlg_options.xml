@@ -577,10 +577,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value"
+                    android:text="@string/msgs_task_sync_task_sync_max_file_name_length"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
                 <EditText
-                    android:id="@+id/edit_sync_task_option_ignore_file_name_length_value"
+                    android:id="@+id/edit_sync_task_option_max_file_name_length"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"

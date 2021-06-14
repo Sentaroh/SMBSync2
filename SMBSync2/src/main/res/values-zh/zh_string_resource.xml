@@ -433,7 +433,7 @@
         <string name="msgs_task_sync_task_sync_file_size_filter">文件大小过滤器</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">选择文件大小过滤类型</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">忽略文件大小为0字节的文件。</string>
-        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value">如果文件名的长度超过指定值，则忽略该文件</string>
+        <string name="msgs_task_sync_task_sync_max_file_name_length">如果文件名的长度超过指定值，则忽略该文件</string>
         <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">指定要忽略的文件名的长度</string>
         <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">指定要忽略的文件名长度大于或等于0</string>
         <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">指定要忽略的文件名长度为255或更小</string>
@@ -616,7 +616,8 @@
         <string name="msgs_mirror_taken_date_convert_error">使用文件的上次修改时间是因为拍摄日期的转换发生错误。文件=</string>
         <string name="msgs_mirror_whole_directory_filter_error">无法使用目录过滤器%s。编辑同步任务并修复无效的过滤器。</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">由于目标路径包含与被复制文件同名的目录，因此同步中止。文件=</string>
-        <string name="msgs_mirror_file_name_gt_255_byte" formatted="false">忽略了该文件，因为文件名的长度超过了%1$s字节。文件名=%2$s, 文件名=%3$s中的字节数</string>
+        <string name="msgs_mirror_file_name_gt_255_byte">忽略了该文件，因为文件名的长度超过了%1$s字节。文件名=%2$s, 文件名=%3$s中的字节数</string>
+        <string name="msgs_mirror_file_name_gt_smb_file_name_length_237_byte">忽略了该文件，因为文件名的长度超过了SMB文件名的最大长度（%1$s字节）。文件名字节数=%2$s, 文件名=%3$s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">由于未安装SDCARD，因此取消了同步。</string>
         <string name="msgs_mirror_external_sdcard_select_required">同步已取消，因为未授予SDCARD写权限。</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">似乎SDCARD内容未反映在媒体存储中。执行媒体扫描以更新SDCARD的内容。</string>

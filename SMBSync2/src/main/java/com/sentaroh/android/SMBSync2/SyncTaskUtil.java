@@ -7986,9 +7986,9 @@ public class SyncTaskUtil {
 
             if (!parm[101].equals("") && !parm[101].equals("end")) {
                 if (parm[101].length() <= 3 && TextUtils.isDigitsOnly(parm[101]) && Integer.parseInt(parm[101]) > 0) { //max 3 digits allowed and value > 1
-                    stli.setSyncOptionIgnoreFileNameLengthValue(Integer.parseInt(parm[101]));
+                    stli.setSyncOptionMaxFileNameLength(Integer.parseInt(parm[101]));
                 } else {
-                    stli.setSyncOptionIgnoreFileNameLengthValue(255);
+                    stli.setSyncOptionMaxFileNameLength(255);
                     putTaskListValueErrorMessage(util, "File name length ignore Value", 255);
                 }
             }
@@ -8543,7 +8543,7 @@ public class SyncTaskUtil {
                             (item.getSyncFilterFileDateType()) + "\t" +                                 //99
                             (item.getSyncFilterFileDateValue()) + "\t" +                                //100
 
-                            (item.getSyncOptionIgnoreFileNameLengthValue()) + "\t" +                    //101
+                            (item.getSyncOptionMaxFileNameLength()) + "\t" +                    //101
 
                             "end"
                     ;
