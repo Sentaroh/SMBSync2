@@ -208,6 +208,10 @@ Si cette case est cochée, le système ne traitera pas les répertoires/fichiers
 
 Si cette case est cochée, les fichiers dont la taille est de 0 octet sont ignorés.  
 
+### Ignorer le fichier si la longueur du nom du fichier est supérieure à la valeur spécifiée.  
+
+Spécifie la longueur maximale (en octets) du nom du fichier de sortie. Ignore le fichier si le nombre d'octets dans le nom du fichier dépasse le maximum.  
+
 ### Manuels  
 [FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_JA.htm)  
 [Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_JA.htm)   

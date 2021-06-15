@@ -1,3 +1,8 @@
+#### 2021-06-15 Ver2.53
+
+- Added support for changing the execution order of tasks in the schedule.
+- Added support for specifying the length of file names to ignore.
+
 #### 2021-05-14 Ver2.52
 
 - Fixed an error in Media Scan.

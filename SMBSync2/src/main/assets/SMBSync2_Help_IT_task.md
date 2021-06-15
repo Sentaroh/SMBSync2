@@ -208,6 +208,10 @@ Se spuntato, il sistema non processerà le directory/file che contengono caratte
 
 Se spuntato, i file con una dimensione di 0 byte vengono ignorati.  
 
+### Ignora il file se la lunghezza del nome del file è più lunga del valore specificato  
+
+Specifica la lunghezza massima (in byte) del nome del file di output. Ignora il file se il numero di byte nel nome del file supera il massimo.  
+
 ### Manuali  
 [FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_JA.htm)  
 [Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_JA.htm)   

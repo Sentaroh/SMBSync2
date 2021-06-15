@@ -207,6 +207,10 @@ If checked, it will not process directories/files that contain characters that c
 
 If checked, files with a file size of 0 bytes will be ignored.  
 
+### Ignore the file if the length of the file name is longer than the specified value  
+
+Specifies the maximum length (in bytes) of the output file name. Ignores the file if the number of bytes in the file name exceeds the maximum.  
+
 ### Manuals  
 [FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_JA.htm)  
 [Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_JA.htm)   

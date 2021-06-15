@@ -203,6 +203,10 @@ avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
 
 如果选中，文件大小为0字节的文件将被忽略。   
 
+### 如果文件名的长度超过指定值，则忽略该文件  
+
+指定输出文件名的最大长度（字节数）。如果文件名中的字节数超过最大值，则忽略该文件。  
+
 ### 使用说明书  
 [FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_JA.htm)  
 [Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_JA.htm)   

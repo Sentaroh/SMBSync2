@@ -202,6 +202,10 @@ SmbFile.setLastModified()やFile.setLastModified()が失敗する場合に有効
 
 チェックするとファイルサイズが0バイトのファイルを無視します。  
 
+### ファイル名の長さが指定した値より長い場合はファイルを無視する  
+
+出力ファイル名の最大長(バイト数)を指定します。ファイル名のバイト数が最大値を超えた場合はファイルを無視します。  
+
 ### ドキュメント  
 [FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_JA.htm)  
 [マニュアル](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_JA.htm)   

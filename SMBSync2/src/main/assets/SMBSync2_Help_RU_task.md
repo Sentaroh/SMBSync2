@@ -203,6 +203,10 @@ avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
 
 Если флажок установлен, файлы с размером файла 0 байт игнорируются.  
 
+### Игнорировать файл, если длина имени файла больше указанного значения  
+
+Задает максимальную длину (в байтах) имени выходного файла. Игнорирует файл, если количество байтов в имени файла превышает максимальное значение.  
+
 ### Руководства  
 [FAQ](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_FAQ_JA.htm)  
 [Manual](https://sentaroh.github.io/Documents/SMBSync2/SMBSync2_Desc_JA.htm)   
