@@ -896,7 +896,7 @@ public class SyncThread extends Thread {
                 }
             } else {
                 if (file_name.getBytes().length>MAX_SMB_FILE_NAME_BYTE_COUNT) {
-                    String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_smb_file_name_length_237_byte, MAX_SMB_FILE_NAME_BYTE_COUNT);
+                    String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_smb_file_name_length_237_byte, MAX_SMB_FILE_NAME_BYTE_COUNT, MAX_SMB_FILE_NAME_BYTE_COUNT, file_name.getBytes().length, file_name);
                     stwa.util.addLogMsg("W", e_msg);
                     return false;
                 }
