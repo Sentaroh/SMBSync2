@@ -4353,6 +4353,51 @@ public class SyncThread extends Thread {
         }
     }
 
+    static public ArrayList<File> sortFileLIst(SyncThreadWorkArea stwa, SyncTaskItem sti, File[] f_array) {
+        long b_time=System.currentTimeMillis();
+        ArrayList<File>f_list=new ArrayList<File>(f_array.length);
+        for(File item:f_array) f_list.add(item);
+        Collections.sort(f_list, new Comparator<File>(){
+            @Override
+            public int compare(File o1, File o2) {
+                String l_key=(o1.isDirectory()?"D":"F").concat(o1.getName());
+                String r_key=(o2.isDirectory()?"D":"F").concat(o2.getName());
+                return l_key.compareToIgnoreCase(r_key);
+            }
+        });
+//        for(File item:f_list) {
+//            if (item.isDirectory()) stwa.util.addDebugMsg(1, "I", "d "+item.getName());
+//            else stwa.util.addDebugMsg(1, "I", "f "+item.getName());
+//        }
+        stwa.util.addDebugMsg(1, "I", "sortFileList elapsed time="+(System.currentTimeMillis()-b_time)+", entry="+f_array.length);
+        return f_list;
+    }
+
+    static public ArrayList<JcifsFile> sortFileLIst(SyncThreadWorkArea stwa, SyncTaskItem sti, JcifsFile[] f_array) {
+        long b_time=System.currentTimeMillis();
+        ArrayList<JcifsFile>f_list=new ArrayList<JcifsFile>(f_array.length);
+        for(JcifsFile item:f_array) f_list.add(item);
+        Collections.sort(f_list, new Comparator<JcifsFile>(){
+            @Override
+            public int compare(JcifsFile o1, JcifsFile o2) {
+                String l_key="", r_key="";
+                try{l_key=(o1.isDirectory()?"D":"F").concat(o1.getName());}catch(Exception e){l_key=o1.getName();};
+                try{r_key=(o2.isDirectory()?"D":"F").concat(o2.getName());}catch(Exception e){r_key=o2.getName();};
+                return l_key.compareToIgnoreCase(r_key);
+            }
+        });
+//        try {
+//            for(JcifsFile item:f_list) {
+//                if (item.isDirectory()) stwa.util.addDebugMsg(1, "I", "d "+item.getName());
+//                else stwa.util.addDebugMsg(1, "I", "f "+item.getName());
+//            }
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+        stwa.util.addDebugMsg(1, "I", "sortFileList elapsed time="+(System.currentTimeMillis()-b_time)+", entry="+f_array.length);
+        return f_list;
+    }
+
     static final public String calTransferRate(long tb, long tt) {
         String tfs = null;
         String units = null;

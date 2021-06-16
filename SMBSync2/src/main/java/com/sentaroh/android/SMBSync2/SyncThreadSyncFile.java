@@ -41,6 +41,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
@@ -736,8 +737,9 @@ public class SyncThreadSyncFile {
                                     SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
                                 }
                             }
-                            File[] children = mf.listFiles();
-                            if (children != null) {
+                            File[] children_array = mf.listFiles();
+                            if (children_array != null) {
+                                ArrayList<File> children=SyncThread.sortFileLIst(stwa, sti, children_array);
                                 for (File element : children) {
                                     if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                         if (!element.getName().equals(".android_secure")) {
@@ -1024,8 +1026,9 @@ public class SyncThreadSyncFile {
                                     SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
                                 }
                             }
-                            File[] children = mf.listFiles();
-                            if (children != null) {
+                            File[] children_array = mf.listFiles();
+                            if (children_array != null) {
+                                ArrayList<File> children=SyncThread.sortFileLIst(stwa, sti, children_array);
                                 for (File element : children) {
                                     if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                         if (!element.getName().equals(".android_secure")) {
@@ -1262,8 +1265,9 @@ public class SyncThreadSyncFile {
                                     SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
                                 }
                             }
-                            File[] children = mf.listFiles();
-                            if (children != null) {
+                            File[] children_array = mf.listFiles();
+                            if (children_array != null) {
+                                ArrayList<File> children=SyncThread.sortFileLIst(stwa, sti, children_array);
                                 for (File element : children) {
                                     if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                         if (!element.getName().equals(".android_secure")) {
@@ -1334,7 +1338,14 @@ public class SyncThreadSyncFile {
                         String parsed_to_path=to_path;
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword() && stwa.replaceKeywordRequiredAtWhileSync)
                             parsed_to_path=convertToExifDateTime(stwa, sti, new FileInputStream(mf), mf.lastModified(), from_path, to_path);
+
                         tf = new JcifsFile(parsed_to_path, stwa.targetAuth);
+
+                        if (!SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+                            sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
+                            return sync_result;
+                        }
+
                         if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword())
                             SyncThread.createDirectoryToSmb(stwa, sti, tf.getParent(), stwa.targetAuth);
 
@@ -1497,8 +1508,9 @@ public class SyncThreadSyncFile {
                                     SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
                                 }
                             }
-                            File[] children = mf.listFiles();
-                            if (children != null) {
+                            File[] children_array = mf.listFiles();
+                            if (children_array != null) {
+                                ArrayList<File> children=SyncThread.sortFileLIst(stwa, sti, children_array);
                                 for (File element : children) {
                                     if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                         if (!element.getName().equals(".android_secure")) {
@@ -1719,8 +1731,9 @@ public class SyncThreadSyncFile {
                                     SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
                                 }
                             }
-                            File[] children = mf.listFiles();
-                            if (children != null) {
+                            File[] children_array = mf.listFiles();
+                            if (children_array != null) {
+                                ArrayList<File> children=SyncThread.sortFileLIst(stwa, sti, children_array);
                                 for (File element : children) {
                                     if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
     //									String tmp = element.getName();
@@ -1963,8 +1976,9 @@ public class SyncThreadSyncFile {
                                     SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
                                 }
                             }
-                            File[] children = mf.listFiles();
-                            if (children != null) {
+                            File[] children_array = mf.listFiles();
+                            if (children_array != null) {
+                                ArrayList<File> children=SyncThread.sortFileLIst(stwa, sti, children_array);
                                 for (File element : children) {
                                     if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                         if (!element.getName().equals(".android_secure")) {
@@ -2248,8 +2262,9 @@ public class SyncThreadSyncFile {
                                     SyncThread.createDirectoryToInternalStorage(stwa, sti, to_path);
                                 }
                             }
-                            JcifsFile[] children = mf.listFiles();
-                            if (children != null) {
+                            JcifsFile[] children_array = mf.listFiles();
+                            if (children_array != null) {
+                                ArrayList<JcifsFile> children=SyncThread.sortFileLIst(stwa, sti, children_array);
                                 for (JcifsFile element : children) {
                                     if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                         while (stwa.syncTaskRetryCount > 0) {
@@ -2586,8 +2601,9 @@ public class SyncThreadSyncFile {
                                     SyncThread.createDirectoryToExternalStorage(stwa, sti, to_path);
                                 }
                             }
-                            JcifsFile[] children = mf.listFiles();
-                            if (children != null) {
+                            JcifsFile[] children_array = mf.listFiles();
+                            if (children_array != null) {
+                                ArrayList<JcifsFile> children=SyncThread.sortFileLIst(stwa, sti, children_array);
                                 for (JcifsFile element : children) {
                                     if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                         while (stwa.syncTaskRetryCount > 0) {
@@ -2908,8 +2924,9 @@ public class SyncThreadSyncFile {
                                     SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.targetAuth);
                                 }
                             }
-                            JcifsFile[] children = mf.listFiles();
-                            if (children != null) {
+                            JcifsFile[] children_array = mf.listFiles();
+                            if (children_array != null) {
+                                ArrayList<JcifsFile> children=SyncThread.sortFileLIst(stwa, sti, children_array);
                                 for (JcifsFile element : children) {
                                     if (sync_result == SyncTaskItem.SYNC_STATUS_SUCCESS) {
                                         while (stwa.syncTaskRetryCount > 0) {
@@ -2985,6 +3002,12 @@ public class SyncThreadSyncFile {
                             stwa.util.addLogMsg("W",stwa.context.getString(R.string.msgs_mirror_same_file_ignored,from_path));
                         } else {
                             tf = new JcifsFile(parsed_to_path, stwa.targetAuth);
+
+                            if (!SyncThread.isValidFileNameLength(stwa, sti, tf.getName())) {
+                                sync_result = SyncTaskItem.SYNC_STATUS_SUCCESS;
+                                return sync_result;
+                            }
+
                             if (sti.isTargetUseTakenDateTimeToDirectoryNameKeyword())
                                 SyncThread.createDirectoryToSmb(stwa, sti, tf.getParent(), stwa.targetAuth);
                             boolean tf_exists = tf.exists();
