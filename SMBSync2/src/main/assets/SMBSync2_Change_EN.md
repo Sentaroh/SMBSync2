@@ -1,3 +1,7 @@
+#### 2021-06-17 Ver2.54
+
+- Prevent app crash
+
 #### 2021-06-15 Ver2.53
 
 - Added support for changing the execution order of tasks in the schedule.
