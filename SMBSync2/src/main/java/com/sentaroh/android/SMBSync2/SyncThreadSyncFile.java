@@ -935,7 +935,7 @@ public class SyncThreadSyncFile {
             } else {
                 taken_millis=file_last_modified;
             }
-            parsed_to_path=SyncThread.replaceKeywordValue(to_path, taken_millis);
+            parsed_to_path=SyncThread.replaceKeywordValue(stwa.gp, to_path, taken_millis);
         }
         return parsed_to_path;
     }

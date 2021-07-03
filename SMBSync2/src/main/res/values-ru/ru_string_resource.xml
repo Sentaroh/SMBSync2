@@ -1077,6 +1077,22 @@
             <item>5</item>
             <item>6</item>
         </string-array >
+        <string name="settings_screen_theme_week_number">settings_screen_theme_week_number</string>
+        <string name="settings_screen_theme_week_number_title">Вычисление номера недели</string>
+        <string name="settings_screen_theme_week_number_dialog_title">Выбор расчета номера недели</string>
+        <string name="settings_screen_theme_week_number_current_date">Текущая дата и время %1$s, номер недели %2$s</string>
+        <string-array name="settings_screen_theme_week_number_list_entries">
+            <item>Система по умолчанию</item>
+            <item>США (начиная с воскресенья, с 1 января)</item>
+            <item>ISO (начиная с понедельника, начиная с 4 января)</item>
+            <item>Ближний Восток (начиная с субботы, начиная с 1 января)</item>
+        </string-array >
+        <string-array name="settings_screen_theme_week_number_list_values">
+            <item>default</item>
+            <item>USA</item>
+            <item>ISO</item>
+            <item>MIDDLE_EAST</item>
+        </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">Тема экрана</string>
         <string name="settings_screen_theme_dialog_title">Тема экрана</string>

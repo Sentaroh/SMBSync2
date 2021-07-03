@@ -109,6 +109,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS;
@@ -249,6 +250,12 @@ public class ActivityMain extends AppCompatActivity {
 
         ScheduleUtil.sendTimerRequest(mContext, SCHEDULER_INTENT_SET_TIMER_IF_NOT_SET);
         setSyncTaskContextButtonHide();
+
+        Calendar calendar = Calendar.getInstance();
+//        calendar.set(2021, 5, 5, 0, 0);
+
+        int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
+        mUtil.addDebugMsg(1, "I", "date="+calendar.getTime().toString()+", no="+weekOfYear+", firstDay="+calendar.getFirstDayOfWeek());
 
     }
 

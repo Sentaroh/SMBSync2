@@ -1077,6 +1077,22 @@
             <item>5</item>
             <item>6</item>
         </string-array >
+        <string name="settings_screen_theme_week_number">settings_screen_theme_week_number</string>
+        <string name="settings_screen_theme_week_number_title">周数计算</string>
+        <string name="settings_screen_theme_week_number_dialog_title">选择周数计算</string>
+        <string name="settings_screen_theme_week_number_current_date">当前日期和时间 %1$s, 周数 %2$s</string>
+        <string-array name="settings_screen_theme_week_number_list_entries">
+            <item>系统默认</item>
+            <item>美国（从周日开始，从1月1日开始</item>
+            <item>国际标准化组织（从星期一开始，从1月4日开始</item>
+            <item>中东 (从星期六开始，从1月1日开始)</item>
+        </string-array >
+        <string-array name="settings_screen_theme_week_number_list_values">
+            <item>default</item>
+            <item>USA</item>
+            <item>ISO</item>
+            <item>MIDDLE_EAST</item>
+        </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">屏幕主题</string>
         <string name="settings_screen_theme_dialog_title">屏幕主题</string>

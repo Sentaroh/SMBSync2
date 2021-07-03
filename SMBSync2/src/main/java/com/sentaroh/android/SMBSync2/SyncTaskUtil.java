@@ -8628,6 +8628,8 @@ public class SyncTaskUtil {
         saveSettingsParmsToFileBoolean(c, pw, false,    encrypt_required, cp, c.getString(R.string.settings_device_orientation_landscape_tablet));
         saveSettingsParmsToFileString(c, pw, SMBSYNC2_SCREEN_THEME_LANGUAGE_SYSTEM,
                                                         encrypt_required, cp, c.getString(R.string.settings_screen_theme_language));
+        saveSettingsParmsToFileString(c, pw, GlobalParameters.WEEK_NUMBER_CALCULATE_METHOD_DEFAULT,
+                                                        encrypt_required, cp, c.getString(R.string.settings_screen_theme_week_number));
         saveSettingsParmsToFileString(c, pw, "0",       encrypt_required, cp, c.getString(R.string.settings_screen_theme));
         saveSettingsParmsToFileBoolean(c, pw, true,     encrypt_required, cp, c.getString(R.string.settings_dim_screen_on_while_sync));
         saveSettingsParmsToFileString(c, pw, GlobalParameters.FONT_SCALE_FACTOR_NORMAL,

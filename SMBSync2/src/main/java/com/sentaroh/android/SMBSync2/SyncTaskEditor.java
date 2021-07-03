@@ -1524,10 +1524,10 @@ public class SyncTaskEditor extends DialogFragment {
     }
 
     private void setWeekDayButtonLabel(Button short_button, Button long_button, String short_label, String long_label) {
-        String s_sunday=SyncThread.replaceKeywordValue(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY, (new Date("2020/07/26").getTime()));
-        String s_monday=SyncThread.replaceKeywordValue(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY, (new Date("2020/07/27").getTime()));
-        String l_sunday=SyncThread.replaceKeywordValue(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG, (new Date("2020/07/26").getTime()));
-        String l_monday=SyncThread.replaceKeywordValue(SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG, (new Date("2020/07/27").getTime()));
+        String s_sunday=SyncThread.replaceKeywordValue(mGp, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY, (new Date("2020/07/26").getTime()));
+        String s_monday=SyncThread.replaceKeywordValue(mGp, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY, (new Date("2020/07/27").getTime()));
+        String l_sunday=SyncThread.replaceKeywordValue(mGp, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG, (new Date("2020/07/26").getTime()));
+        String l_monday=SyncThread.replaceKeywordValue(mGp, SMBSYNC2_REPLACEABLE_KEYWORD_WEEK_DAY_LONG, (new Date("2020/07/27").getTime()));
 
         String new_short_label=String.format(short_label, s_sunday, s_monday);
         String new_long_label=String.format(long_label, l_sunday, l_monday);
@@ -5060,7 +5060,7 @@ public class SyncTaskEditor extends DialogFragment {
         }
         if (target_dir.equals("")) result="/"+temp_dir+new_name;
         else {
-            String tgt_dir_temp=SyncThread.replaceKeywordValue(target_dir, System.currentTimeMillis());
+            String tgt_dir_temp=SyncThread.replaceKeywordValue(mGp, target_dir, System.currentTimeMillis());
             result="/"+tgt_dir_temp+"/"+temp_dir+new_name;
         }
 

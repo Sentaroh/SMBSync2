@@ -48,6 +48,8 @@ import android.util.Log;
 import com.sentaroh.android.Utilities.Dialog.MessageDialogAppFragment;
 import com.sentaroh.android.Utilities.LocalMountPoint;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -560,6 +562,7 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_portrait), getActivity());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_landscape_tablet), getActivity());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme_language), getActivity());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme_week_number), getActivity());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_display_font_scale_factor), getActivity());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_dim_screen_on_while_sync), getActivity());
 
@@ -644,6 +647,29 @@ public class ActivitySettings extends PreferenceActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     getActivity().startActivity(intent);
                 }
+            } else if (key_string.equals(c.getString(R.string.settings_screen_theme_week_number))) {
+                isChecked = true;
+                String tid=shared_pref.getString(key_string, GlobalParameters.WEEK_NUMBER_CALCULATE_METHOD_DEFAULT);
+                String[] wk_msgs = c.getResources().getStringArray(R.array.settings_screen_theme_week_number_list_entries);
+                String sm="";
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                String c_date="", c_wno="";
+                long c_time=System.currentTimeMillis();
+                c_date=sdf.format(c_time);
+                c_wno=String.valueOf(GlobalParameters.getWeekNumber(tid, c_time));
+                if (tid.equals(GlobalParameters.WEEK_NUMBER_CALCULATE_METHOD_USA)) {
+                    sm=wk_msgs[1]+"\n"+mActivity.getString(R.string.settings_screen_theme_week_number_current_date, c_date, c_wno);
+                } else if (tid.equals(GlobalParameters.WEEK_NUMBER_CALCULATE_METHOD_ISO)) {
+                    sm=wk_msgs[2]+"\n"+
+                            mActivity.getString(R.string.settings_screen_theme_week_number_current_date, c_date, c_wno);
+                } else if (tid.equals(GlobalParameters.WEEK_NUMBER_CALCULATE_METHOD_ME)) {
+                    sm=wk_msgs[3]+"\n"+
+                            mActivity.getString(R.string.settings_screen_theme_week_number_current_date, c_date, c_wno);
+                } else {
+                    sm=wk_msgs[0]+"\n"+
+                            mActivity.getString(R.string.settings_screen_theme_week_number_current_date, c_date, c_wno);
+                }
+                pref_key.setSummary(sm);
             } else if (key_string.equals(c.getString(R.string.settings_display_font_scale_factor))) {
                 isChecked = true;
                 String font_scale_id=shared_pref.getString(key_string, GlobalParameters.FONT_SCALE_FACTOR_NORMAL);

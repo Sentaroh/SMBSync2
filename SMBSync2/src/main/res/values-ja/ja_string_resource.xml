@@ -1077,6 +1077,22 @@
             <item>5</item>
             <item>6</item>
         </string-array >
+        <string name="settings_screen_theme_week_number">settings_screen_theme_week_number</string>
+        <string name="settings_screen_theme_week_number_title">週番号の計算</string>
+        <string name="settings_screen_theme_week_number_dialog_title">週番号計算の選択</string>
+        <string name="settings_screen_theme_week_number_current_date">現在の日時 %1$s, 週番号 %2$s</string>
+        <string-array name="settings_screen_theme_week_number_list_entries">
+            <item>システムのデフォルト</item>
+            <item>アメリカ式(日曜始まり, 1月1日始まり)</item>
+            <item>ISO式(月曜始まり, 1月4日始まり)</item>
+            <item>中東式(土曜始まり, 1月1日始まり)</item>
+        </string-array >
+        <string-array name="settings_screen_theme_week_number_list_values">
+            <item>default</item>
+            <item>USA</item>
+            <item>ISO</item>
+            <item>MIDDLE_EAST</item>
+        </string-array >
         <string name="settings_screen_theme">settings_screen_theme</string>
         <string name="settings_screen_theme_title">画面テーマ</string>
         <string name="settings_screen_theme_dialog_title">画面テーマ</string>

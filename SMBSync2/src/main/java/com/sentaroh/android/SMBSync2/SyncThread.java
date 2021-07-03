@@ -1590,7 +1590,11 @@ public class SyncThread extends Thread {
         return sync_result;
     }
 
-    static public String replaceKeywordValue(String replaceable_string, Long time_millis) {
+    private String replaceKeywordValue(String replaceable_string, Long time_millis) {
+        return replaceKeywordValue(mGp, replaceable_string, time_millis);
+    }
+
+    static public String replaceKeywordValue(GlobalParameters gp, String replaceable_string, Long time_millis) {
         String c_date = StringUtil.convDateTimeTo_YearMonthDayHourMin(time_millis);
         String c_date_yyyy = c_date.substring(0, 4);
         String c_date_mm = c_date.substring(5, 7);
@@ -1608,7 +1612,7 @@ public class SyncThread extends Thread {
         String week_day_long=sdf.format(time_millis).toLowerCase();
 
         sdf=new SimpleDateFormat("w");
-        String week_no=sdf.format(time_millis);
+        String week_no=String.valueOf(gp.getWeekNumber(time_millis));//sdf.format(time_millis);
 
         String to_temp = null;
         to_temp = replaceable_string.replaceAll(SMBSYNC2_REPLACEABLE_KEYWORD_YEAR, c_date_yyyy)

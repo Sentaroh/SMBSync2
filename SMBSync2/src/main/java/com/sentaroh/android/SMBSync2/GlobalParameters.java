@@ -73,6 +73,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -523,6 +524,40 @@ public class GlobalParameters extends CommonGlobalParms {
 
         if (!prefs.contains(c.getString(R.string.settings_enable_usb_uuid_list)))
             prefs.edit().putBoolean(c.getString(R.string.settings_enable_usb_uuid_list), false).commit();
+
+        if (!prefs.contains(c.getString(R.string.settings_screen_theme_week_number)))
+            prefs.edit().putString(c.getString(R.string.settings_screen_theme_week_number), WEEK_NUMBER_CALCULATE_METHOD_DEFAULT).commit();
+    }
+
+    public String settingWeekNumberCaculateMethod =WEEK_NUMBER_CALCULATE_METHOD_DEFAULT;
+    public static String WEEK_NUMBER_CALCULATE_METHOD_DEFAULT="default";
+    public static String WEEK_NUMBER_CALCULATE_METHOD_USA="USA";
+    public static String WEEK_NUMBER_CALCULATE_METHOD_ISO="ISO";
+    public static String WEEK_NUMBER_CALCULATE_METHOD_ME="MIDDLE_EAST";
+
+    public int getWeekNumber(long time) {
+        return getWeekNumber(settingWeekNumberCaculateMethod, time);
+    }
+
+    static public int getWeekNumber(String method, long time) {
+        Calendar cal = Calendar.getInstance();
+        int result=-1;
+        if (method.equals(GlobalParameters.WEEK_NUMBER_CALCULATE_METHOD_USA)) {
+            cal.setMinimalDaysInFirstWeek(1);
+            cal.setFirstDayOfWeek(1);
+            result=cal.get(Calendar.WEEK_OF_YEAR);
+        } else if (method.equals(GlobalParameters.WEEK_NUMBER_CALCULATE_METHOD_ISO)) {
+            cal.setMinimalDaysInFirstWeek(4);
+            cal.setFirstDayOfWeek(2);
+            result=cal.get(Calendar.WEEK_OF_YEAR);
+        } else if (method.equals(GlobalParameters.WEEK_NUMBER_CALCULATE_METHOD_ME)) {
+            cal.setMinimalDaysInFirstWeek(1);
+            cal.setFirstDayOfWeek(7);
+            result=cal.get(Calendar.WEEK_OF_YEAR);
+        } else {
+            result=cal.get(Calendar.WEEK_OF_YEAR);
+        }
+        return result;
     }
 
     public void setSettingOptionLogEnabled(Context c, boolean enabled) {
@@ -596,6 +631,7 @@ public class GlobalParameters extends CommonGlobalParms {
 //        } else {
 //            applicationTheme = R.style.MainBlack;
 //        }
+        settingWeekNumberCaculateMethod =prefs.getString(c.getString(R.string.settings_screen_theme_week_number), WEEK_NUMBER_CALCULATE_METHOD_DEFAULT);
         loadLanguagePreference(c);
         setDisplayFontScale(c);
 
