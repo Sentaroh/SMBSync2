@@ -433,10 +433,10 @@
         <string name="msgs_task_sync_task_sync_file_size_filter">Sync files with a size:</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">Sync files if their size is:</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">Ignore empty files (0 Bytes size)</string>
-        <string name="msgs_task_sync_task_sync_max_file_name_length">Ignore the file if the length of the file name is longer than the specified value</string>
-        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">Specify the length of the file name to ignore</string>
-        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">Specify a length of file name to ignore that is greater than or equal to 0</string>
-        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">Specify a file name length of 255 or less to ignore</string>
+        <string name="msgs_task_sync_task_sync_max_file_name_length">Ignore the file if its name length exceeds the specified value</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">Specify the maximum allowed file name length</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">Maximum file name length must be greater than 0</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">Maximum file name length must be less or equal to 255</string>
         <string name="msgs_task_sync_task_sync_file_size_size_hint">Size</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_dialog_title">Select file size filter unit</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_byte">Bytes</string>
@@ -564,20 +564,20 @@
         <string name="msgs_maintenance_result_log_list_del_file">Deleted %s.</string>
         <string name="msgs_maintenance_result_log_list_del_title">Files and directories not related to history logs have been found in the history log directory. Remove these files?</string>
     <!-- edit Sync task list -->
-        <string name="msgs_edit_sync_task_list_delete_sync_task">Would you like to delete the following tasks?</string>
+        <string name="msgs_edit_sync_task_list_delete_sync_task">Would you like to delete the following tasks ?</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">No tasks exist that can be added.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Edit sync task List</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Add sync task</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">No synchronization task has been specified. Click the "Add Sync Task" button to add a task.</string>
-        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Task does not exists. Task=%s</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Task does not exist. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Select all</string>
-        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Deselect all</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Unselect all</string>
         <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">Remove Synchronization Task</string>
         <string name="msgs_edit_sync_task_list_cont_label_add_sync_task">Add Sync Task</string>
-        <string name="msgs_edit_sync_task_list_help_title">Help for editing synchronized task list</string>
+        <string name="msgs_edit_sync_task_list_help_title">Help to edit schedule sync task list</string>
         <string name="msgs_edit_sync_task_list_add_task_list_guide">Select the task you want to add and click the \"Add\" button.</string>
         <string name="msgs_edit_sync_task_list_help_file">SMBSync2_Help_EN_edit_sync_task_list.md</string>
-        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">The task list has changed. Exit without saving?</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">The task list has changed. Exit without saving ?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Sync</string>
         <string name="msgs_menu_exec_schedule">Execute schedule</string>
@@ -616,15 +616,15 @@
         <string name="msgs_mirror_taken_date_convert_error">The last modified time of the file was used because an error occurred in the conversion of the shooting date. File=</string>
         <string name="msgs_mirror_whole_directory_filter_error">Directory filter %s cannot be used. Edit the sync task and fix the invalid filter.</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Sync aborted because the target path contains a directory with the same name as the file being copied. File=</string>
-        <string name="msgs_mirror_file_name_gt_255_byte">Ignored the file because the length of the file name exceeds %1$s bytes. Bytes in file name=%2$s, file name=%3$s</string>
-        <string name="msgs_mirror_file_name_gt_smb_file_name_length_237_byte">Ignored the file because the length of the file name exceeds the maximum length of the SMB file name (%1$s bytes). File name bytes =%2$s, File name =%3$s</string>
+        <string name="msgs_mirror_file_name_gt_255_byte">File skipped because its name length exceeds %1$s bytes. Bytes in file name=%2$s, File name=%3$s</string>
+        <string name="msgs_mirror_file_name_gt_smb_file_name_length_237_byte">File skipped because its name length exceeds the specified SMB value (%1$s bytes). Bytes in file name=%2$s, File name=%3$s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Sync cancelled because SDCARD is not mounted.</string>
         <string name="msgs_mirror_external_sdcard_select_required">Sync cancelled because SDCARD write permission not granted.</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">It seems that the SDCARD content is not reflected in the media store.  Execute media scan to update the contents of the SDCARD.</string>
         <string name="msgs_mirror_file_set_last_modified_failed">setLastModified() failed.  Enable \"Do not set last modified time of destination file to match source file\" in sync task options.</string>
         <string name="msgs_mirror_file_zip_copy_back_from_work">Copying the ZIP file to the target file... %s%% done.</string>
         <string name="msgs_mirror_file_zip_copy_to_work">Copying the ZIP file to the cache temp file... %s%% done.</string>
-        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">Split archive is can not be used.</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">Split archive cannot be used.</string>
         <string name="msgs_mirror_ignore_override_copy_file">File copy ignored because the \"Overwrite destination file(s)\" option is disabled for this task.</string>
         <string name="msgs_mirror_ignore_override_move_file">File move ignored because the \"Overwrite destination file(s)\" option is disabled for this task.</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error" formatted="false">The source file or directory name contains invalid characters for the destination. Edit name to allow sync. Character=%s</string>
