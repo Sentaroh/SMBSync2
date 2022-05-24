@@ -569,6 +569,7 @@
         <string name="msgs_edit_sync_task_list_dlg_title">タスクリストの編集</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">同期タスクの追加</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">同期タスクが指定されていません。「同期タスクの追加」ボタンを押してタスクを追加してください。</string>
+        <string name="msgs_edit_sync_task_list_info_no_sync_tasks_created">少なくとも1つの同期タスクを作成することから始める必要があります。</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">タスクが見つかりません。タスク=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">全て選択</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">全ての選択解除</string>

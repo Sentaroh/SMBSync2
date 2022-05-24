@@ -569,6 +569,7 @@
         <string name="msgs_edit_sync_task_list_dlg_title">Редактировать список синхронизированных задач</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Добавить задачу синхронизации</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Задача синхронизации не задана. Нажмите кнопку \"Добавить задачу синхронизации\", чтобы добавить задачу.</string>
+        <string name="msgs_edit_sync_task_list_info_no_sync_tasks_created">Вы должны начать с создания хотя бы одной задачи синхронизации.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Задачи не существует. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Выберите все</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Удалить все</string>

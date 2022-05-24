@@ -569,6 +569,7 @@
         <string name="msgs_edit_sync_task_list_dlg_title">Modifica elenco attività di sincronizzazione</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Aggiungi attività di sincronizzazione</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Nessuna attività di sincronizzazione e stata aggiunta. Clicca sul pulsante \"Aggiungi attività di sincronizzazione\" per selezionare una.</string>
+        <string name="msgs_edit_sync_task_list_info_no_sync_tasks_created">Devi iniziare creando almeno un\'attività di sincronizzazione.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">L\'attività non esiste. Attività=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Seleziona tutti</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Deseleziona tutti</string>

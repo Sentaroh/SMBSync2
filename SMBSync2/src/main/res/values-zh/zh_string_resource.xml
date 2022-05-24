@@ -569,6 +569,7 @@
         <string name="msgs_edit_sync_task_list_dlg_title">编辑同步任务列表</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">添加同步任务</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">没有指定同步任务。点击 \"添加同步任务 \"按钮，添加一个任务。</string>
+        <string name="msgs_edit_sync_task_list_info_no_sync_tasks_created">您必须首先创建至少一个同步任务。</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">任务不存在。 Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">选择所有</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">取消选择所有</string>

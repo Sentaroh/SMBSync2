@@ -569,6 +569,7 @@
         <string name="msgs_edit_sync_task_list_dlg_title">Liste des tâches de synchronisation</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Ajouter une tâche de synchronisation</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Aucune tâche de synchronisation n\'a été spécifiée. Cliquez sur le bouton \"Ajouter une tâche de synchronisation\" pour ajouter une.</string>
+        <string name="msgs_edit_sync_task_list_info_no_sync_tasks_created">Vous devez commencer par créer au moins une tâche de synchronisation.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">La tâche n\'existe pas. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Sélectionner tout</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Désélectionner tout</string>

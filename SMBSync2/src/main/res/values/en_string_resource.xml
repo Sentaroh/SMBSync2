@@ -569,6 +569,7 @@
         <string name="msgs_edit_sync_task_list_dlg_title">Edit sync task List</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Add sync task</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">No synchronization task has been specified. Click the "Add Sync Task" button to add a task.</string>
+        <string name="msgs_edit_sync_task_list_info_no_sync_tasks_created">You must first start by creating at least one sync task.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Task does not exist. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Select all</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Unselect all</string>
