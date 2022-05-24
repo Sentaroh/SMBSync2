@@ -887,30 +887,19 @@ public class SyncThread extends Thread {
 
     private final static int MAX_SMB_FILE_NAME_BYTE_COUNT=237;
     static public boolean isValidFileNameLength(SyncThreadWorkArea stwa, SyncTaskItem sti, String file_name) {
-        if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-            if (MAX_SMB_FILE_NAME_BYTE_COUNT>sti.getSyncOptionMaxFileNameLength()) {
-                if (file_name.getBytes().length>sti.getSyncOptionMaxFileNameLength()) {
-                    String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_255_byte, sti.getSyncOptionMaxFileNameLength(), file_name.getBytes().length, file_name);
-                    stwa.util.addLogMsg("W", e_msg);
-                    return false;
-                }
-            } else {
-                if (file_name.getBytes().length>MAX_SMB_FILE_NAME_BYTE_COUNT) {
-                    String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_smb_file_name_length_237_byte, MAX_SMB_FILE_NAME_BYTE_COUNT, MAX_SMB_FILE_NAME_BYTE_COUNT, file_name.getBytes().length, file_name);
-                    stwa.util.addLogMsg("W", e_msg);
-                    return false;
-                }
-            }
-        } else {
-            if (file_name.getBytes().length>sti.getSyncOptionMaxFileNameLength()) {
-                String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_255_byte, sti.getSyncOptionMaxFileNameLength(), file_name.getBytes().length, file_name);
-                stwa.util.addLogMsg("W", e_msg);
-                return false;
-            }
+        int filename_len = file_name.getBytes().length;
+        if (filename_len > sti.getSyncOptionMaxFileNameLength()) {
+            String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_255_byte, sti.getSyncOptionMaxFileNameLength(), file_name.getBytes().length, file_name);
+            stwa.util.addLogMsg("W", e_msg);
+            return false;
+        } else if (sti.getTargetFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) && filename_len > MAX_SMB_FILE_NAME_BYTE_COUNT) {
+            String e_msg=stwa.context.getString(R.string.msgs_mirror_file_name_gt_smb_file_name_length_237_byte, MAX_SMB_FILE_NAME_BYTE_COUNT, MAX_SMB_FILE_NAME_BYTE_COUNT, file_name.getBytes().length, file_name);
+            stwa.util.addLogMsg("W", e_msg);
+            return false;
         }
+
         return true;
     }
-
 
     private boolean isIpaddressConnectable(String addr, int port) {
 //        int cnt = 3;
