@@ -330,6 +330,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">使用SMB V2（2.11）</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">使用SMB V2/3（2.12）</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">使用SMB V2/3（2.14）</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb_latest">使用SMB V2/3 (%1$s)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_suggestion_message">所选的SMB协议不允许连接到SMB服务器。将协议更改为SMBv1，SMBv2/3（2.12）或SMBv2（2.14）。</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">由系统决定</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">主文件夹中存在错误。请更正。</string>

@@ -330,6 +330,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Utiliser SMB V2 (2.11)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Utiliser SMB V2/3 (2.12)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">Utiliser SMB V2/3 (2.14)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb_latest">Utiliser SMB V2/3 (%1$s)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_suggestion_message">Le protocole SMB sélectionné ne permet pas la connexion au serveur SMB. Veuillez choisir un autre protocole tel que SMBv1, SMBv2/3(2.12) ou SMBv2(2.14).</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Detection Auto</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">Erreur dans le dossier source. Merci de la corriger.</string>

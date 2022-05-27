@@ -94,17 +94,19 @@ class SyncTaskItem implements Serializable, Cloneable {
 //    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = "2";
 //    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = "3";
 //    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = "4";
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB1);
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB201);
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB211);
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB212);
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB214 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB214);
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT = SYNC_FOLDER_SMB_PROTOCOL_SMB214;
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB1 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB1); //1
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB201 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB201); //2
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB211 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB211); //3
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB212); //4
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB214 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB214); //5
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST = String.valueOf(JcifsAuth.JCIFS_FILE_SMB_LATEST); //6
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST_VERSION = "2.17";
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT = SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST;
     public final static String[] SYNC_FOLDER_SMB_PROTOCOL_LIST=new String[]{
             SYNC_FOLDER_SMB_PROTOCOL_SMB1, SYNC_FOLDER_SMB_PROTOCOL_SMB201, SYNC_FOLDER_SMB_PROTOCOL_SMB211,
-            SYNC_FOLDER_SMB_PROTOCOL_SMB212, SYNC_FOLDER_SMB_PROTOCOL_SMB214};
+            SYNC_FOLDER_SMB_PROTOCOL_SMB212, SYNC_FOLDER_SMB_PROTOCOL_SMB214, SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST};
 
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_DESCRIPTION = "SMB214";
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_DESCRIPTION = "SMB217";
     private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_DEFAULT;
     private boolean syncTaskMasterFolderSmbIpcSigningEnforced = true;
 
