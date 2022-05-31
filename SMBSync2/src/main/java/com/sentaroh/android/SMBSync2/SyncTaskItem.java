@@ -100,13 +100,13 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB212 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB212); //4
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB214 = String.valueOf(JcifsAuth.JCIFS_FILE_SMB214); //5
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST = String.valueOf(JcifsAuth.JCIFS_FILE_SMB_LATEST); //6
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST_VERSION = "2.17";
     public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT = SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST;
     public final static String[] SYNC_FOLDER_SMB_PROTOCOL_LIST=new String[]{
             SYNC_FOLDER_SMB_PROTOCOL_SMB1, SYNC_FOLDER_SMB_PROTOCOL_SMB201, SYNC_FOLDER_SMB_PROTOCOL_SMB211,
             SYNC_FOLDER_SMB_PROTOCOL_SMB212, SYNC_FOLDER_SMB_PROTOCOL_SMB214, SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST};
 
-    public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_DESCRIPTION = "SMB217";
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST_VERSION = "2.17"; // used from SMB protocol selection drop menu and for SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_DESCRIPTION
+    public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_DESCRIPTION = "SMB" + SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST_VERSION; //used to display error message when importing a synctask with invalid SMB protocol
     private String syncTaskMasterFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_DEFAULT;
     private boolean syncTaskMasterFolderSmbIpcSigningEnforced = true;
 
