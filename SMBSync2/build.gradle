@@ -92,7 +92,7 @@ dependencies {
 //    implementation files('libs/JcifsFile-1.0.9.jar')
     implementation files('libs/JcifsFile-1.10.jar')
 //    implementation files('libs/slf4j-api-1.7.7.jar')
-    implementation files('libs/bcprov-jdk15on-158.jar')
+    implementation files('libs/bcprov-jdk15to18-169.jar')
 //    implementation files('libs/WrapperForSlf4j-1.7.36.jar')
 
     implementation files('libs/Utilities-1.0.19.aar')
