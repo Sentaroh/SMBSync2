@@ -606,7 +606,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionUseExtendedDirectoryFilter1() {return syncOptionUseExtendedDirectoryFilter1;}
     public void setSyncOptionUseExtendedDirectoryFilter1(boolean p) {syncOptionUseExtendedDirectoryFilter1 = p;}
 
-    private boolean syncOptionUseDirectoryFilterV2=false;
+    private boolean syncOptionUseDirectoryFilterV2=true;
     public boolean isSyncOptionUseDirectoryFilterV2() {return syncOptionUseDirectoryFilterV2;}
     public void setsyncOptionUseDirectoryFilterV2(boolean p) {syncOptionUseDirectoryFilterV2 = p;}
 
