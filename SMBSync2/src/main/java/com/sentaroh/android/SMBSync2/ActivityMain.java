@@ -4439,10 +4439,10 @@ public class ActivityMain extends AppCompatActivity {
                     SyncTaskItem pfli = new SyncTaskItem();
 //					pfli.setMasterDirectoryName("from");
 //					pfli.setTargetDirectoryName("to");
-                    pfli.setSyncTaskAuto(true);
+                    pfli.setSyncTaskAuto(pfli.isSyncTaskAuto());
                     pfli.setMasterLocalMountPoint(mGp.internalRootDirectory);
                     pfli.setTargetLocalMountPoint(mGp.internalRootDirectory);
-                    pfli.setSyncOptionUseExtendedDirectoryFilter1(true);
+                    pfli.setSyncOptionUseExtendedDirectoryFilter1(pfli.isSyncOptionUseExtendedDirectoryFilter1());
                     SyncTaskEditor pmsp = SyncTaskEditor.newInstance();
                     pmsp.showDialog(getSupportFragmentManager(), pmsp, "ADD", pfli,
                             mTaskUtil, mUtil, mCommonDlg, mGp, ntfy);
