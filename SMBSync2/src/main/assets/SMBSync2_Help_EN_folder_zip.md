@@ -1,13 +1,13 @@
 ### Mount point  
-Select mount point for internal storage.  
+Select the mount point for internal storage.  
 
 ### Save ZIP file to SDCARD.  
 If checked, the ZIP file will be saved to SDCARD.  
 
 ### Select SDCARD  
-Select the SDCARD root directory to get access to SDCARD.   
+Select the SDCARD root directory to get access to the SDCARD.   
 
-List Files  
+### List Files  
 Shows a list of files.  
 
 ### Append the sync time/date to the directory name (the keyword will be replaced by the date and time in which the sync was performed)  
