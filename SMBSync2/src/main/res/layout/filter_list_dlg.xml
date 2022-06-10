@@ -49,6 +49,22 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/filter_select_edit_filter_v1_deprecated_warning_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        android:orientation="vertical" >
+        <TextView
+            android:id="@+id/filter_select_edit_filter_v1_deprecated_warning_message"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/msgs_profile_sync_task_filter_edit_dlg_filter_v1_deprecated_warning_message"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/filter_select_edit_dir_v2_guide_ll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

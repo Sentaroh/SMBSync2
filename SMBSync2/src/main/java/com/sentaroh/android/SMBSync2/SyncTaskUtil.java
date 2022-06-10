@@ -3057,14 +3057,22 @@ public class SyncTaskUtil {
         final TextView tv_dir_filter_mirror_warning = (TextView) dialog.findViewById(R.id. filter_select_edit_mirror_method_warning_message);
         tv_dir_filter_mirror_warning.setTextColor(mGp.themeColorList.text_color_warning);
 
+        final LinearLayout ll_filter_v1_deprecated_warning = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_filter_v1_deprecated_warning_view);
+        final TextView tv_filter_v1_deprecated_warning = (TextView) dialog.findViewById(R.id. filter_select_edit_filter_v1_deprecated_warning_message);
+        tv_filter_v1_deprecated_warning.setTextColor(mGp.themeColorList.text_color_warning);
         Button dirbtn = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
         dirbtn.setVisibility(Button.GONE);
 
         filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList, SMBSYNC2_PROF_FILTER_FILE);
         ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
 
-        if (use_dir_filter_v2) ll_file_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
-        else ll_file_filter_v2_guide.setVisibility(LinearLayout.GONE);
+        if (use_dir_filter_v2) {
+            ll_file_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
+            ll_filter_v1_deprecated_warning.setVisibility(LinearLayout.GONE);
+        } else {
+            ll_file_filter_v2_guide.setVisibility(LinearLayout.GONE);
+            ll_filter_v1_deprecated_warning.setVisibility(LinearLayout.VISIBLE);
+        }
 
         for (int i = 0; i < sti.getFileFilter().size(); i++) {
             String inc = sti.getFileFilter().get(i).substring(0, 1);
@@ -3340,6 +3348,9 @@ public class SyncTaskUtil {
         final TextView tv_dir_filter_mirror_warning = (TextView) dialog.findViewById(R.id. filter_select_edit_mirror_method_warning_message);
         tv_dir_filter_mirror_warning.setTextColor(mGp.themeColorList.text_color_warning);
 
+        final LinearLayout ll_filter_v1_deprecated_warning = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_filter_v1_deprecated_warning_view);
+        final TextView tv_filter_v1_deprecated_warning = (TextView) dialog.findViewById(R.id. filter_select_edit_filter_v1_deprecated_warning_message);
+        tv_filter_v1_deprecated_warning.setTextColor(mGp.themeColorList.text_color_warning);
         filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList, SMBSYNC2_PROF_FILTER_DIR);
         final ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
         final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_select_edit_new_filter);
@@ -3351,8 +3362,13 @@ public class SyncTaskUtil {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_select_edit_msg);
         final Button dirbtn = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
 
-        if (use_dir_filter_v2) ll_dir_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
-        else ll_dir_filter_v2_guide.setVisibility(LinearLayout.GONE);
+        if (use_dir_filter_v2) {
+            ll_dir_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
+            ll_filter_v1_deprecated_warning.setVisibility(LinearLayout.GONE);
+        } else {
+            ll_dir_filter_v2_guide.setVisibility(LinearLayout.GONE);
+            ll_filter_v1_deprecated_warning.setVisibility(LinearLayout.VISIBLE);
+        }
 
         final LinearLayout add_include_select_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_add_include_exclude_view);
         add_include_select_view.setVisibility(LinearLayout.VISIBLE);

@@ -415,6 +415,7 @@
         <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">You can use wildcards in the filter. Example:\n192.168.100.* -> 192.168.100.0-192.168.100.255\n192.168.* -> 192.168.0.0 - 192.168.255.255</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filter all files with specific name: file1;*.txt;*.jpg;file*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_filter_v1_deprecated_warning_message">This filter version is deprecated. Please enable Advanced option \"Use new filter version 2\".</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Option \"Remove folders and files excluded by name filters\" is enabled: All files and directories with a name not included by the name filters, as well as those that do not exist in the source directory, will be deleted from the destination directory.</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">File name filter</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filter</string>
