@@ -40,6 +40,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -3048,11 +3049,14 @@ public class SyncTaskUtil {
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
-        final LinearLayout ll_file_filter_v2_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_file_v2_guide_ll);
+        //final LinearLayout ll_file_filter_v2_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_file_v2_guide_ll);
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
 
+        final ImageButton help_filter_edit = (ImageButton) dialog.findViewById(R.id.filter_select_edit_help);
+        final LinearLayout ll_file_filter_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_guide_ll);
+        final TextView file_filter_guide = (TextView) dialog.findViewById(R.id.filter_select_edit_guide);
         final LinearLayout ll_dir_filter_mirror_warning = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_mirror_method_warning_view);
         final TextView tv_dir_filter_mirror_warning = (TextView) dialog.findViewById(R.id. filter_select_edit_mirror_method_warning_message);
         tv_dir_filter_mirror_warning.setTextColor(mGp.themeColorList.text_color_warning);
@@ -3067,10 +3071,14 @@ public class SyncTaskUtil {
         ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);
 
         if (use_dir_filter_v2) {
-            ll_file_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
+            ll_file_filter_guide.setVisibility(LinearLayout.GONE);
+            file_filter_guide.setText(mContext.getString(R.string.msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide));
+            file_filter_guide.setMovementMethod(new ScrollingMovementMethod());
             ll_filter_v1_deprecated_warning.setVisibility(LinearLayout.GONE);
         } else {
-            ll_file_filter_v2_guide.setVisibility(LinearLayout.GONE);
+            ll_file_filter_guide.setVisibility(LinearLayout.GONE);
+            file_filter_guide.setText(mContext.getString(R.string.msgs_profile_sync_task_filter_edit_dlg_file_filter_v1_guide));
+            file_filter_guide.setMovementMethod(new ScrollingMovementMethod());
             ll_filter_v1_deprecated_warning.setVisibility(LinearLayout.VISIBLE);
         }
 
@@ -3105,6 +3113,13 @@ public class SyncTaskUtil {
             //ok
         }
 
+        help_filter_edit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int toggle = ll_file_filter_guide.getVisibility() == LinearLayout.GONE ? LinearLayout.VISIBLE : LinearLayout.GONE;
+                ll_file_filter_guide.setVisibility(toggle);
+            }
+        });
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override
@@ -3338,12 +3353,15 @@ public class SyncTaskUtil {
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_title_view);
-        final LinearLayout ll_dir_filter_v2_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_dir_v2_guide_ll);
+        //final LinearLayout ll_dir_filter_v2_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_dir_v2_guide_ll);
 
         final TextView title = (TextView) dialog.findViewById(R.id.filter_select_edit_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
 
+        final ImageButton help_filter_edit = (ImageButton) dialog.findViewById(R.id.filter_select_edit_help);
+        final LinearLayout ll_dir_filter_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_guide_ll);
+        final TextView dir_filter_guide = (TextView) dialog.findViewById(R.id.filter_select_edit_guide);
         final LinearLayout ll_dir_filter_mirror_warning = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_mirror_method_warning_view);
         final TextView tv_dir_filter_mirror_warning = (TextView) dialog.findViewById(R.id. filter_select_edit_mirror_method_warning_message);
         tv_dir_filter_mirror_warning.setTextColor(mGp.themeColorList.text_color_warning);
@@ -3363,10 +3381,14 @@ public class SyncTaskUtil {
         final Button dirbtn = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
 
         if (use_dir_filter_v2) {
-            ll_dir_filter_v2_guide.setVisibility(LinearLayout.VISIBLE);
+            ll_dir_filter_guide.setVisibility(LinearLayout.GONE);
+            dir_filter_guide.setText(mContext.getString(R.string.msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide));
+            dir_filter_guide.setMovementMethod(new ScrollingMovementMethod());
             ll_filter_v1_deprecated_warning.setVisibility(LinearLayout.GONE);
         } else {
-            ll_dir_filter_v2_guide.setVisibility(LinearLayout.GONE);
+            ll_dir_filter_guide.setVisibility(LinearLayout.GONE);
+            dir_filter_guide.setText(mContext.getString(R.string.msgs_profile_sync_task_filter_edit_dlg_dir_filter_v1_guide));
+            dir_filter_guide.setMovementMethod(new ScrollingMovementMethod());
             ll_filter_v1_deprecated_warning.setVisibility(LinearLayout.VISIBLE);
         }
 
@@ -3400,6 +3422,13 @@ public class SyncTaskUtil {
             //ok
         }
 
+        help_filter_edit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int toggle = ll_dir_filter_guide.getVisibility() == LinearLayout.GONE ? LinearLayout.VISIBLE : LinearLayout.GONE;
+                ll_dir_filter_guide.setVisibility(toggle);
+            }
+        });
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
             @Override

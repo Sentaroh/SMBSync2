@@ -413,6 +413,8 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">ディレクトリ一覧</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">除外</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">フィルターにワイルドカードが使用できます。 例:\n192.168.100.* -> 192.168.100.0-192.168.100.255\n192.168.* -> 192.168.0.0 - 192.168.255.255</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v1_guide">- \"dir\"：\"source/dir/\"（含む）または\"source/dir*\"（除外）に一致します\n- \"dir/\"：\"source/dir/\"と一致します\n- \"*dir*\"：パス内の任意の場所の\"source/*dir*/\"（含む）または\"/*dir*/\"に一致します（除外）\n- \"dir/*name*/\"：\"source/dir/*name*/\"と一致します\n- \"\\\\dir\"：パス内の任意の場所の\"*/dir/*\"と一致します（除外）\n- \"\\\\*dir*\"：パス内の任意の場所の\"*dir*\"と一致します（除外）\n- \"\\\\cache/data\"：パス内のどこでも\"*/cache/*\"とのみ一致します（除外）</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v1_guide">- 除外フィルターは包含フィルターよりも優先されます\n- \"*\"は任意の文字に一致します\n- \"file.txt\"：任意の\"file.txt\"と一致します\n- \"*.pdf\"：すべての.pdfファイルに一致\n- \"*tmp.log\"：すべての\"*tmp.log\"ファイルに一致</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- 選択例: cache/temp;/my*/fo?der\n- 全てのcache/tempディレクトリーを除外: \\cache/temp\n- フィルターは\";\"で区切ることで複数入力できます\n- 除外が優先されます</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-ファイル名が対象です: file1;*.txt;*.jpg;file*\n-フィルターは\";\"で区切ることで複数入力できます\n-除外が優先されます</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_filter_v1_deprecated_warning_message">This filter version is deprecated. Please enable Advanced option \"Use new filter version 2\".</string>
