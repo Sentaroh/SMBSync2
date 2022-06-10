@@ -2813,8 +2813,12 @@ public class SyncTaskUtil {
         title.setTextColor(mGp.themeColorList.title_text_color);
         title.setText(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_title));
 
-        LinearLayout ll_filter_guide=(LinearLayout)ll_dlg_view.findViewById(R.id.filter_select_edit_ip_address_guide_ll);
-        ll_filter_guide.setVisibility(LinearLayout.VISIBLE);
+        final ImageButton help_filter_edit = (ImageButton) dialog.findViewById(R.id.filter_select_edit_help);
+        final LinearLayout ll_filter_guide = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_guide_ll);
+        final TextView filter_guide = (TextView) dialog.findViewById(R.id.filter_select_edit_guide);
+        ll_filter_guide.setVisibility(LinearLayout.GONE);
+        filter_guide.setText(mContext.getString(R.string.msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide));
+        filter_guide.setMovementMethod(new ScrollingMovementMethod());
 
         Button add_current_addr = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
         add_current_addr.setText(mContext.getString(R.string.msgs_profile_sync_task_dlg_wifi_addr_add_current_addr));
@@ -2841,6 +2845,14 @@ public class SyncTaskUtil {
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_select_edit_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_select_edit_ok_btn);
         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+
+        help_filter_edit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int toggle = ll_filter_guide.getVisibility() == LinearLayout.GONE ? LinearLayout.VISIBLE : LinearLayout.GONE;
+                ll_filter_guide.setVisibility(toggle);
+            }
+        });
 
         NotifyEvent ntfy_inc_exc = new NotifyEvent(mContext);
         ntfy_inc_exc.setListener(new NotifyEventListener() {
