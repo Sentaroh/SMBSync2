@@ -71,15 +71,13 @@ Is a custom include/exclude file filter. You can select the name and extension o
 - Exclude filter always has precedence over include filter
 
 ##### Filter v2 examples:
-We suppose source directory is `/sdcard/source_dir`
-- match any file named my_file.txt: `my_file.txt`
-- exclude the file `/sdcard/source_dir/data/file.dat`: `data/file.dat`
-- match all pdf files: `*.pdf`
-- match all *tmp.log files: `*tmp.log`
-- match any single char: `my?file.txt` will match my_file.txt, my-file.txt, `my file.txt`, myAfile.txt etc.
-- exclude all hidden files: `.*` or just uncheck the option `include hidden files`
-- specify quickly multiple files: `*.pdf;path/to/my_file.doc;file*_tmp.log`
-
+- quickly specify multiple files: `*.pdf;path/to/my_file.doc;file*_tmp.log`
+- `my_file.txt` : matches any file named `my_file.txt`
+- `data/file.dat` : matches the file `source/data/file.dat`
+- `*.pdf` : matche all `anyFile.pdf` files
+- `*tmp.log` : matches all `*tmp.log files`
+- `my?file.txt` : matches `my_file.txt`, `my-file.txt`, `my file.txt`, `myAfile.txt`...
+- `.*` : matches all hidden files or just uncheck the option `Include hidden files`
 
 ### Sync files with a size
 File size filter to choose which files to sync depending on their size.  
@@ -109,20 +107,29 @@ Select the name of the directories you want to exclude or include from the synch
 
 ##### Filter v2 special characters / wildcards:
 - `?` Matches any single character. exp. `dir?` matches any path that is named `dir` plus any one character (dir1, dir2, dirA…)
-- `*` Matches any characters up to the next slash. exp. `*/*/dir*` matches any path that has two directories, then a file or directory that starts with the name `dir`.
+- `*` Matches any characters up to the next slash "/". exp. `*/*/dir*` matches any path that has two directories, then a file or directory that starts with the name `dir`.
 - `\` (exclude filter only): Matches any directory in path. exp. `\dir` matches any path that contains a directory named `dir`.
 - `trailing /` (exclude filter only): Will include (create on target) the empty excluded directory (without synchronizing its contents)
 
 ##### Filter v2 examples:
-- match `source_dir/cache` directory: `cache`
-- match any `cache/temp` directory: `\cache/temp` filter will match `source/cache/temp`, `source/dir/cache/temp`
-- match any directory name ending with `tmp`: `\*tmp`, wil match `dir_tmp`, `my_DIRtmp`, `dir.tmp`…
-- exclude all hidden directories: `\.*` or just uncheck the option `include hidden directories`
-- `dir?`: will match dir1, dir2, dira, dirz…
 - quickly specify multiple paths: `path/to/dir1;path/to/dir2;path/to/dir3`
-- `data/*/*/personal` will match `source/data/dir1/dir2/personal/` directory
-- exclude filter `\cache/` will exclude any directory named exactly `cache`. The excluded directory will be created on the target but all its subfolders and files are excluded (excluded directories appear as empty directories on target)
-- exclude filter `\cache` will behave like `\cache/` except that excluded `cache` directories are not created on the target
+- `cache` or `/cache` : matches `source/cache/` directory
+- `/cache/data` or `cache/data` : matches `source/cache/data/*`
+- `/cache/data/` : same as above except in exclude filter it would create the excluded dirs as empty dirs on target
+- `dir?/tmp` : matches `source/dir1/tmp/`, `source/dira/tmp/`, `source/dirZ/tmp/`, `source/dir-/tmp/`...
+- `cache*` : matches `source/cache*/` like `source/cache/`, `source/cache1/`, `source/cache_dir/`...
+- `*cache` : matches `source/*cache` like `source/cache/`, `source/my_cache/`...
+- `cache/data*` : matches `source/cache/data*`
+- `dir*/dir2` : matches `source/dirxxxx/dir2/`...
+- `*/dir` : matches `source/oneDirLevel/dir/`
+- `dir1/*/dir2` : matches `source/dir1/oneDirLevel/dir2/`
+- `dir/*` : matches `source/dir/anyDir/`
+- `data/*/*/personal` : matches `source/data/anyDir1/anyDir2/personal/`
+- `\cache` : behaves like `\cache/` except that excluded `cache` directories are not created on the target
+- `\cache/` : excludes any directory named exactly `cache`. The excluded directory will be created on the target but all its subfolders and files are excluded (excluded directories appear as empty directories on target)
+- `\cache/temp` : excludes any `cache/temp/` directory like `source/cache/temp/`, `source/dir/cache/temp/`
+- `\*tmp` : matches any directory name ending with `tmp` like `dir_tmp`, `my_DIRtmp`, `dir.tmp`...
+- `\.*` : excludes all hidden directories or just uncheck the option `Include hidden directories`
 
 ### Execute sync tasks only when charging  
 Auto Sync planned tasks won’t start if the device is not charging. Manually starting them is always possible.  
