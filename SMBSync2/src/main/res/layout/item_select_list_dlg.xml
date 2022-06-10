@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_select_list_dlg_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:textAppearance="?android:attr/textAppearanceMedium"
     tools:ignore="HardcodedText,RtlHardcoded,LabelFor" >
@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/item_select_list_dlg_title"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -29,7 +29,7 @@
     
     <TextView
         android:id="@+id/item_select_list_dlg_subtitle"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text=""
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/item_select_list_dlg_msg"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -48,7 +48,7 @@
 
     <ListView
         android:id="@+id/item_select_list_dlg_list_view"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fadeScrollbars="false"

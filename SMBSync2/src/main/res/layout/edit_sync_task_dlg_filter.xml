@@ -48,7 +48,7 @@
                 android:orientation="vertical" >
                 <CheckedTextView
                     android:id="@+id/sync_filter_file_type_audio"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -57,7 +57,7 @@
                 <include layout="@layout/divider_line1" />
                 <CheckedTextView
                     android:id="@+id/sync_filter_file_type_image"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -66,7 +66,7 @@
                 <include layout="@layout/divider_line1" />
                 <CheckedTextView
                     android:id="@+id/sync_filter_file_type_video"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -167,7 +167,7 @@
 
     <CheckedTextView
         android:id="@+id/sync_filter_sub_directory_specific"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"

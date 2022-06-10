@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/filter_select_edit_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:ignore="SpUsage" >
 
@@ -37,14 +37,14 @@
     <include layout="@layout/divider_line1_turquoise" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/filter_select_edit_msg"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -53,8 +53,8 @@
 
         <ListView
             android:id="@+id/filter_select_edit_listview"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:fadeScrollbars="false" >
         </ListView>
     </LinearLayout>
@@ -69,7 +69,7 @@
 
         <TextView
             android:id="@+id/filter_select_edit_filter_v1_deprecated_warning_message"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -79,7 +79,7 @@
 
     <LinearLayout
         android:id="@+id/filter_select_edit_guide_ll"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.7"
         android:layout_marginTop="10dp"
@@ -90,7 +90,7 @@
         <include layout="@layout/divider_line1_turquoise" />
         <TextView
             android:id="@+id/filter_select_edit_guide"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -111,7 +111,7 @@
 
         <TextView
             android:id="@+id/filter_select_edit_mirror_method_warning_message"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -122,13 +122,13 @@
 
     <Button
         android:id="@+id/filter_select_edit_list_dir_btn"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/msgs_profile_sync_task_filter_list_dlg_dir_list" 
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
@@ -150,7 +150,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/filter_select_edit_add_include_exclude_view"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:orientation="horizontal" >

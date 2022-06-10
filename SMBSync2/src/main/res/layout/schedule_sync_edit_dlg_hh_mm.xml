@@ -84,7 +84,7 @@
     </LinearLayout>
     <CheckedTextView
         android:id="@+id/scheduler_main_dlg_ll_exec_last_day_of_the_month"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"

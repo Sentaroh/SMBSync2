@@ -40,7 +40,7 @@
 
     <TextView
         android:id="@+id/edit_data_list_dlg_msg"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"

@@ -44,7 +44,7 @@
 
         <ListView
             android:id="@+id/import_autosave_dlg_autosave_listview"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -67,7 +67,7 @@
 
         <ListView
             android:id="@+id/import_autosave_dlg_manual_save_listview"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"

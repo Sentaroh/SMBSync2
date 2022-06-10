@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/data_list_add_data_item_dlg_title"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginLeft="5dp"
