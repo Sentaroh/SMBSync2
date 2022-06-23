@@ -2435,6 +2435,8 @@ public class ActivityMain extends AppCompatActivity {
         if (REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE == requestCode) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mGp.initStorageStatus(mContext);
+                mGp.syncHistoryList.addAll(mUtil.loadHistoryList());
+                mGp.syncMessageList.addAll(mUtil.loadMsgList(mGp));
                 mUiHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
