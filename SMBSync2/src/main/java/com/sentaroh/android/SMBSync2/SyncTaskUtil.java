@@ -3075,8 +3075,9 @@ public class SyncTaskUtil {
         tv_filter_mirror_warning.setTextColor(mGp.themeColorList.text_color_warning);
 
         final LinearLayout ll_filter_v1_deprecated_warning = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_filter_v1_deprecated_warning_view);
-        final TextView tv_filter_v1_deprecated_warning = (TextView) dialog.findViewById(R.id. filter_select_edit_filter_v1_deprecated_warning_message);
+        final TextView tv_filter_v1_deprecated_warning = (TextView) dialog.findViewById(R.id.filter_select_edit_filter_v1_deprecated_warning_message);
         tv_filter_v1_deprecated_warning.setTextColor(mGp.themeColorList.text_color_warning);
+
         Button dirbtn = (Button) dialog.findViewById(R.id.filter_select_edit_list_dir_btn);
         dirbtn.setVisibility(Button.GONE);
 
@@ -3402,7 +3403,7 @@ public class SyncTaskUtil {
         tv_filter_mirror_warning.setTextColor(mGp.themeColorList.text_color_warning);
 
         final LinearLayout ll_filter_v1_deprecated_warning = (LinearLayout) dialog.findViewById(R.id.filter_select_edit_filter_v1_deprecated_warning_view);
-        final TextView tv_filter_v1_deprecated_warning = (TextView) dialog.findViewById(R.id. filter_select_edit_filter_v1_deprecated_warning_message);
+        final TextView tv_filter_v1_deprecated_warning = (TextView) dialog.findViewById(R.id.filter_select_edit_filter_v1_deprecated_warning_message);
         tv_filter_v1_deprecated_warning.setTextColor(mGp.themeColorList.text_color_warning);
         filterAdapter = new AdapterFilterList(mActivity, R.layout.filter_list_item_view, filterList, SMBSYNC2_PROF_FILTER_DIR);
         final ListView lv = (ListView) dialog.findViewById(R.id.filter_select_edit_listview);

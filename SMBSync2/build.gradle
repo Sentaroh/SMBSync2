@@ -1,15 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "com.sentaroh.android.SMBSync2"
         minSdkVersion 21
-//        targetSdkVersion 21  //Android 5.0
-//        targetSdkVersion 23  //Android 6.0
-        targetSdkVersion 29
+//        targetSdkVersion 21  //Android 5.0 O
+//        targetSdkVersion 23  //Android 6.0 M
+//        targetSdkVersion 29  //Android 10  Q
+        targetSdkVersion 30    //Android 12  R // Mod 8/x: API 30, manage primary and external storage (Enable ALL_FILE_ACCESS)
 
 //
         versionCode 287

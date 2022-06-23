@@ -255,7 +255,7 @@
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">尚未允许写入USB。编辑目标文件夹，并允许写入USB。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">尚未允许写入USB介质。按"允许写入USB介质"以允许写入USB介质。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">未安装USB介质。</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">UBS介质不可用，因为没有USB介质安装点。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">USB介质不可用，因为没有USB介质安装点。</string>
         <string name="msgs_main_sync_profile_dlg_syncopt_prompt">选择同步模式</string>
         <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">警告：未为此任务指定目标目录。可能会发生不可预测的删除或覆盖。继续？</string>
         <string name="msgs_main_sync_profile_dlg_title_master">编辑主文件夹</string>

@@ -42,6 +42,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -114,6 +115,7 @@ import java.util.Calendar;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_SDCARD_STORAGE_ACCESS;
 import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_USB_STORAGE_ACCESS;
+import static com.sentaroh.android.SMBSync2.Constants.ACTIVITY_REQUEST_CODE_MANAGE_EXTERNAL_STORAGE;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE;
 import static com.sentaroh.android.SMBSync2.Constants.SMBSYNC2_CONFIRM_REQUEST_COPY;
@@ -2385,10 +2387,56 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private final int REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
-
     private NotifyEvent mNtfyExternalStoragePermission=null;
+    private final int REQUEST_PERMISSIONS_MANAGE_EXTERNAL_STORAGE = 2;
+    private NotifyEvent mNtfyManageStoragePermission=null;
+
+    private boolean isAllFileAccessPermissionGranted() {
+        return Environment.isExternalStorageManager();
+    }
     private void checkRequiredPermissions(final NotifyEvent p_ntfy) {
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT>=30) {
+            mUtil.addDebugMsg(1, "I", "checkRequiredPermissions: Prermission AllFileAccess: Entering");
+            if (!isAllFileAccessPermissionGranted()) {
+                NotifyEvent ntfy_all_file_access=new NotifyEvent(mContext);
+                ntfy_all_file_access.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        mNtfyManageStoragePermission=p_ntfy;
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                        //Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                        //Intent intent = new Intent(Intent.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+                        intent.setData(uri);
+                        //mContext.startActivity(intent);
+                        startActivityForResult(intent, ACTIVITY_REQUEST_CODE_MANAGE_EXTERNAL_STORAGE);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+                        NotifyEvent ntfy_denied=new NotifyEvent(mContext);
+                        ntfy_denied.setListener(new NotifyEvent.NotifyEventListener() {
+                            @Override
+                            public void positiveResponse(Context context, Object[] objects) {
+                                finish();
+                            }
+                            @Override
+                            public void negativeResponse(Context context, Object[] objects) {}
+                        });
+                        mUtil.showCommonDialog(false, "W",
+                                "All File Access Denied",
+                                "All File Access permission was not granted",
+                                ntfy_denied);
+                    }
+                });
+                mUtil.showCommonDialog(false, "W",
+                        mContext.getString(R.string.msgs_main_permission_external_storage_title),
+                        mContext.getString(R.string.msgs_main_permission_external_storage_request_msg), ntfy_all_file_access);
+            } else {
+                p_ntfy.notifyToListener(true, null);
+            }
+        } else if (Build.VERSION.SDK_INT >= 23) {
             mUtil.addDebugMsg(1, "I", "Prermission WriteExternalStorage=" + checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) +
                     ", WakeLock=" + checkSelfPermission(Manifest.permission.WAKE_LOCK));
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -2432,7 +2480,7 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         mUtil.addDebugMsg(1, "I", "onRequestPermissionsResult="+requestCode);
-        if (REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE == requestCode) {
+        if (requestCode == REQUEST_PERMISSIONS_WRITE_EXTERNAL_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mGp.initStorageStatus(mContext);
                 mGp.syncHistoryList.addAll(mUtil.loadHistoryList());
@@ -2633,6 +2681,36 @@ public class ActivityMain extends AppCompatActivity {
                                 null);
                     }
                 }
+            }
+        } else if (requestCode == ACTIVITY_REQUEST_CODE_MANAGE_EXTERNAL_STORAGE) {
+            mUtil.addDebugMsg(1, "I", "Return from Storage Picker. id=" + requestCode + ", result=" + resultCode + ", Granted All File Access=" + isAllFileAccessPermissionGranted());
+            if (isAllFileAccessPermissionGranted()) {
+                mUtil.addDebugMsg(1, "I", "GRANTED All File Access Permission");
+                mGp.initStorageStatus(mContext);
+                mGp.syncHistoryList.addAll(mUtil.loadHistoryList());
+                mGp.syncMessageList.addAll(mUtil.loadMsgList(mGp));
+//                mUiHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+                if (mNtfyManageStoragePermission!=null) mNtfyManageStoragePermission.notifyToListener(true, null);
+//                    }
+//                }, 500);
+            } else {
+                NotifyEvent ntfy_denied=new NotifyEvent(mContext);
+                ntfy_denied.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        isTaskTermination = true;
+                        finish();
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {}
+                });
+                mUtil.showCommonDialog(false, "W",
+                        "All File Access Denied",
+                        "All File Access permission WAS DENIED",
+                        ntfy_denied);
             }
         }
     }

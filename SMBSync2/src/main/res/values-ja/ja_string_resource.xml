@@ -255,7 +255,7 @@
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">USBメディアへの書き込みが許可されていません、ターゲットフォルダーを編集してUSBメディアへの書込みを許可してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">USBメディアへの書込みが許可されていません、「USBメディアへの書込許可」を押してUSBメディアへの書込みを許可してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">USBメディアがマウントされていません</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">USBメディアのマウントポイントが存在しないためUBSメディアは使用できません。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">USBメディアのマウントポイントが存在しないためUSBメディアは使用できません。</string>
         <string name="msgs_main_sync_profile_dlg_syncopt_prompt">同期方式の選択</string>
         <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">ターゲットフォルダーにディレクトリが指定されていません、意図しない削除や上書きが行われる可能性があります。続行しますか？</string>
         <string name="msgs_main_sync_profile_dlg_title_master">マスターフォルダーの編集</string>
