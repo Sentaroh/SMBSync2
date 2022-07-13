@@ -255,7 +255,7 @@
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">尚未允许写入USB。编辑目标文件夹，并允许写入USB。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">尚未允许写入USB介质。按"允许写入USB介质"以允许写入USB介质。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">未安装USB介质。</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">UBS介质不可用，因为没有USB介质安装点。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">USB介质不可用，因为没有USB介质安装点。</string>
         <string name="msgs_main_sync_profile_dlg_syncopt_prompt">选择同步模式</string>
         <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">警告：未为此任务指定目标目录。可能会发生不可预测的删除或覆盖。继续？</string>
         <string name="msgs_main_sync_profile_dlg_title_master">编辑主文件夹</string>
@@ -330,6 +330,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">使用SMB V2（2.11）</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">使用SMB V2/3（2.12）</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">使用SMB V2/3（2.14）</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb_latest">使用SMB V2/3 (%1$s)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_suggestion_message">所选的SMB协议不允许连接到SMB服务器。将协议更改为SMBv1，SMBv2/3（2.12）或SMBv2（2.14）。</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">由系统决定</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">主文件夹中存在错误。请更正。</string>
@@ -412,9 +413,12 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">目录列表</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">排除</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">你可以在过滤器中使用通配符。例子:\n192.168.100.* -> 192.168.100.0-192.168.100.255\n192.168.* -> 192.168.0.0 - 192.168.255.255</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- include exp: cache/temp;/my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-过滤所有具有特定名称的文件：file1; *.txt; *.jpg; file * \n-过滤器也可以在同一行中输入，并以\"; \" \n-排除过滤器胜出</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">启用了选项"删除过滤器排除的目录和文件"：过滤器不包括的所有文件和目录以及源目录中不存在的所有文件和目录将从目标目录中删除。</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v1_guide">- \"dir\"：匹配 \"source/dir/\"（包含）或 \"source/dir*\"（排除）\n- \"dir/\"：匹配 \"source/dir/\" \n- \"*dir*\"：匹配 \"source/*dir*/\"（包括）或 \"/*dir*/\" 路径中的任何位置（排除）\n- \"dir/*name*/\": 匹配 \"source/dir/*name*/\"\n- \"\\\\dir\": 匹配 \"*/dir/*\" 路径中的任何位置（排除）\n- \"\\\\*dir*\"：匹配 \"*dir*\" 路径中的任何位置（排除）\n- \"\\\\cache/data\"：仍然只匹配 \"*/cache/*\" 路径中的任何位置（排除）</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v1_guide">- 排除过滤器优先于包含过滤器\n- \"*\" 匹配任何字符\n- \"file.txt\"：匹配任何 \"file.txt\"\n- \"*.pdf\"： 匹配所有 .pdf 文件\n- \"*tmp.log\": 匹配所有 \"*tmp.log\" 文件</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- 排除过滤器优先于包含过滤器\n- \"?\" 匹配任何单个字符\n- \"*\" 匹配直到下一个斜杠\"/\" 的任何字符（一个目录级别）\n- \"\\\" 匹配路径中的任何目录（仅排除过滤器）\n- 尾随\"/\"：排除的目录将在目标上创建为空目录（仅排除过滤器）\n- 使用\";\" 分隔多个条目\n- \"cache\": 匹配\"source/cache/\"\n- \"cache/tmp\"：匹配\"source/cache/tmp/\"\n- \"dir?\": 匹配\"source/dir1/\",\"source/dir2/\",\"source/dira/\"...\n- \"dir*/dir2\": 匹配\"source/dirxxxx/dir2/\"\n- \"dir1/*/dir2\": 匹配\"source/dir1/oneDirLevel/dir2/\"\n- \"dir/*/*/dirA\": 匹配\"source/dir/anyDir/anyDir2/dirA/\"...\n- \"*/dir\": 匹配\"source/anyDir/dir/\"\n- \"dir/*\": 匹配\"source/dir/anyDir/\"\n- \"\\cache/\"：排除任何完全命名为\"cache\" 的目录。排除的目录将在目标上创建为空目录\n- \"\\cache\"：与\"\\cache/\" 相同，但不在目标上创建排除的目录\n- \"\\cache/tmp\"：排除任何\"cache/tmp/\" 目录，例如\"source/cache/tmp/\"、\"source/dir/cache/tmp/\"...\n- \"\\*tmp\"：排除任何以 tmp 结尾的目录，例如\"source/dir_tmp/\",\"source/dir/my_DIRtmp/\",\"source/dir2/dir3/dir.tmp/\"...\n- 排除隐藏目录：\"\\.*\" 或取消选中选项\"包括隐藏目录\"</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- 排除过滤器优先于包含过滤器\n- \"?\" 匹配任何单个字符\n- \"*\" 匹配任何字符\n- 使用 \";\" 分隔多个条目\n- \"myfile .txt\"：匹配任何 \"myfile.txt\"\n- \"dir/file.dat\"：匹配 \"/source/dir/file.dat\"\n- \"*.pdf\" : 匹配所有 .pdf 文件\n- \"*tmp.log\": 匹配所有 \"*tmp.log\" 文件\n- \"my?file.txt\": 匹配 \"my_file.txt\" , \"my-file.txt\", \"my file.txt\", \"myAfile.txt\"...\n- 排除所有隐藏文件：\".*\" 或者只是取消选中选项\"包括隐藏文件\"</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_filter_v1_deprecated_warning_message">警告：此过滤器版本已弃用。 请启用高级选项 \"使用新的过滤器版本2\"。</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">警告：\"删除过滤器排除的目录和文件\"选项已启用。 点击以关闭此消息。</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">文件过滤器</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">过滤</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">包括</string>
@@ -569,6 +573,7 @@
         <string name="msgs_edit_sync_task_list_dlg_title">编辑同步任务列表</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">添加同步任务</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">没有指定同步任务。点击 \"添加同步任务 \"按钮，添加一个任务。</string>
+        <string name="msgs_edit_sync_task_list_info_no_sync_tasks_created">您必须首先创建至少一个同步任务。</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">任务不存在。 Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">选择所有</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">取消选择所有</string>

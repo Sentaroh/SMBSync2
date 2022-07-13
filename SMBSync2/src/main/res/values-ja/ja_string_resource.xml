@@ -255,7 +255,7 @@
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_please_edit_target">USBメディアへの書き込みが許可されていません、ターゲットフォルダーを編集してUSBメディアへの書込みを許可してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_auth_press_select_btn">USBメディアへの書込みが許可されていません、「USBメディアへの書込許可」を押してUSBメディアへの書込みを許可してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_usb_not_mounted">USBメディアがマウントされていません</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">USBメディアのマウントポイントが存在しないためUBSメディアは使用できません。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_usb_mount_point_not_exists">USBメディアのマウントポイントが存在しないためUSBメディアは使用できません。</string>
         <string name="msgs_main_sync_profile_dlg_syncopt_prompt">同期方式の選択</string>
         <string name="msgs_main_sync_profile_dlg_target_directory_not_specified">ターゲットフォルダーにディレクトリが指定されていません、意図しない削除や上書きが行われる可能性があります。続行しますか？</string>
         <string name="msgs_main_sync_profile_dlg_title_master">マスターフォルダーの編集</string>
@@ -330,6 +330,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">SMB V2 (2.11)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">SMB V2/3 (2.12)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">SMB V2/3 (2.14)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb_latest">SMB V2/3 (%1$s)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_suggestion_message">現在のSMBプロトコルではSMBサーバーに接続できません。SMBv1、SMBv2/3(2.12)またはSMBv2/3(2.14)に変更してみてください。</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">システムで判別</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">マスターフォルダーにエラーが存在しています。修正してください。</string>
@@ -412,9 +413,12 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">ディレクトリ一覧</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">除外</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">フィルターにワイルドカードが使用できます。 例:\n192.168.100.* -> 192.168.100.0-192.168.100.255\n192.168.* -> 192.168.0.0 - 192.168.255.255</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- 選択例: cache/temp;/my*/fo?der\n- 全てのcache/tempディレクトリーを除外: \\cache/temp\n- フィルターは\";\"で区切ることで複数入力できます\n- 除外が優先されます</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-ファイル名が対象です: file1;*.txt;*.jpg;file*\n-フィルターは\";\"で区切ることで複数入力できます\n-除外が優先されます</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">「フィルターにより除外されたディレクトリー/ファイルを削除する」が有効になっているため、ソースディレクトリに存在しないすべてのファイルとディレクトリー、およびフィルタにより除外されたファイルとディレクトリーは宛先ディレクトリーから削除されます。</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v1_guide">- \"dir\"：\"source/dir/\"（含む）または\"source/dir*\"（除外）に一致します\n- \"dir/\"：\"source/dir/\"と一致します\n- \"*dir*\"：パス内の任意の場所の\"source/*dir*/\"（含む）または\"/*dir*/\"に一致します（除外）\n- \"dir/*name*/\"：\"source/dir/*name*/\"と一致します\n- \"\\\\dir\"：パス内の任意の場所の\"*/dir/*\"と一致します（除外）\n- \"\\\\*dir*\"：パス内の任意の場所の\"*dir*\"と一致します（除外）\n- \"\\\\cache/data\"：パス内のどこでも\"*/cache/*\"とのみ一致します（除外）</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v1_guide">- 除外フィルターは包含フィルターよりも優先されます\n- \"*\"は任意の文字に一致します\n- \"file.txt\"：任意の\"file.txt\"と一致します\n- \"*.pdf\"：すべての.pdfファイルに一致\n- \"*tmp.log\"：すべての\"*tmp.log\"ファイルに一致</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- 除外フィルターは包含フィルターよりも優先されます\n- \"?\"は任意の1文字に一致します\n- \"*\"は、次のスラッシュ\"/\"（1つのディレクトリレベル）までのすべての文字に一致します\n- \"\\\"はパス内の任意のディレクトリに一致します（フィルターのみを除く）\n- 末尾の\"/\"：除外されたdirは、ターゲット上に空のdirとして作成されます（フィルターのみを除外します）\n- \";\"を使用して、複数のエントリを区切ります\n- \"cache\"：\"source/cache/\"と一致します\n- \"cache/tmp\"：\"source/cache/tmp/\"と一致します\n- \"dir?\"：\"source/dir1/\"、\"source/dir2/\"、\"source/dira/\"に一致します...\n- \"dir*/dir2\"：\"source/dirxxxx/dir2/\"と一致します\n- \"dir1/*/dir2\"：\"source/dir1/oneDirLevel/dir2/\"と一致します\n- \"dir/*/*/dirA\"：\"source/dir/anyDir/anyDir2/dirA/\"と一致します...\n- \"*/dir\"：\"source/anyDir/dir/\"と一致します\n- \"dir/*\"：\"source/dir/anyDir/\"と一致します\n- \"\\cache/\"：正確に\"cache\"という名前のディレクトリを除外します。除外されたdirは、ターゲット上に空のdirとして作成されます\n- \"\\cache\"：\"\\cache/\"と同じですが、除外されたdirはターゲットに作成されません\n- \"\\cache/tmp\"：\"source/cache/tmp/\"、\"source/dir/cache/tmp/\"などの\"cache/tmp/\"ディレクトリを除外します...\n- \"\\*tmp\"：\"source/dir_tmp/\"、\"source/dir/my_DIRtmp/\"、\"source/dir2/dir3/dir.tmp/\"などのtmpで終わるディレクトリを除外します「...\n- 隠しディレクトリを除外する：\"\\.*\"またはオプション\"隠しディレクトリを処理する\"のチェックを外します</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">-除外フィルターは包含フィルターよりも優先されます\n-\"?\"は任意の1文字に一致します\n-\"*\"は任意の文字に一致します\n-\";\"を使用して、複数のエントリを区切ります\n-\"file.txt\"：任意の\"file.txt\"と一致します\n-\"dir/file.dat\"：\"/source/dir/file.dat\"と一致します\n-\"*.pdf\"：すべての.pdfファイルに一致\n-\"*tmp.log\"：すべての\"*tmp.log\"ファイルに一致\n-\"my?file.txt\"：\"my_file.txt\"、\"my-file.txt\"、\"my file.txt\"、\"myAfile.txt\"に一致します。..\n-すべての隠しファイルを除外します：\".*\"またはオプション\"隠しファイルを処理する\"のチェックを外します</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_filter_v1_deprecated_warning_message">警告：このフィルターバージョンは非推奨です。 詳細オプションディレクトリーフィルターV2を使用を有効にしてください。</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">警告：オプション「名前フィルターによって除外されたフォルダーとファイルを削除する」が有効になっています。 タップしてこのメッセージを閉じます。</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">ファイル名 フィルター</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">フィルター</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">選択</string>
@@ -569,6 +573,7 @@
         <string name="msgs_edit_sync_task_list_dlg_title">タスクリストの編集</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">同期タスクの追加</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">同期タスクが指定されていません。「同期タスクの追加」ボタンを押してタスクを追加してください。</string>
+        <string name="msgs_edit_sync_task_list_info_no_sync_tasks_created">少なくとも1つの同期タスクを作成することから始める必要があります。</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">タスクが見つかりません。タスク=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">全て選択</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">全ての選択解除</string>

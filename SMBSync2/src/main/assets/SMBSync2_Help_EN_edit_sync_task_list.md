@@ -1,12 +1,12 @@
 ### Change execution order  
 You can change the order by pressing and holding an item or holding down the "icon" on the left side of the screen and moving it up or down.  
-You cannot change the order if it is selected. Please deselect them before reordering.  
+You cannot change the order if it is selected. Please unselect teh tasks before rearranging them.  
 
 ### Remove from list  
 Tap the checkbox or task list name to select it, then tap the trash can icon at the bottom of the screen.  
 
 ### Add to list  
-Tap the Add icon at the bottom left corner of the screen.  
+Tap the Add icon at the bottom left corner of the screen to add a sync task.  
 
 ### Manuals  
 [FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)  

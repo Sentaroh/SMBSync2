@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/scan_remote_ntwk_title"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/scan_remote_ntwk_msg"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -116,7 +116,7 @@
 
             <LinearLayout
                 android:id="@+id/scan_remote_ntwk_port_option"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"

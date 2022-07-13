@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/edit_usb_uuid_list_dlg_title"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -36,7 +36,7 @@
 
     <ListView
         android:id="@+id/edit_usb_uuid_list_dlg_listview"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fadeScrollbars="false" >
@@ -44,13 +44,13 @@
 
     <Button
         android:id="@+id/edit_usb_uuid_list_dlg_list_available_uuid_btn"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/msgs_edit_usb_uuid_dialog_list_available_uuid"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
@@ -72,7 +72,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button

@@ -330,6 +330,7 @@
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211">Usa SMB V2 (2.11)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212">Usa SMB V2/3 (2.12)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214">Usa SMB V2/3 (2.14)</string>
+        <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_smb_latest">Usa SMB V2/3 (%1$s)</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_suggestion_message">Il protocollo SMB selezionato non permette connessioni al server SMB. Cambia il protocollo su SMBv1, SMBv2/3(2.12) o SMBv2(2.14).</string>
         <string name="msgs_profile_edit_sync_folder_dlg_smb_protocol_system">Determinato dal sistema</string>
         <string name="msgs_profile_edit_sync_folder_dlg_import_failed_master_folder">Errore riscontrato nella cartella sorgente. Per favore sistemalo.</string>
@@ -412,9 +413,12 @@
         <string name="msgs_profile_sync_task_filter_list_dlg_dir_list">Lista cartelle</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_exclude">Escludi</string>
         <string name="msgs_profile_sync_task_filter_edit_dlg_ip_address_filter_guide">È possibile utilizzare i caratteri jolly nel filtro. Esempio:\n192.168.100.* -> 192.168.100.0-192.168.100.255\n192.168.* -> 192.168.0.0 - 192.168.255.255</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- inclusi es: cache/temp;/my*/fo?der\n- escludi le cartelle cache/temp: \\cache/temp\n- i filtri possono essere inseriti nella stessa linea, separati da \";\"\n- escludi filter wins</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- filtra tutti i file con nome specifico: file1;*.txt;*.jpg;file*\n- i filtri possono essere inseriti nella stessa linea, separati da \";\"\n- escludi filter wins</string>
-        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">Opzione \"Rimuovi cartelle e file esclusi dai filtri di nomi\" abilitata: Tutti i file e le cartelle non inclusi dai filtri di nome, e quelli che non esistono nella cartella Origine, verranno eliminati dalla cartella Destinazione.</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v1_guide">- \"dir\": corrisponde a \"source/dir/\" (include) o \"source/dir*\" (exclude)\n- \"dir/\": corrisponde a \"source/dir/\" \n- \"*dir*\": corrisponde a \"source/*dir*/\" (include) o \"/*dir*/\" ovunque nel percorso (exclude)\n- \"dir/*name*/\": corrisponde a \"source/dir/*name*/\"\n- \"\\\\dir\": corrisponde a \"*/dir/*\" ovunque nel percorso (escludi)\n- \"\\\\*dir*\": corrisponde a \"*dir*\" ovunque nel percorso (escludi)\n- \"\\\\cache/data\": corrisponde ancora solo \"*/cache/*\" ovunque nel percorso (escludi)</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v1_guide">- I filtri di esclusione hanno la precedenza sui filtri di inclusione\n- \"*\" corrisponde a qualsiasi carattere\n- \"file.txt\": corrisponde a qualsiasi \"file.txt\"\n- \"*.pdf\": corrisponde a tutti i file .pdf\n- \"*tmp.log\": corrisponde a tutti i file \"*tmp.log\"</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_dir_filter_v2_guide">- I filtri di esclusione hanno la precedenza sui filtri di inclusione\n- \"?\" corrisponde a qualsiasi singolo carattere\n- \"*\" corrisponde a tutti i caratteri fino alla barra successiva \"/\" (un livello di cartella)\n- \"\\\" corrisponde a qualsiasi cartella nel percorso (escludi solo il filtro)\n- \"/\" finale: le cartelle escluse verranno create come cartelle vuote sulla destinazione (escludi solo il filtro)\n- Usa \";\" per separare più voci\n- \"cache\": corrisponde a \"source/cache/\"\n- \"cache/tmp\": corrisponde a \"source/cache/tmp/\"\n- \"dir?\": corrisponde a \"source/dir1/\", \"source/dir2/\", \"source/dira/\"...\n- \"dir*/dir2\": corrisponde a \"source/dirxxxx/dir2/\"\n- \"dir1/*/dir2\": corrisponde a \"source/dir1/oneDirLevel/dir2/\"\n- \"dir/*/*/dirA\": corrisponde a \"source/dir/anyDir/anyDir2/dirA/\"...\n- \"*/dir\": corrisponde a \"source/anyDir/dir/\"\n- \"dir/*\": corrisponde a \"source/dir/anyDir/\"\n- \"\\cache/\": esclude qualsiasi cartella denominata esattamente \"cache\". Le cartelle escluse verranno create come cartelle vuote sulla destinazione\n- \"\\cache\": come \"\\cache/\" ma le cartelle escluse non vengono create sulla destinazione\n- \"\\cache/tmp\": esclude qualsiasi cartella \"cache/tmp/\" come \"source/cache/tmp/\", \"source/dir/cache/tmp/\"...\n- \"\\*tmp\": esclude qualsiasi cartella che termina con tmp come \"source/dir_tmp/\", \"source/dir/my_DIRtmp/\", \"source/dir2/dir3/dir.tmp/\"...\n- Escludi cartelle nascoste:\"\\.*\" o deseleziona l\'opzione \"Includi cartelle nascoste\"</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_file_filter_v2_guide">- I filtri di esclusione hanno la precedenza sui filtri di inclusione\n- \"?\" corrisponde a qualsiasi singolo carattere\n- \"*\" corrisponde a qualsiasi carattere\n- Usa \";\" per separare più voci\n- \"file .txt\": corrisponde a qualsiasi \"file.txt\"\n- \"dir/file.dat\": corrisponde a \"/source/dir/file.dat\"\n- \"*.pdf\" : corrisponde a tutti i file .pdf\n- \"*tmp.log\": corrisponde a tutti i file \"*tmp.log\"\n- \"my?file.txt\": corrisponde a \"my_file.txt\" , \"my-file.txt\", \"my file.txt\", \"myAfile.txt\"...\n- Escludi tutti i file nascosti: \".*\" o deseleziona l\'opzione \"Includi file nascosti\"</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_filter_v1_deprecated_warning_message">AVVERTIMENTO: Questa versione del filtro è obsoleta. Si prega di abilitare l\'opzione avanzata \"Usa la nuova versione 2 del filtro\".</string>
+        <string name="msgs_profile_sync_task_filter_edit_dlg_mirror_method_warning_message">AVVERTIMENTO: Opzione \"Rimuovi cartelle e file esclusi dai filtri di nomi\" abilitata. Tocca per ignorare.</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_file_filter">Filtro nome file</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_filter_hint">Filtro</string>
         <string name="msgs_profile_sync_task_filter_list_dlg_include">Includi</string>
@@ -433,10 +437,10 @@
         <string name="msgs_task_sync_task_sync_file_size_filter">Filtro dimensione file</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">Sincronizza i file con una dimensione:</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">Ignora i file con una dimensione di 0 byte</string>
-        <string name="msgs_task_sync_task_sync_max_file_name_length">Ignora il file se la lunghezza del nome del file è più lunga del valore specificato</string>
-        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">Specificare la lunghezza del nome del file da ignorare</string>
-        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">Specificare una lunghezza del nome del file da ignorare che sia maggiore o uguale a 0</string>
-        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">Specificare una lunghezza del nome del file da ignorare pari o inferiore a 255</string>
+        <string name="msgs_task_sync_task_sync_max_file_name_length">Ignora il file se la lunghezza del suo nome supera il valore specificato</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">Specifica la lunghezza massima del nome del file per includerlo</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">La lunghezza massima del nome del file deve essere piu grande di 0</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">La lunghezza massima del nome del file deve essere inferiore o uguale a 255</string>
         <string name="msgs_task_sync_task_sync_file_size_size_hint">Dimensione</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_dialog_title">Seleziona l\'unità del filtro dimensione del file</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_byte">Bytes</string>
@@ -564,20 +568,21 @@
         <string name="msgs_maintenance_result_log_list_del_file">Eliminati %s.</string>
         <string name="msgs_maintenance_result_log_list_del_title">File e cartelle non relative al log cronologia sono state trovate nel log cartella cronologia. Rimuovere questi file?</string>
     <!-- edit Sync task list -->
-        <string name="msgs_edit_sync_task_list_delete_sync_task">Volete cancellare i seguenti compiti?</string>
+        <string name="msgs_edit_sync_task_list_delete_sync_task">Volete cancellare i seguenti compiti ?</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Non esistono compiti che possono essere aggiunti.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Modifica elenco attività di sincronizzazione</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Aggiungi attività di sincronizzazione</string>
-        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Non è stata specificata alcuna attività di sincronizzazione. Fai clic sul pulsante \"Add Sync Task\" per aggiungere un compito.</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Nessuna attività di sincronizzazione e stata aggiunta. Clicca sul pulsante \"Aggiungi attività di sincronizzazione\" per selezionare una.</string>
+        <string name="msgs_edit_sync_task_list_info_no_sync_tasks_created">Devi iniziare creando almeno un\'attività di sincronizzazione.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">L\'attività non esiste. Attività=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Seleziona tutti</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Deseleziona tutti</string>
-        <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">Supprimer une tâche de synchronisation</string>
+        <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">Elimina un\'attività di sincronizzazione</string>
         <string name="msgs_edit_sync_task_list_cont_label_add_sync_task">Aggiungi un\'attività di sincronizzazione</string>
-        <string name="msgs_edit_sync_task_list_help_title">Aide à l\'édition de la liste des tâches synchronisées</string>
-        <string name="msgs_edit_sync_task_list_add_task_list_guide">Seleziona il compito che vuoi aggiungere e clicca sul pulsante \"Aggiungi\".</string>
+        <string name="msgs_edit_sync_task_list_help_title">Aiuta a modificare l\'elenco delle attività da sincronizzare</string>
+        <string name="msgs_edit_sync_task_list_add_task_list_guide">Seleziona l\'attività che vuoi aggiungere e clicca sul pulsante \"Aggiungi\".</string>
         <string name="msgs_edit_sync_task_list_help_file">SMBSync2_Help_IT_edit_sync_task_list.md</string>
-        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">L\'elenco dei compiti è cambiato. Uscire senza salvare?</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">L\'elenco dei compiti e stato modificato. Uscire senza salvare?</string>
     <!-- Menu -->
         <string name="msgs_menu_sync">Sync</string>
         <string name="msgs_menu_exec_schedule">Esegui pianificazione</string>
@@ -616,8 +621,8 @@
         <string name="msgs_mirror_taken_date_convert_error">L\'ora di ultima modifica del file è stata usata perchè c\'è un errore sulla conversione della data di scatto. File=</string>
         <string name="msgs_mirror_whole_directory_filter_error">Filtro cartelle %s non possono essere usati. Modifica il task sync e sistema i filtri non validi.</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Sync interrotto a causa il percorso destinazione contiene una cartella with the same name as the file being copiati. File=</string>
-        <string name="msgs_mirror_file_name_gt_255_byte">Ignorato il file perché la lunghezza del nome del file supera %1$s bytes. Bytes in file name=%2$s, file name=%3$s</string>
-        <string name="msgs_mirror_file_name_gt_smb_file_name_length_237_byte">Ignorato il file perché la lunghezza del nome del file supera la lunghezza massima del nome del file SMB (%1$s bytes). Bytes nome file =%2$s, Nome file =%3$s</string>
+        <string name="msgs_mirror_file_name_gt_255_byte">File ignorato perché la lunghezza del suo nome supera %1$s byte. Byte nel nome del file=%2$s, Nome del file=%3$s</string>
+        <string name="msgs_mirror_file_name_gt_smb_file_name_length_237_byte">File ignorato perché la lunghezza del suo nome supera quella specficata per il file SMB (%1$s byte). Byte nel nome=%2$s, Nome del file=%3$s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Sync annullata a causa di SD non montata.</string>
         <string name="msgs_mirror_external_sdcard_select_required">Sync annullata a causa permessi scrittura SD non concessi.</string>
         <string name="msgs_mirror_file_sdcard_info_not_reflect_media_store">Sembra che i contenuti SD non sono applicati nell\'archivio multimediale.  Esegui una scansione dei media per aggiornare i contenuti della SD.</string>
@@ -704,7 +709,7 @@
         <string name="msgs_menu_scheduler">Piani</string>
         <string name="msgs_scheduler_main_dlg_hdr_title">Modifica Pianificazione</string>
         <string name="msgs_scheduler_main_dlg_hdr_new_schedule_name">Nuovo nome pianificazione</string>
-        <string name="msgs_scheduler_main_dlg_hdr_enable">Abilita pianificazione</string>
+        <string name="msgs_scheduler_main_dlg_hdr_enable">Attivare la pianificazione</string>
         <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Modifica dell\'elenco delle attività di sincronizzazione</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">Dom</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">Lun</string>
@@ -745,7 +750,7 @@
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">Attenzione: Se il giorno selezionato non è presente in alcuni mesi, la sync verrà saltata in quei mesi. Es: Se selezioni il 29 e Febbraio ha solo 28 giorni, o selezioni 31 e il mese ha solo 30 giorni. Seleziona l\'opzione \"Sync l\'ultimo giorno del mese\" per assicurarti l\'esecuzione del task l\'ultimo giorno di ogni mese.</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Lista Sync task</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Esegui tutti auto sync task</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Si prega di specificare le attività di sincronizzazione da programmare premendo il pulsante \"Edit sync task list\" qui sotto.</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Si prega di specificare le attività di sincronizzazione da programmare premendo il pulsante \"Modifica elenco attività di sincronizzazione\" qui sotto.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Prossima sync il %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">Prossimo sync: %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">Alcune pianificazioni abilitate contengono errori. Verifica la scheda \"Piani\" per maggiori dettagli.</string>
@@ -1082,7 +1087,7 @@
         <string name="settings_screen_theme_week_number_dialog_title">Selezione del calcolo del numero della settimana</string>
         <string name="settings_screen_theme_week_number_current_date">Data e ora correnti %1$s, numero di settimana %2$s</string>
         <string-array name="settings_screen_theme_week_number_list_entries">
-            <item>Sistema predefinito</item>
+            <item>Valore di sistema</item>
             <item>USA (a partire da domenica, a partire dal 1° gennaio)</item>
             <item>ISO (a partire da lunedì, a partire dal 4 gennaio)</item>
             <item>Medio Oriente (a partire da sabato, a partire dal 1° gennaio)</item>

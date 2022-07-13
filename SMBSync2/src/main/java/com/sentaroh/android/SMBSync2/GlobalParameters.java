@@ -79,7 +79,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import jcifs.util.LogStream;
+import jcifs13.util.LogStream;
 
 import static android.content.Context.WINDOW_SERVICE;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;

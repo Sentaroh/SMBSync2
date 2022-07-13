@@ -2,7 +2,7 @@
 <!DOCTYPE layout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/progress_spin_dlg_view"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
@@ -42,7 +42,7 @@
     <Button
         android:id="@+id/progress_spin_dlg_btn_cancel"
         android:layout_marginTop="5dp"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/msgs_common_dialog_cancel" />

@@ -43,7 +43,7 @@
 
     <TextView
         android:id="@+id/scheduler_main_dlg_msg"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -51,13 +51,13 @@
         android:textColor="#ffff0000" />
 
     <ScrollView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fadeScrollbars="false" >
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -72,7 +72,7 @@
 
 		    <CheckedTextView
 		        android:id="@+id/scheduler_main_dlg_ctv_enabled"
-		        android:layout_width="fill_parent"
+		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="5dp"
 		        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
@@ -121,7 +121,7 @@
 
 		    <CheckedTextView
 		        android:id="@+id/scheduler_main_dlg_ctv_interval_schedule_reset"
-		        android:layout_width="fill_parent"
+		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="5dp"
 		        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
@@ -131,7 +131,7 @@
             
 		    <CheckedTextView
 		        android:id="@+id/scheduler_main_dlg_ctv_sync_all_sync_task"
-		        android:layout_width="fill_parent"
+		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
@@ -169,7 +169,7 @@
                 android:orientation="vertical" >
                 <CheckedTextView
                     android:id="@+id/scheduler_main_dlg_ctv_wifi_on"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
@@ -225,7 +225,7 @@
 
                     <CheckedTextView
                         android:id="@+id/scheduler_main_dlg_ctv_wifi_off"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
@@ -244,13 +244,13 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical" >
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/msgs_scheduler_main_dlg_hdr_override_sync_option"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
                 <TextView
                     android:id="@+id/scheduler_main_dlg_ctv_override_sync_option_charge"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:gravity="center_vertical"

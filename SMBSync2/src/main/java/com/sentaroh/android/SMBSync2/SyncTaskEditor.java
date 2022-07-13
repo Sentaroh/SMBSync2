@@ -2413,7 +2413,8 @@ public class SyncTaskEditor extends DialogFragment {
             } else {
                 ctv_sync_folder_smb_ipc_enforced.setEnabled(true);
                 if (getSmbSelectedProtocol(sp_sync_folder_smb_proto).equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB212) ||
-                        getSmbSelectedProtocol(sp_sync_folder_smb_proto).equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB214)) ctv_sync_folder_smb_use_smb2_negotiation.setEnabled(true);
+                        getSmbSelectedProtocol(sp_sync_folder_smb_proto).equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB214) ||
+                        getSmbSelectedProtocol(sp_sync_folder_smb_proto).equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST)) ctv_sync_folder_smb_use_smb2_negotiation.setEnabled(true);
                 else ctv_sync_folder_smb_use_smb2_negotiation.setEnabled(false);
             }
             checkSyncFolderValidation(dialog, org_sfev);
@@ -3314,6 +3315,8 @@ public class SyncTaskEditor extends DialogFragment {
             return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB212;
         } else if (spinner.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214))) {
             return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB214;
+        } else if (spinner.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb_latest, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST_VERSION))) {
+            return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST;
         }
         return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1;
     }
@@ -3333,12 +3336,14 @@ public class SyncTaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb211));
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb212));
         adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb214));
+        adapter.add(mContext.getString(R.string.msgs_profile_edit_sync_folder_dlg_smb_protocol_smb_latest, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST_VERSION));
 
         if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) spinner.setSelection(0);
         else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB201)) spinner.setSelection(1);
         else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB211)) spinner.setSelection(2);
         else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB212)) spinner.setSelection(3);
         else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB214)) spinner.setSelection(4);
+        else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB_LATEST)) spinner.setSelection(5);
         else spinner.setSelection(0);
     }
 

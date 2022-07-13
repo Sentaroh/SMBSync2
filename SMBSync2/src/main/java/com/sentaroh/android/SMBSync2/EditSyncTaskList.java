@@ -374,7 +374,13 @@ public class EditSyncTaskList {
             task_list+=sep+mEditDataList.get(i).item_name;
             sep= SYNC_TASK_LIST_SEPARATOR;
         }
-        if (task_list.equals("")) {
+
+        if (mGp.syncTaskList.size()==0) {
+            dlg_msg.setVisibility(TextView.VISIBLE);
+            dlg_msg.setText(mActivity.getString(R.string.msgs_edit_sync_task_list_info_no_sync_tasks_created));
+            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+            return;
+        } else if (task_list.equals("")) {
             dlg_msg.setVisibility(TextView.VISIBLE);
             dlg_msg.setText(mActivity.getString(R.string.msgs_edit_sync_task_list_info_sync_task_list_was_empty));
             CommonDialog.setViewEnabled(mActivity, btn_ok, false);

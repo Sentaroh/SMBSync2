@@ -14,26 +14,27 @@ The schedule can be specified as follows.
 
 ### Sync on the last day of every month  
 
-If you check, you can run it on the last day of each month, such as the 31st for January, the 28th or 29th for February, and so on.  
+If checked, you can plan the schedule on the last day of each month, such as the 31st for January, the 28th or 29th for February, and so on.  
 
 ### Reset interval schedule time  
 
-Set the synchronization start time to the interval time. (If the interval time is set to 5 minutes and the save button is pressed at 1:10:20, the task starts at 1: 15: 0)  
+Set the synchronization start time to the interval time. (If the interval time is set to 5 minutes and the save button is pressed at 1:10:20, the task starts at 1:15:00)
 
 ### Execute all auto sync tasks  
 
-If unchecked, you can select a synchronization task.  
+If unchecked, you can select a synchronization task.
+Else, it will start all Sync Tasks configured as "Auto"
 
 ### Edit Sync List  
-Press the button to display the edit screen. Select tasks to sync.  
+Press the button to display the edit screen. Select the tasks to include in the schedule plan.
 
 ### Turn on Wi-Fi when Wi-Fi is off at the start of sync (<span style="color: red; "><u>Not available on Android 10 or later</u></span>)  
 
-- Delay period before sync after WIFI enable   
+- After Wi-fi is turned on, delay sync by:   
 Wait time before starting synchronization after turning on Wi-Fi.  
 
-- If you turn on Wi-Fi at the start of sync, turn off Wi-Fi after the end of sync  
-If you turned on Wi-Fi at the start of synchronization, turn off Wi-Fi at the end of synchronization.  
+- Turn off back the Wifi once the scheduled tasks are completed.  
+If Wi-Fi was turned on at the start of the synchronization, this option will turn off the Wi-Fi at the end of synchronization.  
 
 ### Sync only starts while charging  
 

@@ -3,20 +3,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_sync_folder_dlg_internal_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:ignore="SpUsage,InefficientWeight,ContentDescription" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="clip_horizontal|fill_horizontal"
         android:orientation="vertical" >
 
         <LinearLayout
             android:id="@+id/edit_sync_folder_dlg_internal_local_mount_point_selector_view"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
@@ -42,14 +42,14 @@
 
         <LinearLayout
             android:id="@+id/edit_sync_folder_dlg_internal_directory_view"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:orientation="vertical" >
 
             <LinearLayout
                 android:id="@+id/edit_sync_folder_dlg_internal_dir_keyword_view"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
                 <TextView
@@ -64,7 +64,7 @@
 
                 <CheckedTextView
                     android:id="@+id/edit_sync_folder_dlg_internal_use_taken_date_time_for_directory_keyword"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
@@ -75,7 +75,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 

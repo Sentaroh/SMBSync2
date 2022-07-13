@@ -2,8 +2,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/about_dialog_title"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
@@ -24,12 +24,12 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
         <com.sentaroh.android.SMBSync2.CustomTabLayout
             android:id="@+id/tab_layout"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorColor="#0088CC"
             app:tabIndicatorHeight="5dp"
@@ -42,7 +42,7 @@
 
         <com.sentaroh.android.Utilities.Widget.CustomViewPager
             android:id="@+id/about_view_pager"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
@@ -50,7 +50,7 @@
 
         <Button
             android:id="@+id/about_dialog_btn_ok"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:text="@string/msgs_common_dialog_close"

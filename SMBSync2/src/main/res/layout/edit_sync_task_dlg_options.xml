@@ -14,7 +14,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginLeft="10dp"
         android:layout_weight="1"
@@ -23,7 +23,7 @@
 
         <CheckedTextView
             android:id="@+id/edit_sync_task_option_ctv_sync_start_when_charging"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:gravity="center_vertical"
@@ -37,7 +37,7 @@
             android:orientation="vertical">
             <CheckedTextView
                 android:id="@+id/edit_sync_task_option_ctv_sync_master_root_dir_file"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:gravity="center_vertical"
@@ -52,7 +52,7 @@
             android:orientation="vertical">
             <CheckedTextView
                 android:id="@+id/edit_sync_task_option_ctv_confirm_override_delete_file"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:gravity="center_vertical"
@@ -80,7 +80,7 @@
             <Spinner
                 android:id="@+id/edit_sync_task_option_spinner_wifi_status"
                 style="?android:attr/spinnerStyle"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
@@ -123,7 +123,7 @@
 
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ap_list_task_skip_if_ssid_invalid"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
@@ -134,7 +134,7 @@
             <include layout="@layout/divider_line1" />
             <CheckedTextView
                 android:id="@+id/edit_sync_task_option_sync_allow_global_ip_address"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
@@ -148,7 +148,7 @@
 
         <CheckedTextView
             android:id="@+id/edit_sync_task_option_ctv_show_special_option"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:gravity="center_vertical"
@@ -169,7 +169,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_sync_sub_dir"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -185,7 +185,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_sync_empty_directory"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -201,7 +201,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_sync_hidden_directory"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -217,7 +217,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_sync_hidden_file"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -233,7 +233,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_process_override_delete_file"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -249,7 +249,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_sync_use_extended_filter1"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -265,7 +265,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_sync_use_directory_filter_v2"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -281,7 +281,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_sync_delete_first_when_mirror"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -296,7 +296,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_sync_ensure_target_is_exact_mirror"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -324,7 +324,7 @@
                     <include layout="@layout/divider_line1" />
                     <CheckedTextView
                         android:id="@+id/edit_sync_task_option_ctv_retry_if_error_occured"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                         android:gravity="center_vertical"
@@ -340,7 +340,7 @@
                     android:orientation="vertical">
                     <CheckedTextView
                         android:id="@+id/edit_sync_task_option_ctv_sync_use_remote_small_io_area"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                         android:gravity="center_vertical"
@@ -356,7 +356,7 @@
                     android:orientation="vertical">
                     <CheckedTextView
                         android:id="@+id/edit_sync_task_option_do_mot_use_rename_when_smb_file_write"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                         android:gravity="center_vertical"
@@ -372,7 +372,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -388,7 +388,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_use_smbsync_last_mod_time"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -404,7 +404,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_sync_diff_use_file_size"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -418,7 +418,7 @@
                     <include layout="@layout/divider_line1"/>
                     <CheckedTextView
                         android:id="@+id/edit_sync_task_option_ctv_sync_diff_file_size_greater_than_target"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                         android:gravity="center_vertical"
@@ -435,7 +435,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_sync_diff_use_last_mod_time"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -484,7 +484,7 @@
                     <include layout="@layout/divider_line1" />
                     <CheckedTextView
                         android:id="@+id/edit_sync_task_option_never_overwrite_target_file_if_it_is_newer_than_the_master_file"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                         android:gravity="center_vertical"
@@ -500,7 +500,7 @@
                     android:orientation="vertical">
                     <CheckedTextView
                         android:id="@+id/edit_sync_task_option_ctv_sync_diff_ignore_dst_difference"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                         android:gravity="center_vertical"
@@ -549,7 +549,7 @@
                 <include layout="@layout/divider_line1" />
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ignore_unusable_character_used_directory_file_name"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"
@@ -598,7 +598,7 @@
                 android:orientation="vertical">
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_remove_directory_if_empty_when_move"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center_vertical"

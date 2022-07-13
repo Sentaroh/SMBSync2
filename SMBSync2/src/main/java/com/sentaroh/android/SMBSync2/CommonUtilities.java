@@ -374,7 +374,6 @@ public final class CommonUtilities {
         return mLog.buildPrintLogMsg(cat, msg);
     }
 
-
     synchronized static public void saveMsgList(GlobalParameters gp) {
         long b_time=System.currentTimeMillis();
         try {
