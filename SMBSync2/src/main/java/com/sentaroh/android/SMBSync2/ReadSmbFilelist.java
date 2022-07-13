@@ -163,6 +163,11 @@ public class ReadSmbFilelist implements Runnable {
 //            else remoteFile=new JcifsFile(remoteUrl, auth);
             JcifsFile remoteFile = new JcifsFile(remoteUrl + remoteDir, auth);
             JcifsFile[] fl = remoteFile.listFiles();
+            try {
+                remoteFile.close();
+            } catch(Exception e) {
+                mUtil.addDebugMsg(1,"I","close() failed. Error=",e.getMessage());
+            }
 
             for (int i = 0; i < fl.length; i++) {
                 String fn = fl[i].getName();
