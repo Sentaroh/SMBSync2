@@ -1,15 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '30.0.3'
+    compileSdkVersion 35
+    namespace "com.sentaroh.android.SMBSync2"
 
     defaultConfig {
         applicationId "com.sentaroh.android.SMBSync2"
-        minSdkVersion 21
-//        targetSdkVersion 21  //Android 5.0
-//        targetSdkVersion 23  //Android 6.0
-        targetSdkVersion 29
+        minSdkVersion 26
+        targetSdkVersion 35
 
 //
         versionCode 287
@@ -21,6 +19,11 @@ android {
         }
     }
 
+    buildFeatures {
+        aidl true
+        buildConfig true
+    }
+
     lintOptions {
         disable 'MissingTranslation'
         abortOnError false
@@ -30,52 +33,30 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-
-            applicationVariants.all { variant ->
-                if (variant.buildType.name.equals("debug")) {
-                    variant.outputs.all {
-                        def versionName = variant.versionName
-                        def versionNumber = variant.versionCode.toString()
-                        def date = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())
-                        def mod_name = "${rootProject.name}"
-                        def fileExtension= outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".")+1)
-                        def newName = "${mod_name}_debug.${fileExtension}"
-//                        outputFileName = "../../../../../release/"+newName
-                        outputFileName = newName
-
-                        task copyDebugApk1(type: Copy) {
-                            from 'build/outputs/apk/debug'
-//                            into '../debug_apk/' // Into the project root, one level above the app folder
-                            into '../release/' // Into the project root, one level above the app folder
-                            include '**/*.apk'
-                        }
-
-                        afterEvaluate {
-                            packageDebug.finalizedBy(copyDebugApk1)
-                        }
-                    }
-                }
-            }
-
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
 
-            applicationVariants.all { variant ->
-                if (variant.buildType.name.equals("release")) {
-                    variant.outputs.all {
-                        def versionName = variant.versionName
-                        def versionNumber = variant.versionCode.toString()
-                        def date = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())
-                        def mod_name = "${rootProject.name}"
-                        def fileExtension= outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".")+1)
-                        def newName = "${mod_name}_${versionName}_${versionNumber}_release.${fileExtension}"
-                        outputFileName = newName
-                    }
-                }
+    applicationVariants.all { variant ->
+        if (variant.buildType.name.equals("debug")) {
+            variant.outputs.all { output ->
+                def mod_name = "${rootProject.name}"
+                def fileExtension = outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".") + 1)
+                def newName = "${mod_name}_debug.${fileExtension}"
+                outputFileName = newName
             }
-
+        } else if (variant.buildType.name.equals("release")) {
+            variant.outputs.all { output ->
+                def versionName = variant.versionName
+                def versionNumber = variant.versionCode.toString()
+                def mod_name = "${rootProject.name}"
+                def fileExtension = outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".") + 1)
+                def newName = "${mod_name}_${versionName}_${versionNumber}_release.${fileExtension}"
+                outputFileName = newName
+            }
         }
     }
 }
@@ -95,13 +76,13 @@ dependencies {
 
     implementation files('libs/Utilities-1.0.19.aar')
 
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:preference-v7:28.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.preference:preference:1.2.1'
 
-    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.google.android.material:material:1.11.0'
 
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
 
     implementation files('libs/metadata-extractor-2.11.0.jar')
 //    implementation files('libs/xmpcore-5.1.3.jar')

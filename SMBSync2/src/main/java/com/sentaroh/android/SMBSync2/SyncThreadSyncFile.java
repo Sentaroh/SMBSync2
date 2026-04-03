@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.util.Log;
 import android.os.Build;
 import android.os.SystemClock;
 
@@ -1324,11 +1325,13 @@ public class SyncThreadSyncFile {
                                 }
                             } else {
                                 if (stwa.gp.settingDebugLevel >= 1) stwa.util.addDebugMsg(1, "I", "Directory was null, dir=" + mf.getPath());
+                                Log.e("SMBSync2", "listFiles() returned null for directory: " + mf.getPath());
                             }
                         } else {
                             stwa.totalIgnoreCount++;
                             SyncThread.showMsg(stwa, true, sti.getSyncTaskName(), "W", "", "",
                                     stwa.context.getString(R.string.msgs_mirror_task_directory_ignored_because_can_not_read, from_path + "/" + mf.getName()));
+                            Log.e("SMBSync2", "canRead() returned false for directory: " + mf.getPath());
                         }
                     }
                 } else { // file copy
@@ -1435,6 +1438,8 @@ public class SyncThreadSyncFile {
                             stwa.util.addLogMsg("E", stwa.context.getString(R.string.msgs_mirror_directory_with_same_name_as_the_file_found)+parsed_to_path);
                             sync_result = SyncTaskItem.SYNC_STATUS_ERROR;
                         }
+                    } else {
+                        Log.d("SMBSync2", "File skipped by filters: " + mf.getPath());
                     }
                 }
             } else {

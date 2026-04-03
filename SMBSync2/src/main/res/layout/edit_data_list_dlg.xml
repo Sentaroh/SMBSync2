@@ -49,13 +49,13 @@
         android:visibility="gone"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/edit_data_list_dlg_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fadeScrollbars="false" >
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/edit_sync_task_list_dlg_select_view"

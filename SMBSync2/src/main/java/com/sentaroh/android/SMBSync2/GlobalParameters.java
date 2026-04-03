@@ -46,9 +46,9 @@ import android.os.LocaleList;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat.BigTextStyle;
-import android.support.v4.app.NotificationCompat.Builder;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat.BigTextStyle;
+import androidx.core.app.NotificationCompat.Builder;
 import android.util.DisplayMetrics;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -107,6 +107,8 @@ public class GlobalParameters extends CommonGlobalParms {
     public boolean externalStorageAccessIsPermitted = false;
     public String internalRootDirectory = "/";
     public String applicationRootDirectory = "/";
+    public String appSpecificMgtDir = "";
+
 
     public String profilePassword = "";
     public final String profileKeyPrefix = "*SMBSync2*";
@@ -352,8 +354,10 @@ public class GlobalParameters extends CommonGlobalParms {
         try {
             String fp=c.getExternalFilesDirs(null)[0].getPath();
             internalRootDirectory = fp.substring(0, fp.indexOf("/Android/data"));
+            appSpecificMgtDir = fp + "/" + APPLICATION_TAG;
         } catch(Exception ex) {
             internalRootDirectory = Environment.getExternalStorageDirectory().toString();
+            appSpecificMgtDir = c.getExternalFilesDir(null).getPath() + "/" + APPLICATION_TAG;
         }
         applicationRootDirectory = c.getFilesDir().toString();
 
@@ -684,7 +688,11 @@ public class GlobalParameters extends CommonGlobalParms {
 
 
     public String getManagementDirectory() {
-        return internalRootDirectory + "/" + APPLICATION_TAG;
+        if (Build.VERSION.SDK_INT >= 30) {
+            return appSpecificMgtDir;
+        } else {
+            return internalRootDirectory + "/" + APPLICATION_TAG;
+        }
     }
 
     public void setScheduleEnabled(Context c, boolean enabled) {
