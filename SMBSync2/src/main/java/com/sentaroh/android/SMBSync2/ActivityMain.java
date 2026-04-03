@@ -2489,11 +2489,46 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_main_permission_all_files_access_title),
                         mContext.getString(R.string.msgs_main_permission_all_files_access_request_msg), ntfy);
             } else {
-                p_ntfy.notifyToListener(true, null);
+                checkExactAlarmPermission(p_ntfy);
             }
         } else {
-            p_ntfy.notifyToListener(true, null);
+            checkExactAlarmPermission(p_ntfy);
         }
+    }
+
+    private void checkExactAlarmPermission(final NotifyEvent p_ntfy) {
+        if (Build.VERSION.SDK_INT >= 31) {
+            android.app.AlarmManager am = (android.app.AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            if (am != null && !am.canScheduleExactAlarms()) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context c, Object[] o) {
+                        try {
+                            Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                            intent.setData(android.net.Uri.parse("package:" + mContext.getPackageName()));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mContext.startActivity(intent);
+                        } catch (Exception e) {
+                            mUtil.addDebugMsg(1, "E", "Failed to launch exact alarm settings: " + e.getMessage());
+                        }
+                        // Proceed regardless to not hard block the application on older devices
+                        if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context c, Object[] o) {
+                        if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
+                    }
+                });
+                mUtil.showCommonDialog(false, "W",
+                        "Exact Alarms Permission Required",
+                        "Android 14 requires explicit permission to set exact alarms for the scheduler to work reliably. Please click OK to open settings and enable 'Alarms & reminders' for SMBSync2.",
+                        ntfy);
+                return;
+            }
+        }
+        if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
     }
 
     @Override
@@ -2505,7 +2540,7 @@ public class ActivityMain extends AppCompatActivity {
                 mUiHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (mNtfyExternalStoragePermission!=null) mNtfyExternalStoragePermission.notifyToListener(true, null);
+                        if (mNtfyExternalStoragePermission != null) checkExactAlarmPermission(mNtfyExternalStoragePermission);
                     }
                 }, 500);
             } else {

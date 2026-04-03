@@ -23,7 +23,11 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -339,6 +343,33 @@ public class ScheduleItemEditor {
                 boolean isChecked = ctv_sched_enabled.isChecked();
                 ScheduleItem n_sli = mSched.clone();
                 if (isChecked) {
+                    if (Build.VERSION.SDK_INT >= 31) {
+                        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                        if (am != null && !am.canScheduleExactAlarms()) {
+                            ctv_sched_enabled.setChecked(false);
+                            NotifyEvent ntfy = new NotifyEvent(mContext);
+                            ntfy.setListener(new NotifyEventListener() {
+                                @Override
+                                public void positiveResponse(Context c, Object[] o) {
+                                    try {
+                                        Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                                        intent.setData(Uri.parse("package:" + mContext.getPackageName()));
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        mContext.startActivity(intent);
+                                    } catch (Exception e) {
+                                        mUtil.addDebugMsg(1, "E", "Failed to launch exact alarm settings: " + e.getMessage());
+                                    }
+                                }
+                                @Override
+                                public void negativeResponse(Context c, Object[] o) {}
+                            });
+                            mUtil.showCommonDialog(false, "W",
+                                    "Exact Alarms Permission Required",
+                                    "Android 14 requires explicit permission to set exact alarms for the scheduler to work reliably. Please click OK to open settings and enable 'Alarms & reminders' for SMBSync2.",
+                                    ntfy);
+                            return;
+                        }
+                    }
                     if (!mSched.scheduleEnabled) {
                         n_sli.scheduleEnabled = true;
                         n_sli.scheduleLastExecTime = System.currentTimeMillis();

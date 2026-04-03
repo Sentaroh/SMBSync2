@@ -66,7 +66,7 @@ import com.sentaroh.android.Utilities.ThreadCtrl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.LoggerWriter;
+// import org.slf4j.LoggerWriter;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -79,7 +79,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import jcifs.util.LogStream;
+// import jcifs.util.LogStream;
 
 import static android.content.Context.WINDOW_SERVICE;
 import static com.sentaroh.android.SMBSync2.Constants.APPLICATION_TAG;
@@ -302,7 +302,7 @@ public class GlobalParameters extends CommonGlobalParms {
 
     public SafManager safMgr = null;
 
-    private static LogStream logStream=null;//JCIFS logStream
+//    private static LogStream logStream=null;//JCIFS logStream
     private static Logger slf4jLog = LoggerFactory.getLogger(GlobalParameters.class);
 
     public GlobalParameters() {
@@ -361,6 +361,7 @@ public class GlobalParameters extends CommonGlobalParms {
         }
         applicationRootDirectory = c.getFilesDir().toString();
 
+        java.security.Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
         final LogUtil jcifs_ng_lu = new LogUtil(c, "SLF4J", this);
         final LogUtil jcifs_old_lu = new LogUtil(c, "JCIFS-V1", this);
 
@@ -393,11 +394,11 @@ public class GlobalParameters extends CommonGlobalParms {
             }
         };
         ps=new PrintStream(os);
-        LogStream.setInstance(ps);
-        logStream=LogStream.getInstance();//Initial create JCIFS logStream object
+//        LogStream.setInstance(ps);
+//        logStream=LogStream.getInstance();//Initial create JCIFS logStream object
 
-        JcifsNgLogWriter jcifs_ng_lw=new JcifsNgLogWriter(jcifs_ng_lu);
-        slf4jLog.setWriter(jcifs_ng_lw);
+//        JcifsNgLogWriter jcifs_ng_lw=new JcifsNgLogWriter(jcifs_ng_lu);
+//        slf4jLog.setWriter(jcifs_ng_lw);
 
         initStorageStatus(c);
 
@@ -582,20 +583,22 @@ public class GlobalParameters extends CommonGlobalParms {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 
         settingDebugLevel = Integer.parseInt(prefs.getString(c.getString(R.string.settings_log_level), "0"));
-        slf4jLog.setAppendTime(false);
+//        slf4jLog.setAppendTime(false);
+/*
         if (settingDebugLevel==0) {
-            LogStream.setLevel(1);
+//            LogStream.setLevel(1);
             slf4jLog.setLogOption(false, true, false, false, false);
         } else if (settingDebugLevel==1) {
-            LogStream.setLevel(2);
+//            LogStream.setLevel(2);
             slf4jLog.setLogOption(false, true, true, false, false);
         } else if (settingDebugLevel==2) {
-            LogStream.setLevel(5);
+//            LogStream.setLevel(5);
             slf4jLog.setLogOption(true, true, true, false, true);
         } else if (settingDebugLevel==3) {
-            LogStream.setLevel(5);
+//            LogStream.setLevel(5);
             slf4jLog.setLogOption(true, true, true, true, true);
         }
+*/
         settingExitClean=prefs.getBoolean(c.getString(R.string.settings_exit_clean), true);
 
         settingLogMaxFileCount = Integer.valueOf(prefs.getString(c.getString(R.string.settings_log_file_max_count), "5"));
@@ -965,6 +968,7 @@ public class GlobalParameters extends CommonGlobalParms {
         return pm.isInteractive();
     }
 
+/*
     class JcifsNgLogWriter extends LoggerWriter {
         private LogUtil mLu =null;
         public JcifsNgLogWriter(LogUtil lu) {
@@ -975,5 +979,6 @@ public class GlobalParameters extends CommonGlobalParms {
             mLu.addDebugMsg(1,"I", msg);
         }
     }
+*/
 
 }
