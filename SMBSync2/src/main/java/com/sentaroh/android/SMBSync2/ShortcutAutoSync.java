@@ -30,7 +30,7 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import android.view.Window;
 
 import com.sentaroh.android.Utilities.Dialog.MessageDialogAppFragment;

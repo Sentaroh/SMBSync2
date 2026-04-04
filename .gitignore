@@ -56,3 +56,5 @@ SMBSync2/src/main/java/com/sentaroh/android/SMBSync2/KeyStoreUtil2.java
 SMBSync2/src/main/java/com/sentaroh/android/SMBSync2/SyncTaskXml.java
 SMBSync2/src/main/java/com/sentaroh/android/SMBSync2/TwoWaySync.java
 SMBSync2/src/main/java/com/sentaroh/android/SMBSync2/TwoWaySyncFile.java
+
+tmpsrc/

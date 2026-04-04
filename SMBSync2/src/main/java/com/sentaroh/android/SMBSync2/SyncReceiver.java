@@ -211,7 +211,7 @@ public class SyncReceiver extends BroadcastReceiver {
                 in.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
                 in.putExtra(SCHEDULER_SCHEDULE_NAME_KEY, sched_names);
                 in.setClass(mContext, SyncReceiver.class);
-                PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
                 AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
                 try {
                     if (Build.VERSION.SDK_INT >= 23) am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
@@ -237,7 +237,7 @@ public class SyncReceiver extends BroadcastReceiver {
         Intent iw = new Intent();
         iw.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
         iw.setClass(mContext, SyncReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, iw, PendingIntent.FLAG_NO_CREATE);
+        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, iw, PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE);
         if (pi == null) {
             return false;
         } else {
@@ -250,7 +250,7 @@ public class SyncReceiver extends BroadcastReceiver {
         Intent in = new Intent();
         in.setClass(mContext, SyncReceiver.class);
         in.setAction(SCHEDULER_INTENT_TIMER_EXPIRED);
-        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, in, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
     }

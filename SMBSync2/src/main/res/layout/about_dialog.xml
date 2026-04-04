@@ -27,7 +27,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         >
-        <com.sentaroh.android.SMBSync2.CustomTabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

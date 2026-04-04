@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"  
     android:layout_width="match_parent"  
     android:layout_height="match_parent"  
+    android:fitsSystemWindows="true"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -12,14 +13,19 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
-        <com.sentaroh.android.SMBSync2.CustomTabLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/main_tab_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorColor="#0088CC"
             app:tabIndicatorHeight="5dp"
-            app:tabBackground="@drawable/tab_bg_selector"
-            app:tabTextColor="@color/tab_textcolor_selector"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium"
             app:tabMaxWidth="0dp"
             app:tabGravity="fill"

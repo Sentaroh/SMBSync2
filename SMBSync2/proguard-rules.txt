@@ -1,0 +1,5 @@
+# Disable obfuscation per user request, but keep code shrinking and optimizations
+-dontobfuscate
+-dontwarn com.adobe.xmp.**
+-dontwarn org.slf4j.**
+-dontwarn org.patched_slf4j.**

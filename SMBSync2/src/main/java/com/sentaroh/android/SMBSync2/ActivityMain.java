@@ -42,17 +42,18 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.storage.StorageVolume;
 import android.provider.Settings;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.FileProvider;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.tabs.TabLayout;
+import androidx.core.content.FileProvider;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.InputType;
@@ -205,8 +206,12 @@ public class ActivityMain extends AppCompatActivity {
         setTheme(mGp.applicationTheme);
         mGp.themeColorList = CommonUtilities.getThemeColorList(mActivity);
 //        getWindow().setNavigationBarColor(mGp.themeColorList.window_background_color_content);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
+
+        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, " + "mStartStatus=" + mStartStatus +", settingScreenThemeLanguage="+mGp.settingScreenThemeLanguage);
@@ -376,7 +381,7 @@ public class ActivityMain extends AppCompatActivity {
                                                 if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
                                                 else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
                                                 if (mGp.syncThreadActive) {
-                                                    mMainTabLayout.setCurrentTabByName(mTabNameMessage);
+                                                    mMainTabLayout.getTabAt(3).select();
                                                 } else {
                                                     mGp.messageListViewMoveToBottomRequired=true;
                                                 }
@@ -417,13 +422,13 @@ public class ActivityMain extends AppCompatActivity {
         if (mRestoreType == RESTART_BY_KILLED) {
             restoreTaskData();
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_killed));
-            mMainTabLayout.setCurrentTabByName(mTabNameMessage);
+            mMainTabLayout.getTabAt(3).select();
         } else if (mRestoreType == RESTART_BY_DESTROYED) {
             restoreTaskData();
             mUtil.addLogMsg("W", mContext.getString(R.string.msgs_smbsync_main_restart_by_destroyed));
-            mMainTabLayout.setCurrentTabByName(mTabNameMessage);
+            mMainTabLayout.getTabAt(3).select();
         } else {
-            if (mGp.syncThreadActive) mMainTabLayout.setCurrentTabByName(mTabNameMessage);
+            if (mGp.syncThreadActive) mMainTabLayout.getTabAt(3).select();
         }
         checkStorageStatus();
         setMessageContextButtonListener();
@@ -919,7 +924,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void restoreViewContent(final ViewSaveArea vsa) {
         mWhileRestoreViewProcess=true;
-        mMainTabLayout.setCurrentTabByPosition(vsa.current_tab_pos);
+        mMainTabLayout.getTabAt(vsa.current_tab_pos).select();
         mMainViewPager.setCurrentItem(vsa.current_pager_pos);
         mWhileRestoreViewProcess=false;
 
@@ -989,7 +994,7 @@ public class ActivityMain extends AppCompatActivity {
     private LinearLayout mMessageView;
 
     private CustomViewPager mMainViewPager;
-    private CustomTabLayout mMainTabLayout;
+    private TabLayout mMainTabLayout;
     private boolean mWhileRestoreViewProcess=false;
 
     private void createTabView() {
@@ -1101,13 +1106,12 @@ public class ActivityMain extends AppCompatActivity {
 
         createContextView();
 
-        mMainTabLayout = (CustomTabLayout) findViewById(R.id.main_tab_layout);
-        mMainTabLayout.addTab(mTabNameTask);
-        mMainTabLayout.addTab(mTabNameSchedule);
-        mMainTabLayout.addTab(mTabNameHistory);
-        mMainTabLayout.addTab(mTabNameMessage);
+        mMainTabLayout = (TabLayout) findViewById(R.id.main_tab_layout);
+        mMainTabLayout.addTab(mMainTabLayout.newTab().setText(mTabNameTask).setTag(mTabNameTask));
+        mMainTabLayout.addTab(mMainTabLayout.newTab().setText(mTabNameSchedule).setTag(mTabNameSchedule));
+        mMainTabLayout.addTab(mMainTabLayout.newTab().setText(mTabNameHistory).setTag(mTabNameHistory));
+        mMainTabLayout.addTab(mMainTabLayout.newTab().setText(mTabNameMessage).setTag(mTabNameMessage));
         mMainTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mMainTabLayout.adjustTabWidth();
 
         View[] tab_view=new View[]{mSyncTaskView, mScheduleView, mHistoryView, mMessageView};
         CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity, tab_view);
@@ -1118,7 +1122,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 mUtil.addDebugMsg(2,"I","onPageSelected entered, pos="+position);
-                mMainTabLayout.setCurrentTabByPosition(position);
+                mMainTabLayout.getTabAt(position).select();
                 if (isUiEnabled()) setUiEnabled();
             }
 
@@ -1133,7 +1137,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        mMainTabLayout.setCurrentTabByName(mTabNameTask);
+        mMainTabLayout.getTabAt(0).select();
         mMainViewPager.setCurrentItem(0);
 
         mMainTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -1440,117 +1444,140 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                processHomeButtonPress();
-                return true;
-            case R.id.menu_top_sync:
-                if (isUiEnabled()) {
-                    if (mGp.syncTaskAdapter.isShowCheckBox()) {
-                        if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0) {
-                            syncSelectedSyncTask();
-                        } else {
-                            //no sync task is selected
-                            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
-                            return true;//do not reset to normal view to let user select a task
-                        }
-                    } else {
-                        syncAutoSyncTask();
-                    }
-                    SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
-                    setSyncTaskContextButtonNormalMode();
-                }
-                return true;
-            case R.id.menu_top_exec_schedule:
-                if (isUiEnabled()) {
-                    if (mGp.syncScheduleAdapter.isSelectMode()) {
-                        if (mGp.syncScheduleAdapter.getSelectedItemCount() > 0) {
-                            executeSelectedSchedule();
-                        } else {
-                            //no schedule is selected
-                            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_schedule_sync_selected_schedule_not_found), "", null);
-                            return true;//do not reset to normal view to let user select a schedule
-                        }
-                    } else {
-                        executeAllEnabledSchedule();
-                    }
-                    SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
-                    setScheduleContextButtonNormalMode();
-                }
-                return true;
-            case R.id.menu_top_browse_log:
-                invokeLogFileBrowser();
-                setContextButtonNormalMode();
-                return true;
-            case R.id.menu_top_export:
-                NotifyEvent ntfy=new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        mTaskUtil.exportSyncTaskListDlg();
-                        setContextButtonNormalMode();
-                    }
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {}
-                });
-                ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
-                        mUtil, false, ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_EXPORT_TASK_LIST);
-                return true;
-            case R.id.menu_top_import:
-                importSyncTaskAndParms();
-                setContextButtonNormalMode();
-                return true;
-            case R.id.menu_top_log_management:
-                invokeLogManagement();
-                setContextButtonNormalMode();
-                return true;
-            case R.id.menu_top_scheduler:
-                toggleScheduleEnabled();
-                return true;
-            case R.id.menu_top_about:
-                aboutSMBSync();
-                setContextButtonNormalMode();
-                return true;
-            case R.id.menu_top_settings:
-                invokeSettingsActivity();
-                setContextButtonNormalMode();
-                return true;
-            case R.id.menu_top_edit_force_usb_uuid_list:
-                EditUsbUuidList eu=new EditUsbUuidList(mActivity, mUtil);
-                return true;
-            case R.id.menu_top_kill:
-                killTerminateApplication();
-                setContextButtonNormalMode();
-                return true;
-            case R.id.menu_top_housekeep:
-                houseKeepManagementFile();
-                return true;
-            case R.id.menu_top_add_shortcut:
-                addShortcut();
-                return true;
-            case R.id.menu_top_show_battery_optimization:
-                showBatteryOptimization();
-                return true;
-            case R.id.menu_top_list_storage:
-                showSystemInfo();
-                return true;
-            case R.id.menu_top_select_storage:
-                reselectSdcard("", "");
-                return true;
-//            case R.id.menu_top_request_grant_coarse_location:
-//                mGp.setSettingGrantCoarseLocationRequired(mContext, true);
-//                checkLocationPermission(false);
-//                return true;
-//            case R.id.menu_top_start_logcat:
-//                LogCatUtil.startLogCat(mGp, mGp.getLogDirName(),"logcat.txt");
-//                return true;
-//            case R.id.menu_top_stop_logcat:
-//                LogCatUtil.stopLogCat(mGp, mUtil);
-//                return true;
-//            case R.id.menu_top_send_logcat:
-//                LogCatUtil.sendLogCat(mActivity, mGp, mUtil, mGp.getLogDirName(), "logcat.txt");
-//                return true;
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            processHomeButtonPress();
+            return true;
         }
+        if (id == R.id.menu_top_sync) {
+            if (isUiEnabled()) {
+                if (mGp.syncTaskAdapter.isShowCheckBox()) {
+                    if (SyncTaskUtil.getSyncTaskSelectedItemCount(mGp.syncTaskAdapter) > 0) {
+                        syncSelectedSyncTask();
+                    } else {
+                        //no sync task is selected
+                        mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_main_sync_select_prof_no_active_profile), "", null);
+                        return true;//do not reset to normal view to let user select a task
+                    }
+                } else {
+                    syncAutoSyncTask();
+                }
+                SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
+                setSyncTaskContextButtonNormalMode();
+            }
+            return true;
+        }
+        if (id == R.id.menu_top_exec_schedule) {
+            if (isUiEnabled()) {
+                if (mGp.syncScheduleAdapter.isSelectMode()) {
+                    if (mGp.syncScheduleAdapter.getSelectedItemCount() > 0) {
+                        executeSelectedSchedule();
+                    } else {
+                        //no schedule is selected
+                        mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_schedule_sync_selected_schedule_not_found), "", null);
+                        return true;//do not reset to normal view to let user select a schedule
+                    }
+                } else {
+                    executeAllEnabledSchedule();
+                }
+                SyncTaskUtil.setAllSyncTaskToUnchecked(true, mGp.syncTaskAdapter);
+                setScheduleContextButtonNormalMode();
+            }
+            return true;
+        }
+        if (id == R.id.menu_top_browse_log) {
+            invokeLogFileBrowser();
+            setContextButtonNormalMode();
+            return true;
+        }
+        if (id == R.id.menu_top_export) {
+            NotifyEvent ntfy = new NotifyEvent(mContext);
+            ntfy.setListener(new NotifyEventListener() {
+                @Override
+                public void positiveResponse(Context context, Object[] objects) {
+                    mTaskUtil.exportSyncTaskListDlg();
+                    setContextButtonNormalMode();
+                }
+
+                @Override
+                public void negativeResponse(Context context, Object[] objects) {
+                }
+            });
+            ApplicationPasswordUtil.applicationPasswordAuthentication(mGp, mActivity, getSupportFragmentManager(),
+                    mUtil, false, ntfy, ApplicationPasswordUtil.APPLICATION_PASSWORD_RESOURCE_EXPORT_TASK_LIST);
+            return true;
+        }
+        if (id == R.id.menu_top_import) {
+            importSyncTaskAndParms();
+            setContextButtonNormalMode();
+            return true;
+        }
+        if (id == R.id.menu_top_log_management) {
+            invokeLogManagement();
+            setContextButtonNormalMode();
+            return true;
+        }
+        if (id == R.id.menu_top_scheduler) {
+            toggleScheduleEnabled();
+            return true;
+        }
+        if (id == R.id.menu_top_about) {
+            aboutSMBSync();
+            setContextButtonNormalMode();
+            return true;
+        }
+        if (id == R.id.menu_top_settings) {
+            invokeSettingsActivity();
+            setContextButtonNormalMode();
+            return true;
+        }
+        if (id == R.id.menu_top_edit_force_usb_uuid_list) {
+            EditUsbUuidList eu = new EditUsbUuidList(mActivity, mUtil);
+            return true;
+        }
+        if (id == R.id.menu_top_kill) {
+            killTerminateApplication();
+            setContextButtonNormalMode();
+            return true;
+        }
+        if (id == R.id.menu_top_housekeep) {
+            houseKeepManagementFile();
+            return true;
+        }
+        if (id == R.id.menu_top_add_shortcut) {
+            addShortcut();
+            return true;
+        }
+        if (id == R.id.menu_top_show_battery_optimization) {
+            showBatteryOptimization();
+            return true;
+        }
+        if (id == R.id.menu_top_list_storage) {
+            showSystemInfo();
+            return true;
+        }
+        if (id == R.id.menu_top_select_storage) {
+            reselectSdcard("", "");
+            return true;
+        }
+
+//        if (id == R.id.menu_top_request_grant_coarse_location) {
+//            mGp.setSettingGrantCoarseLocationRequired(mContext, true);
+//            checkLocationPermission(false);
+//            return true;
+//        }
+//        if (id == R.id.menu_top_start_logcat) {
+//            LogCatUtil.startLogCat(mGp, mGp.getLogDirName(),"logcat.txt");
+//            return true;
+//        }
+//        if (id == R.id.menu_top_stop_logcat) {
+//            LogCatUtil.stopLogCat(mGp, mUtil);
+//            return true;
+//        }
+//        if (id == R.id.menu_top_send_logcat) {
+//            LogCatUtil.sendLogCat(mActivity, mGp, mUtil, mGp.getLogDirName(), "logcat.txt");
+//            return true;
+//        }
         if (isUiEnabled()) {
         }
         return false;
@@ -2018,12 +2045,10 @@ public class ActivityMain extends AppCompatActivity {
         title.setText(getString(R.string.msgs_dlg_title_about) + " (Ver " + SystemInfo.getApplVersionName(mContext) + ")");
 
         // get our tabHost from the xml
-        final CustomTabLayout tab_layout = (CustomTabLayout) dialog.findViewById(R.id.tab_layout);
-        tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_func_btn));
-        tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_privacy_btn));
-        tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_change_btn));
-
-        tab_layout.adjustTabWidth();
+        final TabLayout tab_layout = (TabLayout) dialog.findViewById(R.id.tab_layout);
+        tab_layout.addTab(tab_layout.newTab().setText(mContext.getString(R.string.msgs_about_dlg_func_btn)));
+        tab_layout.addTab(tab_layout.newTab().setText(mContext.getString(R.string.msgs_about_dlg_privacy_btn)));
+        tab_layout.addTab(tab_layout.newTab().setText(mContext.getString(R.string.msgs_about_dlg_change_btn)));
 
         LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -2168,22 +2193,22 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void terminateApplication() {
-        if (mMainTabLayout.getSelectedTabName().equals(mTabNameTask)) {//
+        if (mMainTabLayout.getSelectedTabPosition() == 0) {//
             if (mGp.syncTaskAdapter.isShowCheckBox()) {
                 mGp.syncTaskAdapter.setShowCheckBox(false);
                 mGp.syncTaskAdapter.notifyDataSetChanged();
                 setSyncTaskContextButtonNormalMode();
                 return;
             }
-        } else if (mMainTabLayout.getSelectedTabName().equals(mTabNameSchedule)) {
+        } else if (mMainTabLayout.getSelectedTabPosition() == 1) {
             if (mGp.syncScheduleAdapter.isSelectMode()) {
                 mGp.syncScheduleAdapter.setSelectMode(false);
                 mGp.syncScheduleAdapter.notifyDataSetChanged();
                 setScheduleContextButtonNormalMode();
                 return;
             }
-        } else if (mMainTabLayout.getSelectedTabName().equals(mTabNameMessage)) {
-        } else if (mMainTabLayout.getSelectedTabName().equals(mTabNameHistory)) {
+        } else if (mMainTabLayout.getSelectedTabPosition() == 3) {
+        } else if (mMainTabLayout.getSelectedTabPosition() == 2) {
             if (mGp.syncHistoryAdapter.isShowCheckBox()) {
                 mGp.syncHistoryAdapter.setShowCheckBox(false);
                 mGp.syncHistoryAdapter.notifyDataSetChanged();
@@ -2388,7 +2413,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private NotifyEvent mNtfyExternalStoragePermission=null;
     private void checkRequiredPermissions(final NotifyEvent p_ntfy) {
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 23 && Build.VERSION.SDK_INT < 30) {
             mUtil.addDebugMsg(1, "I", "Prermission WriteExternalStorage=" + checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) +
                     ", WakeLock=" + checkSelfPermission(Manifest.permission.WAKE_LOCK));
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -2424,9 +2449,86 @@ public class ActivityMain extends AppCompatActivity {
             } else {
                 p_ntfy.notifyToListener(true, null);
             }
+        } else if (Build.VERSION.SDK_INT >= 30) {
+            if (!Environment.isExternalStorageManager()) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context c, Object[] o) {
+                        try {
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                            intent.addCategory("android.intent.category.DEFAULT");
+                            intent.setData(Uri.parse(String.format("package:%s", getPackageName())));
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            Intent intent = new Intent();
+                            intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void negativeResponse(Context c, Object[] o) {
+                        NotifyEvent ntfy_term = new NotifyEvent(mContext);
+                        ntfy_term.setListener(new NotifyEventListener() {
+                            @Override
+                            public void positiveResponse(Context c, Object[] o) {
+                                isTaskTermination = true;
+                                finish();
+                            }
+
+                            @Override
+                            public void negativeResponse(Context c, Object[] o) {}
+                        });
+                        mUtil.showCommonDialog(false, "W",
+                                mContext.getString(R.string.msgs_main_permission_all_files_access_title),
+                                mContext.getString(R.string.msgs_main_permission_all_files_access_denied_msg), ntfy_term);
+                    }
+                });
+                mUtil.showCommonDialog(false, "W",
+                        mContext.getString(R.string.msgs_main_permission_all_files_access_title),
+                        mContext.getString(R.string.msgs_main_permission_all_files_access_request_msg), ntfy);
+            } else {
+                checkExactAlarmPermission(p_ntfy);
+            }
         } else {
-            p_ntfy.notifyToListener(true, null);
+            checkExactAlarmPermission(p_ntfy);
         }
+    }
+
+    private void checkExactAlarmPermission(final NotifyEvent p_ntfy) {
+        if (Build.VERSION.SDK_INT >= 31) {
+            android.app.AlarmManager am = (android.app.AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+            if (am != null && !am.canScheduleExactAlarms()) {
+                NotifyEvent ntfy = new NotifyEvent(mContext);
+                ntfy.setListener(new NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context c, Object[] o) {
+                        try {
+                            Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                            intent.setData(android.net.Uri.parse("package:" + mContext.getPackageName()));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mContext.startActivity(intent);
+                        } catch (Exception e) {
+                            mUtil.addDebugMsg(1, "E", "Failed to launch exact alarm settings: " + e.getMessage());
+                        }
+                        // Proceed regardless to not hard block the application on older devices
+                        if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context c, Object[] o) {
+                        if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
+                    }
+                });
+                mUtil.showCommonDialog(false, "W",
+                        "Exact Alarms Permission Required",
+                        "Android 14 requires explicit permission to set exact alarms for the scheduler to work reliably. Please click OK to open settings and enable 'Alarms & reminders' for SMBSync2.",
+                        ntfy);
+                return;
+            }
+        }
+        if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
     }
 
     @Override
@@ -2438,7 +2540,7 @@ public class ActivityMain extends AppCompatActivity {
                 mUiHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (mNtfyExternalStoragePermission!=null) mNtfyExternalStoragePermission.notifyToListener(true, null);
+                        if (mNtfyExternalStoragePermission != null) checkExactAlarmPermission(mNtfyExternalStoragePermission);
                     }
                 }, 500);
             } else {

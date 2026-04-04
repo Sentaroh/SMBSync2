@@ -32,7 +32,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 
 import com.sentaroh.android.SMBSync2.Log.LogUtil;
 
@@ -67,7 +67,7 @@ public class NotificationUtil {
         gwa.notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
         gwa.notificationPendingIntent = PendingIntent.getActivity(c, 0, gwa.notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 //        gwa.notificationLargeIcon = BitmapFactory.decodeResource(c.getResources(), gwa.notificationSmallIcon);
         gwa.notificationBuilder = new NotificationCompat.Builder(c);
         gwa.notificationBuilder.setContentIntent(gwa.notificationPendingIntent)
@@ -271,7 +271,7 @@ public class NotificationUtil {
         }
         if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
             Intent activity_intent = new Intent(c, ActivityMain.class);
-            PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             builder.setContentIntent(activity_pi);
         }
         if (isNotificationEnabled(gwa)) {
